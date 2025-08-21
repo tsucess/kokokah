@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Quicksand:wght@300..700&display=swap');
+
+:root {
+    --color-link-navigation: #00004C;
+    --color-link-hover-navigation: #35527A;
+    --color-text-navigation: #4D525F;
+    --color-bg-button: #004A53;
+    --color-bg-banner: #ECFDFF;
+    --color-bg-jumbotron:#CCDBDD;
+}
+
+.subscribe
+{
+    background: var(--color-bg-jumbotron);
+    text-align: left;
+}
+
+h1, h2
+{
+font-family: "fredoka one";
+color: var(--color-bg-button);
+font-weight:bolder;
+font-size:50px;
+}
+
+h3
+{
+font-family: "fredoka one";
+color: var(--color-bg-button);
+font-weight:bolder;
+font-size:40px;
+}
+
+h6
+{
+ font-weight:bold;
+ font-size:16px;
+}
+
+ul, li
+{
+    font-family: "fredoka one";
+    color: var(--color-bg-button);
+    font-weight: bold;
+
+}
+
+@media screen and(max-width: 320px)
+{
+h1, h2, h3
+{
+font-family: fredoka one;
+color: var(--color-bg-button);
+font-weight: bold;
+font-size:30px;
+}
+}
+
+p
+{
+font-family: sitka;
+font-size: 15px;
+color: #4D525F;
+}
+
+.banner
+{
+background:var(--color-bg-banner);
+}
+
+.jumbotron
+{
+    background: var(--color-bg-jumbotron);
+    border-radius: 30px;"
+}
+
+.navButton
+{
+background: var(--color-bg-button);
+background-color: #00004C;
+color:#fff;
+}
+
+.nav-item a {
+color: var(--color-text-navigation);
+}
+
+.navbar .navbar-nav .nav-item a {
+    color: var(--color-primary);
+}
+
+.navbar .navbar-nav .nav-item:hover {
+    border-bottom: 2px solid var(--color-link-navigation);
+}
+.nav-btn .nav-item li{
+    list-style: none;
+  }
+
+  .nav-btn .nav-item {
+    align-items: center;
+    gap: 1rem;
+  }
+
+
+  .nav-btn .nav-item i {
+    background-color: var(--color-ash);
+    font-size: 1rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+  }
+
+  .navButton:hover
+  {
+   background: var(--color-link-hover-navigation);
+   color: #fff;
+  }
+
+  .demo:hover
+  {
+   background: var(--color-bg-banner);
+   color: #fff;
+  }
+
+/* .container__header .nav-item:hover {
+    border-bottom: 2px solid var(--color-link-navigation);
+} */
+
+.container__header .nav-item li{
+    list-style: none;
+  }
+
+  .nav-btn .nav-item {
+    align-items: center;
+    gap: 1rem;
+  }
+
+
+  .nav-btn .nav-item i {
+    background-color: var(--color-ash);
+    font-size: 1rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+  }
