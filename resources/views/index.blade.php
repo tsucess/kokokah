@@ -5,7 +5,7 @@
 <div class = "row mt-4">
 <div class = "col-12 col-md-6 col-lg-6 my-auto">
 {{-- <img src = "images/Platform.png" class = "img-fluid"> --}}
-<h1>
+<h1 class = "hero">
     All-In-One smarter, easier and affordable learning with Kokokah
 </h1>
 <p class = "mt-3">
@@ -13,9 +13,9 @@
     affordable smart learning platforms, accessible anytime and anywhere.
 </p>
 
-<div class = "d-flex flex-column flex-sm-row gap-2">
-    <button class = "btn text-white ps-4 pe-5 w-100 w-sm-auto" style = "background:#004A53;">Explore Kokokah Features</button>
-    <button class = "btn btn-outline-success text-success ps-5 pe-5 w-100 w-sm-auto" >Get a Demo</button>
+<div class = "d-flex flex-column flex-sm-row gap-3">
+    <button class = "btn text-white p-1 w-100 w-sm-auto navButton" style = "background:#004A53;">Explore Kokokah Features</button>
+    <button class = "btn btn-outline-success text-success p-1 w-100 w-sm-auto demo" >Get a Demo</button>
 </div>
 
 
@@ -62,7 +62,7 @@
 </div>
 
 
-<div class = "col-12 col-md-6 col-lg-6">
+<div class = "col-12 col-md-6 col-lg-6 mt-2">
 <img src = "images/LMS.png" class = "img-fluid">
 </div>
 
@@ -125,7 +125,7 @@
 </div>
 
 
-<div class = "col-12 col-md-6 col-lg-6 my-auto">
+<div class = "col-12 col-md-6 col-lg-6 pt-2">
     <h2>
         Kokokah for All.
     </h2>
@@ -143,13 +143,13 @@
 </div>
 
 
-<div class = "container-fluid">
-    <div class = "row d-flex justify-content-between">
+    <div class="container">
+    <div class = "row">
 
-        <div class = "col-12 col-md-3 col-lg-3">
-    </div>
+    <div class = "d-flex">
 
-    <div class = "col-12 col-md-6 col-lg-6 text-center">
+
+    <div class = "w-100 text-center p-5">
         {{-- <img src = "images/Kokokah_works.png" class = "img-fluid w-50"> --}}
         <h2>
             Why Kokokah is the best
@@ -162,19 +162,19 @@
         </p>
     </div>
 
-    <div class = "col-12 col-md-3 col-lg-3">
-        <img src = "images/trace1.png" class = "img-fluid w-25 float-end">
+    <div class = "flex-shrink-1">
+        <img src = "images/trace1.png" class = "img-fluid">
+    </div>
+</div>
     </div>
 </div>
 
 
-<div class = "row d-flex justify-content-between">
+<div class = "container">
+<div class = "row g-2 justify-content-center mx-auto">
+        <div class = "d-flex ">
 
-        <div class = "col-12 col-md-3 col-lg-3">
-    </div>
-
-    <div class = "d-flex justify-content-between col-12 col-md-6 col-lg-6">
-        <div class ="w-75">
+        <div class = "w-100 text-center">
             <i class="fa-solid fa-download" style = "color:#F56824;"></i>
             <h6 class = "mt-3 text-success">
                 For Students, <br>
@@ -185,61 +185,62 @@
             </p>
         </div>
 
-        <div class ="w-75">
+        <div class = "w-100 text-center">
             <i class="fa-solid fa-download" style = "color:#F56824;"></i>
             <h6 class = "mt-3 text-success">
                 Accessible mobile <br>
                 learning
             </h6>
             <p>
-                Study anywhere, anytime — even on low internet.
-                Learn on your phone, tablet, or computer without missing a beat.
+                Study anywhere, anytime — even<br>
+                on low internet. Learn on your<br>
+                phone, tablet, or computer<br>
+                without missing a beat.
             </p>
         </div>
 
 
-        <div class ="w-75">
+        <div class = "w-100 text-center">
             <i class="fa-solid fa-download" style = "color:#F56824;"></i>
             <h6 class = "mt-3 text-success">
                 AI-integrated and <br>
                 automated features
             </h6>
             <p>
-                Get instant answers, personalized feedback, and quick
-                grading with our built-in Artificial Intelligence — saving
-                time for both students and educators.
+                Get instant answers, personalized<br>
+                feedback, and quick grading with our<br>
+                built-in Artificial Intelligence — <br>
+                saving time for both students and<br>
+                educators.
             </p>
         </div>
 
     </div>
-
-
-    <div class = "col-12 col-md-3 col-lg-3">
-    </div>
+</div>
 
 </div>
 
 
-<div class = "row d-flex justify-content-between">
 
-        <div class = "col-12 col-md-3 col-lg-3">
-    </div>
+<div class = "container">
+<div class = "row g-2 justify-content-center mx-auto">
 
-    <div class = "d-flex justify-content-between col-12 col-md-6 col-lg-6">
-        <div class ="w-75">
+        <div class = "d-flex">
+
+        <div class ="w-100 text-center">
             <i class="fa-solid fa-download" style = "color:#F56824;"></i>
             <h6 class = "mt-3 text-success">
                 Affordable<br>
                  Subscription plans
             </h6>
             <p>
-                Choose a plan that fits your budget
-                and needs — monthly, quarterly, or yearly,
-                all with full platform access.
+                Choose a plan that fits your budget<br>
+                and needs — monthly, quarterly, or <br>
+                yearly, all with full platform access.
             </p>
         </div>
 
-        <div class ="w-75">
+        <div class ="w-100 text-center">
             <i class="fa-solid fa-download" style = "color:#F56824;"></i>
             <h6 class = "mt-3 text-success">
                 Virtual Payment
@@ -250,45 +251,21 @@
             </p>
         </div>
 
+        <div class ="w-100 text-center"></div>
 
-        <div class ="w-75">
-
-        </div>
-
-    </div>
-
-
-    <div class = "col-12 col-md-3 col-lg-3">
-    </div>
-
+</div>
 </div>
 
 
 
+<div class = "row mt-4">
+<div class = "d-flex">
 
-<div class = "row d-flex justify-content-between">
-
-        <div class = "col-12 col-md-3 col-lg-3">
-            <img src = "images/Kokokah_works2.png" class = "p-2 img-fluid w-25">
-    </div>
-
-            <div class = "col-12 col-md-6 col-lg-6">
-    </div>
-
-            <div class = "col-12 col-md-3 col-lg-3">
-    </div>
-</div>
-
-
-<div class = "row">
-    <div class = "col col-md-2 col-lg-2">
-
-    </div>
-
-    <div class = "col col-md-8 col-lg-8 text-center">
-    <h2 class = "fw-bold" style = "color:#004A53;" >Kokokah for
-    <span class = "fw-bold" style = "color: #F56824;">You.</span>
+<div class = "w-100 text-center">
+    <h2>
+        Our Products
     </h2>
+
     <p>
 Kokokah brings you a suite of powerful learning tools designed to
 transform how African students, parents, and educators connect, learn, and thrive.
@@ -296,11 +273,12 @@ transform how African students, parents, and educators connect, learn, and thriv
     <button class = "btn text-white ps-4 pe-5" style = "background:#004A53;">Explore Features</button>
 </div>
 
-<div class = "col col-md-2 col-lg-2">
-    <img src = "images/Ellipse 24.png" class = "img-fluid w-25 float-end" />
-    </div>
+<div class = "flex-shrink-1">
+    <img src = "images/Ellipse 24.png" class = "img-fluid w-50 float-end" />
+</div>
 
 
+</div>
 </div>
 
 
@@ -477,32 +455,65 @@ transform how African students, parents, and educators connect, learn, and thriv
 </div>
 
 
+  <div class="container text-center mt-5 py-5"   style="background: #d9e8eb; ">
+    <!-- Top Badge -->
+    <div class="mb-3">
+      <i class="bi bi-trophy-fill text-warning fs-1"></i>
+      <h6 class="mt-2 fw-bold text-warning">
+        Kokokah Has Industry-Leading Renewals Of Above 80%
+      </h6>
+    </div>
+
+    <!-- Section Title -->
+    <h2 class="fw-bold mb-5">Why People Love Kokokah</h2>
+
+    <!-- Testimonials Row -->
+    <div class="row g-4 justify-content-center">
+
+      <!-- Card 1 -->
+      <div class="col-md-6 col-lg-5">
+        <div class="p-4 rounded-3 shadow-sm position-relative" style="background-color:#fce7f3;">
+          <i class="bi bi-quote text-success fs-1"></i>
+          <p class="mt-3">
+            With Kokokah, we conduct online tests, share lessons digitally, and
+            manage school operations all from one dashboard.
+          </p>
+          <div class="d-flex align-items-center mt-3">
+            <img src="images/lisa.png" alt="Lisa" class="rounded-circle me-3" width="50" height="50">
+            <strong>- Lisa</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="col-md-6 col-lg-5">
+        <div class="p-4 rounded-3 shadow-sm position-relative" style="background-color:#fce7f3;">
+          <i class="bi bi-quote text-success fs-1"></i>
+          <p class="mt-3">
+            With Kokokah, we conduct online tests, share lessons digitally, and
+            manage school operations all from one dashboard.
+          </p>
+          <div class="d-flex align-items-center mt-3">
+            <img src="images/jimmy.png" alt="Jimmy" class="rounded-circle me-3" width="50" height="50">
+            <strong>- Jimmy</strong>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+
 <div class = "row">
 
 <div class = "col-12 col-md-2 col-lg-2">
 </div>
 
-<div class = "col-12 col-md-8 col-lg-8 mt-5">
-    <h2 class = "text-center">
-        See how Kokokah transforms your school’s learning,
-        exams, and operations—all in under a minute.
-    </h2>
-</div>
-
-<div class = "col-12 col-md-2 col-lg-2">
-</div>
-
-</div>
-
-
-
-
-<div class = "row">
-
-<div class = "col-12 col-md-2 col-lg-2">
-</div>
-
-<div class = "col-12 col-md-8 col-lg-8 mt-4">
+<div class = "col-12 col-md-8 col-lg-8 mt-4 text-center">
+    <h2>Message from the founder</h2>
     <img src = "images/youtube.png" class="img-fluid w-100 h-100">
 </div>
 

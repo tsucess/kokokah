@@ -71,22 +71,41 @@
             margin: 0;
             padding: 0;
         }
+
+.bullet-point
+ {
+  width: 1rem;
+  height: 1rem;
+  background-color: #006064; /* A dark teal color */
+  flex-shrink: 0;
+  margin-top: 0.25rem; /* Adjust for vertical alignment with the text */
+}
+
+.custom-shadow {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
     </style>
 </head>
 
 <body>
 
-    <div class = "container-fluid">
+    {{-- <div class = "container-fluid"> --}}
         <!-- Bootstrap 5 Responsive Banner -->
-        <div class="position-relative text-center">
+        {{-- <div class="position-relative text-center"> --}}
+            <div class = "container-fluid">
+            <div class = "row">
             <!-- Background Image -->
             <img src="images/kokokah_header.png" class="img-fluid w-100" alt="Banner Image"
                 style="height: auto; object-fit: cover;">
         </div>
+            </div>
 
-        <header class="container-fluid  container__header grid grid-cols-2 items-center  shadow py-10">
+        {{-- <div class = "row bg-success"> --}}
+        <header class="container__header grid grid-cols-2 items-center  shadow py-10">
 
-            <nav class="container navbar navbar-expand-lg">
+            <nav class="container navbar navbar-expand-lg ">
+
+                <div class="d-flex align-items-center">
                 <a class="navbar-brand" href="/"><img src="{{ asset('images/Kokokah_Logo.png') }}"
                         alt=""></a>
 
@@ -94,6 +113,7 @@
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon fa fa-bars"></span></button>
+                </div>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
@@ -117,16 +137,16 @@
 
                     </ul>
                     <div class="nav-btn">
-                        @guest
+
                             <a href="{{ url('explore') }}" class="btn navButton">Explore Kokokah Products</a>
                             <a href="{{ url('demo') }}" class="btn btn-outline-success text-success demo">Get a Demo</a>
-                        @endguest
+
                     </div>
 
                 </div>
             </nav>
         </header>
-
+    {{-- </div> --}}
 
         <div>
             @yield('content')

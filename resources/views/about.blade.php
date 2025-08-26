@@ -12,7 +12,7 @@ Learning and Management Platform for<br>
 </div>
 </div>
 
-<div class = "container-fluid mb-5">
+<div class = "container mb-5">
 <div class = "row mt-4 bg-white">
 <div class = "col-12 col-md-6 col-lg-6 my-auto">
 <img src = "images/Video.png" class = "img-fluid">
@@ -39,8 +39,8 @@ Learning and Management Platform for<br>
 </div>
 
 
-<div class = "container-fluid mb-5">
-<div class = "row mt-4 bg-white">
+<div class = "container mt-5 mb-5">
+<div class = "row">
 
 <div class = "col-12 col-md-6 col-lg-6 my-auto">
     <h4 class = "fw-bold">
@@ -82,7 +82,7 @@ Learning and Management Platform for<br>
     </div>
 </div>
 
-<div class = "container-fluid mb-5">
+<div class = "container mb-5">
 <div class = "row mt-4 bg-white">
 <div class = "col-12 col-md-6 col-lg-6 my-auto">
 <img src = "images/Story.png" class = "img-fluid">
@@ -125,6 +125,7 @@ We’ve gone from limited resources to limitless possibilities. From local impac
 </div>
 </div>
 
+<div class = "container mb-5">
 <div class = "row">
     <div class="d-flex justify-content-center">
 
@@ -143,6 +144,7 @@ We’ve gone from limited resources to limitless possibilities. From local impac
     </div>
 
     </div>
+</div>
 </div>
 
 
@@ -296,7 +298,7 @@ We’ve gone from limited resources to limitless possibilities. From local impac
         <!-- Icon -->
         <div class="position-absolute top-0 start-50 translate-middle bg-light rounded-4 p-3">
           <i class="fa-solid fa-chart-line text-warning fs-3"></i>
-          
+
 
         </div>
         <!-- Content -->
