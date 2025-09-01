@@ -2,14 +2,14 @@
 
 @section('content')
 <div class = "container-fluid p-5 banner">
-<div class = "row justify-content-center mt-4">
+{{-- <div class = "row justify-content-center mt-4"> --}}
 <h1 class = "text-center">
 Kokokah is Africa’s Leading Digital<br>
 Learning and Management Platform for<br>
  Secondary Schools
 </h1>
 
-</div>
+{{-- </div> --}}
 </div>
 
 <div class = "container mb-5">
@@ -19,10 +19,10 @@ Learning and Management Platform for<br>
 </div>
 
 
-<div class = "col-12 col-md-6 col-lg-6 my-auto">
-    <h2>
-        <span class = "fs-1 fw-bold" style = "color:#004A53;">Kokokah for</span> <span class = "fw-bold" style = "color: #F56824;">All.</span>
-    </h2>
+<div class = "col-12 col-md-6 col-lg-6 mt-3 my-auto">
+    <h3>
+        Kokokah for All
+    </h3>
     <p>
         Kokokah combines School Management, Exam Prep, and a
         Learning Management System (LMS)—helping schools automate admin tasks,
@@ -43,32 +43,44 @@ Learning and Management Platform for<br>
 <div class = "row">
 
 <div class = "col-12 col-md-6 col-lg-6 my-auto">
-    <h4 class = "fw-bold">
-        <span style = "color:#004A53;">Our Mission</span> <span class = "fw-bold" style = "color: #F56824;">& Vision</span>
+    <h4>
+        Our Mission & Vision
     </h4>
 
-    <ul style = "color: gree;">
-        <li>Our Vision
-            <p>
-            We strive for a connected Africa
-            where every student has equal access
-            to quality education.
-            </p>
-        </li>
 
-        <li>Our Mission
-            <p>
+<div class="d-flex align-items-center">
+    <div class="outer-square me-3">
+        <div class="inner-circle"></div>
+    </div>
+    <span class="fw-bold" style="color:#004A53;">Our Vision</span>
+
+</div>
+<p class = "ms-5">
+            We strive for a connected Africa
+            where every student has equal access
+            to<br> quality education.
+            </p>
+
+<div class="d-flex align-items-center">
+    <div class="outer-square me-3">
+        <div class="inner-circle"></div>
+    </div>
+    <span class="fw-bold" style="color:#004A53;">Our Mision</span>
+
+</div>
+<p class = "ms-5">
             We strive for a connected Africa
             where every student has equal access
             to quality education.
-            </p>
-        </li>
-    </ul>
+</p>
+
+
+
     <button class = "btn text-white ps-4 pe-5" style = "background:#004A53;">Explore Product</button>
 </div>
 
 
-<div class = "col-12 col-md-6 col-lg-6 my-auto">
+<div class = "col-12 col-md-6 col-lg-6 mt-4 my-auto">
 <img src = "images/Mission.png" class = "img-fluid">
 </div>
 
@@ -76,23 +88,23 @@ Learning and Management Platform for<br>
 </div>
 </div>
 
-<div class = "row">
-    <div class ="justify-content-center">
-        <h3 class = "text-center">Our Story</h3>
-    </div>
-</div>
+
+
+
 
 <div class = "container mb-5">
 <div class = "row mt-4 bg-white">
+
+    <div class ="justify-content-center">
+        <h3 class = "text-center">Our Story</h3>
+    </div>
+
 <div class = "col-12 col-md-6 col-lg-6 my-auto">
 <img src = "images/Story.png" class = "img-fluid">
 </div>
 
 
 <div class = "col-12 col-md-6 col-lg-6 my-auto">
-    <h2>
-        <span class = "fs-1 fw-bold" style = "color:#004A53;">Kokokah for</span> <span class = "fw-bold" style = "color: #F56824;">All.</span>
-    </h2>
     <p>
 We began as a small but determined platform with a single goal:
 <b>to help Nigerian secondary school students study and pass their exams.</b>
@@ -130,12 +142,11 @@ We’ve gone from limited resources to limitless possibilities. From local impac
     <div class="d-flex justify-content-center">
 
     <div>
-        <h2 class = "text-center">Our Core Values</h2>
+        <h3 class = "text-center">Our Core Values</h3>
         <p class = "text-center">
             Learning should be accessible, engaging, and
             empowering for every student. These values guide
-            how we<br>
-             build, innovate, and serve at Kokokah.
+            how we build, innovate, and serve at Kokokah.
         </p>
     </div>
 
@@ -181,10 +192,10 @@ We’ve gone from limited resources to limitless possibilities. From local impac
   <div class="row g-4 justify-content-center">
 
     <!-- Card 1 -->
-    <div class="col-md-6 col-lg-5">
+    <div class="col-md-6 mb-4 col-lg-5">
       <div class="card border-0 shadow-sm h-100 rounded-4 position-relative text-center p-4">
         <!-- Icon -->
-        <div class="position-absolute top-0 start-50 translate-middle bg-light rounded-4 p-3">
+        <div class="position-absolute top-0 start-50 translate-middle rounded-4 p-3" style="background: #FFF9F0;">
           <i class="fa-solid fa-user-circle text-warning fs-3"></i>
 
         </div>
@@ -201,10 +212,10 @@ We’ve gone from limited resources to limitless possibilities. From local impac
     </div>
 
     <!-- Card 2 -->
-    <div class="col-md-6 col-lg-5">
+    <div class="col-md-6 mb-4 col-lg-5">
       <div class="card border-0 shadow-sm h-100 rounded-4 position-relative text-center p-4">
         <!-- Icon -->
-        <div class="position-absolute top-0 start-50 translate-middle bg-light rounded-4 p-3">
+        <div class="position-absolute top-0 start-50 translate-middle rounded-4 p-3" style="background: #FFF9F0;">
           <i class="fa-solid fa-lightbulb text-warning fs-3"></i>
         </div>
         <!-- Content -->
@@ -226,11 +237,11 @@ We’ve gone from limited resources to limitless possibilities. From local impac
 <div class="container my-5">
   <div class="row g-4 justify-content-center">
 
-    <!-- Card 1 -->
-    <div class="col-md-6 col-lg-5">
+    <!-- Card 3 -->
+    <div class="col-md-6 mb-4 col-lg-5">
       <div class="card border-0 shadow-sm h-100 rounded-4 position-relative text-center p-4">
         <!-- Icon -->
-        <div class="position-absolute top-0 start-50 translate-middle bg-light rounded-4 p-3">
+        <div class="position-absolute top-0 start-50 translate-middle rounded-4 p-3" style="background: #FFF9F0;">
           <i class="fa-solid fa-graduation-cap text-warning fs-3"></i>
 
         </div>
@@ -246,11 +257,11 @@ We’ve gone from limited resources to limitless possibilities. From local impac
       </div>
     </div>
 
-    <!-- Card 2 -->
-    <div class="col-md-6 col-lg-5">
+    <!-- Card 4 -->
+    <div class="col-md-6 mb-4 col-lg-5">
       <div class="card border-0 shadow-sm h-100 rounded-4 position-relative text-center p-4">
         <!-- Icon -->
-        <div class="position-absolute top-0 start-50 translate-middle bg-light rounded-4 p-3">
+        <div class="position-absolute top-0 start-50 translate-middle rounded-4 p-3" style="background: #FFF9F0;">
           <i class="fa-solid fa-shield text-warning fs-3"></i>
 
         </div>
@@ -272,11 +283,11 @@ We’ve gone from limited resources to limitless possibilities. From local impac
 <div class="container my-5">
   <div class="row g-4 justify-content-center">
 
-    <!-- Card 1 -->
-    <div class="col-md-6 col-lg-5">
+    <!-- Card 5 -->
+    <div class="col-md-6 mb-4 col-lg-5">
       <div class="card border-0 shadow-sm h-100 rounded-4 position-relative text-center p-4">
         <!-- Icon -->
-        <div class="position-absolute top-0 start-50 translate-middle bg-light rounded-4 p-3">
+        <div class="position-absolute top-0 start-50 translate-middle rounded-4 p-3" style="background: #FFF9F0;">
           <i class="fa-solid fa-people-group text-warning fs-3"></i>
 
         </div>
@@ -292,11 +303,11 @@ We’ve gone from limited resources to limitless possibilities. From local impac
       </div>
     </div>
 
-    <!-- Card 2 -->
-    <div class="col-md-6 col-lg-5">
+    <!-- Card 6  -->
+    <div class="col-md-6 mb-6 col-lg-5">
       <div class="card border-0 shadow-sm h-100 rounded-4 position-relative text-center p-4">
         <!-- Icon -->
-        <div class="position-absolute top-0 start-50 translate-middle bg-light rounded-4 p-3">
+        <div class="position-absolute top-0 start-50 translate-middle rounded-4 p-3" style="background: #FFF9F0;">
           <i class="fa-solid fa-chart-line text-warning fs-3"></i>
 
 

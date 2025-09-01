@@ -48,3 +48,28 @@ Route::get('/login', function () {
     return view('login');
 });
 
+Route::get('/signup', function () {
+    return view('admin.signup');
+});
+
+Route::get('/login', function () {
+    return view('admin.signin');
+});
+
+Route::get('/dashboard', function () {
+    return view('admin.dashboard');
+});
+
+
+Route::get('/users', function () {
+    return view('admin.users');
+});
+
+Route::get('/aduser', function () {
+    return view('admin.aduser');
+});
+
+Route::get('/activity', function () {
+    return view('admin.useractivity');
+});
+

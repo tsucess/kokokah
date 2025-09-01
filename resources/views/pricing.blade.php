@@ -35,7 +35,7 @@
 
 <div class = "row justify-content-center text-center">
     <h2>Subscription</h2>
-    <p>
+    <p class = "font-family: inter, sans-serif; text-align: center; color: #6c757d; max-width: 600px; margin: 0 auto;" >
         Choose a plan that’s right for your needs.
         Enjoy quality educational needs at a price you can afford.
     </p>
@@ -68,21 +68,25 @@
 
     <!-- Free Plan -->
     <div class="col-md-3 mb-4">
-      <div class="card shadow-sm h-100">
-        <div class="card-body text-center">
+      <div class="card shadow-sm h-100 pt-1">
+        <div class="card-body text-center pt-5">
           <h5 class="card-title fw-bold">Free</h5>
-          <h3 class="fw-bold">₦0 <small class="text-muted">/ user / mo</small></h3>
+          <h3 class="fw-bold">₦0
+          </h3>
+          <p>user / mo</p>
+          <hr style="width: 220px; padding: auto;">
           <p class="text-muted">100 User Active</p>
-          <a href="#" class="btn btn-dark w-100">Select Plan</a>
+          <hr style="width: 220px; padding: auto;">
+          <a href="#" class="btn  w-100 navButton">Select Plan</a>
           <hr>
           <ul class="list-unstyled text-start">
-            <li>✔ Free Custom Domain*</li>
-            <li>✔ Unlimited Bandwidth</li>
-            <li>✔ Contributors</li>
-            <li>✔ Basic Website Metrics</li>
-            <li>✔ SEO/Schema Extension</li>
-            <li class="text-muted">✘ Customer Support</li>
-            <li class="text-muted">✘ Project Roles</li>
+            <li><i class="fa-solid fa-circle-check"></i>&nbsp;<span class = "pricingcolor"> Free Custom Domain*</span></li>
+            <li><i class="fa-solid fa-circle-check"></i>&nbsp; <span class = "pricingcolor">Unlimited Bandwidth</span></li>
+            <li><i class="fa-solid fa-circle-check"></i>&nbsp; <span class = "pricingcolor">Contributors</span></li>
+            <li><i class="fa-solid fa-circle-check"></i>&nbsp; <span class = "pricingcolor">Basic Website Metrics</span></li>
+            <li><i class="fa-solid fa-circle-check"></i>&nbsp; <span class = "pricingcolor">SEO/Schema Extension</span></li>
+            <li class="text-muted"><i class="fa-solid fa-circle-xmark text-danger"></i>&nbsp; <span class = "pricingcolor">Customer Support</span></li>
+            <li class="text-muted"><i class="fa-solid fa-circle-xmark text-danger"></i>&nbsp; <span class = "pricingcolor">Project Roles</span></li>
           </ul>
         </div>
       </div>
@@ -90,21 +94,25 @@
 
     <!-- Basic Plan -->
     <div class="col-md-3 mb-4">
-      <div class="card shadow-sm h-100">
-        <div class="card-body text-center">
+      <div class="card shadow-sm h-100 pt-1">
+        <div class="card-body text-center pt-5">
+
           <h5 class="card-title fw-bold">Basic</h5>
-          <h3 class="fw-bold">₦1500 <small class="text-muted">/ user / mo</small></h3>
+          <h3 class="fw-bold">₦1500</h3>
+          <p> user / mo</p>
+           <hr style="width: 220px; padding: auto;">
           <p class="text-muted">500 User Active</p>
-          <a href="#" class="btn btn-dark w-100">Select Plan</a>
+          <hr style="width: 220px; padding: auto;">
+          <a href="#" class="btn w-100 navButton">Select Plan</a>
           <hr>
           <ul class="list-unstyled text-start">
-            <li>✔ Free Custom Domain*</li>
-            <li>✔ Unlimited Bandwidth</li>
-            <li>✔ Contributors</li>
-            <li>✔ Basic Website Metrics</li>
-            <li>✔ SEO/Schema Extension</li>
-            <li class="text-muted">✘ Customer Support</li>
-            <li class="text-muted">✘ Project Roles</li>
+            <li><i class="fa-solid fa-circle-check"></i>&nbsp;<span class = "pricingcolor">Free Custom Domain*</span></li>
+            <li><i class="fa-solid fa-circle-check"></i>&nbsp;<span class = "pricingcolor">Unlimited Bandwidth</span></li>
+            <li><i class="fa-solid fa-circle-check"></i>&nbsp;<span class = "pricingcolor">Contributors</span></li>
+            <li><i class="fa-solid fa-circle-check"></i>&nbsp;<span class = "pricingcolor">Basic Website Metrics</span></li>
+            <li><i class="fa-solid fa-circle-check"></i>&nbsp;<span class = "pricingcolor">SEO/Schema Extension</span></li>
+            <li class="text-muted"><i class="fa-solid fa-circle-xmark text-danger"></i>&nbsp; <span class = "pricingcolor">Customer Support</span></li>
+            <li class="text-muted"><i class="fa-solid fa-circle-xmark text-danger"></i>&nbsp; <span class = "pricingcolor">Project Roles</span></li>
           </ul>
         </div>
       </div>
@@ -117,19 +125,23 @@
           Popular Plan
         </div>
         <div class="card-body text-center">
+
           <h5 class="card-title fw-bold">Standard</h5>
-          <h3 class="fw-bold">₦1500 <small class="text-muted">/ user / mo</small></h3>
+          <h3 class="fw-bold">₦1500 </h3>
+          <p>user / mo</p>
+          <hr style="width: 220px; padding: auto;">
           <p class="text-muted">1000 User Active</p>
-          <a href="#" class="btn btn-dark w-100">Select Plan</a>
+          <hr style="width: 220px; padding: auto;">
+          <a href="#" class="btn w-100 navButton">Select Plan</a>
           <hr>
           <ul class="list-unstyled text-start">
-            <li>✔ Free Custom Domain*</li>
-            <li>✔ Unlimited Bandwidth</li>
-            <li>✔ Contributors</li>
-            <li>✔ Basic Website Metrics</li>
-            <li>✔ SEO/Schema Extension</li>
-            <li class="text-muted">✘ Customer Support</li>
-            <li class="text-muted">✘ Project Roles</li>
+            <li><i class="fa-solid fa-circle-check"></i>&nbsp;<span class = "pricingcolor">Free Custom Domain*</span></li>
+            <li><i class="fa-solid fa-circle-check"></i>&nbsp;<span class = "pricingcolor">Unlimited Bandwidth<</span>/li>
+            <li><i class="fa-solid fa-circle-check"></i>&nbsp;<span class = "pricingcolor">Contributors</span></li>
+            <li><i class="fa-solid fa-circle-check"></i>&nbsp;<span class = "pricingcolor">Basic Website Metrics</span></li>
+            <li><i class="fa-solid fa-circle-check"></i>&nbsp;<span class = "pricingcolor">SEO/Schema Extension</span></li>
+            <li class="text-muted"><i class="fa-solid fa-circle-xmark text-danger"></i>&nbsp; <span class = "pricingcolor">Customer Support</span></li>
+            <li class="text-muted"><i class="fa-solid fa-circle-xmark text-danger"></i>&nbsp; <span class = "pricingcolor">Project Roles</span></li>
           </ul>
         </div>
       </div>
@@ -137,21 +149,24 @@
 
     <!-- Professional Plan -->
     <div class="col-md-3 mb-4">
-      <div class="card shadow-sm h-100">
-        <div class="card-body text-center">
+      <div class="card shadow-sm pt-1 h-100">
+        <div class="card-body pt-5 text-center">
           <h5 class="card-title fw-bold">Professional</h5>
-          <h3 class="fw-bold">₦1500 <small class="text-muted">/ user / mo</small></h3>
+          <h3 class="fw-bold">₦1500</h3>
+          <p>user / mo</p>
+          <hr style="width: 220px; padding: auto;">
           <p class="text-muted">10,000 User Active</p>
-          <a href="#" class="btn btn-dark w-100">Select Plan</a>
+          <hr style="width: 220px; padding: auto;">
+          <a href="#" class="btn w-100 navButton">Select Plan</a>
           <hr>
           <ul class="list-unstyled text-start">
-            <li>✔ Free Custom Domain*</li>
-            <li>✔ Unlimited Bandwidth</li>
-            <li>✔ Contributors</li>
-            <li>✔ Basic Website Metrics</li>
-            <li>✔ SEO/Schema Extension</li>
-            <li class="text-muted">✘ Customer Support</li>
-            <li class="text-muted">✘ Project Roles</li>
+            <li><i class="fa-solid fa-circle-check"></i>&nbsp;<span class = "pricingcolor">Free Custom Domain*</span></li>
+            <li><i class="fa-solid fa-circle-check"></i>&nbsp;<span class = "pricingcolor">Unlimited Bandwidth</span></li>
+            <li><i class="fa-solid fa-circle-check"></i>&nbsp;<span class = "pricingcolor">Contributors</span></li>
+            <li><i class="fa-solid fa-circle-check"></i>&nbsp;<span class = "pricingcolor">Basic Website Metrics</span></li>
+            <li><i class="fa-solid fa-circle-check"></i>&nbsp;<span class = "pricingcolor">SEO/Schema Extension</span></li>
+            <li class="text-muted"><i class="fa-solid fa-circle-xmark text-danger"></i>&nbsp; <span class = "pricingcolor">Customer Support</span></li>
+            <li class="text-muted"><i class="fa-solid fa-circle-xmark text-danger"></i>&nbsp; <span class = "pricingcolor">Project Roles</span></li>
           </ul>
         </div>
       </div>

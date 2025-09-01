@@ -1,6 +1,7 @@
 @extends('layouts.template')
 
 @section('content')
+
 <div class = "container-fluid p-5 banner">
 <div class = "row mt-4">
 
@@ -41,9 +42,9 @@ and how schools manage learning. 
 
 
 <div class = "col-12 col-md-6 col-lg-6 my-auto">
-    <h2>
+    <h3>
         Kokokah LMS
-    </h2>
+    </h3>
     <p>
         Kokokah is a smart, pan-African learning and school management platform
         built for the realities of African education. Whether you’re a JSS1 student
@@ -65,8 +66,8 @@ and how schools manage learning. 
       <img src="images/lightbulb-icon.png" alt="Lightbulb"  style="width: 40px;">
     </div>
 
-    <div>
-      <h6 class="text-success fw-bold fs-1">Achievements/Statistics Section</h6>
+    <div class = "achieve">
+      <h3 style = "font-size:30px; font-family: arial; w-100  w-sm-auto">Achievements/Statistics Section</h3>
     </div>
 
     <div>
@@ -146,7 +147,7 @@ and how schools manage learning. 
     </div>
 
     <div class = "w-100">
-      <h6 class="text-success fw-bold fs-1">Our Features</h6>
+      <h3>Our Features</h3>
     </div>
 
 
