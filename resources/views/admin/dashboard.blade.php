@@ -22,39 +22,59 @@
       <!-- Stats -->
       <div class="stats-row">
         <div class="stat-card">
-          <div class="stat-meta">
-            <div class="label">Total Users</div>
-            <div class="value">50</div>
-            <div class="small text-muted">8 active users</div>
-          </div>
           <div class="stat-orb orb-users"><i class="fa-solid fa-users"></i></div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-meta">
-            <div class="label">Students</div>
-            <div class="value">308</div>
-            <div class="small text-muted">09 male • 05 female</div>
+          <div class="stat-meta ">
+            <div class="label mt-2">Total Users</div>
+            <div class = "mt-2">
+            <p style = "font-size: 7px;">
+             <i class="fa-solid fa-square text-success"></i> science (50%) &nbsp; &nbsp;
+             <i class="fa-solid fa-square text-warning"></i> Arts (50%)
+            </p>
+            </div>
+            <div class="value">50</div>
           </div>
-          <div class="stat-orb orb-students"><i class="fa-solid fa-user-graduate"></i></div>
         </div>
 
         <div class="stat-card">
+        <div class="stat-orb orb-students"><i class="fa-solid fa-user-graduate"></i></div>
+        <div class="stat-meta ps-2">
+            <div class="label mt-2">Students</div>
+            <div class = "mt-2">
+            <p style = "font-size: 7px;">
+             <i class="fa-solid fa-square text-success"></i> MALE (61%) &nbsp; &nbsp;
+             <i class="fa-solid fa-square text-warning"></i> FEMALE (39%)
+            </p>
+            </div>
+            <div class="value">308</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-orb orb-instructors"><i class="fa-solid fa-chalkboard-user"></i></div>
           <div class="stat-meta">
             <div class="label">Instructors</div>
+            <div class = "mt-2">
+            <p style = "font-size: 7px;">
+             <i class="fa-solid fa-square text-success"></i> MALE (55%) &nbsp; &nbsp;
+             <i class="fa-solid fa-square text-warning"></i> FEMALE (45%)
+            </p>
+            </div>
             <div class="value">100</div>
-            <div class="small text-muted">09 male • 05 female</div>
           </div>
-          <div class="stat-orb orb-instructors"><i class="fa-solid fa-chalkboard-user"></i></div>
         </div>
 
         <div class="stat-card">
+        <div class="stat-orb orb-courses"><i class="fa-solid fa-book-open"></i></div>
           <div class="stat-meta">
             <div class="label">Active Courses</div>
+            <div class = "mt-2">
+            <p style = "font-size: 7px;">
+             <i class="fa-solid fa-square text-success"></i> science (50%) &nbsp; &nbsp;
+             <i class="fa-solid fa-square text-warning"></i> Arts (50%)
+            </p>
+            </div>
             <div class="value">50</div>
-            <div class="small text-muted">8 new courses</div>
           </div>
-          <div class="stat-orb orb-courses"><i class="fa-solid fa-book-open"></i></div>
         </div>
       </div>
 

@@ -143,6 +143,14 @@
       box-shadow: 0 6px 18px rgba(15,28,36,.04);
       border:1px solid #eef6fa;
     }
+
+@media(max-width:320px){
+    .stat-card
+    {
+        width:100%;
+    }
+}
+
     .stat-orb{
       width:60px; height:60px; border-radius:50%;
       display:grid; place-items:center;
@@ -154,8 +162,8 @@
     .orb-instructors i{ color:#F59E0B; font-size:20px; }
     .orb-courses i{ color:#EF4444; font-size:20px; }
 
-    .stat-meta .label{ font-size:12px; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.3px; }
-    .stat-meta .value{ font-size:26px; font-weight:800; margin-top:6px; }
+    .stat-meta .label{ font-size:13px; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.3px; }
+    .stat-meta .value{ font-size:20px; font-weight:800; margin-top:6px; }
 
     /* Chart card */
     .chart-card{ margin-top:18px; background:var(--card-bg); border-radius:18px; padding:18px; border:1px solid #eef6fa; box-shadow: 0 6px 18px rgba(15,28,36,.04); }
@@ -198,6 +206,30 @@
     .upload-box:hover {
       background: #f8f9fa;
     }
+
+    .coursedraft
+{
+background-color:#A3D8DF;
+color:#fff;
+}
+
+    .coursedraft:hover
+{
+background-color:#68dcec;
+color:#fff;
+}
+
+.publishcourse
+{
+background-color: #3BA0AC;
+color:#fff;
+}
+
+.publishcourse:hover
+{
+background-color: #2db5c4;
+color:#fff;
+}
   </style>
 </head>
 <body>
@@ -212,7 +244,7 @@
     </div>
 
     <nav class="nav-group" id="sidebarNav">
-      <a class="nav-item-link" href="#"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+      <a class="nav-item-link" href="/dashboard"><i class="fa-solid fa-gauge"></i> Dashboard</a>
       {{-- <a class="nav-item-link" href="#"><i class="fa-solid fa-users"></i> Users Management</a> --}}
 
 <a class="nav-item-link d-flex justify-content-between align-items-center"

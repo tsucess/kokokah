@@ -73,3 +73,11 @@ Route::get('/activity', function () {
     return view('admin.useractivity');
 });
 
+Route::get('/allcourses', function () {
+    return view('admin.allcourses');
+});
+
+
+Route::get('/createcourse', function () {
+    return view('admin.createcourse');
+});
