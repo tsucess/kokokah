@@ -60,3 +60,313 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 "# kokokah an edtech platform"  
+
+
+
+
+
+# API ENDPOINTS DOCUMENTATION
+
+# 🔐 Authentication API Documentation
+
+## Base URL
+http://127.0.0.1:8000/api
+
+
+
+Perfect 👍 Here’s the **Authentication API Documentation fully written in Markdown** (you can copy-paste directly into your docs or Postman README):
+
+```markdown
+# 🔐 Authentication API Documentation
+
+## Base URL
+
+[http://127.0.0.1:8000/api](http://127.0.0.1:8000/api)
+
+---
+
+## 📌 Endpoints
+
+### 1. Register a User
+**POST** `/register` 
+
+Registers a new user.
+
+#### Request Body
+```json
+{
+  "first_name": "John",
+  "last_name": "Doe",
+  "email": "john@example.com",
+  "password": "secret123",
+  "password_confirmation": "secret123",
+  "role": "student"
+}
+````
+
+#### Response (201 Created)
+
+```json
+{
+  "status": "success",
+  "message": "User registered successfully",
+  "user": {
+    "id": 1,
+    "email": "john@example.com",
+    "role": "student"
+  },
+  "token": "1|QWERasdfZXCVtyui..."
+}
+```
+
+---
+
+### 2. Login
+
+**POST** `/login`
+
+Authenticates a user and returns an access token.
+
+#### Request Body
+
+```json
+{
+  "email": "john@example.com",
+  "password": "secret123"
+}
+```
+
+#### Response (200 OK)
+
+```json
+{
+  "status": "success",
+  "message": "Login successful",
+  "user": {
+    "id": 1,
+    "email": "john@example.com",
+    "roles": ["student"]
+  },
+  "token": "1|QWERasdfZXCVtyui..."
+}
+```
+
+---
+
+### 3. Get Authenticated User
+
+**GET** `/user`
+
+Requires **Bearer Token**.
+
+#### Headers
+
+```
+Authorization: Bearer <token>
+```
+
+#### Response
+
+```json
+{
+  "id": 1,
+  "email": "john@example.com",
+  "roles": ["student"],
+  "profile": {
+    "first_name": "John",
+    "last_name": "Doe",
+    "contact": "08012345678"
+  }
+}
+```
+
+---
+
+### 4. Logout
+
+**POST** `/logout`
+
+Logs out the authenticated user and revokes their token.
+
+#### Headers
+
+```
+Authorization: Bearer <token>
+```
+
+#### Response
+
+```json
+{
+  "status": "success",
+  "message": "Logged out successfully"
+}
+```
+
+---
+
+### 5. Forgot Password
+
+**POST** `/forgot-password`
+
+Sends a reset link to the user’s email.
+
+#### Request Body
+
+```json
+{
+  "email": "john@example.com"
+}
+```
+
+#### Response
+
+```json
+{
+  "status": "success",
+  "message": "Password reset link sent to your email."
+}
+```
+
+---
+
+### 6. Reset Password
+
+**POST** `/reset-password`
+
+Resets the user’s password using a token.
+
+#### Request Body
+
+```json
+{
+  "token": "reset-token-from-email",
+  "email": "john@example.com",
+  "password": "newpassword123",
+  "password_confirmation": "newpassword123"
+}
+```
+
+#### Response
+
+```json
+{
+  "status": "success",
+  "message": "Password reset successfully."
+}
+```
+
+---
+
+## 🔒 Role-Based Access Examples
+
+### Admin Dashboard
+
+**GET** `/admin/dashboard`
+Requires **Bearer Token** and `role: admin`.
+
+#### Response
+
+```json
+{
+  "ok": true
+}
+```
+
+---
+
+### Instructor Courses
+
+**GET** `/instructor/courses`
+Requires **Bearer Token** and `role: instructor`.
+
+#### Response
+
+```json
+{
+  "courses": [
+    { "id": 1, "title": "Math 101" },
+    { "id": 2, "title": "Physics Basics" }
+  ]
+}
+```
+
+---
+
+## 🌍 Third-Party Authentication
+
+### 7. Google Login
+
+**GET** `/auth/google/redirect`
+Redirects the user to Google OAuth.
+
+**GET** `/auth/google/callback`
+Handles Google callback and issues a token.
+
+---
+
+### 8. Facebook Login
+
+**GET** `/auth/facebook/redirect`
+Redirects the user to Facebook OAuth.
+
+**GET** `/auth/facebook/callback`
+Handles Facebook callback and issues a token.
+
+---
+
+### 9. Apple Login
+
+**GET** `/auth/apple/redirect`
+Redirects the user to Apple OAuth.
+
+**GET** `/auth/apple/callback`
+Handles Apple callback and issues a token.
+
+---
+
+## ⚠️ Error Responses
+
+### Invalid Credentials
+
+```json
+{
+  "status": "error",
+  "message": "Invalid login details"
+}
+```
+
+### Unauthorized
+
+```json
+{
+  "status": "error",
+  "message": "Unauthorized"
+}
+```
+
+### Validation Error
+
+```json
+{
+  "status": "error",
+  "errors": {
+    "email": ["The email field is required."]
+  }
+}
+```
+
+
+
+
+
+
+## User Details
+
+{
+  "name": "Test User",
+  "email": "test@example.com",
+  "password": "password123",
+  "password_confirmation": "password123",
+  "role": "student"
+}
