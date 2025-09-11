@@ -9,8 +9,11 @@
 
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+
   <!-- Inter font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
@@ -230,6 +233,56 @@ color:#fff;
 background-color: #2db5c4;
 color:#fff;
 }
+
+
+
+ .upload-card {
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 1rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+
+        .upload-area i {
+            font-size: 3rem;
+        }
+
+        .upload-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            border: 2px dashed #6c757d;
+            border-radius: 1rem;
+            transition: border-color 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+            padding: 1rem;
+        }
+        .upload-area:hover {
+            border-color: #0d6efd;
+        }
+
+        .upload-area .browse-button {
+            color: #0d6efd;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .upload-area p {
+            margin-bottom: 0;
+            color: #6c757d;
+        }
+        .file-name-input {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            cursor: text;
+        }
+        .upload-btn {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
   </style>
 </head>
 <body>
@@ -253,6 +306,13 @@ color:#fff;
     <span><i class="fa-solid fa-users"></i> Users Management</span>
     <i class="fa-solid fa-chevron-down small"></i>
   </a>
+  <!-- Dropdown items -->
+  <div class="collapse ps-4" id="coursesMenu">
+    <a class="nav-item-link d-block" href="#">All Users</a>
+    <a class="nav-item-link d-block" href="#">Add Users</a>
+    <a class="nav-item-link d-block" href="#">Users Activity Log</a>
+  </div>
+
 
       <!-- Courses Management (collapsible) -->
   <a class="nav-item-link d-flex justify-content-between align-items-center"

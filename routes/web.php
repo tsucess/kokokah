@@ -78,6 +78,10 @@ Route::get('/allcourses', function () {
 });
 
 
+Route::get('/coursemedia', function () {
+    return view('admin.coursemedia');
+});
+
 Route::get('/createcourse', function () {
     return view('admin.createcourse');
 });

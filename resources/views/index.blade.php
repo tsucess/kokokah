@@ -1,63 +1,23 @@
 @extends('layouts.template')
 
 @section('content')
-<div class = "container-fluid p-5 banner">
-<div class = "row mt-4">
+<div class = "container-fluid banner">
+
+<div class = "row mt-3 p-5">
 <div class = "col-12 col-md-6 col-lg-6 my-auto">
-{{-- <img src = "images/Platform.png" class = "img-fluid"> --}}
-<h1 class = "hero">
+<h1 class = "heroheading">
     All-In-One smarter, easier and affordable learning with Kokokah
 </h1>
-<p class = "mt-3">
+<p class = "mt-3 heroparagraph">
     We connect African students and educators to high-quality,
     affordable smart learning platforms, accessible anytime and anywhere.
 </p>
 
-<div class = "d-flex flex-column flex-sm-row gap-3">
-    <button class = "btn text-white p-1 w-100 w-sm-auto navButton" style = "background:#004A53;">Explore Kokokah Features</button>
-    <button class = "btn btn-outline-success text-success p-1 w-100 w-sm-auto demo" >Get a Demo</button>
+<div class = "button-container d-flex d-md-flex gap-3">
+        <button class="btn primaryButton" type="button">Explore Kokokah Project</button>
+        <button class="btn secondaryButton" type="button">Get a Demo</button>
 </div>
 
-
-{{-- <div class="d-flex mt-4 justify-content-start">
-<div class="rounded-circle d-flex align-items-center justify-content-center me-3  flex-shrink-0"
-           style="width:50px; height:50px; background-color:#d3e3e3;">
-        <i class="fa-solid fa-users" style="color:#004A53; font-size:24px;"></i>
-      </div>
-      <div class = "pe-2">
-        <h6 class="mb-1">100,000</h6>
-        <p class="mb-0 small">Users</p>
-      </div>
-
-
-      <div class="rounded-circle d-flex align-items-center justify-content-center m-1 mx-auto"
-           style="width:50px; height:50px; background-color:#d3e3e3;">
-        <i class="fa-solid fa-book-open" style="color:#004A53; font-size:24px;"></i>
-      </div>
-      <div class = "ms-2 pe-2" style = "width:150px;">
-        <h6 class="mb-1">100,000</h6>
-        <p class="mb-0 small">Learning Materials</p>
-      </div>
-
-       <div class="rounded-circle d-flex align-items-center justify-content-center m-1 mx-auto"
-           style="width:50px; height:50px; background-color:#d3e3e3;">
-        <i class="fa-solid fa-users" style="color:#004A53; font-size:24px;"></i>
-      </div>
-      <div class = "ms-2 pe-2">
-        <h6 class="mb-1">100,000</h6>
-        <p class="mb-0 small">Users</p>
-      </div>
-
-      <div class="rounded-circle d-flex align-items-center justify-content-center m-1 mx-auto"
-           style="width:50px; height:50px; background-color:#d3e3e3;">
-        <i class="fa-solid fa-book-open" style="color:#004A53; font-size:24px;"></i>
-      </div>
-      <div class = "ms-2 pe-2" style = "width:150px;">
-        <h6 class="mb-1">100,000</h6>
-        <p class="mb-0 small">Learning Materials</p>
-      </div>
-
-    </div> --}}
 
 </div>
 
@@ -67,94 +27,48 @@
 </div>
 
 </div>
-
-
-<div class="row justify-content-start">
-
-    <!-- Users -->
-    <div class="col-6 col-md-3 d-flex flex-column align-items-center mb-3">
-        <div class="rounded-circle d-flex align-items-center justify-content-center mb-2"
-             style="width:50px; height:50px; background-color:#d3e3e3;">
-            <i class="fa-solid fa-users" style="color:#004A53; font-size:24px;"></i>
-        </div>
-        <h6 class="mb-1 text-center">100,000</h6>
-        <p class="mb-0 small text-center">Users</p>
-    </div>
-
-    <!-- Learning Materials -->
-    <div class="col-6 col-md-3 d-flex flex-column align-items-center mb-3">
-        <div class="rounded-circle d-flex align-items-center justify-content-center mb-2"
-             style="width:50px; height:50px; background-color:#d3e3e3;">
-            <i class="fa-solid fa-book-open" style="color:#004A53; font-size:24px;"></i>
-        </div>
-        <h6 class="mb-1 text-center">100,000</h6>
-        <p class="mb-0 small text-center">Learning Materials</p>
-    </div>
-
-    <!-- Users (duplicate example) -->
-    <div class="col-6 col-md-3 d-flex flex-column align-items-center mb-3">
-        <div class="rounded-circle d-flex align-items-center justify-content-center mb-2"
-             style="width:50px; height:50px; background-color:#d3e3e3;">
-            <i class="fa-solid fa-users" style="color:#004A53; font-size:24px;"></i>
-        </div>
-        <h6 class="mb-1 text-center">100,000</h6>
-        <p class="mb-0 small text-center">Users</p>
-    </div>
-
-    <!-- Learning Materials (duplicate example) -->
-    <div class="col-6 col-md-3 d-flex flex-column align-items-center mb-3">
-        <div class="rounded-circle d-flex align-items-center justify-content-center mb-2"
-             style="width:50px; height:50px; background-color:#d3e3e3;">
-            <i class="fa-solid fa-book-open" style="color:#004A53; font-size:24px;"></i>
-        </div>
-        <h6 class="mb-1 text-center">100,000</h6>
-        <p class="mb-0 small text-center">Learning Materials</p>
-    </div>
-
 </div>
 
 
 
-
-</div>
-
-<div class = "container-fluid mb-5">
-<div class = "row mt-4 bg-white">
+<div class = "container mb-5">
+<div class = "row mt-4  bg-white">
 <div class = "col-12 col-md-6 col-lg-6 my-auto">
 <img src = "images/Video.png" class = "img-fluid">
 </div>
 
 
 <div class = "col-12 col-md-6 col-lg-6 pt-2">
-    <h2>
+    <h1>
         Kokokah for All.
-    </h2>
-    <p>
+    </h1>
+    <p class = "heroparagraph">
         Kokokah is a smart, pan-African learning and school management platform
         built for the realities of African education. Whether you’re a JSS1 student
          in Ghana, an SSS3 student in Kenya, or an educator in South Africa, our
          mission is simple — to give every learner from any background the opportunity
          to excel with ease.
     </p>
-    <button class = "btn text-white ps-4 pe-5" style = "background:#004A53;">Discover Kokokah</button>
+    {{-- <button class = "btn text-white ps-4 pe-5" style = "background:#004A53;">Discover Kokokah</button> --}}
+<div class = "button-container d-flex d-md-flex gap-3">
+        <button class="btn primaryButton" type="button">Discover Kokokah</button>
 </div>
 
 </div>
 </div>
 
 
-    <div class="container">
+
+
+    {{-- <div class="container">
     <div class = "row">
 
     <div class = "d-flex">
-
-
     <div class = "w-100 text-center p-5">
-        {{-- <img src = "images/Kokokah_works.png" class = "img-fluid w-50"> --}}
-        <h2>
+        <h1>
             Why Kokokah is the best
-    </h2>
-        <p>
+    </h1>
+        <p class = "heroparagraph">
             Kokokah combines mobile learning, exam preparation and a
             school learning management system, helping schools automate
             tasks efficiently, offering parents high-quality affordable
@@ -167,7 +81,26 @@
     </div>
 </div>
     </div>
+</div> --}}
+<div class="container py-3 ">
+  <div class="row align-items-center">
+    <!-- Text Column -->
+    <div class="col-12 col-md-10 text-center">
+      <p class="mb-0">
+        mobile learning, exam preparation and a school learning management system,
+        helping schools automate tasks efficiently, offering parents high-quality
+        affordable learning options and boosting overall student performance.
+      </p>
+    </div>
+
+    <!-- Image Column -->
+    <div class="col-12 col-md-2 text-md-end text-center mt-3 mt-md-0">
+      <img src="your-image.png" alt="design" class="img-fluid" style="max-width:120px;">
+    </div>
+  </div>
 </div>
+
+
 
 
 <div class = "container">
