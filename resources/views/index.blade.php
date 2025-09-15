@@ -80,9 +80,11 @@
         <img src = "images/trace1.png" class = "img-fluid">
     </div>
 </div>
-    </div>
-</div> --}}
-<div class="container py-3 ">
+    </div> --}}
+
+</div>
+
+{{-- <div class="container py-3 ">
   <div class="row align-items-center">
     <!-- Text Column -->
     <div class="col-12 col-md-10 text-center">
@@ -98,7 +100,7 @@
       <img src="your-image.png" alt="design" class="img-fluid" style="max-width:120px;">
     </div>
   </div>
-</div>
+</div> --}}
 
 
 
@@ -191,31 +193,22 @@
 
 
 
-<div class = "row mt-4">
-<div class = "d-flex">
+<div class = "container-fluid bg-container-fluid">
 
-<div class = "w-100 text-center">
-    <h2>
-        Our Products
-    </h2>
+<h1 >Our Products</h1>
 
-    <p>
-Kokokah brings you a suite of powerful learning tools designed to
-transform how African students, parents, and educators connect, learn, and thrive.
-    </p>
-    <button class = "btn text-white ps-4 pe-5" style = "background:#004A53;">Explore Features</button>
-</div>
+<p>
+Kokokah brings you a suite of powerful learning tools
+designed to transform how African students, parents, and
+educators connect, learn, and thrive.
+</p>
 
-<div class = "flex-shrink-1">
-    <img src = "images/Ellipse 24.png" class = "img-fluid w-50 float-end" />
-</div>
-
+<button class = "btn primaryButton" type = "button">Explore Features</button>
 
 </div>
-</div>
 
 
-<div class = "row d-flex justify-content-between">
+{{-- <div class = "row d-flex justify-content-between">
 
         <div class = "col-12 col-md-3 col-lg-3">
             <img src = "images/Ellipse 23.png" class = "p-2 img-fluid w-25">
@@ -226,7 +219,7 @@ transform how African students, parents, and educators connect, learn, and thriv
 
             <div class = "col-12 col-md-3 col-lg-3">
     </div>
-</div>
+</div> --}}
 
 <div class="row w-100 mx-auto my-4 p-4 jumbotron">
 
