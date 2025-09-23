@@ -193,7 +193,7 @@
 
 
 
-<div class = "container-fluid bg-container-fluid" style="background-image: url('background.png');">
+<div class = "container-fluid bg-container-fluid" style="background-image: url('images/background.png')">
 
 <h1 >Our Products</h1>
 

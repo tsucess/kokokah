@@ -484,8 +484,8 @@ header
 .bg-container-fluid
 {
     margin-top: 30px;
-    /* background-image: url('background.png'); */
-    background-image: url("{{ Vite::asset('resources/css/images/background.png') }}");
+    /* background-image: url('../css/images/background.png'); */
+    /* background-image: url("{{ Vite::asset('../css/images/background.png') }}"); */
     background-repeat: no-repeat;
     background-size: 100px;
     text-align: center;
