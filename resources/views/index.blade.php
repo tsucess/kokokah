@@ -193,7 +193,7 @@
 
 
 
-<div class = "container-fluid bg-container-fluid">
+<div class = "container-fluid bg-container-fluid" style="background-image: url('background.png');">
 
 <h1 >Our Products</h1>
 
@@ -221,13 +221,12 @@ educators connect, learn, and thrive.
     </div>
 </div> --}}
 
-<div class="row w-100 mx-auto my-4 p-4 jumbotron">
+<div class = "container">
+    <div class = "row ourproduct1">
 
-    <!-- Text Section -->
-    <div class="col-12 col-md-6 d-flex flex-column justify-content-center  p-3">
-        <h2>
-            Passnownow
-        </h2>
+        <div class = "col-12 col-md-6 col-lg-6 p-5">
+            <h1> Passnownow </h1>
+
         <p>
             Kokokah houses an exam preparatory platform
             where African students can prepare adequately
@@ -239,48 +238,48 @@ educators connect, learn, and thrive.
         </p>
 
         <div>
-        <button class = "btn text-white" style = "background:#004A53;">Passnownow</button>
+        <button class = "btn primaryButton" type = "button">Explore Passnownow</button>
+        </div>
         </div>
 
+
+          <div class="col-12 col-md-6 text-center p-5 ">
+        <img src="images/exam_prep.png" class="img-fluid" alt="Exam Prep">
     </div>
 
-    <!-- Image Section -->
-    <div class="col-12 col-md-6 text-center p-3">
-        <img src="images/exam_prep.png" class="img-fluid w-75" alt="Exam Prep">
     </div>
 </div>
 
 
-<div class="row w-100 mx-auto my-4 p-2 border border-dark" style="border-radius: 30px;">
+<div class = "container">
+
+<div class="row ourproduct2">
 
     <!-- Image Section -->
-    <div class="col-12 col-md-6 text-center">
-        <img src="images/School Admin.png" class="img-fluid w-75" alt="School Admin">
+    <div class="col-12 col-md-6 col-lg-6 text-center">
+        <img src="images/School Admin.png" class="img-fluid" alt="School Admin">
     </div>
 
     <!-- Text Section -->
-    <div class="col-12 col-md-6 d-flex flex-column">
-        <h3 class ="mt-4">
-            School Management System (SMS)
-        </h3>
-        <p class="fs-5">
+    <div class="col-12 col-md-6 col-lg-6 mt-5">
+        <h3>School Management System (SMS)</h3>
+
+        <p>
             Simplify school administration with fee
-             tracking, digital report cards, attendance, and student
-              portals — all in one secure platform.
+            tracking, digital report cards, attendance, and student
+            portals — all in one secure platform.
         </p>
 
-                <div>
-        <button class = "btn text-white" style = "background:#004A53;">Explore SMS</button>
-        </div>
+        <button class = "btn primaryButton" type="button">Explore SMS</button>
 
     </div>
+</div>
 </div>
 
 
 
-<div class="row w-100 mx-auto my-4 p-4 jumbotron">
+{{-- <div class="row w-100 mx-auto my-4 p-4 jumbotron">
 
-    <!-- Text Section -->
     <div class="col-12 col-md-6 d-flex flex-column justify-content-center p-3">
         <h3>
             kokokah LMS
@@ -295,9 +294,32 @@ educators connect, learn, and thrive.
         </div>
     </div>
 
-    <!-- Image Section -->
     <div class="col-12 col-md-6 text-center p-3">
         <img src="images/lms system.png" class="img-fluid w-75" alt="LMS system">
+    </div>
+</div> --}}
+
+<div class = "container">
+    <div class = "row ourproduct1">
+
+        <div class = "col-12 col-md-6 col-lg-6 p-5 my-auto">
+            <h1>  kokokah LMS </h1>
+
+        <p>
+             Your all-in-one digital classroom — structured lessons, AI-powered
+            tutoring, chatrooms, and  academic & non-academic content for secondary school.
+        </p>
+
+
+        <button class = "btn primaryButton" type = "button">Explore LMS</button>
+
+        </div>
+
+
+          <div class="col-12 col-md-6 text-center p-5 ">
+        <img src="images/exam_prep.png" class="img-fluid" alt="Exam Prep">
+    </div>
+
     </div>
 </div>
 
