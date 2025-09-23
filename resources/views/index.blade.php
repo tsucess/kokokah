@@ -193,7 +193,7 @@
 
 
 
-<div class = "container-fluid bg-container-fluid" style="background-image: url('images/background.png')">
+<div class = "container-fluid  bg-container-fluid" style="background:url('images/background.png');">
 
 <h1 >Our Products</h1>
 
@@ -221,7 +221,7 @@ educators connect, learn, and thrive.
     </div>
 </div> --}}
 
-<div class = "container">
+<div class = "container mt-5">
     <div class = "row ourproduct1">
 
         <div class = "col-12 col-md-6 col-lg-6 p-5">
@@ -323,47 +323,49 @@ educators connect, learn, and thrive.
     </div>
 </div>
 
-
-<div class="row w-100 mx-auto my-4 p-2 border border-dark" style="border-radius: 30px;">
+<div class = "container">
+<div class="row ourproduct2" style="border-radius: 30px;">
 
     <!-- Image Section -->
-    <div class="col-12 col-md-6 text-center">
+    <div class="col-12 col-md-6 my-auto text-center">
         <img src="images/School Admin.png" class="img-fluid w-75" alt="School Admin">
     </div>
 
     <!-- Text Section -->
-    <div class="col-12 col-md-6 d-flex flex-column">
-        <h3 class ="mt-4">
+    <div class="col-12 col-md-6 my-auto d-flex flex-column">
+        <h3>
             The Marketplace
         </h3>
-        <p class="fs-5">
+        <p>
            Africa’s academic forum for parents, teachers, and
            tutors to connect. Book trusted tutors for academics,
            test prep, and special needs learning.
         </p>
 
                 <div>
-        <button class = "btn text-white" style = "background:#004A53;">Explore Marketplace</button>
-        </div>
+        <button class = "btn primaryButton" type = "button">Explore Marketplace</button>
+
+    </div>
 
     </div>
 </div>
+</div>
 
 
-<div class="row w-100 mx-auto my-4 p-4 jumbotron">
+<div class="row w-100 mx-auto my-4 p-4 ourproduct1">
 
     <!-- Text Section -->
     <div class="col-12 col-md-6 d-flex flex-column justify-content-center p-3">
         <h3>
             AI Chatbot
         </h3>
-        <p class="fs-5">
+        <p >
             Your personal academic assistant — ask questions, get explanations,
             and enjoy instant feedback tailored to your study needs.
         </p>
 
           <div>
-        <button class = "btn text-white" style = "background:#004A53;">Get a Demo</button>
+        <button class = "btn primaryButton"  type = "button">Get a Demo</button>
         </div>
     </div>
 
@@ -374,6 +376,36 @@ educators connect, learn, and thrive.
 </div>
 
 
+
+<div class = "container">
+<div class="row ourproduct2" style="border-radius: 30px;">
+
+    <!-- Image Section -->
+    <div class="col-12 col-md-6 my-auto text-center">
+        <img src="images/School Admin.png" class="img-fluid w-75" alt="School Admin">
+    </div>
+
+    <!-- Text Section -->
+    <div class="col-12 col-md-6 my-auto d-flex flex-column">
+        <h1>
+            STEM Labs
+        </h1>
+        <p>
+            Get hands-on STEM bootcamps, summer schools,
+            and practical learning experiences to prepare
+            students for the future of science & tech.
+        </p>
+
+                <div>
+        <button class = "btn primaryButton" type = "button">Register</button>
+
+    </div>
+
+    </div>
+</div>
+</div>
+
+
 <div class = "row mt-4">
 <div class = "col-12 col-md-6 col-lg-6">
 <img src = "images/LMS.png" class = "img-fluid">
@@ -381,11 +413,11 @@ educators connect, learn, and thrive.
 
 
 
-<div class = "col-12 col-md-6 col-lg-6 my-auto">
-<h2 class="fw-bold fs-1" style="color: #004A53;">
-            Koodies for <span style="color: #F56824;">Children</span>
-        </h2>
-<p class = "mt-3">
+<div class = "col-12 col-md-6 col-lg-6 ">
+<h1>
+            Koodies for Children
+        </h1>
+<p>
     Kokokah combines School Management, Exam Prep, and a
     Learning Management System (LMS)—helping schools automate admin tasks,
     boost student performance, and deliver modern digital learning in one
@@ -393,17 +425,17 @@ educators connect, learn, and thrive.
     Learning Management System (LMS)—helping schools automate admin tasks, boost
     student performance, and deliver modern digital learning in one seamless platform.
 </p>
-<button class = "btn text-white ps-4 pe-5" style = "background:#004A53;">Discover Koodies</button>
+<button class = "btn primaryButton" type = "button">Discover Koodies</button>
 
 <div>
-<img src = "images/koodies.png" class = "img-fluid w-50 float-end">
+<img src = "images/koodies.png" class = "img-fluid w-75 float-end">
 </div>
 </div>
 
 </div>
 
 
-  <div class="container text-center mt-5 py-5"   style="background: #d9e8eb; ">
+  <div class="container text-center mt-5 py-5"   style="background-image: url('images/founder.png') ">
     <!-- Top Badge -->
     <div class="mb-3">
       <i class="bi bi-trophy-fill text-warning fs-1"></i>
