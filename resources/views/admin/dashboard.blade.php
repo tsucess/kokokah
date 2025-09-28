@@ -81,11 +81,11 @@
       <!-- Chart -->
       <div class="chart-card">
         <div class="chart-header">
-          <div>
+          <div class = "information1">
             <h6 class="fw-bold m-0">Income & Expense</h6>
-            <div class="small text-muted">Performance overview</div>
+            <p class="small text-muted">Performance overview</p>
           </div>
-          <div class="d-flex align-items-center gap-3">
+          <div class="d-flex align-items-center gap-3 information2">
             <div class="legend-dot"><span class="dot" style="background:var(--brand-green)"></span> Income</div>
             <div class="legend-dot"><span class="dot" style="background:var(--brand-yellow)"></span> Profit</div>
             <select class="form-select form-select-sm w-auto ms-2" style="border-radius:12px;">

@@ -60,6 +60,35 @@ Route::get('/dashboard', function () {
     return view('admin.dashboard');
 });
 
+// Route::get('/dashboard', function () {
+//     return view('admin.dashboardtemp');
+// });
+
+
+Route::get('/usersdashboard', function () {
+    return view('admin.usersdashboard');
+});
+
+Route::get('/userclass', function () {
+    return view('admin.userclass');
+});
+
+Route::get('/usersubject', function () {
+    return view('admin.usersubject');
+});
+
+Route::get('/termsubject', function () {
+    return view('admin.termsubject');
+});
+
+Route::get('/subjectselect', function () {
+    return view('admin.subjectselected');
+});
+
+Route::get('/subjectchart', function () {
+    return view('admin.subjectchart');
+});
+
 
 Route::get('/users', function () {
     return view('admin.users');

@@ -148,22 +148,26 @@ font-size: 14px;
     height: 27px;
 }
 
- .nav-link
+.nav-item
 {
-font-family:  "sitka text", serif;
-font-size: 12px;
-font-weight:300;
-letter-spacing: 1%;
-text-transform: none !important;
+    color:#fff;
+}
+
+.nav a
+{
+font-family: outfit;
+font-size:16px;
+text-decoration: none;
+color: #fff;
 }
 
 .navbar .navbar-nav .nav-item:hover {
     border-bottom: 2px solid var(--color-link-navigation);
 }
 
-a.nav-link
+.nav-link
 {
-    text-transform: none !important;
+    font-size: 14px;
 }
 
 a.nav-link:hover
@@ -187,7 +191,8 @@ a.nav-link.active
 .subscribe
 {
     background: var(--color-bg-jumbotron);
-    text-align: left;
+    text-align:left;
+    padding:50px;
 }
 
 span
@@ -267,13 +272,15 @@ font-family:Fredoka One;
     letter-spacing: 1%;
 }
 
-@media(max-width: 400px)
+@media screen and (max-width: 320px)
 {
-.heroheading
-{
-    font-size: 20px;
+    .heroheading
+    {
+        font-size: 18px;
+    }
 }
-}
+
+
 
 .heroparagraph
 {
@@ -291,6 +298,38 @@ font-family:Fredoka One;
         font-size: 12px;
     }
 }
+
+/* .kokokahbest
+{
+background-image: url('images/kokokah_best.png');
+background-repeat: no-repeat;
+background-size: contain;
+} */
+
+ .feature-card {
+      padding: 20px;
+    }
+    .feature-icon {
+      font-size: 2rem;
+      color: #f15a29; /* orange color */
+    }
+    .feature-number {
+      font-weight: bold;
+      font-size: 2rem;
+      color: #e6e6e6; /* light grey */
+      position: absolute;
+      top: -5px;
+      left: 180px;
+      z-index: 0;
+      opacity: 0.3;
+    }
+    .feature-content {
+      position: relative;
+      z-index: 1;
+    }
+    h5 {
+      font-weight: bold;
+    }
 
 .ourproduct1
 {
@@ -315,6 +354,7 @@ font-family:Fredoka One;
 {
     color: #454545;
 }
+
 .nav-item a {
 color: var(--color-text-navigation);
 font-family: sitka;
@@ -353,27 +393,7 @@ header
 
 
 
-/* @media screen and (max-width: 320px)
-{
-  .demo
-  {
-   width:80%;
-   margin-top:10px;
-      font-family: sitka;
-  }
-}
 
-
-  .demo:hover
-  {
-   background: var(--color-bg-banner);
-   color: #fff;
-   font-family: sitka;
-  } */
-
-/* .container__header .nav-item:hover {
-    border-bottom: 2px solid var(--color-link-navigation);
-} */
 
 .container__header
 {
@@ -437,11 +457,18 @@ header
         } */
 
 
-        .container__footer {
+        footer {
             /* border-top: 1px solid var(--color-ash); */
             background: #004A53;
-            margin-top: 2rem;
-            text-align: center;
+            text-align: left;
+        }
+
+        footer img{
+            padding-top:20px;
+        }
+
+        footer p{
+            color:#fff;
         }
 
         .footer__container .row {
@@ -469,6 +496,8 @@ header
     background-size: 3px;
     text-align: center;
     min-height: 300px;
+    background-size:contain;
+    /* background-image: url('../images/background.png'); */
 
 }
 
@@ -488,3 +517,66 @@ header
 /* .custom-shadow {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
 } */
+
+
+/* Section Background */
+    .testimonial-section {
+      background-color: #fff; /* greenish-grey */
+      padding: 60px 40px;
+      border-radius: 0 0 40px 40px;
+      position: relative;
+    }
+
+    /* Header Area */
+    .section-subtitle {
+      color: #f39c12; /* orange */
+      font-weight: 600;
+      margin-top: 8px;
+      padding-top: 20px;
+    }
+
+    /* Testimonial Cards */
+    .testimonial-card {
+      background-color: #fbe9f2; /* light pink */
+      border-radius: 10px;
+      padding: 30px 20px;
+      position: relative;
+      text-align: left;
+      /* border: 2px dashed #333; */
+      -ms-transform: rotate(-1deg); /* IE 9 */
+         transform: rotate(-1deg);
+    }
+
+    /* Quote Marks */
+    .quote-mark {
+      font-size: 2rem;
+      color: #28a745;
+      line-height: 1;
+    }
+
+    /* Profile Image */
+    .testimonial-card img {
+      width: 70px;
+      height: 70px;
+      border-radius: 10px;
+      object-fit: cover;
+      position: absolute;
+      top: -25px;
+      right: 20px;
+      border: 3px solid #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    /* Decorative Illustrations */
+    .decor-left {
+      position: absolute;
+      bottom: 70px;
+      left: 70px;
+      opacity: 0.7;
+    }
+    .decor-right {
+      position: absolute;
+      top: 120px;
+      right: 100px;
+      opacity: 0.7;
+    }
