@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
+// Route::get('/temp', function () {
+//     return view('layouts.template');
+// });
+
 Route::get('/', function () {
     return view('index');
 });

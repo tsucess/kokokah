@@ -51,11 +51,11 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent"  >
             <ul class="navbar-nav me-auto mb-2 ms-3 mb-lg-0 ">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#" >Home</a>
+                    <a class="nav-link active" aria-current="page" href="/" >Home</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link keep_case" href="#">About Us</a>
+                    <a class="nav-link keep_case" href="/about">About Us</a>
                 </li>
 
                 <li class="nav-item dropdown">
@@ -89,17 +89,133 @@
 </nav>
 
 
-        <div>
+        <div class = "mb-2">
             @yield('content')
         </div>
 
 
 
+<!-- testimonial section -->
+<div class="container-fluid subscribe">
 
-        {{-- FOOTER SECTION --}}
+
+<div class = "row">
+    <div class = "col-12 col-md-6 col-lg-6">
+     <h4  style = "color: #004a53">
+    Don’t Miss Out on the Future of Learning!
+     </h4>
+
+     <p style = "color:#4d8087;">
+        Be the first to get school and study hacks, career tips, and Kokokah
+        updates straight to your inbox. Join thousands of students, parents,
+        and educators across Africa who are already leveling up with us.
+     </p>
+    </div>
 
 
-        <!-- ENDING FOOTER SECTION -->
+<div class = "col-12 col-md-6 col-lg-6 my-auto">
+
+<div class="input-group mb-3">
+  <input type="text" class="form-control" placeholder="Enter your mail" aria-label="Enter your mail" aria-describedby="button-addon2" style = "border-start-start-radius: 10px; border-end-start-radius:10px;">
+  <button class="btn primaryButton" type="button" id="button-addon2" style = "background: #004A53;">Subscribe Now</button>
+</div>
+
+</div>
+</div>
+
+
+</div>
+<!-- ending testimonial section -->
+
+<!-- footer section -->
+<footer>
+<div class="container-fluid">
+    <div class =  "row pt-5 mx-auto">
+        <div class = "col-12 col-md-5 col-lg-5">
+              <img src="images/Contact.png" class="img-fluid">
+              <p class = "pt-2">
+                        Kokokah combines School Management, Exam Prep, and a
+                        Learning Management System (LMS)—helping schools
+                        automate admin tasks, boost student performance, and
+                        deliver modern digital learning in one seamless platform.
+              </p>
+        </div>
+
+
+        <div class = "col-6 col-md-2 col-lg-2 ">
+            <p><b>Short Links</b></p>
+            <ul class="nav flex-column">
+                            <li class="nav-item mb-2"><a href="#" style = "color:white;">Features</a>
+                            </li>
+
+                            <li class="nav-item mb-2"><a href="#" style = "color:white;">How it works</a>
+                            </li>
+                            <li class="nav-item mb-2"><a href="#" style = "color:white;">Security</a>
+                            </li>
+                            <li class="nav-item mb-2"><a href="#" style = "color:white;">Testimonial</a></li>
+                        </ul>
+        </div>
+
+
+
+
+        <div class = "col-6 col-md-2 col-lg-2">
+            <p><b>Other Pages</b></p>
+            <ul class="nav flex-column ">
+                            <li class="nav-item mb-2"><a href="#" style = "color:white;">Privacy Policy</a>
+                            </li>
+
+                            <li class="nav-item mb-2"><a href="#" style = "color:white;">Terms & Condition</a>
+                            </li>
+                            <li class="nav-item mb-2"><a href="#" style = "color:white;">404</a>
+                            </li>
+                        </ul>
+        </div>
+
+
+
+        <div class = "col-12 col-md-3 col-lg-3">
+            <p><b>Connect With Us</b></p>
+            <span class="fa-stack">
+             <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+            </span>
+
+            <span class="fa-stack ">
+  <i class="fas fa-circle fa-stack-2x"></i>
+  <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+</span>
+
+<span class="fa-stack ">
+  <i class="fas fa-circle fa-stack-2x"></i>
+  <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+</span>
+        </div>
+
+
+    </div>
+
+
+    <hr class = "w-75 text-white">
+
+    <div class = "row">
+        <div class="d-flex justify-content-between">
+            <div>
+                    <p>Copyright &copy; 2025 All rights reserved </p>
+            </div>
+
+            <div>
+            <p>
+                <a href="#" class = "me-2 text-white">Terms and Conditions </a> |
+                <a href="#" class = "text-white">Privacy Policy</a>
+            </p>
+            </div>
+
+                </div>
+    </div>
+</div>
+            </footer>
+    <!-- Ending footer section -->
 
     <!-- Scripts needed -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"> </script>

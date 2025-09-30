@@ -31,10 +31,11 @@ body{
 h1
 {
 font-family:  Fredoka, serif;
-font-size:56px;
+font-size:60px;
 line-height:61.6px;
 font-weight: 400;
 font-style: normal;
+color:var(--color-primary-button);
 }
 
 
@@ -44,6 +45,7 @@ font-family:  Fredoka, serif;
 font-weight: bolder;
 font-size:48px;
 line-height:52.8px;
+color:var(--color-primary-button);
 }
 
 h3
@@ -52,6 +54,7 @@ font-family:  Fredoka, serif;
 font-weight: bolder;
 font-size:40px;
 line-height:44px;
+color:var(--color-primary-button);
 }
 
 h4
@@ -60,6 +63,7 @@ font-family:  Fredoka, serif;
 font-weight: bolder;
 font-size:32px;
 line-height:35.2px;
+color:var(--color-primary-button);
 }
 
 h5
@@ -68,6 +72,7 @@ font-family:  Fredoka, serif;
 font-weight: bolder;
 font-size:24px;
 line-height:26.4px;
+color:var(--color-primary-button);
 }
 
 h6
@@ -76,23 +81,23 @@ font-weight: bolder;
 font-family:  Fredoka, serif;
 font-size:20px;
 line-height:22px;
+color:var(--color-primary-button);
 }
 
+
+.banner
+{
+background:var(--color-bg-banner);
+}
 
 @media screen and (max-width: 320px)
 {
-h1, h2
-{
-font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-color: var(--color-bg-button);
-font-weight: bolder;
-font-size:27px;
-text-align: center;
+    .banner h1
+    {
+        font-size: 18px;
+        line-height:18px;
+    }
 }
-}
-
-
-
 
 @media (max-width: 400px)
 {
@@ -200,14 +205,6 @@ span
 font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-/* h1, h2
-{
-font-family: quicksand, sans-serif;
-color: var(--color-bg-button);
-font-weight:bold;
-font-size:64px;
-font-style:regular;
-} */
 
 
 
@@ -236,14 +233,14 @@ ul, li
 
 }
 
-@media screen and(max-width: 320px)
+@media screen and (max-width: 320px)
 {
-h1, h2, h3
+h1
 {
-font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-color: var(--color-bg-button);
-font-weight: bold;
-font-size:30px;
+font-family: Fredoka One;
+color:  var(--color-primary-button);
+font-weight:bolder;
+font-size:20px;
 }
 }
 
@@ -255,12 +252,6 @@ color: #4D525F;
 }
 
 
-.banner
-{
-background:var(--color-bg-banner);
-font-size: 10px;
-font-family:Fredoka One;
-}
 
 .heroheading
 {
@@ -299,34 +290,32 @@ font-family:Fredoka One;
     }
 }
 
-/* .kokokahbest
-{
-background-image: url('images/kokokah_best.png');
-background-repeat: no-repeat;
-background-size: contain;
-} */
 
  .feature-card {
       padding: 20px;
     }
+
     .feature-icon {
       font-size: 2rem;
-      color: #f15a29; /* orange color */
+      color: #f15a29;
     }
+
     .feature-number {
       font-weight: bold;
       font-size: 2rem;
-      color: #e6e6e6; /* light grey */
+      color: #e6e6e6;
       position: absolute;
-      top: -5px;
-      left: 180px;
+      top: -8px;
+      left: 160px;
       z-index: 0;
       opacity: 0.3;
     }
+
     .feature-content {
       position: relative;
       z-index: 1;
     }
+
     h5 {
       font-weight: bold;
     }
@@ -337,8 +326,18 @@ background-size: contain;
     border-radius: 30px;
     top:50px;
     left:100px;
-    height: 400px;
+    /* height: 400px; */
 }
+
+/* @media screen and (max-width: 320px)
+{
+.ourproduct1
+{
+display: flex;
+flex-direction: row-reverse;
+margin: 10px;
+}
+} */
 
 
 .ourproduct2
@@ -347,7 +346,10 @@ background-size: contain;
     margin-top:50px;
     border-radius: 50px;
     margin-bottom: 50px;
-    height: 400px;
+    /* height: 400px; */
+    left: 100px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .pricingcolor
@@ -363,10 +365,10 @@ font-weight: normal;
 
 
 
-header
+/* header
 {
     width:100%;
-}
+} */
 /* .nav-btn .nav-item li{
     list-style: none;
   }
@@ -389,11 +391,6 @@ header
    background: var(--color-link-hover-navigation);
    color: #fff;
   }
-
-
-
-
-
 
 .container__header
 {
@@ -433,7 +430,7 @@ header
   .outer-square {
     width: 25px;
     height: 25px;
-    border: 2px solid #004d40;
+    border: 2px solid #F56824;
     border-radius: 8px;
     display: flex;
     justify-content: center;
@@ -441,10 +438,10 @@ header
 }
 
 .inner-circle {
-    width: 12px; /* Adjust size to be half of the outer square */
-    height: 12px; /* Adjust size to be half of the outer square */
-    background-color: #004d40; /* The inner circle's color */
-    border-radius: 50%; /* To make it a perfect circle */
+    width: 12px;
+    height: 12px;
+    background-color: #F56824;
+    border-radius: 50%;
 }
 
 
@@ -471,7 +468,7 @@ header
             color:#fff;
         }
 
-        .footer__container .row {
+        /* .footer__container .row {
             font-size: 0.8rem;
             padding: 0.5rem 0;
             justify-content: space-between;
@@ -485,7 +482,7 @@ header
         .footer__container a:hover {
             text-decoration: none;
             color: var(--color-primary-blue);
-        }
+        } */
 
 .bg-container-fluid
 {
@@ -498,7 +495,6 @@ header
     min-height: 300px;
     background-size:contain;
     /* background-image: url('../images/background.png'); */
-
 }
 
 
@@ -535,48 +531,49 @@ header
       padding-top: 20px;
     }
 
-    /* Testimonial Cards */
-    .testimonial-card {
-      background-color: #fbe9f2; /* light pink */
-      border-radius: 10px;
-      padding: 30px 20px;
-      position: relative;
-      text-align: left;
-      /* border: 2px dashed #333; */
-      -ms-transform: rotate(-1deg); /* IE 9 */
-         transform: rotate(-1deg);
-    }
 
-    /* Quote Marks */
-    .quote-mark {
-      font-size: 2rem;
-      color: #28a745;
-      line-height: 1;
-    }
 
-    /* Profile Image */
-    .testimonial-card img {
-      width: 70px;
-      height: 70px;
-      border-radius: 10px;
-      object-fit: cover;
-      position: absolute;
-      top: -25px;
-      right: 20px;
-      border: 3px solid #fff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    }
+    /* .testimonial-card {
+  background: #ffe6eb;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  border: 2px dashed #555;
+  overflow: visible;
+}
 
-    /* Decorative Illustrations */
-    .decor-left {
-      position: absolute;
-      bottom: 70px;
-      left: 70px;
-      opacity: 0.7;
-    }
-    .decor-right {
-      position: absolute;
-      top: 120px;
-      right: 100px;
-      opacity: 0.7;
-    }
+.testimonial-img {
+  width: 60px;
+  height: 60px;
+  top: -25px;
+  right: 20px;
+  border: 3px solid #fff;
+  object-fit: cover;
+} */
+
+/* Background Trophy */
+/* .bg-trophy {
+  background-image: url('images/trophys.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  color: #333;
+} */
+
+/* Testimonial Card */
+.testimonial-card {
+  background: #ffe6eb;
+  border-radius: 10px;
+  border: 2px dashed #555;
+  position: relative;
+}
+
+/* Testimonial Image */
+.testimonial-img {
+  width: 60px;
+  height: 60px;
+  top: -25px;
+  right: 20px;
+  border: 3px solid #fff;
+  object-fit: cover;
+}
+

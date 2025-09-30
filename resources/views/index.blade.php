@@ -3,8 +3,8 @@
 @section('content')
 <div class = "container-fluid  banner">
 
-<div class = "row mt-3 p-5">
-<div class = "col-12 col-md-6 col-lg-6 my-auto">
+<div class = "row mt-3 p-5 ">
+<div class = "col-12 col-md-6 col-lg-6  my-auto">
 <h1 class = "heroheading">
     All-In-One smarter, easier and affordable learning with Kokokah
 </h1>
@@ -193,9 +193,8 @@
 </div> --}}
 
 
-<div class = "container-fluid" style = "height: 600px; background-image: url('images/kokokah_best.png'); background-repeat: no-repeat;  background-size: contain;">
+<div class = "container-fluid pt-5 pb-5 text-center bg-containers-fluid" style = "background-image: url('images/kokokah_best.png'); background-repeat: no-repeat;  background-size: contain;">
 
-        <div class="row  text-center">
 
             <h1>
                 Why Kokokah Is the Best
@@ -208,17 +207,20 @@
                  overall student performance.
             </p>
 
+            <div class="container">
+                <div class = "row">
+
     <!-- Feature 1 -->
     <div class="col-12 col-md-6 col-lg-4">
       <div class="feature-card position-relative">
         <span class="feature-number">01</span>
         <div class="feature-content">
           {{-- <div class="feature-icon mb-2">📘</div> --}}
-          <i class="fa-solid fa-download text-warning"></i>
-          <h5>
+          <i class="fa-solid fa-download text-danger"></i>
+          <h6>
             For Students, <br>
              Parents & Schools
-            </h5>
+            </h6>
           <p>One platform for all.</p>
         </div>
       </div>
@@ -230,8 +232,11 @@
         <span class="feature-number">02</span>
         <div class="feature-content">
           {{-- <div class="feature-icon mb-2">📱</div> --}}
-          <i class="fa-solid fa-download text-warning"></i>
-          <h5>Accessible mobile learning</h5>
+          <i class="fa-solid fa-download text-danger"></i>
+          <h6>
+            Accessible mobile<br>
+            learning
+        </h6>
           <p>Study anywhere, anytime — even on low internet. Learn on your phone, tablet, or computer without missing a beat.</p>
         </div>
       </div>
@@ -243,21 +248,32 @@
         <span class="feature-number">03</span>
         <div class="feature-content">
           {{-- <div class="feature-icon mb-2">🤖</div> --}}
-          <i class="fa-solid fa-download text-warning"></i>
-          <h5>AI-integrated and automated features</h5>
+          <i class="fa-solid fa-download text-danger"></i>
+          <h6>
+            AI-integrated and<br>
+            automated features
+        </h6>
           <p>Get instant answers, personalized feedback, and quick grading with our built-in AI — saving time for both students and educators.</p>
         </div>
       </div>
     </div>
 
+            </div>
+
+
+
+<div class = "row">
     <!-- Feature 4 -->
     <div class="col-12 col-md-6 col-lg-4">
       <div class="feature-card position-relative">
         <span class="feature-number">01</span>
         <div class="feature-content">
           {{-- <div class="feature-icon mb-2">💰</div> --}}
-          <i class="fa-solid fa-download text-warning"></i>
-          <h5>Affordable subscription plans</h5>
+          <i class="fa-solid fa-download text-danger"></i>
+          <h6>
+            Affordable<br>
+            subscription plans
+        </h6>
           <p>Choose a plan that fits your budget and needs — monthly, quarterly, or yearly, all with full platform access.</p>
         </div>
       </div>
@@ -269,7 +285,7 @@
         <span class="feature-number">02</span>
         <div class="feature-content">
           {{-- <div class="feature-icon mb-2">💳</div> --}}
-          <i class="fa-solid fa-download text-warning"></i>
+          <i class="fa-solid fa-download text-danger"></i>
           <h5>Virtual payment</h5>
           <p>Store and track money for any resource purchase on Kokokah — quick, safe, and hassle-free.</p>
         </div>
@@ -278,10 +294,11 @@
 
     <!-- Empty Placeholder (Only visible on lg and above) -->
     <div class="col-lg-4 d-none d-lg-block"></div>
-    </div>
 
 </div>
+</div>
 
+</div>
 
 
 <div class = "container-fluid  bg-container-fluid" style="background:url('images/background.png'); background-repeat:no-repeat; background-size:contain;">
@@ -301,7 +318,7 @@ educators connect, learn, and thrive.
 
 
 <div class = "container mt-5">
-    <div class = "row ourproduct1">
+    <div class = "row flex-column-reverse flex-md-row m-2 ourproduct1">
 
         <div class = "col-12 col-md-6 col-lg-6 p-5">
             <h1> Passnownow </h1>
@@ -322,11 +339,12 @@ educators connect, learn, and thrive.
         </div>
 
 
-          <div class="col-12 col-md-6 text-center p-5 ">
-        <img src="images/exam_prep.png" class="img-fluid" alt="Exam Prep">
+          <div class="col-12 col-lg-6 col-md-6 text-center p-5">
+        <img src="images/exam_prep.png" class="img-fluid w-100 w-md-75" alt="Exam Prep">
     </div>
 
     </div>
+
 </div>
 
 
@@ -340,7 +358,7 @@ educators connect, learn, and thrive.
     </div>
 
     <!-- Text Section -->
-    <div class="col-12 col-md-6 col-lg-6 mt-5">
+    <div class="col-12 col-md-6 col-lg-6 mt-5 mb-5">
         <h3>School Management System (SMS)</h3>
 
         <p>
@@ -357,29 +375,9 @@ educators connect, learn, and thrive.
 
 
 
-{{-- <div class="row w-100 mx-auto my-4 p-4 jumbotron">
-
-    <div class="col-12 col-md-6 d-flex flex-column justify-content-center p-3">
-        <h3>
-            kokokah LMS
-        </h3>
-        <p class="fs-5">
-            Your all-in-one digital classroom — structured lessons, AI-powered
-            tutoring, chatrooms, and  academic & non-academic content for secondary school.
-        </p>
-
-          <div>
-        <button class = "btn text-white" style = "background:#004A53;">Explore LMS</button>
-        </div>
-    </div>
-
-    <div class="col-12 col-md-6 text-center p-3">
-        <img src="images/lms system.png" class="img-fluid w-75" alt="LMS system">
-    </div>
-</div> --}}
 
 <div class = "container">
-    <div class = "row ourproduct1">
+    <div class = "row flex-column-reverse flex-md-row m-2 ourproduct1">
 
         <div class = "col-12 col-md-6 col-lg-6 p-5 my-auto">
             <h1>  kokokah LMS </h1>
@@ -396,7 +394,7 @@ educators connect, learn, and thrive.
 
 
           <div class="col-12 col-md-6 text-center p-5 ">
-        <img src="images/exam_prep.png" class="img-fluid" alt="Exam Prep">
+        <img src="images/exam_prep.png" class="img-fluid w-100 w-md-75"  alt="Exam Prep">
     </div>
 
     </div>
@@ -421,7 +419,7 @@ educators connect, learn, and thrive.
            test prep, and special needs learning.
         </p>
 
-                <div>
+                <div class = "mb-3">
         <button class = "btn primaryButton" type = "button">Explore Marketplace</button>
 
     </div>
@@ -432,7 +430,7 @@ educators connect, learn, and thrive.
 
 
 <div class = "container">
-<div class="row  my-4 p-5  ourproduct1">
+<div class="row  my-4 p-2 flex-column-reverse flex-md-row m-2 ourproduct1">
 
     <!-- Text Section -->
     <div class="col-12 col-md-6 d-flex flex-column justify-content-center p-3">
@@ -451,7 +449,7 @@ educators connect, learn, and thrive.
 
     <!-- Image Section -->
     <div class="col-12 col-md-6 text-center p-3">
-        <img src="images/lms system.png" class="img-fluid w-75" alt="LMS system">
+        <img src="images/lms system.png" class="img-fluid w-100 w-md-75" alt="LMS system">
     </div>
 </div>
 
@@ -478,7 +476,7 @@ educators connect, learn, and thrive.
             students for the future of science & tech.
         </p>
 
-                <div>
+                <div class = "mb-3">
         <button class = "btn primaryButton" type = "button">Register</button>
 
     </div>
@@ -496,7 +494,7 @@ educators connect, learn, and thrive.
 
 
 
-<div class = "col-12 col-md-6 col-lg-6 ">
+<div class = "col-12 col-md-6 col-lg-6">
 <h1>
             Koodies for Children
         </h1>
@@ -519,220 +517,69 @@ educators connect, learn, and thrive.
 </div>
 
 
-  {{-- <div class="container text-center mt-5 py-5"   style="background: blue url('../images/founder.png'); ">
 
-  </div> --}}
 
-{{-- <div class = "container-fluid">
-    <div class = "row" style="background:url('images/founder.png'); background-repeat:no-repeat; background-size:contain;">
 
+  <div class="container-fluid text-center py-5" style="width: 1000px; height:500px; background-image: background-image: url('images/trophys.png'); background-repeat: no-repeat; background-size: contain;">
+    {{-- <h2 class="text-white mb-4">Awards & Recognitions</h2> --}}
+  <!-- Section Title -->
+  <div class="row justify-content-center mb-5">
+    <div class="col-12">
+      <h5 class="fw-bold text-white">Why People Love Kokokah</h5>
     </div>
-</div> --}}
+  </div>
 
- <section class="testimonial-section">
-    <div class = "text-center">
-      <i class="bi bi-trophy-fill text-warning fs-1"></i>
-    </div>
+  <!-- Testimonials -->
+  <div class="row g-4 justify-content-center">
 
-    <!-- Testimonials -->
-    <div class="container" style="background: #d9e8e6; margin-top: -30px; height: 500px;" >
-
-        <!-- Header -->
-    <div class="text-center mb-5">
-
-      <div class="section-subtitle">
-        Kokokah Has Industry-Leading<br>
-        Renewals Of Above 80%
+    <!-- Testimonial 1 -->
+    <div class="col-12 col-md-6 col-lg-5">
+      <div class="testimonial-card position-relative p-4">
+        <i class="bi bi-quote text-success fs-2"></i>
+        <p class="mt-3">
+          With Kokokah, we conduct online tests, share lessons digitally, and manage
+          school operations all from one dashboard.
+        </p>
+        <i class="bi bi-quote text-success fs-2 float-end"></i>
+        <img src="images/lisa.png" alt="Lisa"
+             class="testimonial-img position-absolute rounded-circle">
+        <p class="fw-bold text-end mb-0">- Lisa</p>
       </div>
-      <h2>Why People Love Kokokah</h2>
     </div>
 
-      <div class="row g-5 justify-content-center">
-
-        <!-- Lisa -->
-        <div class="col-md-5" style = " border: 2px dashed #333;">
-          <div class="testimonial-card">
-            <div class="quote-mark">“</div>
-            <p class="mt-2">
-              With Kokokah, we conduct online tests, share lessons digitally,
-              and manage school operations all from one dashboard.
-            </p>
-            <p class="fw-bold mb-0">- Lisa</p>
-            <img src="images/Lisa.png" alt="Lisa">
-          </div>
-        </div>
-
-        <!-- Jimmy -->
-        <div class="col-md-5 ms-5" style = " border: 2px dashed #333;">
-          <div class="testimonial-card">
-            <div class="quote-mark">“</div>
-            <p class="mt-2">
-              With Kokokah, we conduct online tests, share lessons digitally,
-              and manage school operations all from one dashboard.
-            </p>
-            <p class="fw-bold mb-0">- Jimmy</p>
-            <img src="images/Jimmy.png" alt="Jimmy">
-          </div>
-        </div>
-
+    <!-- Testimonial 2 -->
+    <div class="col-12 col-md-6 col-lg-5">
+      <div class="testimonial-card position-relative p-4">
+        <i class="bi bi-quote text-success fs-2"></i>
+        <p class="mt-3">
+          With Kokokah, we conduct online tests, share lessons digitally, and manage
+          school operations all from one dashboard.
+        </p>
+        <i class="bi bi-quote text-success fs-2 float-end"></i>
+        <img src="images/jimmy.png" alt="Jimmy"
+             class="testimonial-img position-absolute rounded-circle">
+        <p class="fw-bold text-end mb-0">- Jimmy</p>
       </div>
-
-
-
-
     </div>
 
-    <!-- Decorative illustrations -->
-    <div class="decor-left">
-      {{-- <i class="bi bi-asterisk fs-2 text-secondary"></i> <!-- placeholder for atom-like icon --> --}}
-        <img src = "images/orbit.png" class="img-fluid" />
-    </div>
-    <div class="decor-right">
-      {{-- <i class="bi bi-trophy fs-2 text-secondary"></i>  --}}
-      <img src = "images/trophy.png" class="img-fluid" />
-    </div>
-  </section>
-
-
-
-
-<div class = "row">
-
-<div class = "col-12 col-md-2 col-lg-2">
-</div>
-
-<div class = "col-12 col-md-8 col-lg-8 mt-4 text-center">
-    <h2>Message from the founder</h2>
-    <img src = "images/youtube.png" class="img-fluid w-100 h-100">
-</div>
-
-<div class = "col-12 col-md-2 col-lg-2">
-</div>
-
-<div class = "col-12 col-md-3 col-lg-3">
-            <img src = "images/Kokokah_works2.png" class = "p-2 img-fluid w-25">
-    </div>
-
+  </div>
 </div>
 
 
 
-<div class="container-fluid subscribe">
 
+<div class = "container-fluid" style = "background-image: url('images/founder.png'); background-repeat:no-repeat; background-size:contain;">
+<div class = "row justify-content-center p-5 text-white">
 
-<div class = "row">
-    <div class = "col-12 col-md-6 col-lg-6">
-     <h4  style = "color: #004a53">
-    Don’t Miss Out on the Future of Learning!
-     </h4>
-
-     <p style = "color:#4d8087;">
-        Be the first to get school and study hacks, career tips, and Kokokah
-        updates straight to your inbox. Join thousands of students, parents,
-        and educators across Africa who are already leveling up with us.
-     </p>
-    </div>
-
-
-<div class = "col-12 col-md-6 col-lg-6 my-auto">
-
-<div class="input-group mb-3">
-  <input type="text" class="form-control" placeholder="Enter your mail" aria-label="Enter your mail" aria-describedby="button-addon2" style = "border-start-start-radius: 10px; border-end-start-radius:10px;">
-  <button class="btn primaryButton" type="button" id="button-addon2" style = "background: #004A53;">Subscribe Now</button>
+<div class = "col-12 col-lg-12 col-md-12 text-center">
+    <h3>Message from the founder</h3>
+    <img src = "images/youtube.png" class="img-fluid" style = "width: 800px;">
 </div>
 
 </div>
 </div>
 
 
-</div>
 
-
-<footer>
-<div class="container">
-    <div class =  "row mx-auto">
-        <div class = "col-12 col-md-5 col-lg-5">
-              <img src="images/Contact.png" class="img-fluid d-block"><br>
-              <p>
-                        Kokokah combines School Management, Exam Prep, and a
-                        Learning Management System (LMS)—helping schools
-                        automate admin tasks, boost student performance, and
-                        deliver modern digital learning in one seamless platform.
-              </p>
-        </div>
-
-
-        <div class = "col-6 col-md-2 col-lg-2 mt-4">
-            <p><b>Short Links</b></p>
-            <ul class="nav flex-column ">
-                            <li class="nav-item mb-2"><a href="#" style = "color:white;">Features</a>
-                            </li>
-
-                            <li class="nav-item mb-2"><a href="#" style = "color:white;">How it works</a>
-                            </li>
-                            <li class="nav-item mb-2"><a href="#" style = "color:white;">Security</a>
-                            </li>
-                            <li class="nav-item mb-2"><a href="#" style = "color:white;">Testimonial</a></li>
-                        </ul>
-        </div>
-
-
-
-
-        <div class = "col-6 col-md-2 col-lg-2 mt-4">
-            <p><b>Other Pages</b></p>
-            <ul class="nav flex-column ">
-                            <li class="nav-item mb-2"><a href="#" style = "color:white;">Privacy Policy</a>
-                            </li>
-
-                            <li class="nav-item mb-2"><a href="#" style = "color:white;">Terms & Condition</a>
-                            </li>
-                            <li class="nav-item mb-2"><a href="#" style = "color:white;">404</a>
-                            </li>
-                        </ul>
-        </div>
-
-
-
-        <div class = "col-12 col-md-3 col-lg-3 mt-4">
-            <p><b>Connect With Us</b></p>
-            <span class="fa-stack">
-             <i class="fas fa-circle fa-stack-2x"></i>
-            <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
-            </span>
-
-            <span class="fa-stack ">
-  <i class="fas fa-circle fa-stack-2x"></i>
-  <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
-</span>
-
-<span class="fa-stack ">
-  <i class="fas fa-circle fa-stack-2x"></i>
-  <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
-</span>
-        </div>
-
-
-    </div>
-
-    <hr style = "color:white; width: 800px; height:2px;">
-
-    <div class = "row">
-        <div class="d-flex justify-content-between">
-            <div>
-                    <p>Copyright &copy; 2025 All rights reserved </p>
-            </div>
-
-            <div>
-            <p>
-                <a href="#" class = "me-2 text-white">Terms and Conditions </a> |
-                <a href="#" class = "text-white">Privacy Policy</a>
-            </p>
-            </div>
-
-                </div>
-    </div>
-</div>
-            </footer>
 
 @endsection
