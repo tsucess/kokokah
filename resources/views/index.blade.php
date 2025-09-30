@@ -193,10 +193,10 @@
 </div> --}}
 
 
-<div class = "container-fluid pt-5 pb-5 text-center bg-containers-fluid" style = "background-image: url('images/kokokah_best.png'); background-repeat: no-repeat;  background-size: contain;">
+<div class = "container-fluid pt-5  text-center" style = "min-height:700px;  background-image: url('images/kokokah_best.png'); background-repeat: no-repeat;  background-size: contain;">
 
-
-            <h1>
+<div class = "row">
+            <h1 class = "mb-2">
                 Why Kokokah Is the Best
             </h1>
 
@@ -206,7 +206,7 @@
                  offering parents high-quality affordable learning options and boosting
                  overall student performance.
             </p>
-
+</div>
             <div class="container">
                 <div class = "row">
 
@@ -520,12 +520,12 @@ educators connect, learn, and thrive.
 
 
 
-  <div class="container-fluid text-center py-5" style="width: 1000px; height:500px; background-image: background-image: url('images/trophys.png'); background-repeat: no-repeat; background-size: contain;">
-    {{-- <h2 class="text-white mb-4">Awards & Recognitions</h2> --}}
+  <div class="container mt-5 text-center py-5" style="min-height:570px; background-image: url('images/trophys.png'); background-repeat: no-repeat; background-size: cover; background-position: center;">
+
   <!-- Section Title -->
   <div class="row justify-content-center mb-5">
-    <div class="col-12">
-      <h5 class="fw-bold text-white">Why People Love Kokokah</h5>
+    <div class="col-12 mt-5">
+      <h5 class="fw-bold" style = "margin-top: 130px;">Why People Love Kokokah</h5>
     </div>
   </div>
 
@@ -533,9 +533,9 @@ educators connect, learn, and thrive.
   <div class="row g-4 justify-content-center">
 
     <!-- Testimonial 1 -->
-    <div class="col-12 col-md-6 col-lg-5">
+    <div class="col-12 col-md-6 col-lg-5 custom-width">
       <div class="testimonial-card position-relative p-4">
-        <i class="bi bi-quote text-success fs-2"></i>
+        <i class="bi bi-quote text-success fs-2 float-start"></i><br>
         <p class="mt-3">
           With Kokokah, we conduct online tests, share lessons digitally, and manage
           school operations all from one dashboard.
@@ -548,9 +548,9 @@ educators connect, learn, and thrive.
     </div>
 
     <!-- Testimonial 2 -->
-    <div class="col-12 col-md-6 col-lg-5">
+    <div class="col-12 col-md-6 col-lg-5 custom-width">
       <div class="testimonial-card position-relative p-4">
-        <i class="bi bi-quote text-success fs-2"></i>
+        <i class="bi bi-quote text-success fs-2 float-start"></i><br>
         <p class="mt-3">
           With Kokokah, we conduct online tests, share lessons digitally, and manage
           school operations all from one dashboard.

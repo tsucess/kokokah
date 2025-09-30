@@ -93,6 +93,22 @@ Route::get('/subjectchart', function () {
     return view('admin.subjectchart');
 });
 
+Route::get('/wallet', function () {
+    return view('admin.wallet');
+});
+
+Route::get('/chatroom', function () {
+    return view('admin.chatroom');
+});
+
+Route::get('/announcement', function () {
+    return view('admin.announcement');
+});
+
+Route::get('/feedback', function () {
+    return view('admin.feedback');
+});
+
 
 Route::get('/users', function () {
     return view('admin.users');

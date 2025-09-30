@@ -14,6 +14,10 @@
     --color-text-navigation: #4D525F;
     --color-bg-banner: #ECFDFF;
     --color-bg-jumbotron:#CCDBDD;
+    --bs-dark-teal: #114243;
+    --bs-light-gray: #e9ecef;
+    --bs-main-green: #4CAF50;
+    --bs-main-teal: #338a8a;
     }
 
     body{
@@ -58,6 +62,25 @@ margin-top:10px;
 {
     background: var(--color-secondary-hover-button);
     color: #fff;
+}
+
+.primaryButton
+{
+width: 205px;
+height:60px;
+padding: 16px 20px;
+border-radius:4px;
+background: var(--color-primary-button);
+color:#fff;
+font-size: 14px;
+}
+
+
+
+.primaryButton:hover
+{
+    background: var(--color-primary-hover-button);
+    color:#fff;
 }
 
 .mysubject
@@ -706,7 +729,7 @@ color:#fff;
             height: 40%; /* Ensures cards in the row are the same height */
         }
 
-        
+
 
         /* Custom progress bar styles (from previous code) */
         .custom-progress {
@@ -734,4 +757,356 @@ color:#fff;
             font-size: 1.8rem;
             font-weight: bold;
             color: var(--bs-dark-teal);
+        }
+
+
+        /* WALLET */
+
+        .balance-header {
+            /* Simulating the green gradient and shape */
+            background: linear-gradient(135deg, #4CAF50, #7ee180);
+            color: white;
+            padding: 2rem 1.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .balance-header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Cpath fill='%23ffffff33' d='M0 0h800v300L400 600 0 300z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right top;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+
+        .transaction-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--bs-light-gray);
+        }
+
+        .transaction-details {
+            display: flex;
+            align-items: center;
+        }
+
+        .transaction-icon-container {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--bs-secondary);
+            border-radius: 50%;
+            margin-right: 1rem;
+            font-size: 0.8rem;
+            color: var(--bs-secondary);
+        }
+
+        .transaction-amount {
+            font-weight: bold;
+            color: var(--bs-dark-teal);
+        }
+
+        /* Custom dropdown button styling to match the image */
+        .filter-btn {
+            background-color: #fff;
+            border: 1px solid var(--bs-light-gray);
+            color: #6c757d;
+            padding: 0.25rem 0.5rem;
+        }
+
+        /* Ensure responsive font size for main balance */
+        .main-balance-text {
+            font-size: 2rem; /* Default size */
+            font-weight: bold;
+        }
+        @media (min-width: 768px) {
+            .main-balance-text {
+                font-size: 3rem; /* Larger on desktop */
+            }
+        }
+
+
+    /* CHATROOM */
+    /* Reused/Adjusted Custom Styles */
+        :root {
+            --bs-dark-teal: #114243; /* Primary accent color */
+            --bs-light-gray: #e9ecef; /* Light background/border color */
+            --bs-main-green: #20c997; /* Secondary green for text/accents */
+        }
+
+        /* Main container styling to match the slight border/shadow visible */
+        .chat-app-container {
+            border: 1px solid var(--bs-light-gray);
+            border-radius: 0.75rem;
+            min-height: 90vh; /* Ensure it takes up most of the viewport height */
+            overflow: hidden;
+            background-color: #fff;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+        }
+
+        /* 1. Left Sidebar (Conversation List) */
+        .sidebar-left {
+            background-color: #fff;
+            padding: 1.5rem 1rem;
+            border-right: 1px solid var(--bs-light-gray);
+            /* Ensure fixed height to align with right panel */
+            height: 100%;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 0.5rem;
+            margin-bottom: 0.25rem;
+            cursor: pointer;
+            border-radius: 0.25rem;
+            font-weight: 500;
+            color: var(--bs-dark-teal); /* All links are dark teal */
+            text-decoration: none;
+        }
+
+        .sidebar-item:hover, .sidebar-item.active {
+            background-color: var(--bs-dark-teal);
+            color: white;
+        }
+
+        /* Small orange badge for new messages */
+        .new-message-badge {
+            background-color: #fd7e14; /* Bootstrap warning/orange */
+            color: white;
+            font-size: 0.75rem;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 2. Right Chat Panel */
+        .chat-panel-right {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .chat-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--bs-light-gray);
+            font-weight: bold;
+        }
+
+        .chat-history {
+            flex-grow: 1;
+            padding: 1.5rem;
+            overflow-y: auto; /* Allows scrolling of messages */
+        }
+
+        .chat-message {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+        .message-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 0.75rem;
+        }
+        .message-content {
+            flex-grow: 1;
+        }
+        .message-user {
+            font-weight: 500;
+            margin-right: 0.5rem;
+        }
+        .message-timestamp {
+            font-size: 0.75rem;
+            color: var(--bs-secondary);
+        }
+
+        /* Chat Input Area */
+        .chat-input-area {
+            border-top: 1px solid var(--bs-light-gray);
+            padding: 1rem 1.5rem;
+        }
+
+        .btn-send {
+            background-color: var(--bs-dark-teal);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.25rem;
+            border-radius: 0.5rem;
+        }
+
+        /* Welcome message styling */
+        .welcome-message {
+            padding: 4rem 2rem;
+            text-align: center;
+            color: var(--bs-dark-teal);
+        }
+        .welcome-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background-color: var(--color-primary-button);
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Responsive Breakpoint for Sidebar */
+        @media (max-width: 991.98px) {
+            /* Hide the conversation list sidebar on tablets/mobiles, use a simple toggle button (not included in this static HTML) */
+            .sidebar-left {
+                display: none;
+            }
+            .chat-app-container {
+                border-left: none;
+                border-right: none;
+                border-radius: 0;
+            }
+        }
+
+
+        /* Announcements */
+        /* Main container styling to match the card-like boundary in the image */
+        .announcements-wrapper {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+        }
+
+        /* 1. Table Header Styling */
+        .announcement-header {
+            color: #6c757d; /* Bootstrap secondary color for header text */
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* 2. Announcement Row Styling */
+        .announcement-row {
+            display: flex;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--bs-light-gray);
+        }
+
+        /* 3. View Note Button */
+        .btn-view-note {
+            background-color: var(--bs-main-teal); /* Use a medium teal for the button */
+            color: white;
+            padding: 0.5rem 1.25rem;
+            font-weight: 500;
+        }
+
+        /* Responsive Columns (Adjusting order and visibility) */
+        /* Columns take up 1/4 of the space */
+        .col-announcement { width: 30%; }
+        .col-message { width: 25%; }
+        .col-type { width: 20%; }
+        .col-date { width: 25%; text-align: right; }
+
+        /* Mobile/Tablet Adjustments (using BS5 utility classes for display) */
+        @media (max-width: 767.98px) {
+            .announcements-wrapper { padding: 1rem; }
+            .announcement-header { display: none; } /* Hide the header on mobile */
+
+            .announcement-row {
+                flex-wrap: wrap; /* Allow columns to stack */
+                padding: 1rem 0;
+            }
+
+            /* Stack Title and Date, View Note takes full width */
+            .col-announcement, .col-date {
+                width: 50%;
+                padding-bottom: 0.5rem;
+            }
+            .col-date { text-align: left !important; order: 3; } /* Move date below title */
+            .col-announcement { order: 1; font-weight: bold; }
+
+            /* View Note Button (Message column) takes full width and moves to the second row */
+            .col-message {
+                width: 100%;
+                order: 4;
+                margin-top: 0.5rem;
+            }
+            .col-message .btn { width: 100%; }
+
+            /* Type column moves to the bottom row, takes 100% */
+            .col-type {
+                width: 100%;
+                order: 2;
+                font-size: 0.9rem;
+                color: #6c757d;
+            }
+
+        }
+
+        /* FEEDBACK PAGE */
+         /* 1. Page Header Styling */
+        .page-title {
+            color: var(--color-primary-button);
+        }
+
+        /* 2. Feedback Card Styling */
+        .feedback-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+
+            /* Simulating the border shown in the image */
+            border: 1px solid #c7e8e8; /* A light, desaturated teal color for the border */
+            border-radius: 1rem;
+            background-color: #fff;
+
+            /* Ensures items stack nicely on small screens */
+            flex-wrap: wrap;
+        }
+
+        /* 3. Start Button Styling */
+        .btn-start-survey {
+            /* Matches the color and simple border of the button in the image */
+            background-color: transparent;
+            border: 1px solid var(--bs-main-teal);
+            color: var(--bs-main-teal);
+            padding: 0.5rem 1.5rem;
+            min-width: 100px; /* Ensure button width is consistent */
+            font-weight: 500;
+        }
+
+        /* Responsive adjustments for alignment */
+        @media (max-width: 575.98px) {
+            .feedback-card {
+                padding: 1rem;
+            }
+            /* Stack button below text content on very small screens */
+            .feedback-text-content {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+            .btn-start-survey {
+                width: 100%; /* Button takes full width on mobile */
+            }
         }
