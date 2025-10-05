@@ -84,20 +84,14 @@ line-height:22px;
 color:var(--color-primary-button);
 }
 
-
-.banner
-{
-background:var(--color-bg-banner);
-}
-
-@media screen and (max-width: 320px)
+/* @media screen and (max-width: 320px)
 {
     .banner h1
     {
         font-size: 18px;
         line-height:18px;
     }
-}
+} */
 
 @media (max-width: 400px)
 {

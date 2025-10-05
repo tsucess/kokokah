@@ -18,7 +18,7 @@ Learning and Management Platform for
 
 <div class = "col-12 col-md-6 col-lg-6 mt-3 my-auto">
     <h3>
-        Kokokah for All
+        Kokokah for All.
     </h3>
     <p class = "heroparagraph">
         Kokokah is a smart, pan-African learning
@@ -93,7 +93,7 @@ Learning and Management Platform for
 <div class = "row mt-4 bg-white">
 
     <div class ="justify-content-center">
-        <h1 class = "text-center">Our Story</h1>
+        <h3 class = "fw-bold text-center">Our Story</h3>
     </div>
 
 <div class = "col-12 col-md-6 col-lg-6 my-auto">

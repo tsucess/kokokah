@@ -134,3 +134,11 @@ Route::get('/coursemedia', function () {
 Route::get('/createcourse', function () {
     return view('admin.createcourse');
 });
+
+Route::get('/userkoodies', function () {
+    return view('admin.userkoodies');
+});
+
+Route::get('/userkoodiesaudio', function () {
+    return view('admin.userkoodiesaudio');
+});

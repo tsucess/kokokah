@@ -2,12 +2,13 @@
 
 @section('content')
 
-<div class = "container-fluid p-5 banner">
+<div class = "container-fluid p-5" style="background-image: url('images/lms(hero).png'); background-repeat: no-repeat; background-size: cover; min-height: 610px;">
 <div class = "row mt-4">
 
 <div class = "col-12 col-md-6 col-lg-6 my-auto">
-<h1>
-    Your Complete Ecosystem for Learning and Growth
+<h1 class="heroheading">
+    Your Complete <br>
+    Ecosystem for Learning and Growth
 </h1>
 <p class = "mt-3">
 Kokokah’s learning management system is built to
@@ -16,11 +17,8 @@ and how schools manage learning. 
 </p>
 
 <div class = "d-flex flex-column flex-sm-row gap-2">
-    <button class = "btn text-white ps-4 pe-5 " style = "background:#004A53;">Create a free account</button>
+    <button class = "btn primaryButton" type = "button">Create a free account</button>
 </div>
-
-
-
 
 </div>
 
@@ -52,14 +50,14 @@ and how schools manage learning. 
          mission is simple — to give every learner from any background the opportunity
          to excel with ease.
     </p>
-    <button class = "btn text-white ps-4 pe-5" style = "background:#004A53;">Create a free account</button>
+    <button class = "btn primaryButton" type = "button">Create a free account</button>
 </div>
 
 </div>
 </div>
 
 
-<div class="container my-5">
+{{-- <div class="container my-5">
   <div class="d-flex flex-column flex-md-row align-items-center justify-content-between text-center position-relative mb-5">
 
     <div>
@@ -74,6 +72,19 @@ and how schools manage learning. 
     <img src="images/arrow-icon.png" alt="Arrow"  style="width: 60px;">
 
   </div>
+
+</div>
+</div> --}}
+
+
+<div class="container-fluid" style="background-image: url('images/achievment.png'); background-repeat: no-repeat; background-size: cover; min-height: 300px;">
+  <div class = "row justify-content-center">
+
+    <div class = "achieve">
+      <h3 style = "font-size:30px; font-family: arial; w-100  w-sm-auto">Achievements/Statistics Section</h3>
+    </div>
+
+
 
 </div>
 </div>
