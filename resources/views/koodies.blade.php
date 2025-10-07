@@ -1,6 +1,6 @@
 @extends('layouts.template')
 @section('content')
-<div class="position-relative text-white text-center py-5" style="background-image: url('your-background-image.jpg'); background-size: cover; background-position: center; min-height: 400px;">
+<div class="position-relative text-white text-center py-5" style="background-image: url('images/heros.jpg'); background-size: contain; background-position: center; min-height: 400px;">
     <div class="position-absolute top-0 start-0 w-100 h-100" style="background-color: rgba(0, 0, 0, 0.5);"></div>
     <div class="position-relative h-100 d-flex flex-column justify-content-center align-items-center px-3">
         <h1 class="display-4 fw-bold">Transforming African Education—One School at a Time.</h1>

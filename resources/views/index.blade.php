@@ -4,25 +4,26 @@
 <div class = "container-fluid  banner">
 
 <div class = "row mt-3 p-5 ">
-<div class = "col-12 col-md-6 col-lg-6  my-auto">
+<div class = "col-12 col-md-8 col-lg-8  my-auto">
 <h1 class = "heroheading">
-    All-In-One smarter, easier and affordable learning with Kokokah
+ Quality, Mobile-First, Pay-as-you-Go, Curriculum Based
+ Lessons & Practice Tests for Secondary School Students,
+ Teachers & Schools.
 </h1>
 <p class = "mt-3 heroparagraph">
-    We connect African students and educators to high-quality,
-    affordable smart learning platforms, accessible anytime and anywhere.
+   LOW DATA USAGE + OFFLINE ACCESS + SCHOOL MANAGEMENT SYSTEM
 </p>
 
 <div class = "button-container d-flex d-md-flex gap-3">
-        <button class="btn primaryButton" type="button">Explore Kokokah Project</button>
-        <button class="btn secondaryButton" type="button">Get a Demo</button>
+        <button class="btn primaryButton" type="button" style="background: #004A53;">Start Using Kokokah</button>
+        <button class="btn secondaryButton" type="button" style="background: transparent; font-weight:bold;">Signup Now</button>
 </div>
 
 
 </div>
 
 
-<div class = "col-12 col-md-6 col-lg-6 mt-2 ">
+<div class = "col-12 col-md-4 col-lg-4 mt-2 ">
 <img src = "images/LMS.png" class = "img-fluid">
 </div>
 
@@ -216,7 +217,7 @@
         <span class="feature-number">01</span>
         <div class="feature-content">
           {{-- <div class="feature-icon mb-2">📘</div> --}}
-          <i class="fa-solid fa-download text-danger"></i>
+          <i class="fa-solid fa-download" style="color: #f56824;"></i>
           <h6>
             For Students, <br>
              Parents & Schools
@@ -232,7 +233,7 @@
         <span class="feature-number">02</span>
         <div class="feature-content">
           {{-- <div class="feature-icon mb-2">📱</div> --}}
-          <i class="fa-solid fa-download text-danger"></i>
+          <i class="fa-solid fa-download" style="color: #f56824;"></i>
           <h6>
             Accessible mobile<br>
             learning
@@ -248,7 +249,7 @@
         <span class="feature-number">03</span>
         <div class="feature-content">
           {{-- <div class="feature-icon mb-2">🤖</div> --}}
-          <i class="fa-solid fa-download text-danger"></i>
+          <i class="fa-solid fa-download" style="color: #f56824;"></i>
           <h6>
             AI-integrated and<br>
             automated features
@@ -269,7 +270,7 @@
         <span class="feature-number">01</span>
         <div class="feature-content">
           {{-- <div class="feature-icon mb-2">💰</div> --}}
-          <i class="fa-solid fa-download text-danger"></i>
+          <i class="fa-solid fa-download" style="color: #f56824;"></i>
           <h6>
             Affordable<br>
             subscription plans
@@ -285,7 +286,7 @@
         <span class="feature-number">02</span>
         <div class="feature-content">
           {{-- <div class="feature-icon mb-2">💳</div> --}}
-          <i class="fa-solid fa-download text-danger"></i>
+          <i class="fa-solid fa-download" style="color: #f56824;"></i>
           <h5>Virtual payment</h5>
           <p>Store and track money for any resource purchase on Kokokah — quick, safe, and hassle-free.</p>
         </div>
@@ -318,7 +319,7 @@ educators connect, learn, and thrive.
 
 
 <div class = "container mt-5">
-    <div class = "row flex-column-reverse flex-md-row m-2 ourproduct1">
+    <div class = "row flex-column-reverse flex-md-row m-2 ourproduct1" style = "background: #F56824;">
 
         <div class = "col-12 col-md-6 col-lg-6 p-5">
             <h1> Passnownow </h1>
@@ -350,7 +351,7 @@ educators connect, learn, and thrive.
 
 <div class = "container">
 
-<div class="row ourproduct2">
+<div class="row ourproduct2" style = "border-color: #FDAF22; border-width:2px;">
 
     <!-- Image Section -->
     <div class="col-12 col-md-6 col-lg-6 text-center">
@@ -377,12 +378,12 @@ educators connect, learn, and thrive.
 
 
 <div class = "container">
-    <div class = "row flex-column-reverse flex-md-row m-2 ourproduct1">
+    <div class = "row flex-column-reverse flex-md-row m-2 ourproduct1" style = "background: #004A53;">
 
         <div class = "col-12 col-md-6 col-lg-6 p-5 my-auto">
-            <h1>  kokokah LMS </h1>
+            <h1 class = "text-white">  kokokah LMS </h1>
 
-        <p>
+        <p class = "text-white">
              Your all-in-one digital classroom — structured lessons, AI-powered
             tutoring, chatrooms, and  academic & non-academic content for secondary school.
         </p>
@@ -394,14 +395,14 @@ educators connect, learn, and thrive.
 
 
           <div class="col-12 col-md-6 text-center p-5 ">
-        <img src="images/exam_prep.png" class="img-fluid w-100 w-md-75"  alt="Exam Prep">
+        <img src="images/lms system.png" class="img-fluid w-100 w-md-75"  alt="Exam Prep">
     </div>
 
     </div>
 </div>
 
 <div class = "container">
-<div class="row ourproduct2" style="border-radius: 30px;">
+<div class="row ourproduct2" style="border-radius: 30px; border-color: #FDAF22; border-width:2px;">
 
     <!-- Image Section -->
     <div class="col-12 col-md-6 my-auto text-center">
@@ -430,7 +431,7 @@ educators connect, learn, and thrive.
 
 
 <div class = "container">
-<div class="row  my-4 p-2 flex-column-reverse flex-md-row m-2 ourproduct1">
+<div class="row  my-4 p-2 flex-column-reverse flex-md-row m-2 ourproduct1" style="background: #FDAF22;">
 
     <!-- Text Section -->
     <div class="col-12 col-md-6 d-flex flex-column justify-content-center p-3">
@@ -443,7 +444,7 @@ educators connect, learn, and thrive.
         </p>
 
           <div>
-        <button class = "btn primaryButton"  type = "button">Get a Demo</button>
+        <button class = "btn primaryButton" type = "button" style="background: #004A53;">Coming Soon</button>
         </div>
     </div>
 
@@ -458,7 +459,7 @@ educators connect, learn, and thrive.
 
 
 <div class = "container">
-<div class="row ourproduct2" style="border-radius: 30px;">
+<div class="row ourproduct2" style="border-radius: 30px; border-color: #FDAF22; border-width:2px;">
 
     <!-- Image Section -->
     <div class="col-12 col-md-6 my-auto text-center">

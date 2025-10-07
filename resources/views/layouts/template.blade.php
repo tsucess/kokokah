@@ -101,7 +101,7 @@
 
 <div class = "row">
     <div class = "col-12 col-md-6 col-lg-6">
-     <h4  style = "color: #004a53">
+     <h4  style = "color: #004a53;">
     Don’t Miss Out on the Future of Learning!
      </h4>
 

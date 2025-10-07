@@ -1,12 +1,12 @@
 @extends('layouts.template')
 
 @section('content')
-<div class="container-fluid py-5" style="background-color: #ECFDFF;">
+<div class="container-fluid py-5" style="background-color:#FDAF22;">
     <div class="row align-items-center">
 
         <div class="col-md-9 text-dark p-5">
-            <h6 class="text-dark fw-bold">Get Started</h6>
-            <h1>Get in touch with us. <br>We're here to assist you.</h1>
+            <h6 class="text-dark">Get Started</h6>
+            <h1 class = "text-dark">Get in touch with us. <br>We're here to assist you.</h1>
         </div>
 
         <div class="col-md-3 d-flex flex-column align-items-center">
@@ -52,7 +52,10 @@
     <div class="row mx-auto align-items-start">
         <div class="col-lg-5 mb-4 mb-lg-0">
             <p>Contact Info</p>
-            <h3>We are always happy <br>to assist you</h3>
+            <h4 class="text-dark">
+                We are always happy <br>
+                to assist you
+            </h4>
         </div>
 
         <div class="col-lg-7">

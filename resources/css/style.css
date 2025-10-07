@@ -8,7 +8,7 @@
     --color-link-navigation: #00004C;
     --color-link-hover-navigation: #35527A;
     --color-text-navigation: #4D525F;
-    --color-bg-banner: #ECFDFF;
+    --color-bg-banner: #FDAF22;
     --color-bg-jumbotron:#CCDBDD;
 }
 
@@ -27,6 +27,12 @@ body{
     padding: 0;
     box-sizing: border-box;
 }
+
+.banner
+{
+    background: var(--color-bg-banner);
+}
+
 
 h1
 {
@@ -108,7 +114,7 @@ width: 205px;
 height:60px;
 padding: 16px 20px;
 border-radius:4px;
-background: var(--color-primary-button);
+background: var(--color-bg-banner);
 color:#fff;
 font-size: 14px;
 }
@@ -117,8 +123,8 @@ font-size: 14px;
 
 .primaryButton:hover
 {
-    background: var(--color-primary-hover-button);
-    color:#fff;
+    background: #ffefd9;
+    color: var(--color-bg-banner);
 }
 
 .secondaryButton
@@ -189,7 +195,7 @@ a.nav-link.active
 
 .subscribe
 {
-    background: var(--color-bg-jumbotron);
+    background: var(--color-bg-banner);
     text-align:left;
     padding:50px;
 }
@@ -202,11 +208,11 @@ font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans
 
 
 
-@media screen and (max-width: 320px)
+@media screen and (max-width:320px)
 {
-.achieve
+.achieve h3
 {
-    font-size: 10px;
+    font-size: 18px;
     text-align: center;
 }
 }
@@ -221,9 +227,7 @@ p
 
 ul, li
 {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    color: var(--color-bg-button);
-    font-weight: bold;
+    font-size: 16px;
 
 }
 
@@ -251,7 +255,7 @@ color: #4D525F;
 {
     font-family:  Fredoka, serif;
     font-weight:bolder;
-    font-size: 48px;
+    font-size: 45px;
     line-height: 150%;
     vertical-align: middle;
     letter-spacing: 1%;
@@ -356,7 +360,20 @@ margin: 10px;
 .pricingcolor
 {
     color: #454545;
+    font-family: inter;
+    font-size: 18px;
+    line-height:10px;
+
 }
+
+@media screen and (max-width: 320px)
+{
+.off
+{
+display: block;
+}
+}
+
 
 .nav-item a {
 color: var(--color-text-navigation);
@@ -485,14 +502,14 @@ font-weight: normal;
 
 
 
- /* .bullet-point
+ .bullet-point
  {
   width: 1rem;
   height: 1rem;
   background-color: #006064;
   flex-shrink: 0;
   margin-top: 0.25rem;
-} */
+}
 
 
 /* .custom-shadow {

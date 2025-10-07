@@ -17,7 +17,7 @@ and how schools manage learning. 
 </p>
 
 <div class = "d-flex flex-column flex-sm-row gap-2">
-    <button class = "btn primaryButton" type = "button">Create a free account</button>
+    <button class = "btn primaryButton" type = "button" style="background: #004a53; ">Create a free account</button>
 </div>
 
 </div>
@@ -57,41 +57,17 @@ and how schools manage learning. 
 </div>
 
 
-{{-- <div class="container my-5">
-  <div class="d-flex flex-column flex-md-row align-items-center justify-content-between text-center position-relative mb-5">
+<div class="container-fluid" style="background-image: url('images/achievment.png'); background-repeat: no-repeat; background-size: contain; min-height: 300px;">
+  <div class = "row mb-5 justify-content-center">
 
-    <div>
-      <img src="images/lightbulb-icon.png" alt="Lightbulb"  style="width: 40px;">
+    <div class = "text-center mt-4 achieve">
+      <h3>Achievements/Statistics Section</h3>
     </div>
-
-    <div class = "achieve">
-      <h3 style = "font-size:30px; font-family: arial; w-100  w-sm-auto">Achievements/Statistics Section</h3>
-    </div>
-
-    <div>
-    <img src="images/arrow-icon.png" alt="Arrow"  style="width: 60px;">
-
-  </div>
-
-</div>
-</div> --}}
-
-
-<div class="container-fluid" style="background-image: url('images/achievment.png'); background-repeat: no-repeat; background-size: cover; min-height: 300px;">
-  <div class = "row justify-content-center">
-
-    <div class = "achieve">
-      <h3 style = "font-size:30px; font-family: arial; w-100  w-sm-auto">Achievements/Statistics Section</h3>
-    </div>
-
-
-
-</div>
 </div>
 
 
-<div class="container my-5">
-  <div class="row gy-4 gx-5">
+<div class="container">
+<div class="row gy-4 gx-5 mb-5 mx-auto">
 
     <div class="col-md-6">
       <div class="card p-4 border border-2 border-start border-success border-top-0 border-bottom-0 border-end-0 rounded-start custom-shadow">
@@ -150,7 +126,11 @@ and how schools manage learning. 
   </div>
 </div>
 
-<div class="container my-5">
+</div>
+
+
+
+{{-- <div class="container my-5">
   <div class="d-flex flex-column flex-md-row align-items-center justify-content-start text-center position-relative mb-5">
 
     <div>
@@ -163,9 +143,15 @@ and how schools manage learning. 
 
 
 </div>
+</div> --}}
+
+
+<div class = "container-fluid mb-5" style="background-image: url('images/features.png'); background-repeat: no-repeat; background-size: contain; min-height: 600px;">
+<div class = "text-center mb-5">
+<h3>Our Features</h3>
 </div>
 
-  <div class="row g-4 mb-5 justify-content-center">
+    <div class="row g-4 mt-2 mb-5 justify-content-center">
 
     <!-- Card 1 -->
     <div class="col-md-6 col-lg-5">
@@ -176,16 +162,16 @@ and how schools manage learning. 
 
         </div>
         <!-- Content -->
-        <div class = "mt-2">
-          <h6 class="fw-bold text-success">Kokokah chat room</h6>
-          <p class="text-muted">
+        <div class = "mt-2" style="margin-bottom: 130px;">
+          <h5>Kokokah chat room</h5>
+          <p>
             We make learning available anywhere — even
             with low internet speeds and everyday
             devices — so no student is left behind.
           </p>
         </div>
 
-        <button class = "btn btn-outline-success text-success ps-5 pe-5 w-100 w-sm-auto" >Start a Conversation</button>
+        <button class = "btn mt-5 w-100 w-sm-auto secondaryButton" type="button">Start a Conversation</button>
 
       </div>
     </div>
@@ -200,8 +186,8 @@ and how schools manage learning. 
         </div>
         <!-- Content -->
         <div class = "mt-2">
-          <h6 class="fw-bold text-success">Academic Content</h6>
-          <p class="text-muted">
+          <h5>Academic Content</h5>
+          <p>
             We deliver up-to-date content across all major subjects,
             aligned with your class group and school’s curriculum.
             Teachers gain ready access to comprehensive lesson notes,
@@ -217,7 +203,7 @@ and how schools manage learning. 
           </ul>
         </div>
 
-        <button class = "btn btn-outline-success text-success ps-5 pe-5 w-100 w-sm-auto" >Get Started</button>
+        <button class = "btn w-100 w-sm-auto secondaryButton" type="button" >Get Started</button>
 
     </div>
     </div>
@@ -238,8 +224,8 @@ and how schools manage learning. 
         </div>
         <!-- Content -->
         <div class = "mt-2">
-          <h6 class="fw-bold text-success">Non-Academic Content</h6>
-          <p class="text-muted">
+          <h5>Non-Academic Content</h5>
+          <p>
             Because real success goes beyond exams,
             our LMS also offers practical skills that
             prepare students for life after school.
@@ -250,7 +236,7 @@ and how schools manage learning. 
           </ul>
         </div>
 
-        <button class = "btn btn-outline-success text-success ps-5 pe-5 w-100 w-sm-auto" >Get Started</button>
+        <button class = "btn w-100 w-sm-auto secondaryButton" type="button" >Get Started</button>
       </div>
     </div>
 
@@ -264,25 +250,21 @@ and how schools manage learning. 
         </div>
         <!-- Content -->
         <div class = "mt-2">
-          <h6 class="fw-bold text-success">AI Powered Academic Assistant</h6>
-          <p class="text-muted">
-            Our built-in AI tutor works like your personal academic ChatGPT.
-            It explains tough concepts, answers questions, and supports both
-            independent study and classroom teaching — anytime, anywhere.
+          <h5>AI Powered Academic Assistant</h5>
+          <p>
+           Our built-in AI tutor works like your personal academic ChatGPT.
+           It explains tough concepts, answers questions, and supports both
+           independent study and classroom teaching — anytime, anywhere.
           </p>
-          <ul>
-            <li>Science</li>
-            <li>Arts</li>
-            <li>Commercial</li>
-            <li>General</li>
-          </ul>
         </div>
-         <button class = "btn btn-outline-success text-success ps-5 pe-5 w-100 w-sm-auto" >Get Started</button>
+        <button class = "btn w-100 w-sm-auto secondaryButton" type="button" style = "margin-top:40px;">Get Started</button>
 
       </div>
     </div>
 
   </div>
+
+</div>
 
   {{-- <div class = "container">
   <div class="row ms-5 me-5 justify-content-center">
@@ -340,7 +322,7 @@ and how schools manage learning. 
         <span class="fs-2">🎭</span>
       </div>
 
-      <h6 class="fw-bold text-success mb-3">Virtual Wallet Integration</h6>
+      <h5>Virtual Wallet Integration</h5>
 
       <p class="mb-4">
         Your money, your way — all within Kokokah.
@@ -353,30 +335,30 @@ and how schools manage learning. 
             Seamless Payments: Deposit funds once and use your wallet to pay for courses, tutoring sessions, STEM bootcamps, or any service on the Kokokah platform.
           </p>
         </li>
+
         <li class="mb-3">
           <p class="mb-0">
             <span class="custom-bullet"></span>
             Flexibility: No need to juggle multiple payment methods — everything happens securely in-app.
           </p>
         </li>
+
         <li class="mb-3">
           <p class="mb-0">
             <span class="custom-bullet"></span>
             Withdrawals: Need your funds back? You can withdraw according to our platform's simple, transparent directives.
           </p>
         </li>
+
       </ul>
 
       <p class="mt-5 mb-4 border-top pt-4">
         For Parents & Students: Parents can preload wallets for their kids, making payments easier and teaching financial responsibility.
       </p>
 
-      {{-- <div class="text-center">
-        <button class="btn btn-outline-dark rounded-pill py-2 px-5 border-2 custom-btn">
-          Top Up Your Wallet
-        </button>
-      </div> --}}
-      <button class = "btn btn-outline-success text-success ps-5 pe-5 w-100 w-sm-auto" >Get Started</button>
+
+      <button class = "btn w-100 w-sm-auto secondaryButton" >Get Started</button>
+
     </div>
   </div>
 </div>
@@ -430,7 +412,7 @@ and how schools manage learning. 
       </ul>
 
       <div class = "d-flex flex-column flex-sm-row gap-2">
-    <button class = "btn text-white ps-4 pe-5 " style = "background:#004A53;">See a Demo</button>
+    <button class = "btn primaryButton" type = "button">See a Demo</button>
 </div>
 
     </div>

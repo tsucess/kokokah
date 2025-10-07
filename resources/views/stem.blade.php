@@ -12,7 +12,7 @@
                 mathematics.
             </p>
                 <div>
-                <button class="btn btn-block w-100 navButton">Register Now</button>
+                <button class="btn btn-block w-100 primaryButton" style="background: #004A53;">Register Now</button>
                 {{-- <button class="btn btn-outline-dark btn-lg">Request a Demo</button> --}}
             </div>
 
@@ -59,12 +59,12 @@
 
 
         <div class="col-12 col-md-8 col-lg-8">
-            <h6 style="color:#004A53;">WHY CHOOSE US</h6>
-            <h1>
+            <h6>WHY CHOOSE US</h6>
+            <h1 class = "fw-bold">
                 Why STEM Labs is <br>
                 the Perfect Choice
             </h1>
-            <p class="text-muted">
+            <p>
                 The world is driven by innovation — and Africa’s future leaders must be ready to
                 create, not just consume.<br>
                  STEM Labs by Kokokah blends physical, in-person
@@ -73,10 +73,10 @@
                 Through boot camps, summer schools, workshops, and mentorship programs, students:
             </p>
             <ul class="list-unstyled">
-                <li class="mb-2"><i class="fa-solid fa-circle-arrow-right" style="color:#F56824;"></i> Build real-world projects in coding, robotics, and engineering</li>
-                <li class="mb-2"><i class="fa-solid fa-circle-arrow-right" style="color:#F56824;"></i> Strengthen problem-solving, collaboration, and critical thinking skills</li>
-                <li class="mb-2"><i class="fa-solid fa-circle-arrow-right" style="color:#F56824;"></i> Connect classroom theory with hands-on experiments</li>
-                <li class="mb-2"><i class="fa-solid fa-circle-arrow-right" style="color:#F56824;"></i> Learn directly from STEM professionals and industry mentors</li>
+                <li class="mb-2"><i class="fa-solid fa-circle-arrow-right" style="color:#F56824;"></i> <b>Build real-world projects in coding, robotics, and engineering</b></li>
+                <li class="mb-2"><i class="fa-solid fa-circle-arrow-right" style="color:#F56824;"></i> <b>Strengthen problem-solving, collaboration, and critical thinking skills</b></li>
+                <li class="mb-2"><i class="fa-solid fa-circle-arrow-right" style="color:#F56824;"></i> <b>Connect classroom theory with hands-on experiments</b></li>
+                <li class="mb-2"><i class="fa-solid fa-circle-arrow-right" style="color:#F56824;"></i> <b>Learn directly from STEM professionals and industry mentors</b></li>
             </ul>
         </div>
 
@@ -85,10 +85,10 @@
 
 
 <div class="container my-5 text-center position-relative">
-    <h2 class="fw-bold mb-5">Programs We Offer</h2>
+    <h2 class = "mb-5">Programs We Offer</h2>
 
     <div class="position-absolute top-50 start-50 translate-middle d-none d-lg-block">
-        <img src="path/to/central-image.svg" alt="Central illustration" class="img-fluid" style="width: 150px;">
+        <img src="images/stems.png" alt="Central illustration" class="img-fluid" style="width: 150px;">
     </div>
 
     <div class="row justify-content-center g-4">
