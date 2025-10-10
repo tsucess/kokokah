@@ -30,11 +30,11 @@
 
 <body>
 
-<div class = "container-fluid">
+{{-- <div class = "container-fluid"> --}}
     <!-- Background Image -->
     <img src="images/kokokah_header.png" class="img-fluid" alt="Banner Image" >
 
-</div>
+{{-- </div> --}}
 
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
 

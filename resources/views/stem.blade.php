@@ -12,7 +12,7 @@
                 mathematics.
             </p>
                 <div>
-                <button class="btn btn-block w-100 primaryButton" style="background: #004A53;">Register Now</button>
+                <button class="btn btn-block w-100 primaryButton" style="background: #004A53;">Register Here</button>
                 {{-- <button class="btn btn-outline-dark btn-lg">Request a Demo</button> --}}
             </div>
 
@@ -84,54 +84,56 @@
 </div>
 
 
+
+
+
+<!-- Programs Section -->
 <div class="container my-5 text-center position-relative">
-    <h2 class = "mb-5">Programs We Offer</h2>
+  <h2 class="mb-5 fw-bold">Programs We Offer</h2>
 
-    <div class="position-absolute top-50 start-50 translate-middle d-none d-lg-block">
-        <img src="images/stems.png" alt="Central illustration" class="img-fluid" style="width: 150px;">
+  <!-- Central Image -->
+  <div class="position-absolute top-50 start-50 translate-middle d-none d-md-block" style="z-index: 3;">
+    <div class=" rounded-3  d-flex align-items-center justify-content-center" style="width: 150px; height: 140px; padding-top:80px;">
+      <img src="images/stems.png" alt="Central Illustration" class="img-fluid" style="width: 100px;"/>
+    </div>
+  </div>
+
+  <!-- Grid of Cards -->
+  <div class="row justify-content-center g-4 position-relative" style="z-index: 1; ">
+    <div class="col-12 col-md-5 col-lg-5">
+      <div class="card text-start p-4 text-white justify-content-center border-0" style="background-color: #2B6870; border-radius: 15px; height: 250px;">
+        <h6 class="text-white fw-bold">STEM Boot Camps</h6>
+        <p class = "text-white">Intensive short-term programs during school breaks</p>
+      </div>
     </div>
 
-    <div class="row justify-content-center g-4">
-        <div class="col-md-5">
-            <div class="card p-3 h-100">
-                <h5 class="fw-bold">STEM Boot Camps</h5>
-                <p class="text-muted">Intensive short-term programs during school breaks</p>
-            </div>
-        </div>
-        <div class="col-md-5">
-            <div class="card p-3 h-100">
-                <h5 class="fw-bold">STEM Boot Camps</h5>
-                <p class="text-muted">Intensive short-term programs during school breaks</p>
-            </div>
-        </div>
-        <div class="col-md-5 offset-md-1">
-            <div class="card p-3 h-100">
-                <h5 class="fw-bold">STEM Boot Camps</h5>
-                <p class="text-muted">Intensive short-term programs during school breaks</p>
-            </div>
-        </div>
-        <div class="col-md-5">
-            <div class="card p-3 h-100">
-                <h5 class="fw-bold">STEM Boot Camps</h5>
-                <p class="text-muted">Intensive short-term programs during school breaks</p>
-            </div>
-        </div>
+    <div class="col-12 col-md-5 col-lg-5">
+      <div class="card text-start p-4 justify-content-center text-white border-0" style="background-color: #CC571E; border-radius: 15px; height: 250px;">
+        <h6 class="text-white fw-bold">STEM Boot Camps</h6>
+        <p class = "text-white">Intensive short-term programs during school breaks</p>
+      </div>
     </div>
+
+    <div class="col-12 col-md-5 col-lg-5">
+      <div class="card text-start p-4 text-white justify-content-center border-0" style="background-color: #FAB391; border-radius: 15px; height: 250px;">
+        <h6 class="text-dark fw-bold">STEM Boot Camps</h6>
+        <p class = "text-dark">Intensive short-term programs during school breaks</p>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-5 col-lg-5">
+      <div class="card text-start p-4 text-white justify-content-center border-0" style="background-color: #FDAF22; border-radius: 15px; height:250px">
+        <h6 class="text-dark fw-bold">STEM Boot Camps</h6>
+        <p class = "text-dark">Intensive short-term programs during school breaks</p>
+      </div>
+    </div>
+  </div>
 </div>
 
-{{-- <div class="container my-5">
-    <div class="row align-items-center bg-dark text-white p-4 rounded">
-        <div class="col-lg-9 mb-3 mb-lg-0">
-            <h5 class="fw-bold">JOIN OVER 5555 students passionate about science, technology, or engineering - no prior experience needed! We design beginner-friendly and advanced tracks to meet every student where they are.</h5>
-        </div>
-        <div class="col-lg-3 text-lg-end">
-            <button class="btn btn-outline-light btn-lg">Register for your Next Boot Camp</button>
-        </div>
-    </div>
-</div> --}}
 
-<div class = "row">
-    <div class = "d-flex justify-content-between">
+
+<div class="container-fluid" >
+    <div class = "d-flex justify-content-between" style="width:100%;">
 
 <div class = "col-12 col-md-8 col-lg-8 p-5">
     <p style="color:#004A53;">WHO CAN JOIN</p>
@@ -144,7 +146,7 @@
 </div>
 
 <div class = "col-12 col-md-4 col-lg-4 mt-4 p-5">
-    <button class="btn btn-block w-100 navButton">Register Now</button>
+    <button class="btn text-dark w-100 primaryButton" style="button">Register for the Next Boot Camp</button>
 </div>
 
     </div>

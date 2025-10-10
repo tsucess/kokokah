@@ -252,21 +252,46 @@
           <form>
         <div class="mb-4 form-floating">
       <input type="text" class="form-control" id="fullname" placeholder="majorsignature">
-      <label for="fullname">Enter Full Name</label>
+      <label for="parentname">Enter Parent/Guardian Name</label>
     </div>
 
     <div class="mb-4 form-floating">
       <input type="email" class="form-control" id="email" placeholder="majorsignature@gmail.com">
-      <label for="Email">Enter Email Address</label>
+      <label for="parentemail">Enter Parent/Guardian Name Email Address</label>
     </div>
 
-    <div class="mb-3 form-floating">
-      <input type="date" class="form-control" id="date">
-      <label for="date">Enter Date of Birth</label>
+    <div class="mb-4 form-floating">
+      <input type="tel" class="form-control" id="email" placeholder="+23412345678">
+      <label for="phonenumber">Enter Parent/Guardian Name Phone Number</label>
     </div>
+
+    <div class="mb-4 form-floating">
+      <input type="text" class="form-control" id="fullname" placeholder="Enter enrolled school">
+      <label for="enrolledschool">Enter Currently Enrolled School</label>
+    </div>
+
+    <div class="mb-4 form-floating">
+      <input type="text" class="form-control" id="fullname" placeholder="Enter address of enrolled school">
+      <label for="contactenrolledschool">Enter Contact Address of Currently Enrolled School</label>
+    </div>
+
+        <div class="mb-4">
+              <label class="gender-label">Are you a Kokokah User?</label>
+              <div class="d-flex align-items-center gap-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="user" id="yes" value="yes" checked>
+                  <label class="form-check-label" for="male">Yes</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="gender" id="no" value="no">
+                  <label class="form-check-label" for="female">No</label>
+                </div>
+              </div>
+            </div>
+
 
     <div class="mb-4">
-              <label class="gender-label">Gender</label>
+              <label class="gender-label">Participated in previous Passnownow Programs?</label>
               <div class="d-flex align-items-center gap-3">
                 <div class="form-check">
                   <input class="form-check-input" type="radio" name="gender" id="male" value="male" checked>
@@ -280,38 +305,14 @@
             </div>
 
 
-            <div class="mb-4 form-floating">
-    <select class="form-control" id="country" name="country" placeholder="Select a Country">
-        <option value="" disabled selected>Select STEM Course</option>
-        <option value="us">Robotics</option>
-        <option value="ca">Coding</option>
-        <option value="mx">Mathematics</option>
-    </select>
-    <label for="country">Select Country</label>
-</div>
 
-<div class="mb-4 form-floating">
-      <input type="text" class="form-control" id="email" placeholder="e.g">
-      <label for="future">Future Career Interest</label>
-    </div>
-
-<div class="mb-4 form-floating">
-      <input type="text" class="form-control" id="email" placeholder="state">
-      <label for="state">Enter State of Residence</label>
-    </div>
-
-
-<div class="mb-4 form-floating">
-      <input type="text" class="form-control" id="email" placeholder="mokulolu">
-      <label for="contact">Enter Contact Address</label>
-    </div>
 
 </form>
 
 {{-- <button type="submit" class="btn-next">Next</button> --}}
 
-<button type="button" class="btn w-100 primaryButton">Next</button>
-
+<button type="button" class="btn w-100 primaryButton">Proceed to Make Payment</button>
+<button type="button" class="btn mt-3 w-100 secondaryButton">Previous</button>
 
             {{-- <div class="small-footer mt-4">
 
@@ -334,7 +335,7 @@
             <small>© Copyright Kokokah 2025. All Rights Reserved </small>
         </div>
 
-        <div class = "col-12 col-md-5 col-lg-5">
+        <div class = "col-12 col-md-5 col-lg-5  text-end">
             <small>License | More Themes | Documentation | Support</small>
         </div>
 

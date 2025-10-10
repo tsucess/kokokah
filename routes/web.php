@@ -56,8 +56,8 @@ Route::get('/signup', function () {
     return view('admin.signup');
 });
 
-Route::get('/login', function () {
-    return view('admin.signin');
+Route::get('/payment', function () {
+    return view('admin.payment');
 });
 
 Route::get('/dashboard', function () {

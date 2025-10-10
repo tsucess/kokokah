@@ -123,8 +123,8 @@ font-size: 14px;
 
 .primaryButton:hover
 {
-    background: #ffefd9;
-    color: var(--color-bg-banner);
+    background: #FDBC47;
+    color: #fff;
 }
 
 .secondaryButton
@@ -190,6 +190,19 @@ a.nav-link.active
     height: 27px;
   }
 
+
+  .nav-pills .nav-link.active {
+  background-color: #FDAF22 !important;
+  color: white !important;
+}
+
+@media (min-width: 768px) {
+  .row.g-1 > div:nth-child(1),
+  .row.g-1 > div:nth-child(2) {
+    margin-bottom: 1px;
+
+  }
+}
 
 
 
