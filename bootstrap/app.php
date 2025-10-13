@@ -12,8 +12,35 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->alias([
+            'role' => \App\Http\Middleware\RoleMiddleware::class,
+            'rate.limit' => \App\Http\Middleware\RateLimitMiddleware::class,
+            'security.headers' => \App\Http\Middleware\SecurityHeadersMiddleware::class,
+        ]);
+
+        // Apply global middleware
+        $middleware->append(\App\Http\Middleware\SecurityHeadersMiddleware::class);
+
+        // Apply rate limiting to API routes
+        $middleware->group('api', [
+            'rate.limit:api,60', // 60 requests per minute
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        // Handle API exceptions with consistent JSON responses
+        $exceptions->render(function (Throwable $e, $request) {
+            if ($request->is('api/*') || $request->expectsJson()) {
+                return \App\Exceptions\ApiExceptionHandler::handle($e, $request);
+            }
+        });
+
+        // Report exceptions to external services in production
+        $exceptions->report(function (Throwable $e) {
+            if (app()->environment('production')) {
+                // Log to external services like Sentry, Bugsnag, etc.
+                if (config('logging.channels.sentry')) {
+                    app('sentry')->captureException($e);
+                }
+            }
+        });
     })->create();

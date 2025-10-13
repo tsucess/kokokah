@@ -67,13 +67,6 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 # API ENDPOINTS DOCUMENTATION
 
-# 🔐 Authentication API Documentation
-
-## Base URL
-http://127.0.0.1:8000/api
-
-
-
 Perfect 👍 Here’s the **Authentication API Documentation fully written in Markdown** (you can copy-paste directly into your docs or Postman README):
 
 ```markdown
@@ -81,7 +74,7 @@ Perfect 👍 Here’s the **Authentication API Documentation fully written in Ma
 
 ## Base URL
 
-[http://127.0.0.1:8000/api](http://127.0.0.1:8000/api)
+[http://127.0.0.1:8000/api] 
 
 ---
 

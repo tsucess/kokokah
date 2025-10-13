@@ -13,11 +13,41 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Seed basic data
+        $this->call([
+            LevelSeeder::class,
+            TermSeeder::class,
+            TagSeeder::class,
+            BadgeSeeder::class,
+            SettingSeeder::class,
+        ]);
+
+        // Create test users
+        User::factory()->create([
+            'first_name' => 'Admin',
+            'last_name' => 'User',
+            'email' => 'admin@kokokah.com',
+            'role' => 'admin',
+            'is_active' => true,
+        ]);
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'first_name' => 'John',
+            'last_name' => 'Instructor',
+            'email' => 'instructor@kokokah.com',
+            'role' => 'instructor',
+            'is_active' => true,
         ]);
+
+        User::factory()->create([
+            'first_name' => 'Jane',
+            'last_name' => 'Student',
+            'email' => 'student@kokokah.com',
+            'role' => 'student',
+            'is_active' => true,
+        ]);
+
+        // Create additional test users
+        User::factory(10)->create();
     }
 }
