@@ -32,8 +32,8 @@ return new class extends Migration
         // Add indexes for course_reviews table (admin queries)
         if (Schema::hasTable('course_reviews')) {
             Schema::table('course_reviews', function (Blueprint $table) {
-                $table->index(['status', 'created_at'], 'idx_reviews_status_created');
-                $table->index(['course_id', 'status'], 'idx_reviews_course_status');
+                $table->index(['course_id', 'created_at'], 'idx_reviews_course_created');
+                $table->index(['rating', 'created_at'], 'idx_reviews_rating_created');
             });
         }
 
@@ -78,8 +78,8 @@ return new class extends Migration
         // Drop course_reviews indexes
         if (Schema::hasTable('course_reviews')) {
             Schema::table('course_reviews', function (Blueprint $table) {
-                $table->dropIndex('idx_reviews_status_created');
-                $table->dropIndex('idx_reviews_course_status');
+                $table->dropIndex('idx_reviews_course_created');
+                $table->dropIndex('idx_reviews_rating_created');
             });
         }
 

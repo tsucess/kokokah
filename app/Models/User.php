@@ -30,7 +30,12 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_active',
         'identifier',
         'contact',
-        'gender'
+        'gender',
+        'level_id',
+        'date_of_birth',
+        'address',
+        'profile_photo',
+        'email_verified_at'
     ];
 
     /**
@@ -57,6 +62,7 @@ class User extends Authenticatable implements MustVerifyEmail
     // }
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'date_of_birth' => 'date',
         'is_active' => 'boolean',
         'password' => 'hashed',
     ];

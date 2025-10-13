@@ -66,7 +66,7 @@ return new class extends Migration
 
         Schema::table('assignments', function (Blueprint $table) {
             // Add assignment metadata
-            $table->integer('max_score')->default(100)->after('due_date');
+            $table->integer('max_score')->default(100)->after('deadline');
             $table->json('allowed_file_types')->nullable()->after('max_score'); // ['pdf', 'doc', 'docx']
             $table->integer('max_file_size_mb')->default(10)->after('allowed_file_types');
         });

@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Seed basic data
+        // Seed basic data first
         $this->call([
             LevelSeeder::class,
             TermSeeder::class,
@@ -22,32 +22,17 @@ class DatabaseSeeder extends Seeder
             SettingSeeder::class,
         ]);
 
-        // Create test users
-        User::factory()->create([
-            'first_name' => 'Admin',
-            'last_name' => 'User',
-            'email' => 'admin@kokokah.com',
-            'role' => 'admin',
-            'is_active' => true,
+        // Seed users with proper roles and data
+        $this->call([
+            AdminUserSeeder::class,
+            StudentUserSeeder::class,
         ]);
 
-        User::factory()->create([
-            'first_name' => 'John',
-            'last_name' => 'Instructor',
-            'email' => 'instructor@kokokah.com',
-            'role' => 'instructor',
-            'is_active' => true,
-        ]);
-
-        User::factory()->create([
-            'first_name' => 'Jane',
-            'last_name' => 'Student',
-            'email' => 'student@kokokah.com',
-            'role' => 'student',
-            'is_active' => true,
-        ]);
-
-        // Create additional test users
-        User::factory(10)->create();
+        echo "\n🎉 Database seeding completed successfully!\n";
+        echo "📊 Total users created:\n";
+        echo "   👑 Admins: " . User::where('role', 'admin')->count() . "\n";
+        echo "   👨‍🏫 Instructors: " . User::where('role', 'instructor')->count() . "\n";
+        echo "   👨‍🎓 Students: " . User::where('role', 'student')->count() . "\n";
+        echo "   📈 Total: " . User::count() . "\n\n";
     }
 }
