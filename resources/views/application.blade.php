@@ -56,7 +56,7 @@
       height: 3rem;
     }
 
-        .form-floating {
+    .form-floating {
       position: relative;
       margin-bottom: 1rem;
     }
@@ -77,6 +77,7 @@
       font-weight: 600;
       font-size: 0.85rem;
       padding: 0 .4rem;
+      background-color: white;
       /* top: -0.6rem;
       left: 0.9rem; */
       position: absolute;
@@ -170,27 +171,27 @@
         <form>
         <div class="mb-4 form-floating">
       <input type="text" class="form-control" id="fullname" placeholder="majorsignature">
-      <label for="parentname">Enter Parent/Guardian Name</label>
+      <label for="parentname" style = "margin-left:10px; margin-top: -25px;">Enter Parent/Guardian Name</label>
     </div>
 
     <div class="mb-4 form-floating">
       <input type="email" class="form-control" id="email" placeholder="majorsignature@gmail.com">
-      <label for="parentemail">Enter Parent/Guardian Name Email Address</label>
+      <label for="parentemail" style = "margin-left:10px; margin-top: -25px;">Enter Parent/Guardian Name Email Address</label>
     </div>
 
     <div class="mb-4 form-floating">
       <input type="tel" class="form-control" id="email" placeholder="+23412345678">
-      <label for="phonenumber">Enter Parent/Guardian Name Phone Number</label>
+      <label for="phonenumber" style = "margin-left:10px; margin-top: -25px;">Enter Parent/Guardian Name Phone Number</label>
     </div>
 
     <div class="mb-4 form-floating">
       <input type="text" class="form-control" id="fullname" placeholder="Enter enrolled school">
-      <label for="enrolledschool">Enter Currently Enrolled School</label>
+      <label for="enrolledschool" style = "margin-left:10px; margin-top: -25px;">Enter Currently Enrolled School</label>
     </div>
 
     <div class="mb-4 form-floating">
       <input type="text" class="form-control" id="fullname" placeholder="Enter address of enrolled school">
-      <label for="contactenrolledschool">Enter Contact Address of Currently Enrolled School</label>
+      <label for="contactenrolledschool" style = "margin-left:10px; margin-top: -25px;">Enter Contact Address of Currently Enrolled School</label>
     </div>
 
         <div class="mb-4">
@@ -221,9 +222,6 @@
                 </div>
               </div>
             </div>
-
-
-
 
 </form>
 

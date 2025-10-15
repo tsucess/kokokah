@@ -203,7 +203,7 @@
       font-weight: 600;
       font-size: 0.85rem;
       padding: 0 .4rem;
-      background-color: white;
+      background: white;
       top: -0.6rem;
       left: 0.9rem;
       position: absolute;

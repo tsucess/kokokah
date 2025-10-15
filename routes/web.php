@@ -76,6 +76,14 @@ Route::get('/application', function () {
     return view('application');
 });
 
+Route::get('/adsignup', function () {
+    return view('admin.adminsignup');
+});
+
+Route::get('/becometutor', function () {
+    return view('becometutor');
+});
+
 // Route::get('/dashboard', function () {
 //     return view('admin.dashboardtemp');
 // });

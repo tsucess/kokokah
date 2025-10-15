@@ -790,3 +790,79 @@ font-weight: normal;
     .proceed-btn:hover {
       background-color: #e0a000;
     }
+
+
+    /* faq part */
+.faq-section {
+        padding: 40px 0;
+      }
+
+      .faq-title {
+        color: #004a53;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .accordion-item {
+        border: none;
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 15px;
+        box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      .accordion-button {
+        background-color: #fff;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 16px;
+        color: #222;
+        padding: 1.25rem 3rem 1.25rem 1.25rem;
+        position: relative;
+        box-shadow: none;
+      }
+
+      /* Remove default arrow */
+      .accordion-button::after {
+        display: none !important;
+      }
+
+      /* Add circular indicator */
+      .accordion-button::before {
+        content: "";
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 24px;
+        height: 24px;
+        background-color: #f2f2f2;
+        border-radius: 50%;
+        transition: background-color 0.3s ease;
+      }
+
+      /* When opened */
+      .accordion-button:not(.collapsed)::before {
+        background-color: #ffb400; /* orange indicator */
+      }
+
+      .accordion-button:not(.collapsed) {
+        background-color: #f8f8f8;
+        box-shadow: none;
+      }
+
+      .accordion-body {
+        font-size: 15px;
+        color: #808080;
+        padding: 0 1.25rem 1rem 1.25rem;
+      }
+
+      @media (max-width: 768px) {
+        .accordion-button {
+          font-size: 15px;
+        }
+        .accordion-body {
+          font-size: 14px;
+        }
+      }
