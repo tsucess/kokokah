@@ -134,11 +134,11 @@ We’ve gone from limited resources to limitless possibilities. From local impac
 </div>
 </div>
 
-<div class = "container-fluid" style="padding-top: 80px; padding-bottom:90px; background-image: url('images/kokokah_best.png'); background-size: cover; background-position:top left;  background-repeat: no-repeat;">
+<div class = "container-fluid" style="padding-top: 60px; padding-bottom:100px; background-image: url('images/kokokah_best.png'); background-size: cover; background-repeat: no-repeat;">
 
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center mt-3">
 
-    <div>
+    <div class="mt-5">
         <h3 class = "text-center">Our Core Values</h3>
         <p class = "text-center">
             Learning should be accessible, engaging, and

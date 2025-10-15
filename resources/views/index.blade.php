@@ -3,8 +3,8 @@
 @section('content')
 <div class = "container-fluid  banner">
 
-<div class = "row mt-3 p-5 ">
-<div class = "col-12 col-md-8 col-lg-8  my-auto">
+<div class = "row mt-3 mb-5 p-5 ">
+<div class = "col-12 col-md-8 col-lg-8 my-auto">
 <h1 class = "heroheading">
  Quality, Mobile-First, Pay-as-you-Go, Curriculum Based
  Lessons & Practice Tests for Secondary School Students,
@@ -32,7 +32,7 @@
 
 
 
-<div class = "container mb-5">
+<div class = "container  mb-5">
 <div class = "row mt-4  bg-white">
 <div class = "col-12 col-md-6 col-lg-6 my-auto">
 <img src = "images/Video.png" class = "img-fluid">
@@ -194,8 +194,8 @@
 </div> --}}
 
 
-<div class = "container-fluid pt-5  text-center" style = "min-height:700px;  background-image: url('images/kokokah_best.png'); background-repeat: no-repeat;  background-size: contain;">
-
+{{-- <div class = "container-fluid pt-5  text-center" style = "min-height:700px;  background-image: url('images/kokokah_best.png'); background-repeat: no-repeat;  background-size: contain;"> --}}
+<div class = "container-fluid pt-5  text-center" style = "min-height:700px;  background-repeat: no-repeat;  background-size: cover;">
 <div class = "row">
             <h1 class = "mb-2">
                 Why Kokokah Is the Best
@@ -521,7 +521,7 @@ educators connect, learn, and thrive.
 
 
 
-  <div class="container mt-5 text-center py-5" style="min-height:570px; background-image: url('images/trophys.png'); background-repeat: no-repeat; background-size: cover; background-position: center;">
+  <div class="container text-center mt-5 py-5" style=" min-height:650px; background-image: url('images/trophys.png'); background-repeat: no-repeat; background-size: cover; background-position: center;">
 
   <!-- Section Title -->
   <div class="row justify-content-center mb-5">

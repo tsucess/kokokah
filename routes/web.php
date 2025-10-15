@@ -53,15 +53,27 @@ Route::get('/login', function () {
 });
 
 Route::get('/signup', function () {
-    return view('admin.signup');
+    return view('signup');
 });
 
-Route::get('/payment', function () {
-    return view('admin.payment');
+Route::get('/signup2', function () {
+    return view('signup2');
 });
 
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
+});
+
+Route::get('/market', function () {
+    return view('market');
+});
+
+Route::get('/profile', function () {
+    return view('profile');
+});
+
+Route::get('/application', function () {
+    return view('application');
 });
 
 // Route::get('/dashboard', function () {

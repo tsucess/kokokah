@@ -32,13 +32,13 @@
 
 {{-- <div class = "container-fluid"> --}}
     <!-- Background Image -->
-    <img src="images/kokokah_header.png" class="img-fluid" alt="Banner Image" >
+    <img src="images/kokokah_header.png" class="img-fluid" alt="Banner Image" style="width:100%;">
 
 {{-- </div> --}}
 
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
 
-        <div class="container">
+        <div class="container-fluid " style = "padding-left: 90px; padding-right:90px;">
 
             <a class="navbar-brand" href="#">
             <img src="{{ asset('images/Kokokah_Logo.png') }}" alt="">
