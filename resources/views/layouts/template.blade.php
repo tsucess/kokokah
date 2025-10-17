@@ -32,13 +32,13 @@
 
 {{-- <div class = "container-fluid"> --}}
     <!-- Background Image -->
-    <img src="images/kokokah_header.png" class="img-fluid" alt="Banner Image" style="width:100%;">
+    <img src="images/kokokah_header.png" class="img-fluid" alt="Banner Image" style="width:100%; height:150px;">
 
 {{-- </div> --}}
 
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
 
-        <div class="container-fluid " style = "padding-left: 90px; padding-right:90px;">
+        <div class="container-fluid " style = "padding-left: 60px; padding-right:60px;">
 
             <a class="navbar-brand" href="#">
             <img src="{{ asset('images/Kokokah_Logo.png') }}" alt="">
@@ -48,8 +48,8 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent"  >
-            <ul class="navbar-nav me-auto mb-2 ms-3 mb-lg-0 ">
+        <div class="collapse navbar-collapse " id="navbarSupportedContent"  >
+            <ul class="navbar-nav mx-auto mb-2  mb-lg-0 ">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/" >Home</a>
                 </li>
@@ -62,19 +62,31 @@
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Products</a>
 
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Page 1</a></li>
-                            <li><a class="dropdown-item" href="#">Page 2</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Page 3</a></li>
+                            <li><a class="dropdown-item" href="/lms">LMS</a></li>
+                            <li><a class="dropdown-item" href="/sms">SMS</a></li>
+                            {{-- <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Page 3</a></li> --}}
                         </ul>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Koodies</a>
+                    <a class="nav-link" href="/koodies">Koodies</a>
+                </li>
+
+                {{-- <li class="nav-item">
+                    <a class="nav-link" href="/stem">Stem</a>
                 </li>
 
                 <li class="nav-item">
-                   <a class="nav-link" href="#">Contact Us</a>
+                    <a class="nav-link" href="/market">Market Place</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/pricing">Pricing</a>
+                </li> --}}
+
+                <li class="nav-item">
+                   <a class="nav-link" href="/contact">Contact Us</a>
                 </li>
           </ul>
 
@@ -190,21 +202,31 @@
   <i class="fas fa-circle fa-stack-2x"></i>
   <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
 </span>
+
+<span class="fa-stack ">
+  <i class="fas fa-circle fa-stack-2x"></i>
+  <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+</span>
+
+<span class="fa-stack ">
+  <i class="fas fa-circle fa-stack-2x"></i>
+  <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+</span>
         </div>
 
 
     </div>
 
 
-    <hr class = "w-75 text-white">
+    <hr class = "w-75 ms-2 text-white">
 
     <div class = "row">
         <div class="d-flex justify-content-between">
-            <div>
+            <div class = "ms-3">
                     <p>Copyright &copy; 2025 All rights reserved </p>
             </div>
 
-            <div>
+            <div class = "pe-4">
             <p>
                 <a href="#" class = "me-2 text-white">Terms and Conditions </a> |
                 <a href="#" class = "text-white">Privacy Policy</a>

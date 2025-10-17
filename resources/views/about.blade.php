@@ -2,7 +2,7 @@
 
 @section('content')
 <div class = "container-fluid p-5 banner">
-<h1 class = "text-center" style = "font-weight: bolder;">
+<h1 class = "heroheading text-center" style = "font-weight: bolder;">
 Kokokah is Africa’s Leading Digital
 Learning and Management Platform for
  Secondary Schools
@@ -41,16 +41,17 @@ Learning and Management Platform for
 <div class = "row">
 
 <div class = "col-12 col-md-6 col-lg-6 my-auto">
-    <h4>
+    <h5 class = "mb-3">
         Our Mission & Vision
-    </h4>
+    </h5>
 
 
 <div class="d-flex align-items-center">
     <div class="outer-square me-3">
         <div class="inner-circle"></div>
     </div>
-    <span class="fw-bold" style="color:#004A53;">Our Vision</span>
+    {{-- <span class="fw-bold" style="color:#004A53;">Our Vision</span> --}}
+        <h6 style="color:#004A53;">Our Vision</h6>
 
 </div>
 <p class = "heropraragraph ms-5">
@@ -62,7 +63,8 @@ Learning and Management Platform for
     <div class="outer-square me-3">
         <div class="inner-circle"></div>
     </div>
-    <span class="fw-bold" style="color:#004A53;">Our Mision</span>
+    {{-- <span class="fw-bold" style="color:#004A53;">Our Mision</span> --}}
+    <h6 style="color:#004A53;">Our Mision</h6>
 
 </div>
 <p class = "heroparagraph ms-5">
@@ -92,8 +94,8 @@ Learning and Management Platform for
 <div class = "container">
 <div class = "row mt-4 bg-white">
 
-    <div class ="justify-content-center">
-        <h3 class = "fw-bold text-center">Our Story</h3>
+    <div class ="mb-3 justify-content-center">
+        <h4 class = "fw-bold text-center">Our Story</h4>
     </div>
 
 <div class = "col-12 col-md-6 col-lg-6 my-auto">
@@ -134,13 +136,13 @@ We’ve gone from limited resources to limitless possibilities. From local impac
 </div>
 </div>
 
-<div class = "container-fluid" style="padding-top: 60px; padding-bottom:100px; background-image: url('images/kokokah_best.png'); background-size: cover; background-repeat: no-repeat;">
+<div class = "container-fluid" style="padding-top: 80px; padding-bottom:100px; background-image: url('images/kokokah_best.png'); background-size: cover; background-repeat: no-repeat;">
 
     <div class="d-flex justify-content-center mt-3">
 
-    <div class="mt-5">
-        <h3 class = "text-center">Our Core Values</h3>
-        <p class = "text-center">
+    <div class="">
+        <h4 class = "text-center">Our Core Values</h4>
+        <p class = "text-center pe-5">
             Learning should be accessible, engaging, and
             empowering for every student. These values guide
             how we
@@ -164,7 +166,7 @@ We’ve gone from limited resources to limitless possibilities. From local impac
         </div>
         <!-- Content -->
         <div class="mt-3">
-          <h5 class="fw-bold text-success">Accessiblility</h5>
+          <h6>Accessiblility</h6>
           <p class="text-muted">
             We make learning available anywhere — even
             with low internet speeds and everyday
@@ -183,7 +185,7 @@ We’ve gone from limited resources to limitless possibilities. From local impac
         </div>
         <!-- Content -->
         <div class="mt-3">
-          <h5 class="fw-bold text-success">Innovation with purpose</h5>
+          <h6>Innovation with purpose</h6>
           <p class="text-muted">
             Every feature we create — from our AI integration to
             our marketplace — solves real classroom and study challenges.
@@ -207,7 +209,7 @@ We’ve gone from limited resources to limitless possibilities. From local impac
         </div>
         <!-- Content -->
         <div class="mt-3">
-          <h5 class="fw-bold text-success">Excellence in learning</h5>
+          <h6>Excellence in learning</h6>
           <p class="text-muted">
                 We align our platform to African curricula and
                  global standards, ensuring students get the best
@@ -227,7 +229,7 @@ We’ve gone from limited resources to limitless possibilities. From local impac
         </div>
         <!-- Content -->
         <div class="mt-3">
-          <h5 class="fw-bold text-success">Integrity & Trust</h5>
+          <h6>Integrity & Trust</h6>
           <p class="text-muted">
             We protect user data, offer transparent pricing,
             and provide safe, moderated spaces for learning.
@@ -251,7 +253,7 @@ We’ve gone from limited resources to limitless possibilities. From local impac
         </div>
         <!-- Content -->
         <div class="mt-3">
-          <h5 class="fw-bold text-success">Community & Collaboration</h5>
+          <h6>Community & Collaboration</h6>
           <p class="text-muted">
             We connect students, parents, and educators,
             creating a supportive learning ecosystem that
@@ -272,7 +274,7 @@ We’ve gone from limited resources to limitless possibilities. From local impac
         </div>
         <!-- Content -->
         <div class="mt-3">
-          <h5 class="fw-bold text-success">Lifelong Growth</h5>
+          <h6>Lifelong Growth</h6>
           <p class="text-muted">
             Through Koodies and our learning tools, we prepare students
             not only for examinations, but for real-world situations and

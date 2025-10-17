@@ -1,5 +1,5 @@
-@extends('admin.dashboardtemp')
-
+{{-- @extends('admin.dashboardtemp') --}}
+@extends('users.usertemplate')
 @section('content')
 <main>
     <div class="container">

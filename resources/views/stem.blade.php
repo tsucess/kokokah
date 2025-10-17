@@ -2,8 +2,8 @@
 @section('content')
 <div class="container-fluid banner">
     <div class="row align-items-center">
-        <div class="col-12 col-md-7 col-lg-7 p-5 ">
-            <h2>Build your Child's Future with STEM</h2>
+        <div class="col-12 col-md-8 col-lg-8 p-5 my-auto">
+            <h1 class = "heroheading">Build your Child's Future with STEM</h1>
 
             <p>
                 Description about STEM camps, summer
@@ -12,7 +12,7 @@
                 mathematics.
             </p>
                 <div>
-                <button class="btn btn-block w-100 primaryButton" style="background: #004A53;">Register Here</button>
+                <button class="btn btn-block w-100 tertiaryButton">Register Here</button>
                 {{-- <button class="btn btn-outline-dark btn-lg">Request a Demo</button> --}}
             </div>
 
@@ -37,7 +37,7 @@
 
         </div>
 
-        <div class="col-12 col-md-5 col-lg-5 text-center p-5">
+        <div class="col-12 col-md-4 col-lg-4 text-center p-5">
             <img src="images/stem.png" alt="stem illustration" class="img-fluid ">
         </div>
     </div>
@@ -59,11 +59,8 @@
 
 
         <div class="col-12 col-md-8 col-lg-8">
-            <h6>WHY CHOOSE US</h6>
-            <h1 class = "fw-bold">
-                Why STEM Labs is <br>
-                the Perfect Choice
-            </h1>
+            <h6 style = "font-family: rubik; font-weight:200;">WHY CHOOSE US</h6>
+            <h4>Why STEM Labs is the Perfect Choice</h4>
             <p>
                 The world is driven by innovation — and Africa’s future leaders must be ready to
                 create, not just consume.<br>
@@ -89,7 +86,7 @@
 
 <!-- Programs Section -->
 <div class="container my-5 text-center position-relative">
-  <h2 class="mb-5 fw-bold">Programs We Offer</h2>
+  <h4 class="mb-5">Programs We Offer</h4>
 
   <!-- Central Image -->
   <div class="position-absolute top-50 start-50 translate-middle d-none d-md-block" style="z-index: 3;">
@@ -132,21 +129,21 @@
 
 
 
-<div class="container-fluid" >
+<div class="container-fluid">
     <div class = "d-flex justify-content-between" style="width:100%;">
 
 <div class = "col-12 col-md-8 col-lg-8 p-5">
-    <p style="color:#004A53;">WHO CAN JOIN</p>
+    <p style="color:#004A53; font-family:rubik; font-weight:400;">WHO CAN JOIN</p>
     <h5>
-        JSS1 to SSS3 students passionate about science, technology, or<br>
-        engineering — no prior experience needed! We design beginner-<br>
+        JSS1 to SSS3 students passionate about science, technology, or
+        engineering — no prior experience needed! We design beginner-
         friendly
         and advanced tracks to meet every student where they are.
     </h5>
 </div>
 
 <div class = "col-12 col-md-4 col-lg-4 mt-4 p-5">
-    <button class="btn text-dark w-100 primaryButton" style="button">Register for the Next Boot Camp</button>
+    <button class="btn text-dark fw-bold w-100 primaryButton" style="button">Register for the Next Boot Camp</button>
 </div>
 
     </div>

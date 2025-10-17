@@ -90,15 +90,15 @@ Route::get('/becometutor', function () {
 
 
 Route::get('/usersdashboard', function () {
-    return view('admin.usersdashboard');
+    return view('users.usersdashboard');
 });
 
 Route::get('/userclass', function () {
-    return view('admin.userclass');
+    return view('users.userclass');
 });
 
 Route::get('/usersubject', function () {
-    return view('admin.usersubject');
+    return view('users.usersubject');
 });
 
 Route::get('/termsubject', function () {
@@ -139,7 +139,7 @@ Route::get('/aduser', function () {
 });
 
 Route::get('/activity', function () {
-    return view('admin.useractivity');
+    return view('users.useractivity');
 });
 
 Route::get('/allcourses', function () {
@@ -156,9 +156,9 @@ Route::get('/createcourse', function () {
 });
 
 Route::get('/userkoodies', function () {
-    return view('admin.userkoodies');
+    return view('users.userkoodies');
 });
 
 Route::get('/userkoodiesaudio', function () {
-    return view('admin.userkoodiesaudio');
+    return view('users.userkoodiesaudio');
 });

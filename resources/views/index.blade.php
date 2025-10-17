@@ -40,9 +40,9 @@
 
 
 <div class = "col-12 col-md-6 col-lg-6 pt-2">
-    <h1>
+    <h3>
         Kokokah for All.
-    </h1>
+    </h3>
     <p class = "heroparagraph">
         Kokokah is a smart, pan-African learning and school management platform
         built for the realities of African education. Whether you’re a JSS1 student
@@ -195,11 +195,11 @@
 
 
 {{-- <div class = "container-fluid pt-5  text-center" style = "min-height:700px;  background-image: url('images/kokokah_best.png'); background-repeat: no-repeat;  background-size: contain;"> --}}
-<div class = "container-fluid pt-5  text-center" style = "min-height:700px;  background-repeat: no-repeat;  background-size: cover;">
+<div class = "container-fluid pt-5  text-center" style = "min-height:600px;  background-repeat: no-repeat;  background-size: cover;">
 <div class = "row">
-            <h1 class = "mb-2">
+            <h4 class = "mb-2">
                 Why Kokokah Is the Best
-            </h1>
+            </h4>
 
             <p>
                 Kokokah combines mobile learning, exam preparation and a school
@@ -304,7 +304,7 @@
 
 <div class = "container-fluid  bg-container-fluid" style="background:url('images/background.png'); background-repeat:no-repeat; background-size:contain;">
 
-<h1 >Our Products</h1>
+<h3>Our Products</h3>
 
 <p>
 Kokokah brings you a suite of powerful learning tools
@@ -321,16 +321,16 @@ educators connect, learn, and thrive.
 <div class = "container mt-5">
     <div class = "row flex-column-reverse flex-md-row m-2 ourproduct1" style = "background: #F56824;">
 
-        <div class = "col-12 col-md-6 col-lg-6 p-5">
-            <h1> Passnownow </h1>
+        <div class = "col-12 col-md-7 col-lg-7 p-5">
+            <h5 class = "text-white"> Passnownow </h5>
 
-        <p>
+        <p class = "text-white">
             Kokokah houses an exam preparatory platform
             where African students can prepare adequately
             for both local and international examinations.
         </p>
 
-        <p>
+        <p class = "text-white">
             WAEC - NECO - JAMB - GCE - GMAT - SAT - TOEFL - IELTS - GRE - ACT
         </p>
 
@@ -340,7 +340,7 @@ educators connect, learn, and thrive.
         </div>
 
 
-          <div class="col-12 col-lg-6 col-md-6 text-center p-5">
+          <div class="col-12 col-lg-5 col-md-5 text-center p-5">
         <img src="images/exam_prep.png" class="img-fluid w-100 w-md-75" alt="Exam Prep">
     </div>
 
@@ -354,21 +354,21 @@ educators connect, learn, and thrive.
 <div class="row ourproduct2" style = "border-color: #FDAF22; border-width:2px;">
 
     <!-- Image Section -->
-    <div class="col-12 col-md-6 col-lg-6 text-center">
+    <div class="col-12 col-md-6 col-lg-6">
         <img src="images/School Admin.png" class="img-fluid" alt="School Admin">
     </div>
 
     <!-- Text Section -->
-    <div class="col-12 col-md-6 col-lg-6 mt-5 mb-5">
-        <h3>School Management System (SMS)</h3>
+    <div class="col-12 col-md-6 col-lg-6  my-auto">
+        <h5>School Management System (SMS)</h5>
 
-        <p>
+        <p class = "pe-5">
             Simplify school administration with fee
             tracking, digital report cards, attendance, and student
             portals — all in one secure platform.
         </p>
 
-        <button class = "btn primaryButton" type="button">Explore SMS</button>
+        <button class = "btn mb-4 primaryButton" type="button">Explore SMS</button>
 
     </div>
 </div>
@@ -378,10 +378,10 @@ educators connect, learn, and thrive.
 
 
 <div class = "container">
-    <div class = "row flex-column-reverse flex-md-row m-2 ourproduct1" style = "background: #004A53;">
+    <div class = "row flex-column-reverse flex-md-row ourproduct1" style = "background: #004A53;">
 
         <div class = "col-12 col-md-6 col-lg-6 p-5 my-auto">
-            <h1 class = "text-white">  kokokah LMS </h1>
+            <h4 class = "text-white">  kokokah LMS </h4>
 
         <p class = "text-white">
              Your all-in-one digital classroom — structured lessons, AI-powered
@@ -394,7 +394,7 @@ educators connect, learn, and thrive.
         </div>
 
 
-          <div class="col-12 col-md-6 text-center p-5 ">
+          <div class="col-12 col-md-6 text-center">
         <img src="images/lms system.png" class="img-fluid w-100 w-md-75"  alt="Exam Prep">
     </div>
 
@@ -406,14 +406,14 @@ educators connect, learn, and thrive.
 
     <!-- Image Section -->
     <div class="col-12 col-md-6 my-auto text-center">
-        <img src="images/School Admin.png" class="img-fluid w-75" alt="School Admin">
+        <img src="images/School Admin.png" class="img-fluid w-100 w-md-75" alt="School Admin">
     </div>
 
     <!-- Text Section -->
     <div class="col-12 col-md-6 my-auto d-flex flex-column">
-        <h3>
+        <h5>
             The Marketplace
-        </h3>
+        </h5>
         <p>
            Africa’s academic forum for parents, teachers, and
            tutors to connect. Book trusted tutors for academics,
@@ -431,13 +431,13 @@ educators connect, learn, and thrive.
 
 
 <div class = "container">
-<div class="row  my-4 p-2 flex-column-reverse flex-md-row m-2 ourproduct1" style="background: #FDAF22;">
-
+{{-- <div class="row  my-4 p-2 flex-column-reverse flex-md-row m-2 ourproduct1" style="background: #FDAF22;"> --}}
+<div class = "row flex-column-reverse flex-md-row ourproduct1" style = "background: #FDAF22;">
     <!-- Text Section -->
-    <div class="col-12 col-md-6 d-flex flex-column justify-content-center p-3">
-        <h3>
+    <div class="col-12 col-md-6 d-flex flex-column justify-content-center p-5">
+        <h5>
             AI Chatbot
-        </h3>
+        </h5>
         <p >
             Your personal academic assistant — ask questions, get explanations,
             and enjoy instant feedback tailored to your study needs.
@@ -449,7 +449,7 @@ educators connect, learn, and thrive.
     </div>
 
     <!-- Image Section -->
-    <div class="col-12 col-md-6 text-center p-3">
+    <div class="col-12 col-md-6 text-center">
         <img src="images/lms system.png" class="img-fluid w-100 w-md-75" alt="LMS system">
     </div>
 </div>
@@ -463,14 +463,14 @@ educators connect, learn, and thrive.
 
     <!-- Image Section -->
     <div class="col-12 col-md-6 my-auto text-center">
-        <img src="images/School Admin.png" class="img-fluid w-75" alt="School Admin">
+        <img src="images/School Admin.png" class="img-fluid w-100 w-md-75" alt="School Admin">
     </div>
 
     <!-- Text Section -->
     <div class="col-12 col-md-6 my-auto d-flex flex-column">
-        <h1>
+        <h5>
             STEM Labs
-        </h1>
+        </h5>
         <p>
             Get hands-on STEM bootcamps, summer schools,
             and practical learning experiences to prepare
@@ -489,16 +489,16 @@ educators connect, learn, and thrive.
 
 <div class = "container">
 <div class = "row mt-4">
-<div class = "col-12 col-md-6 col-lg-6">
+<div class = "col-12 col-md-5 col-lg-5">
 <img src = "images/LMS.png" class = "img-fluid">
 </div>
 
 
 
-<div class = "col-12 col-md-6 col-lg-6">
-<h1>
+<div class = "col-12 col-md-7 col-lg-7">
+<h5>
             Koodies for Children
-        </h1>
+</h5>
 <p>
     Kokokah combines School Management, Exam Prep, and a
     Learning Management System (LMS)—helping schools automate admin tasks,
@@ -510,7 +510,7 @@ educators connect, learn, and thrive.
 <button class = "btn primaryButton" type = "button">Discover Koodies</button>
 
 <div>
-<img src = "images/koodies.png" class = "img-fluid w-75 float-end">
+<img src = "images/koodies.png" class = "img-fluid  w-md-75 float-end">
 </div>
 </div>
 
@@ -573,7 +573,7 @@ educators connect, learn, and thrive.
 <div class = "row justify-content-center p-5 text-white">
 
 <div class = "col-12 col-lg-12 col-md-12 text-center">
-    <h3>Message from the founder</h3>
+    <h5 class = "mb-3">Message from the founder</h5>
     <img src = "images/youtube.png" class="img-fluid" style = "width: 800px;">
 </div>
 

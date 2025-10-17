@@ -31,13 +31,14 @@ body{
 .banner
 {
     background: var(--color-bg-banner);
+    margin-bottom: 60px;
 }
 
 
 h1
 {
 font-family:  Fredoka, serif;
-font-size:60px;
+font-size:56px;
 line-height:61.6px;
 font-weight: 400;
 font-style: normal;
@@ -110,9 +111,9 @@ color:var(--color-primary-button);
 
 .primaryButton
 {
-width: 205px;
-height:60px;
-padding: 16px 20px;
+width: 200px;
+height:50px;
+padding: 16px 5px;
 border-radius:4px;
 background: var(--color-bg-banner);
 color:#fff;
@@ -129,9 +130,9 @@ font-size: 14px;
 
 .secondaryButton
 {
-padding: 16px 20px;
-width:205px;
-height:60px;
+padding: 16px 5px;
+width:200px;
+height:50px;
 border-width: 1px;
 border-color:#004A53;
 border-style: solid;
@@ -146,6 +147,23 @@ font-size: 14px;
     color: #fff;
 }
 
+.tertiaryButton
+{
+width: 205px;
+height:60px;
+padding: 16px 20px;
+border-radius:4px;
+background: #004A53;
+color:#fff;
+font-size: 14px;
+}
+
+
+.tertiaryButton:hover
+{
+    background: #2B6870;
+    color: white;
+}
 
 #navbarSupportedContent
 {
@@ -223,9 +241,9 @@ font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans
 
 @media screen and (max-width:320px)
 {
-.achieve h3
+.achieve h4
 {
-    font-size: 18px;
+    font-size: 16px;
     text-align: center;
 }
 }
@@ -241,6 +259,7 @@ p
 ul, li
 {
     font-size: 16px;
+    color:#4D525F;
 
 }
 
@@ -268,10 +287,11 @@ color: #4D525F;
 {
     font-family:  Fredoka, serif;
     font-weight:bolder;
-    font-size: 45px;
+    font-size: 43px;
     line-height: 150%;
     vertical-align: middle;
     letter-spacing: 1%;
+    color:#000F11;
 }
 
 @media screen and (max-width: 320px)
@@ -291,6 +311,7 @@ color: #4D525F;
     font-size:16px;
     vertical-align: middle;
     letter-spacing: 1%;
+    padding-top:10px;
 }
 
 @media(max-width: 400px)
@@ -351,7 +372,7 @@ color: #4D525F;
     border-radius: 30px;
     top:50px;
     left:100px;
-    /* height: 400px; */
+    /* height: 350px; */
 }
 
 /* @media screen and (max-width: 320px)
@@ -368,13 +389,13 @@ margin: 10px;
 .ourproduct2
 {
     border: 1px solid #000;
-    margin-top:50px;
+    margin:50px 10px;
     border-radius: 50px;
-    margin-bottom: 50px;
-    /* height: 400px; */
+    /* margin-bottom: 50px; */
+    /* height: 350px; */
     left: 100px;
-    margin-left: 10px;
-    margin-right: 10px;
+    /* margin-left: 10px; */
+    /* margin-right: 10px; */
 }
 
 .pricingcolor
@@ -424,10 +445,15 @@ font-weight: normal;
     border-radius: 50%;
   } */
 
-  .navButton:hover
+  /* .navButton:hover
   {
    background: var(--color-link-hover-navigation);
    color: #fff;
+  } */
+
+  .dropdown-item:hover
+  {
+    width:158px;
   }
 
 .container__header
@@ -495,6 +521,7 @@ font-weight: normal;
         footer {
             background: #004A53;
             text-align: left;
+            padding:10px;
         }
 
         footer img{
@@ -514,7 +541,7 @@ font-weight: normal;
     background-repeat: no-repeat;
     background-size: 3px;
     text-align: center;
-    min-height: 350px;
+    min-height: 250px; /* initially 350px */
     background-size:contain;
     /* background-image: url('../images/background.png'); */
 }
@@ -537,9 +564,9 @@ font-weight: normal;
 }
 
 
-/* .custom-shadow {
+.custom-shadow {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
-} */
+}
 
 
 /* Section Background */

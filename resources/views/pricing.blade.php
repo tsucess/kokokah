@@ -4,11 +4,11 @@
 <div class = "container-fluid p-5 banner">
 <div class = "row mt-4">
 
-<div class = "col-12 col-md-6 col-lg-6 my-auto">
-<h2 class = "fw-bold text-dark">
+<div class = "col-12 col-md-7 col-lg-7 my-auto">
+<h1 class = "heroheading">
     Transform How you Study, Teach, Track Learning, and Succeed!
-</h2>
-<p class = "mt-3">
+</h1>
+<p class = "mb-4">
     An all-in-one affordable, mobile LMS for African students, schools, and educators
 </p>
 
@@ -22,7 +22,7 @@
 </div>
 
 
-<div class = "col-12 col-md-6 col-lg-6">
+<div class = "col-12 col-md-5 col-lg-5">
 <img src = "images/pricing.png" class = "img-fluid">
 </div>
 
@@ -40,7 +40,7 @@
     </p>
 
 
-    <div class="d-flex align-items-center justify-content-center gap-3 my-4">
+    <div class="d-flex align-items-center justify-content-center  my-4">
 
   <!-- Monthly label -->
   <span class="fw-bold">Monthly</span>

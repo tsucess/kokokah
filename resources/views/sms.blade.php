@@ -29,9 +29,9 @@
 
 <body>
 
- <nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
 
-        <div class="container">
+        <div class="container-fluid " style = "padding-left: 60px; padding-right:60px;">
 
             <a class="navbar-brand" href="#">
             <img src="{{ asset('images/Kokokah_Logo.png') }}" alt="">
@@ -42,7 +42,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent"  >
-            <ul class="navbar-nav me-auto mb-2 ms-3 mb-lg-0 ">
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0 ">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/" >Home</a>
                 </li>
@@ -55,19 +55,31 @@
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Products</a>
 
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Page 1</a></li>
-                            <li><a class="dropdown-item" href="#">Page 2</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Page 3</a></li>
+                            <li><a class="dropdown-item" href="/lms">LMS</a></li>
+                            <li><a class="dropdown-item" href="/sms">SMS</a></li>
+                            {{-- <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Page 3</a></li> --}}
                         </ul>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Koodies</a>
+                    <a class="nav-link" href="/koodies">Koodies</a>
+                </li>
+
+                {{-- <li class="nav-item">
+                    <a class="nav-link" href="/stem">Stem</a>
                 </li>
 
                 <li class="nav-item">
-                   <a class="nav-link" href="#">Contact Us</a>
+                    <a class="nav-link" href="/market">Market Place</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/pricing">Pricing</a>
+                </li> --}}
+
+                <li class="nav-item">
+                   <a class="nav-link" href="/contact">Contact Us</a>
                 </li>
           </ul>
 
@@ -90,14 +102,14 @@
 
     <!-- Main Content -->
     <div class="col-md-12 text-center mx-auto">
-      <h1>
+      <h1 class = "heroheading">
         We’re Building to Serve You Better
       </h1>
 
-      <p class="mt-3 px-md-5" style = "color:#333;">
+      <p class="px-md-5 text-center heroparagraph">
         Kokokah combines <strong>School Management</strong>, <strong>Exam Prep</strong>,
-        and a <strong>Learning Management System (LMS)</strong>—helping schools automate
-        admin tasks, boost student performance, and deliver modern digital learning in one seamless platform.
+        and a <strong>Learning Management System (LMS)</strong>—helping <br>
+        schools automate admin tasks, boost student performance, and deliver modern digital learning in one seamless platform.
       </p>
 
       <!-- Subscribe form -->
@@ -141,5 +153,7 @@
 
 </div>
 
+  <!-- Scripts needed -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"> </script>
 </body>
 </html>

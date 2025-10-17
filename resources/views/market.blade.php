@@ -2,10 +2,10 @@
 @section('content')
 <div class="container-fluid banner">
     <div class="row align-items-center">
-        <div class="col-12 col-md-7 col-lg-7 p-5 ">
-            <h2>
+        <div class="col-12 col-md-8 col-lg-8 p-5 ">
+            <h1 class = "heroheading">
                 Find the Right Tutor for Your Child, Anytime, Anywhere.
-            </h2>
+            </h1>
 
             <p>
                 Connect with trusted tutors for secondary school
@@ -20,7 +20,7 @@
 
         </div>
 
-        <div class="col-12 col-md-5 col-lg-5 text-center p-5">
+        <div class="col-12 col-md-4 col-lg-4 text-center p-5">
             <img src="images/stem.png" alt="stem illustration" class="img-fluid ">
         </div>
 
@@ -32,7 +32,7 @@
 <div class="container">
                 <div class = "row mt-5">
 
-                    <h3 class = "text-center mb-2">How It Works for Parents & Students</h3>
+                    <h4 class = "text-center mb-2">How It Works for Parents & Students</h4>
 
     <!-- Feature 1 -->
     <div class="col-12 col-md-6 col-lg-4 text-center ">
@@ -82,7 +82,7 @@
 
 <div class="container my-5">
     <div class="row g-4 justify-content-center">
-         <h3 class = "text-center mb-2">Top Tutors in Your Area</h3>
+         <h4 class = "text-center mb-2">Top Tutors in Your Area</h4>
       <!-- Card 1 -->
       <div class="col-12 col-sm-6 col-md-4 col-lg-4">
         <div class="tutor-card">
@@ -177,7 +177,7 @@
 
   <div class="container my-5">
     <div class="row g-4 justify-content-center">
-         <h3 class = "text-center mb-2">Dedicated Support for Special Needs Learning</h3>
+         <h4 class = "text-center mb-2">Dedicated Support for Special Needs Learning</h4>
          <p class = "text-center">
             Every child deserves quality education.
             Our platform connects you with tutors trained in <br>
@@ -291,9 +291,9 @@
 
 
         <div class="col-12 col-md-8 col-lg-8">
-            <h2>
+            <h4>
                Share Your Knowledge. Become a Tutor.”
-            </h2>
+            </h4>
             <p>
                 Join our growing community of educators and help shape the future.
                 Flexible schedule, secure payments, and a platform designed to support

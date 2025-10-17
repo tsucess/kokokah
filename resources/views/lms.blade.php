@@ -7,7 +7,7 @@
 
 <div class = "col-12 col-md-6 col-lg-6 my-auto">
 <h1 class="heroheading">
-    Your Complete <br>
+    Your Complete
     Ecosystem for Learning and Growth
 </h1>
 <p class = "mt-3">
@@ -17,7 +17,7 @@ and how schools manage learning. 
 </p>
 
 <div class = "d-flex flex-column flex-sm-row gap-2">
-    <button class = "btn primaryButton" type = "button" style="background: #004a53; ">Create a free account</button>
+    <button class = "btn tertiaryButton" type = "button">Create a free account</button>
 </div>
 
 </div>
@@ -40,9 +40,9 @@ and how schools manage learning. 
 
 
 <div class = "col-12 col-md-6 col-lg-6 my-auto">
-    <h3>
+    <h4>
         Kokokah LMS
-    </h3>
+    </h4>
     <p>
         Kokokah is a smart, pan-African learning and school management platform
         built for the realities of African education. Whether you’re a JSS1 student
@@ -61,7 +61,7 @@ and how schools manage learning. 
   <div class = "row mb-5 justify-content-center">
 
     <div class = "text-center mt-4 achieve">
-      <h3>Achievements/Statistics Section</h3>
+      <h4>Achievements/Statistics Section</h4>
     </div>
 </div>
 
@@ -148,7 +148,7 @@ and how schools manage learning. 
 
 <div class = "container-fluid mb-5" style="background-image: url('images/features.png'); background-repeat: no-repeat; background-size: contain; min-height: 600px;">
 <div class = "text-center mb-5">
-<h3>Our Features</h3>
+<h4>Our Features</h4>
 </div>
 
     <div class="row g-4 mt-2 mb-5 justify-content-center">
@@ -163,7 +163,7 @@ and how schools manage learning. 
         </div>
         <!-- Content -->
         <div class = "mt-2" style="margin-bottom: 130px;">
-          <h5>Kokokah chat room</h5>
+          <h6>Kokokah chat room</h6>
           <p>
             We make learning available anywhere — even
             with low internet speeds and everyday
@@ -186,7 +186,7 @@ and how schools manage learning. 
         </div>
         <!-- Content -->
         <div class = "mt-2">
-          <h5>Academic Content</h5>
+          <h6>Academic Content</h6>
           <p>
             We deliver up-to-date content across all major subjects,
             aligned with your class group and school’s curriculum.
@@ -224,7 +224,7 @@ and how schools manage learning. 
         </div>
         <!-- Content -->
         <div class = "mt-2">
-          <h5>Non-Academic Content</h5>
+          <h6>Non-Academic Content</h6>
           <p>
             Because real success goes beyond exams,
             our LMS also offers practical skills that
@@ -250,7 +250,7 @@ and how schools manage learning. 
         </div>
         <!-- Content -->
         <div class = "mt-2">
-          <h5>AI Powered Academic Assistant</h5>
+          <h6>AI Powered Academic Assistant</h6>
           <p>
            Our built-in AI tutor works like your personal academic ChatGPT.
            It explains tough concepts, answers questions, and supports both
@@ -322,7 +322,7 @@ and how schools manage learning. 
         <span class="fs-2">🎭</span>
       </div>
 
-      <h5>Virtual Wallet Integration</h5>
+      <h6>Virtual Wallet Integration</h6>
 
       <p class="mb-4">
         Your money, your way — all within Kokokah.
@@ -374,7 +374,7 @@ and how schools manage learning. 
     </div>
 
     <div class="col-lg-6">
-      <h3>Why Choose Kokokah LMS</h3>
+      <h4 class = "mb-3">Why Choose Kokokah LMS</h4>
 
       <ul class="list-unstyled">
         <li class="mb-3">
