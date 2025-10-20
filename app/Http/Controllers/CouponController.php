@@ -13,11 +13,8 @@ use Illuminate\Support\Str;
 
 class CouponController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum');
-        $this->middleware('role:instructor,admin')->except(['validateCoupon', 'applyCoupon', 'getUserCoupons']);
-    }
+    // Note: Middleware is applied at route level in Laravel 12
+    // See routes/api.php for middleware configuration
 
     /**
      * Get all coupons (admin/instructor)

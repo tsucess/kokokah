@@ -10,11 +10,8 @@ use Illuminate\Support\Facades\Cache;
 
 class SettingController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum');
-        $this->middleware('role:admin')->except(['getPublicSettings']);
-    }
+    // Note: Middleware is applied at route level in Laravel 12
+    // See routes/api.php for middleware configuration
 
     /**
      * Get all system settings

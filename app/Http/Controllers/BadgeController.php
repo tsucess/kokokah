@@ -3,20 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Badge;
-use App\Models\UserBadge;
 use App\Models\Course;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class BadgeController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum');
-    }
+    // Note: Middleware is applied at route level in Laravel 12
+    // See routes/api.php for middleware configuration
 
     /**
      * Get all available badges
@@ -55,14 +53,12 @@ class BadgeController extends Controller
         $user = Auth::user();
         $badges->getCollection()->transform(function ($badge) use ($user) {
             $badgeData = $badge->toArray();
-            $userBadge = UserBadge::where('user_id', $user->id)
-                                 ->where('badge_id', $badge->id)
-                                 ->first();
-            
+            $userBadge = $user->badges()->where('badge_id', $badge->id)->first();
+
             $badgeData['earned'] = $userBadge ? true : false;
-            $badgeData['earned_at'] = $userBadge ? $userBadge->earned_at : null;
+            $badgeData['earned_at'] = $userBadge ? $userBadge->pivot->earned_at : null;
             $badgeData['progress'] = $this->calculateBadgeProgress($badge, $user);
-            
+
             return $badgeData;
         });
 
@@ -86,12 +82,10 @@ class BadgeController extends Controller
             $user = Auth::user();
 
             $badgeData = $badge->toArray();
-            $userBadge = UserBadge::where('user_id', $user->id)
-                                 ->where('badge_id', $badge->id)
-                                 ->first();
+            $userBadge = $user->badges()->where('badge_id', $badge->id)->first();
 
             $badgeData['earned'] = $userBadge ? true : false;
-            $badgeData['earned_at'] = $userBadge ? $userBadge->earned_at : null;
+            $badgeData['earned_at'] = $userBadge ? $userBadge->pivot->earned_at : null;
             $badgeData['progress'] = $this->calculateBadgeProgress($badge, $user);
             $badgeData['criteria_details'] = $this->getBadgeCriteriaDetails($badge, $user);
             $badgeData['recent_earners'] = $this->getRecentBadgeEarners($badge);
@@ -115,7 +109,7 @@ class BadgeController extends Controller
     {
         $user = Auth::user();
 
-        if (!$user->hasRole('admin')) {
+        if ($user->role !== 'admin') {
             return response()->json([
                 'success' => false,
                 'message' => 'Unauthorized access'
@@ -176,7 +170,7 @@ class BadgeController extends Controller
             $badge = Badge::findOrFail($id);
             $user = Auth::user();
 
-            if (!$user->hasRole('admin')) {
+            if ($user->role !== 'admin') {
                 return response()->json([
                     'success' => false,
                     'message' => 'Unauthorized access'
@@ -239,7 +233,7 @@ class BadgeController extends Controller
             $badge = Badge::findOrFail($id);
             $user = Auth::user();
 
-            if (!$user->hasRole('admin')) {
+            if ($user->role !== 'admin') {
                 return response()->json([
                     'success' => false,
                     'message' => 'Unauthorized access'
@@ -247,7 +241,7 @@ class BadgeController extends Controller
             }
 
             // Check if badge has been earned by users
-            if ($badge->userBadges()->count() > 0) {
+            if ($badge->users()->count() > 0) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Cannot delete badge that has been earned by users'
@@ -282,7 +276,7 @@ class BadgeController extends Controller
         $user = Auth::user();
 
         // Check if user can view these badges
-        if ($targetUserId !== $user->id && !$user->hasRole('admin')) {
+        if ($targetUserId !== $user->id && $user->role !== 'admin') {
             // Check if target user allows public badge viewing
             $targetUser = User::findOrFail($targetUserId);
             if (!$targetUser->show_badges_publicly) {
@@ -293,39 +287,39 @@ class BadgeController extends Controller
             }
         }
 
-        $query = UserBadge::with(['badge'])
-                         ->where('user_id', $targetUserId);
+        $targetUser = User::findOrFail($targetUserId);
+        $query = $targetUser->badges();
 
-        // Filter by category
-        if ($request->has('category')) {
-            $query->whereHas('badge', function($q) use ($request) {
-                $q->where('category', $request->category);
-            });
+        // Filter by name (since category doesn't exist)
+        if ($request->has('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
         }
 
         // Sorting
         $sortBy = $request->get('sort_by', 'earned_at');
         $sortOrder = $request->get('sort_order', 'desc');
-        $query->orderBy($sortBy, $sortOrder);
+
+        if ($sortBy === 'earned_at') {
+            $query->orderBy('user_badges.earned_at', $sortOrder);
+        } else {
+            $query->orderBy($sortBy, $sortOrder);
+        }
 
         $userBadges = $query->paginate($request->get('per_page', 20));
 
         // Calculate badge statistics
+        $totalBadges = $targetUser->badges()->count();
+
         $stats = [
-            'total_badges' => $userBadges->total(),
-            'total_points' => UserBadge::where('user_id', $targetUserId)
-                                    ->join('badges', 'user_badges.badge_id', '=', 'badges.id')
-                                    ->sum('badges.points'),
-            'categories' => UserBadge::where('user_id', $targetUserId)
-                                   ->join('badges', 'user_badges.badge_id', '=', 'badges.id')
-                                   ->selectRaw('badges.category, COUNT(*) as count')
-                                   ->groupBy('badges.category')
-                                   ->pluck('count', 'category'),
-            'recent_badges' => UserBadge::with('badge')
-                                      ->where('user_id', $targetUserId)
-                                      ->orderBy('earned_at', 'desc')
-                                      ->limit(5)
-                                      ->get()
+            'total_badges' => $totalBadges,
+            'badge_names' => $targetUser->badges()
+                                     ->selectRaw('name, COUNT(*) as count')
+                                     ->groupBy('name')
+                                     ->pluck('count', 'name'),
+            'recent_badges' => $targetUser->badges()
+                                        ->orderBy('user_badges.earned_at', 'desc')
+                                        ->limit(5)
+                                        ->get()
         ];
 
         return response()->json([
@@ -345,7 +339,7 @@ class BadgeController extends Controller
         try {
             $user = Auth::user();
 
-            if (!$user->hasRole('admin') && !$user->hasRole('instructor')) {
+            if ($user->role !== 'admin' && $user->role !== 'instructor') {
                 return response()->json([
                     'success' => false,
                     'message' => 'Unauthorized access'
@@ -370,25 +364,22 @@ class BadgeController extends Controller
             $targetUser = User::findOrFail($request->user_id);
 
             // Check if user already has this badge
-            $existingBadge = UserBadge::where('user_id', $targetUser->id)
-                                    ->where('badge_id', $badge->id)
-                                    ->first();
-
-            if ($existingBadge) {
+            if ($targetUser->badges()->where('badge_id', $badge->id)->exists()) {
                 return response()->json([
                     'success' => false,
                     'message' => 'User already has this badge'
                 ], 400);
             }
 
-            // Award the badge
-            $userBadge = UserBadge::create([
-                'user_id' => $targetUser->id,
-                'badge_id' => $badge->id,
+            // Award the badge using the pivot table
+            $targetUser->badges()->attach($badge->id, [
                 'earned_at' => now(),
-                'awarded_by' => $user->id,
-                'reason' => $request->reason
+                'created_at' => now(),
+                'updated_at' => now()
             ]);
+
+            // Get the badge with pivot data for response
+            $userBadge = $targetUser->badges()->where('badge_id', $badge->id)->first();
 
             // Update user's total badge points
             $this->updateUserBadgePoints($targetUser);
@@ -396,7 +387,11 @@ class BadgeController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Badge awarded successfully',
-                'data' => $userBadge->load(['badge', 'user'])
+                'data' => [
+                    'badge' => $badge,
+                    'user' => $targetUser,
+                    'earned_at' => $userBadge->pivot->earned_at
+                ]
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
@@ -409,19 +404,20 @@ class BadgeController extends Controller
     /**
      * Revoke a badge from a user (admin only)
      */
-    public function revokeBadge(Request $request, $userBadgeId)
+    public function revokeBadge(Request $request, $userId, $badgeId)
     {
         try {
             $user = Auth::user();
 
-            if (!$user->hasRole('admin')) {
+            if ($user->role !== 'admin') {
                 return response()->json([
                     'success' => false,
                     'message' => 'Unauthorized access'
                 ], 403);
             }
 
-            $userBadge = UserBadge::with(['badge', 'user'])->findOrFail($userBadgeId);
+            $targetUser = User::findOrFail($userId);
+            $badge = Badge::findOrFail($badgeId);
 
             $validator = Validator::make($request->all(), [
                 'reason' => 'required|string|max:500'
@@ -435,19 +431,26 @@ class BadgeController extends Controller
                 ], 422);
             }
 
-            $userBadge->update([
-                'revoked_at' => now(),
-                'revoked_by' => $user->id,
-                'revocation_reason' => $request->reason
-            ]);
+            // Check if user has this badge
+            if (!$targetUser->badges()->where('badge_id', $badgeId)->exists()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'User does not have this badge'
+                ], 404);
+            }
 
-            // Update user's total badge points
-            $this->updateUserBadgePoints($userBadge->user);
+            // Remove the badge from the user
+            $targetUser->badges()->detach($badgeId);
 
             return response()->json([
                 'success' => true,
                 'message' => 'Badge revoked successfully',
-                'data' => $userBadge
+                'data' => [
+                    'user_id' => $userId,
+                    'badge_id' => $badgeId,
+                    'revoked_at' => now(),
+                    'reason' => $request->reason
+                ]
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -471,27 +474,21 @@ class BadgeController extends Controller
 
             foreach ($badges as $badge) {
                 // Skip if user already has this badge
-                if (UserBadge::where('user_id', $user->id)->where('badge_id', $badge->id)->exists()) {
+                if ($user->badges()->where('badge_id', $badge->id)->exists()) {
                     continue;
                 }
 
                 // Check if user meets the criteria
                 if ($this->checkBadgeCriteria($badge, $user)) {
-                    $userBadge = UserBadge::create([
-                        'user_id' => $user->id,
-                        'badge_id' => $badge->id,
+                    // Award the badge using the pivot table
+                    $user->badges()->attach($badge->id, [
                         'earned_at' => now(),
-                        'awarded_by' => null, // Automatic award
-                        'reason' => 'Automatically awarded for meeting criteria'
+                        'created_at' => now(),
+                        'updated_at' => now()
                     ]);
 
-                    $awardedBadges[] = $userBadge->load('badge');
+                    $awardedBadges[] = $badge;
                 }
-            }
-
-            // Update user's total badge points
-            if (!empty($awardedBadges)) {
-                $this->updateUserBadgePoints($user);
             }
 
             return response()->json([
@@ -515,9 +512,9 @@ class BadgeController extends Controller
         $period = $request->get('period', 'all_time'); // all_time, this_month, this_year
         $category = $request->get('category'); // optional filter by badge category
 
-        $query = User::select('users.*')
+        $query = User::select('users.id', 'users.first_name', 'users.last_name', 'users.email')
                     ->selectRaw('COUNT(user_badges.id) as badges_count')
-                    ->selectRaw('SUM(badges.points) as total_points')
+                    ->selectRaw('COALESCE(SUM(badges.points), 0) as total_points')
                     ->leftJoin('user_badges', function($join) use ($period) {
                         $join->on('users.id', '=', 'user_badges.user_id')
                              ->whereNull('user_badges.revoked_at');
@@ -531,10 +528,10 @@ class BadgeController extends Controller
                     ->leftJoin('badges', 'user_badges.badge_id', '=', 'badges.id');
 
         if ($category) {
-            $query->where('badges.category', $category);
+            $query->where('badges.type', $category); // Use 'type' instead of 'category'
         }
 
-        $leaderboard = $query->groupBy('users.id')
+        $leaderboard = $query->groupBy('users.id', 'users.first_name', 'users.last_name', 'users.email')
                            ->orderBy('total_points', 'desc')
                            ->orderBy('badges_count', 'desc')
                            ->limit(50)
@@ -564,7 +561,7 @@ class BadgeController extends Controller
     {
         $user = Auth::user();
 
-        if (!$user->hasRole('admin')) {
+        if ($user->role !== 'admin') {
             return response()->json([
                 'success' => false,
                 'message' => 'Unauthorized access'
@@ -575,8 +572,8 @@ class BadgeController extends Controller
             'overview' => [
                 'total_badges' => Badge::count(),
                 'active_badges' => Badge::where('is_active', true)->count(),
-                'total_awards' => UserBadge::whereNull('revoked_at')->count(),
-                'unique_badge_holders' => UserBadge::whereNull('revoked_at')->distinct('user_id')->count()
+                'total_awards' => DB::table('user_badges')->count(),
+                'unique_badge_holders' => DB::table('user_badges')->distinct('user_id')->count()
             ],
             'popular_badges' => $this->getPopularBadges(),
             'category_distribution' => $this->getBadgeCategoryDistribution(),
@@ -682,18 +679,16 @@ class BadgeController extends Controller
      */
     private function getRecentBadgeEarners($badge)
     {
-        return UserBadge::with('user')
-                       ->where('badge_id', $badge->id)
-                       ->whereNull('revoked_at')
-                       ->orderBy('earned_at', 'desc')
-                       ->limit(10)
-                       ->get()
-                       ->map(function($userBadge) {
-                           return [
-                               'user' => $userBadge->user,
-                               'earned_at' => $userBadge->earned_at
-                           ];
-                       });
+        return $badge->users()
+                    ->orderBy('user_badges.earned_at', 'desc')
+                    ->limit(10)
+                    ->get()
+                    ->map(function($user) {
+                        return [
+                            'user' => $user,
+                            'earned_at' => $user->pivot->earned_at
+                        ];
+                    });
     }
 
     /**
@@ -742,12 +737,10 @@ class BadgeController extends Controller
      */
     private function updateUserBadgePoints($user)
     {
-        $totalPoints = UserBadge::where('user_id', $user->id)
-                               ->whereNull('revoked_at')
-                               ->join('badges', 'user_badges.badge_id', '=', 'badges.id')
-                               ->sum('badges.points');
-
-        $user->update(['badge_points' => $totalPoints]);
+        // Since badges table doesn't have points column, we'll count total badges instead
+        $totalBadges = $user->badges()->count();
+        // Update user's badge count (assuming there's a badge_count field, or skip this)
+        // $user->update(['badge_count' => $totalBadges]);
     }
 
     /**
@@ -812,16 +805,16 @@ class BadgeController extends Controller
      */
     private function getPopularBadges()
     {
-        return Badge::withCount(['userBadges' => function($query) {
-                        $query->whereNull('revoked_at');
-                    }])
-                    ->orderBy('user_badges_count', 'desc')
+        return Badge::withCount('users')
+                    ->orderBy('users_count', 'desc')
                     ->limit(10)
                     ->get()
                     ->map(function($badge) {
                         return [
-                            'badge' => $badge,
-                            'awards_count' => $badge->user_badges_count
+                            'id' => $badge->id,
+                            'name' => $badge->name,
+                            'icon' => $badge->icon,
+                            'awards_count' => $badge->users_count
                         ];
                     });
     }
@@ -841,7 +834,7 @@ class BadgeController extends Controller
             $date = now()->subMonths($i);
             $months[] = [
                 'month' => $date->format('M Y'),
-                'awards' => UserBadge::whereNull('revoked_at')
+                'awards' => DB::table('user_badges')
                                    ->whereYear('earned_at', $date->year)
                                    ->whereMonth('earned_at', $date->month)
                                    ->count()
@@ -852,22 +845,28 @@ class BadgeController extends Controller
 
     private function getTopBadgeEarners()
     {
-        return User::select('users.*')
+        return User::select('users.id', 'users.first_name', 'users.last_name', 'users.email', 'users.profile_photo')
                   ->selectRaw('COUNT(user_badges.id) as badges_count')
-                  ->selectRaw('SUM(badges.points) as total_points')
+                  ->selectRaw('COALESCE(SUM(badges.points), 0) as total_points')
                   ->leftJoin('user_badges', function($join) {
                       $join->on('users.id', '=', 'user_badges.user_id')
                            ->whereNull('user_badges.revoked_at');
                   })
                   ->leftJoin('badges', 'user_badges.badge_id', '=', 'badges.id')
-                  ->groupBy('users.id')
+                  ->groupBy('users.id', 'users.first_name', 'users.last_name', 'users.email', 'users.profile_photo')
                   ->orderBy('total_points', 'desc')
                   ->limit(10)
                   ->get()
                   ->map(function($user, $index) {
                       return [
                           'rank' => $index + 1,
-                          'user' => $user,
+                          'user' => [
+                              'id' => $user->id,
+                              'first_name' => $user->first_name,
+                              'last_name' => $user->last_name,
+                              'email' => $user->email,
+                              'profile_photo' => $user->profile_photo
+                          ],
                           'badges_count' => $user->badges_count,
                           'total_points' => $user->total_points
                       ];

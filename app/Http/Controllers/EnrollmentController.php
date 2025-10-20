@@ -18,7 +18,6 @@ class EnrollmentController extends Controller
     public function __construct(WalletService $walletService)
     {
         $this->walletService = $walletService;
-        $this->middleware('auth:sanctum');
     }
 
     /**
@@ -389,8 +388,8 @@ class EnrollmentController extends Controller
                 'user_id' => $user->id,
                 'course_id' => $course->id,
                 'certificate_number' => 'CERT-' . strtoupper(uniqid()),
-                'issued_at' => now(),
-                'expires_at' => null // Certificates don't expire by default
+                'certificate_url' => 'certificates/cert-' . $user->id . '-' . $course->id . '.pdf',
+                'issued_at' => now()
             ]);
 
             return response()->json([

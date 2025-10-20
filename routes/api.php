@@ -91,6 +91,12 @@ Route::get('/courses', [CourseController::class, 'index']);
 Route::get('/courses/search', [CourseController::class, 'search']);
 Route::get('/courses/featured', [CourseController::class, 'featured']);
 Route::get('/courses/popular', [CourseController::class, 'popular']);
+
+// Authenticated course routes (must be before {id} route)
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/courses/my-courses', [CourseController::class, 'myCourses']);
+});
+
 Route::get('/courses/{id}', [CourseController::class, 'show']);
 
 
@@ -156,7 +162,6 @@ Route::middleware('auth:sanctum')->group(function () {
         // Student accessible routes
         Route::post('/{id}/enroll', [CourseController::class, 'enroll']);
         Route::delete('/{id}/unenroll', [CourseController::class, 'unenroll']);
-        Route::get('/my-courses', [CourseController::class, 'myCourses']);
     });
 
     // Lesson management routes (authenticated)
@@ -179,12 +184,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('enrollments')->group(function () {
         Route::get('/', [EnrollmentController::class, 'index']);
         Route::post('/', [EnrollmentController::class, 'store']);
+        Route::get('/certificates', [EnrollmentController::class, 'certificates']);
         Route::get('/{id}', [EnrollmentController::class, 'show']);
         Route::put('/{id}', [EnrollmentController::class, 'update']);
         Route::delete('/{id}', [EnrollmentController::class, 'destroy']);
         Route::get('/{id}/progress', [EnrollmentController::class, 'progress']);
         Route::post('/{id}/complete', [EnrollmentController::class, 'complete']);
-        Route::get('/certificates', [EnrollmentController::class, 'certificates']);
     });
 
     // User profile and dashboard routes (authenticated)
@@ -307,7 +312,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{id}', [BadgeController::class, 'show']);
         Route::put('/{id}', [BadgeController::class, 'update']);
         Route::delete('/{id}', [BadgeController::class, 'destroy']);
-        Route::post('/user-badges/{id}/revoke', [BadgeController::class, 'revokeBadge']);
+        Route::post('/user-badges/{userId}/{badgeId}/revoke', [BadgeController::class, 'revokeBadge']);
     });
 
     // User badges routes
@@ -348,6 +353,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/payments', [AdminController::class, 'payments']);
         Route::get('/reports', [AdminController::class, 'reports']);
         Route::get('/settings', [AdminController::class, 'settings']);
+        Route::get('/stats', [AdminController::class, 'databaseStats']); // Add missing stats route
         Route::post('/users/{userId}/ban', [AdminController::class, 'banUser']);
         Route::post('/users/{userId}/unban', [AdminController::class, 'unbanUser']);
         Route::get('/analytics', [AdminController::class, 'analytics']);
@@ -502,6 +508,7 @@ Route::middleware('auth:sanctum')->prefix('notifications')->group(function () {
 
 // Search routes
 Route::middleware('auth:sanctum')->prefix('search')->group(function () {
+    Route::get('/', [SearchController::class, 'globalSearch']); // General search route
     Route::get('/global', [SearchController::class, 'globalSearch']);
     Route::get('/courses', [SearchController::class, 'courseSearch']);
     Route::get('/users', [SearchController::class, 'userSearch']);

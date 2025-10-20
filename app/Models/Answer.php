@@ -13,11 +13,17 @@ class Answer extends Model
         'question_id',
         'student_id',
         'answer',
-        'score'
+        'score',
+        'attempt_number',
+        'points_earned',
+        'points_possible'
     ];
 
     protected $casts = [
-        'score' => 'integer',
+        'score',
+        'attempt_number',
+        'points_earned',
+        'points_possible' => 'integer',
     ];
 
     // Relationships
@@ -49,12 +55,18 @@ class Answer extends Model
 
     public function scopeCorrect($query)
     {
-        return $query->where('score', '>', 0);
+        return $query->where('score',
+        'attempt_number',
+        'points_earned',
+        'points_possible', '>', 0);
     }
 
     public function scopeIncorrect($query)
     {
-        return $query->where('score', 0);
+        return $query->where('score',
+        'attempt_number',
+        'points_earned',
+        'points_possible', 0);
     }
 
     // Methods

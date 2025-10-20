@@ -11,12 +11,16 @@ class ForumTopic extends Model
 
     protected $fillable = [
         'forum_id',
+        'course_id',
         'user_id',
         'title',
         'content',
         'is_pinned',
         'is_locked',
-        'views'
+        'views',
+        'status',
+        'category',
+        'last_activity'
     ];
 
     protected $casts = [
@@ -31,9 +35,24 @@ class ForumTopic extends Model
         return $this->belongsTo(Forum::class);
     }
 
+    public function course()
+    {
+        return $this->hasOneThrough(Course::class, Forum::class, 'id', 'id', 'forum_id', 'course_id');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(ForumPost::class, 'topic_id')->orderBy('created_at');
+    }
+
+    public function lastPost()
+    {
+        return $this->hasOne(ForumPost::class, 'topic_id')->latestOfMany();
     }
 
     public function replies()
@@ -44,6 +63,18 @@ class ForumTopic extends Model
     public function latestReply()
     {
         return $this->hasOne(ForumReply::class, 'topic_id')->latestOfMany();
+    }
+
+    public function subscribers()
+    {
+        // Return users who have subscribed to this topic
+        // For now, return the topic creator and all users who have replied
+        $subscriberIds = collect([$this->user_id]);
+        $subscriberIds = $subscriberIds->merge(
+            $this->replies()->pluck('user_id')->unique()
+        );
+
+        return User::whereIn('id', $subscriberIds)->get();
     }
 
     // Scopes

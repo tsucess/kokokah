@@ -17,10 +17,8 @@ use Illuminate\Support\Facades\DB;
 
 class ProgressController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum');
-    }
+    // Note: Middleware is applied at route level in Laravel 12
+    // See routes/api.php for middleware configuration
 
     /**
      * Get course progress overview
@@ -52,15 +50,30 @@ class ProgressController extends Controller
             $enrollmentData = $enrollment->toArray();
             $course = $enrollment->course;
 
+            // Check if course exists
+            if (!$course) {
+                $enrollmentData['detailed_progress'] = [
+                    'lessons' => ['completed' => 0, 'total' => 0, 'percentage' => 0],
+                    'quizzes' => ['completed' => 0, 'total' => 0, 'percentage' => 0],
+                    'assignments' => ['submitted' => 0, 'total' => 0, 'percentage' => 0]
+                ];
+                $enrollmentData['study_time_hours'] = 0;
+                $enrollmentData['next_lesson'] = null;
+                return $enrollmentData;
+            }
+
             // Calculate detailed progress
             $totalLessons = $course->lessons()->count();
             $completedLessons = LessonCompletion::where('user_id', $user->id)
                                               ->whereIn('lesson_id', $course->lessons()->pluck('id'))
                                               ->count();
 
-            $totalQuizzes = $course->quizzes()->count();
+            // Get quizzes through lessons to avoid ambiguous column issue
+            $lessonIds = $course->lessons()->pluck('lessons.id');
+            $quizIds = \App\Models\Quiz::whereIn('lesson_id', $lessonIds)->pluck('id');
+            $totalQuizzes = $quizIds->count();
             $completedQuizzes = QuizAttempt::where('user_id', $user->id)
-                                         ->whereIn('quiz_id', $course->quizzes()->pluck('id'))
+                                         ->whereIn('quiz_id', $quizIds)
                                          ->where('status', 'completed')
                                          ->distinct('quiz_id')
                                          ->count();
@@ -392,9 +405,8 @@ class ProgressController extends Controller
                 'user_id' => $user->id,
                 'course_id' => $course->id,
                 'certificate_number' => $this->generateCertificateNumber(),
-                'issued_at' => now(),
-                'grade' => $enrollment->final_grade,
-                'completion_date' => $enrollment->completed_at
+                'certificate_url' => 'certificates/cert-' . $user->id . '-' . $course->id . '.pdf',
+                'issued_at' => now()
             ]);
 
             return response()->json([

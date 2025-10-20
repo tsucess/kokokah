@@ -12,10 +12,8 @@ use Illuminate\Support\Facades\Storage;
 
 class CertificateController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum');
-    }
+    // Note: Middleware is applied at route level in Laravel 12
+    // See routes/api.php for middleware configuration
 
     /**
      * Get user's certificates
@@ -156,11 +154,8 @@ class CertificateController extends Controller
                 'user_id' => $student->id,
                 'course_id' => $course->id,
                 'certificate_number' => $this->generateCertificateNumber(),
-                'issued_at' => now(),
-                'issued_by' => $user->id,
-                'grade' => $enrollment->final_grade,
-                'completion_date' => $enrollment->completed_at,
-                'expires_at' => null // Certificates don't expire by default
+                'certificate_url' => 'certificates/cert-' . $student->id . '-' . $course->id . '.pdf',
+                'issued_at' => now()
             ]);
 
             // Generate PDF certificate
@@ -493,11 +488,8 @@ class CertificateController extends Controller
                         'user_id' => $student->id,
                         'course_id' => $course->id,
                         'certificate_number' => $this->generateCertificateNumber(),
-                        'issued_at' => now(),
-                        'issued_by' => $user->id,
-                        'grade' => $enrollment->final_grade,
-                        'completion_date' => $enrollment->completed_at,
-                        'expires_at' => null
+                        'certificate_url' => 'certificates/cert-' . $student->id . '-' . $course->id . '.pdf',
+                        'issued_at' => now()
                     ]);
 
                     // Generate PDF

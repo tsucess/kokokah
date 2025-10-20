@@ -12,13 +12,20 @@ class PasswordResetController extends Controller
     // Send reset link
     public function sendResetLinkEmail(Request $request)
     {
-        $request->validate(['email'=>'required|email']);
+        try {
+            $request->validate(['email'=>'required|email']);
 
-        $status = Password::sendResetLink($request->only('email'));
+            $status = Password::sendResetLink($request->only('email'));
 
-        return $status === Password::RESET_LINK_SENT
-            ? response()->json(['message'=>__($status)])
-            : response()->json(['message'=>__($status)], 422);
+            return $status === Password::RESET_LINK_SENT
+                ? response()->json(['success' => true, 'message'=>'Password reset link sent to your email'])
+                : response()->json(['success' => false, 'message'=>'Unable to send reset link'], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to send password reset link: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     // Reset password

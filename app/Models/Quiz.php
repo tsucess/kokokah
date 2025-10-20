@@ -42,6 +42,11 @@ class Quiz extends Model
         return $this->hasManyThrough(Answer::class, Question::class);
     }
 
+    public function course()
+    {
+        return $this->hasOneThrough(Course::class, Lesson::class, 'id', 'id', 'lesson_id', 'course_id');
+    }
+
     // Scopes
     public function scopeByType($query, $type)
     {
@@ -63,6 +68,11 @@ class Quiz extends Model
         }
         
         return $questions->get();
+    }
+
+    public function attempts()
+    {
+        return $this->hasMany(QuizAttempt::class);
     }
 
     public function getUserAttempts(User $user)

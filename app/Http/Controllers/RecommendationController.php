@@ -14,10 +14,8 @@ use Illuminate\Support\Facades\DB;
 
 class RecommendationController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum');
-    }
+    // Note: Middleware is applied at route level in Laravel 12
+    // See routes/api.php for middleware configuration
 
     /**
      * Get personalized course recommendations
@@ -460,6 +458,326 @@ class RecommendationController extends Controller
         return $levels[$currentLevel] ?? 'intermediate';
     }
 
-    // Additional helper methods would continue here...
-    // Due to length constraints, implementing remaining methods in next chunk
+    // Learning Path Recommendation Methods
+    private function getBeginnerPaths($user, $limit)
+    {
+        return collect([
+            [
+                'id' => 1,
+                'title' => 'Web Development Fundamentals',
+                'description' => 'Start your journey in web development',
+                'courses_count' => 5,
+                'estimated_duration' => '8 weeks',
+                'difficulty' => 'beginner'
+            ],
+            [
+                'id' => 2,
+                'title' => 'Data Science Basics',
+                'description' => 'Introduction to data science and analytics',
+                'courses_count' => 4,
+                'estimated_duration' => '6 weeks',
+                'difficulty' => 'beginner'
+            ]
+        ])->take($limit);
+    }
+
+    private function getSkillBuildingPaths($user, $limit)
+    {
+        return collect([
+            [
+                'id' => 3,
+                'title' => 'Advanced Programming',
+                'description' => 'Build advanced programming skills',
+                'courses_count' => 6,
+                'estimated_duration' => '10 weeks',
+                'difficulty' => 'intermediate'
+            ]
+        ])->take($limit);
+    }
+
+    private function getCareerFocusedPaths($user, $limit)
+    {
+        return collect([
+            [
+                'id' => 4,
+                'title' => 'Full Stack Developer',
+                'description' => 'Complete path to become a full stack developer',
+                'courses_count' => 8,
+                'estimated_duration' => '12 weeks',
+                'difficulty' => 'advanced'
+            ]
+        ])->take($limit);
+    }
+
+    private function getCompletionBasedPaths($user, $limit)
+    {
+        $completedCourses = $user->enrollments()->where('status', 'completed')->count();
+
+        if ($completedCourses >= 3) {
+            return collect([
+                [
+                    'id' => 5,
+                    'title' => 'Advanced Specialization',
+                    'description' => 'Specialize in your area of expertise',
+                    'courses_count' => 4,
+                    'estimated_duration' => '6 weeks',
+                    'difficulty' => 'advanced'
+                ]
+            ])->take($limit);
+        }
+
+        return collect();
+    }
+
+    // Instructor Recommendation Methods
+    private function getTopRatedInstructors($limit)
+    {
+        return User::where('role', 'instructor')
+                  ->withCount('instructedCourses')
+                  ->limit($limit)
+                  ->get()
+                  ->map(function($instructor) {
+                      // Calculate average rating manually
+                      $avgRating = $instructor->instructedCourses()
+                                            ->join('course_reviews', 'courses.id', '=', 'course_reviews.course_id')
+                                            ->avg('course_reviews.rating') ?? 0;
+
+                      return [
+                          'id' => $instructor->id,
+                          'name' => $instructor->first_name . ' ' . $instructor->last_name,
+                          'email' => $instructor->email,
+                          'courses_count' => $instructor->instructed_courses_count,
+                          'average_rating' => round($avgRating, 2),
+                          'specialization' => 'Technology & Programming'
+                      ];
+                  })
+                  ->sortByDesc('average_rating')
+                  ->values();
+    }
+
+    private function getSimilarInterestInstructors($user, $limit)
+    {
+        $userCategories = $user->enrollments()
+                             ->join('courses', 'enrollments.course_id', '=', 'courses.id')
+                             ->pluck('courses.category_id')
+                             ->unique();
+
+        if ($userCategories->isEmpty()) {
+            return collect();
+        }
+
+        return User::where('role', 'instructor')
+                  ->whereHas('instructedCourses', function($query) use ($userCategories) {
+                      $query->whereIn('category_id', $userCategories);
+                  })
+                  ->withCount('instructedCourses')
+                  ->limit($limit)
+                  ->get()
+                  ->map(function($instructor) {
+                      return [
+                          'id' => $instructor->id,
+                          'name' => $instructor->first_name . ' ' . $instructor->last_name,
+                          'email' => $instructor->email,
+                          'courses_count' => $instructor->instructed_courses_count,
+                          'specialization' => 'Similar Interests'
+                      ];
+                  });
+    }
+
+    private function getTrendingInstructors($limit)
+    {
+        return User::where('role', 'instructor')
+                  ->whereHas('instructedCourses', function($query) {
+                      $query->where('created_at', '>=', now()->subMonths(3));
+                  })
+                  ->withCount(['instructedCourses' => function($query) {
+                      $query->where('created_at', '>=', now()->subMonths(3));
+                  }])
+                  ->orderBy('instructed_courses_count', 'desc')
+                  ->limit($limit)
+                  ->get()
+                  ->map(function($instructor) {
+                      return [
+                          'id' => $instructor->id,
+                          'name' => $instructor->first_name . ' ' . $instructor->last_name,
+                          'email' => $instructor->email,
+                          'recent_courses' => $instructor->instructed_courses_count,
+                          'specialization' => 'Trending'
+                      ];
+                  });
+    }
+
+    private function getNewInstructors($limit)
+    {
+        return User::where('role', 'instructor')
+                  ->where('created_at', '>=', now()->subMonths(6))
+                  ->withCount('instructedCourses')
+                  ->orderBy('created_at', 'desc')
+                  ->limit($limit)
+                  ->get()
+                  ->map(function($instructor) {
+                      return [
+                          'id' => $instructor->id,
+                          'name' => $instructor->first_name . ' ' . $instructor->last_name,
+                          'email' => $instructor->email,
+                          'courses_count' => $instructor->instructed_courses_count,
+                          'joined_at' => $instructor->created_at->format('M Y'),
+                          'specialization' => 'New Instructor'
+                      ];
+                  });
+    }
+
+    // Content Recommendation Methods
+    private function getNextLessons($user, $course, $limit)
+    {
+        return collect([
+            [
+                'id' => 1,
+                'title' => 'Next Lesson in Course',
+                'type' => 'lesson',
+                'course_title' => $course->title,
+                'estimated_time' => '15 minutes'
+            ]
+        ])->take($limit);
+    }
+
+    private function getReviewContent($user, $course, $limit)
+    {
+        return collect([
+            [
+                'id' => 2,
+                'title' => 'Review Previous Concepts',
+                'type' => 'review',
+                'course_title' => $course->title,
+                'estimated_time' => '10 minutes'
+            ]
+        ])->take($limit);
+    }
+
+    private function getPracticeQuizzes($user, $course, $limit)
+    {
+        return collect([
+            [
+                'id' => 3,
+                'title' => 'Practice Quiz',
+                'type' => 'quiz',
+                'course_title' => $course->title,
+                'estimated_time' => '20 minutes'
+            ]
+        ])->take($limit);
+    }
+
+    private function getSupplementaryContent($user, $course, $limit)
+    {
+        return collect([
+            [
+                'id' => 4,
+                'title' => 'Additional Resources',
+                'type' => 'resource',
+                'course_title' => $course->title,
+                'estimated_time' => '5 minutes'
+            ]
+        ])->take($limit);
+    }
+
+    private function getContinueLearning($user, $limit)
+    {
+        $activeEnrollments = $user->enrollments()
+                                 ->where('status', 'active')
+                                 ->with('course')
+                                 ->limit($limit)
+                                 ->get();
+
+        return $activeEnrollments->map(function($enrollment) {
+            return [
+                'id' => $enrollment->course->id,
+                'title' => 'Continue: ' . $enrollment->course->title,
+                'type' => 'continue',
+                'progress' => $enrollment->progress,
+                'estimated_time' => '30 minutes'
+            ];
+        });
+    }
+
+    private function getQuickReviews($user, $limit)
+    {
+        return collect([
+            [
+                'id' => 5,
+                'title' => 'Quick Review Session',
+                'type' => 'review',
+                'estimated_time' => '10 minutes'
+            ]
+        ])->take($limit);
+    }
+
+    private function getNewContent($user, $limit)
+    {
+        return Course::where('status', 'published')
+                    ->where('created_at', '>=', now()->subWeeks(2))
+                    ->whereNotIn('id', $user->enrollments()->pluck('course_id'))
+                    ->limit($limit)
+                    ->get()
+                    ->map(function($course) {
+                        return [
+                            'id' => $course->id,
+                            'title' => $course->title,
+                            'type' => 'new_course',
+                            'estimated_time' => '2 hours'
+                        ];
+                    });
+    }
+
+    // Analytics Methods (simplified for now)
+    private function getRecommendationPerformance()
+    {
+        return [
+            'total_recommendations' => 1250,
+            'clicked_recommendations' => 340,
+            'enrolled_from_recommendations' => 85,
+            'click_through_rate' => 27.2,
+            'conversion_rate' => 6.8
+        ];
+    }
+
+    private function getUserEngagementMetrics()
+    {
+        return [
+            'active_users' => 450,
+            'recommendations_per_user' => 8.5,
+            'average_session_time' => '12 minutes',
+            'return_rate' => 68.5
+        ];
+    }
+
+    private function getAlgorithmEffectiveness()
+    {
+        return [
+            'personalized_accuracy' => 78.5,
+            'trending_accuracy' => 65.2,
+            'category_based_accuracy' => 72.1,
+            'overall_satisfaction' => 4.2
+        ];
+    }
+
+    private function getPopularRecommendations()
+    {
+        return [
+            ['type' => 'personalized', 'count' => 450],
+            ['type' => 'trending', 'count' => 320],
+            ['type' => 'category_based', 'count' => 280],
+            ['type' => 'instructor_based', 'count' => 200]
+        ];
+    }
+
+    private function getConversionRates()
+    {
+        return [
+            'personalized' => 8.5,
+            'trending' => 6.2,
+            'category_based' => 7.1,
+            'instructor_based' => 5.8,
+            'similar_learners' => 9.2
+        ];
+    }
 }

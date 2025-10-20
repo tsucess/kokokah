@@ -23,8 +23,11 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // Apply rate limiting to API routes
         $middleware->group('api', [
-            'rate.limit:api,60', // 60 requests per minute
+            'rate.limit:api,300', // 300 requests per minute (increased for testing)
         ]);
+
+        // Configure authentication redirect for unauthenticated users
+        $middleware->redirectGuestsTo('/login');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         // Handle API exceptions with consistent JSON responses

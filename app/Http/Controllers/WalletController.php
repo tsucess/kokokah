@@ -16,7 +16,7 @@ class WalletController extends Controller
     public function __construct(WalletService $walletService)
     {
         $this->walletService = $walletService;
-        $this->middleware('auth:sanctum');
+        // Middleware applied at route level in Laravel 12
     }
 
     /**

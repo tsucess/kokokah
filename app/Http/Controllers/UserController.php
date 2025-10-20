@@ -11,10 +11,8 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum');
-    }
+    // Note: Middleware is applied at route level in Laravel 12
+    // See routes/api.php for auth:sanctum middleware configuration
 
     /**
      * Get user profile
@@ -150,19 +148,26 @@ class UserController extends Controller
      */
     public function achievements()
     {
-        $user = Auth::user();
+        try {
+            $user = Auth::user();
 
-        $achievements = [
-            'badges' => $user->badges()->with('badge')->get(),
-            'certificates' => $user->certificates()->with(['course.category'])->get(),
-            'rewards' => $user->rewards()->orderBy('created_at', 'desc')->limit(10)->get(),
-            'milestones' => $this->calculateMilestones($user)
-        ];
+            $achievements = [
+                'badges' => $user->badges()->get() ?? [],
+                'certificates' => $user->certificates()->with(['course.category'])->get() ?? [],
+                'rewards' => $user->rewards()->orderBy('created_at', 'desc')->limit(10)->get() ?? [],
+                'milestones' => $this->calculateMilestones($user)
+            ];
 
-        return response()->json([
-            'success' => true,
-            'data' => $achievements
-        ]);
+            return response()->json([
+                'success' => true,
+                'data' => $achievements
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch achievements: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -366,12 +371,14 @@ class UserController extends Controller
                                  ->get();
 
         foreach ($recentEnrollments as $enrollment) {
-            $activities[] = [
-                'type' => 'enrollment',
-                'message' => 'Enrolled in ' . $enrollment->course->title,
-                'date' => $enrollment->enrolled_at,
-                'course_id' => $enrollment->course_id
-            ];
+            if ($enrollment->course) {
+                $activities[] = [
+                    'type' => 'enrollment',
+                    'message' => 'Enrolled in ' . $enrollment->course->title,
+                    'date' => $enrollment->enrolled_at,
+                    'course_id' => $enrollment->course_id
+                ];
+            }
         }
 
         // Recent lesson completions
@@ -439,18 +446,20 @@ class UserController extends Controller
         // Recent certificates
         $recentCertificates = $user->certificates()
                                   ->with('course')
-                                  ->orderBy('issued_at', 'desc')
+                                  ->orderBy('created_at', 'desc')
                                   ->limit(3)
                                   ->get();
 
         foreach ($recentCertificates as $certificate) {
-            $achievements[] = [
-                'type' => 'certificate',
-                'title' => 'Course Completed',
-                'description' => 'Earned certificate for ' . $certificate->course->title,
-                'date' => $certificate->issued_at,
-                'icon' => 'certificate'
-            ];
+            if ($certificate->course) {
+                $achievements[] = [
+                    'type' => 'certificate',
+                    'title' => 'Course Completed',
+                    'description' => 'Earned certificate for ' . $certificate->course->title,
+                    'date' => $certificate->created_at,
+                    'icon' => 'certificate'
+                ];
+            }
         }
 
         // Recent rewards

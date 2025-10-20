@@ -14,11 +14,8 @@ use Illuminate\Support\Facades\Storage;
 
 class LearningPathController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum');
-        $this->middleware('role:instructor,admin')->except(['index', 'show', 'enroll', 'unenroll', 'myPaths', 'pathProgress']);
-    }
+    // Note: Middleware is applied at route level in Laravel 12
+    // See routes/api.php for middleware configuration
 
     /**
      * Get all learning paths (public)

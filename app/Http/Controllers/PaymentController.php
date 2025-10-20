@@ -18,7 +18,7 @@ class PaymentController extends Controller
     public function __construct(PaymentGatewayService $paymentService)
     {
         $this->paymentService = $paymentService;
-        $this->middleware('auth:sanctum')->except(['webhook', 'callback', 'success', 'cancel']);
+        // Middleware applied at route level in Laravel 12
     }
 
     /**
@@ -142,7 +142,14 @@ class PaymentController extends Controller
             $payload = $request->all();
             Log::info("Payment webhook received from {$gateway}", $payload);
 
-            $result = $this->paymentService->verifyPayment($gateway, $this->extractReference($gateway, $payload));
+            $reference = $this->extractReference($gateway, $payload);
+
+            if (!$reference) {
+                Log::warning("No reference found in webhook payload for {$gateway}");
+                return response()->json(['status' => 'success']); // Return success to prevent retry
+            }
+
+            $result = $this->paymentService->verifyPayment($gateway, $reference);
 
             if ($result['success']) {
                 Log::info("Payment verified successfully", $result);
@@ -150,11 +157,11 @@ class PaymentController extends Controller
             }
 
             Log::warning("Payment verification failed", $result);
-            return response()->json(['status' => 'failed'], 400);
+            return response()->json(['status' => 'success']); // Return success to prevent retry
 
         } catch (\Exception $e) {
             Log::error("Webhook processing failed for {$gateway}: " . $e->getMessage());
-            return response()->json(['status' => 'error'], 500);
+            return response()->json(['status' => 'success']); // Return success to prevent retry
         }
     }
 

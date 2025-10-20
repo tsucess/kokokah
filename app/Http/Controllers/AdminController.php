@@ -155,7 +155,7 @@ class AdminController extends Controller
             $sortOrder = $request->get('sort_order', 'desc');
             $query->orderBy($sortBy, $sortOrder);
 
-            $users = $query->withCount(['enrollments', 'courses'])
+            $users = $query->withCount(['enrollments', 'instructedCourses', 'enrolledCourses'])
                           ->paginate($request->get('per_page', 20));
 
             // Add additional user data
@@ -165,7 +165,7 @@ class AdminController extends Controller
                                                 ->where('status', 'completed')
                                                 ->sum('amount');
                 $userData['last_activity'] = $user->last_login_at;
-                $userData['is_banned'] = $user->banned_at !== null;
+                $userData['is_banned'] = !$user->is_active;
                 return $userData;
             });
 
@@ -393,9 +393,16 @@ class AdminController extends Controller
         try {
             $user = User::findOrFail($userId);
 
+            // Check if user is already banned
+            if (!$user->is_active) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'User is already banned'
+                ], 400);
+            }
+
             $validator = Validator::make($request->all(), [
-                'reason' => 'required|string|max:500',
-                'duration' => 'nullable|integer|min:1' // days
+                'reason' => 'nullable|string|max:500'
             ]);
 
             if ($validator->fails()) {
@@ -406,19 +413,24 @@ class AdminController extends Controller
                 ], 422);
             }
 
-            $banUntil = $request->duration ? now()->addDays($request->duration) : null;
-
+            // Ban the user by setting is_active to false
             $user->update([
-                'banned_at' => now(),
-                'ban_reason' => $request->reason,
-                'banned_until' => $banUntil,
-                'banned_by' => Auth::id()
+                'is_active' => false
             ]);
 
             return response()->json([
                 'success' => true,
                 'message' => 'User banned successfully',
-                'data' => $user
+                'data' => [
+                    'id' => $user->id,
+                    'first_name' => $user->first_name,
+                    'last_name' => $user->last_name,
+                    'email' => $user->email,
+                    'role' => $user->role,
+                    'is_active' => $user->is_active,
+                    'banned_at' => now()->toISOString(),
+                    'reason' => $request->reason ?? 'No reason provided'
+                ]
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -436,17 +448,31 @@ class AdminController extends Controller
         try {
             $user = User::findOrFail($userId);
 
+            // Check if user is already active
+            if ($user->is_active) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'User is not banned'
+                ], 400);
+            }
+
+            // Unban the user by setting is_active to true
             $user->update([
-                'banned_at' => null,
-                'ban_reason' => null,
-                'banned_until' => null,
-                'banned_by' => null
+                'is_active' => true
             ]);
 
             return response()->json([
                 'success' => true,
                 'message' => 'User unbanned successfully',
-                'data' => $user
+                'data' => [
+                    'id' => $user->id,
+                    'first_name' => $user->first_name,
+                    'last_name' => $user->last_name,
+                    'email' => $user->email,
+                    'role' => $user->role,
+                    'is_active' => $user->is_active,
+                    'unbanned_at' => now()->toISOString()
+                ]
             ]);
         } catch (\Exception $e) {
             return response()->json([

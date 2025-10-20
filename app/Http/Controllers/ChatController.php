@@ -12,10 +12,8 @@ use Illuminate\Support\Facades\Validator;
 
 class ChatController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum');
-    }
+    // Note: Middleware is applied at route level in Laravel 12
+    // See routes/api.php for middleware configuration
 
     /**
      * Start a new chat session

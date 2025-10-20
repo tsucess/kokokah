@@ -41,6 +41,16 @@ class Coupon extends Model
         return $this->hasMany(CouponUsage::class);
     }
 
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'coupon_courses');
+    }
+
     // Scopes
     public function scopeActive($query)
     {

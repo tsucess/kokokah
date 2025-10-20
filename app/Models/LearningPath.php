@@ -55,6 +55,16 @@ class LearningPath extends Model
                     ->withTimestamps();
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(CourseReview::class, 'learning_path_id');
+    }
+
+    public function enrollments()
+    {
+        return $this->hasMany(LearningPathEnrollment::class);
+    }
+
     // Boot method to auto-generate slug
     protected static function boot()
     {

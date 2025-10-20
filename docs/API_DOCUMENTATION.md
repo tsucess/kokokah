@@ -221,12 +221,39 @@ Authorization: Bearer {token}
 ```
 
 **Query Parameters:**
-- `q` (string) - Search query (name, email)
-- `role` (string) - Filter by role
-- `level_id` (int) - Filter by education level
-- `is_active` (boolean) - Filter by active status
-- `page` (int) - Page number
-- `per_page` (int) - Items per page
+- `q` (string) - Search query (name, email, contact, address)
+- `role` (string) - Filter by role (student, instructor, admin)
+- `per_page` (int) - Items per page (max: 50)
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "data": [
+      {
+        "id": 1,
+        "first_name": "John",
+        "last_name": "Doe",
+        "email": "john@example.com",
+        "role": "student",
+        "contact": "+234-800-123-4567",
+        "gender": "male",
+        "is_active": true,
+        "profile_photo": null,
+        "level": {
+          "id": 4,
+          "name": "400 Level",
+          "type": "university"
+        }
+      }
+    ],
+    "current_page": 1,
+    "per_page": 20,
+    "total": 1
+  }
+}
+```
 
 #### **Get User Profile**
 ```http
@@ -354,13 +381,13 @@ Authorization: Bearer {token}
 {
   "title": "Introduction to Mathematics",
   "description": "Learn basic mathematical concepts",
-  "category_id": 1,
-  "term_id": 1,
-  "level_id": 1,
+  "category_id": 10,
+  "term_id": 10,
+  "level_id": 10,
   "price": 99.99,
   "difficulty": "beginner",
   "duration_hours": 40,
-  "max_students": 100
+  "max_students": 300
 }
 ```
 
@@ -375,6 +402,11 @@ Authorization: Bearer {token}
 DELETE /courses/{id}
 Authorization: Bearer {token}
 ```
+Student Token:
+10|DZEuSz0Dgth8VkhdpkA1noL6Mi17vo7HjFwGYVczb039b867
+
+Admin Token:
+4|eZ6bvHbU9VGXI8NOBQUtvCrVl0WcXg3amjuY31to043963bb
 
 #### **Enroll in Course**
 ```http

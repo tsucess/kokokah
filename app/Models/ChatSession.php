@@ -10,7 +10,22 @@ class ChatSession extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id'
+        'user_id',
+        'course_id',
+        'session_token',
+        'session_type',
+        'context',
+        'status',
+        'started_at',
+        'ended_at',
+        'last_activity_at'
+    ];
+
+    protected $casts = [
+        'context' => 'array',
+        'started_at' => 'datetime',
+        'ended_at' => 'datetime',
+        'last_activity_at' => 'datetime',
     ];
 
     // Relationships
@@ -27,6 +42,11 @@ class ChatSession extends Model
     public function latestMessage()
     {
         return $this->hasOne(ChatMessage::class)->latestOfMany();
+    }
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
     }
 
     // Scopes

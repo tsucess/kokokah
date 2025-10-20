@@ -401,17 +401,51 @@ class CourseController extends Controller
      */
     public function myCourses()
     {
-        $user = Auth::user();
+        try {
+            $user = Auth::user();
 
-        $enrollments = Enrollment::with(['course.category', 'course.instructor', 'course.level'])
-                                ->where('user_id', $user->id)
-                                ->orderBy('enrolled_at', 'desc')
-                                ->get();
+            if (!$user) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'User not authenticated'
+                ], 401);
+            }
 
-        return response()->json([
-            'success' => true,
-            'data' => $enrollments
-        ]);
+            // Get enrollments and manually check for valid courses
+            $enrollments = Enrollment::where('user_id', $user->id)
+                                    ->orderBy('enrolled_at', 'desc')
+                                    ->get();
+
+            $validEnrollments = [];
+
+            foreach ($enrollments as $enrollment) {
+                // Check if course exists before loading relationships
+                $course = \App\Models\Course::with(['category', 'instructor', 'level'])
+                                          ->find($enrollment->course_id);
+
+                if ($course) {
+                    $enrollmentData = $enrollment->toArray();
+                    $enrollmentData['course'] = $course->toArray();
+                    $validEnrollments[] = $enrollmentData;
+                }
+            }
+
+            return response()->json([
+                'success' => true,
+                'data' => $validEnrollments,
+                'total' => count($validEnrollments)
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('My Courses Error: ' . $e->getMessage());
+            \Log::error('Stack trace: ' . $e->getTraceAsString());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch courses',
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ], 500);
+        }
     }
 
     /**

@@ -46,6 +46,41 @@ response from register Edpoint
     "token": "2|n1CWlOFNeOu4bDRsqtsMaJhsaTJXRtjcvNYCaqRd0847e259"
 }
 
+
+{
+  "email": "femi.okafor3@student.kokokah.com",
+  "password": "student123"
+}
+
+{
+    "status": "success",
+    "message": "Login successful",
+    "user": {
+        "id": 32,
+        "identifier": null,
+        "first_name": "Femi",
+        "last_name": "Okafor",
+        "contact": "+234-826-438-7489",
+        "gender": "male",
+        "email": "femi.okafor3@student.kokokah.com",
+        "role": "student",
+        "is_active": true,
+        "email_verified_at": "2025-10-13T12:44:04.000000Z",
+        "last_login_at": null,
+        "last_login_ip": null,
+        "created_at": "2025-10-13T12:44:04.000000Z",
+        "updated_at": "2025-10-13T12:44:04.000000Z",
+        "level_id": 13,
+        "date_of_birth": "2001-08-01T00:00:00.000000Z",
+        "address": "Enugu, Nigeria",
+        "profile_photo": null,
+        "deleted_at": null
+    },
+    "token": "10|DZEuSz0Dgth8VkhdpkA1noL6Mi17vo7HjFwGYVczb039b867"
+}
+
+
+
 /logout
 
 {
@@ -54,12 +89,7 @@ response from register Edpoint
 }
 
 
-
-
-
-
-
-/user
+/user (current user)
 
 {
     "id": 21,
@@ -83,7 +113,17 @@ response from register Edpoint
     "deleted_at": null
 }
 
-
+GET /admin/users - Fetch all Users by Admin
+GET /users/profile
+PUT /users/profile
+POST /admin/users/30/ban
+POST /admin/users/30/unban
+GET /audit/users/{userId}/activity
+GET /users/{userId}/badges
+GET /courses?page=1&per_page=15&category_id=1&level_id=2&difficulty=beginner
+POST /courses
+PUT /courses/{id}
+DELETE /courses/{id}
 
 
  INFO  Seeding database.  

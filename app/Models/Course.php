@@ -120,6 +120,11 @@ class Course extends Model
         return $this->hasMany(CourseAnalytic::class);
     }
 
+    public function quizzes()
+    {
+        return $this->hasManyThrough(Quiz::class, Lesson::class, 'course_id', 'lesson_id', 'id', 'id');
+    }
+
     public function learningPaths()
     {
         return $this->belongsToMany(LearningPath::class, 'learning_path_courses')

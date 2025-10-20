@@ -15,10 +15,8 @@ use Illuminate\Support\Facades\DB;
 
 class SearchController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum');
-    }
+    // Note: Middleware is applied at route level in Laravel 12
+    // See routes/api.php for auth:sanctum middleware configuration
 
     /**
      * Global search across all content
@@ -27,7 +25,7 @@ class SearchController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'query' => 'required|string|min:2|max:255',
+                'q' => 'required|string|min:2|max:255',
                 'type' => 'nullable|in:all,courses,users,lessons,quizzes,assignments,forums',
                 'limit' => 'nullable|integer|min:1|max:50'
             ]);
@@ -40,7 +38,7 @@ class SearchController extends Controller
                 ], 422);
             }
 
-            $query = $request->query;
+            $query = $request->q;
             $type = $request->get('type', 'all');
             $limit = $request->get('limit', 20);
 
@@ -96,7 +94,7 @@ class SearchController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'query' => 'nullable|string|max:255',
+                'q' => 'nullable|string|max:255',
                 'category_id' => 'nullable|exists:categories,id',
                 'instructor_id' => 'nullable|exists:users,id',
                 'difficulty_level' => 'nullable|in:beginner,intermediate,advanced',
@@ -120,8 +118,8 @@ class SearchController extends Controller
             $query = Course::where('status', 'published');
 
             // Text search
-            if ($request->query) {
-                $searchTerm = $request->query;
+            if ($request->q) {
+                $searchTerm = $request->q;
                 $query->where(function($q) use ($searchTerm) {
                     $q->where('title', 'like', "%{$searchTerm}%")
                       ->orWhere('description', 'like', "%{$searchTerm}%")
@@ -191,7 +189,7 @@ class SearchController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'query' => 'required|string|min:2|max:255',
+                'q' => 'required|string|min:2|max:255',
                 'role' => 'nullable|in:student,instructor,admin',
                 'per_page' => 'nullable|integer|min:1|max:50'
             ]);
@@ -204,19 +202,21 @@ class SearchController extends Controller
                 ], 422);
             }
 
-            $searchTerm = $request->query;
+            $searchTerm = $request->q;
             $query = User::where(function($q) use ($searchTerm) {
                 $q->where('first_name', 'like', "%{$searchTerm}%")
                   ->orWhere('last_name', 'like', "%{$searchTerm}%")
                   ->orWhere('email', 'like', "%{$searchTerm}%")
-                  ->orWhere('bio', 'like', "%{$searchTerm}%");
+                  ->orWhere('contact', 'like', "%{$searchTerm}%")
+                  ->orWhere('address', 'like', "%{$searchTerm}%");
             });
 
             if ($request->role) {
                 $query->where('role', $request->role);
             }
 
-            $users = $query->select(['id', 'first_name', 'last_name', 'email', 'role', 'avatar', 'bio'])
+            $users = $query->select(['id', 'first_name', 'last_name', 'email', 'role', 'contact', 'gender', 'is_active', 'profile_photo'])
+                          ->with('level:id,name,type')
                           ->paginate($request->get('per_page', 20));
 
             return response()->json([
@@ -238,7 +238,7 @@ class SearchController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'query' => 'required|string|min:2|max:255',
+                'q' => 'required|string|min:2|max:255',
                 'course_id' => 'required|exists:courses,id',
                 'content_type' => 'nullable|in:all,lessons,quizzes,assignments',
                 'per_page' => 'nullable|integer|min:1|max:50'
@@ -263,7 +263,7 @@ class SearchController extends Controller
                 ], 403);
             }
 
-            $searchTerm = $request->query;
+            $searchTerm = $request->q;
             $contentType = $request->get('content_type', 'all');
             $results = [];
 
@@ -302,7 +302,7 @@ class SearchController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'query' => 'required|string|min:1|max:100',
+                'q' => 'required|string|min:1|max:100',
                 'type' => 'nullable|in:courses,users,topics',
                 'limit' => 'nullable|integer|min:1|max:20'
             ]);
@@ -315,7 +315,7 @@ class SearchController extends Controller
                 ], 422);
             }
 
-            $query = $request->query;
+            $query = $request->q;
             $type = $request->get('type', 'courses');
             $limit = $request->get('limit', 10);
 
@@ -364,7 +364,7 @@ class SearchController extends Controller
     {
         try {
             $filters = [
-                'categories' => DB::table('categories')->select('id', 'name')->get(),
+                'categories' => DB::table('categories')->select('id', 'title as name')->get(),
                 'difficulty_levels' => ['beginner', 'intermediate', 'advanced'],
                 'price_ranges' => [
                     ['label' => 'Free', 'min' => 0, 'max' => 0],
@@ -432,7 +432,7 @@ class SearchController extends Controller
                           ->orWhere('last_name', 'like', "%{$query}%")
                           ->orWhere('email', 'like', "%{$query}%");
                     })
-                    ->select(['id', 'first_name', 'last_name', 'email', 'role', 'avatar'])
+                    ->select(['id', 'first_name', 'last_name', 'email', 'role', 'profile_photo'])
                     ->limit($limit)
                     ->get();
     }
@@ -474,9 +474,9 @@ class SearchController extends Controller
     {
         return Forum::where(function($q) use ($query) {
                         $q->where('title', 'like', "%{$query}%")
-                          ->orWhere('content', 'like', "%{$query}%");
+                          ->orWhere('description', 'like', "%{$query}%");
                     })
-                    ->with(['user', 'course'])
+                    ->with(['course'])
                     ->limit($limit)
                     ->get();
     }
@@ -493,7 +493,9 @@ class SearchController extends Controller
 
     private function searchCourseQuizzes($courseId, $query)
     {
-        return Quiz::where('course_id', $courseId)
+        return Quiz::whereHas('lesson', function($q) use ($courseId) {
+                      $q->where('course_id', $courseId);
+                  })
                   ->where(function($q) use ($query) {
                       $q->where('title', 'like', "%{$query}%")
                         ->orWhere('description', 'like', "%{$query}%");

@@ -13,10 +13,8 @@ use Illuminate\Support\Facades\DB;
 
 class AssignmentController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum');
-    }
+    // Note: Middleware is applied at route level in Laravel 12
+    // See routes/api.php for middleware configuration
 
     /**
      * Get course assignments
@@ -184,6 +182,14 @@ class AssignmentController extends Controller
             $assignment = Assignment::with(['course', 'submissions.student'])->findOrFail($id);
             $user = Auth::user();
 
+            // Check if course exists
+            if (!$assignment->course) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Assignment course not found'
+                ], 404);
+            }
+
             // Check access
             $isEnrolled = $assignment->course->enrollments()->where('user_id', $user->id)->exists();
             $isInstructor = $assignment->course->instructor_id === $user->id;
@@ -210,7 +216,7 @@ class AssignmentController extends Controller
                 $assignmentData['user_submission'] = $userSubmission;
                 $assignmentData['can_submit'] = !$userSubmission && now() <= $assignment->due_date;
                 $assignmentData['is_overdue'] = now() > $assignment->due_date;
-                
+
                 // Remove submissions array for students
                 unset($assignmentData['submissions']);
             }
@@ -219,11 +225,11 @@ class AssignmentController extends Controller
                 'success' => true,
                 'data' => $assignmentData
             ]);
-        } catch (\Exception) {
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Assignment not found'
-            ], 404);
+                'message' => 'Failed to fetch assignment: ' . $e->getMessage()
+            ], 500);
         }
     }
 

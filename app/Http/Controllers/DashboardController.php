@@ -16,10 +16,8 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum');
-    }
+    // Note: Middleware is applied at route level in Laravel 12
+    // See routes/api.php for middleware configuration
 
     /**
      * Get student dashboard
@@ -178,8 +176,11 @@ class DashboardController extends Controller
             'certificates_earned' => $user->certificates()->count(),
             'total_study_time' => LessonCompletion::where('user_id', $user->id)->sum('time_spent'),
             'lessons_completed' => LessonCompletion::where('user_id', $user->id)->count(),
-            'quizzes_taken' => Answer::where('student_id', $user->id)->distinct('quiz_id')->count('quiz_id'),
-            'assignments_submitted' => AssignmentSubmission::where('student_id', $user->id)->count(),
+            'quizzes_taken' => Answer::where('student_id', $user->id)
+                                     ->join('questions', 'answers.question_id', '=', 'questions.id')
+                                     ->distinct('questions.quiz_id')
+                                     ->count('questions.quiz_id'),
+            'assignments_submitted' => AssignmentSubmission::where('user_id', $user->id)->count(),
             'current_streak' => 7, // Mock value - would calculate from login logs
             'wallet_balance' => $user->getOrCreateWallet()->balance
         ];
@@ -198,11 +199,17 @@ class DashboardController extends Controller
                    ->get()
                    ->map(function ($enrollment) use ($user) {
                        $course = $enrollment->course;
+
+                       // Skip enrollments with null courses
+                       if (!$course) {
+                           return null;
+                       }
+
                        $totalLessons = $course->lessons()->count();
                        $completedLessons = LessonCompletion::where('user_id', $user->id)
                                                          ->whereIn('lesson_id', $course->lessons()->pluck('id'))
                                                          ->count();
-                       
+
                        return [
                            'enrollment_id' => $enrollment->id,
                            'course' => $course,
@@ -215,7 +222,8 @@ class DashboardController extends Controller
                                                  ->first(),
                            'last_accessed' => $enrollment->updated_at
                        ];
-                   });
+                   })
+                   ->filter(); // Remove null values
     }
 
     /**
@@ -290,10 +298,10 @@ class DashboardController extends Controller
                             return [
                                 'id' => $assignment->id,
                                 'title' => $assignment->title,
-                                'course' => $assignment->course->title,
+                                'course' => $assignment->course ? $assignment->course->title : 'Unknown Course',
                                 'due_date' => $assignment->due_date,
                                 'days_remaining' => now()->diffInDays($assignment->due_date),
-                                'max_points' => $assignment->max_points
+                                'max_points' => $assignment->max_score ?? 0
                             ];
                         });
     }
@@ -308,18 +316,20 @@ class DashboardController extends Controller
         // Recent certificates
         $recentCertificates = $user->certificates()
                                   ->with('course')
-                                  ->orderBy('issued_at', 'desc')
+                                  ->orderBy('created_at', 'desc')
                                   ->limit(3)
                                   ->get();
 
         foreach ($recentCertificates as $certificate) {
-            $achievements[] = [
-                'type' => 'certificate',
-                'title' => 'Course Completed',
-                'description' => 'Earned certificate for ' . $certificate->course->title,
-                'timestamp' => $certificate->issued_at,
-                'icon' => 'certificate'
-            ];
+            if ($certificate->course) {
+                $achievements[] = [
+                    'type' => 'certificate',
+                    'title' => 'Course Completed',
+                    'description' => 'Earned certificate for ' . $certificate->course->title,
+                    'timestamp' => $certificate->created_at,
+                    'icon' => 'certificate'
+                ];
+            }
         }
 
         // Recent high quiz scores
