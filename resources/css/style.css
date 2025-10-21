@@ -113,7 +113,7 @@ color:var(--color-primary-button);
 {
 width: 200px;
 height:50px;
-padding: 16px 5px;
+padding: 10px 6px;
 border-radius:4px;
 background: var(--color-bg-banner);
 color:#fff;
@@ -130,7 +130,7 @@ font-size: 14px;
 
 .secondaryButton
 {
-padding: 16px 5px;
+padding: 10px 6px;
 width:200px;
 height:50px;
 border-width: 1px;

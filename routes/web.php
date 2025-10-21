@@ -101,6 +101,10 @@ Route::get('/usersubject', function () {
     return view('users.usersubject');
 });
 
+Route::get('/enroll', function () {
+    return view('users.enroll');
+});
+
 Route::get('/termsubject', function () {
     return view('admin.termsubject');
 });

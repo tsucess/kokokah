@@ -14,20 +14,21 @@
         </div>
 
         <div class="action-buttons ms-auto">
-          <button class="btn btn-outline-primary"><i class="fa-solid fa-plus me-2"></i> Add New Course</button>
-          <button class="btn btn-success"><i class="fa-solid fa-user-plus me-2"></i> Create New User</button>
+          <button class="btn secondaryButton"><i class="fa-solid fa-plus me-2"></i> Add New Course</button>
+          <button class="btn primaryButton"><i class="fa-solid fa-user-plus me-2"></i> Create New User</button>
         </div>
       </div>
 
       <!-- Stats -->
       <div class="stats-row">
         <div class="stat-card">
-          <div class="stat-orb orb-users"><i class="fa-solid fa-users"></i></div>
+            <img src = "images/abc.png" class = "img-fluid" />
+          {{-- <div class="stat-orb orb-users"><i class="fa-solid fa-users"></i></div> --}}
           <div class="stat-meta ">
             <div class="label mt-2">Total Users</div>
             <div class = "mt-2">
             <p style = "font-size: 7px;">
-             <i class="fa-solid fa-square text-success"></i> science (50%) &nbsp; &nbsp;
+             <i class="fa-solid fa-square text-success"></i> science (50%)
              <i class="fa-solid fa-square text-warning"></i> Arts (50%)
             </p>
             </div>
@@ -36,12 +37,13 @@
         </div>
 
         <div class="stat-card">
-        <div class="stat-orb orb-students"><i class="fa-solid fa-user-graduate"></i></div>
-        <div class="stat-meta ps-2">
+            <img src = "images/students.png" class = "img-fluid" />
+        {{-- <div class="stat-orb orb-students"><i class="fa-solid fa-user-graduate"></i></div> --}}
+                <div class="stat-meta">
             <div class="label mt-2">Students</div>
             <div class = "mt-2">
             <p style = "font-size: 7px;">
-             <i class="fa-solid fa-square text-success"></i> MALE (61%) &nbsp; &nbsp;
+             <i class="fa-solid fa-square text-success"></i> MALE (61%)
              <i class="fa-solid fa-square text-warning"></i> FEMALE (39%)
             </p>
             </div>
@@ -50,12 +52,13 @@
         </div>
 
         <div class="stat-card">
-            <div class="stat-orb orb-instructors"><i class="fa-solid fa-chalkboard-user"></i></div>
-          <div class="stat-meta">
+            {{-- <div class="stat-orb orb-instructors"><i class="fa-solid fa-chalkboard-user"></i></div> --}}
+            <img src = "images/instructor.png" class = "img-fluid" />
+            <div class="stat-meta">
             <div class="label">Instructors</div>
             <div class = "mt-2">
             <p style = "font-size: 7px;">
-             <i class="fa-solid fa-square text-success"></i> MALE (55%) &nbsp; &nbsp;
+             <i class="fa-solid fa-square text-success"></i> MALE (55%)
              <i class="fa-solid fa-square text-warning"></i> FEMALE (45%)
             </p>
             </div>
@@ -64,12 +67,13 @@
         </div>
 
         <div class="stat-card">
-        <div class="stat-orb orb-courses"><i class="fa-solid fa-book-open"></i></div>
+        <img src = "images/abc.png" class = "img-fluid" />
+        {{-- <div class="stat-orb orb-courses"><i class="fa-solid fa-book-open"></i></div> --}}
           <div class="stat-meta">
             <div class="label">Active Courses</div>
             <div class = "mt-2">
             <p style = "font-size: 7px;">
-             <i class="fa-solid fa-square text-success"></i> science (50%) &nbsp; &nbsp;
+             <i class="fa-solid fa-square text-success"></i> science (50%)
              <i class="fa-solid fa-square text-warning"></i> Arts (50%)
             </p>
             </div>
@@ -129,7 +133,8 @@
                 <td>Teacher</td>
                 <td>Male</td>
                 <td>majorsignature@gmail.com</td>
-                <td><span class="badge bg-success">Active</span></td>
+                <td><span class="badge text-success" style = "background: #DCFCE7;"><i class="fa fa-circle  p-1 text-success" style = "font-size:10px;"></i>Active</span></td>
+                {{-- <td><button class="btn border rounded-5 p-2  text-success" type = "button" style = "background: #DCFCE7;"><i class="fa fa-circle ps-2 pe-2 text-success" style = "font-size:10px;"></i>Active</span></td> --}}
               </tr>
               <tr>
                 <td>Jane Doe</td>
@@ -137,7 +142,7 @@
                 <td>Student</td>
                 <td>Female</td>
                 <td>jane@example.com</td>
-                <td><span class="badge bg-warning text-dark">Pending</span></td>
+                <td><span class="badge bg-warning text-dark"><i class="fa fa-circle  p-1 text-white" style = "font-size:10px;"></i>Pending</span></td>
               </tr>
               <tr>
                 <td>John Smith</td>
@@ -145,7 +150,7 @@
                 <td>Student</td>
                 <td>Male</td>
                 <td>john@example.com</td>
-                <td><span class="badge bg-danger">Inactive</span></td>
+                <td><span class="badge bg-danger text-white"><i class="fa fa-circle  p-1 text-white" style = "font-size:10px;"></i>Inactive</span></td>
               </tr>
             </tbody>
           </table>
