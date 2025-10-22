@@ -76,7 +76,7 @@
 
     /* Right column background image */
     .right-col {
-      background: url('images/signup-bg.png') no-repeat center center;
+      background: url('../images/signup-bg.png') no-repeat center center;
       background-size: cover;
       border-radius: 20px;
       min-height: 100vh;
@@ -108,21 +108,21 @@
     }
 
 
-    /* Sign In Button */
-    .btn-signup-custom
-    {
-      background-color: #0F4D46; /* Dark Teal */
-      border: none;
-      border-radius: 8px;
-      padding: 14px;
-      font-weight: 600;
-      color: white;
-      font-size: 1.15rem;
-      margin-top: 10px; /* Slight space above button */
-       }
-   
-    .btn-signup-custom:hover {
-      background-color: #0c3d38;
-      color: white;
-    }
+/* Sign In Button */
+.btn-signup-custom
+{
+  background-color: #0F4D46; /* Dark Teal */
+  border: none;
+  border-radius: 8px;
+  padding: 14px;
+  font-weight: 600;
+  color: white;
+  font-size: 1.15rem;
+  margin-top: 10px; /* Slight space above button */
+}
+
+.btn-signup-custom:hover {
+  background-color: #0c3d38;
+  color: white;
+}
 

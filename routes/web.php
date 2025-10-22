@@ -80,6 +80,10 @@ Route::get('/adsignup', function () {
     return view('admin.adminsignup');
 });
 
+Route::get('/adlogin', function () {
+    return view('admin.adminlogin');
+});
+
 Route::get('/becometutor', function () {
     return view('becometutor');
 });

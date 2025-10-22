@@ -34,23 +34,9 @@
           </div>
 
           <!-- Heading -->
-          <h3 class = "text-dark mb-2">Sign up</h3>
+          <h3 class = "text-dark mb-2">Sign in</h3>
           <p class="mb-4" style = "color:#969696;font:inter;">Please login to continue to your account.</p>
 
-
-          <div class="custom-form-group">
-
-                    <label for="firstNameInput" class="custom-label">Enter First Name</label>
-
-                    <input type="text" class="form-control-custom" id="firstNameInput" placeholder="Winner">
-                </div>
-
-                <div class="custom-form-group">
-
-                    <label for="lastNameInput" class="custom-label">Enter Last Name</label>
-
-                    <input type="text" class="form-control-custom" id="lastNameInput" placeholder="Effiong">
-                </div>
 
                 <div class="custom-form-group">
 
@@ -60,51 +46,50 @@
                 </div>
 
 
-                <div class="custom-form-group">
+                <div class="custom-form-group mb-2">
 
                     <label for="psw" class="custom-label">Enter Password</label>
 
                     <input type="password" class="form-control-custom" id="psw" placeholder="*******">
                 </div>
 
+               {{-- <div class = "d-flex justify-content-between">
 
-                <div class="custom-form-group">
-
-                    <label for="psw" class="custom-label">Select Role</label>
-
-                    {{-- <input type="password" class="form-control-custom" id="psw" placeholder="*******"> --}}
-
-                    <select class="form-control-custom" aria-label="select role">
-                            <option selected>Teacher</option>
-                            <option value="1">Student</option>
-                             <option value="2">Parent</option>
-                    </select>
-
+                <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Keep me logged in
+                 </label>
                 </div>
+
+               <div class = "mb-5">
+                <a class = "text-decoration-none text-dark" href = "#" style = "color:#232323;">Forgot Password?</a>
+               </div>
+
+
+               </div> --}}
+
+               <div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+        <label class="form-check-label" for="flexCheckDefault" style="font-size: 0.95rem;">
+            Keep me logged in
+        </label>
+    </div>
+
+    <div>
+        <a class="text-decoration-none" href="#" style="color:#232323; font-size: 0.95rem;">
+            Forgot Password?
+        </a>
+    </div>
+</div>
+
 
                 <button type="submit" class="btn tertiaryButton w-100">Sign in</button>
 
 
-          <!-- Divider -->
-          <div class="divider">or</div>
 
-          <!-- Social logins -->
-          <div class="d-grid gap-2">
-            <button class="btn btn-outline-custom">
-              Continue with Google <i class="fab fa-google text-danger"></i>
-            </button>
-            <button class="btn btn-outline-custom">
-              Continue with Facebook <i class="fab fa-facebook text-primary"></i>
-            </button>
-            <button class="btn btn-outline-custom">
-              Continue with Apple <i class="fab fa-apple text-dark"></i>
-            </button>
-          </div>
-
-          <!-- Footer link -->
-          <p class="mt-4 text-center">
-            Already have an account? <a href="#" class="fw-bold">Login</a>
-          </p>
           <p class="mt-5 text-center small text-muted">© Copyright Kokokah 2025, All Right Reserved</p>
         </div>
       </div>
