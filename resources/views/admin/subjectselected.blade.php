@@ -1,4 +1,5 @@
-@extends('admin.usertemplate')
+{{-- @extends('admin.usertemplate') --}}
+@extends('users.usertemplate')
 
 @section('content')
 <main>
@@ -8,7 +9,18 @@
 
         <div class="col-12 col-lg-8 pe-lg-4">
 
-            <p class="text-muted back-nav mb-4"><i class="bi bi-arrow-left me-2"></i> Back</p>
+            {{-- <p class="text-muted back-nav mb-4"><i class="bi bi-arrow-left me-2"></i> Back</p> --}}
+            <div class = "d-flex justify-content-between">
+
+                <div><h6>Lesson 2 of 15</h6></div>
+
+                <div style = "width:150px;">
+                     <div class="progress" style="height:10px;">
+                    <div class="progress-bar" style="width:70%;  background:#F56824;"></div>
+                     </div>
+                </div>
+
+            </div>
 
             <div class="main-content-card">
 
@@ -88,13 +100,46 @@
       <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
     </div>
   </div>
+            </div>
 
+            <div class = "d-flex justify-content-between">
 
+                <button class = "btn m-2 btn-white">Previous Lesson</button>
+                <button class = "btn m-2 text-white" style="background: #3BA0AC;">Mark Lesson Complete</button>
+                <button class = "btn m-2 btn-white">Next Lesson</button>
 
             </div>
+
         </div>
 
         <div class="col-lg-4 d-none d-lg-block">
+
+                <div class = "bg-white mb-3" style = "width:300px; height:150px;">
+
+                  <div class = "p-3">
+                    <h6>Lesson 2 of 15</h6>
+
+                <div style = "width:150px;">
+                     <div class="progress" style="height:10px;">
+                    <div class="progress-bar" style="width:70%;  background:#F56824;"></div>
+                     </div>
+                </div>
+                <hr>
+                <p class = "text-muted" style = "font-size:14px;">
+                    <i class="fa-solid fa-book pe-2"></i>
+                    Mark Lesson Complete
+                </p>
+            </div>
+
+
+
+                    </div>
+
+
+            {{-- <div class = "bg-primary mb-3" style = "width: 300px; height: 200px;">
+
+            </div> --}}
+
             <div class="sidebar-messaging">
                 <div class="flex-grow-1">
                     </div>
