@@ -529,5 +529,68 @@ Route::middleware('auth:sanctum')->prefix('files')->group(function () {
     Route::get('/storage/stats', [FileController::class, 'getStorageStats']);
 });
 
+// Advanced Analytics routes
+Route::middleware('auth:sanctum')->prefix('analytics/advanced')->group(function () {
+    // Student predictions
+    Route::get('/predictions/student/{studentId}', 'App\Http\Controllers\AdvancedAnalyticsController@getStudentPredictions');
+    Route::post('/predictions/student/{studentId}/calculate', 'App\Http\Controllers\AdvancedAnalyticsController@calculateStudentPredictions')->middleware('role:admin');
+
+    // Cohort analysis
+    Route::get('/cohorts', 'App\Http\Controllers\AdvancedAnalyticsController@listCohorts');
+    Route::post('/cohorts', 'App\Http\Controllers\AdvancedAnalyticsController@createCohort')->middleware('role:admin');
+    Route::get('/cohorts/{cohortId}', 'App\Http\Controllers\AdvancedAnalyticsController@getCohortAnalysis');
+    Route::post('/cohorts/{cohortId1}/compare/{cohortId2}', 'App\Http\Controllers\AdvancedAnalyticsController@compareCohorts');
+
+    // Engagement scores
+    Route::get('/engagement/course/{courseId}', 'App\Http\Controllers\AdvancedAnalyticsController@getCourseEngagement');
+    Route::get('/engagement/student/{studentId}/course/{courseId}', 'App\Http\Controllers\AdvancedAnalyticsController@getStudentEngagement');
+    Route::post('/engagement/course/{courseId}/calculate', 'App\Http\Controllers\AdvancedAnalyticsController@calculateCourseEngagement')->middleware('role:admin');
+
+    // At-risk and high-performing students
+    Route::get('/at-risk/course/{courseId}', 'App\Http\Controllers\AdvancedAnalyticsController@getAtRiskStudents');
+    Route::get('/high-performing/course/{courseId}', 'App\Http\Controllers\AdvancedAnalyticsController@getHighPerformingStudents');
+
+    // Dashboard
+    Route::get('/dashboard', 'App\Http\Controllers\AdvancedAnalyticsController@getDashboard');
+});
+
+// Localization routes
+Route::middleware('auth:sanctum')->prefix('localization')->group(function () {
+    Route::get('/preferences', 'App\Http\Controllers\LocalizationController@getPreferences');
+    Route::put('/preferences', 'App\Http\Controllers\LocalizationController@updatePreferences');
+    Route::get('/languages', 'App\Http\Controllers\LocalizationController@getSupportedLanguages');
+    Route::get('/currencies', 'App\Http\Controllers\LocalizationController@getSupportedCurrencies');
+    Route::get('/timezones', 'App\Http\Controllers\LocalizationController@getSupportedTimezones');
+    Route::post('/convert-currency', 'App\Http\Controllers\LocalizationController@convertCurrency');
+    Route::post('/translate', 'App\Http\Controllers\LocalizationController@translateContent');
+    Route::get('/translations', 'App\Http\Controllers\LocalizationController@getTranslations');
+});
+
+// Video Streaming routes
+Route::middleware('auth:sanctum')->prefix('videos')->group(function () {
+    Route::post('/', 'App\Http\Controllers\VideoStreamingController@createVideoStream')->middleware('role:instructor,admin');
+    Route::post('/{videoStreamId}/process', 'App\Http\Controllers\VideoStreamingController@processVideoStream')->middleware('role:admin');
+    Route::get('/{videoStreamId}', 'App\Http\Controllers\VideoStreamingController@getVideoStream');
+    Route::post('/{videoStreamId}/view', 'App\Http\Controllers\VideoStreamingController@recordVideoView');
+    Route::post('/{videoStreamId}/watch-time', 'App\Http\Controllers\VideoStreamingController@updateWatchTime');
+    Route::post('/{videoStreamId}/download', 'App\Http\Controllers\VideoStreamingController@createDownloadRequest');
+    Route::get('/{videoStreamId}/analytics', 'App\Http\Controllers\VideoStreamingController@getVideoAnalytics')->middleware('role:instructor,admin');
+    Route::get('/top/videos', 'App\Http\Controllers\VideoStreamingController@getTopVideos');
+    Route::get('/user/downloads', 'App\Http\Controllers\VideoStreamingController@getUserDownloads');
+});
+
+// Real-time Features routes
+Route::middleware('auth:sanctum')->prefix('realtime')->group(function () {
+    Route::post('/online', 'App\Http\Controllers\RealtimeController@markUserOnline');
+    Route::post('/offline', 'App\Http\Controllers\RealtimeController@markUserOffline');
+    Route::get('/users/online', 'App\Http\Controllers\RealtimeController@getOnlineUsers');
+    Route::get('/users/online/count', 'App\Http\Controllers\RealtimeController@getOnlineCount');
+    Route::get('/course/{courseId}/users/online', 'App\Http\Controllers\RealtimeController@getOnlineUsersInCourse');
+    Route::get('/course/{courseId}/users/online/count', 'App\Http\Controllers\RealtimeController@getOnlineCountInCourse');
+    Route::post('/typing', 'App\Http\Controllers\RealtimeController@sendTypingIndicator');
+    Route::get('/activity/{userId}', 'App\Http\Controllers\RealtimeController@getUserActivityStatus');
+    Route::get('/activity', 'App\Http\Controllers\RealtimeController@getCurrentUserActivityStatus');
+});
+
 
 

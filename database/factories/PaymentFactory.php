@@ -22,9 +22,9 @@ class PaymentFactory extends Factory
             'amount' => $this->faker->randomFloat(2, 10, 1000),
             'currency' => 'NGN',
             'gateway' => $this->faker->randomElement(['paystack', 'flutterwave', 'stripe', 'paypal']),
-            'gateway_transaction_id' => $this->faker->uuid(),
+            'gateway_reference' => 'PAY_' . strtoupper($this->faker->unique()->bothify('??##??##')),
+            'type' => $this->faker->randomElement(['wallet_deposit', 'course_purchase']),
             'status' => $this->faker->randomElement(['pending', 'completed', 'failed', 'cancelled']),
-            'payment_method' => $this->faker->randomElement(['card', 'bank_transfer', 'wallet']),
         ];
     }
 }

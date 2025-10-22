@@ -19,7 +19,7 @@ class EnrollmentFactory extends Factory
         return [
             'user_id' => \App\Models\User::factory(),
             'course_id' => \App\Models\Course::factory(),
-            'status' => $this->faker->randomElement(['active', 'completed', 'dropped', 'suspended']),
+            'status' => $this->faker->randomElement(['active', 'completed', 'dropped', 'paused', 'cancelled']),
             'progress' => $this->faker->numberBetween(0, 100),
             'enrolled_at' => $this->faker->dateTimeBetween('-6 months', 'now'),
             'completed_at' => $this->faker->optional(30)->dateTimeBetween('now', '+1 month'),

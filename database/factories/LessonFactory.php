@@ -24,7 +24,6 @@ class LessonFactory extends Factory
             'duration_minutes' => $this->faker->numberBetween(5, 120),
             'order' => $this->faker->numberBetween(1, 20),
             'is_free' => $this->faker->boolean(30), // 30% chance of being free
-            'status' => $this->faker->randomElement(['draft', 'published']),
         ];
     }
 }

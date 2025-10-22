@@ -17,7 +17,9 @@ class WalletFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => \App\Models\User::factory(),
+            'balance' => $this->faker->randomFloat(2, 0, 10000),
+            'currency' => 'NGN',
         ];
     }
 }

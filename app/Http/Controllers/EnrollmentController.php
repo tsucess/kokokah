@@ -135,17 +135,22 @@ class EnrollmentController extends Controller
             }
 
             // Use wallet service to handle payment and enrollment
-            $result = $this->walletService->purchaseCourse($user, $course, $request->coupon_code);
+            $transaction = $this->walletService->purchaseCourse($user, $course, $request->coupon_code);
+
+            // Get the enrollment that was created
+            $enrollment = Enrollment::where('user_id', $user->id)
+                                   ->where('course_id', $course->id)
+                                   ->first();
 
             return response()->json([
                 'success' => true,
                 'message' => 'Successfully enrolled in course',
                 'data' => [
-                    'enrollment' => $result['enrollment'],
-                    'transaction' => $result['transaction'],
-                    'new_balance' => $user->wallet->balance
+                    'enrollment' => $enrollment,
+                    'transaction' => $transaction,
+                    'new_balance' => $user->wallet->fresh()->balance
                 ]
-            ]);
+            ], 201);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -284,7 +289,7 @@ class EnrollmentController extends Controller
             }
 
             // Check if enrollment is recent (within 7 days)
-            if ($enrollment->enrolled_at->diffInDays(now()) > 7) {
+            if ($enrollment->enrolled_at && $enrollment->enrolled_at->diffInDays(now()) > 7) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Cannot cancel enrollment after 7 days'

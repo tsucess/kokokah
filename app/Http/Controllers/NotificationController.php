@@ -83,7 +83,11 @@ class NotificationController extends Controller
     {
         try {
             $user = Auth::user();
-            $notification = Notification::where('user_id', $user->id)->findOrFail($id);
+            // Query by notifiable_id (polymorphic notifications) or user_id (custom notifications)
+            $notification = Notification::where(function($q) use ($user) {
+                $q->where('notifiable_id', $user->id)
+                  ->orWhere('user_id', $user->id);
+            })->findOrFail($id);
 
             if (!$notification->read_at) {
                 $notification->update(['read_at' => now()]);
@@ -133,7 +137,11 @@ class NotificationController extends Controller
     {
         try {
             $user = Auth::user();
-            $notification = Notification::where('user_id', $user->id)->findOrFail($id);
+            // Query by notifiable_id (polymorphic notifications) or user_id (custom notifications)
+            $notification = Notification::where(function($q) use ($user) {
+                $q->where('notifiable_id', $user->id)
+                  ->orWhere('user_id', $user->id);
+            })->findOrFail($id);
 
             $notification->delete();
 

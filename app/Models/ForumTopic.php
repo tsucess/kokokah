@@ -67,14 +67,8 @@ class ForumTopic extends Model
 
     public function subscribers()
     {
-        // Return users who have subscribed to this topic
-        // For now, return the topic creator and all users who have replied
-        $subscriberIds = collect([$this->user_id]);
-        $subscriberIds = $subscriberIds->merge(
-            $this->replies()->pluck('user_id')->unique()
-        );
-
-        return User::whereIn('id', $subscriberIds)->get();
+        // Return a many-to-many relationship for subscribers
+        return $this->belongsToMany(User::class, 'forum_topic_subscribers', 'topic_id', 'user_id');
     }
 
     // Scopes

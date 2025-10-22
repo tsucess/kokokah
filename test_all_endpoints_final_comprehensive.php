@@ -48,6 +48,7 @@ if ($student) {
 // Get actual IDs for test data
 echo "🔧 Getting actual test data IDs...\n";
 use App\Models\ForumPost;
+use App\Models\Enrollment;
 
 // Get student user
 $studentUser = User::where('email', 'test.student@kokokah.com')->first();
@@ -57,6 +58,9 @@ $badgeId = Badge::first()?->id ?? 2;
 $couponId = Coupon::first()?->id ?? 9;
 $forumTopicId = \DB::table('forum_topics')->first()?->id ?? 1;
 $forumPostId = ForumPost::first()?->id ?? 1;
+
+// Get enrollment ID for student user
+$enrollmentId = Enrollment::where('user_id', $studentUserId)->first()?->id ?? 7;
 
 // Get or create notification for the student user
 $notification = \DB::table('notifications')->where('notifiable_id', $studentUserId)->first();
@@ -77,7 +81,8 @@ if (!$notification) {
     $notificationId = $notification->id;
 }
 
-echo "Using Badge ID: $badgeId, Coupon ID: $couponId, Forum Topic ID: $forumTopicId, Forum Post ID: $forumPostId, Notification ID: $notificationId\n\n";
+echo "Using Badge ID: $badgeId, Coupon ID: $couponId, Forum Topic ID: $forumTopicId, Forum Post ID: $forumPostId, Enrollment ID: $enrollmentId, Notification ID: $notificationId\n";
+echo "DEBUG: enrollmentId = $enrollmentId (type: " . gettype($enrollmentId) . ")\n\n";
 
 // Load authentication tokens
 $authTokens = [];
@@ -236,11 +241,11 @@ $allEndpoints = [
     ['url' => 'enrollments', 'method' => 'GET', 'token' => 'student', 'category' => 'Enrollment', 'description' => 'Get enrollments'],
     ['url' => 'enrollments', 'method' => 'POST', 'token' => 'student', 'category' => 'Enrollment', 'description' => 'Create enrollment', 'data' => ['course_id' => 1]],
     ['url' => 'enrollments/certificates', 'method' => 'GET', 'token' => 'student', 'category' => 'Enrollment', 'description' => 'Get enrollment certificates'],
-    ['url' => 'enrollments/1', 'method' => 'GET', 'token' => 'student', 'category' => 'Enrollment', 'description' => 'Get single enrollment'],
-    ['url' => 'enrollments/1', 'method' => 'PUT', 'token' => 'student', 'category' => 'Enrollment', 'description' => 'Update enrollment', 'data' => ['status' => 'active']],
-    ['url' => 'enrollments/1', 'method' => 'DELETE', 'token' => 'student', 'category' => 'Enrollment', 'description' => 'Delete enrollment'],
-    ['url' => 'enrollments/1/progress', 'method' => 'GET', 'token' => 'student', 'category' => 'Enrollment', 'description' => 'Get enrollment progress'],
-    ['url' => 'enrollments/1/complete', 'method' => 'POST', 'token' => 'student', 'category' => 'Enrollment', 'description' => 'Complete enrollment'],
+    ['url' => 'enrollments/{enrollmentId}', 'method' => 'GET', 'token' => 'student', 'category' => 'Enrollment', 'description' => 'Get single enrollment'],
+    ['url' => 'enrollments/{enrollmentId}', 'method' => 'PUT', 'token' => 'student', 'category' => 'Enrollment', 'description' => 'Update enrollment', 'data' => ['status' => 'active']],
+    ['url' => 'enrollments/{enrollmentId}', 'method' => 'DELETE', 'token' => 'student', 'category' => 'Enrollment', 'description' => 'Delete enrollment'],
+    ['url' => 'enrollments/{enrollmentId}/progress', 'method' => 'GET', 'token' => 'student', 'category' => 'Enrollment', 'description' => 'Get enrollment progress'],
+    ['url' => 'enrollments/{enrollmentId}/complete', 'method' => 'POST', 'token' => 'student', 'category' => 'Enrollment', 'description' => 'Complete enrollment'],
 ];
 
 $results = [
@@ -644,7 +649,23 @@ foreach ($finalEndpoints as $endpoint) {
     $results['total']++;
     $token = $endpoint['token'] ? $authTokens[$endpoint['token']] : null;
     $data = $endpoint['data'] ?? null;
-    $response = makeRequest($endpoint['url'], $endpoint['method'], $token, $data);
+
+    // Replace placeholders in URL
+    $url = $endpoint['url'];
+    if (strpos($url, '{enrollmentId}') !== false) {
+        echo "DEBUG: Before replacement: $url, enrollmentId=$enrollmentId\n";
+    }
+    $url = str_replace('{enrollmentId}', $enrollmentId, $url);
+    $url = str_replace('{badgeId}', $badgeId, $url);
+    $url = str_replace('{couponId}', $couponId, $url);
+    $url = str_replace('{forumTopicId}', $forumTopicId, $url);
+    $url = str_replace('{forumPostId}', $forumPostId, $url);
+    $url = str_replace('{notificationId}', $notificationId, $url);
+    if (strpos($endpoint['url'], '{enrollmentId}') !== false) {
+        echo "DEBUG: After replacement: $url\n";
+    }
+
+    $response = makeRequest($url, $endpoint['method'], $token, $data);
     $status = $response['status'];
 
     $category = $endpoint['category'];
@@ -662,17 +683,18 @@ foreach ($finalEndpoints as $endpoint) {
     if ($status >= 200 && $status < 300) {
         $results['success']++;
         $results['by_category'][$category]['success']++;
-        echo "✅ {$endpoint['method']} {$endpoint['url']} ({$category})\n";
+        echo "✅ {$endpoint['method']} $url ({$category})\n";
     } else {
         $results['failed']++;
-        echo "❌ {$endpoint['method']} {$endpoint['url']} - $status ({$category}) - {$endpoint['description']}\n";
+        echo "❌ {$endpoint['method']} $url - $status ({$category}) - {$endpoint['description']}\n";
 
         // Track 500 errors specifically
         if ($status >= 500) {
             $results['errors_500'][] = [
                 'endpoint' => $endpoint,
                 'status' => $status,
-                'response' => $response['body']
+                'response' => $response['body'],
+                'url' => $url
             ];
         }
     }
@@ -716,7 +738,8 @@ foreach ($results['by_category'] as $category => $categoryResult) {
 if (!empty($results['errors_500'])) {
     echo "\n🚨 500 SERVER ERRORS DETECTED:\n";
     foreach ($results['errors_500'] as $error) {
-        echo "❌ {$error['endpoint']['method']} {$error['endpoint']['url']} - {$error['status']}\n";
+        $displayUrl = $error['url'] ?? $error['endpoint']['url'];
+        echo "❌ {$error['endpoint']['method']} $displayUrl - {$error['status']}\n";
         $body = json_decode($error['response'], true);
         if ($body && isset($body['message'])) {
             echo "   💥 Error: " . substr($body['message'], 0, 100) . "...\n";

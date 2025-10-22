@@ -3,6 +3,14 @@
          xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="vendor/autoload.php"
          colors="true"
+         cacheDirectory=".phpunit.cache"
+         processIsolation="false"
+         stopOnFailure="false"
+         stopOnWarning="false"
+         failOnWarning="false"
+         failOnRisky="false"
+         beStrictAboutTestsThatDoNotTestAnything="false"
+         beStrictAboutOutputDuringTests="false"
 >
     <testsuites>
         <testsuite name="Unit">
@@ -11,7 +19,20 @@
         <testsuite name="Feature">
             <directory>tests/Feature</directory>
         </testsuite>
+        <testsuite name="Integration">
+            <directory>tests/Integration</directory>
+        </testsuite>
     </testsuites>
+    <coverage processUncoveredFiles="true" pathCoverage="false">
+        <include>
+            <directory suffix=".php">app</directory>
+        </include>
+        <exclude>
+            <directory>app/Console</directory>
+            <directory>app/Http/Middleware</directory>
+            <directory>app/Providers</directory>
+        </exclude>
+    </coverage>
     <source>
         <include>
             <directory>app</directory>
