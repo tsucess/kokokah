@@ -44,7 +44,7 @@ class AuthEndpointsTest extends TestCase
         ]);
 
         $response->assertStatus(200);
-        $response->assertJsonStructure(['success', 'data' => ['token']]);
+        $response->assertJsonStructure(['status', 'message', 'token', 'user']);
     }
 
     /**

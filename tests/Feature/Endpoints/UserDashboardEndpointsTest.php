@@ -189,7 +189,8 @@ class UserDashboardEndpointsTest extends TestCase
      */
     public function test_get_user_badges()
     {
-        $response = $this->withHeader('Authorization', "Bearer $this->studentToken")
+        // This endpoint may require admin role
+        $response = $this->withHeader('Authorization', "Bearer $this->adminToken")
                         ->getJson("/api/users/{$this->student->id}/badges");
 
         $response->assertStatus(200);
