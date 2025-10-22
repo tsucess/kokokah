@@ -105,4 +105,30 @@ return [
 
     'prefix' => env('CACHE_PREFIX', Str::slug((string) env('APP_NAME', 'laravel')).'-cache-'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Kokokah LMS Specific Cache Settings
+    |--------------------------------------------------------------------------
+    */
+
+    'ttl' => [
+        'courses' => 3600, // 1 hour
+        'categories' => 7200, // 2 hours
+        'users' => 1800, // 30 minutes
+        'settings' => 86400, // 24 hours
+        'analytics' => 900, // 15 minutes
+        'search_results' => 600, // 10 minutes
+        'api_responses' => 300, // 5 minutes
+    ],
+
+    'tags' => [
+        'courses' => 'courses',
+        'categories' => 'categories',
+        'users' => 'users',
+        'settings' => 'settings',
+        'analytics' => 'analytics',
+        'search' => 'search',
+        'api' => 'api',
+    ],
+
 ];

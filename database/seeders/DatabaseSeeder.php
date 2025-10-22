@@ -13,11 +13,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // Seed basic data first
+        $this->call([
+            LevelSeeder::class,
+            TermSeeder::class,
+            TagSeeder::class,
+            BadgeSeeder::class,
+            SettingSeeder::class,
         ]);
+
+        // Seed users with proper roles and data
+        $this->call([
+            AdminUserSeeder::class,
+            StudentUserSeeder::class,
+        ]);
+
+        echo "\n🎉 Database seeding completed successfully!\n";
+        echo "📊 Total users created:\n";
+        echo "   👑 Admins: " . User::where('role', 'admin')->count() . "\n";
+        echo "   👨‍🏫 Instructors: " . User::where('role', 'instructor')->count() . "\n";
+        echo "   👨‍🎓 Students: " . User::where('role', 'student')->count() . "\n";
+        echo "   📈 Total: " . User::count() . "\n\n";
     }
 }
