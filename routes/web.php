@@ -17,3 +17,7 @@ Route::get('/login', function () {
         ]
     ], 401);
 })->name('login');
+
+Route::get('/template', function () {
+    return view('template');
+});
