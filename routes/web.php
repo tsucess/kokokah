@@ -15,6 +15,7 @@ Route::get('/', function () {
     return view('index');
 });
 
+<<<<<<< HEAD
 // Login route for authentication redirects (API-only app)
 Route::get('/login', function () {
     return response()->json([
@@ -27,6 +28,8 @@ Route::get('/login', function () {
     ], 401);
 })->name('login');
 
+=======
+>>>>>>> samuel
 Route::get('/about', function () {
     return view('about');
 });

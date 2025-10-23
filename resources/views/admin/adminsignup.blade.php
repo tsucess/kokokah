@@ -18,7 +18,10 @@
 
   @vite(['resources/css/style.css'])
   @vite(['resources/css/access.css'])
+  <style>
 
+
+  </style>
 </head>
 <body>
 
