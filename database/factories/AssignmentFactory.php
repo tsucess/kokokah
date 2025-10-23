@@ -17,7 +17,13 @@ class AssignmentFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'course_id' => \App\Models\Course::factory(),
+            'title' => $this->faker->sentence(3),
+            'instructions' => $this->faker->paragraph(),
+            'deadline' => $this->faker->dateTimeBetween('+1 day', '+30 days'),
+            'max_score' => $this->faker->numberBetween(50, 100),
+            'allowed_file_types' => json_encode(['pdf', 'doc', 'docx']),
+            'max_file_size_mb' => 10,
         ];
     }
 }

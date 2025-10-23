@@ -19,7 +19,7 @@ return new class extends Migration
         });
 
         // Migrate existing data from name to first_name and last_name
-        DB::statement("UPDATE users SET first_name = SUBSTR(name, 1, INSTR(name || ' ', ' ') - 1), last_name = SUBSTR(name, INSTR(name || ' ', ' ') + 1) WHERE name IS NOT NULL");
+        DB::statement("UPDATE users SET first_name = SUBSTRING_INDEX(name, ' ', 1), last_name = SUBSTRING_INDEX(name, ' ', -1) WHERE name IS NOT NULL");
 
         Schema::table('users', function (Blueprint $table) {
             // Make first_name and last_name required
@@ -36,17 +36,25 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            // Add back the name column
-            $table->string('name')->after('id');
-        });
+        // Check if name column already exists
+        if (!Schema::hasColumn('users', 'name')) {
+            Schema::table('users', function (Blueprint $table) {
+                // Add back the name column
+                $table->string('name')->after('id');
+            });
 
-        // Migrate data back from first_name and last_name to name
-        DB::statement("UPDATE users SET name = first_name || ' ' || last_name WHERE first_name IS NOT NULL AND last_name IS NOT NULL");
+            // Migrate data back from first_name and last_name to name
+            DB::statement("UPDATE users SET name = CONCAT(first_name, ' ', last_name) WHERE first_name IS NOT NULL AND last_name IS NOT NULL");
+        }
 
         Schema::table('users', function (Blueprint $table) {
-            // Drop the split columns
-            $table->dropColumn(['first_name', 'last_name']);
+            // Drop the split columns if they exist
+            if (Schema::hasColumn('users', 'first_name')) {
+                $table->dropColumn('first_name');
+            }
+            if (Schema::hasColumn('users', 'last_name')) {
+                $table->dropColumn('last_name');
+            }
         });
     }
 };
