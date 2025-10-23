@@ -1,0 +1,131 @@
+/* Define the exact color used for the border and label */
+:root {
+    --input-border-color: #4a8785;
+    /* Dark Teal/Gray-Green from image */
+}
+
+/* .signup-container {
+      min-height: 100vh;
+      margin-top:10px;
+    } */
+
+/* Left column form */
+.signup-form {
+    width: 500px;
+    margin: auto;
+}
+
+.custom-form-group {
+    position: relative;
+    margin-bottom: 40px;
+    /* Space needed for the label above the border */
+}
+
+
+.custom-label {
+    position: absolute;
+    /* Move label above the top border */
+    top: -12px;
+    left: 15px;
+    /* Create the background cutout effect */
+    background-color: white;
+    padding: 0 10px;
+    /* Font and color matching the image */
+    font: sitka;
+    font-size: 14px;
+    color: #004A53;
+    font-weight: bold;
+    z-index: 10;
+}
+
+
+.form-control-custom {
+    /* Inherit basic form control look but override for the design */
+    display: block;
+    width: 100%;
+    padding: 1rem 1.25rem;
+    /* Increased padding for the height shown */
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #333;
+    /* Darker text */
+    background-color: #fff;
+
+    /* Border style matching the image */
+    border: 2px solid var(--input-border-color);
+    border-radius: 10px;
+    /* Highly rounded corners */
+
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+    /* Remove default Bootstrap focus shadow/outline */
+    box-shadow: none;
+}
+
+.form-control-custom:focus {
+    border-color: #3d706e;
+    /* Slightly darker on focus */
+    box-shadow: 0 0 0 0.25rem rgba(74, 135, 133, 0.25);
+    /* Subtle shadow on focus */
+}
+
+.btn-outline-custom {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    font-weight: 500;
+}
+
+.btn-outline-custom i {
+    margin-left: 8px;
+}
+
+/* Right column background image */
+.right-col {
+    background: url('../images/signup-bg.png') no-repeat center center;
+    background-size: cover;
+    border-radius: 20px;
+    min-height: 100vh;
+}
+
+.divider {
+    text-align: center;
+    position: relative;
+    margin: 20px 0;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background: #ddd;
+}
+
+.divider::before {
+    left: 0;
+}
+
+.divider::after {
+    right: 0;
+}
+
+
+.btn-signup-custom {
+    background-color: #0F4D46;
+    border: none;
+    border-radius: 8px;
+    padding: 14px;
+    font-weight: 600;
+    color: white;
+    font-size: 1.15rem;
+    margin-top: 10px;
+}
+
+.btn-signup-custom:hover {
+    background-color: #0c3d38;
+    color: white;
+}
