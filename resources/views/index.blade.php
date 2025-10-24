@@ -23,7 +23,7 @@
 </div>
 
 
-<div class = "col-12 col-md-4 col-lg-4 mt-2">
+<div class = "col-12 col-md-4 col-lg-4 mt-3">
 <img src = "images/LMS.png" class = "img-fluid">
 </div>
 

@@ -120,7 +120,23 @@ color:#fff;
 font-size: 14px;
 }
 
+@media screen and (max-width: 520px)
+{
+    .primaryButton
+    {
+        width:330px;
+        /* margin-left:-15px; */
+        margin:auto;
+    }
+}
 
+@media screen and (max-width: 520px)
+{
+    .secondaryButton
+    {
+        width:330px;
+    }
+}
 
 .primaryButton:hover
 {
@@ -294,13 +310,14 @@ color: #4D525F;
     color:#000F11;
 }
 
-@media screen and (max-width: 320px)
+@media screen and (max-width: 520px)
 {
     .heroheading
     {
         font-size: 18px;
     }
 }
+
 
 
 
@@ -372,7 +389,16 @@ color: #4D525F;
     border-radius: 30px;
     top:50px;
     left:100px;
+    margin:50px 10px;
     /* height: 350px; */
+}
+
+@media screen and(max-width: 520px)
+{
+    .ourproduct1
+    {
+        margin:auto;
+    }
 }
 
 /* @media screen and (max-width: 320px)
