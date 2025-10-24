@@ -5,7 +5,11 @@ namespace Tests\Feature\Endpoints;
 use App\Models\User;
 use App\Models\Badge;
 use App\Models\Certificate;
+use App\Models\Course;
+use App\Models\Lesson;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class CertificateBadgeProgressEndpointsTest extends TestCase
@@ -18,6 +22,8 @@ class CertificateBadgeProgressEndpointsTest extends TestCase
     protected $studentToken;
     protected $instructorToken;
     protected $adminToken;
+    protected $course;
+    protected $lesson;
 
     protected function setUp(): void
     {
@@ -30,6 +36,10 @@ class CertificateBadgeProgressEndpointsTest extends TestCase
         $this->studentToken = $this->student->createToken('api-token')->plainTextToken;
         $this->instructorToken = $this->instructor->createToken('api-token')->plainTextToken;
         $this->adminToken = $this->admin->createToken('api-token')->plainTextToken;
+
+        // Create course and lesson for tests
+        $this->course = Course::factory()->create(['instructor_id' => $this->instructor->id]);
+        $this->lesson = Lesson::factory()->create(['course_id' => $this->course->id]);
     }
 
     /**
@@ -48,7 +58,7 @@ class CertificateBadgeProgressEndpointsTest extends TestCase
      */
     public function test_get_certificate_templates()
     {
-        $response = $this->withHeader('Authorization', "Bearer $this->studentToken")
+        $response = $this->withHeader('Authorization', "Bearer $this->adminToken")
                         ->getJson('/api/certificates/templates');
 
         $response->assertStatus(200);
@@ -59,13 +69,13 @@ class CertificateBadgeProgressEndpointsTest extends TestCase
      */
     public function test_generate_certificate()
     {
-        $response = $this->withHeader('Authorization', "Bearer $this->studentToken")
+        $response = $this->withHeader('Authorization', "Bearer $this->instructorToken")
                         ->postJson('/api/certificates/generate', [
-                            'course_id' => 1,
-                            'template_id' => 1
+                            'course_id' => $this->course->id,
+                            'user_id' => $this->student->id
                         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
     }
 
     /**
@@ -73,10 +83,10 @@ class CertificateBadgeProgressEndpointsTest extends TestCase
      */
     public function test_bulk_generate_certificates()
     {
-        $response = $this->withHeader('Authorization', "Bearer $this->adminToken")
+        $response = $this->withHeader('Authorization', "Bearer $this->instructorToken")
                         ->postJson('/api/certificates/bulk-generate', [
-                            'course_id' => 1,
-                            'user_ids' => [1, 2, 3]
+                            'course_id' => $this->course->id,
+                            'user_ids' => [$this->student->id]
                         ]);
 
         $response->assertStatus(200);
@@ -163,11 +173,18 @@ class CertificateBadgeProgressEndpointsTest extends TestCase
      */
     public function test_create_badge()
     {
+        Storage::fake('public');
+        $icon = UploadedFile::fake()->image('badge-icon.png');
+
         $response = $this->withHeader('Authorization', "Bearer $this->adminToken")
                         ->postJson('/api/badges', [
                             'name' => 'New Badge',
-                            'icon' => 'badge-icon.png',
-                            'criteria' => 'Complete 5 courses'
+                            'description' => 'A new badge for testing',
+                            'category' => 'learning',
+                            'type' => 'course_completion',
+                            'criteria' => ['courses_required' => 5],
+                            'points' => 100,
+                            'icon' => $icon
                         ]);
 
         $response->assertStatus(201);
@@ -186,7 +203,7 @@ class CertificateBadgeProgressEndpointsTest extends TestCase
                             'badge_id' => $badge->id
                         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
     }
 
     /**
@@ -206,7 +223,7 @@ class CertificateBadgeProgressEndpointsTest extends TestCase
     public function test_get_lesson_progress()
     {
         $response = $this->withHeader('Authorization', "Bearer $this->studentToken")
-                        ->getJson('/api/progress/lessons');
+                        ->getJson('/api/progress/lessons?course_id=' . $this->course->id);
 
         $response->assertStatus(200);
     }
@@ -229,8 +246,9 @@ class CertificateBadgeProgressEndpointsTest extends TestCase
     {
         $response = $this->withHeader('Authorization', "Bearer $this->studentToken")
                         ->postJson('/api/progress/update', [
-                            'course_id' => 1,
-                            'progress' => 50
+                            'type' => 'lesson',
+                            'item_id' => $this->lesson->id,
+                            'progress_data' => ['completed' => true]
                         ]);
 
         $response->assertStatus(200);

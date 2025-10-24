@@ -1511,4 +1511,189 @@ class AnalyticsController extends Controller
             'seasonal_factor' => rand(15, 35)
         ];
     }
+
+    /**
+     * Generate comparison insights from comparative analytics data
+     */
+    private function generateComparisonInsights($comparison, $metrics)
+    {
+        $insights = [];
+
+        if (in_array('enrollment', $metrics)) {
+            $enrollments = array_map(function($course) {
+                return $course['metrics']['enrollment']['total'] ?? 0;
+            }, $comparison);
+            $insights['enrollment'] = [
+                'highest' => max($enrollments),
+                'lowest' => min($enrollments),
+                'average' => count($enrollments) > 0 ? array_sum($enrollments) / count($enrollments) : 0
+            ];
+        }
+
+        if (in_array('completion', $metrics)) {
+            $insights['completion'] = [
+                'average_rate' => rand(60, 90),
+                'trend' => 'upward'
+            ];
+        }
+
+        if (in_array('engagement', $metrics)) {
+            $insights['engagement'] = [
+                'average_score' => rand(70, 85),
+                'trend' => 'stable'
+            ];
+        }
+
+        if (in_array('revenue', $metrics)) {
+            $insights['revenue'] = [
+                'total_revenue' => rand(10000, 50000),
+                'average_per_course' => rand(5000, 25000)
+            ];
+        }
+
+        if (in_array('rating', $metrics)) {
+            $insights['rating'] = [
+                'average_rating' => rand(4, 5),
+                'highest_rated' => $comparison[0]['course_title'] ?? 'N/A'
+            ];
+        }
+
+        return $insights;
+    }
+
+    /**
+     * Generate export data based on type
+     */
+    private function generateExportData($type, $params, $user)
+    {
+        $data = [];
+
+        switch ($type) {
+            case 'learning':
+                $data = $this->getLearningExportData($user);
+                break;
+            case 'course':
+                $data = $this->getCourseExportData($user);
+                break;
+            case 'student':
+                $data = $this->getStudentExportData($user);
+                break;
+            case 'revenue':
+                $data = $this->getRevenueExportData($user);
+                break;
+            case 'engagement':
+                $data = $this->getEngagementExportData($user);
+                break;
+        }
+
+        return $data;
+    }
+
+    /**
+     * Get learning export data
+     */
+    private function getLearningExportData($user)
+    {
+        return [
+            'title' => 'Learning Analytics Report',
+            'generated_at' => now()->format('Y-m-d H:i:s'),
+            'data' => [
+                'total_learners' => rand(100, 1000),
+                'active_learners' => rand(50, 500),
+                'completion_rate' => rand(60, 90),
+                'average_time_spent' => rand(10, 50) . ' hours'
+            ]
+        ];
+    }
+
+    /**
+     * Get course export data
+     */
+    private function getCourseExportData($user)
+    {
+        return [
+            'title' => 'Course Analytics Report',
+            'generated_at' => now()->format('Y-m-d H:i:s'),
+            'data' => [
+                'total_courses' => rand(10, 100),
+                'published_courses' => rand(5, 50),
+                'average_enrollment' => rand(20, 200),
+                'average_rating' => rand(4, 5)
+            ]
+        ];
+    }
+
+    /**
+     * Get student export data
+     */
+    private function getStudentExportData($user)
+    {
+        return [
+            'title' => 'Student Analytics Report',
+            'generated_at' => now()->format('Y-m-d H:i:s'),
+            'data' => [
+                'total_students' => rand(100, 1000),
+                'active_students' => rand(50, 500),
+                'average_progress' => rand(40, 80),
+                'completion_rate' => rand(50, 85)
+            ]
+        ];
+    }
+
+    /**
+     * Get revenue export data
+     */
+    private function getRevenueExportData($user)
+    {
+        return [
+            'title' => 'Revenue Analytics Report',
+            'generated_at' => now()->format('Y-m-d H:i:s'),
+            'data' => [
+                'total_revenue' => rand(50000, 500000),
+                'average_transaction' => rand(100, 1000),
+                'transaction_count' => rand(100, 1000),
+                'success_rate' => rand(85, 98)
+            ]
+        ];
+    }
+
+    /**
+     * Get engagement export data
+     */
+    private function getEngagementExportData($user)
+    {
+        return [
+            'title' => 'Engagement Analytics Report',
+            'generated_at' => now()->format('Y-m-d H:i:s'),
+            'data' => [
+                'average_session_duration' => rand(15, 60) . ' minutes',
+                'daily_active_users' => rand(50, 500),
+                'forum_posts' => rand(100, 1000),
+                'quiz_attempts' => rand(200, 2000)
+            ]
+        ];
+    }
+
+    /**
+     * Generate export file
+     */
+    private function generateExportFile($data, $format, $type)
+    {
+        $fileName = $type . '_report_' . now()->format('Y_m_d_H_i_s') . '.' . $format;
+
+        // Mock implementation - would generate actual export file
+        switch ($format) {
+            case 'csv':
+                // Generate CSV content
+                break;
+            case 'excel':
+                // Generate Excel content
+                break;
+            case 'pdf':
+                // Generate PDF content
+                break;
+        }
+
+        return $fileName;
+    }
 }

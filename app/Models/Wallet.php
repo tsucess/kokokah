@@ -66,13 +66,13 @@ class Wallet extends Model
             throw new \Exception('Insufficient balance');
         }
 
-        $reference = 'TRF-' . uniqid();
+        $baseReference = 'TRF-' . uniqid();
 
         // Debit from sender
         $debitTransaction = $this->transactions()->create([
             'amount' => $amount,
             'type' => 'debit',
-            'reference' => $reference,
+            'reference' => $baseReference . '-OUT',
             'status' => 'success',
             'description' => $description ?: 'Transfer sent',
             'related_user_id' => $recipientWallet->user_id
@@ -82,7 +82,7 @@ class Wallet extends Model
         $creditTransaction = $recipientWallet->transactions()->create([
             'amount' => $amount,
             'type' => 'credit',
-            'reference' => $reference,
+            'reference' => $baseReference . '-IN',
             'status' => 'success',
             'description' => $description ?: 'Transfer received',
             'related_user_id' => $this->user_id

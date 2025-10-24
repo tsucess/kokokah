@@ -54,6 +54,12 @@ class LessonQuizAssignmentEndpointsTest extends TestCase
         $this->lesson = Lesson::factory()->create(['course_id' => $this->course->id]);
         $this->quiz = Quiz::factory()->create(['lesson_id' => $this->lesson->id]);
         $this->assignment = Assignment::factory()->create(['course_id' => $this->course->id]);
+
+        // Enroll the student in the course
+        $this->student->enrollments()->create([
+            'course_id' => $this->course->id,
+            'status' => 'active'
+        ]);
     }
 
     /**
@@ -146,7 +152,7 @@ class LessonQuizAssignmentEndpointsTest extends TestCase
     {
         $response = $this->withHeader('Authorization', "Bearer $this->studentToken")
                         ->postJson("/api/lessons/{$this->lesson->id}/watch-time", [
-                            'duration' => 300
+                            'time_spent' => 300
                         ]);
 
         $response->assertStatus(200);
@@ -182,7 +188,15 @@ class LessonQuizAssignmentEndpointsTest extends TestCase
         $response = $this->withHeader('Authorization', "Bearer $this->instructorToken")
                         ->postJson("/api/lessons/{$this->lesson->id}/quizzes", [
                             'title' => 'New Quiz',
-                            'description' => 'Quiz description'
+                            'type' => 'mcq',
+                            'questions' => [
+                                [
+                                    'question_text' => 'What is 2+2?',
+                                    'type' => 'mcq',
+                                    'points' => 1,
+                                    'correct_answer' => '4'
+                                ]
+                            ]
                         ]);
 
         $response->assertStatus(201);
@@ -229,7 +243,10 @@ class LessonQuizAssignmentEndpointsTest extends TestCase
         $response = $this->withHeader('Authorization', "Bearer $this->instructorToken")
                         ->postJson("/api/courses/{$this->course->id}/assignments", [
                             'title' => 'New Assignment',
-                            'description' => 'Assignment description'
+                            'description' => 'Assignment description',
+                            'due_date' => now()->addDays(7)->format('Y-m-d H:i:s'),
+                            'max_points' => 100,
+                            'submission_type' => 'text'
                         ]);
 
         $response->assertStatus(201);

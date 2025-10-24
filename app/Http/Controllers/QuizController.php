@@ -99,16 +99,16 @@ class QuizController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'title' => 'required|string|max:255',
-                'type' => 'required|in:practice,graded,final',
+                'type' => 'required|in:mcq,theory',
                 'time_limit_minutes' => 'nullable|integer|min:1',
                 'max_attempts' => 'nullable|integer|min:1',
                 'passing_score' => 'nullable|integer|min:0|max:100',
                 'shuffle_questions' => 'boolean',
                 'questions' => 'required|array|min:1',
                 'questions.*.question_text' => 'required|string',
-                'questions.*.type' => 'required|in:multiple_choice,true_false,short_answer,essay',
+                'questions.*.type' => 'required|in:mcq,theory',
                 'questions.*.points' => 'required|integer|min:1',
-                'questions.*.options' => 'required_if:questions.*.type,multiple_choice|array',
+                'questions.*.options' => 'nullable|array',
                 'questions.*.correct_answer' => 'required|string'
             ]);
 

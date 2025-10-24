@@ -13,17 +13,27 @@ class Assignment extends Model
         'course_id',
         'title',
         'description',
+        'instructions',
         'due_date',
         'max_score',
+        'max_points',
+        'submission_type',
         'allowed_file_types',
-        'max_file_size_mb'
+        'max_file_size_mb',
+        'late_submission_penalty',
+        'allow_late_submissions',
+        'attachments'
     ];
 
     protected $casts = [
         'due_date' => 'datetime',
         'max_score' => 'integer',
+        'max_points' => 'integer',
         'allowed_file_types' => 'array',
         'max_file_size_mb' => 'integer',
+        'late_submission_penalty' => 'integer',
+        'allow_late_submissions' => 'boolean',
+        'attachments' => 'array',
     ];
 
     // Relationships
@@ -34,7 +44,7 @@ class Assignment extends Model
 
     public function submissions()
     {
-        return $this->hasMany(Submission::class);
+        return $this->hasMany(AssignmentSubmission::class);
     }
 
     // Scopes

@@ -36,17 +36,25 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            // Add back the name column
-            $table->string('name')->after('id');
-        });
+        // Only add back the name column if it doesn't exist
+        if (!Schema::hasColumn('users', 'name')) {
+            Schema::table('users', function (Blueprint $table) {
+                // Add back the name column
+                $table->string('name')->after('id');
+            });
 
-        // Migrate data back from first_name and last_name to name
-        DB::statement("UPDATE users SET name = first_name || ' ' || last_name WHERE first_name IS NOT NULL AND last_name IS NOT NULL");
+            // Migrate data back from first_name and last_name to name
+            DB::statement("UPDATE users SET name = CONCAT(first_name, ' ', last_name) WHERE first_name IS NOT NULL AND last_name IS NOT NULL");
+        }
 
         Schema::table('users', function (Blueprint $table) {
-            // Drop the split columns
-            $table->dropColumn(['first_name', 'last_name']);
+            // Drop the split columns if they exist
+            if (Schema::hasColumn('users', 'first_name')) {
+                $table->dropColumn('first_name');
+            }
+            if (Schema::hasColumn('users', 'last_name')) {
+                $table->dropColumn('last_name');
+            }
         });
     }
 };

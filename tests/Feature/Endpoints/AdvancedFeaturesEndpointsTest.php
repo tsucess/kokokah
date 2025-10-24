@@ -3,6 +3,7 @@
 namespace Tests\Feature\Endpoints;
 
 use App\Models\User;
+use App\Models\Course;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -16,6 +17,8 @@ class AdvancedFeaturesEndpointsTest extends TestCase
     protected $studentToken;
     protected $instructorToken;
     protected $adminToken;
+    protected $course1;
+    protected $course2;
 
     protected function setUp(): void
     {
@@ -28,6 +31,10 @@ class AdvancedFeaturesEndpointsTest extends TestCase
         $this->studentToken = $this->student->createToken('api-token')->plainTextToken;
         $this->instructorToken = $this->instructor->createToken('api-token')->plainTextToken;
         $this->adminToken = $this->admin->createToken('api-token')->plainTextToken;
+
+        // Create courses for learning path tests
+        $this->course1 = Course::factory()->create(['instructor_id' => $this->instructor->id]);
+        $this->course2 = Course::factory()->create(['instructor_id' => $this->instructor->id]);
     }
 
     /**
@@ -49,7 +56,12 @@ class AdvancedFeaturesEndpointsTest extends TestCase
         $response = $this->withHeader('Authorization', "Bearer $this->instructorToken")
                         ->postJson('/api/learning-paths', [
                             'title' => 'New Path',
-                            'description' => 'Path description'
+                            'description' => 'Path description',
+                            'category' => 'programming',
+                            'difficulty_level' => 'beginner',
+                            'estimated_duration' => 40,
+                            'course_ids' => [$this->course1->id, $this->course2->id],
+                            'learning_objectives' => ['Learn basics', 'Practice skills']
                         ]);
 
         $response->assertStatus(201);
@@ -152,9 +164,13 @@ class AdvancedFeaturesEndpointsTest extends TestCase
     {
         $response = $this->withHeader('Authorization', "Bearer $this->adminToken")
                         ->postJson('/api/coupons', [
+                            'name' => 'Test Coupon',
                             'code' => 'TEST10',
-                            'discount' => 10,
-                            'type' => 'percentage'
+                            'discount_type' => 'percentage',
+                            'discount_value' => 10,
+                            'starts_at' => now()->toDateString(),
+                            'expires_at' => now()->addDays(30)->toDateString(),
+                            'applicable_to' => 'all'
                         ]);
 
         $response->assertStatus(201);
@@ -167,7 +183,8 @@ class AdvancedFeaturesEndpointsTest extends TestCase
     {
         $response = $this->withHeader('Authorization', "Bearer $this->studentToken")
                         ->postJson('/api/coupons/validate', [
-                            'code' => 'TEST10'
+                            'code' => 'TEST10',
+                            'amount' => 100
                         ]);
 
         $response->assertStatus(200);
@@ -180,7 +197,9 @@ class AdvancedFeaturesEndpointsTest extends TestCase
     {
         $response = $this->withHeader('Authorization', "Bearer $this->studentToken")
                         ->postJson('/api/coupons/apply', [
-                            'code' => 'TEST10'
+                            'code' => 'TEST10',
+                            'amount' => 100,
+                            'payment_id' => 'test-payment-123'
                         ]);
 
         $response->assertStatus(200);

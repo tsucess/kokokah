@@ -7,6 +7,7 @@ use App\Models\Course;
 use App\Models\Category;
 use App\Models\Term;
 use App\Models\Level;
+use App\Models\Lesson;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -123,6 +124,7 @@ class CourseEndpointsTest extends TestCase
                             'category_id' => $category->id,
                             'term_id' => $term->id,
                             'level_id' => $level->id,
+                            'difficulty' => 'beginner',
                             'price' => 150.00
                         ]);
 
@@ -163,7 +165,13 @@ class CourseEndpointsTest extends TestCase
      */
     public function test_publish_course()
     {
+        // Create a lesson for the course (required for publishing)
+        Lesson::factory()->create(['course_id' => $this->course->id]);
+
         $instructorToken = $this->instructor->createToken('api-token')->plainTextToken;
+
+        // First unpublish the course to test publishing
+        $this->course->update(['status' => 'draft']);
 
         $response = $this->withHeader('Authorization', "Bearer $instructorToken")
                         ->postJson("/api/courses/{$this->course->id}/publish");

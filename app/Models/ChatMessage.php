@@ -12,7 +12,9 @@ class ChatMessage extends Model
     protected $fillable = [
         'chat_session_id',
         'sender',
-        'message'
+        'sender_type',
+        'message',
+        'sent_at'
     ];
 
     // Relationships

@@ -4,6 +4,8 @@ namespace Tests\Feature\Endpoints;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class NotificationFileChatEndpointsTest extends TestCase
@@ -102,7 +104,8 @@ class NotificationFileChatEndpointsTest extends TestCase
     {
         $response = $this->withHeader('Authorization', "Bearer $this->adminToken")
                         ->postJson('/api/notifications/send', [
-                            'user_id' => $this->user->id,
+                            'recipient_id' => $this->user->id,
+                            'type' => 'system',
                             'title' => 'Test',
                             'message' => 'Test message'
                         ]);
@@ -117,6 +120,8 @@ class NotificationFileChatEndpointsTest extends TestCase
     {
         $response = $this->withHeader('Authorization', "Bearer $this->adminToken")
                         ->postJson('/api/notifications/broadcast', [
+                            'recipient_type' => 'all',
+                            'type' => 'system',
                             'title' => 'Test',
                             'message' => 'Test message'
                         ]);
@@ -140,12 +145,15 @@ class NotificationFileChatEndpointsTest extends TestCase
      */
     public function test_file_upload()
     {
+        Storage::fake('public');
+        $file = UploadedFile::fake()->create('test-file.txt', 100);
+
         $response = $this->withHeader('Authorization', "Bearer $this->userToken")
-                        ->postJson('/api/files/upload', [
-                            'file' => 'test-file.txt'
+                        ->post('/api/files/upload', [
+                            'file' => $file
                         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
     }
 
     /**
@@ -223,10 +231,10 @@ class NotificationFileChatEndpointsTest extends TestCase
     {
         $response = $this->withHeader('Authorization', "Bearer $this->userToken")
                         ->postJson('/api/chat/start', [
-                            'topic' => 'Course Help'
+                            'session_type' => 'general'
                         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
     }
 
     /**

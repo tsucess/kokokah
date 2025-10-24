@@ -17,12 +17,22 @@ class LearningPath extends Model
         'created_by',
         'is_published',
         'difficulty',
-        'estimated_hours'
+        'estimated_hours',
+        'category',
+        'difficulty_level',
+        'estimated_duration',
+        'prerequisites',
+        'learning_objectives',
+        'image_path',
+        'creator_id',
+        'status'
     ];
 
     protected $casts = [
         'is_published' => 'boolean',
         'estimated_hours' => 'integer',
+        'estimated_duration' => 'integer',
+        'learning_objectives' => 'array',
     ];
 
     // Relationships

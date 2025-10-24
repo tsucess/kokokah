@@ -3,6 +3,7 @@
 namespace Tests\Feature\Endpoints;
 
 use App\Models\User;
+use App\Models\Course;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -90,10 +91,14 @@ class AnalyticsAdminSearchEndpointsTest extends TestCase
      */
     public function test_comparative_analytics()
     {
+        // Create two courses for comparison
+        $course1 = Course::factory()->create(['instructor_id' => $this->instructor->id]);
+        $course2 = Course::factory()->create(['instructor_id' => $this->instructor->id]);
+
         $response = $this->withHeader('Authorization', "Bearer $this->instructorToken")
                         ->postJson('/api/analytics/comparative', [
-                            'metric' => 'enrollment',
-                            'period' => 'month'
+                            'course_ids' => [$course1->id, $course2->id],
+                            'metrics' => ['enrollment', 'completion']
                         ]);
 
         $response->assertStatus(200);
@@ -106,6 +111,7 @@ class AnalyticsAdminSearchEndpointsTest extends TestCase
     {
         $response = $this->withHeader('Authorization', "Bearer $this->instructorToken")
                         ->postJson('/api/analytics/export', [
+                            'type' => 'course',
                             'format' => 'csv'
                         ]);
 
@@ -238,8 +244,17 @@ class AnalyticsAdminSearchEndpointsTest extends TestCase
      */
     public function test_content_search()
     {
+        // Create a course for the student to search within
+        $course = Course::factory()->create();
+
+        // Enroll the student in the course
+        $this->student->enrollments()->create([
+            'course_id' => $course->id,
+            'status' => 'active'
+        ]);
+
         $response = $this->withHeader('Authorization', "Bearer $this->studentToken")
-                        ->getJson('/api/search/content?q=test');
+                        ->getJson("/api/search/content?q=test&course_id={$course->id}");
 
         $response->assertStatus(200);
     }

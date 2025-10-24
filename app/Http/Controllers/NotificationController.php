@@ -87,7 +87,14 @@ class NotificationController extends Controller
             $notification = Notification::where(function($q) use ($user) {
                 $q->where('notifiable_id', $user->id)
                   ->orWhere('user_id', $user->id);
-            })->findOrFail($id);
+            })->find($id);
+
+            if (!$notification) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Notification not found'
+                ], 404);
+            }
 
             if (!$notification->read_at) {
                 $notification->update(['read_at' => now()]);
@@ -141,7 +148,14 @@ class NotificationController extends Controller
             $notification = Notification::where(function($q) use ($user) {
                 $q->where('notifiable_id', $user->id)
                   ->orWhere('user_id', $user->id);
-            })->findOrFail($id);
+            })->find($id);
+
+            if (!$notification) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Notification not found'
+                ], 404);
+            }
 
             $notification->delete();
 

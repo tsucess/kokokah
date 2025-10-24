@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ChatController extends Controller
 {
@@ -54,6 +55,7 @@ class ChatController extends Controller
             $session = ChatSession::create([
                 'user_id' => $user->id,
                 'course_id' => $request->course_id,
+                'session_token' => 'chat-' . uniqid(),
                 'session_type' => $request->session_type,
                 'context' => $request->context,
                 'status' => 'active',
@@ -65,6 +67,7 @@ class ChatController extends Controller
             
             $message = ChatMessage::create([
                 'chat_session_id' => $session->id,
+                'sender' => 'bot',
                 'sender_type' => 'ai',
                 'message' => $welcomeMessage,
                 'sent_at' => now()
@@ -78,6 +81,11 @@ class ChatController extends Controller
                     'welcome_message' => $message
                 ]
             ], 201);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Course not found'
+            ], 404);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -126,6 +134,7 @@ class ChatController extends Controller
             // Create user message
             $userMessage = ChatMessage::create([
                 'chat_session_id' => $session->id,
+                'sender' => 'user',
                 'sender_type' => 'user',
                 'message' => $request->message,
                 'sent_at' => now()
@@ -137,6 +146,7 @@ class ChatController extends Controller
             // Create AI message
             $aiMessage = ChatMessage::create([
                 'chat_session_id' => $session->id,
+                'sender' => 'bot',
                 'sender_type' => 'ai',
                 'message' => $aiResponse,
                 'sent_at' => now()
@@ -152,6 +162,11 @@ class ChatController extends Controller
                     'ai_response' => $aiMessage
                 ]
             ]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Chat session not found'
+            ], 404);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -183,6 +198,11 @@ class ChatController extends Controller
                 'success' => true,
                 'data' => $session
             ]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Chat session not found'
+            ], 404);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -259,6 +279,11 @@ class ChatController extends Controller
                 'success' => true,
                 'message' => 'Chat session ended successfully'
             ]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Chat session not found'
+            ], 404);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -308,6 +333,11 @@ class ChatController extends Controller
                 'message' => 'Session rated successfully',
                 'data' => $session
             ]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Chat session not found'
+            ], 404);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -522,12 +552,25 @@ class ChatController extends Controller
     private function getPeakUsageHours()
     {
         $hours = [];
+        $sessions = ChatSession::all();
+
+        // Count sessions by hour
+        $hourCounts = array_fill(0, 24, 0);
+        foreach ($sessions as $session) {
+            if ($session->started_at) {
+                $hour = $session->started_at->hour;
+                $hourCounts[$hour]++;
+            }
+        }
+
+        // Format the data
         for ($hour = 0; $hour < 24; $hour++) {
             $hours[] = [
                 'hour' => sprintf('%02d:00', $hour),
-                'sessions' => ChatSession::whereRaw('HOUR(started_at) = ?', [$hour])->count()
+                'sessions' => $hourCounts[$hour]
             ];
         }
+
         return collect($hours)->sortByDesc('sessions')->take(5)->values();
     }
 

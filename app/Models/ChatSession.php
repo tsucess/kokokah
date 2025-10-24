@@ -18,7 +18,10 @@ class ChatSession extends Model
         'status',
         'started_at',
         'ended_at',
-        'last_activity_at'
+        'last_activity_at',
+        'rating',
+        'feedback',
+        'rated_at'
     ];
 
     protected $casts = [
@@ -26,6 +29,7 @@ class ChatSession extends Model
         'started_at' => 'datetime',
         'ended_at' => 'datetime',
         'last_activity_at' => 'datetime',
+        'rated_at' => 'datetime',
     ];
 
     // Relationships

@@ -25,21 +25,31 @@ return new class extends Migration
 
         Schema::table('submissions', function (Blueprint $table) {
             // Prevent multiple submissions (unless resubmission is allowed)
-            $table->unique(['student_id', 'assignment_id']);
-            $table->timestamp('submitted_at')->nullable()->after('feedback');
+            if (!Schema::hasIndex('submissions', 'submissions_student_id_assignment_id_unique')) {
+                $table->unique(['student_id', 'assignment_id']);
+            }
+            if (!Schema::hasColumn('submissions', 'submitted_at')) {
+                $table->timestamp('submitted_at')->nullable()->after('feedback');
+            }
         });
 
         Schema::table('course_reviews', function (Blueprint $table) {
             // One review per user per course
-            $table->unique(['user_id', 'course_id']);
+            if (!Schema::hasIndex('course_reviews', 'course_reviews_user_id_course_id_unique')) {
+                $table->unique(['user_id', 'course_id']);
+            }
         });
 
         Schema::table('wallets', function (Blueprint $table) {
             // One wallet per user
-            $table->unique('user_id');
-            
+            if (!Schema::hasIndex('wallets', 'wallets_user_id_unique')) {
+                $table->unique('user_id');
+            }
+
             // Add currency support
-            $table->string('currency', 3)->default('USD')->after('balance');
+            if (!Schema::hasColumn('wallets', 'currency')) {
+                $table->string('currency', 3)->default('USD')->after('balance');
+            }
         });
 
         Schema::table('courses', function (Blueprint $table) {
@@ -75,26 +85,42 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('enrollments', function (Blueprint $table) {
-            $table->dropUnique(['user_id', 'course_id']);
-            $table->dropColumn(['enrolled_at', 'completed_at']);
+            if (Schema::hasIndex('enrollments', 'enrollments_user_id_course_id_unique')) {
+                $table->dropUnique(['user_id', 'course_id']);
+            }
+            if (Schema::hasColumn('enrollments', 'enrolled_at')) {
+                $table->dropColumn(['enrolled_at', 'completed_at']);
+            }
         });
 
         Schema::table('answers', function (Blueprint $table) {
-            $table->dropUnique(['student_id', 'question_id']);
+            if (Schema::hasIndex('answers', 'answers_student_id_question_id_unique')) {
+                $table->dropUnique(['student_id', 'question_id']);
+            }
         });
 
         Schema::table('submissions', function (Blueprint $table) {
-            $table->dropUnique(['student_id', 'assignment_id']);
-            $table->dropColumn('submitted_at');
+            if (Schema::hasIndex('submissions', 'submissions_student_id_assignment_id_unique')) {
+                $table->dropUnique(['student_id', 'assignment_id']);
+            }
+            if (Schema::hasColumn('submissions', 'submitted_at')) {
+                $table->dropColumn('submitted_at');
+            }
         });
 
         Schema::table('course_reviews', function (Blueprint $table) {
-            $table->dropUnique(['user_id', 'course_id']);
+            if (Schema::hasIndex('course_reviews', 'course_reviews_user_id_course_id_unique')) {
+                $table->dropUnique(['user_id', 'course_id']);
+            }
         });
 
         Schema::table('wallets', function (Blueprint $table) {
-            $table->dropUnique(['user_id']);
-            $table->dropColumn('currency');
+            if (Schema::hasIndex('wallets', 'wallets_user_id_unique')) {
+                $table->dropUnique(['user_id']);
+            }
+            if (Schema::hasColumn('wallets', 'currency')) {
+                $table->dropColumn('currency');
+            }
         });
 
         Schema::table('courses', function (Blueprint $table) {

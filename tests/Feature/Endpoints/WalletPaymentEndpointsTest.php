@@ -3,6 +3,7 @@
 namespace Tests\Feature\Endpoints;
 
 use App\Models\User;
+use App\Models\Course;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -41,11 +42,14 @@ class WalletPaymentEndpointsTest extends TestCase
      */
     public function test_wallet_transfer()
     {
-        $recipient = User::factory()->create();
+        $recipient = User::factory()->create(['is_active' => true]);
+
+        // Create wallet for sender with balance
+        $this->user->getOrCreateWallet()->update(['balance' => 500.00]);
 
         $response = $this->withHeader('Authorization', "Bearer $this->token")
                         ->postJson('/api/wallet/transfer', [
-                            'recipient_id' => $recipient->id,
+                            'recipient_email' => $recipient->email,
                             'amount' => 100.00
                         ]);
 
@@ -91,9 +95,11 @@ class WalletPaymentEndpointsTest extends TestCase
      */
     public function test_check_affordability()
     {
+        $course = Course::factory()->create();
+
         $response = $this->withHeader('Authorization', "Bearer $this->token")
                         ->postJson('/api/wallet/check-affordability', [
-                            'amount' => 100.00
+                            'course_id' => $course->id
                         ]);
 
         $response->assertStatus(200);
@@ -154,7 +160,8 @@ class WalletPaymentEndpointsTest extends TestCase
     {
         $response = $this->getJson('/api/payments/callback/paystack?reference=test-ref');
 
-        $response->assertStatus(200);
+        // Callback endpoint redirects to frontend, so expect 302
+        $response->assertStatus(302);
     }
 
     /**
