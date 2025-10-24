@@ -108,21 +108,5 @@
     }
 
 
-.btn-signup-custom
-{
-      background-color: #0F4D46;
-      border: none;
-      border-radius: 8px;
-      padding: 14px;
-      font-weight: 600;
-      color: white;
-      font-size: 1.15rem;
-      margin-top: 10px;
-}
-   
- 
-.btn-signup-custom:hover {
-      background-color: #0c3d38;
-      color: white;
-    }
+
 

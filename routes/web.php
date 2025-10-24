@@ -51,12 +51,12 @@ Route::get('/login', function () {
     return view('login');
 });
 
-Route::get('/signup', function () {
-    return view('signup');
+Route::get('/stemregister', function () {
+    return view('auth.stemregister');
 });
 
-Route::get('/signup2', function () {
-    return view('signup2');
+Route::get('/stemregister2', function () {
+    return view('auth.stemregister2');
 });
 
 Route::get('/dashboard', function () {
@@ -75,8 +75,8 @@ Route::get('/application', function () {
     return view('application');
 });
 
-Route::get('/adsignup', function () {
-    return view('admin.adminsignup');
+Route::get('/register', function () {
+    return view('auth.register');
 });
 
 Route::get('/becometutor', function () {
