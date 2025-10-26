@@ -51,6 +51,22 @@ Route::get('/login', function () {
     return view('login');
 });
 
+Route::get('/login', function () {
+    return view('auth.login');
+});
+
+Route::get('/forgotpassword', function () {
+    return view('auth.forgotpassword');
+});
+
+Route::get('/resetpassword', function () {
+    return view('auth.resetpassword');
+});
+
+Route::get('/verify', function () {
+    return view('auth.verifypassword');
+});
+
 Route::get('/stemregister', function () {
     return view('auth.stemregister');
 });

@@ -11,12 +11,12 @@
     /* Left column form */
     .signup-form {
       width: 500px;
-      margin: auto;
+      margin: 30px auto;
     }
 
         .custom-form-group {
             position: relative;
-            margin-bottom: 40px; /* Space needed for the label above the border */
+            margin-bottom: 40px;
         }
 
 
@@ -63,6 +63,8 @@
     box-shadow: 0 0 0 0.25rem rgba(74, 135, 133, 0.25); /* Subtle shadow on focus */
 }
 
+
+
 .btn-outline-custom {
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -76,7 +78,23 @@
 
     /* Right column background image */
     .right-col {
-      background: url('images/signup-bg.png') no-repeat center center;
+      background: url('../images/signup-bg.png') no-repeat center center;
+      background-size: cover;
+      border-radius: 20px;
+      min-height: 100vh;
+    }
+
+    /* Right column retrieve password background image */
+    .right-col-passwordretrieve {
+      background: url('../images/security.png') no-repeat center center;
+      background-size: cover;
+      border-radius: 20px;
+      min-height: 100vh;
+    }
+
+    /* Right column retrieve password background image */
+    .right-col-passwordverify {
+      background: url('../images/verification.png') no-repeat center center;
       background-size: cover;
       border-radius: 20px;
       min-height: 100vh;
@@ -107,6 +125,11 @@
         right: 0;
     }
 
-
+a
+{
+    font-family: Poppins, sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+}
 
 

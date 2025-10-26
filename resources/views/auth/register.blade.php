@@ -37,7 +37,7 @@
           </div>
 
           <!-- Heading -->
-          <h3 class = "text-dark mb-2">Sign up</h3>
+          <h4 class = "text-dark mb-2">Sign up</h4>
           <p class="mb-4" style = "color:#969696;font:inter;">Please login to continue to your account.</p>
 
 
@@ -78,14 +78,14 @@
                     {{-- <input type="password" class="form-control-custom" id="psw" placeholder="*******"> --}}
 
                     <select class="form-control-custom" aria-label="select role">
-                            <option selected>Teacher</option>
+                            {{-- <option selected>Teacher</option> --}}
                             <option value="1">Student</option>
-                             <option value="2">Parent</option>
+                             {{-- <option value="2">Parent</option> --}}
                     </select>
 
                 </div>
 
-                <button type="submit" class="btn tertiaryButton w-100">Sign in</button>
+                <button type="submit" class="btn primaryButton text-dark w-100">Sign Up</button>
 
 
           <!-- Divider -->
@@ -106,9 +106,9 @@
 
           <!-- Footer link -->
           <p class="mt-4 text-center">
-            Already have an account? <a href="#" class="fw-bold">Login</a>
+            Already have an account? <a class = "text-decoration-none text-dark fw-bold" href="#">Login</a>
           </p>
-          <p class="mt-5 text-center small text-muted">© Copyright Kokokah 2025, All Right Reserved</p>
+          {{-- <p class="mt-5 text-center small text-muted">© Copyright Kokokah 2025, All Right Reserved</p> --}}
         </div>
       </div>
 
