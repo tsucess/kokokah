@@ -20,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // Apply global middleware
         $middleware->append(\App\Http\Middleware\SecurityHeadersMiddleware::class);
+        $middleware->append(\App\Http\Middleware\SetLocale::class);
 
         // Apply rate limiting to API routes
         $middleware->group('api', [

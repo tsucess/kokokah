@@ -31,6 +31,7 @@ use App\Http\Controllers\AuditController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\LanguageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
@@ -43,7 +44,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 Route::middleware('auth:sanctum')->group(function () {
 
-    // Resend verification link
+    // Resend verification link (traditional method)
     Route::post('/email/verification-notification', function (Request $request) {
         if ($request->user()->hasVerifiedEmail()) {
             return response()->json(['message' => 'Email already verified.'], 400);
@@ -61,6 +62,15 @@ Route::middleware('auth:sanctum')->group(function () {
 
         return response()->json(['message' => 'Email verified successfully.']);
     })->middleware(['signed'])->name('verification.verify');
+
+    // Send verification code (authenticated user)
+    Route::post('/email/send-code', [AuthController::class, 'sendVerificationCode']);
+
+    // Verify with code (authenticated user)
+    Route::post('/email/verify-code', [AuthController::class, 'verifyEmailWithCode']);
+
+    // Resend verification code (authenticated user)
+    Route::post('/email/resend-code', [AuthController::class, 'resendVerificationCode']);
 });
 
 
@@ -104,15 +114,15 @@ Route::get('/courses/{id}', [CourseController::class, 'show']);
 
 
 
-
-
-
-
-
 Route::post('/register', [AuthController::class,'register']);
 Route::post('/login', [AuthController::class,'login']);
 Route::post('/forgot-password', [PasswordResetController::class,'sendResetLinkEmail']);
 Route::post('/reset-password', [PasswordResetController::class,'reset']);
+
+// Email verification with code routes (public)
+Route::post('/email/send-verification-code', [AuthController::class, 'sendVerificationCode']);
+Route::post('/email/verify-with-code', [AuthController::class, 'verifyEmailWithCode']);
+Route::post('/email/resend-verification-code', [AuthController::class, 'resendVerificationCode']);
 
 // Public payment routes (no auth required)
 Route::prefix('payments')->group(function () {
@@ -121,6 +131,8 @@ Route::prefix('payments')->group(function () {
     Route::get('/success/{gateway}', [PaymentController::class, 'success'])->name('payment.success');
     Route::get('/cancel/{gateway}', [PaymentController::class, 'cancel'])->name('payment.cancel');
 });
+
+
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [AuthController::class,'user']);
@@ -179,6 +191,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/{id}/watch-time', [LessonController::class, 'trackWatchTime']);
         Route::get('/{id}/attachments', [LessonController::class, 'attachments']);
     });
+
+
 
     // Enrollment management routes (authenticated)
     Route::prefix('enrollments')->group(function () {
@@ -592,5 +606,35 @@ Route::middleware('auth:sanctum')->prefix('realtime')->group(function () {
     Route::get('/activity', 'App\Http\Controllers\RealtimeController@getCurrentUserActivityStatus');
 });
 
+// Language/Localization Routes (Public)
+Route::prefix('language')->group(function () {
+    // Get current locale
+    Route::get('/current', [LanguageController::class, 'getCurrentLocale']);
 
+    // Get all supported languages
+    Route::get('/supported', [LanguageController::class, 'getSupportedLanguages']);
 
+    // Set locale (for guests)
+    Route::post('/set', [LanguageController::class, 'setLocale']);
+
+    // Get translations for current locale
+    Route::get('/translations', [LanguageController::class, 'getTranslations']);
+
+    // Get translations for specific locale
+    Route::get('/translations/{locale}', [LanguageController::class, 'getTranslationsByLocale']);
+
+    // Get language info
+    Route::get('/info/{locale}', [LanguageController::class, 'getLanguageInfo']);
+
+    // Get all language info
+    Route::get('/info', [LanguageController::class, 'getAllLanguageInfo']);
+});
+
+// Language/Localization Routes (Authenticated)
+Route::middleware('auth:sanctum')->prefix('language')->group(function () {
+    // Set user's preferred language
+    Route::post('/user/set', [LanguageController::class, 'setUserLanguage']);
+
+    // Get user's language preference
+    Route::get('/user', [LanguageController::class, 'getUserLanguage']);
+});
