@@ -150,13 +150,14 @@ class LearningPathController extends Controller
                 'prerequisites' => $request->prerequisites,
                 'learning_objectives' => $request->learning_objectives,
                 'image_path' => $imagePath,
+                'created_by' => $user->id,
                 'creator_id' => $user->id,
                 'status' => 'draft'
             ]);
 
             // Attach courses with order
             foreach ($request->course_ids as $index => $courseId) {
-                $path->courses()->attach($courseId, ['order' => $index + 1]);
+                $path->courses()->attach($courseId, ['sort_order' => $index + 1]);
             }
 
             return response()->json([
@@ -211,6 +212,11 @@ class LearningPathController extends Controller
                 'success' => true,
                 'data' => $pathData
             ]);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Learning path not found'
+            ], 404);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -279,7 +285,7 @@ class LearningPathController extends Controller
             if ($request->has('course_ids')) {
                 $path->courses()->detach();
                 foreach ($request->course_ids as $index => $courseId) {
-                    $path->courses()->attach($courseId, ['order' => $index + 1]);
+                    $path->courses()->attach($courseId, ['sort_order' => $index + 1]);
                 }
             }
 

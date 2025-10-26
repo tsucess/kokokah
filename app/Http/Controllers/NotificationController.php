@@ -299,6 +299,7 @@ class NotificationController extends Controller
                 'type' => $request->type,
                 'title' => $request->title,
                 'message' => $request->message,
+                'data' => [],
                 'action_url' => $request->action_url,
                 'priority' => $request->priority ?? 'normal',
                 'sent_by' => $user->id
@@ -367,6 +368,7 @@ class NotificationController extends Controller
                         'type' => $request->type,
                         'title' => $request->title,
                         'message' => $request->message,
+                        'data' => [],
                         'action_url' => $request->action_url,
                         'priority' => $request->priority ?? 'normal',
                         'sent_by' => $user->id
@@ -504,12 +506,33 @@ class NotificationController extends Controller
 
     private function getReadRateByType()
     {
-        return Notification::select('type')
-                          ->selectRaw('COUNT(*) as total')
-                          ->selectRaw('COUNT(read_at) as read_count')
-                          ->selectRaw('ROUND((COUNT(read_at) / COUNT(*)) * 100, 2) as read_rate')
-                          ->groupBy('type')
-                          ->get();
+        // Use PHP-based calculation for SQLite compatibility
+        $notifications = Notification::all();
+        $typeStats = [];
+
+        foreach ($notifications as $notification) {
+            $type = $notification->type;
+            if (!isset($typeStats[$type])) {
+                $typeStats[$type] = ['total' => 0, 'read_count' => 0];
+            }
+            $typeStats[$type]['total']++;
+            if ($notification->read_at) {
+                $typeStats[$type]['read_count']++;
+            }
+        }
+
+        $result = [];
+        foreach ($typeStats as $type => $stats) {
+            $readRate = $stats['total'] > 0 ? round(($stats['read_count'] / $stats['total']) * 100, 2) : 0;
+            $result[] = [
+                'type' => $type,
+                'total' => $stats['total'],
+                'read_count' => $stats['read_count'],
+                'read_rate' => $readRate
+            ];
+        }
+
+        return $result;
     }
 
     private function getAverageResponseTimes()
@@ -558,10 +581,27 @@ class NotificationController extends Controller
 
     private function getPeakNotificationHours()
     {
-        return Notification::selectRaw('HOUR(created_at) as hour, count(*) as count')
-                          ->groupBy('hour')
-                          ->orderBy('count', 'desc')
-                          ->limit(3)
-                          ->get();
+        // Use PHP-based hour extraction for SQLite compatibility
+        $notifications = Notification::all();
+        $hourCounts = [];
+
+        foreach ($notifications as $notification) {
+            $hour = $notification->created_at->hour;
+            $hourCounts[$hour] = ($hourCounts[$hour] ?? 0) + 1;
+        }
+
+        // Sort by count descending and get top 3
+        arsort($hourCounts);
+        $topHours = array_slice($hourCounts, 0, 3, true);
+
+        $result = [];
+        foreach ($topHours as $hour => $count) {
+            $result[] = [
+                'hour' => $hour,
+                'count' => $count
+            ];
+        }
+
+        return $result;
     }
 }

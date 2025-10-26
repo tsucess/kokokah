@@ -110,7 +110,7 @@ class NotificationFileChatEndpointsTest extends TestCase
                             'message' => 'Test message'
                         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
     }
 
     /**

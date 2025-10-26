@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\File;
 use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -136,6 +137,11 @@ class FileController extends Controller
             $this->logFileAccess($file, $user, 'download');
 
             return Storage::disk('public')->download($file->file_path, $file->original_name);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'File not found'
+            ], 404);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -173,6 +179,11 @@ class FileController extends Controller
                 'success' => true,
                 'message' => 'File deleted successfully'
             ]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'File not found'
+            ], 404);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -313,6 +324,11 @@ class FileController extends Controller
                 'success' => true,
                 'data' => $previewData
             ]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'File not found'
+            ], 404);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -377,6 +393,11 @@ class FileController extends Controller
                     'expires_at' => $request->expires_at
                 ]
             ]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'File not found'
+            ], 404);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
