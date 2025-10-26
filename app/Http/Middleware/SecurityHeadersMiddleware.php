@@ -33,17 +33,32 @@ class SecurityHeadersMiddleware
             $response->headers->set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
         }
 
-        // Content Security Policy
-        $csp = [
-            "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com",
-            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net",
-            "font-src 'self' https://fonts.gstatic.com",
-            "img-src 'self' data: https:",
-            "media-src 'self' https:",
-            "connect-src 'self' https:",
-            "frame-src 'self' https://www.youtube.com https://player.vimeo.com",
-        ];
+        // Content Security Policy - More permissive in development
+        if (app()->environment('local', 'development')) {
+            // Development: Allow Vite dev server and all CDNs
+            $csp = [
+                "default-src 'self'",
+                "script-src 'self' 'unsafe-inline' 'unsafe-eval' https: http: ws: wss:",
+                "style-src 'self' 'unsafe-inline' https: http:",
+                "font-src 'self' https: http: data:",
+                "img-src 'self' data: https: http:",
+                "media-src 'self' https: http:",
+                "connect-src 'self' https: http: ws: wss:",
+                "frame-src 'self' https://www.youtube.com https://player.vimeo.com",
+            ];
+        } else {
+            // Production: Strict CSP
+            $csp = [
+                "default-src 'self'",
+                "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com",
+                "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com",
+                "font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com",
+                "img-src 'self' data: https:",
+                "media-src 'self' https:",
+                "connect-src 'self' https:",
+                "frame-src 'self' https://www.youtube.com https://player.vimeo.com",
+            ];
+        }
         $response->headers->set('Content-Security-Policy', implode('; ', $csp));
 
         // Referrer Policy
