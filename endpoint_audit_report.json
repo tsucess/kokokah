@@ -1,0 +1,1435 @@
+{
+    "timestamp": "2025-10-16 18:55:13",
+    "summary": {
+        "total": 178,
+        "passed": 26,
+        "failed": 152,
+        "success_rate": 14.61
+    },
+    "results": [
+        {
+            "method": "POST",
+            "path": "\/register",
+            "description": "Register new user",
+            "success": false,
+            "http_code": 422,
+            "token_type": null
+        },
+        {
+            "method": "POST",
+            "path": "\/login",
+            "description": "Login user",
+            "success": false,
+            "http_code": 422,
+            "token_type": null
+        },
+        {
+            "method": "GET",
+            "path": "\/user",
+            "description": "Get current user",
+            "success": true,
+            "http_code": 200,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/logout",
+            "description": "Logout user",
+            "success": true,
+            "http_code": 200,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/forgot-password",
+            "description": "Send password reset",
+            "success": false,
+            "http_code": 422,
+            "token_type": null
+        },
+        {
+            "method": "POST",
+            "path": "\/reset-password",
+            "description": "Reset password",
+            "success": false,
+            "http_code": 422,
+            "token_type": null
+        },
+        {
+            "method": "GET",
+            "path": "\/courses",
+            "description": "Get all courses (public)",
+            "success": true,
+            "http_code": 200,
+            "token_type": null
+        },
+        {
+            "method": "GET",
+            "path": "\/courses\/11",
+            "description": "Get single course",
+            "success": true,
+            "http_code": 200,
+            "token_type": null
+        },
+        {
+            "method": "POST",
+            "path": "\/courses",
+            "description": "Create course",
+            "success": false,
+            "http_code": 422,
+            "token_type": "admin"
+        },
+        {
+            "method": "PUT",
+            "path": "\/courses\/11",
+            "description": "Update course",
+            "success": true,
+            "http_code": 200,
+            "token_type": "admin"
+        },
+        {
+            "method": "DELETE",
+            "path": "\/courses\/11",
+            "description": "Delete course",
+            "success": false,
+            "http_code": 400,
+            "token_type": "admin"
+        },
+        {
+            "method": "POST",
+            "path": "\/courses\/11\/enroll",
+            "description": "Enroll in course",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "DELETE",
+            "path": "\/courses\/11\/unenroll",
+            "description": "Unenroll from course",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/courses\/my-courses",
+            "description": "Get user courses",
+            "success": true,
+            "http_code": 404,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/courses\/search",
+            "description": "Search courses",
+            "success": false,
+            "http_code": 422,
+            "token_type": null
+        },
+        {
+            "method": "GET",
+            "path": "\/courses\/featured",
+            "description": "Get featured courses",
+            "success": false,
+            "http_code": 500,
+            "token_type": null
+        },
+        {
+            "method": "GET",
+            "path": "\/courses\/popular",
+            "description": "Get popular courses",
+            "success": true,
+            "http_code": 200,
+            "token_type": null
+        },
+        {
+            "method": "GET",
+            "path": "\/courses\/11\/students",
+            "description": "Get course students",
+            "success": true,
+            "http_code": 200,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/courses\/11\/analytics",
+            "description": "Get course analytics",
+            "success": false,
+            "http_code": 500,
+            "token_type": "admin"
+        },
+        {
+            "method": "POST",
+            "path": "\/courses\/11\/publish",
+            "description": "Publish course",
+            "success": false,
+            "http_code": 400,
+            "token_type": "admin"
+        },
+        {
+            "method": "POST",
+            "path": "\/courses\/11\/unpublish",
+            "description": "Unpublish course",
+            "success": true,
+            "http_code": 200,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/courses\/11\/lessons",
+            "description": "Get course lessons",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/courses\/11\/lessons",
+            "description": "Create lesson",
+            "success": false,
+            "http_code": 422,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/lessons\/1",
+            "description": "Get single lesson",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "PUT",
+            "path": "\/lessons\/1",
+            "description": "Update lesson",
+            "success": false,
+            "http_code": 500,
+            "token_type": "admin"
+        },
+        {
+            "method": "DELETE",
+            "path": "\/lessons\/1",
+            "description": "Delete lesson",
+            "success": false,
+            "http_code": 500,
+            "token_type": "admin"
+        },
+        {
+            "method": "POST",
+            "path": "\/lessons\/1\/complete",
+            "description": "Mark lesson complete",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/lessons\/1\/progress",
+            "description": "Get lesson progress",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/lessons\/1\/watch-time",
+            "description": "Track watch time",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/lessons\/1\/attachments",
+            "description": "Get lesson attachments",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/lessons\/1\/quizzes",
+            "description": "Get lesson quizzes",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/lessons\/1\/quizzes",
+            "description": "Create quiz",
+            "success": false,
+            "http_code": 500,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/quizzes\/1",
+            "description": "Get single quiz",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "PUT",
+            "path": "\/quizzes\/1",
+            "description": "Update quiz",
+            "success": false,
+            "http_code": 500,
+            "token_type": "admin"
+        },
+        {
+            "method": "DELETE",
+            "path": "\/quizzes\/1",
+            "description": "Delete quiz",
+            "success": false,
+            "http_code": 500,
+            "token_type": "admin"
+        },
+        {
+            "method": "POST",
+            "path": "\/quizzes\/1\/start",
+            "description": "Start quiz attempt",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/quizzes\/1\/submit",
+            "description": "Submit quiz",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/quizzes\/1\/results",
+            "description": "Get quiz results",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/quizzes\/1\/analytics",
+            "description": "Get quiz analytics",
+            "success": false,
+            "http_code": 500,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/courses\/11\/assignments",
+            "description": "Get course assignments",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/courses\/11\/assignments",
+            "description": "Create assignment",
+            "success": false,
+            "http_code": 422,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/assignments\/1",
+            "description": "Get single assignment",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "PUT",
+            "path": "\/assignments\/1",
+            "description": "Update assignment",
+            "success": false,
+            "http_code": 500,
+            "token_type": "admin"
+        },
+        {
+            "method": "DELETE",
+            "path": "\/assignments\/1",
+            "description": "Delete assignment",
+            "success": false,
+            "http_code": 500,
+            "token_type": "admin"
+        },
+        {
+            "method": "POST",
+            "path": "\/assignments\/1\/submit",
+            "description": "Submit assignment",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/assignments\/1\/submissions",
+            "description": "Get assignment submissions",
+            "success": false,
+            "http_code": 500,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/assignments\/1\/grades",
+            "description": "Get assignment grades",
+            "success": false,
+            "http_code": 500,
+            "token_type": "admin"
+        },
+        {
+            "method": "PUT",
+            "path": "\/submissions\/1\/grade",
+            "description": "Grade submission",
+            "success": false,
+            "http_code": 500,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/admin\/users",
+            "description": "Get all users",
+            "success": true,
+            "http_code": 200,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/search\/users",
+            "description": "Search users",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/users\/profile",
+            "description": "Get user profile",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "PUT",
+            "path": "\/users\/profile",
+            "description": "Update user profile",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/users\/dashboard",
+            "description": "Get user dashboard",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/users\/achievements",
+            "description": "Get user achievements",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/users\/learning-stats",
+            "description": "Get learning statistics",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "PUT",
+            "path": "\/users\/preferences",
+            "description": "Update user preferences",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/users\/notifications",
+            "description": "Get user notifications",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/users\/notifications\/read",
+            "description": "Mark notifications read",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/users\/change-password",
+            "description": "Change password",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/admin\/users\/32\/ban",
+            "description": "Ban user",
+            "success": true,
+            "http_code": 200,
+            "token_type": "admin"
+        },
+        {
+            "method": "POST",
+            "path": "\/admin\/users\/32\/unban",
+            "description": "Unban user",
+            "success": false,
+            "http_code": 429,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/audit\/users\/32\/activity",
+            "description": "Get user activity",
+            "success": false,
+            "http_code": 429,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/users\/32\/badges",
+            "description": "Get user badges",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/dashboard\/student",
+            "description": "Student dashboard",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/dashboard\/instructor",
+            "description": "admin",
+            "success": false,
+            "http_code": 429,
+            "token_type": null
+        },
+        {
+            "method": "GET",
+            "path": "\/dashboard\/admin",
+            "description": "Admin dashboard",
+            "success": false,
+            "http_code": 429,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/dashboard\/analytics",
+            "description": "Dashboard analytics",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/payments\/gateways",
+            "description": "Get payment gateways",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/payments\/deposit",
+            "description": "Initialize wallet deposit",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/payments\/purchase-course",
+            "description": "Initialize course payment",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/payments\/history",
+            "description": "Get payment history",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/payments\/1",
+            "description": "Get single payment",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/payments\/webhook\/paystack",
+            "description": "Payment webhook",
+            "success": false,
+            "http_code": 429,
+            "token_type": null
+        },
+        {
+            "method": "GET",
+            "path": "\/payments\/callback\/paystack",
+            "description": "Payment callback",
+            "success": false,
+            "http_code": 429,
+            "token_type": null
+        },
+        {
+            "method": "GET",
+            "path": "\/payments\/success\/paystack",
+            "description": "Payment success",
+            "success": false,
+            "http_code": 429,
+            "token_type": null
+        },
+        {
+            "method": "GET",
+            "path": "\/payments\/cancel\/paystack",
+            "description": "Payment cancel",
+            "success": false,
+            "http_code": 429,
+            "token_type": null
+        },
+        {
+            "method": "GET",
+            "path": "\/wallet",
+            "description": "Get wallet info",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/wallet\/transfer",
+            "description": "Transfer funds",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/wallet\/purchase-course",
+            "description": "Purchase course with wallet",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/wallet\/transactions",
+            "description": "Get wallet transactions",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/wallet\/rewards",
+            "description": "Get wallet rewards",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/wallet\/claim-login-reward",
+            "description": "Claim login reward",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/wallet\/check-affordability",
+            "description": "Check if user can afford",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/certificates",
+            "description": "Get user certificates",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/certificates\/analytics",
+            "description": "Get certificate analytics",
+            "success": false,
+            "http_code": 429,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/certificates\/templates",
+            "description": "Get certificate templates",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/certificates\/generate",
+            "description": "Generate certificate",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/certificates\/bulk-generate",
+            "description": "Bulk generate certificates",
+            "success": false,
+            "http_code": 429,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/certificates\/1",
+            "description": "Get single certificate",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/certificates\/1\/download",
+            "description": "Download certificate",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/certificates\/1\/revoke",
+            "description": "Revoke certificate",
+            "success": false,
+            "http_code": 429,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/certificates\/verify\/CERT123",
+            "description": "Verify certificate (public)",
+            "success": false,
+            "http_code": 429,
+            "token_type": null
+        },
+        {
+            "method": "GET",
+            "path": "\/badges",
+            "description": "Get all badges",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/badges\/analytics",
+            "description": "Get badge analytics",
+            "success": false,
+            "http_code": 429,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/badges\/leaderboard",
+            "description": "Get badge leaderboard",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/badges",
+            "description": "Create badge",
+            "success": false,
+            "http_code": 429,
+            "token_type": "admin"
+        },
+        {
+            "method": "POST",
+            "path": "\/badges\/award",
+            "description": "Award badge to user",
+            "success": false,
+            "http_code": 429,
+            "token_type": "admin"
+        },
+        {
+            "method": "POST",
+            "path": "\/badges\/check-automatic\/32",
+            "description": "Check automatic badges",
+            "success": false,
+            "http_code": 429,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/badges\/1",
+            "description": "Get single badge",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "PUT",
+            "path": "\/badges\/1",
+            "description": "Update badge",
+            "success": false,
+            "http_code": 429,
+            "token_type": "admin"
+        },
+        {
+            "method": "DELETE",
+            "path": "\/badges\/1",
+            "description": "Delete badge",
+            "success": false,
+            "http_code": 429,
+            "token_type": "admin"
+        },
+        {
+            "method": "POST",
+            "path": "\/badges\/user-badges\/1\/revoke",
+            "description": "Revoke user badge",
+            "success": false,
+            "http_code": 429,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/users\/32\/badges",
+            "description": "Get user badges",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/my-badges",
+            "description": "Get my badges",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/progress\/courses",
+            "description": "Get course progress",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/progress\/lessons",
+            "description": "Get lesson progress",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/progress\/overall",
+            "description": "Get overall progress",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/progress\/update",
+            "description": "Update progress",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/progress\/certificates",
+            "description": "Get available certificates",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/progress\/generate-cert",
+            "description": "Generate certificate",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/progress\/achievements",
+            "description": "Get achievement progress",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/progress\/streaks",
+            "description": "Get streak progress",
+            "success": false,
+            "http_code": 429,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/analytics\/learning",
+            "description": "Learning analytics",
+            "success": false,
+            "http_code": 429,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/analytics\/course-performance",
+            "description": "Course performance",
+            "success": false,
+            "http_code": 429,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/analytics\/student-progress",
+            "description": "Student progress",
+            "success": false,
+            "http_code": 429,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/analytics\/revenue",
+            "description": "Revenue analytics",
+            "success": false,
+            "http_code": 429,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/analytics\/engagement",
+            "description": "Engagement analytics",
+            "success": false,
+            "http_code": 429,
+            "token_type": "admin"
+        },
+        {
+            "method": "POST",
+            "path": "\/analytics\/comparative",
+            "description": "Comparative analytics",
+            "success": false,
+            "http_code": 422,
+            "token_type": "admin"
+        },
+        {
+            "method": "POST",
+            "path": "\/analytics\/export",
+            "description": "Export analytics",
+            "success": false,
+            "http_code": 422,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/analytics\/real-time",
+            "description": "Real-time analytics",
+            "success": false,
+            "http_code": 500,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/analytics\/predictive",
+            "description": "Predictive analytics",
+            "success": false,
+            "http_code": 500,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/recommendations",
+            "description": "Get personalized recommendations",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/recommendations\/courses\/11",
+            "description": "Course-based recommendations",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/recommendations\/learning-paths",
+            "description": "Learning path recommendations",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/recommendations\/instructors",
+            "description": "Instructor recommendations",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/recommendations\/content",
+            "description": "Content recommendations",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "PUT",
+            "path": "\/recommendations\/preferences",
+            "description": "Update recommendation preferences",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/recommendations\/analytics",
+            "description": "Recommendation analytics",
+            "success": false,
+            "http_code": 500,
+            "token_type": "admin"
+        },
+        {
+            "method": "POST",
+            "path": "\/chat\/start",
+            "description": "Start chat session",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/chat\/sessions\/1\/message",
+            "description": "Send message",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/chat\/sessions\/1",
+            "description": "Get session history",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/chat\/sessions",
+            "description": "Get user sessions",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/chat\/sessions\/1\/end",
+            "description": "End session",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/chat\/sessions\/1\/rate",
+            "description": "Rate session",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/chat\/analytics",
+            "description": "Chat analytics",
+            "success": false,
+            "http_code": 500,
+            "token_type": "admin"
+        },
+        {
+            "method": "POST",
+            "path": "\/chat\/suggestions",
+            "description": "Get suggested responses",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/search\/global?q=test",
+            "description": "Global search",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/search\/courses?q=math",
+            "description": "Course search",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/search\/users?q=admin",
+            "description": "User search",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/search\/content?q=lesson",
+            "description": "Content search",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/search\/suggestions?q=mat",
+            "description": "Search suggestions",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/search\/filters",
+            "description": "Get search filters",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/notifications",
+            "description": "Get notifications",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "PUT",
+            "path": "\/notifications\/1\/read",
+            "description": "Mark as read",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "PUT",
+            "path": "\/notifications\/read-all",
+            "description": "Mark all as read",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "DELETE",
+            "path": "\/notifications\/1",
+            "description": "Delete notification",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/notifications\/preferences",
+            "description": "Get notification preferences",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "PUT",
+            "path": "\/notifications\/preferences",
+            "description": "Update notification preferences",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/notifications\/send",
+            "description": "Send notification",
+            "success": false,
+            "http_code": 422,
+            "token_type": "admin"
+        },
+        {
+            "method": "POST",
+            "path": "\/notifications\/broadcast",
+            "description": "Broadcast notification",
+            "success": false,
+            "http_code": 422,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/notifications\/analytics",
+            "description": "Notification analytics",
+            "success": true,
+            "http_code": 200,
+            "token_type": "admin"
+        },
+        {
+            "method": "POST",
+            "path": "\/files\/upload",
+            "description": "Upload file",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/files\/download\/1",
+            "description": "Download file",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "DELETE",
+            "path": "\/files\/1",
+            "description": "Delete file",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/files\/list",
+            "description": "List user files",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/files\/preview\/1",
+            "description": "Preview file",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/files\/1\/share",
+            "description": "Share file",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "POST",
+            "path": "\/files\/organize",
+            "description": "Organize files",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/files\/storage\/stats",
+            "description": "Get storage statistics",
+            "success": false,
+            "http_code": 401,
+            "token_type": "student"
+        },
+        {
+            "method": "GET",
+            "path": "\/admin\/dashboard",
+            "description": "Admin dashboard",
+            "success": true,
+            "http_code": 200,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/admin\/users",
+            "description": "Get all users",
+            "success": true,
+            "http_code": 200,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/admin\/courses",
+            "description": "Get all courses",
+            "success": true,
+            "http_code": 200,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/admin\/payments",
+            "description": "Get all payments",
+            "success": true,
+            "http_code": 200,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/admin\/reports",
+            "description": "Get admin reports",
+            "success": true,
+            "http_code": 200,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/admin\/settings",
+            "description": "Get admin settings",
+            "success": true,
+            "http_code": 200,
+            "token_type": "admin"
+        },
+        {
+            "method": "POST",
+            "path": "\/admin\/users\/32\/ban",
+            "description": "Ban user",
+            "success": false,
+            "http_code": 400,
+            "token_type": "admin"
+        },
+        {
+            "method": "POST",
+            "path": "\/admin\/users\/32\/unban",
+            "description": "Unban user",
+            "success": true,
+            "http_code": 200,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/admin\/analytics",
+            "description": "Admin analytics",
+            "success": true,
+            "http_code": 200,
+            "token_type": "admin"
+        },
+        {
+            "method": "POST",
+            "path": "\/admin\/bulk-actions",
+            "description": "Bulk actions",
+            "success": false,
+            "http_code": 422,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/admin\/audit-logs",
+            "description": "Get audit logs",
+            "success": true,
+            "http_code": 200,
+            "token_type": "admin"
+        },
+        {
+            "method": "POST",
+            "path": "\/admin\/maintenance",
+            "description": "Toggle maintenance mode",
+            "success": false,
+            "http_code": 422,
+            "token_type": "admin"
+        },
+        {
+            "method": "POST",
+            "path": "\/admin\/clear-cache",
+            "description": "Clear system cache",
+            "success": true,
+            "http_code": 200,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/admin\/database-stats",
+            "description": "Get database statistics",
+            "success": true,
+            "http_code": 200,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/category",
+            "description": "Get all categories",
+            "success": true,
+            "http_code": 200,
+            "token_type": null
+        },
+        {
+            "method": "POST",
+            "path": "\/category",
+            "description": "Create category",
+            "success": false,
+            "http_code": 422,
+            "token_type": "admin"
+        },
+        {
+            "method": "GET",
+            "path": "\/category\/1",
+            "description": "Get single category",
+            "success": true,
+            "http_code": 200,
+            "token_type": null
+        },
+        {
+            "method": "PUT",
+            "path": "\/category\/1",
+            "description": "Update category",
+            "success": false,
+            "http_code": 422,
+            "token_type": "admin"
+        },
+        {
+            "method": "DELETE",
+            "path": "\/category\/1",
+            "description": "Delete category",
+            "success": true,
+            "http_code": 200,
+            "token_type": "admin"
+        }
+    ]
+}
