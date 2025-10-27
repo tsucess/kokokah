@@ -34,9 +34,9 @@
 
 <body>
 
-    <div class = "container-fluid top_header" style="">
+    <div class="container-fluid top_header">
         <!-- Background Image -->
-        {{-- <img src="images/kokokah_header.png" class="img-fluid" alt="Banner Image" style="width:100%; height:150px;"> --}}
+        {{-- <img src="images/kokokah_header.png" class="img-fluid" alt="Banner Image"> --}}
         <h1>Transforming African Education—One School</h1>
     </div>
 
@@ -91,15 +91,14 @@
 
 
     <!-- Newsletter Section - Yellow Background -->
-    <div class="container-fluid py-4 py-md-5" style="background-color: #FDAF22;">
+    <div class="container-fluid py-4 py-md-5 newsletter-section">
         <div class="container">
             <div class="row align-items-center gap-3 gap-md-0">
                 <div class="col-12 col-md-6 col-lg-6 mb-4 mb-md-0">
-                    <h2 class="fw-bold mb-3"
-                        style="font-size: clamp(22px, 4.5vw, 40px); color: #000000; font-family: 'Fredoka', sans-serif;">
+                    <h2 class="newsletter-title">
                         Don't Miss Out on the Future of Learning!
                     </h2>
-                    <p style="font-size: 16px; color: #1C1D1D; line-height: 1.6;">
+                    <p class="newsletter-description">
                         Be the first to get school and study hacks, career tips, and Kokokah updates straight to your
                         inbox. Join thousands of students, parents, and educators across Africa who are already leveling
                         up with us.
@@ -108,12 +107,9 @@
 
                 <div class="col-12 col-md-6 col-lg-6">
                     <div class="input-group">
-                        <input type="email" class="form-control" placeholder="Enter your email"
-                            aria-label="Enter your email"
-                            style="border-radius: 8px 0 0 8px; padding: 10px 16px; border: none; font-size: 14px;">
-                        <button class="btn fw-bold" type="button"
-                            style="background-color: #004A53; color: white; border: none; border-radius: 0 8px 8px 0; padding: 10px 20px; font-size: 14px;">Subscribe
-                            Now</button>
+                        <input type="email" class="form-control newsletter-input" placeholder="Enter your email"
+                            aria-label="Enter your email">
+                        <button class="btn fw-bold newsletter-button" type="button">Subscribe Now</button>
                     </div>
                 </div>
             </div>
@@ -121,12 +117,12 @@
     </div>
 
     <!-- Footer Section - Teal Background -->
-    <footer style="background-color: #004A53; color: white; padding: 40px 20px 15px; padding-md: 60px 40px 20px;">
+    <footer class="footer-section">
         <div class="container">
             <div class="row mb-4 mb-md-5">
                 <div class="col-12 col-md-5 col-lg-5 mb-4 mb-md-0">
-                    <img src="images/Contact.png" class="img-fluid mb-3" style="max-width: 150px;">
-                    <p style="font-size: 14px; line-height: 1.6;">
+                    <img src="images/Contact.png" class="img-fluid mb-3 footer-logo">
+                    <p class="footer-description">
                         Kokokah combines School Management, Exam Prep, and a Learning Management System (LMS)—helping
                         schools automate admin tasks, boost student performance, and deliver modern digital learning in
                         one seamless platform.
@@ -134,69 +130,54 @@
                 </div>
 
                 <div class="col-6 col-md-2 col-lg-2">
-                    <h6 class="fw-bold mb-3">Short Links</h6>
+                    <h6 class="footer-heading">Short Links</h6>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="#"
-                                style="color: white; text-decoration: none;">Features</a></li>
-                        <li class="nav-item mb-2"><a href="#" style="color: white; text-decoration: none;">How
-                                it works</a></li>
-                        <li class="nav-item mb-2"><a href="#"
-                                style="color: white; text-decoration: none;">Security</a></li>
-                        <li class="nav-item mb-2"><a href="#"
-                                style="color: white; text-decoration: none;">Testimonial</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="footer-link">Features</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="footer-link">How it works</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="footer-link">Security</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="footer-link">Testimonial</a></li>
                     </ul>
                 </div>
 
                 <div class="col-6 col-md-2 col-lg-2">
-                    <h6 class="fw-bold mb-3">Other Pages</h6>
+                    <h6 class="footer-heading">Other Pages</h6>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="#"
-                                style="color: white; text-decoration: none;">Privacy Policy</a></li>
-                        <li class="nav-item mb-2"><a href="#"
-                                style="color: white; text-decoration: none;">Terms & Condition</a></li>
-                        <li class="nav-item mb-2"><a href="#"
-                                style="color: white; text-decoration: none;">404</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="footer-link">Privacy Policy</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="footer-link">Terms & Condition</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="footer-link">404</a></li>
                     </ul>
                 </div>
 
-                <div class="col-12 col-md-3 col-lg-3">
-                    <h6 class="fw-bold mb-3">Connect With Us</h6>
+                <div class="col-12 col-md-3 col-lg-3 mt-4">
+                    <h6 class="footer-heading">Connect With Us</h6>
                     <div class="d-flex gap-2 flex-wrap">
-                        <a href="#" class="btn btn-light rounded-circle"
-                            style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; padding: 0; min-width: 36px;">
-                            <i class="fab fa-facebook-f" style="color: #004A53; font-size: 14px;"></i>
+                        <a href="#" class="btn btn-light footer-social-btn">
+                            <i class="fab fa-facebook-f footer-social-icon"></i>
                         </a>
-                        <a href="#" class="btn btn-light rounded-circle"
-                            style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; padding: 0; min-width: 36px;">
-                            <i class="fab fa-twitter" style="color: #004A53; font-size: 14px;"></i>
+                        <a href="#" class="btn btn-light footer-social-btn">
+                            <i class="fab fa-twitter footer-social-icon"></i>
                         </a>
-                        <a href="#" class="btn btn-light rounded-circle"
-                            style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; padding: 0; min-width: 36px;">
-                            <i class="fab fa-instagram" style="color: #004A53; font-size: 14px;"></i>
+                        <a href="#" class="btn btn-light footer-social-btn">
+                            <i class="fab fa-instagram footer-social-icon"></i>
                         </a>
-                        <a href="#" class="btn btn-light rounded-circle"
-                            style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; padding: 0; min-width: 36px;">
-                            <i class="fab fa-linkedin-in" style="color: #004A53; font-size: 14px;"></i>
+                        <a href="#" class="btn btn-light footer-social-btn">
+                            <i class="fab fa-linkedin-in footer-social-icon"></i>
                         </a>
-                        <a href="#" class="btn btn-light rounded-circle"
-                            style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; padding: 0; min-width: 36px;">
-                            <i class="fab fa-youtube" style="color: #004A53; font-size: 14px;"></i>
+                        <a href="#" class="btn btn-light footer-social-btn">
+                            <i class="fab fa-youtube footer-social-icon"></i>
                         </a>
                     </div>
                 </div>
             </div>
 
-            <hr style="border-color: rgba(255,255,255,0.2);">
+            <hr class="footer-divider">
 
             <div class="row">
                 <div class="col-12 d-flex justify-content-between align-items-center flex-wrap">
-                    <p class="mb-0" style="font-size: 14px;">Copyright &copy; 2025 All rights reserved</p>
+                    <p class="mb-0 footer-copyright">Copyright &copy; 2025 All rights reserved</p>
                     <div>
-                        <a href="#"
-                            style="color: white; text-decoration: none; font-size: 14px; margin-right: 16px;">Terms and
-                            Conditions</a>
-                        <a href="#" style="color: white; text-decoration: none; font-size: 14px;">Privacy
-                            Policy</a>
+                        <a href="#" class="footer-bottom-link">Terms and Conditions</a>
+                        <a href="#" class="footer-bottom-link">Privacy Policy</a>
                     </div>
                 </div>
             </div>

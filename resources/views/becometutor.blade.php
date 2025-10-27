@@ -131,7 +131,7 @@
 </div>
 
 <!-- Teach Your Way Section -->
-<div class="container-fluid py-4 py-md-5" style="background-color: #FFFFFF;">
+<div class="container-fluid py-4 py-md-5 teach-section-white">
   <div class="container">
     <div class="row align-items-center">
       <div class="col-lg-4 mb-4 mb-lg-0 ps-0 ps-lg-4">
@@ -149,7 +149,7 @@
           Teach Your Way, Earn Your Worth
         </h2>
         <p class="hero-subtitle">
-          <i class="fa-solid fa-circle-arrow-right" style="color: #FF6B35; margin-right: 12px;"></i>
+          <i class="fa-solid fa-circle-arrow-right teach-arrow-icon"></i>
           Set your hourly rate, choose subjects you love, and decide whether to teach online or in person. We provide the students — you bring the knowledge.
         </p>
       </div>
@@ -226,10 +226,10 @@
 <div class="container-fluid hero-section-orange">
   <div class="row align-items-center">
     <div class="col-12 col-md-6 col-lg-6">
-      <h2 class="fw-bold mb-4 section-heading" style="color: #FFFFFF;">
+      <h2 class="fw-bold mb-4 section-heading teach-section-heading">
         Ready to Start Teaching?
       </h2>
-      <p class="mb-4" style="font-size: 16px; color: #FFFFFF; line-height: 1.6;">
+      <p class="mb-4 teach-section-text">
         It only takes 5 minutes to start your application.
       </p>
       <button class="btn btn-yellow-action">Apply to Become a Tutor</button>

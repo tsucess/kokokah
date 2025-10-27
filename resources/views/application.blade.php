@@ -113,7 +113,7 @@
             </p>
 
                 <div>
-                <button class="btn btn-block w-100 primaryButton" style="background: #004A53;">Sign Up to Teach</button>
+                <button class="btn btn-block w-100 primaryButton application-button">Sign Up to Teach</button>
                 {{-- <button class="btn btn-outline-dark btn-lg">Request a Demo</button> --}}
             </div>
 
@@ -148,10 +148,10 @@
             </h4>
 
             <ul class="list-unstyled">
-                <li class="mb-2"><i class="fa-solid fa-circle-arrow-right" style="color:#F56824;"></i> <b>Valid teaching qualification or strong subject expertise</b></li>
-                <li class="mb-2"><i class="fa-solid fa-circle-arrow-right" style="color:#F56824;"></i> <b>Passion for teaching and mentoring students</b></li>
-                <li class="mb-2"><i class="fa-solid fa-circle-arrow-right" style="color:#F56824;"></i> <b>Ability to commit to scheduled sessions</b></li>
-                <li class="mb-2"><i class="fa-solid fa-circle-arrow-right" style="color:#F56824;"></i> <b>(Optional) Experience in special needs education is a plus</b></li>
+                <li class="mb-2"><i class="fa-solid fa-circle-arrow-right requirement-icon"></i> <b>Valid teaching qualification or strong subject expertise</b></li>
+                <li class="mb-2"><i class="fa-solid fa-circle-arrow-right requirement-icon"></i> <b>Passion for teaching and mentoring students</b></li>
+                <li class="mb-2"><i class="fa-solid fa-circle-arrow-right requirement-icon"></i> <b>Ability to commit to scheduled sessions</b></li>
+                <li class="mb-2"><i class="fa-solid fa-circle-arrow-right requirement-icon"></i> <b>(Optional) Experience in special needs education is a plus</b></li>
             </ul>
             <div class = "button-container d-flex d-md-flex gap-3">
                 <button class="btn w-100 primaryButton" type="button">Apply for a Tutor</button>
@@ -171,27 +171,27 @@
         <form>
         <div class="mb-4 form-floating">
       <input type="text" class="form-control" id="fullname" placeholder="majorsignature">
-      <label for="parentname" style = "margin-left:10px; margin-top: -25px;">Enter Parent/Guardian Name</label>
+      <label for="parentname" class="form-label-floating">Enter Parent/Guardian Name</label>
     </div>
 
     <div class="mb-4 form-floating">
       <input type="email" class="form-control" id="email" placeholder="majorsignature@gmail.com">
-      <label for="parentemail" style = "margin-left:10px; margin-top: -25px;">Enter Parent/Guardian Name Email Address</label>
+      <label for="parentemail" class="form-label-floating">Enter Parent/Guardian Name Email Address</label>
     </div>
 
     <div class="mb-4 form-floating">
       <input type="tel" class="form-control" id="email" placeholder="+23412345678">
-      <label for="phonenumber" style = "margin-left:10px; margin-top: -25px;">Enter Parent/Guardian Name Phone Number</label>
+      <label for="phonenumber" class="form-label-floating">Enter Parent/Guardian Name Phone Number</label>
     </div>
 
     <div class="mb-4 form-floating">
       <input type="text" class="form-control" id="fullname" placeholder="Enter enrolled school">
-      <label for="enrolledschool" style = "margin-left:10px; margin-top: -25px;">Enter Currently Enrolled School</label>
+      <label for="enrolledschool" class="form-label-floating">Enter Currently Enrolled School</label>
     </div>
 
     <div class="mb-4 form-floating">
       <input type="text" class="form-control" id="fullname" placeholder="Enter address of enrolled school">
-      <label for="contactenrolledschool" style = "margin-left:10px; margin-top: -25px;">Enter Contact Address of Currently Enrolled School</label>
+      <label for="contactenrolledschool" class="form-label-floating">Enter Contact Address of Currently Enrolled School</label>
     </div>
 
         <div class="mb-4">

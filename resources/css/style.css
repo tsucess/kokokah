@@ -9,6 +9,7 @@
   --color-link-navigation: #004A53;
   --color-link-hover-navigation: #35527A;
   --color-text-navigation: #4D525F;
+  --color-text-dark: #131313;
   --color-bg-banner: #ECFDFF;
   --color-bg-jumbotron: #CCDBDD;
 }
@@ -94,6 +95,219 @@ a.nav-link.active {
 }
 
 
+
+/* ===== NEWSLETTER SECTION ===== */
+.newsletter-section {
+  background-color: #FDAF22;
+  padding: 1rem;
+}
+
+.newsletter-title {
+  font-size: clamp(22px, 4.5vw, 40px);
+  color: #000000;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.newsletter-description {
+  font-size: 16px;
+  color: #1C1D1D;
+  line-height: 1.6;
+}
+
+.newsletter-input {
+  border-radius: 8px 0 0 8px;
+  padding: 10px 16px;
+  border: none;
+  font-size: 14px;
+}
+
+.newsletter-button {
+  background-color: #004A53;
+  color: white;
+  border: none;
+  border-radius: 0 8px 8px 0;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.newsletter-button:hover {
+  background-color: #2B6870;
+  color: white;
+}
+
+/* ===== FOOTER SECTION ===== */
+.footer-section {
+  background-color: #004A53;
+  color: white;
+  padding: 40px 20px 15px;
+}
+
+.footer-logo {
+  max-width: 150px;
+}
+
+.footer-description {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.footer-heading {
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.footer-link {
+  color: white !important;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}
+
+.footer-divider {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.footer-social-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  min-width: 36px;
+  border-radius: 50%;
+}
+
+.footer-social-icon {
+  color: #004A53;
+  font-size: 14px;
+}
+
+.footer-copyright {
+  font-size: 14px;
+}
+
+.footer-bottom-link {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  margin-right: 16px;
+}
+
+.footer-bottom-link:hover {
+  text-decoration: underline;
+}
+
+/* ===== PRODUCT SECTIONS ===== */
+.product-section-orange {
+  background-color: #F56824;
+}
+
+.product-section-teal {
+  background-color: #004A53;
+}
+
+.product-section-yellow {
+  background-color: #FDAF22;
+}
+
+.product-section-bordered {
+  border-color: #FDAF22;
+  border-width: 2px;
+  border-radius: 10px;
+}
+
+.product-button {
+  background-color: #004A53;
+  color: var(--color-secondary-button);
+}
+
+.product-button:hover {
+  background-color: #2B6870;
+}
+.product-button-yellow {
+  background-color: #FDAF22;
+  color: var(--color-text-dark);
+}
+
+.product-button-yellow:hover {
+  background-color: #ffc14e;
+}
+
+/* ===== ACHIEVEMENT SECTION ===== */
+.achievement-section {
+  min-height: 650px;
+  background-image: url('../../public/images/trophys.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.achievement-title {
+  margin-top: 130px;
+  font-weight: bold;
+}
+
+/* ===== FOUNDER MESSAGE SECTION ===== */
+.founder-section {
+  background-image: url('../../public/images/founder.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.founder-video {
+  width: 800px;
+}
+
+/* ===== DASHBOARD LOGO ===== */
+.dashboard-logo {
+  width: 236px;
+  height: 61px;
+}
+
+/* ===== TEACH SECTION ===== */
+.teach-section-white {
+  background-color: #FFFFFF;
+}
+
+.teach-arrow-icon {
+  color: #FF6B35;
+  margin-right: 12px;
+}
+
+.teach-section-heading {
+  color: #FFFFFF;
+}
+
+.teach-section-text {
+  font-size: 16px;
+  color: #FFFFFF;
+  line-height: 1.6;
+}
+
+/* ===== APPLICATION PAGE ===== */
+.application-button {
+  background-color: #004A53;
+}
+
+.application-button:hover {
+  background-color: #2B6870;
+}
+
+.requirement-icon {
+  color: #F56824;
+}
+
+.form-label-floating {
+  margin-left: 10px;
+  margin-top: -25px;
+}
 
 .subscribe {
   background: var(--color-bg-banner);
@@ -192,11 +406,8 @@ h5 {
 }
 
 .ourproduct1 {
-  background: var(--color-bg-jumbotron);
+  /* background: var(--color-bg-jumbotron); */
   border-radius: 30px;
-  top: 50px;
-  left: 100px;
-  /* height: 350px; */
 }
 
 /* @media screen and (max-width: 320px)
@@ -213,12 +424,8 @@ margin: 10px;
 .ourproduct2 {
   border: 1px solid #000;
   margin: 50px 10px;
-  border-radius: 50px;
-  /* margin-bottom: 50px; */
-  /* height: 350px; */
-  left: 100px;
-  /* margin-left: 10px; */
-  /* margin-right: 10px; */
+  border-radius: 30px;
+  padding: 1.5rem;
 }
 
 .pricingcolor {
@@ -230,8 +437,6 @@ margin: 10px;
 }
 
 /* Media queries moved to responsiveness.css */
-
-
 .nav-item a {
   color: var(--color-text-navigation);
   font-family: sitka;
