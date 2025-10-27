@@ -1,0 +1,753 @@
+{
+  "info": {
+    "name": "Kokokah LMS API",
+    "description": "Complete API collection for Kokokah Learning Management System with 220+ endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\",\n  \"password_confirmation\": \"password123\",\n  \"role\": \"student\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/register",
+              "host": ["{{base_url}}"],
+              "path": ["register"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/login",
+              "host": ["{{base_url}}"],
+              "path": ["login"]
+            }
+          }
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/user",
+              "host": ["{{base_url}}"],
+              "path": ["user"]
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/logout",
+              "host": ["{{base_url}}"],
+              "path": ["logout"]
+            }
+          }
+        },
+        {
+          "name": "Send Verification Code",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/email/send-verification-code",
+              "host": ["{{base_url}}"],
+              "path": ["email", "send-verification-code"]
+            }
+          }
+        },
+        {
+          "name": "Verify Email with Code",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john@example.com\",\n  \"code\": \"ABC123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/email/verify-with-code",
+              "host": ["{{base_url}}"],
+              "path": ["email", "verify-with-code"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Courses",
+      "item": [
+        {
+          "name": "Get All Courses",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/courses?page=1&per_page=10",
+              "host": ["{{base_url}}"],
+              "path": ["courses"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search Courses",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/courses/search?q=web",
+              "host": ["{{base_url}}"],
+              "path": ["courses", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "web"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Single Course",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/courses/1",
+              "host": ["{{base_url}}"],
+              "path": ["courses", "1"]
+            }
+          }
+        },
+        {
+          "name": "Create Course",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Web Development 101\",\n  \"description\": \"Learn web development from scratch\",\n  \"category\": \"programming\",\n  \"level\": \"beginner\",\n  \"price\": 5000,\n  \"difficulty\": \"beginner\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/courses",
+              "host": ["{{base_url}}"],
+              "path": ["courses"]
+            }
+          }
+        },
+        {
+          "name": "Enroll in Course",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/courses/1/enroll",
+              "host": ["{{base_url}}"],
+              "path": ["courses", "1", "enroll"]
+            }
+          }
+        },
+        {
+          "name": "Get My Courses",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/courses/my-courses",
+              "host": ["{{base_url}}"],
+              "path": ["courses", "my-courses"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Lessons",
+      "item": [
+        {
+          "name": "Get Lessons",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/courses/1/lessons",
+              "host": ["{{base_url}}"],
+              "path": ["courses", "1", "lessons"]
+            }
+          }
+        },
+        {
+          "name": "Get Single Lesson",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/lessons/1",
+              "host": ["{{base_url}}"],
+              "path": ["lessons", "1"]
+            }
+          }
+        },
+        {
+          "name": "Complete Lesson",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/lessons/1/complete",
+              "host": ["{{base_url}}"],
+              "path": ["lessons", "1", "complete"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Quizzes",
+      "item": [
+        {
+          "name": "Get Quizzes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/lessons/1/quizzes",
+              "host": ["{{base_url}}"],
+              "path": ["lessons", "1", "quizzes"]
+            }
+          }
+        },
+        {
+          "name": "Start Quiz",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/quizzes/1/start",
+              "host": ["{{base_url}}"],
+              "path": ["quizzes", "1", "start"]
+            }
+          }
+        },
+        {
+          "name": "Submit Quiz",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"answers\": [\n    {\"question_id\": 1, \"answer\": \"A\"},\n    {\"question_id\": 2, \"answer\": \"B\"}\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/quizzes/1/submit",
+              "host": ["{{base_url}}"],
+              "path": ["quizzes", "1", "submit"]
+            }
+          }
+        },
+        {
+          "name": "Get Quiz Results",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/quizzes/1/results",
+              "host": ["{{base_url}}"],
+              "path": ["quizzes", "1", "results"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/profile",
+              "host": ["{{base_url}}"],
+              "path": ["users", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe Updated\",\n  \"bio\": \"I love learning\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/users/profile",
+              "host": ["{{base_url}}"],
+              "path": ["users", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Get Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/dashboard",
+              "host": ["{{base_url}}"],
+              "path": ["users", "dashboard"]
+            }
+          }
+        },
+        {
+          "name": "Get Achievements",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/achievements",
+              "host": ["{{base_url}}"],
+              "path": ["users", "achievements"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Wallet & Payments",
+      "item": [
+        {
+          "name": "Get Wallet Balance",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/wallet",
+              "host": ["{{base_url}}"],
+              "path": ["wallet"]
+            }
+          }
+        },
+        {
+          "name": "Get Wallet Transactions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/wallet/transactions",
+              "host": ["{{base_url}}"],
+              "path": ["wallet", "transactions"]
+            }
+          }
+        },
+        {
+          "name": "Purchase Course",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"course_id\": 1,\n  \"gateway_id\": \"paystack\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/payments/purchase-course",
+              "host": ["{{base_url}}"],
+              "path": ["payments", "purchase-course"]
+            }
+          }
+        },
+        {
+          "name": "Get Payment History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/payments/history",
+              "host": ["{{base_url}}"],
+              "path": ["payments", "history"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Certificates",
+      "item": [
+        {
+          "name": "Get Certificates",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/certificates",
+              "host": ["{{base_url}}"],
+              "path": ["certificates"]
+            }
+          }
+        },
+        {
+          "name": "Generate Certificate",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"course_id\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/certificates/generate",
+              "host": ["{{base_url}}"],
+              "path": ["certificates", "generate"]
+            }
+          }
+        },
+        {
+          "name": "Verify Certificate",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/certificates/verify/CERT123",
+              "host": ["{{base_url}}"],
+              "path": ["certificates", "verify", "CERT123"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "item": [
+        {
+          "name": "Get Notifications",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/notifications",
+              "host": ["{{base_url}}"],
+              "path": ["notifications"]
+            }
+          }
+        },
+        {
+          "name": "Mark as Read",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/notifications/1/read",
+              "host": ["{{base_url}}"],
+              "path": ["notifications", "1", "read"]
+            }
+          }
+        },
+        {
+          "name": "Delete Notification",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/notifications/1",
+              "host": ["{{base_url}}"],
+              "path": ["notifications", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Search",
+      "item": [
+        {
+          "name": "Global Search",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/search?q=web",
+              "host": ["{{base_url}}"],
+              "path": ["search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "web"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Language",
+      "item": [
+        {
+          "name": "Get Current Language",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/language/current",
+              "host": ["{{base_url}}"],
+              "path": ["language", "current"]
+            }
+          }
+        },
+        {
+          "name": "Set Language",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"locale\": \"ha\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/language/set",
+              "host": ["{{base_url}}"],
+              "path": ["language", "set"]
+            }
+          }
+        },
+        {
+          "name": "Get Translations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/language/translations/ha",
+              "host": ["{{base_url}}"],
+              "path": ["language", "translations", "ha"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000/api",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
+
