@@ -140,9 +140,9 @@
     </div>
 
     <div class="top-icons">
-      <button class="icon-btn round-2" title="bell" style = "background: #ECEBF1;"><i class="fa-regular fa-bell"></i></button>
-      <button class="icon-btn round-2" title="message" style = "background: #ECEBF1;"><i class="fa-regular fa-envelope"></i></button>
-      <button class="icon-btn round-2" title="question" style = "background: #ECEBF1;"><i class="fa-solid fa-question"></i></button>
+      <button class="icon-btn round-2 icon-btn-light" title="bell"><i class="fa-regular fa-bell"></i></button>
+      <button class="icon-btn round-2 icon-btn-light" title="message"><i class="fa-regular fa-envelope"></i></button>
+      <button class="icon-btn round-2 icon-btn-light" title="question"><i class="fa-solid fa-question"></i></button>
     </div>
   </header>
 

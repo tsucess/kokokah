@@ -37,8 +37,8 @@
           </div>
 
           <!-- Heading -->
-          <h4 class = "text-dark mb-2">Sign in</h4>
-          <p class="mb-5" style = "color:#969696;font:inter;">Please login to continue to your account.</p>
+          <h4 class="auth-heading">Sign in</h4>
+          <p class="auth-subheading">Please login to continue to your account.</p>
 
                 <div class = "pt-3">
                 <div class="custom-form-group">
@@ -74,24 +74,21 @@
 
                </div> --}}
 
-               <div class="d-flex justify-content-between align-items-center mb-4">
-
+               <div class="auth-checkbox-row">
     <div class="form-check">
         <input class="form-check-input" type="checkbox" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault" style="font-size: 0.95rem;">
-            <b>Keep me logged in</b>
+        <label class="form-check-label" for="flexCheckDefault">
+            Keep me logged in
         </label>
     </div>
 
     <div>
-        <a class="text-decoration-none" href="#" style="color:#232323; font-size: 0.95rem;">
-            <b>Forgot Password?</b>
-        </a>
+        <a href="#">Forgot Password?</a>
     </div>
 </div>
 
 
-                <button type="submit" class="btn primaryButton text-dark w-100">Sign in</button>
+                <button type="submit" class="btn primaryButton">Sign in</button>
 
 
 

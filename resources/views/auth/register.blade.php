@@ -37,8 +37,8 @@
           </div>
 
           <!-- Heading -->
-          <h4 class = "text-dark mb-2">Sign up</h4>
-          <p class="mb-4" style = "color:#969696;font:inter;">Please login to continue to your account.</p>
+          <h4 class="auth-heading">Sign up</h4>
+          <p class="auth-subheading">Please login to continue to your account.</p>
 
 
           <div class="custom-form-group">
@@ -85,7 +85,7 @@
 
                 </div>
 
-                <button type="submit" class="btn primaryButton text-dark w-100">Sign Up</button>
+                <button type="submit" class="btn primaryButton">Sign Up</button>
 
 
           <!-- Divider -->
@@ -105,8 +105,8 @@
           </div>
 
           <!-- Footer link -->
-          <p class="mt-4 text-center">
-            Already have an account? <a class = "text-decoration-none text-dark fw-bold" href="#">Login</a>
+          <p class="auth-footer-link">
+            Already have an account? <a href="#">Login</a>
           </p>
           {{-- <p class="mt-5 text-center small text-muted">© Copyright Kokokah 2025, All Right Reserved</p> --}}
         </div>

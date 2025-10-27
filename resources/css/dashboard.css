@@ -5,15 +5,7 @@
       --muted: #6b737a;
       --card-bg: #ffffff;
       --page-bg: #F6F8FA;
-    --color-primary-button: #004A53;
-    --color-primary-hover-button: #2B6870;
-    --color-secondary-button:#fff;
-    --color-secondary-hover-button: #2B6870;
-    --color-link-navigation: #00004C;
-    --color-link-hover-navigation: #35527A;
-    --color-text-navigation: #4D525F;
-    --color-bg-banner: #ECFDFF;
-    --color-bg-jumbotron:#CCDBDD;
+    /* Color variables moved to Tailwind config - see tailwind.config.js */
     --bs-dark-teal: #114243;
     --bs-light-gray: #e9ecef;
     --bs-main-green: #4CAF50;
@@ -25,61 +17,7 @@
     }
 
 
-    h1
-{
-font-family:  Fredoka, serif;
-font-size:56px;
-line-height:61.6px;
-font-weight: 400;
-font-style: normal;
-color:var(--color-primary-button);
-}
-
-
-h2
-{
-font-family:  Fredoka, serif;
-font-weight: bolder;
-font-size:48px;
-line-height:52.8px;
-color:var(--color-primary-button);
-}
-
-h3
-{
-font-family:  Fredoka, serif;
-font-weight: bolder;
-font-size:40px;
-line-height:44px;
-color:var(--color-primary-button);
-}
-
-h4
-{
-font-family:  Fredoka, serif;
-font-weight: bolder;
-font-size:32px;
-line-height:35.2px;
-color:var(--color-primary-button);
-}
-
-h5
-{
-font-family:  Fredoka, serif;
-font-weight: bolder;
-font-size:24px;
-line-height:26.4px;
-color:var(--color-primary-button);
-}
-
-h6
-{
-font-weight: bolder;
-font-family:  Fredoka, serif;
-font-size:20px;
-line-height:22px;
-color:var(--color-primary-button);
-}
+    /* Typography styles moved to Tailwind - see resources/css/app.css */
 
 p
 {
@@ -87,63 +25,7 @@ p
     font-size: 20px;
 }
 
-    .userbutton
-    {
-        background: var(--color-primary-button);
-        padding-top: 4px;
-        padding-bottom: 4px;
-        padding-left: 28px;
-        padding-right: 28px;
-        border-radius: 5px;
-        width:105px;
-        height:36px;
-        color:#fff;
-    }
-
-    .userbutton:hover
-    {
-        background: var(--color-primary-hover-button);
-        color:#fff;
-    }
-
-
-.primaryButton
-{
-width: 200px;
-height:50px;
-padding: 10px 6px;
-border-radius:4px;
-background: #FDBC47;
-color:#fff;
-font-size: 14px;
-}
-
-
-
-.primaryButton:hover
-{
-    background: #FDBC47;
-    color: #fff;
-}
-
-.secondaryButton
-{
-padding: 10px 6px;
-width:200px;
-height:50px;
-border-width: 1px;
-border-color:#004A53;
-border-style: solid;
-background: var(--color-secondary-button);
-color: #004A53;
-font-size: 14px;
-}
-
-.secondaryButton:hover
-{
-    background: var(--color-secondary-hover-button);
-    color: #fff;
-}
+    /* Button styles moved to Tailwind - see resources/css/app.css */
 
 .mysubject
 {

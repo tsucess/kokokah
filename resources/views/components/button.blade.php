@@ -1,3 +1,55 @@
-<button {{ $attributes->merge(['type' => 'submit', 'class' => 'inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150']) }}>
-    {{ $slot }}
-</button>
+@props([
+    'variant' => 'primary',
+    'size' => 'md',
+    'disabled' => false,
+    'type' => 'button',
+    'href' => null,
+])
+
+@php
+    // Define button classes based on variant
+    $variantClasses = match($variant) {
+        'primary' => 'primaryButton',
+        'secondary' => 'secondaryButton',
+        'tertiary' => 'tertiaryButton',
+        'danger' => 'btn-danger',
+        'success' => 'btn-success',
+        'warning' => 'btn-warning',
+        'info' => 'btn-info',
+        'light' => 'btn-light',
+        'dark' => 'btn-dark',
+        default => 'primaryButton',
+    };
+
+    // Define size classes
+    $sizeClasses = match($size) {
+        'sm' => 'btn-sm',
+        'md' => '',
+        'lg' => 'btn-lg',
+        default => '',
+    };
+
+    // Combine all classes
+    $classes = "btn {$variantClasses} {$sizeClasses}";
+    $classes = trim(preg_replace('/\s+/', ' ', $classes));
+@endphp
+
+@if($href)
+    <a
+        href="{{ $href }}"
+        class="{{ $classes }}"
+        @disabled($disabled)
+        {{ $attributes }}
+    >
+        {{ $slot }}
+    </a>
+@else
+    <button
+        type="{{ $type }}"
+        class="{{ $classes }}"
+        @disabled($disabled)
+        {{ $attributes }}
+    >
+        {{ $slot }}
+    </button>
+@endif
