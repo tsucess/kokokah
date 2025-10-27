@@ -41,7 +41,7 @@
     </div>
 
     <!-- Navigation Bar - Fixed/Sticky with Overlay -->
-    <nav class="navbar navbar-expand-lg sticky-top" aria-label="Fifth navbar example">
+    <nav class="navbar navbar-expand-lg sticky-top px-md-3 px-lg-2 px-xl-5" aria-label="Fifth navbar example">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
                 <img src="{{ asset('images/Kokokah_Logo.png') }}" alt="Kokokah Logo">
