@@ -104,6 +104,18 @@
     /* width: 30%; */
   }
 
+  
+.custom-width {
+  width: 45%;
+}
+.product-button {
+  width: 70%;
+}
+
+.product-button-yellow {
+  width: 70%;
+}
+
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -255,6 +267,14 @@
   .btn-nav-secondary {
     padding: 14px 26px;
   }
+
+  .product-button {
+  width: 60%;
+}
+
+.product-button-yellow {
+  width: 60%;
+}
 }
 
 /* ===== EXTRA LARGE DESKTOP BREAKPOINTS (min-width: 1440px) ===== */
