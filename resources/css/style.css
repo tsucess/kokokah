@@ -226,6 +226,8 @@ a.nav-link.active {
 .product-button {
   background-color: #004A53;
   color: var(--color-secondary-button);
+  width: 100%;
+  padding: 0.75rem;
 }
 
 .product-button:hover {
@@ -234,6 +236,8 @@ a.nav-link.active {
 .product-button-yellow {
   background-color: #FDAF22;
   color: var(--color-text-dark);
+  width: 100%;
+  padding: 0.75rem;
 }
 
 .product-button-yellow:hover {
@@ -670,10 +674,9 @@ footer p {
 
 
 .custom-width {
-  width: 50%;
+  width: 85%;
   border: 2px dashed #555;
   margin-left: 20px;
-
 }
 
 /* Media queries moved to responsiveness.css */
