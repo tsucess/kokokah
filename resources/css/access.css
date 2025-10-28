@@ -278,6 +278,7 @@ a
   overflow: hidden;
 }
 
+
 .right-col::before {
   content: "";
   position: absolute;
