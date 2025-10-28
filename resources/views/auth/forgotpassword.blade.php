@@ -19,8 +19,9 @@
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 
-  @vite(['resources/css/style.css'])
-  @vite(['resources/css/access.css'])
+  <!-- Custom CSS -->
+  <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/access.css') }}" rel="stylesheet">
 
 </head>
 <body>
@@ -37,20 +38,23 @@
           </div>
 
           <a href = "/login" class="btn btn-link mb-4 p-0" style="color: #313131; font-weight: 500; text-decoration: none;"> <i class="fa fa-arrow-left"></i> Back to login</a>
+
+          <!-- Alert Container -->
+          <div id="alertContainer"></div>
+
           <!-- Heading -->
           <h4 class = "text-dark mb-2">Forgot your Password?</h4>
           <p class="mb-5" style = "color:#969696;font:inter;">Enter your email below to recover your password.</p>
 
+          <form id="forgotForm" method="POST">
+            @csrf
+            <div class="custom-form-group">
+              <label for="email" class="custom-label">Enter Email Address</label>
+              <input type="email" class="form-control-custom" id="email" name="email" placeholder="majorsignature@gmail.com" aria-label="Email Address" autocomplete="email" required>
+            </div>
 
-                <div class="custom-form-group">
-
-                    <label for="emailaddress" class="custom-label">Enter Email Address</label>
-
-                    <input type="email" class="form-control-custom" id="emailaddress" placeholder="majorsignature@gmail.com">
-                </div>
-
-
-                <button type="submit" class="btn primaryButton w-100">Submit</button>
+            <button type="submit" class="btn primaryButton w-100" id="forgotBtn">Submit</button>
+          </form>
 
         </div>
       </div>
@@ -62,5 +66,49 @@
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Axios -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <script type="module">
+    import AuthApiClient from '{{ asset('js/api/authClient.js') }}';
+    import UIHelpers from '{{ asset('js/utils/uiHelpers.js') }}';
+
+    // Store original button text
+    UIHelpers.storeButtonText('forgotBtn');
+
+    // Handle forgot password form submission
+    document.getElementById('forgotForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value.trim();
+
+      if (!email) {
+        UIHelpers.showError('Please enter your email address');
+        return;
+      }
+
+      if (!UIHelpers.isValidEmail(email)) {
+        UIHelpers.showError('Please enter a valid email address');
+        return;
+      }
+
+      UIHelpers.setButtonLoading('forgotBtn', true);
+      UIHelpers.showLoadingOverlay(true);
+
+      const result = await AuthApiClient.sendPasswordResetLink(email);
+
+      UIHelpers.showLoadingOverlay(false);
+
+      if (result.success) {
+        UIHelpers.showSuccess('Password reset link sent to your email!');
+        document.getElementById('forgotForm').reset();
+        UIHelpers.setButtonLoading('forgotBtn', false);
+      } else {
+        UIHelpers.showError(result.message || 'Failed to send reset link');
+        UIHelpers.setButtonLoading('forgotBtn', false);
+      }
+    });
+  </script>
 </body>
 </html>
