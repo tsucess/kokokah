@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kokokah - Sign Up</title>
+    <title>Kokokah - Verify Email</title>
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- css styles -->
-
 
     <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,25 +39,39 @@
                     <a href = "/login" class="btn btn-link mb-4 p-0"
                         style="color: #313131; font-weight: 500; text-decoration: none;"> <i
                             class="fa fa-arrow-left"></i> Back to login</a>
+
+                    <!-- Alert Container -->
+                    <div id="alertContainer"></div>
+
                     <!-- Heading -->
-                    <h4 class = "text-dark mb-2">Verify code</h4>
+                    <h4 class = "text-dark mb-2">Verify Email</h4>
                     <p class="mb-4" style = "color:#969696;font:inter;">An authentication code has been sent to your
                         email</p>
 
-                    <div class="custom-form-group">
+                    <form id="verifyForm" method="POST">
+                        @csrf
+                        <div class="custom-form-group">
+                            <label for="email" class="custom-label">Email Address</label>
+                            <input type="email" class="form-control-custom" id="email" name="email"
+                                placeholder="your@email.com" aria-label="Email Address" autocomplete="email" readonly>
+                            <small class="text-muted d-block mt-1">Verification code sent to this email</small>
+                        </div>
 
-                        <label for="verifycode" class="custom-label">Enter code</label>
+                        <div class="custom-form-group">
+                            <label for="verificationCode" class="custom-label">Enter code</label>
+                            <input type="text" class="form-control-custom" id="verificationCode" name="code"
+                                placeholder="000000" maxlength="6" aria-label="Verification Code" inputmode="numeric"
+                                required>
+                        </div>
 
-                        <input type="text" class="form-control-custom" id="verifycode" placeholder="80EAS33">
-                    </div>
-                    <p>
-                        Didn’t receive a code?
-                        <a href = "#" style = "color:red; text-decoration:none;">Resend</a>
-                    </p>
+                        <p>
+                            Did not receive a code?
+                            <a href="#" id="resendLink"
+                                style="color: #FDAF22; text-decoration: none; cursor: pointer;">Resend</a>
+                        </p>
 
-
-                    <button type="submit" class="btn primaryButton w-100">Verify</button>
-
+                        <button type="submit" class="btn primaryButton w-100" id="verifyBtn">Verify</button>
+                    </form>
                 </div>
             </div>
 
@@ -84,25 +96,38 @@
         // Get email from URL or session
         const email = UIHelpers.getUrlParameter('email') || sessionStorage.getItem('registerEmail');
 
+        // Display email on the form
+        if (email) {
+            document.getElementById('email').value = email;
+        }
+
         // Handle verify form submission
         document.getElementById('verifyForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const code = document.getElementById('verifycode').value.trim();
+            const code = document.getElementById('verificationCode').value.trim();
+
+            if (!email) {
+                UIHelpers.showError('Email not found. Please register again.');
+                return;
+            }
 
             if (!code) {
                 UIHelpers.showError('Please enter the verification code');
                 return;
             }
 
-            if (code.length !== 6) {
-                UIHelpers.showError('Verification code must be 6 digits');
+            if (!UIHelpers.isValidCode(code)) {
+                UIHelpers.showError('Verification code must be exactly 6 digits');
                 return;
             }
 
             UIHelpers.setButtonLoading('verifyBtn', true);
+            UIHelpers.showLoadingOverlay(true);
 
             const result = await AuthApiClient.verifyEmailWithCode(email, code);
+
+            UIHelpers.showLoadingOverlay(false);
 
             if (result.success) {
                 UIHelpers.showSuccess('Email verified successfully! Redirecting to dashboard...');

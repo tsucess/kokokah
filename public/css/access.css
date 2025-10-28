@@ -291,8 +291,9 @@ a {
   right: 0;
   bottom: 0;
   background-image: url('../images/signup-bg.png');
-  background-repeat: repeat;
-  animation: waveAnimation 20s linear infinite;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* animation: waveAnimation 20s linear infinite; */
 }
 
 @keyframes gradientShift {
@@ -408,54 +409,50 @@ a {
 
 /* Success Alert */
 .alert-success {
-  background-color: #d4edda !important;
-  border-color: #28a745 !important;
-  color: #155724 !important;
+  background-color: #d4edda ;
+  border-color: #28a745 ;
+  color: #155724 ;
   text-align: center;
 }
 
 .alert-success .btn-close {
-  color: #155724 !important;
-  border-radius: 50%;
-  border: solid 1px #155724;
+  color: #155724 ;
+  font-size: 1rem;
 }
 
 /* Danger Alert */
 .alert-danger {
   text-align: center;
-  background-color: #f8d7da !important;
-  border-color: #f5c6cb !important;
-  color: #721c24 !important;
+  background-color: #f8d7da ;
+  border-color: #f5c6cb ;
+  color: #721c24 ;
 }
 
 .alert-danger .btn-close {
-  color: #721c24 !important;
-  border-radius: 50%;
-  height: 0.75rem;
-  width: 0.75rem;
-  border: solid 1px #721c24;
+  color: #721c24 ;
+  font-size: 1rem;
 }
 
 /* Warning Alert */
 .alert-warning {
-  background-color: #fff3cd !important;
-  border-color: #ffeaa7 !important;
-  color: #856404 !important;
+  background-color: #fff3cd ;
+  border-color: #ffeaa7 ;
+  color: #856404 ;
 }
 
 .alert-warning .btn-close {
-  color: #856404 !important;
+  color: #856404 ;
 }
 
 /* Info Alert */
 .alert-info {
-  background-color: #d1ecf1 !important;
-  border-color: #bee5eb !important;
-  color: #0c5460 !important;
+  background-color: #d1ecf1 ;
+  border-color: #bee5eb ;
+  color: #0c5460 ;
 }
 
 .alert-info .btn-close {
-  color: #0c5460 !important;
+  color: #0c5460 ;
 }
 
 @keyframes slideIn {
