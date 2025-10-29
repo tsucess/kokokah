@@ -28,6 +28,8 @@ class AuthEndpointsTest extends TestCase
         $this->assertDatabaseHas('users', ['email' => 'john@example.com']);
     }
 
+    
+
     /**
      * Test user login endpoint
      */
