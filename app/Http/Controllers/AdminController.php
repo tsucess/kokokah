@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -1181,5 +1182,85 @@ class AdminController extends Controller
         }
 
         return round($bytes, $precision) . ' ' . $units[$i];
+    }
+
+    /**
+     * Create a new user (admin endpoint)
+     */
+    public function createUser(Request $request)
+    {
+        try {
+            // Validate required fields
+            $validator = Validator::make($request->all(), [
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|string|min:8',
+                'role' => 'required|in:student,instructor,admin',
+                'gender' => 'nullable|in:male,female',
+                'date_of_birth' => 'nullable|date',
+                'phone_number' => 'nullable|string|max:20',
+                'home_address' => 'nullable|string|max:255',
+                'state' => 'nullable|string|max:100',
+                'zipcode' => 'nullable|string|max:20',
+                'parent_first_name' => 'nullable|string|max:255',
+                'parent_last_name' => 'nullable|string|max:255',
+                'parent_email' => 'nullable|email',
+                'parent_phone' => 'nullable|string|max:20',
+                'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validation failed',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            // Handle profile photo upload
+            $profilePhotoPath = null;
+            if ($request->hasFile('profile_photo')) {
+                $file = $request->file('profile_photo');
+                $profilePhotoPath = $file->store('profile_photos', 'public');
+            }
+
+            // Create the user
+            $user = User::create([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => $request->role,
+                'gender' => $request->gender ?? 'male',
+                'date_of_birth' => $request->date_of_birth,
+                'contact' => $request->phone_number,
+                'address' => $request->home_address,
+                'profile_photo' => $profilePhotoPath,
+                'is_active' => true
+            ]);
+
+            // Store parent information if provided (you may need to create a parents table)
+            // For now, we'll just store it in a JSON field or separate table if available
+            if ($request->parent_first_name || $request->parent_email) {
+                // This assumes you have a way to store parent info
+                // You can extend this based on your database schema
+            }
+
+            // Send email verification notification
+            $user->sendEmailVerificationNotification();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'User created successfully',
+                'user' => $user
+            ], 201);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error creating user: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }

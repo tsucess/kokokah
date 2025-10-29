@@ -363,6 +363,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('admin')->middleware('role:admin')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard']);
         Route::get('/users', [AdminController::class, 'users']);
+        Route::post('/users', [AdminController::class, 'createUser']);
         Route::get('/courses', [AdminController::class, 'courses']);
         Route::get('/payments', [AdminController::class, 'payments']);
         Route::get('/reports', [AdminController::class, 'reports']);
