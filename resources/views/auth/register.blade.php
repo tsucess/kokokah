@@ -16,9 +16,12 @@
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 
-  <!-- Custom CSS -->
-  <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-  <link href="{{ asset('css/access.css') }}" rel="stylesheet">
+  @vite(['resources/css/style.css'])
+  @vite(['resources/css/access.css'])
+  <style>
+
+
+  </style>
 </head>
 <body>
 
@@ -33,72 +36,79 @@
             <img src="images/Kokokah_Logo.png" alt="Kokokah Logo" class = "img-fluid w-75">
           </div>
 
-          <!-- Alert Container -->
-          <div id="alertContainer"></div>
-
           <!-- Heading -->
           <h4 class="auth-heading">Sign up</h4>
-          <p class="auth-subheading">Create your account to get started.</p>
+          <p class="auth-subheading">Please login to continue to your account.</p>
 
-          <form id="registerForm" method="POST">
-            @csrf
-            <div class="custom-form-group">
-              <label for="firstName" class="custom-label">Enter First Name</label>
-              <input type="text" class="form-control-custom" id="firstName" name="firstName" placeholder="Winner" aria-label="First Name" autocomplete="given-name" required>
-            </div>
 
-            <div class="custom-form-group">
-              <label for="lastName" class="custom-label">Enter Last Name</label>
-              <input type="text" class="form-control-custom" id="lastName" name="lastName" placeholder="Effiong" aria-label="Last Name" autocomplete="family-name" required>
-            </div>
+          <div class="custom-form-group">
 
-            <div class="custom-form-group">
-              <label for="email" class="custom-label">Enter Email Address</label>
-              <input type="email" class="form-control-custom" id="email" name="email" placeholder="majorsignature@gmail.com" aria-label="Email Address" autocomplete="email" required>
-            </div>
+                    <label for="firstNameInput" class="custom-label">Enter First Name</label>
 
-            <div class="custom-form-group">
-              <label for="password" class="custom-label">Enter Password</label>
-              <div class="password-input-wrapper">
-                <input type="password" class="form-control-custom" id="password" name="password" placeholder="*******" aria-label="Password" aria-describedby="passwordStrength" autocomplete="new-password" required>
-                <button class="password-toggle-btn" type="button" id="togglePassword" title="Toggle password visibility">
-                  <i class="fa fa-eye"></i>
-                </button>
-              </div>
-              <small class="text-muted d-block mt-1" id="passwordStrength"></small>
-            </div>
+                    <input type="text" class="form-control-custom" id="firstNameInput" placeholder="Winner">
+                </div>
 
-            <div class="custom-form-group">
-              <label for="role" class="custom-label">Select Role</label>
-              <select class="form-control-custom" id="role" name="role" aria-label="User Role" required>
-                <option value="">-- Select Role --</option>
-                <option value="student">Student</option>
-                <option value="instructor">Instructor</option>
-              </select>
-            </div>
+                <div class="custom-form-group">
 
-            <button type="submit" class="btn primaryButton" id="registerBtn">Sign Up</button>
+                    <label for="lastNameInput" class="custom-label">Enter Last Name</label>
 
-            <p class="mt-3 text-center">
-              Already have an account? <a href="/login" style="color: #FDAF22; text-decoration: none;">Sign in</a>
-            </p>
-          </form>
+                    <input type="text" class="form-control-custom" id="lastNameInput" placeholder="Effiong">
+                </div>
+
+                <div class="custom-form-group">
+
+                    <label for="emailaddress" class="custom-label">Enter Email Address</label>
+
+                    <input type="email" class="form-control-custom" id="emailaddress" placeholder="majorsignature@gmail.com">
+                </div>
+
+
+                <div class="custom-form-group">
+
+                    <label for="psw" class="custom-label">Enter Password</label>
+
+                    <input type="password" class="form-control-custom" id="psw" placeholder="*******">
+                </div>
+
+
+                <div class="custom-form-group">
+
+                    <label for="psw" class="custom-label">Select Role</label>
+
+                    {{-- <input type="password" class="form-control-custom" id="psw" placeholder="*******"> --}}
+
+                    <select class="form-control-custom" aria-label="select role">
+                            {{-- <option selected>Teacher</option> --}}
+                            <option value="1">Student</option>
+                             {{-- <option value="2">Parent</option> --}}
+                    </select>
+
+                </div>
+
+                <button type="submit" class="btn primaryButton">Sign Up</button>
+
 
           <!-- Divider -->
           <div class="divider">or</div>
 
           <!-- Social logins -->
           <div class="d-grid gap-2">
-            <button class="btn btn-outline-custom" type="button" disabled>
+            <button class="btn btn-outline-custom">
               Continue with Google <i class="fab fa-google text-danger"></i>
             </button>
-            <button class="btn btn-outline-custom" type="button" disabled>
+            <button class="btn btn-outline-custom">
               Continue with Facebook <i class="fab fa-facebook text-primary"></i>
             </button>
-            <button class="btn btn-outline-custom" type="button" disabled>
+            <button class="btn btn-outline-custom">
               Continue with Apple <i class="fab fa-apple text-dark"></i>
             </button>
           </div>
+
+          <!-- Footer link -->
+          <p class="auth-footer-link">
+            Already have an account? <a href="#">Login</a>
+          </p>
+          {{-- <p class="mt-5 text-center small text-muted">© Copyright Kokokah 2025, All Right Reserved</p> --}}
         </div>
       </div>
 
@@ -109,128 +119,5 @@
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Axios -->
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-  <script type="module">
-    import AuthApiClient from '{{ asset('js/api/authClient.js') }}';
-    import UIHelpers from '{{ asset('js/utils/uiHelpers.js') }}';
-
-    // Store original button text
-    UIHelpers.storeButtonText('registerBtn');
-
-    // Password visibility toggle
-    document.getElementById('togglePassword').addEventListener('click', () => {
-      const input = document.getElementById('password');
-      const icon = document.querySelector('#togglePassword i');
-
-      if (input.type === 'password') {
-        input.type = 'text';
-        icon.classList.remove('fa-eye');
-        icon.classList.add('fa-eye-slash');
-      } else {
-        input.type = 'password';
-        icon.classList.remove('fa-eye-slash');
-        icon.classList.add('fa-eye');
-      }
-    });
-
-    // Password strength indicator
-    document.getElementById('password').addEventListener('input', (e) => {
-      const password = e.target.value;
-      const strengthMsg = UIHelpers.getPasswordStrengthMessage(password);
-      const strengthElement = document.getElementById('passwordStrength');
-
-      if (password.length === 0) {
-        strengthElement.textContent = '';
-      } else if (UIHelpers.isValidPassword(password)) {
-        strengthElement.textContent = '✓ ' + strengthMsg;
-        strengthElement.style.color = 'green';
-      } else {
-        strengthElement.textContent = '✗ ' + strengthMsg;
-        strengthElement.style.color = 'red';
-      }
-    });
-
-    // Handle register form submission
-    document.getElementById('registerForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const firstName = document.getElementById('firstName').value.trim();
-      const lastName = document.getElementById('lastName').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-      const role = document.getElementById('role').value;
-
-      // Debug: Log the form data
-      console.log('Form Data:', {
-        firstName,
-        lastName,
-        email,
-        password,
-        role
-      });
-
-      // Validate inputs
-      if (!firstName || !lastName || !email || !password || !role) {
-        UIHelpers.showError('Please fill in all fields');
-        return;
-      }
-
-      if (!UIHelpers.isValidName(firstName)) {
-        UIHelpers.showError('First name must be 2-50 characters and contain only letters, spaces, hyphens, or apostrophes');
-        return;
-      }
-
-      if (!UIHelpers.isValidName(lastName)) {
-        UIHelpers.showError('Last name must be 2-50 characters and contain only letters, spaces, hyphens, or apostrophes');
-        return;
-      }
-
-      if (!UIHelpers.isValidEmail(email)) {
-        UIHelpers.showError('Please enter a valid email address');
-        return;
-      }
-
-      if (!UIHelpers.isValidPassword(password)) {
-        UIHelpers.showError(UIHelpers.getPasswordStrengthMessage(password));
-        return;
-      }
-
-      // Show loading state
-      UIHelpers.setButtonLoading('registerBtn', true);
-      UIHelpers.showLoadingOverlay(true);
-
-      // Store email for verification page
-      sessionStorage.setItem('registerEmail', email);
-
-      // Debug: Log API call
-      console.log('Calling API with:', {
-        firstName,
-        lastName,
-        email,
-        password,
-        role
-      });
-
-      // Call register API
-      const result = await AuthApiClient.register(firstName, lastName, email, password, role);
-
-      // Debug: Log API response
-      console.log('API Response:', result);
-
-      UIHelpers.showLoadingOverlay(false);
-
-      if (result.success) {
-        UIHelpers.showSuccess('Registration successful! Redirecting to verification...');
-        // Redirect to verification page after 1.5 seconds
-        UIHelpers.redirect('/verify', 1500);
-      } else {
-        UIHelpers.showError(result.message || 'Registration failed');
-        UIHelpers.setButtonLoading('registerBtn', false);
-      }
-    });
-  </script>
 </body>
 </html>

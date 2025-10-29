@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
+
+// Route::get('/temp', function () {
+//     return view('layouts.template');
+// });
+
 Route::get('/', function () {
     return view('index');
 });
@@ -43,6 +48,10 @@ Route::get('/stem', function () {
 });
 
 Route::get('/login', function () {
+    return view('login');
+});
+
+Route::get('/login', function () {
     return view('auth.login');
 });
 
@@ -55,8 +64,7 @@ Route::get('/resetpassword', function () {
 });
 
 Route::get('/verify', function () {
-    // return view('auth.verifypassword');
-    return view('auth.verify-email');
+    return view('auth.verifypassword');
 });
 
 Route::get('/stemregister', function () {

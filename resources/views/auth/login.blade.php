@@ -3,10 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kokokah - Sign In</title>
+  <title>Kokokah - Sign Up</title>
 
   <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- css styles -->
+
 
   <!-- Google Font -->
  <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,9 +19,8 @@
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 
-  <!-- Custom CSS -->
-  <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-  <link href="{{ asset('css/access.css') }}" rel="stylesheet">
+  @vite(['resources/css/style.css'])
+  @vite(['resources/css/access.css'])
 
 </head>
 <body>
@@ -34,56 +36,63 @@
             <img src="images/Kokokah_Logo.png" alt="Kokokah Logo" class = "img-fluid w-75">
           </div>
 
-          <!-- Alert Container -->
-          <div id="alertContainer"></div>
-
           <!-- Heading -->
           <h4 class="auth-heading">Sign in</h4>
           <p class="auth-subheading">Please login to continue to your account.</p>
 
-          <form id="loginForm" method="POST">
-                @csrf
                 <div class = "pt-3">
                 <div class="custom-form-group">
 
-                    <label for="email" class="custom-label">Email</label>
+                    <label for="emailaddress" class="custom-label">Email</label>
 
-                    <input type="email" class="form-control-custom" id="email" name="email" placeholder="majorsignature@gmail.com" aria-label="Email Address" autocomplete="email" required>
+                    <input type="email" class="form-control-custom" id="emailaddress" placeholder="majorsignature@gmail.com">
                 </div>
 
 
                 <div class="custom-form-group mb-2">
 
-                    <label for="password" class="custom-label">Password</label>
+                    <label for="psw" class="custom-label">Password</label>
 
-                    <div class="password-input-wrapper">
-                      <input type="password" class="form-control-custom" id="password" name="password" placeholder="*******" aria-label="Password" autocomplete="current-password" required>
-                      <button class="password-toggle-btn" type="button" id="togglePassword" title="Toggle password visibility">
-                        <i class="fa fa-eye"></i>
-                      </button>
-                    </div>
+                    <input type="password" class="form-control-custom" id="psw" placeholder="*******">
                 </div>
                 </div>
+
+
+               {{-- <div class = "d-flex justify-content-between">
+
+                <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Keep me logged in
+                 </label>
+                </div>
+
+               <div class = "mb-5">
+                <a class = "text-decoration-none text-dark" href = "#" style = "color:#232323;">Forgot Password?</a>
+               </div>
+
+
+               </div> --}}
 
                <div class="auth-checkbox-row">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="rememberMe" name="rememberMe">
-                        <label class="form-check-label" for="rememberMe">
-                            Keep me logged in
-                        </label>
-                    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="flexCheckDefault">
+        <label class="form-check-label" for="flexCheckDefault">
+            Keep me logged in
+        </label>
+    </div>
 
-                    <div>
-                        <a href="/forgot-password">Forgot Password?</a>
-                    </div>
-                </div>
+    <div>
+        <a href="#">Forgot Password?</a>
+    </div>
+</div>
 
-                <button type="submit" class="btn primaryButton" id="loginBtn">Sign in</button>
 
-                <p class="mt-3 text-center">
-                  Don't have an account? <a href="/register" style="color: #FDAF22; text-decoration: none;">Sign up</a>
-                </p>
-          </form>
+                <button type="submit" class="btn primaryButton">Sign in</button>
+
+
+
+          {{-- <p class="mt-5 text-center small text-muted">© Copyright Kokokah 2025, All Right Reserved</p> --}}
         </div>
       </div>
 
@@ -94,70 +103,5 @@
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Axios -->
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-  <script type="module">
-    import AuthApiClient from '{{ asset('js/api/authClient.js') }}';
-    import UIHelpers from '{{ asset('js/utils/uiHelpers.js') }}';
-
-    // Store original button text
-    UIHelpers.storeButtonText('loginBtn');
-
-    // Password visibility toggle
-    document.getElementById('togglePassword').addEventListener('click', () => {
-      const input = document.getElementById('password');
-      const icon = document.querySelector('#togglePassword i');
-
-      if (input.type === 'password') {
-        input.type = 'text';
-        icon.classList.remove('fa-eye');
-        icon.classList.add('fa-eye-slash');
-      } else {
-        input.type = 'password';
-        icon.classList.remove('fa-eye-slash');
-        icon.classList.add('fa-eye');
-      }
-    });
-
-    // Handle login form submission
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-      const rememberMe = document.getElementById('rememberMe').checked;
-
-      // Validate inputs
-      if (!email || !password) {
-        UIHelpers.showError('Please fill in all fields');
-        return;
-      }
-
-      if (!UIHelpers.isValidEmail(email)) {
-        UIHelpers.showError('Please enter a valid email address');
-        return;
-      }
-
-      // Show loading state
-      UIHelpers.setButtonLoading('loginBtn', true);
-      UIHelpers.showLoadingOverlay(true);
-
-      // Call login API
-      const result = await AuthApiClient.login(email, password);
-
-      UIHelpers.showLoadingOverlay(false);
-
-      if (result.success) {
-        UIHelpers.showSuccess('Login successful! Redirecting...');
-        // Redirect to dashboard after 1.5 seconds
-        UIHelpers.redirect('/dashboard', 1500);
-      } else {
-        UIHelpers.showError(result.message || 'Login failed');
-        UIHelpers.setButtonLoading('loginBtn', false);
-      }
-    });
-  </script>
 </body>
 </html>
