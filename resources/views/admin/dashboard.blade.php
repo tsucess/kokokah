@@ -4,20 +4,22 @@
   <!-- Main -->
   <main>
     <div class="container">
+     <div class = "row">
+      <div class="d-flex justify-content-between">
 
-      <!-- Welcome row: left = welcome text, right = action buttons -->
-      <div class="welcome-row mb-3">
-        <div class="welcome-text d-none d-lg-block">
-          {{-- <div class="small text-muted">Welcome back,</div> --}}
-          <h4>Welcome back, Samuel (Admin)</h4>
-          <p>Here overview of your dashboard</p>
+        <div>
+          <h4 class ="fw-bold">Welcome back, Samuel (Admin)</h4>
+          <p class = "text-muted">Here overview of your </p>
         </div>
 
-        <div class="action-buttons ms-auto">
-          <button class="btn secondaryButton"><i class="fa-solid fa-plus me-2"></i> Add New Course</button>
-          <button class="btn primaryButton"><i class="fa-solid fa-user-plus me-2"></i> Create New User</button>
+
+         <div class = "d-flex ms-auto">
+          <button class="btn btn-nav-secondary me-3"><i class="fa-solid fa-plus me-2"></i> Add New Course</button>
+          <button class="btn btn-nav-primary"><i class="fa-solid fa-plus me-2"></i> Create New User</button>
         </div>
+
       </div>
+    </div>
 
       <!-- Stats -->
       <div class="stats-row">
@@ -82,7 +84,9 @@
         </div>
       </div>
 
+
       <!-- Chart -->
+      <div class = "row">
       <div class="chart-card">
         <div class="chart-header">
           <div class = "information1">
@@ -102,16 +106,20 @@
         <div style="height:320px;">
           <canvas id="ieChart"></canvas>
         </div>
+
       </div>
+
+    </div>
 
       <!-- Recently Registered Users table (restored) -->
       <div class="table-card">
         <div class="d-flex justify-content-between align-items-center mb-2">
           <div>
-            <div style="font-weight:700;">Recently Registered Users</div>
-            <div class="small text-muted">Latest signups</div>
+            {{-- <div style="font-weight:700;">Recently Registered Users</div> --}}
+            <h6 class = "registeredusers">Recently Registered Users</h6>
+            <p class="small text-muted registeredusers" style="line-height: 1px;">Your awesome text goes here.</p>
           </div>
-          <a href="#" class="small fw-semibold">View all users</a>
+          <a href="#" class="small text-dark fw-semibold text-decoration-none">View all users</a>
         </div>
 
         <div class="table-responsive">
@@ -158,8 +166,8 @@
       </div>
 
 
-    </div>
 
+    </div>
 
   <!-- Chart.js (keep after body) -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>

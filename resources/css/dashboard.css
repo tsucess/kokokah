@@ -45,8 +45,33 @@ h4
 {
 font-family:  Fredoka, serif;
 font-weight: 400;
-font-size:32px;
+font-size:22px;
+color:#004A53;
 }
+
+p {
+  font-family: sitka;
+  font-size: 15px;
+  color: #4D525F;
+}
+
+
+h6.registeredusers
+{
+    font-family: quicksand;
+    font-weight: 700;
+    font-size:18px;
+    color:#000;
+}
+
+.registeredusers
+{
+    font-family: quicksand;
+    font-weight: 700;
+    font-size:14px;
+    color:#000;
+}
+
 
 .subjects
 {
@@ -215,9 +240,13 @@ font-size:32px;
     /* Main content */
     main .container{ padding-top:18px; padding-bottom:36px; }
 
-    .welcome-row{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+    .welcome-row
+    {
+        display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+    }
+
     .welcome-text h4{ margin:0; font-weight:800; font-size:18px; }
-    .action-buttons{ display:flex; gap:10px; align-items:center; }
+    /* .action-buttons{ display:flex; gap:10px; align-items:center; } */
 
     /* Stat cards */
     .stats-row{ margin-top:10px; display:grid; grid-template-columns: repeat(4,1fr); gap:18px; }
@@ -1081,3 +1110,47 @@ color:#fff;
     .header-image {
       max-width: 350px;
     }
+
+    /* Primary Navigation Button (Explore Kokokah) */
+.btn-nav-primary {
+  background-color: #FDAF22;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  white-space: nowrap;
+  width: 200px;
+  padding: 12px 20px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.btn-nav-primary:hover {
+  background-color: #f5a500;
+  color: #000000;
+}
+
+
+/* Secondary Navigation Button (Get a Demo) */
+.btn-nav-secondary {
+  background-color: #FFFFFF;
+  color: #004A53;
+  border: 2px solid #004A53;
+  border-radius: 8px;
+  font-size: 14px;
+  white-space: nowrap;
+  width: 10rem;
+  padding: 12px 20px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.btn-nav-secondary:hover {
+  background-color: #004A53;
+  color: #FFFFFF;
+}
