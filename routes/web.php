@@ -145,25 +145,25 @@ Route::get('/users', function () {
     return view('admin.users');
 });
 
-Route::get('/aduser', function () {
-    return view('admin.aduser');
+Route::get('/adduser', function () {
+    return view('admin.adduser');
 });
 
-Route::get('/activity', function () {
-    return view('users.useractivity');
+Route::get('/useractivity', function () {
+    return view('admin.useractivity');
 });
 
-Route::get('/allcourses', function () {
-    return view('admin.allcourses');
+Route::get('/subjects', function () {
+    return view('admin.allsubjects');
 });
 
 
-Route::get('/coursemedia', function () {
-    return view('admin.coursemedia');
+Route::get('/subjectmedia', function () {
+    return view('admin.subjectmedia');
 });
 
-Route::get('/createcourse', function () {
-    return view('admin.createcourse');
+Route::get('/createsubject', function () {
+    return view('admin.createsubject');
 });
 
 Route::get('/userkoodies', function () {

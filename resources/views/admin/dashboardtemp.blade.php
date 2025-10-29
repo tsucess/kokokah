@@ -7,6 +7,11 @@
 
   <link rel="icon" type="image/x-icon" href="images/Kokokah_Logo.png" />
 
+  <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -17,8 +22,9 @@
   <!-- Inter font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  
+
   @vite(['resources/css/dashboard.css'])
 </head>
 <body>
@@ -36,17 +42,17 @@
       <a class="nav-item-link" href="/dashboard"><i class="fa-solid fa-gauge pe-2"></i> Dashboard</a>
 
       <!-- Users Management (collapsible) -->
-<a class="nav-item-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse"  role="button"
-   aria-expanded="false" aria-controls="coursesMenu">
+
+<a class="nav-item-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse"  href="#usersMenu" aria-expanded="false" aria-controls="coursesMenu">
     <span><i class="fa-solid fa-users pe-3"></i> Users Management</span>
     <i class="fa-solid fa-chevron-down small"></i>
   </a>
 
   <!-- Dropdown items -->
-  <div class="collapse ps-4" id="coursesMenu">
-    <a class="nav-item-link d-block" href="#">All Users</a>
+  <div class="collapse ps-4" id="usersMenu">
+    <a class="nav-item-link d-block" href="/adduser">All Users</a>
     <a class="nav-item-link d-block" href="#">Add Users</a>
-    <a class="nav-item-link d-block" href="#">Users Activity Log</a>
+    <a class="nav-item-link d-block" href="/useractivity">Users Activity Log</a>
   </div>
 
 
@@ -54,44 +60,42 @@
   <a class="nav-item-link d-flex justify-content-between align-items-center"
      data-bs-toggle="collapse" href="#coursesMenu" role="button"
      aria-expanded="false" aria-controls="coursesMenu">
-    <span><i class="fa-solid fa-book-open me-2 pe-2"></i> Courses Management</span>
+    <span><i class="fa-solid fa-book-open me-2 pe-2"></i> Subject Management</span>
     <i class="fa-solid fa-chevron-down small"></i>
   </a>
 
   <!-- Dropdown items -->
   <div class="collapse ps-4" id="coursesMenu">
-    <a class="nav-item-link d-block" href="#">All Courses</a>
-    <a class="nav-item-link d-block" href="#">Create New Course</a>
-    <a class="nav-item-link d-block" href="#">Course Categories</a>
-    <a class="nav-item-link d-block" href="#">Course Reviews & Rating</a>
-    <a class="nav-item-link d-block" href="#">Course Approval</a>
+    <a class="nav-item-link d-block" href="/subjects">All Subject</a>
+    <a class="nav-item-link d-block" href="#">Create New Subject</a>
+    <a class="nav-item-link d-block" href="#">Subject Categories</a>
+    <a class="nav-item-link d-block" href="#">Subject Reviews & Rating</a>
+    <a class="nav-item-link d-block" href="#">Subject Approval</a>
   </div>
 
     <a class="nav-item-link d-flex justify-content-between align-items-center"
      data-bs-toggle="collapse" role="button"
      aria-expanded="false" aria-controls="coursesMenu">
     <span><i class="fa-solid fa-chalkboard-user pe-3"></i> Instructors</span>
-    <i class="fa-solid fa-chevron-down small"></i>
   </a>
 
   <a class="nav-item-link d-flex justify-content-between align-items-center"
      data-bs-toggle="collapse"  role="button"
      aria-expanded="false" aria-controls="coursesMenu">
     <span><i class="fa-solid fa-user-graduate pe-4"></i> Students</span>
-    <i class="fa-solid fa-chevron-down small"></i>
   </a>
 
-    <a class="nav-item-link d-flex justify-content-between align-items-center"
+    {{-- <a class="nav-item-link d-flex justify-content-between align-items-center"
      data-bs-toggle="collapse" role="button"
      aria-expanded="false" aria-controls="coursesMenu">
     <span><i class="fa-solid fa-book pe-4"></i> Content Management</span>
     <i class="fa-solid fa-chevron-down small"></i>
-  </a>
+  </a> --}}
 
   <a class="nav-item-link d-flex justify-content-between align-items-center"
      data-bs-toggle="collapse" role="button"
      aria-expanded="false" aria-controls="coursesMenu">
-    <span><i class="fa-solid fa-credit-card pe-4"></i> Financial / Payments</span>
+    <span><i class="fa-solid fa-credit-card pe-4"></i>Payments</span>
     <i class="fa-solid fa-chevron-down small"></i>
   </a>
 
@@ -109,7 +113,7 @@
     <i class="fa-solid fa-chevron-down small"></i>
   </a>
 
-      <a class="nav-item-link" href="#"><i class="fa-solid fa-child-reaching pe-4"></i> Koodies</a>
+      {{-- <a class="nav-item-link" href="#"><i class="fa-solid fa-child-reaching pe-4"></i> Koodies</a> --}}
     </nav>
 
 
@@ -117,12 +121,21 @@
     <div class="sidebar-footer">
       <a class="nav-item-link" href="#"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
       <div class="profile mt-3">
-        <img class="avatar" src="https://dummyimage.com/72x72/0ea5e9/ffffff.png&text=U" alt="user">
-        <div>
-          <div class="fw-bold">Culacino_</div>
-          <div class="text-muted small">UI Designer</div>
+        <img class="avatar" src="images/winner-round.png" alt="user">
+
+          <div class="d-flex justify-content-between mt-4 p-2 w-100 align-items-center">
+
+            <div>
+            <h6 class = "fw-semibold">Culacino_</h6>
+            <p class = "small text-muted">UX Designer</p>
+            </div>
+
+            <div>
+            <i class="fa-solid fa-arrow-right-from-bracket"></i></span><br>
+            </div>
+
         </div>
-      </div>
+    </div>
     </div>
   </aside>
 
