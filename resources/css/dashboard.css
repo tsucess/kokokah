@@ -1118,8 +1118,9 @@ color:#fff;
   border-radius: 8px;
   font-size: 14px;
   white-space: nowrap;
-  width: 200px;
+  /* width: 200px; */
   padding: 12px 20px;
+  height: 3.5rem;
   flex: 1;
   display: flex;
   align-items: center;
@@ -1141,8 +1142,9 @@ color:#fff;
   border-radius: 8px;
   font-size: 14px;
   white-space: nowrap;
-  width: 10rem;
+  /* width: 10rem; */
   padding: 12px 20px;
+  height: 3.5rem;
   flex: 1;
   display: flex;
   align-items: center;

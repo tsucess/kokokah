@@ -50,7 +50,7 @@
 
   <!-- Dropdown items -->
   <div class="collapse ps-4" id="usersMenu">
-    <a class="nav-item-link d-block" href="/adduser">All Users</a>
+    <a class="nav-item-link d-block" href="/users">All Users</a>
     <a class="nav-item-link d-block" href="#">Add Users</a>
     <a class="nav-item-link d-block" href="/useractivity">Users Activity Log</a>
   </div>
