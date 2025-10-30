@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -177,6 +178,42 @@ class AdminController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to fetch users: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Get recently registered users (max 10)
+     */
+    public function recentlyRegisteredUsers(Request $request)
+    {
+        try {
+            $perPage = $request->get('per_page', 10);
+
+            $users = User::orderBy('created_at', 'desc')
+                        ->paginate($perPage);
+
+            // Transform user data to include profile photo URL
+            $users->getCollection()->transform(function ($user) {
+                $userData = $user->toArray();
+                // Add profile photo URL
+                if ($user->profile_photo) {
+                    $userData['profile_photo_url'] = asset('storage/' . $user->profile_photo);
+                } else {
+                    $userData['profile_photo_url'] = asset('images/default-avatar.png');
+                }
+                $userData['formatted_date'] = $user->created_at->format('M d, Y');
+                return $userData;
+            });
+
+            return response()->json([
+                'success' => true,
+                'data' => $users
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch recently registered users: ' . $e->getMessage()
             ], 500);
         }
     }
@@ -1181,5 +1218,260 @@ class AdminController extends Controller
         }
 
         return round($bytes, $precision) . ' ' . $units[$i];
+    }
+
+    /**
+     * Create a new user (admin endpoint)
+     */
+    public function createUser(Request $request)
+    {
+        try {
+            // Validate required fields
+            $validator = Validator::make($request->all(), [
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|string|min:8',
+                'role' => 'required|in:student,instructor,admin',
+                'gender' => 'nullable|in:male,female',
+                'date_of_birth' => 'nullable|date',
+                'phone_number' => 'nullable|string|max:20',
+                'home_address' => 'nullable|string|max:255',
+                'state' => 'nullable|string|max:100',
+                'zipcode' => 'nullable|string|max:20',
+                'parent_first_name' => 'nullable|string|max:255',
+                'parent_last_name' => 'nullable|string|max:255',
+                'parent_email' => 'nullable|email',
+                'parent_phone' => 'nullable|string|max:20',
+                'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validation failed',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            // Handle profile photo upload
+            $profilePhotoPath = null;
+            if ($request->hasFile('profile_photo')) {
+                $file = $request->file('profile_photo');
+                $profilePhotoPath = $file->store('profile_photos', 'public');
+            }
+
+            // Create the user with all fields
+            $user = User::create([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => $request->role,
+                'gender' => $request->gender ?? 'male',
+                'date_of_birth' => $request->date_of_birth,
+                'contact' => $request->phone_number,
+                'address' => $request->home_address,
+                'state' => $request->state,
+                'zipcode' => $request->zipcode,
+                'parent_first_name' => $request->parent_first_name,
+                'parent_last_name' => $request->parent_last_name,
+                'parent_email' => $request->parent_email,
+                'parent_phone' => $request->parent_phone,
+                'profile_photo' => $profilePhotoPath,
+                'is_active' => true
+            ]);
+
+            // Send email verification notification
+            $user->sendEmailVerificationNotification();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'User created successfully',
+                'user' => $user
+            ], 201);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error creating user: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Get a single user by ID
+     */
+    public function getUser($userId)
+    {
+        try {
+            $user = User::findOrFail($userId);
+
+            return response()->json([
+                'success' => true,
+                'data' => $user
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found: ' . $e->getMessage()
+            ], 404);
+        }
+    }
+
+    /**
+     * Update a user (admin endpoint)
+     */
+    public function updateUser(Request $request, $userId)
+    {
+        try {
+            $user = User::findOrFail($userId);
+
+            // Validate fields
+            $validator = Validator::make($request->all(), [
+                'first_name' => 'sometimes|required|string|max:255',
+                'last_name' => 'sometimes|required|string|max:255',
+                'email' => 'sometimes|required|email|unique:users,email,' . $userId,
+                'password' => 'sometimes|string|min:8',
+                'role' => 'sometimes|required|in:student,instructor,admin',
+                'gender' => 'nullable|in:male,female',
+                'date_of_birth' => 'nullable|date',
+                'phone_number' => 'nullable|string|max:20',
+                'home_address' => 'nullable|string|max:255',
+                'state' => 'nullable|string|max:100',
+                'zipcode' => 'nullable|string|max:20',
+                'parent_first_name' => 'nullable|string|max:255',
+                'parent_last_name' => 'nullable|string|max:255',
+                'parent_email' => 'nullable|email',
+                'parent_phone' => 'nullable|string|max:20',
+                'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validation failed',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            // Use database transaction to ensure atomicity
+            \DB::beginTransaction();
+
+            try {
+                // Prepare update data
+                $updateData = [];
+
+                if ($request->has('first_name')) $updateData['first_name'] = $request->first_name;
+                if ($request->has('last_name')) $updateData['last_name'] = $request->last_name;
+                if ($request->has('email')) $updateData['email'] = $request->email;
+                if ($request->has('password')) $updateData['password'] = Hash::make($request->password);
+                if ($request->has('role')) $updateData['role'] = $request->role;
+                if ($request->has('gender')) $updateData['gender'] = $request->gender;
+                if ($request->has('date_of_birth')) $updateData['date_of_birth'] = $request->date_of_birth;
+                if ($request->has('phone_number')) $updateData['contact'] = $request->phone_number;
+                if ($request->has('home_address')) $updateData['address'] = $request->home_address;
+                if ($request->has('state')) $updateData['state'] = $request->state;
+                if ($request->has('zipcode')) $updateData['zipcode'] = $request->zipcode;
+                if ($request->has('parent_first_name')) $updateData['parent_first_name'] = $request->parent_first_name;
+                if ($request->has('parent_last_name')) $updateData['parent_last_name'] = $request->parent_last_name;
+                if ($request->has('parent_email')) $updateData['parent_email'] = $request->parent_email;
+                if ($request->has('parent_phone')) $updateData['parent_phone'] = $request->parent_phone;
+
+                // Handle profile photo upload
+                if ($request->hasFile('profile_photo')) {
+                    // Delete old profile photo if exists
+                    if ($user->profile_photo) {
+                        \Storage::disk('public')->delete($user->profile_photo);
+                    }
+                    $profilePhotoPath = $request->file('profile_photo')->store('profile_photos', 'public');
+                    $updateData['profile_photo'] = $profilePhotoPath;
+                }
+
+                // Update the user
+                $user->update($updateData);
+
+                // Commit the transaction
+                \DB::commit();
+
+                // Refresh the user from database to ensure we have latest data
+                $user->refresh();
+
+                // Log the update for debugging
+                \Log::info('User updated successfully', [
+                    'user_id' => $user->id,
+                    'updated_fields' => array_keys($updateData),
+                    'user_data' => $user->toArray()
+                ]);
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'User updated successfully',
+                    'data' => $user
+                ]);
+
+            } catch (\Exception $e) {
+                \DB::rollBack();
+                throw $e;
+            }
+
+        } catch (\Exception $e) {
+            \Log::error('Error updating user', [
+                'user_id' => $userId,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Error updating user: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Delete a user (admin endpoint)
+     */
+    public function deleteUser($userId)
+    {
+        try {
+            $user = User::findOrFail($userId);
+
+            // Prevent deleting the last admin
+            if ($user->role === 'admin') {
+                $adminCount = User::where('role', 'admin')->count();
+                if ($adminCount <= 1) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Cannot delete the last admin user'
+                    ], 400);
+                }
+            }
+
+            // Delete profile photo if exists
+            if ($user->profile_photo) {
+                \Storage::disk('public')->delete($user->profile_photo);
+            }
+
+            // Delete the user
+            $user->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'User deleted successfully',
+                'data' => [
+                    'id' => $user->id,
+                    'first_name' => $user->first_name,
+                    'last_name' => $user->last_name,
+                    'email' => $user->email
+                ]
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error deleting user: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }

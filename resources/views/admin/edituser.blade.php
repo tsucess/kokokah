@@ -6,16 +6,14 @@
             <!-- Header Section -->
             <div class="d-flex justify-content-between align-items-start mb-2">
                 <div>
-                    <h1 class="fw-bold mb-2" style="font-size: 2.5rem; color: #004A53; font-family: 'Fredoka One', sans-serif;">Add New User</h1>
+                    <h1 class="fw-bold mb-2" style="font-size: 2.5rem; color: #004A53; font-family: 'Fredoka One', sans-serif;">Edit User</h1>
                     <p class="text-muted" style="font-size: 0.95rem;">Here overview of your</p>
                 </div>
                 <div class="d-flex gap-3">
                     <button type="button" class="btn btn-light px-4 py-2" id="cancelBtn"
                         style="border: 1px solid #ddd; color: #333; font-weight: 500;">cancel</button>
-                    <button type="button" class="btn btn-light px-4 py-2" id="resetBtn"
-                        style="border: 1px solid #ddd; color: #333; font-weight: 500;">reset</button>
                     <button type="button" class="btn px-4 py-2 fw-semibold" id="saveBtn"
-                        style="background-color: #FDAF22; border: none; color: white;">save</button>
+                        style="background-color: #FDAF22; border: none; color: white;">Update</button>
                 </div>
             </div>
 
@@ -247,7 +245,7 @@
                                     <div class="form-group">
                                         <label class="form-label form-label-custom">Enter Email Address</label>
                                         <input type="email" class="form-control form-input-custom" id="email"
-                                            name="email" placeholder="@gmail.com" readonly>
+                                            name="email" placeholder="@gmail.com" required>
                                         <small class="text-danger d-none" id="emailError"></small>
                                     </div>
                                 </div>
@@ -258,7 +256,7 @@
                                         <label class="form-label form-label-custom">Enter Password</label>
                                         <div class="password-input-wrapper position-relative">
                                             <input type="password" class="form-control form-input-custom" id="password"
-                                                name="password" placeholder="••••••••" required >
+                                                name="password" placeholder="••••••••" required>
                                             <button type="button"
                                                 class="btn btn-link position-absolute end-0 top-50 translate-middle-y"
                                                 id="togglePassword" style="border: none; padding: 0.5rem 1rem;">
@@ -274,7 +272,6 @@
                                     <div class="form-group">
                                         <label class="form-label form-label-custom">Select Role</label>
                                         <select class="form-select form-input-custom" id="role" name="role" required>
-                                            <option value="">Select Role</option>
                                             <option value="student">Student</option>
                                             <option value="instructor">Instructor</option>
                                             <option value="admin">Admin</option>
@@ -451,6 +448,71 @@
         const cancelBtn = document.getElementById('cancelBtn');
         const resetBtn = document.getElementById('resetBtn');
 
+        // Get user ID from URL query parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('id');
+        const isEditMode = !!userId;
+
+        // Load user data if in edit mode
+        if (isEditMode) {
+            loadUserData(userId);
+        }
+
+        async function loadUserData(userId) {
+            try {
+                const token = localStorage.getItem('auth_token');
+                const response = await fetch(`/api/admin/users/${userId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    showAlert('Failed to load user data', 'error');
+                    return;
+                }
+
+                const data = await response.json();
+                const user = data.data;
+
+                // Populate form fields
+                document.getElementById('firstName').value = user.first_name || '';
+                document.getElementById('lastName').value = user.last_name || '';
+                document.getElementById('email').value = user.email || '';
+                document.getElementById('phoneNumber').value = user.contact || '';
+                document.getElementById('homeAddress').value = user.address || '';
+                document.getElementById('state').value = user.state || '';
+                document.getElementById('zipcode').value = user.zipcode || '';
+                document.getElementById('dateOfBirth').value = user.date_of_birth || '';
+                document.getElementById('parentFirstName').value = user.parent_first_name || '';
+                document.getElementById('parentLastName').value = user.parent_last_name || '';
+                document.getElementById('parentEmail').value = user.parent_email || '';
+                document.getElementById('parentPhone').value = user.parent_phone || '';
+                document.getElementById('role').value = user.role || 'student';
+
+                // Set gender
+                if (user.gender) {
+                    document.querySelector(`input[name="gender"][value="${user.gender}"]`).checked = true;
+                }
+
+                // Load profile photo
+                if (user.profile_photo) {
+                    profilePreview.src = `/storage/${user.profile_photo}`;
+                }
+
+                // Update page title
+                document.querySelector('h1').textContent = `Edit User - ${user.first_name} ${user.last_name}`;
+                document.querySelector('.btn-light').textContent = 'Back';
+                saveBtn.textContent = 'Update';
+
+            } catch (error) {
+                console.error('Error loading user data:', error);
+                showAlert('Error loading user data', 'error');
+            }
+        }
+
         if (saveBtn) {
             saveBtn.addEventListener('click', async (e) => {
                 e.preventDefault();
@@ -459,7 +521,6 @@
                 const firstName = document.getElementById('firstName').value.trim();
                 const lastName = document.getElementById('lastName').value.trim();
                 const email = document.getElementById('email').value.trim();
-                const password = document.getElementById('password').value.trim();
                 const role = document.getElementById('role').value;
 
                 if (!firstName) {
@@ -474,23 +535,39 @@
                     showAlert('Email is required', 'error');
                     return;
                 }
-                if (!password) {
-                    showAlert('Password is required', 'error');
-                    return;
-                }
                 if (!role) {
                     showAlert('Role is required', 'error');
                     return;
                 }
 
+                // In edit mode, password is optional
+                if (!isEditMode) {
+                    const password = document.getElementById('password').value.trim();
+                    if (!password) {
+                        showAlert('Password is required', 'error');
+                        return;
+                    }
+                }
+
                 // Create FormData for file upload
                 const formData = new FormData();
+
+                // For PUT requests with FormData, we need to add _method field
+                if (isEditMode) {
+                    formData.append('_method', 'PUT');
+                }
+
                 formData.append('first_name', firstName);
                 formData.append('last_name', lastName);
                 formData.append('email', email);
-                formData.append('password', password);
                 formData.append('role', role);
                 formData.append('gender', document.querySelector('input[name="gender"]:checked')?.value || 'male');
+
+                // Add password only if provided (required for create, optional for edit)
+                const password = document.getElementById('password').value.trim();
+                if (password) {
+                    formData.append('password', password);
+                }
 
                 // Only append optional fields if they have values
                 const dateOfBirth = document.getElementById('dateOfBirth').value;
@@ -525,6 +602,14 @@
                     formData.append('profile_photo', profilePhoto.files[0]);
                 }
 
+                // Debug: Log form data
+                console.log('Sending update request to:', isEditMode ? `/api/admin/users/${userId}` : '/api/admin/users');
+                console.log('Method:', isEditMode ? 'PUT' : 'POST');
+                console.log('Form data entries:');
+                for (let [key, value] of formData.entries()) {
+                    console.log(`  ${key}:`, value);
+                }
+
                 try {
                     saveBtn.disabled = true;
                     saveBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Saving...';
@@ -542,23 +627,37 @@
                         headers['Authorization'] = `Bearer ${token}`;
                     }
 
-                    const response = await fetch('/api/admin/users', {
-                        method: 'POST',
+                    // Use PUT for edit, POST for create
+                    const method = isEditMode ? 'PUT' : 'POST';
+                    const endpoint = isEditMode ? `/api/admin/users/${userId}` : '/api/admin/users';
+
+                    const response = await fetch(endpoint, {
+                        method: method,
                         headers: headers,
-                        body: formData
+                        body: formData,
+                        cache: 'no-store'  // Prevent caching
                     });
 
                     const data = await response.json();
 
+                    console.log('Response status:', response.status);
+                    console.log('Response data:', data);
+                    console.log('Updated user from API:', data.data);
+
                     if (response.ok) {
-                        showAlert('User created successfully!', 'success');
+                        const message = isEditMode ? 'User updated successfully!' : 'User created successfully!';
+                        console.log('Success! Updated user data:', data.data);
+                        showAlert(message, 'success');
+
+                        // Add a small delay to ensure database is fully committed
                         setTimeout(() => {
-                            window.location.href = '/users';
+                            // Force reload to get fresh data from server
+                            window.location.href = '/users?t=' + Date.now();
                         }, 1500);
                     } else {
                         // Log validation errors for debugging
-                        console.log('Response status:', response.status);
-                        console.log('Response data:', data);
+                        console.error('Request failed with status:', response.status);
+                        console.error('Response data:', data);
 
                         if (data.errors) {
                             // Show validation errors
@@ -569,15 +668,16 @@
                             console.error(errorMessage);
                             showAlert(errorMessage, 'error');
                         } else {
-                            showAlert(data.message || 'Failed to create user', 'error');
+                            showAlert(data.message || 'Failed to save user', 'error');
                         }
                     }
                 } catch (error) {
                     console.error('Error:', error);
-                    showAlert('An error occurred while creating the user', 'error');
+                    const errorMsg = isEditMode ? 'An error occurred while updating the user' : 'An error occurred while creating the user';
+                    showAlert(errorMsg, 'error');
                 } finally {
                     saveBtn.disabled = false;
-                    saveBtn.innerHTML = 'save';
+                    saveBtn.innerHTML = isEditMode ? 'Update' : 'save';
                 }
             });
         }

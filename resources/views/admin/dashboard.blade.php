@@ -22,9 +22,10 @@
     </div>
 
       <!-- Stats -->
-      <div class="stats-row">
+      <div class="stats-row" id="statsContainer">
         <div class="stat-card">
             <img src = "images/abc.png" class = "img-fluid" />
+<<<<<<< HEAD
           {{-- <div class="stat-orb orb-users"><i class="fa-solid fa-users"></i></div> --}}
           <div class="stat-meta">
             <div class="label mt-2">Total Users</div>
@@ -32,54 +33,77 @@
             <p>
              <i class="fa-solid fa-square text-success"></i> science (50%)
              <i class="fa-solid fa-square text-warning"></i> Arts (50%)
+=======
+          <div class="stat-meta ">
+            <div class="label mt-2">Total Users</div>
+            <div class = "mt-2">
+            <p style = "font-size: 7px;">
+             <i class="fa-solid fa-square text-success"></i> Students <span id="studentPercent">0%</span>
+             <i class="fa-solid fa-square text-warning"></i> Instructors <span id="instructorPercent">0%</span>
+>>>>>>> main
             </p>
             </div>
-            <div class="value">50</div>
+            <div class="value" id="totalUsers">0</div>
           </div>
         </div>
 
         <div class="stat-card">
             <img src = "images/students.png" class = "img-fluid" />
-        {{-- <div class="stat-orb orb-students"><i class="fa-solid fa-user-graduate"></i></div> --}}
-                <div class="stat-meta">
+        <div class="stat-meta">
             <div class="label mt-2">Students</div>
             <div class = "mt-2">
+<<<<<<< HEAD
             <p>
              <i class="fa-solid fa-square text-success"></i> MALE (61%)
              <i class="fa-solid fa-square text-warning"></i> FEMALE (39%)
+=======
+            <p style = "font-size: 7px;">
+             <i class="fa-solid fa-square text-success"></i> Active
+             <i class="fa-solid fa-square text-warning"></i> Inactive
+>>>>>>> main
             </p>
             </div>
-            <div class="value">308</div>
+            <div class="value" id="totalStudents">0</div>
           </div>
         </div>
 
         <div class="stat-card">
-            {{-- <div class="stat-orb orb-instructors"><i class="fa-solid fa-chalkboard-user"></i></div> --}}
             <img src = "images/instructor.png" class = "img-fluid" />
             <div class="stat-meta">
             <div class="label">Instructors</div>
             <div class = "mt-2">
+<<<<<<< HEAD
             <p>
              <i class="fa-solid fa-square text-success"></i> MALE (55%)
              <i class="fa-solid fa-square text-warning"></i> FEMALE (45%)
+=======
+            <p style = "font-size: 7px;">
+             <i class="fa-solid fa-square text-success"></i> Active
+             <i class="fa-solid fa-square text-warning"></i> Inactive
+>>>>>>> main
             </p>
             </div>
-            <div class="value">100</div>
+            <div class="value" id="totalInstructors">0</div>
           </div>
         </div>
 
         <div class="stat-card">
         <img src = "images/abc.png" class = "img-fluid" />
-        {{-- <div class="stat-orb orb-courses"><i class="fa-solid fa-book-open"></i></div> --}}
           <div class="stat-meta">
             <div class="label">Active Courses</div>
             <div class = "mt-2">
+<<<<<<< HEAD
             <p>
              <i class="fa-solid fa-square text-success"></i> science (50%)
              <i class="fa-solid fa-square text-warning"></i> Arts (50%)
+=======
+            <p style = "font-size: 7px;">
+             <i class="fa-solid fa-square text-success"></i> Published
+             <i class="fa-solid fa-square text-warning"></i> Draft
+>>>>>>> main
             </p>
             </div>
-            <div class="value">50</div>
+            <div class="value" id="totalCourses">0</div>
           </div>
         </div>
       </div>
@@ -115,11 +139,10 @@
       <div class="table-card">
         <div class="d-flex justify-content-between align-items-center mb-2">
           <div>
-            {{-- <div style="font-weight:700;">Recently Registered Users</div> --}}
             <h6 class = "registeredusers">Recently Registered Users</h6>
-            <p class="small text-muted registeredusers" style="line-height: 1px;">Your awesome text goes here.</p>
+            <p class="small text-muted registeredusers" style="line-height: 1px;">Latest 10 registered users</p>
           </div>
-          <a href="#" class="small text-dark fw-semibold text-decoration-none">View all users</a>
+          <a href="/users" class="small text-dark fw-semibold text-decoration-none">View all users</a>
         </div>
 
         <div class="table-responsive">
@@ -131,37 +154,30 @@
                 <th>Role</th>
                 <th>Gender</th>
                 <th>Email</th>
-                <th>Status</th>
+                <th>Registered</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="recentUsersTableBody">
               <tr>
-                <td>Winner Effiong Duff</td>
-                <td>KOKOKAH-0001</td>
-                <td>Teacher</td>
-                <td>Male</td>
-                <td>majorsignature@gmail.com</td>
-                <td><span class="badge text-success" style = "background: #DCFCE7;"><i class="fa fa-circle  p-1 text-success" style = "font-size:10px;"></i>Active</span></td>
-                {{-- <td><button class="btn border rounded-5 p-2  text-success" type = "button" style = "background: #DCFCE7;"><i class="fa fa-circle ps-2 pe-2 text-success" style = "font-size:10px;"></i>Active</span></td> --}}
-              </tr>
-              <tr>
-                <td>Jane Doe</td>
-                <td>KOKOKAH-0002</td>
-                <td>Student</td>
-                <td>Female</td>
-                <td>jane@example.com</td>
-                <td><span class="badge bg-warning text-dark"><i class="fa fa-circle  p-1 text-white" style = "font-size:10px;"></i>Pending</span></td>
-              </tr>
-              <tr>
-                <td>John Smith</td>
-                <td>KOKOKAH-0003</td>
-                <td>Student</td>
-                <td>Male</td>
-                <td>john@example.com</td>
-                <td><span class="badge bg-danger text-white"><i class="fa fa-circle  p-1 text-white" style = "font-size:10px;"></i>Inactive</span></td>
+                <td colspan="6" class="text-center text-muted py-4">
+                  <i class="fa-solid fa-spinner fa-spin me-2"></i>Loading users...
+                </td>
               </tr>
             </tbody>
           </table>
+        </div>
+
+        <!-- Pagination for Recently Registered Users -->
+        <div class="d-flex justify-content-between align-items-center mt-3" id="recentUsersPagination">
+          <small class="text-muted" id="recentUsersInfo">Loading...</small>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-sm btn-outline-secondary" id="prevBtn" onclick="loadRecentUsers(currentPage - 1)" disabled>
+              <i class="fa-solid fa-chevron-left"></i> Previous
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary" id="nextBtn" onclick="loadRecentUsers(currentPage + 1)">
+              Next <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -171,6 +187,128 @@
 
   <!-- Chart.js (keep after body) -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+
+  <script>
+    // Get auth token
+    const token = localStorage.getItem('auth_token');
+    let currentPage = 1;
+
+    // Fetch dashboard data on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      loadDashboardStats();
+      loadRecentUsers(1);
+    });
+
+    // Load dashboard statistics
+    async function loadDashboardStats() {
+      try {
+        const response = await fetch('/api/admin/dashboard', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          console.error('Failed to fetch dashboard stats:', response.status);
+          return;
+        }
+
+        const data = await response.json();
+        console.log('Dashboard API Response:', data);
+
+        if (data.success && data.data && data.data.statistics) {
+          const stats = data.data.statistics;
+          console.log('Stats:', stats);
+
+          // Update total users
+          const totalUsers = stats.users.total;
+          const students = stats.users.by_role.students;
+          const instructors = stats.users.by_role.instructors;
+
+          console.log('Total Users:', totalUsers, 'Students:', students, 'Instructors:', instructors);
+
+          document.getElementById('totalUsers').textContent = totalUsers;
+          document.getElementById('totalStudents').textContent = students;
+          document.getElementById('totalInstructors').textContent = instructors;
+          document.getElementById('totalCourses').textContent = stats.courses.total;
+
+          // Calculate percentages
+          const studentPercent = totalUsers > 0 ? Math.round((students / totalUsers) * 100) : 0;
+          const instructorPercent = totalUsers > 0 ? Math.round((instructors / totalUsers) * 100) : 0;
+
+          document.getElementById('studentPercent').textContent = studentPercent + '%';
+          document.getElementById('instructorPercent').textContent = instructorPercent + '%';
+        } else {
+          console.error('Unexpected response structure:', data);
+        }
+      } catch (error) {
+        console.error('Error loading dashboard stats:', error);
+      }
+    }
+
+    // Load recently registered users
+    async function loadRecentUsers(page = 1) {
+      try {
+        const response = await fetch(`/api/admin/users/recent?page=${page}&per_page=10`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          console.error('Failed to fetch recent users');
+          return;
+        }
+
+        const data = await response.json();
+        if (data.success && data.data) {
+          currentPage = page;
+          const users = data.data.data;
+          const pagination = data.data;
+
+          // Update table
+          const tbody = document.getElementById('recentUsersTableBody');
+          tbody.innerHTML = '';
+
+          if (users.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-4">No users found</td></tr>';
+          } else {
+            users.forEach((user, index) => {
+              const statusBadge = user.is_active
+                ? '<span class="badge text-success" style="background: #DCFCE7;"><i class="fa fa-circle p-1 text-success" style="font-size:10px;"></i>Active</span>'
+                : '<span class="badge bg-danger text-white"><i class="fa fa-circle p-1 text-white" style="font-size:10px;"></i>Inactive</span>';
+
+              const row = `
+                <tr>
+                  <td>${user.first_name} ${user.last_name}</td>
+                  <td>${user.identifier}</td>
+                  <td><span class="badge" style="background-color: #004A53; color: white;">${user.role}</span></td>
+                  <td>${user.gender || 'N/A'}</td>
+                  <td>${user.email}</td>
+                  <td>${user.formatted_date}</td>
+                </tr>
+              `;
+              tbody.innerHTML += row;
+            });
+          }
+
+          // Update pagination info
+          const info = `Showing ${users.length} of ${pagination.total} users`;
+          document.getElementById('recentUsersInfo').textContent = info;
+
+          // Update pagination buttons
+          document.getElementById('prevBtn').disabled = !pagination.prev_page_url;
+          document.getElementById('nextBtn').disabled = !pagination.next_page_url;
+        }
+      } catch (error) {
+        console.error('Error loading recent users:', error);
+      }
+    }
+  </script>
 
   <script>
     // Chart (with callout bubble plugin)
