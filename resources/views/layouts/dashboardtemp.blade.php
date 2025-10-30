@@ -31,111 +31,11 @@
 
 <body>
 
-      <!-- Overlay for mobile sidebar -->
-  <div class="overlay" id="sidebarOverlay"></div>
-
-  <!-- Sidebar -->
-  <aside class="sidebar" id="sidebar">
-    <div class="brand">
-      <img src="images/Kokokah_Logo.png" alt="" class = "img-fluid dashboard-logo">
-    </div>
-
-    <nav class="nav-group" id="sidebarNav">
-      <a class="nav-item-link" href="/dashboard"><i class="fa-solid fa-gauge pe-2"></i> Dashboard</a>
-
-      <!-- Users Management (collapsible) -->
-
-<a class="nav-item-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse"  href="#usersMenu" aria-expanded="false" aria-controls="coursesMenu">
-    <span><i class="fa-solid fa-users pe-3"></i> Users Management</span>
-    <i class="fa-solid fa-chevron-down small"></i>
-  </a>
-
-  <!-- Dropdown items -->
-  <div class="collapse ps-4" id="usersMenu">
-    <a class="nav-item-link d-block" href="/users">All Users</a>
-    <a class="nav-item-link d-block" href="#">Add Users</a>
-    <a class="nav-item-link d-block" href="/useractivity">Users Activity Log</a>
-  </div>
-
-
-      <!-- Courses Management (collapsible) -->
-  <a class="nav-item-link d-flex justify-content-between align-items-center"
-     data-bs-toggle="collapse" href="#coursesMenu" role="button"
-     aria-expanded="false" aria-controls="coursesMenu">
-    <span><i class="fa-solid fa-book-open me-2 pe-2"></i> Subject Management</span>
-    <i class="fa-solid fa-chevron-down small"></i>
-  </a>
-
-  <!-- Dropdown items -->
-  <div class="collapse ps-4" id="coursesMenu">
-    <a class="nav-item-link d-block" href="/subjects">All Subject</a>
-    <a class="nav-item-link d-block" href="createsubject">Create New Subject</a>
-    <a class="nav-item-link d-block" href="#">Subject Categories</a>
-    <a class="nav-item-link d-block" href="#">Subject Reviews & Rating</a>
-    <a class="nav-item-link d-block" href="#">Subject Approval</a>
-  </div>
-
-    <a class="nav-item-link d-flex justify-content-between align-items-center"
-     data-bs-toggle="collapse" role="button"
-     aria-expanded="false" aria-controls="coursesMenu">
-    <span><i class="fa-solid fa-chalkboard-user pe-3"></i> Instructors</span>
-  </a>
-
-  <a class="nav-item-link d-flex justify-content-between align-items-center"
-     data-bs-toggle="collapse"  role="button"
-     aria-expanded="false" aria-controls="coursesMenu">
-    <span><i class="fa-solid fa-user-graduate pe-4"></i> Students</span>
-  </a>
-
-    {{-- <a class="nav-item-link d-flex justify-content-between align-items-center"
-     data-bs-toggle="collapse" role="button"
-     aria-expanded="false" aria-controls="coursesMenu">
-    <span><i class="fa-solid fa-book pe-4"></i> Content Management</span>
-    <i class="fa-solid fa-chevron-down small"></i>
-  </a> --}}
-
-  <a class="nav-item-link d-flex justify-content-between align-items-center"
-     data-bs-toggle="collapse" role="button"
-     aria-expanded="false" aria-controls="coursesMenu">
-    <span><i class="fa-solid fa-credit-card pe-4"></i>Payments</span>
-    <i class="fa-solid fa-chevron-down small"></i>
-  </a>
-
-  <a class="nav-item-link d-flex justify-content-between align-items-center"
-     data-bs-toggle="collapse" role="button"
-     aria-expanded="false" aria-controls="coursesMenu">
-    <span><i class="fa-solid fa-chart-line pe-4"></i> Reports & Analytics</span>
-    <i class="fa-solid fa-chevron-down small"></i>
-  </a>
-
-
-    <a class="nav-item-link d-flex justify-content-between align-items-center"
-     data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="coursesMenu">
-    <span><i class="fa-solid fa-comments pe-4"></i> Communication</span>
-    <i class="fa-solid fa-chevron-down small"></i>
-  </a>
-
-      {{-- <a class="nav-item-link" href="#"><i class="fa-solid fa-child-reaching pe-4"></i> Koodies</a> --}}
-    </nav>
-
-
-
-    <div class="sidebar-footer">
-      <a class="nav-item-link" href="#"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
-      <div class="profile mt-3">
-        <img class="avatar" src="images/winner-round.png" alt="user">
-
-          <div class="d-flex justify-content-between mt-4 p-2 w-100 align-items-center">
-
-            <div>
-            <h6 class = "fw-semibold">Culacino_</h6>
-            <p class = "small text-muted">UX Designer</p>
-            </div>
-
-            <div>
-            <i class="fa-solid fa-arrow-right-from-bracket"></i></span><br>
-            </div>
-
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 9998; justify-content: center; align-items: center;">
+        <div class="spinner-border text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
         </div>
     </div>
 

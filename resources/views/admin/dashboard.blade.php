@@ -25,13 +25,12 @@
       <div class="stats-row" id="statsContainer">
         <div class="stat-card">
             <img src = "images/abc.png" class = "img-fluid" />
-          {{-- <div class="stat-orb orb-users"><i class="fa-solid fa-users"></i></div> --}}
-          <div class="stat-meta bg-primary">
+          <div class="stat-meta ">
             <div class="label mt-2">Total Users</div>
             <div class = "mt-2">
-            <p>
-             <i class="fa-solid fa-square text-success"></i> science (50%)
-             <i class="fa-solid fa-square text-warning"></i> Arts (50%)
+            <p style = "font-size: 7px;">
+             <i class="fa-solid fa-square text-success"></i> Students <span id="studentPercent">0%</span>
+             <i class="fa-solid fa-square text-warning"></i> Instructors <span id="instructorPercent">0%</span>
             </p>
             </div>
             <div class="value" id="totalUsers">0</div>
@@ -43,9 +42,9 @@
         <div class="stat-meta">
             <div class="label mt-2">Students</div>
             <div class = "mt-2">
-            <p>
-             <i class="fa-solid fa-square text-success"></i> MALE (61%)
-             <i class="fa-solid fa-square text-warning"></i> FEMALE (39%)
+            <p style = "font-size: 7px;">
+             <i class="fa-solid fa-square text-success"></i> Active
+             <i class="fa-solid fa-square text-warning"></i> Inactive
             </p>
             </div>
             <div class="value" id="totalStudents">0</div>
@@ -57,9 +56,9 @@
             <div class="stat-meta">
             <div class="label">Instructors</div>
             <div class = "mt-2">
-            <p>
-             <i class="fa-solid fa-square text-success"></i> MALE (55%)
-             <i class="fa-solid fa-square text-warning"></i> FEMALE (45%)
+            <p style = "font-size: 7px;">
+             <i class="fa-solid fa-square text-success"></i> Active
+             <i class="fa-solid fa-square text-warning"></i> Inactive
             </p>
             </div>
             <div class="value" id="totalInstructors">0</div>
@@ -71,9 +70,9 @@
           <div class="stat-meta">
             <div class="label">Active Courses</div>
             <div class = "mt-2">
-            <p>
-             <i class="fa-solid fa-square text-success"></i> science (50%)
-             <i class="fa-solid fa-square text-warning"></i> Arts (50%)
+            <p style = "font-size: 7px;">
+             <i class="fa-solid fa-square text-success"></i> Published
+             <i class="fa-solid fa-square text-warning"></i> Draft
             </p>
             </div>
             <div class="value" id="totalCourses">0</div>
