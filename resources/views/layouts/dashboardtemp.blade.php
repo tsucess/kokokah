@@ -67,7 +67,7 @@
   <!-- Dropdown items -->
   <div class="collapse ps-4" id="coursesMenu">
     <a class="nav-item-link d-block" href="/subjects">All Subject</a>
-    <a class="nav-item-link d-block" href="#">Create New Subject</a>
+    <a class="nav-item-link d-block" href="createsubject">Create New Subject</a>
     <a class="nav-item-link d-block" href="#">Subject Categories</a>
     <a class="nav-item-link d-block" href="#">Subject Reviews & Rating</a>
     <a class="nav-item-link d-block" href="#">Subject Approval</a>

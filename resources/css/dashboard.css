@@ -255,8 +255,10 @@ h6.registeredusers
     .stat-card{
       background:var(--card-bg);
       border-radius:18px;
-      padding:14px 10px;
-      display:flex; justify-content:space-between; align-items:center;
+      padding:14px 1px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
       box-shadow: 0 6px 18px rgba(15,28,36,.04);
       border:1px solid #eef6fa;
     }
@@ -281,6 +283,16 @@ h6.registeredusers
     .orb-students i{ color:var(--brand-green); font-size:20px; }
     .orb-instructors i{ color:#F59E0B; font-size:20px; }
     .orb-courses i{ color:#EF4444; font-size:20px; }
+
+    .stat-meta
+    {
+        width:160px;
+    }
+
+    .stat-meta p{
+        font-size: 8px;
+
+    }
 
     .stat-meta .label{ font-size:11px; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.3px; }
     .stat-meta .value{ font-size:20px; font-weight:800; margin-top:6px; }
@@ -1134,6 +1146,7 @@ color:#fff;
 }
 
 
+
 /* Secondary Navigation Button (Get a Demo) */
 .btn-nav-secondary {
   background-color: #FFFFFF;
@@ -1156,3 +1169,170 @@ color:#fff;
   background-color: #004A53;
   color: #FFFFFF;
 }
+
+
+
+.btn-nav-curriculum {
+  background-color: #FDAF22;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  white-space: nowrap;
+  /* width: 200px; */
+  padding: 6px 10px;
+  height: 2.5rem;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.btn-nav-curriculum:hover {
+  background-color: #f5a500;
+  color: #000000;
+}
+
+.custom-form-group {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+
+.custom-label {
+  position: absolute;
+  /* Move label above the top border */
+  top: -12px;
+  left: 15px;
+  /* Create the background cutout effect */
+  background-color: white;
+  padding: 0 10px;
+  /* Font and color matching the image */
+  font: sitka;
+  font-size: 14px;
+  color: #004A53;
+  font-weight: bold;
+  z-index: 10;
+}
+
+
+.form-control-custom {
+  /* Inherit basic form control look but override for the design */
+  display: block;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  /* Increased padding for the height shown */
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #333;
+  /* Darker text */
+  background-color: #fff;
+
+  /* Border style matching the image */
+  /* border: 2px solid var(--input-border-color); */
+    border: 2px solid #004A53;
+  border-radius: 10px;
+}
+
+.connectlink
+{
+width: 320px;
+color:#004A53;
+}
+
+
+ .btn-prev {
+      border: 2px solid #004A53;
+      color: #0a3d62;
+      background-color: white;
+      font-weight: 500;
+      text-transform: capitalize;
+      width:200px;
+    }
+
+    .btn-prev:hover {
+      background-color: #004A53;
+      color:#fff;
+    }
+
+    .btn-continue {
+      background-color: #FDAF22;
+      border: 2px solid #FDAF22;
+      color: #000;
+      font-weight: 600;
+      width:200px;
+    }
+
+    .btn-continue:hover {
+      background-color: #f5a700;
+    }
+
+    /* make borders look dotted like in your image */
+    .btn-prev, .btn-continue {
+      border-style: sold;
+    }
+
+    /* spacing between buttons */
+    .btn-row {
+      display: flex;
+      justify-content: end;
+      gap: 10px;
+
+    }
+
+    /* responsive stacking on mobile */
+    @media (max-width: 576px) {
+      .btn-row {
+        flex-direction: column;
+        align-items: center;
+      }
+      .btn-prev, .btn-continue {
+        width: 80%;
+      }
+    }
+
+
+    .accordion-item {
+            border: 1px solid rgba(0, 0, 0, .125); /* Subtle border for separation */
+            margin-bottom: 10px;
+        }
+
+        .accordion-header {
+            background-color: #f8f9fa; /* Light grey header background */
+            padding: 1rem 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .accordion-header h5 {
+            margin-bottom: 0;
+            font-weight: bold; /* Category name bold */
+        }
+
+        .accordion-body {
+            padding: 1rem 1.25rem;
+            color: #00252A;
+            font-size:12px;
+            font-family: sitka;
+        }
+
+        /* .action-icons i {
+            margin-left: 15px;
+            font-size: 1.1rem;
+            color: #6c757d;
+            cursor: pointer;
+        } */
+
+        .accordion-button:not(.collapsed) {
+            color: #000; /* Text color when expanded */
+            background-color: #e9ecef; /* Slightly darker background when expanded */
+            box-shadow: none;
+        }
+
+        /* Hide the default Bootstrap accordion caret/icon */
+        .accordion-button::after {
+            display: none;
+        }

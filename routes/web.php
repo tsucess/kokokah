@@ -75,6 +75,10 @@ Route::get('/market', function () {
     return view('market');
 });
 
+Route::get('/profiles', function () {
+    return view('admin.profile');
+});
+
 Route::get('/profile', function () {
     return view('profile');
 });
@@ -113,7 +117,7 @@ Route::get('/enroll', function () {
 });
 
 Route::get('/termsubject', function () {
-    return view('admin.termsubject');
+    return view('users.termsubject');
 });
 
 Route::get('/subjectselect', function () {
@@ -157,9 +161,17 @@ Route::get('/subjects', function () {
     return view('admin.allsubjects');
 });
 
+Route::get('/categories', function () {
+    return view('admin.categories');
+});
+
 
 Route::get('/subjectmedia', function () {
     return view('admin.subjectmedia');
+});
+
+Route::get('/curriculum', function () {
+    return view('admin.curriculum');
 });
 
 Route::get('/createsubject', function () {

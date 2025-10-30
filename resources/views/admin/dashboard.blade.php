@@ -26,10 +26,10 @@
         <div class="stat-card">
             <img src = "images/abc.png" class = "img-fluid" />
           {{-- <div class="stat-orb orb-users"><i class="fa-solid fa-users"></i></div> --}}
-          <div class="stat-meta ">
+          <div class="stat-meta">
             <div class="label mt-2">Total Users</div>
             <div class = "mt-2">
-            <p style = "font-size: 7px;">
+            <p>
              <i class="fa-solid fa-square text-success"></i> science (50%)
              <i class="fa-solid fa-square text-warning"></i> Arts (50%)
             </p>
@@ -44,7 +44,7 @@
                 <div class="stat-meta">
             <div class="label mt-2">Students</div>
             <div class = "mt-2">
-            <p style = "font-size: 7px;">
+            <p>
              <i class="fa-solid fa-square text-success"></i> MALE (61%)
              <i class="fa-solid fa-square text-warning"></i> FEMALE (39%)
             </p>
@@ -59,7 +59,7 @@
             <div class="stat-meta">
             <div class="label">Instructors</div>
             <div class = "mt-2">
-            <p style = "font-size: 7px;">
+            <p>
              <i class="fa-solid fa-square text-success"></i> MALE (55%)
              <i class="fa-solid fa-square text-warning"></i> FEMALE (45%)
             </p>
@@ -74,7 +74,7 @@
           <div class="stat-meta">
             <div class="label">Active Courses</div>
             <div class = "mt-2">
-            <p style = "font-size: 7px;">
+            <p>
              <i class="fa-solid fa-square text-success"></i> science (50%)
              <i class="fa-solid fa-square text-warning"></i> Arts (50%)
             </p>
@@ -86,7 +86,7 @@
 
 
       <!-- Chart -->
-      <div class = "row">
+      <div class = "container">
       <div class="chart-card">
         <div class="chart-header">
           <div class = "information1">
