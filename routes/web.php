@@ -148,6 +148,9 @@ Route::get('/users', function () {
 Route::get('/adduser', function () {
     return view('admin.createuser');
 });
+Route::get('/edituser', function () {
+    return view('admin.edituser');
+});
 
 Route::get('/useractivity', function () {
     return view('admin.useractivity');

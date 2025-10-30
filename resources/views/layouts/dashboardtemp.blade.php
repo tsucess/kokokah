@@ -46,7 +46,6 @@
     <aside class="sidebar" id="sidebar">
         <div class="brand">
             <img src="images/Kokokah_Logo.png" alt="Kokokah Logo" class="img-fluid dashboard-logo">
-            <span class="brand-text">Kokokah</span>
         </div>
 
         <nav class="nav-group" id="sidebarNav">
@@ -130,7 +129,7 @@
             <a class="nav-item-link" href="#"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
             <div class="profile mt-3" id="profileSection">
                 <img class="avatar" id="profileImage" src="images/winner-round.png" alt="user"
-                    style="cursor: pointer;" data-bs-toggle="tooltip" data-bs-placement="top" title="Profile">
+                    style="cursor: pointer; width: 40px; height: 40px; object-fit: cover; border-radius: 50%; border: 2px solid #ff00;" data-bs-toggle="tooltip" data-bs-placement="top" title="Profile">
                 <div class="d-flex justify-content-between mt-4 p-2 w-100 align-items-center">
                     <div id="profileInfo" style="cursor: pointer;" data-bs-toggle="tooltip" data-bs-placement="top"
                         title="Profile">

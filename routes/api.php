@@ -363,7 +363,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('admin')->middleware('role:admin')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard']);
         Route::get('/users', [AdminController::class, 'users']);
+        Route::get('/users/recent', [AdminController::class, 'recentlyRegisteredUsers']);
+        Route::get('/users/{userId}', [AdminController::class, 'getUser']);
         Route::post('/users', [AdminController::class, 'createUser']);
+        Route::put('/users/{userId}', [AdminController::class, 'updateUser']);
+        Route::delete('/users/{userId}', [AdminController::class, 'deleteUser']);
         Route::get('/courses', [AdminController::class, 'courses']);
         Route::get('/payments', [AdminController::class, 'payments']);
         Route::get('/reports', [AdminController::class, 'reports']);
@@ -420,11 +424,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/suggestions', [ChatController::class, 'getSuggestedResponses']);
     });
 });
-
-Route::middleware(['auth:sanctum', 'role:admin'])->get('/admin/dashboard', function () {
-    return response()->json(['ok' => true]);
-});
-
 
 // Admin-only route
 Route::middleware(['auth:sanctum', 'role:admin'])->get('/admin/reports', function () {

@@ -131,8 +131,14 @@ class DashboardModule {
 
     // Update profile image if available
     const profileImage = document.getElementById('profileImage');
-    if (profileImage && user.profile_photo) {
-      profileImage.src = user.profile_photo;
+    if (profileImage) {
+      if (user.profile_photo) {
+        // Use storage URL for profile photos
+        profileImage.src = `/storage/${user.profile_photo}`;
+      } else {
+        // Use default avatar if no profile photo
+        profileImage.src = 'images/winner-round.png';
+      }
     }
   }
 }

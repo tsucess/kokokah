@@ -35,7 +35,13 @@ class User extends Authenticatable implements MustVerifyEmail
         'level_id',
         'date_of_birth',
         'address',
+        'state',
+        'zipcode',
         'profile_photo',
+        'parent_first_name',
+        'parent_last_name',
+        'parent_email',
+        'parent_phone',
         'email_verified_at'
     ];
 

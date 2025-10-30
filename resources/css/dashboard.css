@@ -171,11 +171,11 @@ body {
 }
 
 .brand img {
-    width: 40px;
-    height: 40px;
+    width: 13rem;
+    /* height: 40px; */
     border-radius: 8px;
     object-fit: cover;
-    flex-shrink: 0;
+    /* flex-shrink: 0; */
 }
 
 .brand .brand-text {
