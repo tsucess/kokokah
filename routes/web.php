@@ -56,7 +56,7 @@ Route::get('/resetpassword', function () {
 
 Route::get('/verify', function () {
     // return view('auth.verifypassword');
-    return view('auth.verify-email');
+    return view('auth.verifypassword');
 });
 
 Route::get('/stemregister', function () {

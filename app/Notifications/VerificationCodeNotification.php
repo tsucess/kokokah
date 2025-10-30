@@ -50,7 +50,7 @@ class VerificationCodeNotification extends Notification implements ShouldQueue
             ->line('')
             ->line('This code will expire in ' . $expiresIn . ' minutes.')
             ->line('If you did not request this code, please ignore this email.')
-            ->action('Verify Email', url('/verify-email?code=' . $this->verificationCode->code))
+            ->action('Verify Email', url('/verifypassword?code=' . $this->verificationCode->code))
             ->line('Or enter the code manually in the verification page.')
             ->line('')
             ->line('Thank you for using Kokokah LMS!');
