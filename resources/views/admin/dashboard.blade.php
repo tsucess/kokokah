@@ -25,10 +25,10 @@
       <div class="stats-row" id="statsContainer">
         <div class="stat-card">
             <img src = "images/abc.png" class = "img-fluid" />
-          <div class="stat-meta ">
+          <div class="stat-meta">
             <div class="label mt-2">Total Users</div>
             <div class = "mt-2">
-            <p style = "font-size: 7px;">
+            <p>
              <i class="fa-solid fa-square text-success"></i> Students <span id="studentPercent">0%</span>
              <i class="fa-solid fa-square text-warning"></i> Instructors <span id="instructorPercent">0%</span>
             </p>
@@ -42,7 +42,7 @@
         <div class="stat-meta">
             <div class="label mt-2">Students</div>
             <div class = "mt-2">
-            <p style = "font-size: 7px;">
+            <p>
              <i class="fa-solid fa-square text-success"></i> Active
              <i class="fa-solid fa-square text-warning"></i> Inactive
             </p>
@@ -56,7 +56,7 @@
             <div class="stat-meta">
             <div class="label">Instructors</div>
             <div class = "mt-2">
-            <p style = "font-size: 7px;">
+            <p>
              <i class="fa-solid fa-square text-success"></i> Active
              <i class="fa-solid fa-square text-warning"></i> Inactive
             </p>
@@ -70,7 +70,7 @@
           <div class="stat-meta">
             <div class="label">Active Courses</div>
             <div class = "mt-2">
-            <p style = "font-size: 7px;">
+            <p>
              <i class="fa-solid fa-square text-success"></i> Published
              <i class="fa-solid fa-square text-warning"></i> Draft
             </p>

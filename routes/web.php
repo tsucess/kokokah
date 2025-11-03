@@ -164,11 +164,6 @@ Route::get('/subjects', function () {
     return view('admin.allsubjects');
 });
 
-Route::get('/categories', function () {
-    return view('admin.categories');
-});
-
-
 Route::get('/subjectmedia', function () {
     return view('admin.subjectmedia');
 });

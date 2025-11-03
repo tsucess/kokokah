@@ -2,16 +2,16 @@
 
 @section('content')
 <main>
-    <div class = "container">
+<div class = "container">
 
         <div class = "d-flex justify-content-between">
 
             <div>
-            <h3>Create New Course</h3>
+            <h4 class = "fw-bold">Create New Subject</h4>
             <p>Here overview of your</p>
         </div>
 
-        <div>
+        <div class = "d-flex gap-4">
         <button class = "btn rounded coursedraft">
         Save As Draft
         </button>
@@ -26,37 +26,39 @@
     </div>
 
 
-    <div class = "container">
+<div class = "container">
 
-        <div class = "d-flex">
-        <button  type = "button" class = "btn btn-outline-dark border-1 rounded me-4" style = "width: 300px;">
-            <i class="fa-solid fa-dot-circle me-2"></i>
-            Create New Subject
+        <div class = "d-flex gap-4 justify-content-space-between">
+        <button  type = "button" class = "btn btn-light borderlessconnectorbutton">
+            <i class="fa-solid fa-dot-circle me-2" ></i>
+            Create New Subject &nbsp;
             <i class="fa fa-arrow-right me-2"></i>
         </button>
 
 
-        <button class = "btn  btn-outline-dark border-1 rounded w-25 me-4" style = "background: #004A53; color: #fff;">
+        <button class = "btn btn-light btn-outline-dark connectorbutton" type = "button" href = "/subjectmedia">
             <i class="fa-solid fa-dot-circle me-2"></i>
             Subject Media
             <i class="fa fa-arrow-right me-2"></i>
         </button>
 
-        <button  type = "button" class = "btn  btn-light rounded w-25 me-4" >
+
+        <button class = "btn btn-light borderlessconnectorbutton" type = "button">
             <i class="fa-solid fa-dot-circle me-2"></i>
             Curriculum
             <i class="fa fa-arrow-right me-2"></i>
         </button>
 
-        <button  type = "button" class = "btn btn-outline-dark border-1 rounded w-25 me-4">
+        <button class = "btn btn-light borderlessconnectorbutton" type = "button">
             <i class="fa-solid fa-dot-circle me-2"></i>
-             Publish Course
+             Publish Subject
             <i class="fa fa-arrow-right me-2"></i>
         </button>
 
 
     </div>
-    </div>
+
+</div>
 
     <div class = "container-fluid">
     <div class = "row">
@@ -109,9 +111,7 @@
 
 <div class="d-flex mb-3 w-100">
     <input type="text" class="form-control file-name-input flex-grow-1" id="fileNameDisplay" placeholder="No file selected" readonly>
-    <button class="btn btn-success upload-btn w-25" type="button" id="uploadButton">
-        Upload File
-    </button>
+        <button class="btn btn-nav-primary" style="padding: 12px 120px;">Upload File</button>
 </div>
 
 
@@ -133,12 +133,15 @@
         </div>
     </div>
 
-<div class = "container">
-    <div class = "d-flex justify-content-end gap-2">
-    <button class = "btn btn-outline-success  w-25 text-success" >Cancel</button>
-    <button class = "btn text-white p-3 w-25 navButton" style = "background:#004A53;">Continue</button>
+<div class = "row mt-3">
+<div class = "d-flex col-md-12 col-lg-12 justify-content-end ">
+    <div class = "d-flex flex-column flex-lg-row gap-3 px-0">
+          <button class="btn btn-nav-secondary" style="padding: 12px 120px;">Cancel</button>
+          <button class="btn btn-nav-primary" style="padding: 12px 120px;">Continue</button>
+        </div>
 </div>
-    </div>
+</div>
+
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>

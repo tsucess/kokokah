@@ -51,6 +51,12 @@ h4 {
     color: #004A53;
 }
 
+h5 {
+    font-family: Fredoka, serif;
+    font-weight: bold;
+    font-size: 20px;
+}
+
 p {
     font-family: sitka;
     font-size: 15px;
@@ -118,6 +124,8 @@ body {
     transition: transform 0.28s ease-in-out;
     font-family: sitka;
     font-size: 14px;
+     overflow-y: auto;
+    overflow-x: hidden;
     /* line-spacing: 0.1px; */
 }
 
@@ -130,8 +138,17 @@ body {
         transform: translateX(0);
     }
 
-    main,
-    .topbar {
+    /* Caret rotation animation */
+.chevron-icon {
+    transition: transform 0.3s ease;
+}
+
+/* When collapse is open, rotate caret */
+.nav-parent[aria-expanded="true"] .chevron-icon {
+    transform: rotate(180deg);
+}
+
+    main, .topbar {
         margin-left: 0 !important;
     }
 }
@@ -371,9 +388,9 @@ main .container {
 .stat-card {
     background: var(--card-bg);
     border-radius: 18px;
-    padding: 14px 10px;
+    padding: 14px 15px;
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
     box-shadow: 0 6px 18px rgba(15, 28, 36, .04);
     border: 1px solid #eef6fa;
@@ -385,6 +402,10 @@ main .container {
         display: flex;
         flex-direction: column;
     }
+}
+
+.stat-card p {
+    font-size: 12px;
 }
 
 .stat-orb {
@@ -417,8 +438,13 @@ main .container {
     font-size: 20px;
 }
 
+.stat-meta
+{
+margin-left: 10px;
+}
+
 .stat-meta .label {
-    font-size: 11px;
+    font-size: 18px;
     color: var(--muted);
     font-weight: 700;
     text-transform: uppercase;
@@ -525,6 +551,11 @@ main .container {
 .coursedraft {
     background-color: #A3D8DF;
     color: #fff;
+    width:130px;
+    height: 40px;
+    border-radius: 8px;
+    padding: 8px 16px;
+    border: 1px solid #A3D8DF;
 }
 
 .coursedraft:hover {
@@ -535,6 +566,11 @@ main .container {
 .publishcourse {
     background-color: #3BA0AC;
     color: #fff;
+    width:138px;
+    height: 40px;
+    border-radius: 8px;
+    padding: 8px 16px;
+    border: 1px solid #A3D8DF;
 }
 
 .publishcourse:hover {
@@ -542,7 +578,25 @@ main .container {
     color: #fff;
 }
 
+.connectorbutton
+{
+    width:284px;
+    height:62px;
+    border-radius: 5px;
+    border: 1px solid #004A53;
+    color:#000F11;
+    font:sitka;
+    font-size: 18px;
+}
 
+.borderlessconnectorbutton
+{
+    width:284px;
+    height:62px;
+    color:#004A53;
+    font:sitka;
+    font-size: 18px;
+}
 
 .upload-card {
     background-color: #fff;
