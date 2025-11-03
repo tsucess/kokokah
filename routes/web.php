@@ -168,6 +168,17 @@ Route::get('/categories', function () {
     return view('admin.categories');
 });
 
+Route::get('/students', function () {
+    return view('admin.students');
+});
+
+Route::get('/instructors', function () {
+    return view('admin.instructors');
+});
+
+Route::get('/transactions', function () {
+    return view('admin.transactions');
+});
 
 Route::get('/subjectmedia', function () {
     return view('admin.subjectmedia');

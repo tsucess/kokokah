@@ -61,6 +61,8 @@
             <!-- Dropdown items -->
             <div class="collapse ps-4" id="usersMenu">
                 <a class="nav-item-link d-block nav-child" href="/users">All Users</a>
+                <a class="nav-item-link d-block nav-child" href="/students">Students</a>
+                <a class="nav-item-link d-block nav-child" href="/instructors">Instructors</a>
                 <a class="nav-item-link d-block nav-child" href="/adduser">Add Users</a>
                 <a class="nav-item-link d-block nav-child" href="/useractivity">Users Activity Log</a>
             </div>
@@ -76,26 +78,19 @@
             <div class="collapse ps-4" id="subjectsMenu">
                 <a class="nav-item-link d-block nav-child" href="/subjects">All Subject</a>
                 <a class="nav-item-link d-block nav-child" href="/createsubject">Create New Subject</a>
-                <a class="nav-item-link d-block nav-child" href="/categories">Subject Categories</a>
+                <a class="nav-item-link d-block nav-child" href="/categories">Curriculum Categories</a>
                 <a class="nav-item-link d-block nav-child" href="#">Subject Reviews & Rating</a>
                 <a class="nav-item-link d-block nav-child" href="#">Subject Approval</a>
             </div>
 
-            <a class="nav-item-link" href="#">
-                <span><i class="fa-solid fa-chalkboard-user pe-3"></i> Instructors</span>
-            </a>
-
-            <a class="nav-item-link" href="#">
-                <span><i class="fa-solid fa-user-graduate pe-3"></i> Students</span>
-            </a>
-
             <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent" data-bs-toggle="collapse"
                 href="#paymentsMenu" role="button" aria-expanded="false" aria-controls="paymentsMenu">
-                <span><i class="fa-solid fa-credit-card pe-3"></i> Payments</span>
+                <span><i class="fa-solid fa-credit-card pe-3"></i> Payments & Transactions</span>
                 <i class="fa-solid fa-chevron-down small chevron-icon"></i>
             </a>
 
             <div class="collapse ps-4" id="paymentsMenu">
+                <a class="nav-item-link d-block nav-child" href="/transactions">Transactions</a>
                 <a class="nav-item-link d-block nav-child" href="#">Payment History</a>
                 <a class="nav-item-link d-block nav-child" href="#">Invoices</a>
             </div>
