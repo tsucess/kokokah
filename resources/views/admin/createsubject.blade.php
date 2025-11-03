@@ -30,18 +30,19 @@
     <div class = "container">
 
         <div class = "d-flex">
-        <button  type = "button" class = "btn btn-outline-dark border-1 rounded me-4" style = "background: #004A53; color: #fff; width: 260px;">
+        <button  type = "button" class = "btn btn-outline-dark border-1 rounded me-4" style = "background: #004A53; color: #fff; width: 270px;">
             <i class="fa-solid fa-dot-circle me-2" ></i>
-            Create New Course
+            Create New Subject
             <i class="fa fa-arrow-right me-2"></i>
         </button>
 
 
-        <button class = "btn btn-light rounded w-25 me-4">
+        <button class = "btn btn-light rounded w-25 me-4" href = "/subjectmedia" type = "button">
             <i class="fa-solid fa-dot-circle me-2"></i>
-            Course Media
+            Subject Media
             <i class="fa fa-arrow-right me-2"></i>
         </button>
+
 
         <button  type = "button" class = "btn btn-outline-dark border-1 rounded w-25 me-4" >
             <i class="fa-solid fa-dot-circle me-2"></i>
@@ -57,7 +58,8 @@
 
 
     </div>
-    </div>
+
+</div>
 
 <div class = "container">
 

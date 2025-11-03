@@ -1,4 +1,5 @@
-@extends('admin.usertemplate')
+{{-- @extends('admin.usertemplate') --}}
+@extends('layouts.dashboardtemp')
 
 @section('content')
 <main>

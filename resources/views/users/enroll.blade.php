@@ -1,4 +1,4 @@
-@extends('users.usertemplate')
+@extends('layouts.usertemplate')
  <style>
     /* Global font & background */
     body {
