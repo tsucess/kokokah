@@ -552,7 +552,7 @@
                 // Create FormData for file upload
                 const formData = new FormData();
 
-                // For PUT requests with FormData, we need to add _method field
+                // For PUT requests with FormData, we need to add _method field for Laravel method spoofing
                 if (isEditMode) {
                     formData.append('_method', 'PUT');
                 }
@@ -627,12 +627,12 @@
                         headers['Authorization'] = `Bearer ${token}`;
                     }
 
-                    // Use PUT for edit, POST for create
-                    const method = isEditMode ? 'PUT' : 'POST';
+                    // Use POST for both create and edit (with _method for edit)
+                    // This is required for FormData with file uploads
                     const endpoint = isEditMode ? `/api/admin/users/${userId}` : '/api/admin/users';
 
                     const response = await fetch(endpoint, {
-                        method: method,
+                        method: 'POST',  // Always POST when using FormData
                         headers: headers,
                         body: formData,
                         cache: 'no-store'  // Prevent caching

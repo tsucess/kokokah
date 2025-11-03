@@ -367,6 +367,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/users/{userId}', [AdminController::class, 'getUser']);
         Route::post('/users', [AdminController::class, 'createUser']);
         Route::put('/users/{userId}', [AdminController::class, 'updateUser']);
+        Route::post('/users/{userId}', [AdminController::class, 'updateUser']);  // Allow POST with _method=PUT for FormData
         Route::delete('/users/{userId}', [AdminController::class, 'deleteUser']);
         Route::get('/courses', [AdminController::class, 'courses']);
         Route::get('/payments', [AdminController::class, 'payments']);
