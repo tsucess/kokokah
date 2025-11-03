@@ -373,10 +373,11 @@ main .container {
     border-radius: 18px;
     padding: 14px 10px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     box-shadow: 0 6px 18px rgba(15, 28, 36, .04);
     border: 1px solid #eef6fa;
+    gap: 1.5rem
 }
 
 @media(max-width:320px) {
@@ -417,6 +418,7 @@ main .container {
     font-size: 20px;
 }
 
+
 .stat-meta .label {
     font-size: 11px;
     color: var(--muted);
@@ -424,6 +426,7 @@ main .container {
     text-transform: uppercase;
     letter-spacing: .3px;
 }
+
 
 .stat-meta .value {
     font-size: 20px;

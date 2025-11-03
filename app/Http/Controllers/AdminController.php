@@ -43,6 +43,18 @@ class AdminController extends Controller
                             'students' => User::where('role', 'student')->count(),
                             'instructors' => User::where('role', 'instructor')->count(),
                             'admins' => User::where('role', 'admin')->count()
+                        ],
+                        'by_gender' => [
+                            'male' => User::where('gender', 'male')->count(),
+                            'female' => User::where('gender', 'female')->count()
+                        ],
+                        'students_by_gender' => [
+                            'male' => User::where('role', 'student')->where('gender', 'male')->count(),
+                            'female' => User::where('role', 'student')->where('gender', 'female')->count()
+                        ],
+                        'instructors_by_gender' => [
+                            'male' => User::where('role', 'instructor')->where('gender', 'male')->count(),
+                            'female' => User::where('role', 'instructor')->where('gender', 'female')->count()
                         ]
                     ],
                 'courses' => [
@@ -50,6 +62,9 @@ class AdminController extends Controller
                     'published' => Course::where('status', 'published')->count(),
                     'draft' => Course::where('status', 'draft')->count(),
                     'new_this_month' => Course::where('created_at', '>=', now()->startOfMonth())->count(),
+                    'by_category' => \App\Models\Category::withCount('courses')
+                                          ->get()
+                                          ->pluck('courses_count', 'title'),
                     'most_popular' => Course::withCount('enrollments')
                                           ->orderBy('enrollments_count', 'desc')
                                           ->limit(5)
@@ -79,7 +94,7 @@ class AdminController extends Controller
                     'forum_topics' => ForumTopic::count(),
                     'course_reviews' => CourseReview::count(),
                     'certificates_issued' => Certificate::count(),
-                    'average_rating' => CourseReview::where('status', 'approved')->avg('rating')
+                    'average_rating' => CourseReview::avg('rating')
                 ]
                 ];
             });

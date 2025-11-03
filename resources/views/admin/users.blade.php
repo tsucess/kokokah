@@ -6,11 +6,11 @@
     <!-- Header Section -->
     <div class="d-flex justify-content-between align-items-start mb-2">
       <div>
-        <h1 class="fw-bold mb-2" style="font-size: 2.5rem; color: #004A53; font-family: 'Fredoka One', sans-serif;">Welcome Back Samuel(Admin)</h1>
+        <h1 class="fw-bold mb-2" style="font-size: 1.2rem; color: #004A53; font-family: 'Fredoka One', sans-serif;">Welcome Back Samuel(Admin)</h1>
         <p class="text-muted" style="font-size: 0.95rem;">Here overview of your</p>
       </div>
       <div>
-        <a href="/adduser" class="btn px-4 py-2 fw-semibold" style="background-color: #004A53; border: none; color: white;">
+        <a href="/adduser" class="btn px-3 py-2 fw-semibold" style="background-color: #004A53; border: none; color: white;">
           <i class="fa-solid fa-plus me-2"></i> Create New User
         </a>
       </div>

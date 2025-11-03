@@ -23,7 +23,9 @@ class CategoryController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        return Category::all();
+        return Category::with(['courses' => function($query) {
+            $query->with('level');
+        }])->get();
     }
 
     /**

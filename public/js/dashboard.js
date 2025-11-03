@@ -122,6 +122,22 @@ class DashboardModule {
       userName.textContent = `${user.first_name} ${user.last_name}`;
     }
 
+    // Update first name in dashboard (by class selector)
+    const firstNameElements = document.querySelectorAll('.first_name');
+    if (firstNameElements.length > 0 && user.first_name) {
+      firstNameElements.forEach(el => {
+        el.textContent = user.first_name;
+      });
+    }
+
+    // Update role in dashboard (by class selector)
+    const roleElements = document.querySelectorAll('.role');
+    if (roleElements.length > 0 && user.role) {
+      roleElements.forEach(el => {
+        el.textContent = `(${user.role.charAt(0).toUpperCase() + user.role.slice(1)})`;
+      });
+    }
+
     // Update user role
     const userRole = document.getElementById('userRole');
     if (userRole && user.role) {
