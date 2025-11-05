@@ -1606,3 +1606,92 @@ main .container {
         background-color: transparent;
         border-radius: 4px;
     }
+
+    /* publish page */
+     button {
+        background-color: transparent;
+        border: none;
+    }
+
+    .subject-overview-card {
+        border: 1px solid #004A53;
+        border-radius: 15px;
+        padding: 30px;
+        gap: 30px;
+    }
+
+    .subject-overview-title {
+        font-size: 24px;
+        color: #000000;
+        font-family: "Fredoka", sans-serif;
+        font-weight: 600;
+    }
+
+    .gap {
+        gap: 16px;
+    }
+
+    .subject-text {
+        font-size: 32px;
+        color: #004A53;
+        font-weight: 600;
+        font-family: "Fredoka", sans-serif;
+    }
+
+    .subject-subtext {
+        color: #A0A0A0;
+        font-size: 14px;
+    }
+
+    .subject-overview-img {
+        height: 313px;
+        width: 100%;
+        border-radius: 20px;
+    }
+
+    .subject-overview-description-container {
+        gap: 14px;
+    }
+
+    .subject-overview-description-title {
+        color: #000000;
+        font-size: 24px;
+        font-family: "Fredoka", sans-serif;
+        font-weight: 600;
+    }
+
+    .subject-overview-study-list {
+        color: #1C1D1D;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    li {
+        color: #1C1D1D;
+        font-size: 18px;
+    }
+
+    .subject-overview-description-text {
+        color: #1C1D1D;
+        font-size: 18px;
+    }
+
+    p {
+        margin-bottom: 0;
+    }
+
+    .curriculum-container {
+        gap: 20px;
+    }
+
+    .speech-card {
+        border: 1px solid #004A53;
+        border-radius: 15px;
+        padding: 16px;
+    }
+
+    .speech-card-title {
+        font-size: 20px;
+        color: #000000;
+        font-weight: 700;
+    }
