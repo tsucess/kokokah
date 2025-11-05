@@ -112,7 +112,7 @@ class LearningPathController extends Controller
                 'prerequisites' => 'nullable|string',
                 'learning_objectives' => 'required|array',
                 'learning_objectives.*' => 'string|max:255',
-                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048'
             ]);
 
             if ($validator->fails()) {
@@ -253,7 +253,7 @@ class LearningPathController extends Controller
                 'prerequisites' => 'nullable|string',
                 'learning_objectives' => 'sometimes|array',
                 'learning_objectives.*' => 'string|max:255',
-                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
                 'status' => 'sometimes|in:draft,published,archived'
             ]);
 

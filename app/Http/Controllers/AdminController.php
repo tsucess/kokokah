@@ -1349,7 +1349,7 @@ class AdminController extends Controller
                 'parent_last_name' => 'nullable|string|max:255',
                 'parent_email' => 'nullable|email',
                 'parent_phone' => 'nullable|string|max:20',
-                'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+                'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048'
             ]);
 
             if ($validator->fails()) {
@@ -1450,7 +1450,7 @@ class AdminController extends Controller
                 'parent_last_name' => 'nullable|string|max:255',
                 'parent_email' => 'nullable|email',
                 'parent_phone' => 'nullable|string|max:20',
-                'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+                'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048'
             ]);
 
             if ($validator->fails()) {
