@@ -87,6 +87,26 @@ Route::get('/application', function () {
     return view('application');
 });
 
+Route::get('/categories', function () {
+    return view('admin.categories');
+});
+
+Route::get('/rating', function () {
+    return view('admin.rating');
+});
+
+Route::get('/instructor', function () {
+    return view('admin.instructor');
+});
+
+Route::get('/student', function () {
+    return view('admin.student');
+});
+
+Route::get('/subscription', function () {
+    return view('admin.subscriptionplan');
+});
+
 Route::get('/register', function () {
     return view('auth.register');
 });

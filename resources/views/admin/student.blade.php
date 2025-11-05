@@ -11,7 +11,7 @@
       </div>
       <div>
         <a href="/adduser" class="btn px-3 py-2 fw-semibold btn-nav-primary" >
-          <i class="fa-solid fa-plus me-2"></i> Create New User
+          <i class="fa-solid fa-plus me-2"></i> Create New Student
         </a>
       </div>
     </div>
@@ -21,7 +21,7 @@
       <div class="card-body p-4">
         <!-- Table Header with Search and Filters -->
         <div class="d-flex justify-content-between align-items-center mb-5">
-          <h5 class="fw-bold mb-0" style="font-size: 1.1rem; color: #1a1a1a;">All Users List</h5>
+          <h5 class="fw-bold mb-0" style="font-size: 1.1rem; color: #1a1a1a;">All Students List</h5>
           <div class="d-flex gap-3 justify-content-end" style="flex: 1; margin-left: 2rem;">
             <!-- Search Input -->
             <div class="position-relative flex-grow-1" style="max-width: 300px;">
@@ -40,7 +40,7 @@
               <option value="course">All Courses</option>
               <option value="category">All Categories</option>
               <option value="role-student">Students</option>
-              <option value="role-instructor">Instructors</option>
+              <option value="role-instructor">Students</option>
               <option value="role-admin">Admins</option>
             </select>
 
@@ -60,12 +60,12 @@
           <thead>
             <tr style="background-color: #f0f0f0; border-bottom: 2px solid #e8e8e8;">
               <th style="color: #333; font-weight: 600; padding: 1rem;">No</th>
-              <th style="color: #333; font-weight: 600; padding: 1rem;">Users</th>
+              <th style="color: #333; font-weight: 600; padding: 1rem;">Students</th>
               <th style="color: #333; font-weight: 600; padding: 1rem;">ID</th>
               <th style="color: #333; font-weight: 600; padding: 1rem;">Email Address</th>
               <th style="color: #333; font-weight: 600; padding: 1rem;">Gender</th>
               <th style="color: #333; font-weight: 600; padding: 1rem;">Contact</th>
-              <th style="color: #333; font-weight: 600; padding: 1rem;">Role</th>
+              <th style="color: #333; font-weight: 600; padding: 1rem;">Location</th>
               <th style="color: #333; font-weight: 600; padding: 1rem;">Action</th>
             </tr>
           </thead>
@@ -199,7 +199,7 @@
                 <td style="padding: 1rem;"><span style="color: #666;">${user.gender || 'N/A'}</span></td>
                 <td style="padding: 1rem; color: #666;">${user.contact || 'N/A'}</td>
                 <td style="padding: 1rem;">
-                  <span class="badge" style="background-color: ${roleColor}; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">${user.role}</span>
+                  <!-- <span class="badge" style="background-color: ${roleColor}; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">${user.role}</span> -->
                 </td>
                 <td style="padding: 1rem;">
                   <div class="d-flex gap-2">

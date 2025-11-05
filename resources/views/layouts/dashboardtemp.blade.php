@@ -82,36 +82,40 @@
             <a class="nav-item-link d-block nav-child" href="#">Subject Approval</a>
         </div>
 
-        <a class="nav-item-link" href="#">
+        <a class="nav-item-link" href="/instructor">
             <span><i class="fa-solid fa-chalkboard-user pe-3"></i> Instructors</span>
         </a>
 
-        <a class="nav-item-link" href="#">
+        <a class="nav-item-link" href="/student">
             <span><i class="fa-solid fa-user-graduate pe-3"></i> Students</span>
         </a>
 
-<<<<<<< HEAD
-        <!-- Payments -->
-        <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent" data-bs-toggle="collapse"
-           href="#paymentsMenu" role="button" aria-expanded="false" aria-controls="paymentsMenu">
-            <span><i class="fa-solid fa-credit-card pe-3"></i> Payments</span>
-            <i class="fa-solid fa-chevron-down chevron-icon"></i>
-        </a>
-=======
             <!-- Dropdown items -->
             <div class="collapse ps-4" id="subjectsMenu">
                 <a class="nav-item-link d-block nav-child" href="/subjects">All Subject</a>
                 <a class="nav-item-link d-block nav-child" href="/createsubject">Create New Subject</a>
                 <a class="nav-item-link d-block nav-child" href="/categories">Subject Categories</a>
-                <a class="nav-item-link d-block nav-child" href="#">Subject Reviews & Rating</a>
+                <a class="nav-item-link d-block nav-child" href="/rating">Subject Reviews & Rating</a>
                 <a class="nav-item-link d-block nav-child" href="#">Subject Approval</a>
             </div>
->>>>>>> main
 
         <div class="collapse ps-4" id="paymentsMenu">
             <a class="nav-item-link d-block nav-child" href="#">Payment History</a>
             <a class="nav-item-link d-block nav-child" href="#">Invoices</a>
         </div>
+
+        <!-- Financial / Payment  -->
+        <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent" data-bs-toggle="collapse"
+           href="#analyticsMenu" role="button" aria-expanded="false" aria-controls="analyticsMenu">
+            <span><i class="fa-solid fa-chart-line pe-3"></i>Financial / Payments</span>
+            <i class="fa-solid fa-chevron-down chevron-icon"></i>
+        </a>
+
+        <div class="collapse ps-4" id="analyticsMenu">
+            <a class="nav-item-link d-block nav-child" href="#">Transactions</a>
+            <a class="nav-item-link d-block nav-child" href="/subscription">Subscription Plans</a>
+        </div>
+
 
         <!-- Reports & Analytics -->
         <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent" data-bs-toggle="collapse"
