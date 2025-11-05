@@ -358,6 +358,97 @@ class AdminController extends Controller
     }
 
     /**
+     * Get wallet transactions
+     */
+    public function transactions(Request $request)
+    {
+        try {
+            $query = WalletTransaction::with(['wallet.user']);
+
+            // Search by user name or email
+            if ($request->has('search')) {
+                $search = $request->search;
+                $query->whereHas('wallet.user', function ($q) use ($search) {
+                    $q->where('first_name', 'like', "%{$search}%")
+                      ->orWhere('last_name', 'like', "%{$search}%")
+                      ->orWhere('email', 'like', "%{$search}%");
+                });
+            }
+
+            // Filter by status
+            if ($request->has('status')) {
+                $query->where('status', $request->status);
+            }
+
+            // Filter by type
+            if ($request->has('type')) {
+                $query->where('type', $request->type);
+            }
+
+            // Filter by date range
+            if ($request->has('from_date')) {
+                $query->where('created_at', '>=', $request->from_date);
+            }
+
+            if ($request->has('to_date')) {
+                $query->where('created_at', '<=', $request->to_date);
+            }
+
+            // Sorting
+            $sortBy = $request->get('sort_by', 'created_at');
+            $sortOrder = $request->get('sort_order', 'desc');
+            $query->orderBy($sortBy, $sortOrder);
+
+            $transactions = $query->paginate($request->get('per_page', 20));
+
+            // Transform data for frontend
+            $transformedTransactions = $transactions->map(function ($transaction) {
+                return [
+                    'id' => $transaction->id,
+                    'user_name' => $transaction->wallet->user->first_name . ' ' . $transaction->wallet->user->last_name,
+                    'user_email' => $transaction->wallet->user->email,
+                    'amount' => $transaction->amount,
+                    'type' => $transaction->type,
+                    'status' => $transaction->status,
+                    'payment_method' => $transaction->payment_method ?? 'N/A',
+                    'plan' => $transaction->type,
+                    'created_at' => $transaction->created_at,
+                    'reference' => $transaction->reference
+                ];
+            });
+
+            // Transaction statistics
+            $stats = [
+                'total_transactions' => WalletTransaction::count(),
+                'completed_transactions' => WalletTransaction::where('status', 'completed')->count(),
+                'pending_transactions' => WalletTransaction::where('status', 'pending')->count(),
+                'failed_transactions' => WalletTransaction::where('status', 'failed')->count(),
+                'total_amount' => WalletTransaction::where('status', 'completed')->sum('amount'),
+                'average_transaction' => WalletTransaction::where('status', 'completed')->avg('amount')
+            ];
+
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'data' => $transformedTransactions,
+                    'current_page' => $transactions->currentPage(),
+                    'per_page' => $transactions->perPage(),
+                    'total' => $transactions->total(),
+                    'last_page' => $transactions->lastPage(),
+                    'prev_page_url' => $transactions->previousPageUrl(),
+                    'next_page_url' => $transactions->nextPageUrl(),
+                    'statistics' => $stats
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch transactions: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
      * Get system reports
      */
     public function reports(Request $request)
@@ -1258,7 +1349,7 @@ class AdminController extends Controller
                 'parent_last_name' => 'nullable|string|max:255',
                 'parent_email' => 'nullable|email',
                 'parent_phone' => 'nullable|string|max:20',
-                'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+                'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048'
             ]);
 
             if ($validator->fails()) {
@@ -1359,7 +1450,7 @@ class AdminController extends Controller
                 'parent_last_name' => 'nullable|string|max:255',
                 'parent_email' => 'nullable|email',
                 'parent_phone' => 'nullable|string|max:20',
-                'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+                'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048'
             ]);
 
             if ($validator->fails()) {

@@ -91,7 +91,7 @@ class CourseController extends Controller
             'difficulty' => 'required|in:beginner,intermediate,advanced',
             'duration_hours' => 'nullable|integer|min:1',
             'max_students' => 'nullable|integer|min:1',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:5048'
         ]);
 
         if ($validator->fails()) {
@@ -204,7 +204,7 @@ class CourseController extends Controller
                 'difficulty' => 'sometimes|in:beginner,intermediate,advanced',
                 'duration_hours' => 'nullable|integer|min:1',
                 'max_students' => 'nullable|integer|min:1',
-                'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+                'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:5048'
             ]);
 
             if ($validator->fails()) {

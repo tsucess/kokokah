@@ -184,6 +184,25 @@ Route::get('/subjects', function () {
     return view('admin.allsubjects');
 });
 
+<<<<<<< HEAD
+=======
+Route::get('/categories', function () {
+    return view('admin.categories');
+});
+
+Route::get('/students', function () {
+    return view('admin.students');
+});
+
+Route::get('/instructors', function () {
+    return view('admin.instructors');
+});
+
+Route::get('/transactions', function () {
+    return view('admin.transactions');
+});
+
+>>>>>>> f1d28d8cdec28e8c120f1c3c2fe3536d60ada84a
 Route::get('/subjectmedia', function () {
     return view('admin.subjectmedia');
 });

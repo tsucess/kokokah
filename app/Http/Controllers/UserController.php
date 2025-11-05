@@ -69,7 +69,7 @@ class UserController extends Controller
             'city' => 'nullable|string|max:100',
             'timezone' => 'nullable|string|max:50',
             'language' => 'nullable|string|max:10',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:5048'
         ]);
 
         if ($validator->fails()) {

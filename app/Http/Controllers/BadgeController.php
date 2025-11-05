@@ -123,7 +123,7 @@ class BadgeController extends Controller
             'type' => 'required|in:course_completion,quiz_mastery,streak,participation,milestone',
             'criteria' => 'required|array',
             'points' => 'required|integer|min:1',
-            'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
             'is_active' => 'boolean'
         ]);
 
@@ -184,7 +184,7 @@ class BadgeController extends Controller
                 'type' => 'sometimes|in:course_completion,quiz_mastery,streak,participation,milestone',
                 'criteria' => 'sometimes|array',
                 'points' => 'sometimes|integer|min:1',
-                'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
                 'is_active' => 'boolean'
             ]);
 

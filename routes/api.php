@@ -371,6 +371,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/users/{userId}', [AdminController::class, 'deleteUser']);
         Route::get('/courses', [AdminController::class, 'courses']);
         Route::get('/payments', [AdminController::class, 'payments']);
+        Route::get('/transactions', [AdminController::class, 'transactions']);
         Route::get('/reports', [AdminController::class, 'reports']);
         Route::get('/settings', [AdminController::class, 'settings']);
         Route::get('/stats', [AdminController::class, 'databaseStats']); // Add missing stats route
