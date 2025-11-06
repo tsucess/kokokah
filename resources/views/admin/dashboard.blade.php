@@ -248,10 +248,10 @@
                             let categoryHtml = '';
                             const categories = Object.entries(stats.courses.by_category);
                             categories.forEach((entry, index) => {
-                                const [categoryName, count] = entry;
-                                const color = index % 2 === 0 ? 'text-success' : 'text-warning';
-                                categoryHtml += `<i class="fa-solid fa-square ${color}"></i> ${categoryName} <span>(${count})</span>`;
-                                if (index < categories.length - 1) categoryHtml += ' <br />';
+                                // const [categoryName, count] = entry;
+                                // const color = index % 2 === 0 ? 'text-success' : 'text-warning';
+                                // categoryHtml += `<i class="fa-solid fa-square ${color}"></i> ${categoryName} <span>(${count})</span>`;
+                                // if (index < categories.length - 1) categoryHtml += ' <br />';
                             });
                             coursesByCategoryEl.innerHTML = categoryHtml;
                         }
