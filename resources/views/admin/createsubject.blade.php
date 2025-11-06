@@ -30,27 +30,27 @@
     <div class = "container">
 
         <div class = "d-flex gap-4 justify-content-space-between">
-        <button  type = "button" class = "btn btn-light btn-outline-dark border-1 rounded me-3 connectorbutton">
+        <button  type = "button" class = "btn btn-light btn-outline-dark border-1 rounded me-3 connectorbutton" data-section="details">
             <i class="fa-solid fa-dot-circle me-2" ></i>
             Create New Subject &nbsp;
             <i class="fa fa-arrow-right me-2"></i>
         </button>
 
 
-        <button class = "btn btn-light borderlessconnectorbutton" type = "button" href = "/subjectmedia">
+        <button class = "btn btn-light borderlessconnectorbutton" type = "button" data-section="media">
             <i class="fa-solid fa-dot-circle me-2"></i>
             Subject Media
             <i class="fa fa-arrow-right me-2"></i>
         </button>
 
 
-        <button class = "btn btn-light borderlessconnectorbutton" type = "button">
+        <button class = "btn btn-light borderlessconnectorbutton" type = "button" data-section="curriculum">
             <i class="fa-solid fa-dot-circle me-2"></i>
             Curriculum
             <i class="fa fa-arrow-right me-2"></i>
         </button>
 
-        <button class = "btn btn-light borderlessconnectorbutton" type = "button">
+        <button class = "btn btn-light borderlessconnectorbutton" type = "button" data-section="publish">
             <i class="fa-solid fa-dot-circle me-2"></i>
              Publish Subject
             <i class="fa fa-arrow-right me-2"></i>
@@ -61,7 +61,9 @@
 
 </div>
 
-<div class = "container">
+
+<!-- New Course Details Section -->
+<div class = "container content-section" id="details">
 
 <div class = "row">
 <div class = "mb-2  border border-bottom-1 border-top-0 border-start-0 border-end-0">
@@ -155,7 +157,7 @@ Course Details
 
 
 <div class = "row mt-3">
-<div class = "d-flex col-md-12 col-lg-12 justify-content-end ">
+<div class = "d-flex col-md-12 col-lg-12 justify-content-end">
     <div class = "d-flex flex-column flex-lg-row gap-3 px-0">
           <button class="btn btn-nav-secondary" style="padding: 12px 120px;">Cancel</button>
           <button class="btn btn-nav-primary" style="padding: 12px 120px;">Continue</button>
@@ -166,5 +168,267 @@ Course Details
 </div>
 
 
+
+<!-- New Subject Media Section -->
+ <div class = "container-fluid" id="media" class="content-section d-none">
+    <div class = "row">
+        <h5>Course Media</h5>
+        <p class = "text-muted">Intro Course Overview Provide type (Mp4, Youtube,etc)</p>
+
+
+<div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+
+
+                    <form id="uploadForm bg-primary">
+                        <!-- File Name Display and Upload Button -->
+
+
+<div class="d-flex mb-3 w-100">
+    <input type="text" class="form-control file-name-input flex-grow-1" id="fileNameDisplay" placeholder="No file selected" readonly>
+        <button class="btn btn-nav-primary" style="padding: 12px 120px;">Upload File</button>
+</div>
+
+
+                        <!-- File Upload Area -->
+                        <div class="mb-3">
+                            <label for="fileInput" class="upload-area">
+                                <i class="fas fa-file-circle-check "></i>
+                                <h5>Upload Image</h5>
+                                <p>PNG, JPEG, GIF (max 2mb size)</p>
+                            </label>
+                            <input type="file" id="fileInput" name="file" class="d-none">
+                        </div>
+
+
+                    </form>
+                    <div id="message" class="text-center text-success fw-bold"></div>
+
+            </div>
+        </div>
+    </div>
+
+<div class = "row mt-3">
+<div class = "d-flex col-md-12 col-lg-12 justify-content-end ">
+    <div class = "d-flex flex-column flex-lg-row gap-3 px-0">
+          <button class="btn btn-nav-secondary" style="padding: 12px 120px;">Cancel</button>
+          <button class="btn btn-nav-primary" style="padding: 12px 120px;">Continue</button>
+        </div>
+</div>
+</div>
+    </div>
+    </div>
+
+
+    <!-- Curriculum Section -->
+        <div class = "container content-section d-none" id="curriculum">
+        <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h5 class="fw-bold">Curriculum</h5>
+      <p class="text-muted mb-0">Intro Course Overview Provide type (Mp4, Youtube,etc)</p>
+    </div>
+
+        <button class="btn btn-nav-primary"><i class="fa-solid fa-plus me-2"></i> Add New Topic</button>
+    </div>
+
+  </div>
+    </div>
+
+    <div class = "container">
+
+ <div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h5 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="border: none;">
+       <i class="fa-solid fa-book-open me-2"></i>  Parts of Speech
+      </button>
+    </h5>
+    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>This is the first item’s accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element.
+      </div>
+    </div>
+  </div>
+
+        </div>
+
+        <div class = "d-flex justify-content-between border border-2 rounded p-3 mt-3 mb-2">
+
+            <div>
+                <i class="fa-solid fa-circle-play"></i> Nouns
+            </div>
+
+            <div>
+                <i class="fa-solid fa-pen-to-square"></i>
+                <i class="fa-solid fa-trash"></i>
+            </div>
+        </div>
+
+                <div class = "d-flex justify-content-between border border-2 rounded p-3 mt-3 mb-2">
+
+            <div>
+                <i class="fa-solid fa-circle-play"></i> Pronoun
+            </div>
+
+            <div>
+                <i class="fa-solid fa-pen-to-square"></i>
+                <i class="fa-solid fa-trash"></i>
+            </div>
+        </div>
+
+        <button type="button" class="btn  btn-outline-dark btn-light" style="width: 150px;">
+            <i class="fa-solid fa-plus"></i>
+            Add Lesson
+        </button>
+
+    </div>
+
+
+
+
+<div class = "row mt-3">
+<div class = "d-flex col-md-12 col-lg-12 justify-content-end ">
+    <div class = "d-flex flex-column flex-lg-row gap-3 px-0">
+          <button class="btn btn-nav-secondary" style="padding: 12px 120px;">Previous</button>
+          <button class="btn btn-nav-primary" style="padding: 12px 120px;">Continue</button>
+        </div>
+</div>
+</div>
+
+
+
+    <div class = "container content-section d-none" id="publish">
+ <section class="subject-overview-card">
+        <h3 class="subject-overview-title">Subject Overview</h3>
+        <div class="d-flex flex-column gap-3">
+            <section class="d-flex flex-column gap">
+                <header class="d-flex justify-content-between gap-2 align-items-center ">
+                    <div class="d-flex flex-column gap-3">
+                        <h4 class="subject-text">English Language</h4>
+                        <div class="d-flex gap-2 align-items-center">
+                            <div class="d-flex aling-items-center gap-1"><i class="fa-solid fa-book" style="color: #000000;"></i> <span class="subject-subtext">11 Topics</span></div>
+                            <div class="d-flex aling-items-center gap-1"><i class="fa-solid fa-circle-play" style="color: #000000;"></i> <span class="subject-subtext">11 Lesson</span></div>
+                            <div class="d-flex aling-items-center gap-1"><i class="fa-solid fa-question" style="color: #000000;"></i> <span class="subject-subtext">10 Quiz</span></div>
+                            <div class="d-flex aling-items-center gap-1"><i class="fa-solid fa-clock" style="color: #000000;"></i> <span class="subject-subtext">03:50:00 Hours</span></div>
+                            <div class="d-flex aling-items-center gap-1"><i class="fa-solid fa-landmark" style="color: #000000;"></i> <span class="subject-subtext">Jss 1</span></div>
+                        </div>
+
+                    </div>
+                    <div class="d-flex gap-2 align-items-center">
+                        <button><i class="fa-solid fa-circle-check"></i></button>
+                        <button><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                    </div>
+                </header>
+                <div><img src="images/publish.png" alt="" class="subject-overview-img"></div>
+            </section>
+            <article class="d-flex flex-column subject-overview-description-container">
+                <h4 class="subject-overview-description-title">Subject Description</h4>
+                <div class="d-flex gap-2 flex-column">
+                    <p class="subject-overview-description-text">English Language is designed to equip learners with the skills needed to communicate effectively in both spoken and written forms. The subject focuses on grammar, vocabulary, comprehension, writing, and oral communication. Learners
+                        will develop the ability to read with understanding, write clearly and creatively, listen attentively, and speak confidently in different contexts. Through interactive lessons, practice exercises, and assessments, students will
+                        build a strong foundation in grammar and vocabulary, improve their reading and writing skills, and learn to express themselves fluently and accurately. By the end of the course, learners will not only master the technical aspects
+                        of English but also gain the confidence to apply the language in academic, professional, and everyday life. </p>
+
+                    <div>
+                        <p class="subject-overview-study-list">Key Areas of Study:</p>
+                        <ul>
+                            <li>Grammar and Structure </li>
+                            <li>Vocabulary Development</li>
+                            <li>Reading Comprehension</li>
+                            <li>Writing Skills (letters, essays, reports, creative writing)</li>
+                            <li>Speaking and Listening Skills </li>
+                            <li>Literature Appreciation (poetry, prose, drama)</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </article>
+            <section class="d-flex flex-column curriculum-container">
+                <h4 class="subject-overview-description-title">Curriculum</h4>
+                <div class="d-flex flex-column gap-2">
+                    <div class="d-flex justify-content-between align-items-center gap-2 speech-card">
+                        <div class="d-flex gap-3 align-items-center">
+                            <i class="fa-solid fa-book-open-reader"></i>
+                            <div class="d-flex flex-column gap-1">
+                                <h5 class="speech-card-title">Parts of Speech</h5>
+                                <div class="d-flex gap-1 align-items-center">
+                                    <div class="d-flex aling-items-center gap-1"><i class="fa-solid fa-circle-play" style="color: #000000;"></i> <span class="subject-subtext">11 Lesson</span></div>
+                                    <div class="d-flex aling-items-center gap-1"><i class="fa-solid fa-question" style="color: #000000;"></i> <span class="subject-subtext">10 Quiz</span></div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-circle-check" style="color: #004A53;"></i>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+    </section>
+
+</div>
+
+<div class = "row  mt-4">
+<div class = "d-flex col-md-12 col-lg-12 justify-content-end ">
+    <div class = "d-flex flex-column flex-lg-row gap-3 px-0">
+          <button class="btn btn-nav-secondary" style="padding: 12px 120px;">Back</button>
+          <button class="btn btn-nav-primary" style="padding: 12px 120px;">Publish Now</button>
+        </div>
+</div>
+</div>
+
+
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.getElementById('fileInput');
+            const fileNameDisplay = document.getElementById('fileNameDisplay');
+            const uploadButton = document.getElementById('uploadButton');
+            const messageElement = document.getElementById('message');
+
+            // Listen for changes on the hidden file input
+            fileInput.addEventListener('change', function(e) {
+                if (this.files && this.files.length > 0) {
+                    fileNameDisplay.value = this.files[0].name;
+                    messageElement.textContent = '';
+                } else {
+                    fileNameDisplay.value = 'No file selected...';
+                }
+            });
+
+            // Handle the upload button click
+            uploadButton.addEventListener('click', function() {
+                if (fileInput.files.length > 0) {
+                    // Placeholder for actual upload logic
+                    messageElement.textContent = 'File "' + fileInput.files[0].name + '" is ready for upload!';
+                } else {
+                    messageElement.textContent = 'Please select a file first.';
+                }
+            });
+        });
+
+
+        <!-- Navigating across the connectors -->
+        document.querySelectorAll('[data-section]').forEach(btn => {
+    btn.addEventListener('click', function() {
+      // Remove active state from all buttons
+      document.querySelectorAll('[data-section]').forEach(b => b.classList.remove('connectorbutton'));
+
+      // Add active to clicked one
+      this.classList.add('connectorbutton');
+
+      // Hide all content sections
+      document.querySelectorAll('.content-section').forEach(sec => sec.classList.add('d-none'));
+
+      // Show selected section
+      document.getElementById(this.dataset.section).classList.remove('d-none');
+    });
+  });
+    </script>
 </main>
 @endsection

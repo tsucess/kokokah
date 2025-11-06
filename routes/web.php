@@ -208,6 +208,11 @@ Route::get('/curriculum', function () {
     return view('admin.curriculum');
 });
 
+#testing this code
+Route::get('/create-subject', function () {
+    return view('admin.create-subject');
+});
+
 Route::get('/createsubject', function () {
     return view('admin.createsubject');
 });
