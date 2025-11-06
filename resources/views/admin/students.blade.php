@@ -65,7 +65,7 @@
               <th style="color: #333; font-weight: 600; padding: 1rem;">Email Address</th>
               <th style="color: #333; font-weight: 600; padding: 1rem;">Gender</th>
               <th style="color: #333; font-weight: 600; padding: 1rem;">Contact</th>
-              <th style="color: #333; font-weight: 600; padding: 1rem;">Location</th>
+              {{-- <th style="color: #333; font-weight: 600; padding: 1rem;">Location</th> --}}
               <th style="color: #333; font-weight: 600; padding: 1rem;">Action</th>
             </tr>
           </thead>
@@ -198,9 +198,9 @@
                 <td style="padding: 1rem; color: #666;">${user.email}</td>
                 <td style="padding: 1rem;"><span style="color: #666;">${user.gender || 'N/A'}</span></td>
                 <td style="padding: 1rem; color: #666;">${user.contact || 'N/A'}</td>
-                <td style="padding: 1rem;">
-                  <!-- <span class="badge" style="background-color: ${roleColor}; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">${user.role}</span> -->
-                </td>
+                <!-- <td style="padding: 1rem;">
+                  <span class="badge" style="background-color: ${roleColor}; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">${user.role}</span> 
+                </td>-->
                 <td style="padding: 1rem;">
                   <div class="d-flex gap-2">
                     <a href="/edituser?id=${user.id}" class="btn btn-sm btn-light" style="border: 1px solid #ddd; padding: 0.5rem 0.75rem;" title="Edit">
