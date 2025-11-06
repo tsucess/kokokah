@@ -89,7 +89,7 @@
         <!-- Table Header with Search and Filters -->
         <div class="d-flex justify-content-between align-items-center mb-5">
           <h5 class="fw-bold mb-0" style="font-size: 1.1rem; color: #1a1a1a;">Courses</h5>
-          <div class="d-flex gap-3" style="flex: 1; margin-left: 2rem;">
+          <div class="d-flex gap-3 justify-content-end" style="flex: 1; margin-left: 2rem;">
             <!-- Search Input -->
             <div class="position-relative flex-grow-1" style="max-width: 300px;">
               <i class="fa-solid fa-search position-absolute top-50 start-0 translate-middle-y ms-3" style="color: #999;"></i>
@@ -110,12 +110,12 @@
             </select>
 
             <!-- View Options -->
-            <button class="btn btn-light" style="border: 1px solid #ddd; padding: 0.625rem 1rem;" title="List View">
+            {{-- <button class="btn btn-light" style="border: 1px solid #ddd; padding: 0.625rem 1rem;" title="List View">
               <i class="fa-solid fa-list" style="color: #004A53;"></i>
             </button>
             <button class="btn btn-light" style="border: 1px solid #ddd; padding: 0.625rem 1rem;" title="Grid View">
               <i class="fa-solid fa-grip" style="color: #999;"></i>
-            </button>
+            </button> --}}
           </div>
         </div>
 

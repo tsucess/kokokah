@@ -7,11 +7,11 @@
         <div class = "d-flex justify-content-between">
 
             <div>
-            <h4 class = "fw-bold">Create New Course</h4>
+            <h4 class = "fw-bold">Create New Subject</h4>
             <p>Here overview of your</p>
         </div>
 
-        <div>
+        <div class = "d-flex gap-4">
         <button class = "btn rounded coursedraft">
         Save As Draft
         </button>
@@ -28,35 +28,38 @@
 
     <div class = "container">
 
-        <div class = "d-flex">
-        <button  type = "button" class = "btn btn-link text-decoration-none border-1 rounded  connectlink" >
-            <i class="fa-solid fa-dot-circle me-2"></i>
-            Create New Subject
-            <i class="fa fa-arrow-right me-1"></i>
+        <div class = "d-flex gap-4 justify-content-space-between">
+        <button  type = "button" class = "btn btn-light borderlessconnectorbutton">
+            <i class="fa-solid fa-dot-circle me-2" ></i>
+            Create New Subject &nbsp;
+            <i class="fa fa-arrow-right me-2"></i>
         </button>
 
 
-          <button  type = "button" class = "btn btn-link text-decoration-none border-1 rounded connectlink">
+        <button class = "btn btn-light borderlessconnectorbutton" type = "button" href = "/subjectmedia">
             <i class="fa-solid fa-dot-circle me-2"></i>
             Subject Media
-            <i class="fa fa-arrow-right me-1"></i>
+            <i class="fa fa-arrow-right me-2"></i>
         </button>
 
-         <button  type = "button" class = "btn btn-link text-decoration-none border-1 rounded me-4 connectlink">
+
+        <button class = "btn btn-light btn-outline-dark connectorbutton" type = "button">
             <i class="fa-solid fa-dot-circle me-2"></i>
             Curriculum
-            <i class="fa fa-arrow-right me-1"></i>
+            <i class="fa fa-arrow-right me-2"></i>
         </button>
 
-        <button  type = "button" class = "btn btn-outline-dark border-1 rounded w-25  connectlink">
+        <button class = "btn btn-light borderlessconnectorbutton" type = "button">
             <i class="fa-solid fa-dot-circle me-2"></i>
-             Publish Course
-            <i class="fa fa-arrow-right me-1"></i>
+             Publish Subject
+            <i class="fa fa-arrow-right me-2"></i>
         </button>
 
 
     </div>
-    </div>
+
+</div>
+
 
     <div class = "container">
         <!-- Header -->
@@ -70,9 +73,11 @@
     </button> --}}
 
     <div>
-    <button class="btn-nav-curriculum">
+    {{-- <button class="btn-nav-curriculum">
       <i class="fa fa-plus me-2"></i>Add New Topic
-    </button>
+    </button> --}}
+
+        <button class="btn btn-nav-primary"><i class="fa-solid fa-plus me-2"></i> Add New Topic</button>
     </div>
 
   </div>
@@ -108,6 +113,18 @@
             </div>
         </div>
 
+                <div class = "d-flex justify-content-between border border-2 rounded p-3 mt-3 mb-2">
+
+            <div>
+                <i class="fa-solid fa-circle-play"></i> Pronoun
+            </div>
+
+            <div>
+                <i class="fa-solid fa-pen-to-square"></i>
+                <i class="fa-solid fa-trash"></i>
+            </div>
+        </div>
+
         <button type="button" class="btn  btn-outline-dark btn-light" style="width: 150px;">
             <i class="fa-solid fa-plus"></i>
             Add Lesson
@@ -116,20 +133,16 @@
     </div>
 
 
-    {{-- <div class = "row float-end mx-auto">
 
-        <div class="d-flex justify-content-end gap-3 px-0">
-            <button class="btn-nav-secondary w-75">Previous</button>
-            <button class="btn-nav-primary w-75">Continue</button>
-                </div>
-    </div> --}}
 
-    <div class = "container">
-    <div class="btn-row">
-    <button class="btn btn-prev px-4 py-2">Previous</button>
-    <button class="btn btn-continue px-4 py-2">Continue</button>
-  </div>
-    </div>
+<div class = "row mt-3">
+<div class = "d-flex col-md-12 col-lg-12 justify-content-end ">
+    <div class = "d-flex flex-column flex-lg-row gap-3 px-0">
+          <button class="btn btn-nav-secondary" style="padding: 12px 120px;">Previous</button>
+          <button class="btn btn-nav-primary" style="padding: 12px 120px;">Continue</button>
+        </div>
+</div>
+</div>
 
 </main>
 @endsection
