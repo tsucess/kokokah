@@ -86,10 +86,10 @@
         </div>
 
            
-
+{{-- 
         <a class="nav-item-link" href="/student">
             <span><i class="fa-solid fa-user-graduate pe-3"></i> Students</span>
-        </a>
+        </a> --}}
 
             <!-- Dropdown items -->
             <div class="collapse ps-4" id="subjectsMenu">
