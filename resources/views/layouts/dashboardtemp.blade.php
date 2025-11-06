@@ -61,11 +61,14 @@
             <i class="fa-solid fa-chevron-down chevron-icon"></i>
         </a>
 
-        <div class="collapse ps-4" id="usersMenu">
-            <a class="nav-item-link d-block nav-child" href="/users">All Users</a>
-            <a class="nav-item-link d-block nav-child" href="/adduser">Add Users</a>
-            <a class="nav-item-link d-block nav-child" href="/useractivity">Users Activity Log</a>
-        </div>
+         <!-- Dropdown items -->
+            <div class="collapse ps-4" id="usersMenu">
+                <a class="nav-item-link d-block nav-child" href="/users">All Users</a>
+                <a class="nav-item-link d-block nav-child" href="/students">Students</a>
+                <a class="nav-item-link d-block nav-child" href="/instructors">Instructors</a>
+                <a class="nav-item-link d-block nav-child" href="/adduser">Add Users</a>
+                <a class="nav-item-link d-block nav-child" href="/useractivity">Users Activity Log</a>
+            </div>
 
         <!-- Subject Management -->
         <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent" data-bs-toggle="collapse"
@@ -82,18 +85,11 @@
             <a class="nav-item-link d-block nav-child" href="#">Subject Approval</a>
         </div>
 
-            <!-- Dropdown items -->
-            <div class="collapse ps-4" id="usersMenu">
-                <a class="nav-item-link d-block nav-child" href="/users">All Users</a>
-                <a class="nav-item-link d-block nav-child" href="/students">Students</a>
-                <a class="nav-item-link d-block nav-child" href="/instructors">Instructors</a>
-                <a class="nav-item-link d-block nav-child" href="/adduser">Add Users</a>
-                <a class="nav-item-link d-block nav-child" href="/useractivity">Users Activity Log</a>
-            </div>
-
+           
+{{-- 
         <a class="nav-item-link" href="/student">
             <span><i class="fa-solid fa-user-graduate pe-3"></i> Students</span>
-        </a>
+        </a> --}}
 
             <!-- Dropdown items -->
             <div class="collapse ps-4" id="subjectsMenu">
