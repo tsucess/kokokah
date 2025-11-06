@@ -6,7 +6,7 @@
         <div class="row align-items-center">
             <div class="col-12 col-md-6 col-lg-6">
                 <h1 class="fw-bold hero-title">
-                    Quality, Mobile-First, Pay-as-you-Go, Curriculum Based Lessons & Practice Tests
+                    Quality, Mobile-First, Pay-as-you-Go, Curriculum Based Lessons & Practice Tests for Secondary School Students, Teachers & Schools.
                 </h1>
                 <p class="mb-4 hero-subtitle">
                     LOW DATA USAGE + OFFLINE ACCESS + SCHOOL MANAGEMENT SYSTEM
@@ -264,7 +264,7 @@
 
 
     <div class = "container">
-        <div class="row ourproduct2 product-section-bordered">
+        <div class="row ourproduct2 product-section-bordered" style="background-color : #F56824;">
             <!-- Image Section -->
             <div class="col-12 col-md-6 my-auto text-center">
                 <img src="images/School Admin.png" class="img-fluid w-100 w-md-75" alt="School Admin">
@@ -272,10 +272,10 @@
 
             <!-- Text Section -->
             <div class="col-12 col-md-6 my-auto d-flex flex-column">
-                <h5>
+                <h5 class="text-white">
                     STEM Labs
                 </h5>
-                <p>
+                <p class="text-white">
                     Get hands-on STEM bootcamps, summer schools,
                     and practical learning experiences to prepare
                     students for the future of science & tech.
@@ -299,7 +299,7 @@
 
             <div class = "col-12 col-md-7 col-lg-7">
                 <h5>
-                    Koodies for Children
+                    Kokoplay
                 </h5>
                 <p>
                     Kokokah combines School Management, Exam Prep, and a
@@ -309,7 +309,7 @@
                     Learning Management System (LMS)—helping schools automate admin tasks, boost
                     student performance, and deliver modern digital learning in one seamless platform.
                 </p>
-                <button class = "btn primaryButton product-button-yellow" type = "button">Discover Koodies</button>
+                <button class = "btn primaryButton product-button-yellow" type = "button">Coming Soon</button>
 
                 <div>
                     <img src = "images/koodies.png" class = "img-fluid  w-md-75 float-end">
@@ -321,6 +321,8 @@
 
 
     <div class="container text-center mt-5 py-5 achievement-section">
+    <p class="achievement-label">Kokokah has industry-leading renewals of above 80%
+</p>
         <!-- Section Title -->
         <div class="row justify-content-center mb-5">
             <div class="col-12 mt-5">
@@ -329,7 +331,7 @@
         </div>
 
         <!-- Testimonials -->
-        <div class="row g-4 justify-content-center">
+        <div class="row g-5 justify-content-center">
             <!-- Testimonial 1 -->
             <div class="col-12 col-md-6 col-lg-5 custom-width">
                 <div class="testimonial-card position-relative p-4">
@@ -368,7 +370,7 @@
         <div class = "row justify-content-center p-5 text-white">
 
             <div class = "col-12 col-lg-12 col-md-12 text-center">
-                <h5 class = "mb-3">Message from the founder</h5>
+                <h5 class = "mb-3 " style="color:#004A53; font-size : 32px;">Message from the founder</h5>
                 <img src = "images/youtube.png" class="img-fluid founder-video">
             </div>
 

@@ -34,8 +34,8 @@ Route::get('/contact', function () {
     return view('contact');
 });
 
-Route::get('/koodies', function () {
-    return view('koodies');
+Route::get('/kokoplay', function () {
+    return view('kokoplay');
 });
 
 Route::get('/stem', function () {
@@ -85,6 +85,26 @@ Route::get('/profile', function () {
 
 Route::get('/application', function () {
     return view('application');
+});
+
+Route::get('/categories', function () {
+    return view('admin.categories');
+});
+
+Route::get('/rating', function () {
+    return view('admin.rating');
+});
+
+Route::get('/instructor', function () {
+    return view('admin.instructor');
+});
+
+Route::get('/student', function () {
+    return view('admin.student');
+});
+
+Route::get('/subscription', function () {
+    return view('admin.subscriptionplan');
 });
 
 Route::get('/register', function () {
@@ -188,8 +208,17 @@ Route::get('/curriculum', function () {
     return view('admin.curriculum');
 });
 
+#testing this code
+Route::get('/create-subject', function () {
+    return view('admin.create-subject');
+});
+
 Route::get('/createsubject', function () {
     return view('admin.createsubject');
+});
+
+Route::get('/publish', function () {
+    return view('admin.publish');
 });
 
 Route::get('/userkoodies', function () {

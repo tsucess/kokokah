@@ -51,6 +51,12 @@ h4 {
     color: #004A53;
 }
 
+h5 {
+    font-family: Fredoka, serif;
+    font-weight: bold;
+    font-size: 20px;
+}
+
 p {
     font-family: sitka;
     font-size: 15px;
@@ -118,6 +124,8 @@ body {
     transition: transform 0.28s ease-in-out;
     font-family: sitka;
     font-size: 14px;
+     overflow-y: auto;
+    overflow-x: hidden;
     /* line-spacing: 0.1px; */
 }
 
@@ -130,8 +138,17 @@ body {
         transform: translateX(0);
     }
 
-    main,
-    .topbar {
+    /* Caret rotation animation */
+.chevron-icon {
+    transition: transform 0.3s ease;
+}
+
+/* When collapse is open, rotate caret */
+.nav-parent[aria-expanded="true"] .chevron-icon {
+    transform: rotate(180deg);
+}
+
+    main, .topbar {
         margin-left: 0 !important;
     }
 }
@@ -371,7 +388,7 @@ main .container {
 .stat-card {
     background: var(--card-bg);
     border-radius: 18px;
-    padding: 14px 10px;
+    padding: 14px 15px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -386,6 +403,10 @@ main .container {
         display: flex;
         flex-direction: column;
     }
+}
+
+.stat-card p {
+    font-size: 12px;
 }
 
 .stat-orb {
@@ -420,7 +441,7 @@ main .container {
 
 
 .stat-meta .label {
-    font-size: 11px;
+    font-size: 18px;
     color: var(--muted);
     font-weight: 700;
     text-transform: uppercase;
@@ -528,6 +549,11 @@ main .container {
 .coursedraft {
     background-color: #A3D8DF;
     color: #fff;
+    width:130px;
+    height: 40px;
+    border-radius: 8px;
+    padding: 8px 16px;
+    border: 1px solid #A3D8DF;
 }
 
 .coursedraft:hover {
@@ -538,6 +564,11 @@ main .container {
 .publishcourse {
     background-color: #3BA0AC;
     color: #fff;
+    width:138px;
+    height: 40px;
+    border-radius: 8px;
+    padding: 8px 16px;
+    border: 1px solid #A3D8DF;
 }
 
 .publishcourse:hover {
@@ -545,7 +576,25 @@ main .container {
     color: #fff;
 }
 
+.connectorbutton
+{
+    width:284px;
+    height:62px;
+    border-radius: 5px;
+    border: 1px solid #004A53;
+    color:#000F11;
+    font:sitka;
+    font-size: 18px;
+}
 
+.borderlessconnectorbutton
+{
+    width:284px;
+    height:62px;
+    color:#004A53;
+    font:sitka;
+    font-size: 18px;
+}
 
 .upload-card {
     background-color: #fff;
@@ -1365,3 +1414,284 @@ main .container {
     background-color: #004A53;
     color: #FFFFFF;
 }
+
+
+/* rating code */
+.rating-container {
+        gap: 32px;
+      }
+      .rating-header {
+        gap: 6px;
+      }
+      .rating-title {
+        font-family: "Fredoka", sans-serif;
+        color: #004a53;
+        font-size: 32px;
+        font-weight: 600;
+      }
+      .rating-subtitle {
+        font-size: 18px;
+        color: #1c1d1d;
+      }
+      .review-container {
+        gap: 58px;
+        border: 1px solid #004a53;
+        border-radius: 20px;
+        padding: 20px;
+      }
+      .review-header-title-container {
+        gap: 4px;
+      }
+      .review-header-title {
+        font-weight: 700;
+        color: #000;
+        font-size: 20px;
+      }
+      .review-header-subtitle {
+        color: #00252a;
+        font-size: 14px;
+      }
+      .gap {
+        gap: 4px;
+      }
+      .review-header-rating {
+        font-size: 16px;
+        color: #004a53;
+      }
+      .review-btn {
+        border: 1px solid #004a53;
+        border-radius: 8px;
+        padding: 8px 16px;
+        font-size: 16px;
+        color: #004a53;
+        font-family: "Lato", sans-serif;
+        background-color: transparent;
+        font-weight: 600;
+      }
+      .review-distribution {
+        font-size: 20px;
+        color: #000;
+        font-weight: 700;
+      }
+      .progress-bar {
+        width: 198px;
+        height: 6px;
+        border-radius: 3px;
+        background-color: #78787833;
+      }
+      .progress-bar-track {
+        background-color: #004a53;
+        height: 6px;
+        border-radius: 3px;
+      }
+
+
+      /* Admin Dashboard Subscription Plan */
+       .subscription-header {
+        gap: 12px;
+    }
+
+    .subscription-title {
+        font-size: 32px;
+        font-family: "Fredoka", sans-serif;
+        color: #004a53;
+        font-weight: bold;
+    }
+
+    .subscription-text {
+        font-size: 18px;
+        color: #1c1d1d;
+    }
+
+    .toggle-text {
+        font-size: 18px;
+        color: black;
+        font-weight: 600;
+    }
+
+    .toggle-container {
+        width: 68px;
+        height: 39px;
+        border: 1px solid #cbcbcb;
+        border-radius: 50rem;
+        display: flex;
+        align-items: center;
+        padding-inline: 5px;
+    }
+
+    .toggle-switch {
+        width: 28px;
+        height: 28px;
+        background-color: #FDAF22;
+        border-radius: 50%;
+    }
+
+    .toggle-label {
+        width: 63px;
+        height: 17px;
+        border: 1px solid #004a53;
+        font-size: 9px;
+        color: #004a53;
+        font-weight: 500;
+    }
+
+    .price-plan {
+        box-shadow: 6px 6px 54px 0 rgba(0, 0, 0, 0.10);
+        background-color: white;
+        padding: 20px 18px;
+        border-radius: 10px;
+        gap: 10px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .price-plan-header {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .price-plan-title {
+        font-size: 20px;
+        font-weight: 700;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #272727;
+    }
+
+    .price-plan-subtext {
+        font-size: 16px;
+        color: #6b6b6b;
+    }
+
+    .price-plan-price-container {
+        border: 1px solid #e5e6e7;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-block: 24px;
+        color: #004a53;
+    }
+
+    .price-plan-price-large {
+        font-size: 48px;
+        font-weight: 700;
+    }
+
+    .price-plan-price-small {
+        font-size: 20px;
+        align-self: self-end;
+    }
+
+    .price-plan-list {
+        gap: 8px;
+    }
+
+    .price-plan-list-item {
+        font-size: 20px;
+        color: #6b6b6b;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        gap: 8px;
+        display: flex;
+        align-items: center;
+    }
+
+    .price-plan-btn {
+        width: 100%;
+        height: 60px;
+        border: 1px solid #004a53;
+        color: #004a53;
+        font-weight: 600;
+        background-color: transparent;
+        border-radius: 4px;
+    }
+
+    /* publish page */
+     button {
+        background-color: transparent;
+        border: none;
+    }
+
+    .subject-overview-card {
+        border: 1px solid #004A53;
+        border-radius: 15px;
+        padding: 30px;
+        gap: 30px;
+    }
+
+    .subject-overview-title {
+        font-size: 24px;
+        color: #000000;
+        font-family: "Fredoka", sans-serif;
+        font-weight: 600;
+    }
+
+    .gap {
+        gap: 16px;
+    }
+
+    .subject-text {
+        font-size: 32px;
+        color: #004A53;
+        font-weight: 600;
+        font-family: "Fredoka", sans-serif;
+    }
+
+    .subject-subtext {
+        color: #A0A0A0;
+        font-size: 14px;
+    }
+
+    .subject-overview-img {
+        height: 313px;
+        width: 100%;
+        border-radius: 20px;
+    }
+
+    .subject-overview-description-container {
+        gap: 14px;
+    }
+
+    .subject-overview-description-title {
+        color: #000000;
+        font-size: 24px;
+        font-family: "Fredoka", sans-serif;
+        font-weight: 600;
+    }
+
+    .subject-overview-study-list {
+        color: #1C1D1D;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    li {
+        color: #1C1D1D;
+        font-size: 18px;
+    }
+
+    .subject-overview-description-text {
+        color: #1C1D1D;
+        font-size: 18px;
+    }
+
+    p {
+        margin-bottom: 0;
+    }
+
+    .curriculum-container {
+        gap: 20px;
+    }
+
+    .speech-card {
+        border: 1px solid #004A53;
+        border-radius: 15px;
+        padding: 16px;
+    }
+
+    .speech-card-title {
+        font-size: 20px;
+        color: #000000;
+        font-weight: 700;
+    }
