@@ -7,7 +7,6 @@
 
             <div class = "d-flex justify-content-between">
 
-<<<<<<< HEAD
                 <div>
                     <h3>Create New Course</h3>
                     <p>Here overview of your</p>
@@ -27,17 +26,6 @@
             </div>
         </div>
 
-=======
-            <div>
-            <h4 class = "fw-bold">Create New Subject</h4>
-            <p>Here overview of your</p>
-        </div>
-
-        <div class = "d-flex gap-4">
-        <button class = "btn rounded coursedraft">
-        Save As Draft
-        </button>
->>>>>>> b6e9223eda6792e7667e17f89824a02a0716acc1
 
         <div class = "container">
 
@@ -105,7 +93,6 @@
                         </select>
                     </div>
 
-<<<<<<< HEAD
                     <div class="col">
                         <label for = "course-level"><b>Course level</b></label>
                         <select class="form-select form-select-sm " id = "course-level" aria-label="Small select example">
@@ -115,17 +102,9 @@
                             <option value="3">Level Three</option>
                         </select>
                     </div>
-=======
-        <button class = "btn btn-light borderlessconnectorbutton" type = "button" data-section="media">
-            <i class="fa-solid fa-dot-circle me-2"></i>
-            Subject Media
-            <i class="fa fa-arrow-right me-2"></i>
-        </button>
->>>>>>> b6e9223eda6792e7667e17f89824a02a0716acc1
 
                 </div>
 
-<<<<<<< HEAD
                 <div class = "row mt-2">
                     <div class="col">
                         <label for="exampleDateInput" class="form-label"><b>Select Date</b></label>
@@ -136,19 +115,6 @@
                         <label for="lesson" class="form-label"><b>Total Lesson</b></label>
                         <input type="number" class="form-control" id="lesson">
                     </div>
-=======
-        <button class = "btn btn-light borderlessconnectorbutton" type = "button" data-section="curriculum">
-            <i class="fa-solid fa-dot-circle me-2"></i>
-            Curriculum
-            <i class="fa fa-arrow-right me-2"></i>
-        </button>
-
-        <button class = "btn btn-light borderlessconnectorbutton" type = "button" data-section="publish">
-            <i class="fa-solid fa-dot-circle me-2"></i>
-             Publish Subject
-            <i class="fa fa-arrow-right me-2"></i>
-        </button>
->>>>>>> b6e9223eda6792e7667e17f89824a02a0716acc1
 
                 </div>
 
@@ -157,9 +123,6 @@
 
         </div>
 
-<<<<<<< HEAD
-    </main>
-=======
 
 <!-- New Course Details Section -->
 <div class = "container content-section" id="details">
@@ -530,5 +493,4 @@ Course Details
   });
     </script>
 </main>
->>>>>>> b6e9223eda6792e7667e17f89824a02a0716acc1
 @endsection
