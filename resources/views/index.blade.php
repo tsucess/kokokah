@@ -272,10 +272,10 @@
 
             <!-- Text Section -->
             <div class="col-12 col-md-6 my-auto d-flex flex-column">
-                <h5>
+                <h5 class="text-white">
                     STEM Labs
                 </h5>
-                <p>
+                <p class="text-white">
                     Get hands-on STEM bootcamps, summer schools,
                     and practical learning experiences to prepare
                     students for the future of science & tech.
