@@ -34,8 +34,8 @@ Route::get('/contact', function () {
     return view('contact');
 });
 
-Route::get('/koodies', function () {
-    return view('koodies');
+Route::get('/kokoplay', function () {
+    return view('kokoplay');
 });
 
 Route::get('/stem', function () {

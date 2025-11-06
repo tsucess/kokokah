@@ -1,25 +1,25 @@
 @extends('layouts.template')
 
 @section('content')
-<div class = "container-fluid p-5 banner">
-<h1 class = "heroheading text-center" style = "font-weight: bolder;">
+<div class = "container-fluid p-5 banner d-flex align-items-center justify-content-center" style="background-color : #FDAF22; height:501px;">
+<h1 class = "heroheading text-center" style = "font-weight: bolder; max-width:40ch;">
 Kokokah is Africa’s Leading Digital
 Learning and Management Platform for
  Secondary Schools
 </h1>
 </div>
 
-<div class = "container mb-5">
+<div class = "container mb-5 d-flex align-items-center" >
 <div class = "row mt-4 bg-white">
 <div class = "col-12 col-md-6 col-lg-6 my-auto">
-<img src = "images/Video.png" class = "img-fluid">
+<img src = "images/Video.png" class = "img-fluid" style="height:382px;">
 </div>
 
 
-<div class = "col-12 col-md-6 col-lg-6 mt-3 my-auto">
-    <h3>
+<div class = "col-12 col-md-6 col-lg-6 mt-3">
+    <h4>
         Kokokah for All.
-    </h3>
+    </h4>
     <p class = "heroparagraph">
         Kokokah is a smart, pan-African learning
         and school management platform built for
@@ -41,9 +41,9 @@ Learning and Management Platform for
 <div class = "row">
 
 <div class = "col-12 col-md-6 col-lg-6 my-auto">
-    <h5 class = "mb-3">
+    <h4 class = "mb-3">
         Our Mission & Vision
-    </h5>
+    </h4>
 
 
 <div class="d-flex align-items-center">
@@ -75,12 +75,11 @@ Learning and Management Platform for
 
 
 
-    <button class = "btn primaryButton" type = "button">Explore Product</button>
 </div>
 
 
 <div class = "col-12 col-md-6 col-lg-6 mt-4 my-auto">
-<img src = "images/Mission.png" class = "img-fluid">
+<img src = "images/Mission.png" class = "img-fluid" style="height:540px;">
 </div>
 
 
@@ -90,21 +89,21 @@ Learning and Management Platform for
 
 
 
-
-<div class = "container">
-<div class = "row mt-4 bg-white">
+<section class="py-5" style="background-color: #F56824;">
+<div class = "container" >
+<div class = "row mt-4 ">
 
     <div class ="mb-3 justify-content-center">
-        <h4 class = "fw-bold text-center">Our Story</h4>
+        <h4 class = "fw-bold text-center text-white">Our Story</h4>
     </div>
 
 <div class = "col-12 col-md-6 col-lg-6 my-auto">
-<img src = "images/Story.png" class = "img-fluid">
+<img src = "images/Story.png" class = "img-fluid" style="height:840px">
 </div>
 
 
 <div class = "col-12 col-md-6 col-lg-6 my-auto">
-    <p class="heroparagraph">
+    <p class="heroparagraph text-white">
 We began as a small but determined platform with a single goal:
 <b>to help Nigerian secondary school students study and pass their exams.</b>
  Back then, our offerings were limited — a narrow curriculum, few resources,
@@ -135,7 +134,7 @@ We’ve gone from limited resources to limitless possibilities. From local impac
 
 </div>
 </div>
-
+</section>
 <div class = "container-fluid" style="padding-top: 80px; padding-bottom:100px; background-image: url('images/kokokah_best.png'); background-size: cover; background-repeat: no-repeat;">
 
     <div class="d-flex justify-content-center mt-3">

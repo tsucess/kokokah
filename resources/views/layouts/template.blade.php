@@ -68,7 +68,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/koodies">Koodies</a>
+                        <a class="nav-link" href="/kokoplay">Kokoplay</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/contact">Contact Us</a>
