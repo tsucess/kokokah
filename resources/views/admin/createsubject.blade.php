@@ -301,7 +301,7 @@ Course Details
 
     <div class = "container content-section d-none" id="publish">
  <section class="subject-overview-card">
-        <h3 class="subject-overview-title">Subject Overview</h3>
+        <h3 class="subject-overview-title">Subject Overview </h3>
         <div class="d-flex flex-column gap-3">
             <section class="d-flex flex-column gap">
                 <header class="d-flex justify-content-between gap-2 align-items-center ">
