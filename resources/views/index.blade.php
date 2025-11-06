@@ -135,7 +135,7 @@
                 </p>
             </div>
             <div class="text-center">
-                <button class="btn btn-primary-action">Explore Features</button>
+                <button class="btn primaryButton">Explore Features</button>
             </div>
         </div>
     </div>
@@ -157,7 +157,7 @@
                 </p>
 
                 <div>
-                    <button class = "btn primaryButton product-button-yellow" type = "button">Explore Passnownow</button>
+                    <button class = "  primaryButton" type = "button">Explore Passnownow</button>
                 </div>
             </div>
 
@@ -185,7 +185,7 @@
                     portals — all in one secure platform.
                 </p>
 
-                <button class = "btn mb-4 primaryButton product-button-yellow" type="button">Explore SMS</button>
+                <button class = " primaryButton " type="button">Explore SMS</button>
 
             </div>
         </div>
@@ -202,7 +202,7 @@
                     Your all-in-one digital classroom — structured lessons, AI-powered
                     tutoring, chatrooms, and  academic & non-academic content for secondary school.
                 </p>
-                <button class = "btn primaryButton product-button-yellow" type = "button">Explore LMS</button>
+                <button class = "primaryButton" type = "button">Explore LMS</button>
             </div>
             <div class="col-12 col-md-6 text-center">
                 <img src="images/lms system.png" class="img-fluid w-100 w-md-75" alt="Exam Prep">
@@ -228,7 +228,7 @@
                     test prep, and special needs learning.
                 </p>
                 <div class = "mb-3">
-                    <button class = "btn primaryButton product-button-yellow" type = "button">Explore Marketplace</button>
+                    <button class = "primaryButton" type = "button">Explore Marketplace</button>
 
                 </div>
             </div>
@@ -250,7 +250,7 @@
                 </p>
 
                 <div>
-                    <button class = "btn primaryButton product-button" type = "button">Coming Soon</button>
+                    <button class = "primaryButton greenBtn" type = "button" >Coming Soon</button>
                 </div>
             </div>
 
@@ -282,7 +282,7 @@
                 </p>
 
                 <div class = "mb-3">
-                    <button class = "btn primaryButton product-button-yellow" type = "button">Register</button>
+                    <button class = "primaryButton" type = "button">Register</button>
 
                 </div>
 
@@ -297,10 +297,10 @@
                 <img src = "images/LMS.png" class = "img-fluid">
             </div>
 
-            <div class = "col-12 col-md-7 col-lg-7">
-                <h5>
+            <div class = "col-12 col-md-7 col-lg-7 mt-lg-5">
+                <h6>
                     Kokoplay
-                </h5>
+                </h6>
                 <p>
                     Kokokah combines School Management, Exam Prep, and a
                     Learning Management System (LMS)—helping schools automate admin tasks,
@@ -309,7 +309,7 @@
                     Learning Management System (LMS)—helping schools automate admin tasks, boost
                     student performance, and deliver modern digital learning in one seamless platform.
                 </p>
-                <button class = "btn primaryButton product-button-yellow" type = "button">Coming Soon</button>
+                <button class = "primaryButton mt-3" type = "button">Coming Soon</button>
 
                 <div>
                     <img src = "images/koodies.png" class = "img-fluid  w-md-75 float-end">
