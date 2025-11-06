@@ -133,13 +133,7 @@
     </div>
 
 
-    {{-- <div class = "row float-end mx-auto">
 
-        <div class="d-flex justify-content-end gap-3 px-0">
-            <button class="btn-nav-secondary w-75">Previous</button>
-            <button class="btn-nav-primary w-75">Continue</button>
-                </div>
-    </div> --}}
 
 <div class = "row mt-3">
 <div class = "d-flex col-md-12 col-lg-12 justify-content-end ">

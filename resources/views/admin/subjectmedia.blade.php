@@ -65,40 +65,6 @@
         <h5>Course Media</h5>
         <p class = "text-muted">Intro Course Overview Provide type (Mp4, Youtube,etc)</p>
 
-    {{-- <div>
-    <label for="formFileLg" class="form-label">Course Thumbnail(required)
-    <input class="form-control form-control-lg required" id="formFileLg" type="file">
-  </label>
-</div> --}}
-
-
-
-
-{{-- <div class="container my-5">
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card p-4 custom-upload-card">
-        <div class="card-body text-center">
-          <label for="fileInput" class="w-100 h-100 d-flex flex-column align-items-center justify-content-center custom-file-dropzone">
-            <i class="bi bi-cloud-upload display-4"></i>
-            <p class="mt-2 mb-0 text-muted">Click or drag a file to upload</p>
-          </label>
-
-          <input type="file" id="fileInput" name="file" class="d-none">
-        </div>
-      </div>
-
-      <div class="input-group mt-3">
-        <input type="text" id="fileNameDisplay" class="form-control" placeholder="No file selected..." aria-label="File name" readonly>
-        <button class="btn btn-primary" type="button" id="uploadButton">
-          Upload File
-        </button>
-      </div>
-    </div>
-  </div>
-</div> --}}
-
-
 
 <div class="container">
         <div class="row justify-content-center">
