@@ -7,15 +7,25 @@
 
             <div class = "d-flex justify-content-between">
 
-            <div>
-            <h4 class = "fw-bold">Create New Subject</h4>
-            <p>Here overview of your</p>
+                <div>
+                    <h3>Create New Course</h3>
+                    <p>Here overview of your</p>
+                </div>
+
+                <div>
+                    <button class = "btn rounded coursedraft">
+                        Save As Draft
+                    </button>
+
+                    <button class = "btn rounded publishcourse">
+                        Publish Course
+                    </button>
+
+                </div>
+
+            </div>
         </div>
 
-        <div class = "d-flex gap-4">
-        <button class = "btn rounded coursedraft">
-        Save As Draft
-        </button>
 
         <div class = "container">
 
@@ -83,25 +93,28 @@
                         </select>
                     </div>
 
-        <button class = "btn btn-light borderlessconnectorbutton" type = "button" data-section="media">
-            <i class="fa-solid fa-dot-circle me-2"></i>
-            Subject Media
-            <i class="fa fa-arrow-right me-2"></i>
-        </button>
+                    <div class="col">
+                        <label for = "course-level"><b>Course level</b></label>
+                        <select class="form-select form-select-sm " id = "course-level" aria-label="Small select example">
+                            <option selected>select course level</option>
+                            <option value="1">Level One</option>
+                            <option value="2">Level Two</option>
+                            <option value="3">Level Three</option>
+                        </select>
+                    </div>
 
                 </div>
 
-        <button class = "btn btn-light borderlessconnectorbutton" type = "button" data-section="curriculum">
-            <i class="fa-solid fa-dot-circle me-2"></i>
-            Curriculum
-            <i class="fa fa-arrow-right me-2"></i>
-        </button>
+                <div class = "row mt-2">
+                    <div class="col">
+                        <label for="exampleDateInput" class="form-label"><b>Select Date</b></label>
+                        <input type="date" class="form-control" id="exampleDateInput">
+                    </div>
 
-        <button class = "btn btn-light borderlessconnectorbutton" type = "button" data-section="publish">
-            <i class="fa-solid fa-dot-circle me-2"></i>
-             Publish Subject
-            <i class="fa fa-arrow-right me-2"></i>
-        </button>
+                    <div class="col">
+                        <label for="lesson" class="form-label"><b>Total Lesson</b></label>
+                        <input type="number" class="form-control" id="lesson">
+                    </div>
 
                 </div>
 
