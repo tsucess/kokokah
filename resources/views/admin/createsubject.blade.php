@@ -3,17 +3,17 @@
 
 @section('content')
     <main>
-        <div class = "container">
+        <div class = "container bg-white">
 
             <div class = "d-flex justify-content-between">
 
                 <div>
-                    <h3>Create New Course</h3>
+                    <h3 style="font-size:32px; color: #004a53;">Create New Course</h3>
                     <p>Here overview of your</p>
                 </div>
 
-                <div>
-                    <button class = "btn rounded coursedraft">
+                <div class="d-flex align-items-center gap-3">
+                    <button class = "btn rounded coursedraft" style="font-size: 16px;">
                         Save As Draft
                     </button>
 
@@ -27,34 +27,34 @@
         </div>
 
 
-        <div class = "container">
+        <div class = "container bg-white">
 
-            <div class = "d-flex">
-                <button type = "button" class = "btn btn-outline-dark border-1 rounded me-4"
-                    style = "background: #004A53; color: #fff; width: 270px;">
-                    <i class="fa-solid fa-dot-circle me-2"></i>
+            <div class = "d-flex gap-4">
+                <button type = "button" class = "d-flex justify-content-center align-items-center gap-2 w-25 coursebtn"
+                    data-section="details">
+                    <i class="fa-solid fa-circle fa-2xs"></i>
                     Create New Subject
-                    <i class="fa fa-arrow-right me-2"></i>
+                    <i class="fa fa-arrow-right"></i>
                 </button>
 
 
-                <button class = "btn btn-light rounded w-25 me-4" href = "/subjectmedia" type = "button">
-                    <i class="fa-solid fa-dot-circle me-2"></i>
+                <button class = "d-flex justify-content-center align-items-center w-25 gap-2 coursebtn" href = "/subjectmedia" type = "button" data-section="media">
+                    <i class="fa-solid fa-circle fa-2xs"></i>
                     Subject Media
-                    <i class="fa fa-arrow-right me-2"></i>
+                    <i class="fa fa-arrow-right"></i>
                 </button>
 
 
-                <button type = "button" class = "btn btn-outline-dark border-1 rounded w-25 me-4">
-                    <i class="fa-solid fa-dot-circle me-2"></i>
+                <button type = "button" class = "d-flex justify-content-center align-items-center w-25 gap-2 coursebtn" data-section="curriculum">
+                    <i class="fa-solid fa-circle fa-2xs" ></i>
                     Curriculum
-                    <i class="fa fa-arrow-right me-2"></i>
+                    <i class="fa fa-arrow-right"></i>
                 </button>
 
-                <button type = "button" class = "btn btn-outline-dark border-1 rounded w-25 me-4">
-                    <i class="fa-solid fa-dot-circle me-2"></i>
+                <button type = "button" class = "d-flex justify-content-center align-items-center w-25 gap-2 coursebtn" data-section="publish">
+                    <i class="fa-solid fa-circle fa-2xs" ></i>
                     Additional Information
-                    <i class="fa fa-arrow-right me-2"></i>
+                    <i class="fa fa-arrow-right "></i>
                 </button>
 
 
@@ -62,70 +62,13 @@
 
         </div>
 
-        <div class = "container">
+       
 
-            <div class = "row">
-                <div class = "mb-2  border border-bottom-1 border-top-0 border-start-0 border-end-0">
-                    <h5>
-                        Course Details
-                    </h5>
-                </div>
-            </div>
-
-            <form>
-                <div class="row mt-3">
-
-        <div class = "d-flex gap-4 justify-content-space-between">
-        <button  type = "button" class = "btn btn-light btn-outline-dark border-1 rounded me-3 connectorbutton" data-section="details">
-            <i class="fa-solid fa-dot-circle me-2" ></i>
-            Create New Subject &nbsp;
-            <i class="fa fa-arrow-right me-2"></i>
-        </button>
-
-                <div class = "row">
-                    <div class="col">
-                        <label for = "course-category"><b>Course Category</b></label>
-                        <select class="form-select form-select-sm" id = "course-category" aria-label="Small select example">
-                            <option selected>select course category</option>
-                            <option value="1">Category One</option>
-                            <option value="2">Category Two</option>
-                            <option value="3">Category Three</option>
-                        </select>
-                    </div>
-
-                    <div class="col">
-                        <label for = "course-level"><b>Course level</b></label>
-                        <select class="form-select form-select-sm " id = "course-level" aria-label="Small select example">
-                            <option selected>select course level</option>
-                            <option value="1">Level One</option>
-                            <option value="2">Level Two</option>
-                            <option value="3">Level Three</option>
-                        </select>
-                    </div>
-
-                </div>
-
-                <div class = "row mt-2">
-                    <div class="col">
-                        <label for="exampleDateInput" class="form-label"><b>Select Date</b></label>
-                        <input type="date" class="form-control" id="exampleDateInput">
-                    </div>
-
-                    <div class="col">
-                        <label for="lesson" class="form-label"><b>Total Lesson</b></label>
-                        <input type="number" class="form-control" id="lesson">
-                    </div>
-
-                </div>
-
-        </div>
-        </form>
-
-        </div>
+           
 
 
 <!-- New Course Details Section -->
-<div class = "container content-section" id="details">
+<div class = "container  bg-white content-section" id="details">
 
 <div class = "row">
 <div class = "mb-2  border border-bottom-1 border-top-0 border-start-0 border-end-0">
@@ -221,8 +164,8 @@ Course Details
 <div class = "row mt-3">
 <div class = "d-flex col-md-12 col-lg-12 justify-content-end">
     <div class = "d-flex flex-column flex-lg-row gap-3 px-0">
-          <button class="btn btn-nav-secondary" style="padding: 12px 120px;">Cancel</button>
-          <button class="btn btn-nav-primary" style="padding: 12px 120px;">Continue</button>
+         
+          <button class="btn btn-nav-primary continue-btn" style="padding: 12px 120px;" data-next="media">Continue</button>
         </div>
 </div>
 </div>
@@ -232,7 +175,7 @@ Course Details
 
 
 <!-- New Subject Media Section -->
- <div class = "container-fluid" id="media" class="content-section d-none">
+ <div class = "container-fluid bg-white d-none content-section" id="media" >
     <div class = "row">
         <h5>Course Media</h5>
         <p class = "text-muted">Intro Course Overview Provide type (Mp4, Youtube,etc)</p>
@@ -274,8 +217,8 @@ Course Details
 <div class = "row mt-3">
 <div class = "d-flex col-md-12 col-lg-12 justify-content-end ">
     <div class = "d-flex flex-column flex-lg-row gap-3 px-0">
-          <button class="btn btn-nav-secondary" style="padding: 12px 120px;">Cancel</button>
-          <button class="btn btn-nav-primary" style="padding: 12px 120px;">Continue</button>
+          <button class="btn btn-nav-secondary back-btn" style="padding: 12px 120px;" data-next='details'>Previous</button>
+          <button class="btn btn-nav-primary continue-btn" style="padding: 12px 120px;" data-next="curriculum">Continue</button>
         </div>
 </div>
 </div>
@@ -284,7 +227,7 @@ Course Details
 
 
     <!-- Curriculum Section -->
-        <div class = "container content-section d-none" id="curriculum">
+<div class = "container bg-white d-none content-section" id="curriculum">
         <!-- Header -->
   <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
@@ -295,24 +238,24 @@ Course Details
         <button class="btn btn-nav-primary"><i class="fa-solid fa-plus me-2"></i> Add New Topic</button>
     </div>
 
-  </div>
-    </div>
 
-    <div class = "container">
+ 
 
- <div class="accordion" id="accordionExample">
-  <div class="accordion-item">
-    <h5 class="accordion-header">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="border: none;">
-       <i class="fa-solid fa-book-open me-2"></i>  Parts of Speech
-      </button>
-    </h5>
-    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        <strong>This is the first item’s accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element.
-      </div>
-    </div>
-  </div>
+       <div class = "container ">
+
+        <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+            <h5 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="border: none;">
+            <i class="fa-solid fa-book-open me-2"></i>  Parts of Speech
+            </button>
+            </h5>
+            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <strong>This is the first item’s accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element.
+            </div>
+            </div>
+        </div>
 
         </div>
 
@@ -344,24 +287,24 @@ Course Details
             <i class="fa-solid fa-plus"></i>
             Add Lesson
         </button>
-
-    </div>
-
-
-
-
-<div class = "row mt-3">
-<div class = "d-flex col-md-12 col-lg-12 justify-content-end ">
-    <div class = "d-flex flex-column flex-lg-row gap-3 px-0">
-          <button class="btn btn-nav-secondary" style="padding: 12px 120px;">Previous</button>
-          <button class="btn btn-nav-primary" style="padding: 12px 120px;">Continue</button>
+        <div class = "row mt-3 bg-white">
+        <div class = "d-flex col-md-12 col-lg-12 justify-content-end ">
+            <div class = "d-flex flex-column flex-lg-row gap-3 px-0">
+                <button class="btn btn-nav-secondary back-btn" style="padding: 12px 120px;" data-next="media">Previous</button>
+                <button class="btn btn-nav-primary continue-btn" style="padding: 12px 120px;" data-next="publish">Continue</button>
+                </div>
         </div>
+        </div>
+      </div>
 </div>
-</div>
 
 
 
-    <div class = "container content-section d-none" id="publish">
+
+
+
+
+<div class = "container bg-white d-none content-section" id="publish">
  <section class="subject-overview-card">
         <h3 class="subject-overview-title">Subject Overview</h3>
         <div class="d-flex flex-column gap-3">
@@ -430,17 +373,17 @@ Course Details
             </section>
         </div>
     </section>
-
-</div>
-
 <div class = "row  mt-4">
 <div class = "d-flex col-md-12 col-lg-12 justify-content-end ">
     <div class = "d-flex flex-column flex-lg-row gap-3 px-0">
-          <button class="btn btn-nav-secondary" style="padding: 12px 120px;">Back</button>
+          <button class="btn btn-nav-secondary back-btn" style="padding: 12px 120px;" data-next="curriculum">Previous</button>
           <button class="btn btn-nav-primary" style="padding: 12px 120px;">Publish Now</button>
         </div>
 </div>
 </div>
+</div>
+
+
 
 
 
@@ -476,21 +419,41 @@ Course Details
 
 
         <!-- Navigating across the connectors -->
-        document.querySelectorAll('[data-section]').forEach(btn => {
-    btn.addEventListener('click', function() {
-      // Remove active state from all buttons
-      document.querySelectorAll('[data-section]').forEach(b => b.classList.remove('connectorbutton'));
+      document.addEventListener('DOMContentLoaded', () => {
+  const navButtons = document.querySelectorAll('.coursebtn');
+  const sections = document.querySelectorAll('.content-section');
+  const continueButtons = document.querySelectorAll('.continue-btn');
+  const backButtons = document.querySelectorAll('.back-btn');
 
-      // Add active to clicked one
-      this.classList.add('connectorbutton');
+  // Function to show a section
+  function showSection(sectionId) {
+    sections.forEach(sec => sec.classList.add('d-none'));
+    document.getElementById(sectionId).classList.remove('d-none');
 
-      // Hide all content sections
-      document.querySelectorAll('.content-section').forEach(sec => sec.classList.add('d-none'));
+    navButtons.forEach(btn => btn.classList.remove('course-btn-active'));
+    document.querySelector(`[data-section="${sectionId}"]`)?.classList.add('course-btn-active');
+  }
 
-      // Show selected section
-      document.getElementById(this.dataset.section).classList.remove('d-none');
+
+  // Continue button click
+  continueButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const next = btn.getAttribute('data-next');
+      showSection(next);
     });
   });
+
+  // Back btton click
+  backButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const back = btn.getAttribute('data-next');
+      showSection(back);
+    });
+  });
+  
+  showSection('details');
+});
+
     </script>
 </main>
 @endsection

@@ -549,11 +549,11 @@ main .container {
 .coursedraft {
     background-color: #A3D8DF;
     color: #fff;
-    width:130px;
     height: 40px;
     border-radius: 8px;
     padding: 8px 16px;
     border: 1px solid #A3D8DF;
+    font-size: 16px;
 }
 
 .coursedraft:hover {
@@ -564,16 +564,28 @@ main .container {
 .publishcourse {
     background-color: #3BA0AC;
     color: #fff;
-    width:138px;
     height: 40px;
     border-radius: 8px;
     padding: 8px 16px;
     border: 1px solid #A3D8DF;
+    font-size: 16px;
 }
 
 .publishcourse:hover {
     background-color: #2db5c4;
     color: #fff;
+}
+.coursebtn{
+    border: 1px solid #F5F6F8;
+    border-radius: 5px;
+    color: #004A53;
+    height: 62px;
+}
+.course-btn-active{
+    border: 1px solid #004A53;
+    background-color: #F5F6F8;
+    color: #000F11;
+    border-radius: 5px;
 }
 
 .connectorbutton
