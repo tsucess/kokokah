@@ -1,500 +1,1105 @@
 @extends('layouts.dashboardtemp')
 
-
 @section('content')
+    <style>
+        /* ===== Header Styles ===== */
+        .subject-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+
+        .subject-header h3 {
+            font-size: 2rem;
+            color: #004A53;
+            font-family: 'Fredoka One', sans-serif;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .subject-header p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .header-buttons {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-draft {
+            background-color: white;
+            border: 1px solid #004A53;
+            color: #004A53;
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-draft:hover {
+            background-color: #f0f8f9;
+        }
+
+        .btn-publish {
+            background-color: #FDAF22;
+            border: none;
+            color: white;
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-publish:hover {
+            background-color: #e59a0f;
+        }
+
+        /* ===== Navigation Buttons ===== */
+        .nav-buttons-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .coursebtn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            flex: 1;
+            min-width: 200px;
+            padding: 1rem;
+            background-color: white;
+            border: 2px solid #e0e0e0;
+            color: #004A53;
+            font-weight: 500;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .coursebtn:hover {
+            border-color: #004A53;
+            background-color: #f9f9f9;
+        }
+
+        .coursebtn.course-btn-active {
+            background-color: #004A53;
+            color: white;
+            border-color: #004A53;
+        }
+
+        /* ===== Section Styles ===== */
+        .section-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .section-header h5 {
+            font-size: 1.25rem;
+            color: #004A53;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        /* ===== Form Styles ===== */
+        .form-row-two {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group-custom {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group-custom label {
+            font-weight: 500;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .form-group-custom input,
+        .form-group-custom select {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 0.375rem;
+            font-size: 0.95rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group-custom input:focus,
+        .form-group-custom select:focus {
+            outline: none;
+            border-color: #004A53;
+            box-shadow: 0 0 0 3px rgba(0, 74, 83, 0.1);
+        }
+
+        .form-group-custom input::placeholder {
+            color: #999;
+        }
+
+        /* ===== Description Editor ===== */
+        .description-section {
+            margin-top: 2rem;
+        }
+
+        .description-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .editor-toolbar {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            padding: 0.75rem;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            border-radius: 0.375rem 0.375rem 0 0;
+        }
+
+        .editor-toolbar span {
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s ease;
+            padding: 0.25rem 0.5rem;
+        }
+
+        .editor-toolbar span:hover {
+            color: #004A53;
+        }
+
+        .description-textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 0 0 0.375rem 0.375rem;
+            font-size: 0.95rem;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .description-textarea:focus {
+            outline: none;
+            border-color: #004A53;
+            box-shadow: 0 0 0 3px rgba(0, 74, 83, 0.1);
+        }
+
+        /* ===== Button Styles ===== */
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+
+        .btn-continue {
+            background-color: #FDAF22;
+            border: none;
+            color: white;
+            font-weight: 500;
+            padding: 0.75rem 2rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .btn-continue:hover {
+            background-color: #e59a0f;
+        }
+
+        .btn-back {
+            background-color: white;
+            border: 1px solid #004A53;
+            color: #004A53;
+            font-weight: 500;
+            padding: 0.75rem 2rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background-color: #f0f8f9;
+        }
+
+        /* ===== Mobile Responsiveness ===== */
+        @media (max-width: 768px) {
+            .subject-header {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .header-buttons {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .btn-draft,
+            .btn-publish {
+                width: 100%;
+            }
+
+            .nav-buttons-container {
+                flex-direction: column;
+            }
+
+            .coursebtn {
+                min-width: auto;
+                width: 100%;
+            }
+
+            .form-row-two {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn-continue,
+            .btn-back {
+                width: 100%;
+            }
+        }
+    </style>
+
     <main>
-        <div class = "container bg-white">
-
-            <div class = "d-flex justify-content-between">
-
+        <!-- Header Section -->
+        <div class="container bg-white">
+            <div class="subject-header">
                 <div>
-                    <h3 style="font-size:32px; color: #004a53;">Create New Course</h3>
+                    <h3>Create New Course</h3>
                     <p>Here overview of your</p>
                 </div>
 
-                <div class="d-flex align-items-center gap-3">
-                    <button class = "btn rounded coursedraft" style="font-size: 16px;">
+                <div class="header-buttons">
+                    <button type="button" class="btn btn-draft" id="saveDraftBtn">
                         Save As Draft
                     </button>
 
-                    <button class = "btn rounded publishcourse">
+                    <button type="button" class="btn btn-publish" id="publishBtn">
                         Publish Course
                     </button>
-
                 </div>
-
             </div>
         </div>
 
-
-        <div class = "container bg-white">
-
-            <div class = "d-flex gap-4">
-                <button type = "button" class = "d-flex justify-content-center align-items-center gap-2 w-25 coursebtn"
-                    data-section="details">
+        <!-- Navigation Buttons -->
+        <div class="container bg-white">
+            <div class="nav-buttons-container">
+                <button type="button" class="coursebtn" data-section="details">
                     <i class="fa-solid fa-circle fa-2xs"></i>
                     Create New Subject
                     <i class="fa fa-arrow-right"></i>
                 </button>
 
-
-                <button class = "d-flex justify-content-center align-items-center w-25 gap-2 coursebtn"
-                    href = "/subjectmedia" type = "button" data-section="media">
+                <button type="button" class="coursebtn" data-section="media">
                     <i class="fa-solid fa-circle fa-2xs"></i>
                     Subject Media
                     <i class="fa fa-arrow-right"></i>
                 </button>
 
-
-                <button type = "button" class = "d-flex justify-content-center align-items-center w-25 gap-2 coursebtn"
-                    data-section="curriculum">
+                <button type="button" class="coursebtn" data-section="curriculum">
                     <i class="fa-solid fa-circle fa-2xs"></i>
                     Curriculum
                     <i class="fa fa-arrow-right"></i>
                 </button>
 
-                <button type = "button" class = "d-flex justify-content-center align-items-center w-25 gap-2 coursebtn"
-                    data-section="publish">
+                <button type="button" class="coursebtn" data-section="publish">
                     <i class="fa-solid fa-circle fa-2xs"></i>
                     Additional Information
-                    <i class="fa fa-arrow-right "></i>
+                    <i class="fa fa-arrow-right"></i>
                 </button>
-
-
             </div>
-
         </div>
 
+        <!-- Course Details Section -->
+        <div class="container bg-white content-section" id="details">
+            <div class="section-header">
+                <h5>Course Details</h5>
+            </div>
 
+            <form id="courseDetailsForm">
+                @csrf
 
-
-
-
-        <!-- New Course Details Section -->
-        <div class = "container  bg-white content-section" id="details">
-
-            <div class = "row">
-                <div class = "mb-2  border border-bottom-1 border-top-0 border-start-0 border-end-0">
-                    <h5>
-                        Course Details
-                    </h5>
+                <div class="form-group-custom mb-3">
+                    <label for="subjectTitle">Subject Title</label>
+                    <input type="text" class="form-control" id="subjectTitle" name="subjectTitle"
+                        placeholder="Enter Subject Title" required>
                 </div>
+
+                <div class="form-row-two">
+                    <div class="form-group-custom">
+                        <label for="subjectCategory">Subject Category</label>
+                        <select class="form-control" id="subjectCategory" name="subjectCategory" required>
+                            <option value="">Select Category</option>
+                            <option value="science">Science</option>
+                            <option value="art">Art</option>
+                            <option value="commercial">Commercial</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group-custom">
+                        <label for="subjectLevel">Subject Level</label>
+                        <select class="form-control" id="subjectLevel" name="subjectLevel" required>
+                            <option value="">Select Level</option>
+                            <option value="jss1">JSS 1</option>
+                            <option value="jss2">JSS 2</option>
+                            <option value="jss3">JSS 3</option>
+                            <option value="ss1">SS 1</option>
+                            <option value="ss2">SS 2</option>
+                            <option value="ss3">SS 3</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row-two">
+                    <div class="form-group-custom">
+                        <label for="subjectTime">Subject Time</label>
+                        <input type="text" class="form-control" id="subjectTime" name="subjectTime"
+                            placeholder="e.g., 2 hours" required>
+                    </div>
+
+                    <div class="form-group-custom">
+                        <label for="totalLesson">Total Lessons</label>
+                        <input type="number" class="form-control" id="totalLesson" name="totalLesson"
+                            placeholder="e.g., 12" min="1" required>
+                    </div>
+                </div>
+
+                <div class="description-section">
+                    <p class="description-label">Subject Description</p>
+
+                    <div class="editor-toolbar">
+                        <span title="Bold"><i class="fa-solid fa-bold"></i></span>
+                        <span title="Italic"><i class="fa-solid fa-italic"></i></span>
+                        <span title="Underline"><i class="fa-solid fa-underline"></i></span>
+                        <span title="Strikethrough"><i class="fa-solid fa-strikethrough"></i></span>
+                        <span title="Upload"><i class="fa-solid fa-file-arrow-up"></i></span>
+                    </div>
+
+                    <textarea class="description-textarea" id="subjectDescription" name="subjectDescription"
+                        placeholder="Write subject description here..." form="courseDetailsForm"></textarea>
+                </div>
+            </form>
+
+            <div class="button-group">
+                <button type="button" class="btn btn-continue continue-btn" data-next="media">
+                    Continue
+                </button>
+            </div>
+        </div>
+
+        <!-- Media Section -->
+        <div class="container bg-white d-none content-section" id="media">
+            <div class="section-header">
+                <h5>Subject Media</h5>
             </div>
 
+            <form id="mediaUploadForm">
+                @csrf
 
-
-
-            <div class="row mt-3">
-                <form>
-
-                    <div class="custom-form-group">
-                        <label for="coursetitle" class="custom-label">Subject Title</label>
-                        <input type="text" class="form-control-custom" id="subjectTitle" name="subjectTitle"
-                            placeholder="Enter Subject Title" aria-label="Subject Title" autocomplete="subject" required>
-                    </div>
-
-                    <div class = "d-flex gap-2">
-                        <div class="w-50 custom-form-group">
-                            <label for="role" class="custom-label">Subject Category</label>
-                            <select class="form-control-custom" id="role" name="role" aria-label="User Role"
-                                required>
-                                <option value="">Subject Category</option>
-                                <option value="student">Science</option>
-                                <option value="instructor">Art</option>
-                                <option value="instructor">Commercial</option>
-                            </select>
-                        </div>
-
-
-                        <div class="w-50 custom-form-group">
-                            <label for="role" class="custom-label">Subject Level</label>
-                            <select class="form-control-custom" id="role" name="role" aria-label="User Role"
-                                required>
-                                <option value="">JSS 1</option>
-                                <option value="student">JSS 2</option>
-                                <option value="instructor">JSS 3</option>
-                                <option value="instructor">SS 1</option>
-                                <option value="instructor">SS 2</option>
-                                <option value="instructor">SS 3</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class = "d-flex gap-2">
-                        <div class="w-50 custom-form-group">
-
-                            <label for="subjecttime" class="custom-label">Subject Time</label>
-
-                            <input type="text" class="form-control-custom" id="subjectTime" name="subjectTime"
-                                placeholder="Enter Subject Time" aria-label="Subject Time" autocomplete="subject time"
-                                required>
-                        </div>
-
-                        <div class="w-50 custom-form-group">
-
-                            <label for="totallesson" class="custom-label">Total Lesson</label>
-
-                            <input type="text" class="form-control-custom" id="totallesson" name="totallesson"
-                                placeholder="Enter Total Lesson" aria-label="Total Lesson" autocomplete="total lesson"
-                                required>
-                        </div>
-                    </div>
-
-                </form>
-            </div>
-
-            <div class = "row">
-                <div class = "col col-md-12 col-lg-12">
-                    <p><b>Subject Description</b></p>
-
-                    <div class="dropdown">
-                        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            15
+                <div class="form-group-custom mb-3">
+                    <label>Upload Subject Image</label>
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                        <input type="text" class="form-control" id="fileNameDisplay" placeholder="No file selected" readonly
+                            style="flex: 1;">
+                        <button type="button" class="btn btn-publish" id="uploadButton" style="padding: 0.75rem 1.5rem;">
+                            Upload File
                         </button>
-                        <span><i class="fa-solid fa-bold"></i></span>
-                        <span><i class="ms-2 fa-solid fa-italic"></i></span>
-                        <span><i class="ms-2 fa-solid fa-underline"></i></span>
-                        <span><i class="ms-2 fa-solid fa-strikethrough"></i></span>
-                        <span><i class="ms-2 fa-solid fa-file-arrow-up"></i></span>
-
-                        <div class="mt-2 mb-2">
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="6"
-                                placeholder="Write subject description here..."></textarea>
-                        </div>
-
                     </div>
+
+                    <label style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; border: 2px dashed #ddd; border-radius: 0.375rem; cursor: pointer; transition: all 0.3s ease; background-color: #f9f9f9;"
+                        for="fileInput">
+                        <i class="fa-solid fa-file-circle-check" style="font-size: 2rem; color: #004A53; margin-bottom: 0.5rem;"></i>
+                        <h5 style="margin: 0.5rem 0; color: #333;">Upload Image</h5>
+                        <p style="margin: 0; color: #666; font-size: 0.9rem;">PNG, JPEG, GIF (max 2MB)</p>
+                    </label>
+                    <input type="file" id="fileInput" name="file" class="d-none" accept="image/*,.mp4,.webm">
                 </div>
-            </div>
+            </form>
 
-
-
-            <div class = "row mt-3">
-                <div class = "d-flex col-md-12 col-lg-12 justify-content-end">
-                    <div class = "d-flex flex-column flex-lg-row gap-3 px-0">
-
-                        <button class="btn btn-nav-primary continue-btn" style="padding: 12px 120px;"
-                            data-next="media">Continue</button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-
-
-        <!-- New Subject Media Section -->
-        <div class = "container-fluid bg-white d-none content-section" id="media">
-            <div class = "row">
-                <h5>Course Media</h5>
-                <p class = "text-muted">Intro Course Overview Provide type (Mp4, Youtube,etc)</p>
-
-
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-12 col-md-12 col-sm-12">
-
-
-                            <form id="uploadForm bg-primary">
-                                <!-- File Name Display and Upload Button -->
-
-
-                                <div class="d-flex mb-3 w-100">
-                                    <input type="text" class="form-control file-name-input flex-grow-1"
-                                        id="fileNameDisplay" placeholder="No file selected" readonly>
-                                    <button class="btn btn-nav-primary" style="padding: 12px 120px;">Upload File</button>
-                                </div>
-
-
-                                <!-- File Upload Area -->
-                                <div class="mb-3">
-                                    <label for="fileInput" class="upload-area">
-                                        <i class="fas fa-file-circle-check "></i>
-                                        <h5>Upload Image</h5>
-                                        <p>PNG, JPEG, GIF (max 2mb size)</p>
-                                    </label>
-                                    <input type="file" id="fileInput" name="file" class="d-none">
-                                </div>
-
-
-                            </form>
-                            <div id="message" class="text-center text-success fw-bold"></div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class = "row mt-3">
-                    <div class = "d-flex col-md-12 col-lg-12 justify-content-end ">
-                        <div class = "d-flex flex-column flex-lg-row gap-3 px-0">
-                            <button class="btn btn-nav-secondary back-btn" style="padding: 12px 120px;"
-                                data-next='details'>Previous</button>
-                            <button class="btn btn-nav-primary continue-btn" style="padding: 12px 120px;"
-                                data-next="curriculum">Continue</button>
-                        </div>
-                    </div>
-                </div>
+            <div class="button-group">
+                <button type="button" class="btn btn-back back-btn" data-next="details">
+                    Previous
+                </button>
+                <button type="button" class="btn btn-continue continue-btn" data-next="curriculum">
+                    Continue
+                </button>
             </div>
         </div>
-
 
         <!-- Curriculum Section -->
-        <div class = "container bg-white d-none content-section" id="curriculum">
-            <!-- Header -->
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <div>
-                    <h5 class="fw-bold">Curriculum</h5>
-                    <p class="text-muted mb-0">Intro Course Overview Provide type (Mp4, Youtube,etc)</p>
-                </div>
-
-                <button class="btn btn-nav-primary"><i class="fa-solid fa-plus me-2"></i> Add New Topic</button>
-            </div>
-
-
-
-
-            <div class = "container ">
-
-                <div class="accordion" id="accordionExample">
-                    <div class="accordion-item">
-                        <h5 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"
-                                style="border: none;">
-                                <i class="fa-solid fa-book-open me-2"></i> Parts of Speech
-                            </button>
-                        </h5>
-                        <div id="collapseOne" class="accordion-collapse collapse show"
-                            data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <strong>This is the first item’s accordion body.</strong> It is shown by default, until the
-                                collapse plugin adds the appropriate classes that we use to style each element.
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class = "d-flex justify-content-between border border-2 rounded p-3 mt-3 mb-2">
-
-                    <div>
-                        <i class="fa-solid fa-circle-play"></i> Nouns
-                    </div>
-
-                    <div>
-                        <i class="fa-solid fa-pen-to-square"></i>
-                        <i class="fa-solid fa-trash"></i>
-                    </div>
-                </div>
-
-                <div class = "d-flex justify-content-between border border-2 rounded p-3 mt-3 mb-2">
-
-                    <div>
-                        <i class="fa-solid fa-circle-play"></i> Pronoun
-                    </div>
-
-                    <div>
-                        <i class="fa-solid fa-pen-to-square"></i>
-                        <i class="fa-solid fa-trash"></i>
-                    </div>
-                </div>
-
-                <button type="button" class="btn  btn-outline-dark btn-light" style="width: 150px;">
-                    <i class="fa-solid fa-plus"></i>
-                    Add Lesson
-                </button>
-                <div class = "row mt-3 bg-white">
-                    <div class = "d-flex col-md-12 col-lg-12 justify-content-end ">
-                        <div class = "d-flex flex-column flex-lg-row gap-3 px-0">
-                            <button class="btn btn-nav-secondary back-btn" style="padding: 12px 120px;"
-                                data-next="media">Previous</button>
-                            <button class="btn btn-nav-primary continue-btn" style="padding: 12px 120px;"
-                                data-next="publish">Continue</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-
-
-
-
-        <div class = "container bg-white d-none content-section" id="publish">
-            <section class="subject-overview-card">
-                <h3 class="subject-overview-title">Subject Overview</h3>
-                <div class="d-flex flex-column gap-3">
-                    <section class="d-flex flex-column gap">
-                        <header class="d-flex justify-content-between gap-2 align-items-center ">
-                            <div class="d-flex flex-column gap-3">
-                                <h4 class="subject-text">English Language</h4>
-                                <div class="d-flex gap-2 align-items-center">
-                                    <div class="d-flex aling-items-center gap-1"><i class="fa-solid fa-book"
-                                            style="color: #000000;"></i> <span class="subject-subtext">11 Topics</span>
-                                    </div>
-                                    <div class="d-flex aling-items-center gap-1"><i class="fa-solid fa-circle-play"
-                                            style="color: #000000;"></i> <span class="subject-subtext">11 Lesson</span>
-                                    </div>
-                                    <div class="d-flex aling-items-center gap-1"><i class="fa-solid fa-question"
-                                            style="color: #000000;"></i> <span class="subject-subtext">10 Quiz</span>
-                                    </div>
-                                    <div class="d-flex aling-items-center gap-1"><i class="fa-solid fa-clock"
-                                            style="color: #000000;"></i> <span class="subject-subtext">03:50:00
-                                            Hours</span></div>
-                                    <div class="d-flex aling-items-center gap-1"><i class="fa-solid fa-landmark"
-                                            style="color: #000000;"></i> <span class="subject-subtext">Jss 1</span></div>
-                                </div>
-
-                            </div>
-                            <div class="d-flex gap-2 align-items-center">
-                                <button><i class="fa-solid fa-circle-check"></i></button>
-                                <button><i class="fa-solid fa-ellipsis-vertical"></i></button>
-                            </div>
-                        </header>
-                        <div><img src="images/publish.png" alt="" class="subject-overview-img"></div>
-                    </section>
-                    <article class="d-flex flex-column subject-overview-description-container">
-                        <h4 class="subject-overview-description-title">Subject Description</h4>
-                        <div class="d-flex gap-2 flex-column">
-                            <p class="subject-overview-description-text">English Language is designed to equip learners
-                                with the skills needed to communicate effectively in both spoken and written forms. The
-                                subject focuses on grammar, vocabulary, comprehension, writing, and oral communication.
-                                Learners
-                                will develop the ability to read with understanding, write clearly and creatively, listen
-                                attentively, and speak confidently in different contexts. Through interactive lessons,
-                                practice exercises, and assessments, students will
-                                build a strong foundation in grammar and vocabulary, improve their reading and writing
-                                skills, and learn to express themselves fluently and accurately. By the end of the course,
-                                learners will not only master the technical aspects
-                                of English but also gain the confidence to apply the language in academic, professional, and
-                                everyday life. </p>
-
-                            <div>
-                                <p class="subject-overview-study-list">Key Areas of Study:</p>
-                                <ul>
-                                    <li>Grammar and Structure </li>
-                                    <li>Vocabulary Development</li>
-                                    <li>Reading Comprehension</li>
-                                    <li>Writing Skills (letters, essays, reports, creative writing)</li>
-                                    <li>Speaking and Listening Skills </li>
-                                    <li>Literature Appreciation (poetry, prose, drama)</li>
-                                </ul>
-                            </div>
-
-                        </div>
-
-                    </article>
-                    <section class="d-flex flex-column curriculum-container">
-                        <h4 class="subject-overview-description-title">Curriculum</h4>
-                        <div class="d-flex flex-column gap-2">
-                            <div class="d-flex justify-content-between align-items-center gap-2 speech-card">
-                                <div class="d-flex gap-3 align-items-center">
-                                    <i class="fa-solid fa-book-open-reader"></i>
-                                    <div class="d-flex flex-column gap-1">
-                                        <h5 class="speech-card-title">Parts of Speech</h5>
-                                        <div class="d-flex gap-1 align-items-center">
-                                            <div class="d-flex aling-items-center gap-1"><i
-                                                    class="fa-solid fa-circle-play" style="color: #000000;"></i> <span
-                                                    class="subject-subtext">11 Lesson</span></div>
-                                            <div class="d-flex aling-items-center gap-1"><i class="fa-solid fa-question"
-                                                    style="color: #000000;"></i> <span class="subject-subtext">10
-                                                    Quiz</span></div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <i class="fa-solid fa-circle-check" style="color: #004A53;"></i>
-                            </div>
-                        </div>
-
-                    </section>
-                </div>
-            </section>
-            <div class = "row  mt-4">
-                <div class = "d-flex col-md-12 col-lg-12 justify-content-end ">
-                    <div class = "d-flex flex-column flex-lg-row gap-3 px-0">
-                        <button class="btn btn-nav-secondary back-btn" style="padding: 12px 120px;"
-                            data-next="curriculum">Previous</button>
-                        <button class="btn btn-nav-primary" style="padding: 12px 120px;">Publish Now</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-
-
-        <!-- Bootstrap 5 JS -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const fileInput = document.getElementById('fileInput');
-                const fileNameDisplay = document.getElementById('fileNameDisplay');
-                const uploadButton = document.getElementById('uploadButton');
-                const messageElement = document.getElementById('message');
-
-                // Listen for changes on the hidden file input
-                fileInput.addEventListener('change', function(e) {
-                    if (this.files && this.files.length > 0) {
-                        fileNameDisplay.value = this.files[0].name;
-                        messageElement.textContent = '';
-                    } else {
-                        fileNameDisplay.value = 'No file selected...';
-                    }
-                });
-
-                // Handle the upload button click
-                uploadButton.addEventListener('click', function() {
-                    if (fileInput.files.length > 0) {
-                        // Placeholder for actual upload logic
-                        messageElement.textContent = 'File "' + fileInput.files[0].name +
-                            '" is ready for upload!';
-                    } else {
-                        messageElement.textContent = 'Please select a file first.';
-                    }
-                });
-            });
-
-
-            <
-            !--Navigating across the connectors-- >
-            document.addEventListener('DOMContentLoaded', () => {
-                const navButtons = document.querySelectorAll('.coursebtn');
-                const sections = document.querySelectorAll('.content-section');
-                const continueButtons = document.querySelectorAll('.continue-btn');
-                const backButtons = document.querySelectorAll('.back-btn');
-
-                // Function to show a section
-                function showSection(sectionId) {
-                    sections.forEach(sec => sec.classList.add('d-none'));
-                    document.getElementById(sectionId).classList.remove('d-none');
-
-                    navButtons.forEach(btn => btn.classList.remove('course-btn-active'));
-                    document.querySelector(`[data-section="${sectionId}"]`)?.classList.add('course-btn-active');
+        <div class="container bg-white d-none content-section" id="curriculum">
+            <style>
+                .curriculum-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    margin-bottom: 2rem;
+                    flex-wrap: wrap;
+                    gap: 1rem;
                 }
 
+                .curriculum-header-text h5 {
+                    font-size: 1.25rem;
+                    color: #004A53;
+                    font-weight: 600;
+                    margin-bottom: 0.5rem;
+                }
 
-                // Continue button click
-                continueButtons.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        const next = btn.getAttribute('data-next');
-                        showSection(next);
-                    });
-                });
+                .curriculum-header-text p {
+                    color: #666;
+                    font-size: 0.95rem;
+                    margin: 0;
+                }
 
-                // Back btton click
-                backButtons.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        const back = btn.getAttribute('data-next');
-                        showSection(back);
-                    });
-                });
+                .btn-add-topic {
+                    background-color: #FDAF22;
+                    border: none;
+                    color: white;
+                    font-weight: 500;
+                    padding: 0.75rem 1.5rem;
+                    border-radius: 0.375rem;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    white-space: nowrap;
+                }
 
-                showSection('details');
-            });
-        </script>
+                .btn-add-topic:hover {
+                    background-color: #e59a0f;
+                }
+
+                .lesson-item {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 1rem;
+                    border: 1px solid #ddd;
+                    border-radius: 0.375rem;
+                    margin-bottom: 1rem;
+                    transition: all 0.3s ease;
+                }
+
+                .lesson-item:hover {
+                    border-color: #004A53;
+                    background-color: #f9f9f9;
+                }
+
+                .lesson-item-content {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.75rem;
+                    color: #333;
+                }
+
+                .lesson-item-actions {
+                    display: flex;
+                    gap: 1rem;
+                    align-items: center;
+                }
+
+                .lesson-item-actions button {
+                    background: none;
+                    border: none;
+                    cursor: pointer;
+                    color: #666;
+                    transition: color 0.3s ease;
+                    padding: 0.25rem 0.5rem;
+                }
+
+                .lesson-item-actions button:hover {
+                    color: #004A53;
+                }
+
+                .btn-add-lesson {
+                    background-color: white;
+                    border: 1px solid #004A53;
+                    color: #004A53;
+                    font-weight: 500;
+                    padding: 0.75rem 1.5rem;
+                    border-radius: 0.375rem;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    margin-bottom: 2rem;
+                }
+
+                .btn-add-lesson:hover {
+                    background-color: #f0f8f9;
+                }
+
+                .curriculum-actions {
+                    display: flex;
+                    gap: 1rem;
+                    justify-content: flex-end;
+                    margin-top: 2rem;
+                    flex-wrap: wrap;
+                }
+
+                @media (max-width: 768px) {
+                    .curriculum-header {
+                        flex-direction: column;
+                    }
+
+                    .curriculum-actions {
+                        flex-direction: column;
+                    }
+
+                    .curriculum-actions button {
+                        width: 100%;
+                    }
+                }
+            </style>
+
+            <div class="curriculum-header">
+                <div class="curriculum-header-text">
+                    <h5>Curriculum</h5>
+                    <p>Manage course topics and lessons</p>
+                </div>
+                <button type="button" class="btn btn-add-topic">
+                    <i class="fa-solid fa-plus me-2"></i> Add New Topic
+                </button>
+            </div>
+
+            <div class="accordion mb-4" id="curriculumAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <i class="fa-solid fa-book-open me-2"></i> Parts of Speech
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#curriculumAccordion">
+                        <div class="accordion-body">
+                            <p>This section covers the fundamental parts of speech in English language.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lesson-item">
+                <div class="lesson-item-content">
+                    <i class="fa-solid fa-circle-play"></i>
+                    <span>Nouns</span>
+                </div>
+                <div class="lesson-item-actions">
+                    <button type="button" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button type="button" title="Delete"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            </div>
+
+            <div class="lesson-item">
+                <div class="lesson-item-content">
+                    <i class="fa-solid fa-circle-play"></i>
+                    <span>Pronouns</span>
+                </div>
+                <div class="lesson-item-actions">
+                    <button type="button" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button type="button" title="Delete"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-add-lesson">
+                <i class="fa-solid fa-plus me-2"></i> Add Lesson
+            </button>
+
+            <div class="curriculum-actions">
+                <button type="button" class="btn btn-back back-btn" data-next="media">
+                    Previous
+                </button>
+                <button type="button" class="btn btn-continue continue-btn" data-next="publish">
+                    Continue
+                </button>
+            </div>
+        </div>
+
+        <!-- Publish Section -->
+        <div class="container bg-white d-none content-section" id="publish">
+            <style>
+                .publish-overview {
+                    background-color: #f9f9f9;
+                    border: 1px solid #e0e0e0;
+                    border-radius: 0.5rem;
+                    padding: 2rem;
+                    margin-bottom: 2rem;
+                }
+
+                .overview-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    margin-bottom: 1.5rem;
+                }
+
+                .overview-title {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+                }
+
+                .overview-title h6 {
+                    font-size: 0.9rem;
+                    color: #666;
+                    font-weight: 500;
+                    margin: 0;
+                }
+
+                .overview-title h2 {
+                    font-size: 1.75rem;
+                    color: #004A53;
+                    font-weight: 600;
+                    margin: 0;
+                    font-family: 'Fredoka One', sans-serif;
+                }
+
+                .overview-meta {
+                    display: flex;
+                    gap: 1.5rem;
+                    flex-wrap: wrap;
+                    font-size: 0.9rem;
+                    color: #666;
+                }
+
+                .meta-item {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                }
+
+                .meta-item i {
+                    color: #004A53;
+                }
+
+                .overview-actions {
+                    display: flex;
+                    gap: 0.5rem;
+                    align-items: center;
+                }
+
+                .overview-actions button {
+                    background: none;
+                    border: none;
+                    cursor: pointer;
+                    color: #666;
+                    padding: 0.5rem;
+                    transition: color 0.3s ease;
+                }
+
+                .overview-actions button:hover {
+                    color: #004A53;
+                }
+
+                .course-image {
+                    width: 100%;
+                    height: 250px;
+                    object-fit: cover;
+                    border-radius: 0.5rem;
+                    margin-bottom: 2rem;
+                }
+
+                .course-description-section {
+                    margin-bottom: 2rem;
+                }
+
+                .course-description-section h6 {
+                    font-size: 1rem;
+                    color: #004A53;
+                    font-weight: 600;
+                    margin-bottom: 1rem;
+                }
+
+                .course-description-section p {
+                    color: #333;
+                    line-height: 1.7;
+                    margin-bottom: 1rem;
+                }
+
+                .key-areas-list {
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                }
+
+                .key-areas-list li {
+                    color: #333;
+                    padding: 0.5rem 0;
+                    padding-left: 1.5rem;
+                    position: relative;
+                    line-height: 1.6;
+                }
+
+                .key-areas-list li:before {
+                    content: "•";
+                    position: absolute;
+                    left: 0;
+                    color: #FDAF22;
+                    font-weight: bold;
+                    font-size: 1.2rem;
+                }
+
+                .curriculum-preview {
+                    margin-top: 2rem;
+                }
+
+                .curriculum-preview h6 {
+                    font-size: 1rem;
+                    color: #004A53;
+                    font-weight: 600;
+                    margin-bottom: 1rem;
+                }
+
+                .curriculum-item {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 1rem;
+                    border: 1px solid #e0e0e0;
+                    border-radius: 0.375rem;
+                    margin-bottom: 0.75rem;
+                    background-color: white;
+                }
+
+                .curriculum-item-content {
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+                    flex: 1;
+                }
+
+                .curriculum-item-icon {
+                    color: #004A53;
+                    font-size: 1.25rem;
+                }
+
+                .curriculum-item-text h6 {
+                    font-size: 0.95rem;
+                    color: #333;
+                    font-weight: 600;
+                    margin: 0 0 0.25rem 0;
+                }
+
+                .curriculum-item-text p {
+                    font-size: 0.85rem;
+                    color: #666;
+                    margin: 0;
+                }
+
+                .curriculum-item-meta {
+                    display: flex;
+                    gap: 1rem;
+                    font-size: 0.85rem;
+                    color: #666;
+                }
+
+                .curriculum-item-check {
+                    color: #004A53;
+                    font-size: 1.25rem;
+                }
+
+                .publish-actions {
+                    display: flex;
+                    gap: 1rem;
+                    justify-content: flex-end;
+                    margin-top: 2rem;
+                    flex-wrap: wrap;
+                }
+
+                @media (max-width: 768px) {
+                    .publish-overview {
+                        padding: 1.5rem;
+                    }
+
+                    .overview-header {
+                        flex-direction: column;
+                        gap: 1rem;
+                    }
+
+                    .overview-meta {
+                        gap: 1rem;
+                    }
+
+                    .course-image {
+                        height: 200px;
+                    }
+
+                    .publish-actions {
+                        flex-direction: column;
+                    }
+
+                    .publish-actions button {
+                        width: 100%;
+                    }
+                }
+            </style>
+
+            <div class="publish-overview">
+                <div class="overview-header">
+                    <div class="overview-title">
+                        <h6>Subject Overview</h6>
+                        <h2 id="publishSubjectTitle">English Language</h2>
+                    </div>
+                    <div class="overview-actions">
+                        <button type="button" title="Edit"><i class="fa-solid fa-check-circle" style="color: #004A53; font-size: 1.5rem;"></i></button>
+                        <button type="button" title="More options"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                    </div>
+                </div>
+
+                <div class="overview-meta">
+                    <div class="meta-item">
+                        <i class="fa-solid fa-book"></i>
+                        <span id="publishTopics">0 Topics</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        <span id="publishLessons">0 Lessons</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fa-solid fa-clock"></i>
+                        <span id="publishTime">0 Hours</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fa-solid fa-layer-group"></i>
+                        <span id="publishLevel">Level</span>
+                    </div>
+                </div>
+
+                <img id="publishCourseImage" src="images/publish.png" alt="Course Preview" class="course-image">
+
+                <div class="course-description-section">
+                    <h6>Subject Description</h6>
+                    <p id="publishDescription">
+                        This comprehensive course covers essential concepts and skills. Students will learn through interactive lessons, practice exercises, and assessments to build a strong foundation.
+                    </p>
+                </div>
+
+                <div class="course-description-section">
+                    <h6>Key Areas of Study:</h6>
+                    <ul class="key-areas-list" id="publishKeyAreas">
+                        <li>Fundamental Concepts</li>
+                        <li>Practical Applications</li>
+                        <li>Advanced Techniques</li>
+                        <li>Real-world Examples</li>
+                        <li>Assessment & Evaluation</li>
+                    </ul>
+                </div>
+
+                <div class="curriculum-preview">
+                    <h6>Curriculum</h6>
+                    <div id="curriculumPreviewContainer">
+                        <div class="curriculum-item">
+                            <div class="curriculum-item-content">
+                                <div class="curriculum-item-icon">
+                                    <i class="fa-solid fa-book-open"></i>
+                                </div>
+                                <div class="curriculum-item-text">
+                                    <h6>Parts of Speech</h6>
+                                    <p>Foundation concepts</p>
+                                </div>
+                            </div>
+                            <div class="curriculum-item-meta">
+                                <span><i class="fa-solid fa-graduation-cap"></i> 5 Lessons</span>
+                                <span><i class="fa-solid fa-clock"></i> 2 Units</span>
+                            </div>
+                            <div class="curriculum-item-check">
+                                <i class="fa-solid fa-check-circle"></i>
+                            </div>
+                        </div>
+
+                        <div class="curriculum-item">
+                            <div class="curriculum-item-content">
+                                <div class="curriculum-item-icon">
+                                    <i class="fa-solid fa-book-open"></i>
+                                </div>
+                                <div class="curriculum-item-text">
+                                    <h6>Sentence Structure</h6>
+                                    <p>Building complex sentences</p>
+                                </div>
+                            </div>
+                            <div class="curriculum-item-meta">
+                                <span><i class="fa-solid fa-graduation-cap"></i> 4 Lessons</span>
+                                <span><i class="fa-solid fa-clock"></i> 2 Units</span>
+                            </div>
+                            <div class="curriculum-item-check">
+                                <i class="fa-solid fa-check-circle"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="publish-actions">
+                <button type="button" class="btn btn-back back-btn" data-next="curriculum">
+                    Back
+                </button>
+                <button type="button" class="btn btn-publish" id="finalPublishBtn">
+                    Publish Now
+                </button>
+            </div>
+        </div>
     </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Navigation between sections
+        document.addEventListener('DOMContentLoaded', () => {
+            const navButtons = document.querySelectorAll('.coursebtn');
+            const sections = document.querySelectorAll('.content-section');
+            const continueButtons = document.querySelectorAll('.continue-btn');
+            const backButtons = document.querySelectorAll('.back-btn');
+
+            function showSection(sectionId) {
+                sections.forEach(sec => sec.classList.add('d-none'));
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    section.classList.remove('d-none');
+                }
+
+                navButtons.forEach(btn => btn.classList.remove('course-btn-active'));
+                const activeBtn = document.querySelector(`[data-section="${sectionId}"]`);
+                if (activeBtn) {
+                    activeBtn.classList.add('course-btn-active');
+                }
+
+                // Populate publish section when navigating to it
+                if (sectionId === 'publish') {
+                    populatePublishSection();
+                }
+            }
+
+            function populatePublishSection() {
+                // Get data from form fields
+                const title = document.getElementById('subjectTitle').value || 'English Language';
+                const category = document.getElementById('subjectCategory').value || 'Language';
+                const level = document.getElementById('subjectLevel').value || 'JSS 1';
+                const time = document.getElementById('subjectTime').value || '0 Hours';
+                const lessons = document.getElementById('totalLesson').value || '0';
+                const description = document.getElementById('subjectDescription').value || 'This comprehensive course covers essential concepts and skills.';
+                const fileInput = document.getElementById('fileInput');
+
+                // Update publish section
+                document.getElementById('publishSubjectTitle').textContent = title;
+                document.getElementById('publishTopics').textContent = '0 Topics';
+                document.getElementById('publishLessons').textContent = lessons + ' Lessons';
+                document.getElementById('publishTime').textContent = time;
+                document.getElementById('publishLevel').textContent = level;
+                document.getElementById('publishDescription').textContent = description;
+
+                // Update course image if file is selected
+                if (fileInput && fileInput.files && fileInput.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        document.getElementById('publishCourseImage').src = e.target.result;
+                    };
+                    reader.readAsDataURL(fileInput.files[0]);
+                }
+            }
+
+            navButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const section = btn.getAttribute('data-section');
+                    showSection(section);
+                });
+            });
+
+            continueButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const next = btn.getAttribute('data-next');
+                    showSection(next);
+                });
+            });
+
+            backButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const back = btn.getAttribute('data-next');
+                    showSection(back);
+                });
+            });
+
+            // File upload handler
+            const fileInput = document.getElementById('fileInput');
+            const fileNameDisplay = document.getElementById('fileNameDisplay');
+            const uploadButton = document.getElementById('uploadButton');
+
+            if (uploadButton) {
+                uploadButton.addEventListener('click', () => {
+                    fileInput.click();
+                });
+            }
+
+            if (fileInput) {
+                fileInput.addEventListener('change', (e) => {
+                    if (e.target.files && e.target.files[0]) {
+                        fileNameDisplay.value = e.target.files[0].name;
+                    }
+                });
+            }
+
+            // Publish button handler
+            const finalPublishBtn = document.getElementById('finalPublishBtn');
+            if (finalPublishBtn) {
+                finalPublishBtn.addEventListener('click', () => {
+                    const title = document.getElementById('subjectTitle').value;
+                    const category = document.getElementById('subjectCategory').value;
+                    const level = document.getElementById('subjectLevel').value;
+
+                    if (!title || !category || !level) {
+                        alert('Please fill in all required fields');
+                        return;
+                    }
+
+                    // Here you would submit the form to the server
+                    console.log('Publishing course:', {
+                        title,
+                        category,
+                        level,
+                        time: document.getElementById('subjectTime').value,
+                        lessons: document.getElementById('totalLesson').value,
+                        description: document.getElementById('subjectDescription').value
+                    });
+
+                    alert('Course published successfully!');
+                });
+            }
+
+            // Save draft button handler
+            const saveDraftBtn = document.getElementById('saveDraftBtn');
+            if (saveDraftBtn) {
+                saveDraftBtn.addEventListener('click', () => {
+                    const title = document.getElementById('subjectTitle').value;
+                    if (!title) {
+                        alert('Please enter a subject title');
+                        return;
+                    }
+
+                    console.log('Saving draft...');
+                    alert('Course saved as draft!');
+                });
+            }
+
+            showSection('details');
+        });
+    </script>
 @endsection
