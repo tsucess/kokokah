@@ -164,7 +164,6 @@ Route::get('/feedback', function () {
     return view('admin.feedback');
 });
 
-
 Route::get('/users', function () {
     return view('admin.users');
 });
@@ -208,7 +207,6 @@ Route::get('/curriculum', function () {
     return view('admin.curriculum');
 });
 
-
 Route::get('/createsubject', function () {
     return view('admin.createsubject');
 });
@@ -217,8 +215,8 @@ Route::get('/publish', function () {
     return view('admin.publish');
 });
 
-Route::get('/rating', function () {
-    return view('admin.rating');
+Route::get('/createannouncement', function () {
+    return view('admin.createannouncement');
 });
 
 Route::get('/userkoodies', function () {

@@ -8,7 +8,7 @@
             <div class = "d-flex flex-column justify-content-between">
 
                 <div>
-                    <h3 style="font-size:32px; color: #004a53;">Create New Course</h3>
+                    <h1>Create New Course</h1>
                     <p>Here overview of your</p>
                 </div>
 

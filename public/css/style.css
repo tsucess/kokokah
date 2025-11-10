@@ -34,6 +34,13 @@ body {
   margin-bottom: 60px;
 }
 
+h1{
+  font-size: 32px;
+  color: var(--color-primary-button);
+  line-height: 120%;
+  font-weight: 600;
+  font-family: 'Fredoka One', sans-serif;
+}
 
 
 

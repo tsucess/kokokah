@@ -5,7 +5,7 @@
 <main>
  <section class="d-flex flex-column rating-container">
       <header class="m-4 d-flex flex-column rating-header">
-        <h3 class="rating-title">Reviews & Ratings</h3>
+        <h1 >Reviews & Ratings</h1>
         <p class="rating-subtitle">
           See what other learners think about the subject.
         </p>

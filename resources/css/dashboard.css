@@ -25,6 +25,13 @@ body {
 
 
 /* Typography styles moved to Tailwind - see resources/css/app.css */
+h1{
+  font-size: 32px;
+  color: var(--color-primary-button);
+  line-height: 120%;
+  font-weight: 600;
+  font-family: 'Fredoka One', sans-serif;
+}
 
 p {
     font: sitka;
@@ -1706,3 +1713,239 @@ main .container {
         color: #000000;
         font-weight: 700;
     }
+
+     .text {
+        font-size: 18px;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #1c1d1d;
+    }
+    
+    .announcement-btn {
+        border: 1px solid #004a53;
+        border-radius: 8px;
+        background-color: #004a53;
+        font-family: "Lato", sans-serif;
+    }
+    
+    .tab {
+        background-color: #ccdbdd;
+        height: auto;
+        gap: 24px;
+    }
+    
+    .notification-container {
+        border: 1px solid #ccdbdd;
+        border-radius: 20px;
+        gap: 25px;
+        padding: 25px;
+    }
+    
+    .notification-category {
+        border: 1px solid #ccdbdd;
+        width: 90px;
+        height: 26px;
+        font-size: 12px;
+        border-radius: 10px;
+    }
+    
+    .notification-title {
+        color: #1c1d1d;
+        font-size: 20px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    
+    .notification-label {
+        background-color: #e6e8ff;
+        width: 65px;
+        height: 26px;
+        gap: 4px;
+        color: #1c1d1d;
+        font-size: 12px;
+    }
+    
+    .button {
+        appearance: none;
+        border: none;
+        background-color: transparent;
+    }
+    
+    .notification-date {
+        font-size: 16px;
+        font-weight: 600;
+    }
+    
+    .notification-text {
+        font-size: 18px;
+        color: #1c1d1d;
+    }
+    
+    
+    
+    .tab-text {
+        font-size: 18px;
+        color: #1c1d1d;
+    }
+    
+    @media screen and (max-width: 768px) {
+        .tab-text {
+            font-size: 12px;
+        }
+        .tab {
+            gap: 16px;
+        }
+    }
+
+       button {
+            background-color: transparent;
+            border: none;
+        }
+        
+        p {
+            margin: 0;
+        }
+        
+        .back-arrow {
+            font-size: 18px;
+            color: #1C1D1D;
+        }
+        
+        .announcement-title {
+            font-weight: 600;
+            font-family: "Fredoka", sans-serif;
+            font-size: 32px;
+            color: #004A53;
+        }
+        
+        .announcement-subtitle {
+            font-size: 18px;
+            color: #1C1D1D;
+        }
+        
+        .announment-btn {
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 16px;
+            color: #000F11;
+        }
+        
+        .cancel-btn {
+            border: 1px solid #777777;
+        }
+        
+        .draft-btn {
+            background-color: #FFD893;
+            border: 1px solid #004A53;
+        }
+        
+        .publish-btn {
+            background-color: #FDAF22;
+        }
+        
+        .input-container {
+            border: 1.5px solid #004A53;
+            border-radius: 10px;
+            padding: 0 24px 27px;
+            position: relative;
+            height: 62px;
+        }
+        
+        .textarea-container {
+            border: 1.5px solid #004A53;
+            border-radius: 10px;
+            padding: 0 24px 27px;
+            position: relative;
+            height: 167px;
+        }
+        
+        .label {
+            position: relative;
+            top: -14px;
+            color: #004A53;
+            background-color: #fff;
+            font-size: 14px;
+            padding: 0 4px;
+            font-weight: 500;
+            align-self: flex-start;
+        }
+        
+        .input-text {
+            font-size: 14px;
+            color: #8E8E93;
+            border: none;
+            outline: none;
+        }
+        
+        .textarea-text {
+            font-size: 14px;
+            color: #8E8E93;
+            border: none;
+            outline: none;
+            height: auto;
+        }
+        
+        .priority-container {
+            gap: 18px;
+        }
+        
+        .priority-title {
+            color: #004A53;
+            font-size: 14px;
+        }
+        
+        .preview-container {
+            gap: 14px;
+        }
+        
+        .preview-title {
+            font-weight: 600;
+            font-family: "Fredoka", sans-serif;
+            font-size: 24px;
+            color: #004A53;
+        }
+        
+        .preview-card {
+            border: 1px solid #CCDBDD;
+            border-radius: 20px;
+            padding: 25px;
+            gap: 20px;
+        }
+        
+        .preview-card-title {
+            color: #1C1D1D;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .preview-card-badge {
+            gap: 4px;
+            background-color: #E6E8FF;
+            width: 65px;
+            height: 26px;
+            color: #1C1D1D;
+            font-size: 12px;
+            font-weight: 500;
+            border-radius: 20px;
+            padding: 4px 50px;
+        }
+        
+        .preview-card-text {
+            font-size: 18px;
+            color: #1C1D1D;
+        }
+        
+        select {
+            outline: none;
+            border: none;
+            font-size: 14px;
+            color: #000F11;
+        }
+        
+        .urgent-badge {
+            background-color: #FDE1D3;
+            color: #F56824;
+        }
+        
+        .warning-badge {
+            background-color: #FFF1D8;
+            color: #FDAF22;
+        }

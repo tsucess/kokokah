@@ -6,7 +6,7 @@
     <!-- Header Section -->
     <div class="d-flex justify-content-between align-items-start mb-5">
       <div>
-        <h1 class="fw-bold mb-2" style="font-size: 2.5rem; color: #004A53; font-family: 'Fredoka One', sans-serif;">All Subjects</h1>
+        <h1 class="fw-bold mb-2" >All Subjects</h1>
         <p class="text-muted" style="font-size: 0.95rem;">Here overview of your</p>
       </div>
       <div>
