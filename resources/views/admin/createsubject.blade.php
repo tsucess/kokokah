@@ -289,7 +289,7 @@
         <div class="container bg-white">
             <div class="subject-header">
                 <div>
-                    <h3>Create New Course</h3>
+                    <h1>Create New Course</h1>
                     <p>Here overview of your</p>
                 </div>
 

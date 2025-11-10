@@ -127,7 +127,7 @@
 
             <div class="collapse ps-4" id="communicationMenu">
                 <a class="nav-item-link d-block nav-child" href="#">Messages</a>
-                <a class="nav-item-link d-block nav-child" href="#">Notifications</a>
+                <a class="nav-item-link d-block nav-child" href="/announcement">Notifications</a>
             </div>
         </nav>
 

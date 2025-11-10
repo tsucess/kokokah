@@ -8,9 +8,9 @@
                 <div class="d-flex justify-content-between">
 
                     <div>
-                        <h4 class ="fw-bold">Welcome back, <span id="first_name">Samuel</span> <span
-                                id="role">(Admins)</span></h4>
-                        <p class = "text-muted">Here overview of your </p>
+                        <h1 class ="fw-bold">Welcome back, <span id="first_name">Samuel</span> <span
+                                id="role">(Admins)</span></h1>
+                            <p class = "text-muted">Here overview of your </p>
                     </div>
 
 
