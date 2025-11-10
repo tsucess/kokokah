@@ -7,27 +7,6 @@
 
             <div class = "d-flex justify-content-between">
 
-<<<<<<< HEAD
-                <div>
-                    <h3>Create New Course</h3>
-                    <p>Here overview of your</p>
-                </div>
-
-                <div>
-                    <button class = "btn rounded coursedraft">
-                        Save As Draft
-                    </button>
-
-                    <button class = "btn rounded publishcourse">
-                        Publish Course
-                    </button>
-
-                </div>
-
-            </div>
-        </div>
-
-=======
             <div>
             <h4 class = "fw-bold">Create New Subject</h4>
             <p>Here overview of your</p>
@@ -37,7 +16,6 @@
         <button class = "btn rounded coursedraft">
         Save As Draft
         </button>
->>>>>>> b6e9223eda6792e7667e17f89824a02a0716acc1
 
         <div class = "container">
 
@@ -105,38 +83,14 @@
                         </select>
                     </div>
 
-<<<<<<< HEAD
-                    <div class="col">
-                        <label for = "course-level"><b>Course level</b></label>
-                        <select class="form-select form-select-sm " id = "course-level" aria-label="Small select example">
-                            <option selected>select course level</option>
-                            <option value="1">Level One</option>
-                            <option value="2">Level Two</option>
-                            <option value="3">Level Three</option>
-                        </select>
-                    </div>
-=======
         <button class = "btn btn-light borderlessconnectorbutton" type = "button" data-section="media">
             <i class="fa-solid fa-dot-circle me-2"></i>
             Subject Media
             <i class="fa fa-arrow-right me-2"></i>
         </button>
->>>>>>> b6e9223eda6792e7667e17f89824a02a0716acc1
 
                 </div>
 
-<<<<<<< HEAD
-                <div class = "row mt-2">
-                    <div class="col">
-                        <label for="exampleDateInput" class="form-label"><b>Select Date</b></label>
-                        <input type="date" class="form-control" id="exampleDateInput">
-                    </div>
-
-                    <div class="col">
-                        <label for="lesson" class="form-label"><b>Total Lesson</b></label>
-                        <input type="number" class="form-control" id="lesson">
-                    </div>
-=======
         <button class = "btn btn-light borderlessconnectorbutton" type = "button" data-section="curriculum">
             <i class="fa-solid fa-dot-circle me-2"></i>
             Curriculum
@@ -148,7 +102,6 @@
              Publish Subject
             <i class="fa fa-arrow-right me-2"></i>
         </button>
->>>>>>> b6e9223eda6792e7667e17f89824a02a0716acc1
 
                 </div>
 
@@ -157,9 +110,6 @@
 
         </div>
 
-<<<<<<< HEAD
-    </main>
-=======
 
 <!-- New Course Details Section -->
 <div class = "container content-section" id="details">
@@ -530,5 +480,4 @@ Course Details
   });
     </script>
 </main>
->>>>>>> b6e9223eda6792e7667e17f89824a02a0716acc1
 @endsection

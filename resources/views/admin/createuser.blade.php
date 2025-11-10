@@ -578,7 +578,7 @@
                                     <div class="form-group">
                                         <label class="form-label form-label-custom">Enter Email Address</label>
                                         <input type="email" class="form-control form-input-custom" id="email"
-                                            name="email" placeholder="@gmail.com" readonly>
+                                            name="email" placeholder="@gmail.com">
                                         <small class="text-danger d-none" id="emailError"></small>
                                     </div>
                                 </div>
