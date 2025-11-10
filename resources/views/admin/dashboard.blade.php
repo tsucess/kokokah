@@ -9,15 +9,15 @@
 
                     <div>
                         <h4 class ="fw-bold">Welcome back, <span id="first_name">Samuel</span> <span
-                                id="role">(Admin)</span></h4>
+                                id="role">(Admins)</span></h4>
                         <p class = "text-muted">Here overview of your </p>
                     </div>
 
 
-                    <div class = "d-flex ms-auto">
-                        <button class="btn btn-nav-secondary me-3"><i class="fa-solid fa-plus me-2"></i> Add New
+                    <div class = "d-flex gap-4 align-items-center">
+                        <button class="btn-border-green"><i class="fa-solid fa-plus "></i> Add New
                             Course</button>
-                        <button class="btn btn-nav-primary"><i class="fa-solid fa-plus me-2"></i> Create New User</button>
+                        <button class="btn-accent-yellow"><i class="fa-solid fa-plus"></i> Create New User</button>
                     </div>
 
                 </div>
@@ -69,7 +69,7 @@
                 </div>
 
                 <div class="stat-card">
-                    <img src = "images/abc.png" class = "img-fluid" />
+                    <img src = "images/abc.png" class = "img-fluid "/>
                     <div class="stat-meta">
                         <div class="label">Active Courses</div>
                         <div class = "mt-2">

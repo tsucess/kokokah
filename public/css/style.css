@@ -1066,7 +1066,35 @@ footer p {
   background-color: #004A53;
   color: #FFFFFF;
 }
+.btn-accent-yellow{
+  background-color: #FDAF22;
+  color: #000000;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  white-space: nowrap;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  gap: 8px;
+}
 
+.btn-border-green{
+  background-color: #FFFFFF;
+  color: #004A53;
+  border: 2px solid #004A53;
+  border-radius: 8px;
+  font-size: 14px;
+  white-space: nowrap;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  gap: 8px;
+}
 /* ===== HERO SECTIONS ===== */
 
 .hero-section-yellow {

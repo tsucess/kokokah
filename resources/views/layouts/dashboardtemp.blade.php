@@ -19,6 +19,8 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
+    <link href="css/style.css" rel="stylesheet">
+
 
     <!-- Inter font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -28,6 +30,7 @@
 
     @vite(['resources/css/dashboard.css'])
     @vite(['resources/css/access.css'])
+
 </head>
 
 <body>
@@ -44,24 +47,25 @@
     <div class="overlay" id="sidebarOverlay"></div>
 
     <!-- Sidebar -->
-<aside class="sidebar" id="sidebar" style="height: 100vh; overflow-y: auto; overflow-x: hidden;">
-    <div class="brand p-3">
-        <img src="images/Kokokah_Logo.png" alt="Kokokah Logo" class="img-fluid dashboard-logo">
-    </div>
+    <aside class="sidebar" id="sidebar" style="height: 100vh; overflow-y: auto; overflow-x: hidden;">
+        <div class="brand p-3">
+            <img src="images/Kokokah_Logo.png" alt="Kokokah Logo" class="img-fluid dashboard-logo">
+        </div>
 
-    <nav class="nav-group px-2" id="sidebarNav">
-        <a class="nav-item-link" href="/dashboard" id="dashboardLink">
-            <i class="fa-solid fa-gauge pe-2"></i> Dashboard
-        </a>
+        <nav class="nav-group px-2" id="sidebarNav">
+            <a class="nav-item-link" href="/dashboard" id="dashboardLink">
+                <i class="fa-solid fa-gauge pe-2"></i> Dashboard
+            </a>
 
-        <!-- Users Management -->
-        <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent" data-bs-toggle="collapse"
-           href="#usersMenu" role="button" aria-expanded="true" aria-controls="usersMenu">
-            <span><i class="fa-solid fa-users pe-3"></i> Users Management</span>
-            <i class="fa-solid fa-chevron-down chevron-icon"></i>
-        </a>
+            <!-- Users Management -->
+            <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
+                data-bs-toggle="collapse" href="#usersMenu" role="button" aria-expanded="true"
+                aria-controls="usersMenu">
+                <span><i class="fa-solid fa-users pe-3"></i> Users Management</span>
+                <i class="fa-solid fa-chevron-down chevron-icon"></i>
+            </a>
 
-         <!-- Dropdown items -->
+            <!-- Dropdown items -->
             <div class="collapse ps-4" id="usersMenu">
                 <a class="nav-item-link d-block nav-child" href="/users">All Users</a>
                 <a class="nav-item-link d-block nav-child" href="/students">Students</a>
@@ -70,12 +74,13 @@
                 <a class="nav-item-link d-block nav-child" href="/useractivity">Users Activity Log</a>
             </div>
 
-        <!-- Subject Management -->
-        <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent" data-bs-toggle="collapse"
-           href="#subjectsMenu" role="button" aria-expanded="true" aria-controls="subjectsMenu">
-            <span><i class="fa-solid fa-book-open me-2 pe-2"></i> Subject Management</span>
-            <i class="fa-solid fa-chevron-down chevron-icon"></i>
-        </a>
+            <!-- Subject Management -->
+            <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
+                data-bs-toggle="collapse" href="#subjectsMenu" role="button" aria-expanded="true"
+                aria-controls="subjectsMenu">
+                <span><i class="fa-solid fa-book-open me-2 pe-2"></i> Subject Management</span>
+                <i class="fa-solid fa-chevron-down chevron-icon"></i>
+            </a>
 
 
             <!-- Dropdown items -->
@@ -87,8 +92,9 @@
                 <a class="nav-item-link d-block nav-child" href="#">Subject Approval</a>
             </div>
 
-            <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent" data-bs-toggle="collapse"
-                href="#paymentsMenu" role="button" aria-expanded="false" aria-controls="paymentsMenu">
+            <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
+                data-bs-toggle="collapse" href="#paymentsMenu" role="button" aria-expanded="false"
+                aria-controls="paymentsMenu">
                 <span><i class="fa-solid fa-credit-card pe-3"></i> Payments & Transactions</span>
                 <i class="fa-solid fa-chevron-down small chevron-icon"></i>
             </a>
@@ -99,8 +105,9 @@
                 <a class="nav-item-link d-block nav-child" href="#">Invoices</a>
             </div>
 
-            <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent" data-bs-toggle="collapse"
-                href="#analyticsMenu" role="button" aria-expanded="false" aria-controls="analyticsMenu">
+            <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
+                data-bs-toggle="collapse" href="#analyticsMenu" role="button" aria-expanded="false"
+                aria-controls="analyticsMenu">
                 <span><i class="fa-solid fa-chart-line pe-3"></i> Reports & Analytics</span>
                 <i class="fa-solid fa-chevron-down small chevron-icon"></i>
             </a>
@@ -110,8 +117,9 @@
                 <a class="nav-item-link d-block nav-child" href="#">Analytics</a>
             </div>
 
-            <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent" data-bs-toggle="collapse"
-                href="#communicationMenu" role="button" aria-expanded="false" aria-controls="communicationMenu">
+            <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
+                data-bs-toggle="collapse" href="#communicationMenu" role="button" aria-expanded="false"
+                aria-controls="communicationMenu">
                 <span><i class="fa-solid fa-comments pe-3"></i> Communication</span>
                 <i class="fa-solid fa-chevron-down small chevron-icon"></i>
             </a>
@@ -120,26 +128,28 @@
                 <a class="nav-item-link d-block nav-child" href="#">Messages</a>
                 <a class="nav-item-link d-block nav-child" href="#">Notifications</a>
             </div>
-    </nav>
+        </nav>
 
-    <div class="sidebar-footer mt-auto p-3">
-        <a class="nav-item-link" href="#"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
-        <div class="profile mt-3" id="profileSection">
-            <img class="avatar" id="profileImage" src="images/winner-round.png" alt="user"
-                 style="cursor: pointer; width: 40px; height: 40px; object-fit: cover; border-radius: 50%; border: 2px solid #ff00;"
-                 data-bs-toggle="tooltip" data-bs-placement="top" title="Profile">
-            <div class="d-flex justify-content-between mt-4 p-2 w-100 align-items-center">
-                <div id="profileInfo" style="cursor: pointer;" data-bs-toggle="tooltip" data-bs-placement="top" title="Profile">
-                    <h6 class="fw-semibold" id="userName">Culacino_</h6>
-                    <p class="small text-muted" id="userRole">UX Designer</p>
-                </div>
-                <div class="logout">
-                    <a href="#" id="logoutBtn" title="Logout"><span><i class="fa-solid fa-arrow-right-from-bracket"></i></span></a>
+        <div class="sidebar-footer mt-auto p-3">
+            <a class="nav-item-link" href="#"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
+            <div class="profile mt-3" id="profileSection">
+                <img class="avatar" id="profileImage" src="images/winner-round.png" alt="user"
+                    style="cursor: pointer; width: 40px; height: 40px; object-fit: cover; border-radius: 50%; border: 2px solid #ff00;"
+                    data-bs-toggle="tooltip" data-bs-placement="top" title="Profile">
+                <div class="d-flex justify-content-between mt-4 p-2 w-100 align-items-center">
+                    <div id="profileInfo" style="cursor: pointer;" data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="Profile">
+                        <h6 class="fw-semibold" id="userName">Culacino_</h6>
+                        <p class="small text-muted" id="userRole">UX Designer</p>
+                    </div>
+                    <div class="logout">
+                        <a href="#" id="logoutBtn" title="Logout"><span><i
+                                    class="fa-solid fa-arrow-right-from-bracket"></i></span></a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</aside>
+    </aside>
 
 
     <!-- Topbar -->
@@ -269,7 +279,9 @@
                             if (parentToggle) {
                                 parentToggle.classList.add('active');
                                 // Expand the menu
-                                const bsCollapse = new bootstrap.Collapse(parentMenu, { toggle: false });
+                                const bsCollapse = new bootstrap.Collapse(parentMenu, {
+                                    toggle: false
+                                });
                                 bsCollapse.show();
                             }
                         }
@@ -293,53 +305,53 @@
 
 
         //toggling the accordion icons
-document.addEventListener('DOMContentLoaded', function () {
-    // Select all collapsible parents
-    document.querySelectorAll('.nav-parent').forEach(parent => {
-        const targetId = parent.getAttribute('href');
-        const target = document.querySelector(targetId);
-        const icon = parent.querySelector('.chevron-icon');
+        document.addEventListener('DOMContentLoaded', function() {
+            // Select all collapsible parents
+            document.querySelectorAll('.nav-parent').forEach(parent => {
+                const targetId = parent.getAttribute('href');
+                const target = document.querySelector(targetId);
+                const icon = parent.querySelector('.chevron-icon');
 
-        if (!target || !icon) return;
+                if (!target || !icon) return;
 
-        // When collapse is shown
-        target.addEventListener('show.bs.collapse', () => {
-            icon.classList.add('rotate');
+                // When collapse is shown
+                target.addEventListener('show.bs.collapse', () => {
+                    icon.classList.add('rotate');
+                });
+
+                // When collapse is hidden
+                target.addEventListener('hide.bs.collapse', () => {
+                    icon.classList.remove('rotate');
+                });
+            });
         });
 
-        // When collapse is hidden
-        target.addEventListener('hide.bs.collapse', () => {
-            icon.classList.remove('rotate');
-        });
-    });
-});
 
 
+        <
+        !--Toggling chevron icons up / down based on collapse state-- >
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelectorAll('.nav-parent').forEach(parent => {
+                    const targetId = parent.getAttribute('href');
+                    const target = document.querySelector(targetId);
+                    const icon = parent.querySelector('.chevron-icon');
 
-<!-- Toggling chevron icons up/down based on collapse state -->
-document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.nav-parent').forEach(parent => {
-        const targetId = parent.getAttribute('href');
-        const target = document.querySelector(targetId);
-        const icon = parent.querySelector('.chevron-icon');
+                    if (!target || !icon) return;
 
-        if (!target || !icon) return;
+                    // When dropdown opens
+                    target.addEventListener('show.bs.collapse', () => {
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
+                    });
 
-        // When dropdown opens
-        target.addEventListener('show.bs.collapse', () => {
-            icon.classList.remove('fa-chevron-down');
-            icon.classList.add('fa-chevron-up');
-        });
-
-        // When dropdown closes
-        target.addEventListener('hide.bs.collapse', () => {
-            icon.classList.remove('fa-chevron-up');
-            icon.classList.add('fa-chevron-down');
-        });
-    });
-});
-
-</script>
+                    // When dropdown closes
+                    target.addEventListener('hide.bs.collapse', () => {
+                        icon.classList.remove('fa-chevron-up');
+                        icon.classList.add('fa-chevron-down');
+                    });
+                });
+            });
+    </script>
 
 </body>
 
