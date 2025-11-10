@@ -7,27 +7,15 @@
 
             <div class = "d-flex justify-content-between">
 
-                <div>
-                    <h3 style="font-size:32px; color: #004a53;">Create New Course</h3>
-                    <p>Here overview of your</p>
-                </div>
-
-                <div class="d-flex align-items-center gap-3">
-                    <button class = "btn rounded coursedraft" style="font-size: 16px;">
-                        Save As Draft
-                    </button>
-
-                    <button class = "btn rounded publishcourse">
-                        Publish Course
-                    </button>
-
-                </div>
-
-            </div>
+            <div>
+            <h4 class = "fw-bold">Create New Subject</h4>
+            <p>Here overview of your</p>
         </div>
 
-
-        <div class = "container bg-white">
+        <div class = "d-flex gap-4">
+        <button class = "btn rounded coursedraft">
+        Save As Draft
+        </button>
 
             <div class = "d-flex gap-4">
                 <button type = "button" class = "d-flex justify-content-center align-items-center gap-2 w-25 coursebtn"
@@ -65,6 +53,54 @@
        
 
            
+
+            <form>
+                <div class="row mt-3">
+
+        <div class = "d-flex gap-4 justify-content-space-between">
+        <button  type = "button" class = "btn btn-light btn-outline-dark border-1 rounded me-3 connectorbutton" data-section="details">
+            <i class="fa-solid fa-dot-circle me-2" ></i>
+            Create New Subject &nbsp;
+            <i class="fa fa-arrow-right me-2"></i>
+        </button>
+
+                <div class = "row">
+                    <div class="col">
+                        <label for = "course-category"><b>Course Category</b></label>
+                        <select class="form-select form-select-sm" id = "course-category" aria-label="Small select example">
+                            <option selected>select course category</option>
+                            <option value="1">Category One</option>
+                            <option value="2">Category Two</option>
+                            <option value="3">Category Three</option>
+                        </select>
+                    </div>
+
+        <button class = "btn btn-light borderlessconnectorbutton" type = "button" data-section="media">
+            <i class="fa-solid fa-dot-circle me-2"></i>
+            Subject Media
+            <i class="fa fa-arrow-right me-2"></i>
+        </button>
+
+                </div>
+
+        <button class = "btn btn-light borderlessconnectorbutton" type = "button" data-section="curriculum">
+            <i class="fa-solid fa-dot-circle me-2"></i>
+            Curriculum
+            <i class="fa fa-arrow-right me-2"></i>
+        </button>
+
+        <button class = "btn btn-light borderlessconnectorbutton" type = "button" data-section="publish">
+            <i class="fa-solid fa-dot-circle me-2"></i>
+             Publish Subject
+            <i class="fa fa-arrow-right me-2"></i>
+        </button>
+
+                </div>
+
+        </div>
+        </form>
+
+        </div>
 
 
 <!-- New Course Details Section -->

@@ -245,7 +245,7 @@
                                     <div class="form-group">
                                         <label class="form-label form-label-custom">Enter Email Address</label>
                                         <input type="email" class="form-control form-input-custom" id="email"
-                                            name="email" placeholder="@gmail.com" required>
+                                            name="email" placeholder="@gmail.com" required readonly>
                                         <small class="text-danger d-none" id="emailError"></small>
                                     </div>
                                 </div>
@@ -287,6 +287,45 @@
         </div>
     </main>
 
+    <!-- Image Cropper Modal - Bootstrap -->
+    <div class="modal fade" id="cropperModal" tabindex="-1" aria-labelledby="cropperModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header border-bottom">
+                    <h5 class="modal-title" id="cropperModalLabel">Crop Profile Photo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-2 image-div">
+                        <img id="cropperImage" src="" alt="Crop Image">
+                    </div>
+                    <div class="zoom-container mb-2">
+                        <label for="zoomRange" class="form-label zoom-label">Zoom:</label>
+                        <input type="range" id="zoomRange" class="form-range" min="0.1" max="3" step="0.1" value="1">
+                    </div>
+                    <div class="controls-container">
+                        <button type="button" class="btn" id="rotateLeftBtn">
+                            <i class="fa-solid fa-rotate-left"></i> <span class="d-none d-md-inline">Rotate Left</span>
+                        </button>
+                        <button type="button" class="btn" id="rotateRightBtn">
+                            <i class="fa-solid fa-rotate-right"></i> <span class="d-none d-md-inline">Rotate Right</span>
+                        </button>
+                        <button type="button" class="btn" id="resetCropBtn">
+                            <i class="fa-solid fa-arrows-rotate"></i> <span class="d-none d-md-inline">Reset</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer border-top">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-sm" id="cropperSave">Crop & Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
 
@@ -298,6 +337,90 @@
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
+        }
+
+        /* Cropper button hover effects */
+        #rotateLeftBtn:hover, #rotateRightBtn:hover, #resetCropBtn:hover {
+            background-color: #004A53 !important;
+            color: white !important;
+        }
+
+        /* Cropper Modal Styles */
+        .modal-dialog {
+            margin: auto !important;
+        }
+
+        .modal-header {
+            background-color: #f9f9f9;
+        }
+
+        .modal-header .modal-title {
+            color: #004A53;
+            font-weight: 600;
+        }
+
+        .modal-body {
+            height: 360px;
+            overflow-y: auto;
+            padding: 0.75rem;
+        }
+
+        .image-div {
+            max-width: 100%;
+            height: 250px;
+        }
+
+        #cropperImage {
+            max-width: 100%;
+            max-height: 500px;
+        }
+
+        .zoom-container {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .zoom-label {
+            font-size: 0.9rem;
+            color: #666;
+            min-width: 50px;
+            margin-bottom: 0;
+        }
+
+        #zoomRange {
+            flex: 1;
+        }
+
+        .controls-container {
+            display: flex;
+            justify-content: center;
+            gap: 0.25rem;
+        }
+
+        #rotateLeftBtn,
+        #rotateRightBtn,
+        #resetCropBtn {
+            background-color: white;
+            border: 1px solid #004A53;
+            color: #004A53;
+            font-size: 0.8rem;
+            padding: 0.15rem 0.8rem;
+            line-height: 1;
+        }
+
+        .modal-footer {
+            background-color: #f9f9f9;
+        }
+
+        #cropperSave {
+            background-color: #FDAF22;
+            border: none;
+            color: white;
+            font-weight: 500;
+            font-size: 0.85rem;
         }
 
         .form-label-custom {
@@ -380,6 +503,148 @@
         .rounded-4 {
             border-radius: 1rem !important;
         }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .container-fluid {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+
+            h1 {
+                font-size: 1.75rem !important;
+            }
+
+            .d-flex.justify-content-between {
+                flex-direction: column !important;
+                gap: 1rem !important;
+            }
+
+            .d-flex.gap-3 {
+                flex-wrap: wrap !important;
+                gap: 0.5rem !important;
+            }
+
+            .btn {
+                font-size: 0.85rem !important;
+                padding: 0.5rem 1rem !important;
+            }
+
+            .row.g-4 {
+                gap: 1.5rem !important;
+            }
+
+            .col-lg-8, .col-lg-4 {
+                flex: 0 0 100% !important;
+                max-width: 100% !important;
+            }
+
+            .card-body {
+                padding: 1.5rem !important;
+            }
+
+            .form-label-custom {
+                font-size: 0.85rem !important;
+            }
+
+            .form-input-custom {
+                padding: 0.7rem 1rem !important;
+                font-size: 0.9rem !important;
+            }
+
+            .modal-body {
+                height: 320px !important;
+                padding: 0.75rem !important;
+            }
+
+            .modal-body> .image-div {
+                height: 200px !important;
+            }
+
+            #cropperImage {
+                max-height: 400px !important;
+            }
+
+            .d-flex.flex-wrap.gap-2 {
+                flex-direction: row !important;
+                gap: 0.3rem !important;
+                justify-content: center !important;
+            }
+
+            .d-flex.flex-wrap.gap-2>div {
+                width: 100% !important;
+                margin-bottom: 0.5rem !important;
+            }
+
+            .d-flex.flex-wrap.gap-2>button {
+                flex: 1 1 auto !important;
+                min-width: 40px !important;
+                padding: 0.3rem 0.4rem !important;
+            }
+
+            .modal-footer {
+                flex-wrap: wrap !important;
+                gap: 0.5rem !important;
+            }
+
+            .modal-footer button {
+                /* flex: 1 1 calc(50% - 0.25rem) !important; */
+                font-size: 0.75rem !important;
+                padding: 0.4rem 0.5rem !important;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container-fluid {
+                padding-left: 0.75rem !important;
+                padding-right: 0.75rem !important;
+            }
+
+            h1 {
+                font-size: 1.5rem !important;
+            }
+
+            .btn {
+                font-size: 0.75rem !important;
+                padding: 0.4rem 0.75rem !important;
+            }
+
+            .card-body {
+                padding: 1rem !important;
+            }
+
+            .form-label-custom {
+                font-size: 0.8rem !important;
+            }
+
+            .form-input-custom {
+                padding: 0.6rem 0.9rem !important;
+                font-size: 0.85rem !important;
+            }
+
+            .modal-body {
+                height: 300px !important;
+                padding: 0.5rem !important;
+            }
+
+            .modal-body> .image-div {
+                height: 200px !important;
+            }
+
+            #cropperImage {
+                max-height: 350px !important;
+            }
+
+            .modal-footer button {
+                /* flex: 1 1 50% !important; */
+                font-size: 0.7rem !important;
+                padding: 0.35rem 0.4rem !important;
+            }
+
+            .d-flex.gap-5 {
+                gap: 1rem !important;
+            }
+        }
     </style>
 
     <script>
@@ -422,11 +687,143 @@
             if (file) {
                 const reader = new FileReader();
                 reader.onload = (e) => {
-                    profilePreview.src = e.target.result;
+                    originalImageData = e.target.result;
+                    openCropperModal(e.target.result);
                 };
                 reader.readAsDataURL(file);
             }
         }
+
+        // Cropper variables
+        let cropper = null;
+        let originalImageData = null;
+        let currentRotation = 0;
+        let cropperModalInstance = null;
+
+        // Cropper modal elements
+        const cropperModalElement = document.getElementById('cropperModal');
+        const cropperImage = document.getElementById('cropperImage');
+        const cropperSave = document.getElementById('cropperSave');
+        const zoomRange = document.getElementById('zoomRange');
+        const rotateLeftBtn = document.getElementById('rotateLeftBtn');
+        const rotateRightBtn = document.getElementById('rotateRightBtn');
+        const resetCropBtn = document.getElementById('resetCropBtn');
+
+        // Initialize Bootstrap modal
+        if (cropperModalElement) {
+            cropperModalInstance = new bootstrap.Modal(cropperModalElement);
+        }
+
+        function openCropperModal(imageSrc) {
+            currentRotation = 0;
+            zoomRange.value = 1;
+
+            // Show Bootstrap modal first
+            if (cropperModalInstance) {
+                cropperModalInstance.show();
+            }
+
+            // Destroy existing cropper
+            if (cropper) {
+                cropper.destroy();
+            }
+
+            // Set image source and wait for it to load
+            cropperImage.onload = function() {
+                // Wait for modal to fully render before initializing cropper
+                setTimeout(() => {
+                    // Initialize cropper after image loads and modal is rendered
+                    cropper = new Cropper(cropperImage, {
+                        aspectRatio: 1, // Square aspect ratio for profile photo
+                        viewMode: 0, // 0 = image can extend beyond container
+                        autoCropArea: 0.8,
+                        responsive: true,
+                        restore: true,
+                        guides: true,
+                        center: true,
+                        highlight: true,
+                        cropBoxMovable: true,
+                        cropBoxResizable: true,
+                        toggleDragModeOnDblclick: true,
+                    });
+                }, 300);
+            };
+
+            // Set the image source (this will trigger onload)
+            cropperImage.src = imageSrc;
+        }
+
+        function closeCropperModal() {
+            if (cropperModalInstance) {
+                cropperModalInstance.hide();
+            }
+            if (cropper) {
+                cropper.destroy();
+                cropper = null;
+            }
+        }
+
+        cropperSave.addEventListener('click', () => {
+            if (cropper) {
+                const canvas = cropper.getCroppedCanvas({
+                    maxWidth: 4096,
+                    maxHeight: 4096,
+                    fillColor: '#fff',
+                    imageSmoothingEnabled: true,
+                    imageSmoothingQuality: 'high',
+                });
+
+                // Convert canvas to blob and update file input
+                canvas.toBlob((blob) => {
+                    const file = new File([blob], 'cropped-image.png', { type: 'image/png' });
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(file);
+                    profilePhoto.files = dataTransfer.files;
+
+                    // Update preview
+                    profilePreview.src = canvas.toDataURL();
+                    closeCropperModal();
+                });
+            }
+        });
+
+        // Zoom control
+        zoomRange.addEventListener('input', (e) => {
+            if (cropper) {
+                cropper.zoomTo(parseFloat(e.target.value));
+            }
+        });
+
+        // Rotate controls
+        rotateLeftBtn.addEventListener('click', () => {
+            if (cropper) {
+                currentRotation -= 45;
+                cropper.rotateTo(currentRotation);
+            }
+        });
+
+        rotateRightBtn.addEventListener('click', () => {
+            if (cropper) {
+                currentRotation += 45;
+                cropper.rotateTo(currentRotation);
+            }
+        });
+
+        // Reset button
+        resetCropBtn.addEventListener('click', () => {
+            if (cropper) {
+                cropper.reset();
+                currentRotation = 0;
+                zoomRange.value = 1;
+            }
+        });
+
+        // Close modal when clicking outside
+        cropperModalElement.addEventListener('click', (e) => {
+            if (e.target === cropperModalElement) {
+                closeCropperModal();
+            }
+        });
 
         // Password toggle
         const togglePassword = document.getElementById('togglePassword');
