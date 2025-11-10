@@ -71,13 +71,13 @@
                 <a class="nav-item-link d-block nav-child" href="/useractivity">Users Activity Log</a>
             </div>
 
-            <!-- Subject Management -->
-            <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
-                data-bs-toggle="collapse" href="#subjectsMenu" role="button" aria-expanded="true"
-                aria-controls="subjectsMenu">
-                <span><i class="fa-solid fa-book-open me-2 pe-2"></i> Subject Management</span>
-                <i class="fa-solid fa-chevron-down chevron-icon"></i>
-            </a>
+        <!-- Subject Management -->
+        <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent" data-bs-toggle="collapse"
+           href="#subjectsMenu" role="button" aria-expanded="true" aria-controls="subjectsMenu">
+            <span><i class="fa-solid fa-book-open me-2 pe-2"></i> Subject Management</span>
+            <i class="fa-solid fa-chevron-down chevron-icon"></i>
+        </a>
+
 
             <!-- Dropdown items -->
             <div class="collapse ps-4" id="subjectsMenu">
@@ -132,25 +132,21 @@
                 <a class="nav-item-link d-block nav-child" href="#">Messages</a>
                 <a class="nav-item-link d-block nav-child" href="#">Notifications</a>
             </div>
-        </nav>
+    </nav>
 
-
-        <div class="sidebar-footer mt-auto p-3">
-            <a class="nav-item-link" href="#"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
-            <div class="profile mt-3" id="profileSection">
-                <img class="avatar" id="profileImage" src="images/winner-round.png" alt="user"
-                    style="cursor: pointer; width: 40px; height: 40px; object-fit: cover; border-radius: 50%; border: 2px solid #ff00;"
-                    data-bs-toggle="tooltip" data-bs-placement="top" title="Profile">
-                <div class="d-flex justify-content-between mt-4 p-2 w-100 align-items-center">
-                    <div id="profileInfo" style="cursor: pointer;" data-bs-toggle="tooltip" data-bs-placement="top"
-                        title="Profile">
-                        <h6 class="fw-semibold" id="userName">Culacino_</h6>
-                        <p class="small text-muted" id="userRole">UX Designer</p>
-                    </div>
-                    <div class="logout">
-                        <a href="#" id="logoutBtn" title="Logout"><span><i
-                                    class="fa-solid fa-arrow-right-from-bracket"></i></span></a>
-                    </div>
+    <div class="sidebar-footer mt-auto p-3">
+        <a class="nav-item-link" href="#"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
+        <div class="profile mt-3" id="profileSection">
+            <img class="avatar" id="profileImage" src="images/winner-round.png" alt="user"
+                 style="cursor: pointer; width: 40px; height: 40px; object-fit: cover; border-radius: 50%; border: 2px solid #ff00;"
+                 data-bs-toggle="tooltip" data-bs-placement="top" title="Profile">
+            <div class="d-flex justify-content-between mt-4 p-2 w-100 align-items-center">
+                <div id="profileInfo" style="cursor: pointer;" data-bs-toggle="tooltip" data-bs-placement="top" title="Profile">
+                    <h6 class="fw-semibold" id="userName">Culacino_</h6>
+                    <p class="small text-muted" id="userRole">UX Designer</p>
+                </div>
+                <div class="logout">
+                    <a href="#" id="logoutBtn" title="Logout"><span><i class="fa-solid fa-arrow-right-from-bracket"></i></span></a>
                 </div>
             </div>
         </div>
