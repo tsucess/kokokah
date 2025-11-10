@@ -8,6 +8,241 @@
             <div class = "d-flex flex-column justify-content-between">
 
                 <div>
+                    <h3 style="font-size:32px; color: #004a53;">Create New Course</h3>
+                    <p>Here overview of your</p>
+                </div>
+
+                <div class="d-flex align-items-center gap-3">
+                    <button class = "btn rounded coursedraft" style="font-size: 16px;">
+                        Save As Draft
+                    </button>
+
+                    <button class = "btn rounded publishcourse">
+                        Publish Course
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class = "container bg-white">
+
+            <div class = "d-flex gap-4">
+                <button type = "button" class = "d-flex justify-content-center align-items-center gap-2 w-25 coursebtn"
+                    data-section="details">
+                    <i class="fa-solid fa-circle fa-2xs"></i>
+                    Create New Subject
+                    <i class="fa fa-arrow-right"></i>
+                </button>
+
+
+                <button class = "d-flex justify-content-center align-items-center w-25 gap-2 coursebtn"
+                    href = "/subjectmedia" type = "button" data-section="media">
+                    <i class="fa-solid fa-circle fa-2xs"></i>
+                    Subject Media
+                    <i class="fa fa-arrow-right"></i>
+                </button>
+
+
+                <button type = "button" class = "d-flex justify-content-center align-items-center w-25 gap-2 coursebtn"
+                    data-section="curriculum">
+                    <i class="fa-solid fa-circle fa-2xs"></i>
+                    Curriculum
+                    <i class="fa fa-arrow-right"></i>
+                </button>
+
+                <button type = "button" class = "d-flex justify-content-center align-items-center w-25 gap-2 coursebtn"
+                    data-section="publish">
+                    <i class="fa-solid fa-circle fa-2xs"></i>
+                    Additional Information
+                    <i class="fa fa-arrow-right "></i>
+                </button>
+
+
+            </div>
+
+        </div>
+
+
+
+
+
+
+        <!-- New Course Details Section -->
+        <div class = "container  bg-white content-section" id="details">
+
+            <div class = "row">
+                <div class = "mb-2  border border-bottom-1 border-top-0 border-start-0 border-end-0">
+                    <h5>
+                        Course Details
+                    </h5>
+                </div>
+            </div>
+
+
+
+
+            <div class="row mt-3">
+                <form>
+
+                    <div class="custom-form-group">
+                        <label for="coursetitle" class="custom-label">Subject Title</label>
+                        <input type="text" class="form-control-custom" id="subjectTitle" name="subjectTitle"
+                            placeholder="Enter Subject Title" aria-label="Subject Title" autocomplete="subject" required>
+                    </div>
+
+                    <div class = "d-flex gap-2">
+                        <div class="w-50 custom-form-group">
+                            <label for="role" class="custom-label">Subject Category</label>
+                            <select class="form-control-custom" id="role" name="role" aria-label="User Role"
+                                required>
+                                <option value="">Subject Category</option>
+                                <option value="student">Science</option>
+                                <option value="instructor">Art</option>
+                                <option value="instructor">Commercial</option>
+                            </select>
+                        </div>
+
+
+                        <div class="w-50 custom-form-group">
+                            <label for="role" class="custom-label">Subject Level</label>
+                            <select class="form-control-custom" id="role" name="role" aria-label="User Role"
+                                required>
+                                <option value="">JSS 1</option>
+                                <option value="student">JSS 2</option>
+                                <option value="instructor">JSS 3</option>
+                                <option value="instructor">SS 1</option>
+                                <option value="instructor">SS 2</option>
+                                <option value="instructor">SS 3</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class = "d-flex gap-2">
+                        <div class="w-50 custom-form-group">
+
+                            <label for="subjecttime" class="custom-label">Subject Time</label>
+
+                            <input type="text" class="form-control-custom" id="subjectTime" name="subjectTime"
+                                placeholder="Enter Subject Time" aria-label="Subject Time" autocomplete="subject time"
+                                required>
+                        </div>
+
+                        <div class="w-50 custom-form-group">
+
+                            <label for="totallesson" class="custom-label">Total Lesson</label>
+
+                            <input type="text" class="form-control-custom" id="totallesson" name="totallesson"
+                                placeholder="Enter Total Lesson" aria-label="Total Lesson" autocomplete="total lesson"
+                                required>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class = "row">
+                <div class = "col col-md-12 col-lg-12">
+                    <p><b>Subject Description</b></p>
+
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            15
+                        </button>
+                        <span><i class="fa-solid fa-bold"></i></span>
+                        <span><i class="ms-2 fa-solid fa-italic"></i></span>
+                        <span><i class="ms-2 fa-solid fa-underline"></i></span>
+                        <span><i class="ms-2 fa-solid fa-strikethrough"></i></span>
+                        <span><i class="ms-2 fa-solid fa-file-arrow-up"></i></span>
+
+                        <div class="mt-2 mb-2">
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="6"
+                                placeholder="Write subject description here..."></textarea>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class = "row mt-3">
+                <div class = "d-flex col-md-12 col-lg-12 justify-content-end">
+                    <div class = "d-flex flex-column flex-lg-row gap-3 px-0">
+
+                        <button class="btn btn-nav-primary continue-btn" style="padding: 12px 120px;"
+                            data-next="media">Continue</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <!-- New Subject Media Section -->
+        <div class = "container-fluid bg-white d-none content-section" id="media">
+            <div class = "row">
+                <h5>Course Media</h5>
+                <p class = "text-muted">Intro Course Overview Provide type (Mp4, Youtube,etc)</p>
+
+
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+
+
+                            <form id="uploadForm bg-primary">
+                                <!-- File Name Display and Upload Button -->
+
+
+                                <div class="d-flex mb-3 w-100">
+                                    <input type="text" class="form-control file-name-input flex-grow-1"
+                                        id="fileNameDisplay" placeholder="No file selected" readonly>
+                                    <button class="btn btn-nav-primary" style="padding: 12px 120px;">Upload File</button>
+                                </div>
+
+
+                                <!-- File Upload Area -->
+                                <div class="mb-3">
+                                    <label for="fileInput" class="upload-area">
+                                        <i class="fas fa-file-circle-check "></i>
+                                        <h5>Upload Image</h5>
+                                        <p>PNG, JPEG, GIF (max 2mb size)</p>
+                                    </label>
+                                    <input type="file" id="fileInput" name="file" class="d-none">
+                                </div>
+
+
+                            </form>
+                            <div id="message" class="text-center text-success fw-bold"></div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class = "row mt-3">
+                    <div class = "d-flex col-md-12 col-lg-12 justify-content-end ">
+                        <div class = "d-flex flex-column flex-lg-row gap-3 px-0">
+                            <button class="btn btn-nav-secondary back-btn" style="padding: 12px 120px;"
+                                data-next='details'>Previous</button>
+                            <button class="btn btn-nav-primary continue-btn" style="padding: 12px 120px;"
+                                data-next="curriculum">Continue</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Curriculum Section -->
+        <div class = "container bg-white d-none content-section" id="curriculum">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
                     <h4 class = "fw-bold">Create New Subject</h4>
                     <p>Here overview of your</p>
                 </div>
