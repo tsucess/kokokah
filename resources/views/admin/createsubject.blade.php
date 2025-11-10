@@ -7,15 +7,27 @@
 
             <div class = "d-flex justify-content-between">
 
-            <div>
-            <h4 class = "fw-bold">Create New Subject</h4>
-            <p>Here overview of your</p>
+                <div>
+                    <h3 style="font-size:32px; color: #004a53;">Create New Course</h3>
+                    <p>Here overview of your</p>
+                </div>
+
+                <div class="d-flex align-items-center gap-3">
+                    <button class = "btn rounded coursedraft" style="font-size: 16px;">
+                        Save As Draft
+                    </button>
+
+                    <button class = "btn rounded publishcourse">
+                        Publish Course
+                    </button>
+
+                </div>
+
+            </div>
         </div>
 
-        <div class = "d-flex gap-4">
-        <button class = "btn rounded coursedraft">
-        Save As Draft
-        </button>
+
+        <div class = "container bg-white">
 
             <div class = "d-flex gap-4">
                 <button type = "button" class = "d-flex justify-content-center align-items-center gap-2 w-25 coursebtn"
