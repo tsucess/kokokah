@@ -1949,3 +1949,86 @@ main .container {
             background-color: #FFF1D8;
             color: #FDAF22;
         }
+
+          .modal-backdrop.show {
+            background-color: #004a53 !important;
+        }
+        
+        .modal-dialog {
+            max-width: 800px;
+            margin: auto;
+        }
+        
+        .modal-container {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px 16px;
+        }
+        
+        .modal-content {
+            border: none;
+        }
+        
+        .modal-header {
+            padding: 20px;
+        }
+        
+        .modal-title {
+            font-family: "Fredoka", sans-serif;
+            color: #000;
+            font-size: 24px;
+        }
+        
+        .modal-header-btn {
+            background-color: transparent;
+            border: none;
+        }
+        
+        .modal-form-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+        }
+        
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        .modal-form-input-border {
+            border: 1.5px solid #004a53;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 0px 27px 24px;
+            border-radius: 15px;
+            position: relative;
+        }
+        
+        .modal-label {
+            position: relative;
+            top: -15px;
+            color: #004a53;
+            font-size: 14px;
+            background-color: white;
+            padding: 0px 4px;
+            align-self: start;
+        }
+        
+        .modal-input {
+            outline: none;
+            border: none;
+            font-size: 14px;
+            color: #aebaca;
+        }
+        
+        .modal-form-btn {
+            color: #000f11;
+            font-size: 16px;
+            font-weight: 600;
+            background-color: #fdaf22;
+            padding-block: 16px;
+            border: none;
+        }

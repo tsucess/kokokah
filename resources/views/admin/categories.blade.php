@@ -9,10 +9,37 @@
                 <h1 class="fw-bold mb-2">Subject Categories</h1>
                 <p class="text-muted" style="font-size: 0.95rem;">Here overview of your</p>
             </div>
-            <button class="btn px-4 py-2 fw-semibold" style="background-color: #FDAF22; border: none; color: white;">
+            <button class="btn px-4 py-2 fw-semibold" style="background-color: #FDAF22; border: none; color: white;" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 <i class="fa-solid fa-plus me-2"></i> Add Category
             </button>
         </div>
+
+        <!-- Modal component -->
+           <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 modal-container">
+                <div class="modal-header border-0 d-flex justify-content-between align-items-center">
+                    <h1 class="modal-title" id="staticBackdropLabel">Add Category</h1>
+                    <button type="button" class="modal-header-btn" data-bs-dismiss="modal" aria-label="Close">
+          <i class="fa-solid fa-circle-xmark"></i>
+        </button>
+                </div>
+                <form class="modal-form-container">
+                    <div class="modal-form">
+                        <div class="modal-form-input-border">
+                            <label for="" class="modal-label">Category Name</label>
+                            <input class="modal-input" type="text" placeholder="Art" />
+                        </div>
+                        <div class="modal-form-input-border">
+                            <label for="" class="modal-label">Subject Name</label>
+                            <input type="text" class="modal-input" placeholder="Art" />
+                        </div>
+                    </div>
+                    <button class="modal-form-btn">Add Category</button>
+                </form>
+            </div>
+        </div>
+    </div>
 
         <!-- Categories Grid -->
         <div class="row g-4">
