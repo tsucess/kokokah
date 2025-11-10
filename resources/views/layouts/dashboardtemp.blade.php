@@ -135,33 +135,6 @@
         </nav>
 
 
-        <!-- Reports & Analytics -->
-        <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
-            data-bs-toggle="collapse" href="#analyticsMenu" role="button" aria-expanded="false"
-            aria-controls="analyticsMenu">
-            <span><i class="fa-solid fa-chart-line pe-3"></i> Reports & Analytics</span>
-            <i class="fa-solid fa-chevron-down chevron-icon"></i>
-        </a>
-
-        <div class="collapse ps-4" id="analyticsMenu">
-            <a class="nav-item-link d-block nav-child" href="#">Reports</a>
-            <a class="nav-item-link d-block nav-child" href="#">Analytics</a>
-        </div>
-
-        <!-- Communication -->
-        <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
-            data-bs-toggle="collapse" href="#communicationMenu" role="button" aria-expanded="false"
-            aria-controls="communicationMenu">
-            <span><i class="fa-solid fa-comments pe-3"></i> Communication</span>
-            <i class="fa-solid fa-chevron-down chevron-icon"></i>
-        </a>
-
-        <div class="collapse ps-4" id="communicationMenu">
-            <a class="nav-item-link d-block nav-child" href="#">Messages</a>
-            <a class="nav-item-link d-block nav-child" href="#">Notifications</a>
-        </div>
-        </nav>
-
         <div class="sidebar-footer mt-auto p-3">
             <a class="nav-item-link" href="#"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
             <div class="profile mt-3" id="profileSection">
