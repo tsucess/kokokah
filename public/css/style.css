@@ -273,8 +273,8 @@ a.nav-link.active {
 
 /* ===== DASHBOARD LOGO ===== */
 .dashboard-logo {
-  width: 236px;
-  height: 61px;
+  width: 150px;
+  height: 39px;
 }
 
 /* ===== TEACH SECTION ===== */
@@ -1066,7 +1066,37 @@ footer p {
   background-color: #004A53;
   color: #FFFFFF;
 }
+.btn-accent-yellow{
+  background-color: #FDAF22;
+  color: #000000;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  white-space: nowrap;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  gap: 8px;
+  text-decoration: none;
+}
 
+.btn-border-green{
+  background-color: #FFFFFF;
+  color: #004A53;
+  border: 2px solid #004A53;
+  border-radius: 8px;
+  font-size: 14px;
+  white-space: nowrap;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  gap: 8px;
+  text-decoration: none;
+}
 /* ===== HERO SECTIONS ===== */
 
 .hero-section-yellow {

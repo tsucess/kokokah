@@ -10,7 +10,7 @@
         <p class="text-muted" style="font-size: 0.95rem;">Here overview of your</p>
       </div>
       <div>
-        <a href="/adduser" class="btn px-3 py-2 fw-semibold btn-nav-primary" >
+        <a href="/adduser" class="btn-accent-yellow">
           <i class="fa-solid fa-plus me-2"></i> Create New Student
         </a>
       </div>

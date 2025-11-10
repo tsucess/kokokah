@@ -19,6 +19,8 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
+    <link href="css/style.css" rel="stylesheet">
+
 
     <!-- Inter font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -28,6 +30,7 @@
 
     @vite(['resources/css/dashboard.css'])
     @vite(['resources/css/access.css'])
+
 </head>
 
 <body>
@@ -71,12 +74,13 @@
                 <a class="nav-item-link d-block nav-child" href="/useractivity">Users Activity Log</a>
             </div>
 
-        <!-- Subject Management -->
-        <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent" data-bs-toggle="collapse"
-           href="#subjectsMenu" role="button" aria-expanded="true" aria-controls="subjectsMenu">
-            <span><i class="fa-solid fa-book-open me-2 pe-2"></i> Subject Management</span>
-            <i class="fa-solid fa-chevron-down chevron-icon"></i>
-        </a>
+            <!-- Subject Management -->
+            <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
+                data-bs-toggle="collapse" href="#subjectsMenu" role="button" aria-expanded="true"
+                aria-controls="subjectsMenu">
+                <span><i class="fa-solid fa-book-open me-2 pe-2"></i> Subject Management</span>
+                <i class="fa-solid fa-chevron-down chevron-icon"></i>
+            </a>
 
 
             <!-- Dropdown items -->
@@ -84,22 +88,15 @@
                 <a class="nav-item-link d-block nav-child" href="/subjects">All Subject</a>
                 <a class="nav-item-link d-block nav-child" href="/createsubject">Create New Subject</a>
                 <a class="nav-item-link d-block nav-child" href="/categories">Curriculum Categories</a>
-                <a class="nav-item-link d-block nav-child" href="#">Subject Reviews & Rating</a>
+                <a class="nav-item-link d-block nav-child" href="/rating">Subject Reviews & Rating</a>
                 <a class="nav-item-link d-block nav-child" href="#">Subject Approval</a>
             </div>
-
-
-            {{-- 
-        <a class="nav-item-link" href="/student">
-            <span><i class="fa-solid fa-user-graduate pe-3"></i> Students</span>
-        </a> --}}
-
-
 
             <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
                 data-bs-toggle="collapse" href="#paymentsMenu" role="button" aria-expanded="false"
                 aria-controls="paymentsMenu">
                 <span><i class="fa-solid fa-credit-card pe-3"></i> Payments & Transactions</span>
+                
                 <i class="fa-solid fa-chevron-down small chevron-icon"></i>
             </a>
 
@@ -132,21 +129,24 @@
                 <a class="nav-item-link d-block nav-child" href="#">Messages</a>
                 <a class="nav-item-link d-block nav-child" href="#">Notifications</a>
             </div>
-    </nav>
+        </nav>
 
-    <div class="sidebar-footer mt-auto p-3">
-        <a class="nav-item-link" href="#"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
-        <div class="profile mt-3" id="profileSection">
-            <img class="avatar" id="profileImage" src="images/winner-round.png" alt="user"
-                 style="cursor: pointer; width: 40px; height: 40px; object-fit: cover; border-radius: 50%; border: 2px solid #ff00;"
-                 data-bs-toggle="tooltip" data-bs-placement="top" title="Profile">
-            <div class="d-flex justify-content-between mt-4 p-2 w-100 align-items-center">
-                <div id="profileInfo" style="cursor: pointer;" data-bs-toggle="tooltip" data-bs-placement="top" title="Profile">
-                    <h6 class="fw-semibold" id="userName">Culacino_</h6>
-                    <p class="small text-muted" id="userRole">UX Designer</p>
-                </div>
-                <div class="logout">
-                    <a href="#" id="logoutBtn" title="Logout"><span><i class="fa-solid fa-arrow-right-from-bracket"></i></span></a>
+        <div class="sidebar-footer mt-auto p-3">
+            <a class="nav-item-link" href="#"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
+            <div class="profile mt-3" id="profileSection">
+                <img class="avatar" id="profileImage" src="images/winner-round.png" alt="user"
+                    style="cursor: pointer; width: 40px; height: 40px; object-fit: cover; border-radius: 50%; border: 2px solid #ff00;"
+                    data-bs-toggle="tooltip" data-bs-placement="top" title="Profile">
+                <div class="d-flex justify-content-between mt-4 p-2 w-100 align-items-center">
+                    <div id="profileInfo" style="cursor: pointer;" data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="Profile">
+                        <h6 class="fw-semibold" id="userName">Culacino_</h6>
+                        <p class="small text-muted" id="userRole">UX Designer</p>
+                    </div>
+                    <div class="logout">
+                        <a href="#" id="logoutBtn" title="Logout"><span><i
+                                    class="fa-solid fa-arrow-right-from-bracket"></i></span></a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -180,6 +180,7 @@
     <div id="alertContainer" style="position: fixed; top: 20px; right: 20px; z-index: 9999; max-width: 400px;"></div>
 
     @yield('content')
+
 
 
     <!-- Footer -->
