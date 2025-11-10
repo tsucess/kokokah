@@ -217,6 +217,10 @@ Route::get('/publish', function () {
     return view('admin.publish');
 });
 
+Route::get('/rating', function () {
+    return view('admin.rating');
+});
+
 Route::get('/userkoodies', function () {
     return view('users.userkoodies');
 });

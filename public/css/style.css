@@ -1079,6 +1079,7 @@ footer p {
   justify-content: center;
   font-weight: 700;
   gap: 8px;
+  text-decoration: none;
 }
 
 .btn-border-green{
@@ -1094,6 +1095,7 @@ footer p {
   justify-content: center;
   font-weight: 700;
   gap: 8px;
+  text-decoration: none;
 }
 /* ===== HERO SECTIONS ===== */
 
