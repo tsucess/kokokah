@@ -170,6 +170,7 @@
 
     @yield('content')
 
+    
 
     <!-- Footer -->
     <div class="d-flex page-footer justify-content-between">
