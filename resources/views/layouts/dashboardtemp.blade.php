@@ -49,7 +49,8 @@
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar" style="height: 100vh; overflow-y: auto; overflow-x: hidden;">
         <div class="brand p-3">
-            <img src="images/Kokokah_Logo.png" alt="Kokokah Logo" class="img-fluid dashboard-logo">
+            <a href="/"><img src="images/Kokokah_Logo.png" alt="Kokokah Logo"
+                    class="img-fluid dashboard-logo"></a>
         </div>
 
         <nav class="nav-group px-2" id="sidebarNav">
@@ -96,7 +97,7 @@
                 data-bs-toggle="collapse" href="#paymentsMenu" role="button" aria-expanded="false"
                 aria-controls="paymentsMenu">
                 <span><i class="fa-solid fa-credit-card pe-3"></i> Payments & Transactions</span>
-                
+
                 <i class="fa-solid fa-chevron-down small chevron-icon"></i>
             </a>
 
