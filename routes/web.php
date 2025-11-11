@@ -91,6 +91,22 @@ Route::get('/categories', function () {
     return view('admin.categories');
 });
 
+Route::get('/curriculum-categories', function () {
+    return view('admin.curriculum-categories');
+});
+
+Route::get('/subject-categories', function () {
+    return view('admin.subject-categories');
+});
+
+Route::get('/levels', function () {
+    return view('admin.levels');
+});
+
+Route::get('/terms', function () {
+    return view('admin.terms');
+});
+
 Route::get('/rating', function () {
     return view('admin.rating');
 });

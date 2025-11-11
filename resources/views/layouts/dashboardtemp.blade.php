@@ -87,7 +87,10 @@
             <div class="collapse ps-4" id="subjectsMenu">
                 <a class="nav-item-link d-block nav-child" href="/subjects">All Subject</a>
                 <a class="nav-item-link d-block nav-child" href="/createsubject">Create New Subject</a>
-                <a class="nav-item-link d-block nav-child" href="/categories">Curriculum Categories</a>
+                <a class="nav-item-link d-block nav-child" href="/categories">Subject Categories</a>
+                <a class="nav-item-link d-block nav-child" href="/curriculum-categories">Curriculum Categories</a>
+                <a class="nav-item-link d-block nav-child" href="/levels">Levels & Classes</a>
+                <a class="nav-item-link d-block nav-child" href="/terms">Academic Terms</a>
                 <a class="nav-item-link d-block nav-child" href="/rating">Subject Reviews & Rating</a>
                 <a class="nav-item-link d-block nav-child" href="#">Subject Approval</a>
             </div>
@@ -306,7 +309,7 @@
 
 
 
-        //toggling the accordion icons
+        // Toggling chevron icons and managing collapse state
         document.addEventListener('DOMContentLoaded', function() {
             // Select all collapsible parents
             document.querySelectorAll('.nav-parent').forEach(parent => {
@@ -319,40 +322,50 @@
                 // When collapse is shown
                 target.addEventListener('show.bs.collapse', () => {
                     icon.classList.add('rotate');
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-up');
                 });
 
                 // When collapse is hidden
                 target.addEventListener('hide.bs.collapse', () => {
                     icon.classList.remove('rotate');
+                    icon.classList.remove('fa-chevron-up');
+                    icon.classList.add('fa-chevron-down');
+                });
+            });
+
+            // Close other dropdowns when one is opened, and toggle current dropdown
+            document.querySelectorAll('.nav-parent').forEach(parent => {
+                parent.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const target = document.querySelector(targetId);
+
+                    if (!target) return;
+
+                    // Check if current dropdown is already open
+                    const isCurrentOpen = target.classList.contains('show');
+
+                    // Close all other collapse menus
+                    document.querySelectorAll('.collapse').forEach(collapse => {
+                        if (collapse.id !== targetId && collapse.classList.contains('show')) {
+                            const bsCollapse = bootstrap.Collapse.getInstance(collapse);
+                            if (bsCollapse) {
+                                bsCollapse.hide();
+                            }
+                        }
+                    });
+
+                    // Toggle current dropdown
+                    const bsCollapse = bootstrap.Collapse.getInstance(target) || new bootstrap.Collapse(target, { toggle: false });
+                    if (isCurrentOpen) {
+                        bsCollapse.hide();
+                    } else {
+                        bsCollapse.show();
+                    }
                 });
             });
         });
-
-
-
-        <
-        !--Toggling chevron icons up / down based on collapse state-- >
-            document.addEventListener('DOMContentLoaded', function() {
-                document.querySelectorAll('.nav-parent').forEach(parent => {
-                    const targetId = parent.getAttribute('href');
-                    const target = document.querySelector(targetId);
-                    const icon = parent.querySelector('.chevron-icon');
-
-                    if (!target || !icon) return;
-
-                    // When dropdown opens
-                    target.addEventListener('show.bs.collapse', () => {
-                        icon.classList.remove('fa-chevron-down');
-                        icon.classList.add('fa-chevron-up');
-                    });
-
-                    // When dropdown closes
-                    target.addEventListener('hide.bs.collapse', () => {
-                        icon.classList.remove('fa-chevron-up');
-                        icon.classList.add('fa-chevron-down');
-                    });
-                });
-            });
     </script>
 
 </body>
