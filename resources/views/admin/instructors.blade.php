@@ -22,7 +22,7 @@
         <!-- Table Header with Search and Filters -->
         <div class="d-flex justify-content-between align-items-center mb-5">
           <h5 class="fw-bold mb-0" style="font-size: 1.1rem; color: #1a1a1a;">All Instructors List</h5>
-          <div class="d-flex gap-3 justify-content-end" style="flex: 1; margin-left: 2rem;">
+          <div class="d-flex gap-3 justify-content-end" >
             <!-- Search Input -->
             <div class="position-relative flex-grow-1" style="max-width: 300px;">
               <i class="fa-solid fa-search position-absolute top-50 start-0 translate-middle-y ms-3" style="color: #999;"></i>
@@ -59,14 +59,14 @@
         <table class="table table-hover align-middle users-table">
           <thead>
             <tr style="background-color: #f0f0f0; border-bottom: 2px solid #e8e8e8;">
-              <th style="color: #333; font-weight: 600; padding: 1rem;">No</th>
-              <th style="color: #333; font-weight: 600; padding: 1rem;">Instructors</th>
-              <th style="color: #333; font-weight: 600; padding: 1rem;">ID</th>
-              <th style="color: #333; font-weight: 600; padding: 1rem;">Email Address</th>
-              <th style="color: #333; font-weight: 600; padding: 1rem;">Gender</th>
-              <th style="color: #333; font-weight: 600; padding: 1rem;">Contact</th>
-              <th style="color: #333; font-weight: 600; padding: 1rem;">Location</th>
-              <th style="color: #333; font-weight: 600; padding: 1rem;">Action</th>
+              <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">No</th>
+              <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Instructors</th>
+              <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">ID</th>
+              <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Email Address</th>
+              <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Gender</th>
+              <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Contact</th>
+              <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Location</th>
+              <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Action</th>
             </tr>
           </thead>
           <tbody id="usersTableBody">
@@ -187,26 +187,26 @@
 
             const row = `
               <tr style="border-bottom: 1px solid #e8e8e8;">
-                <td style="padding: 1rem; color: #666;">${String((page - 1) * 20 + index + 1).padStart(2, '0')}</td>
-                <td style="padding: 1rem;">
+                <td style="padding: 1rem; color: #666; font-size:14px;">${String((page - 1) * 20 + index + 1).padStart(2, '0')}</td>
+                <td style="padding: 1rem; font-size:14px;">
                   <div class="d-flex align-items-center">
-                    <img src="${profilePhoto}" class="rounded-circle me-3" width="40" height="40" style="object-fit: cover; background: #f0f0f0;">
+                    <img src="${profilePhoto}" class="rounded-circle me-3" width="32" height="32" style="object-fit: cover; background: #f0f0f0;">
                     <span style="color: #333; font-weight: 500;">${user.first_name} ${user.last_name}</span>
                   </div>
                 </td>
-                <td style="padding: 1rem; color: #666;">KOKOKAH-${String(user.id).padStart(4, '0')}</td>
-                <td style="padding: 1rem; color: #666;">${user.email}</td>
-                <td style="padding: 1rem;"><span style="color: #666;">${user.gender || 'N/A'}</span></td>
-                <td style="padding: 1rem; color: #666;">${user.contact || 'N/A'}</td>
-                <td style="padding: 1rem;">
+                <td style="padding: 1rem; color: #666; font-size:14px;">KOKOKAH-${String(user.id).padStart(4, '0')}</td>
+                <td style="padding: 1rem; color: #666; font-size:14px;">${user.email}</td>
+                <td style="padding: 1rem; font-size:14px;"><span style="color: #666;">${user.gender || 'N/A'}</span></td>
+                <td style="padding: 1rem; color: #666; font-size:14px;">${user.contact || 'N/A'}</td>
+                <td style="padding: 1rem; font-size:14px;">
                   <!-- <span class="badge" style="background-color: ${roleColor}; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">${user.role}</span> -->
                 </td>
                 <td style="padding: 1rem;">
                   <div class="d-flex gap-2">
-                    <a href="/edituser?id=${user.id}" class="btn btn-sm btn-light" style="border: 1px solid #ddd; padding: 0.5rem 0.75rem;" title="Edit">
+                    <a href="/edituser?id=${user.id}" class="btn btn-sm btn-light" style="border: 1px solid #ddd; padding: 0.2rem 0.5rem;" title="Edit">
                       <i class="fa fa-edit" style="color: #004A53;"></i>
                     </a>
-                    <button class="btn btn-sm btn-light delete-btn" data-user-id="${user.id}" style="border: 1px solid #ddd; padding: 0.5rem 0.75rem;" title="Delete">
+                    <button class="btn btn-sm btn-light delete-btn" data-user-id="${user.id}" style="border: 1px solid #ddd; padding: 0.2rem 0.5rem;" title="Delete">
                       <i class="fa fa-trash" style="color: #dc3545;"></i>
                     </button>
                   </div>

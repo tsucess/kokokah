@@ -17,7 +17,7 @@
         <!-- Table Header with Search and Filters -->
         <div class="d-flex justify-content-between align-items-center mb-5">
           <h5 class="fw-bold mb-0" style="font-size: 1.1rem; color: #1a1a1a;">Transactions</h5>
-          <div class="d-flex gap-3" style="flex: 1; margin-left: 2rem;">
+          <div class="d-flex gap-3 " >
             <!-- Search Input -->
             <div class="position-relative flex-grow-1" style="max-width: 300px;">
               <i class="fa-solid fa-search position-absolute top-50 start-0 translate-middle-y ms-3" style="color: #999;"></i>
@@ -37,13 +37,7 @@
               <option value="failed">Failed</option>
             </select>
 
-            <!-- View Options -->
-            <button class="btn btn-light" style="border: 1px solid #ddd; padding: 0.625rem 1rem;" title="List View">
-              <i class="fa-solid fa-list" style="color: #004A53;"></i>
-            </button>
-            <button class="btn btn-light" style="border: 1px solid #ddd; padding: 0.625rem 1rem;" title="Grid View">
-              <i class="fa-solid fa-grip" style="color: #999;"></i>
-            </button>
+            
           </div>
         </div>
 
@@ -52,18 +46,18 @@
         <table class="table table-hover align-middle transactions-table">
           <thead>
             <tr style="background-color: #f0f0f0; border-bottom: 2px solid #e8e8e8;">
-              <th style="color: #333; font-weight: 600; padding: 1rem;">ID</th>
-              <th style="color: #333; font-weight: 600; padding: 1rem;">User</th>
-              <th style="color: #333; font-weight: 600; padding: 1rem;">Date</th>
-              <th style="color: #333; font-weight: 600; padding: 1rem;">Amount</th>
-              <th style="color: #333; font-weight: 600; padding: 1rem;">Plan</th>
-              <th style="color: #333; font-weight: 600; padding: 1rem;">Payment Method</th>
-              <th style="color: #333; font-weight: 600; padding: 1rem;">Status</th>
+              <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">ID</th>
+              <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">User</th>
+              <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Date</th>
+              <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Amount</th>
+              <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Plan</th>
+              <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Payment Method</th>
+              <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Status</th>
             </tr>
           </thead>
           <tbody id="transactionsTableBody">
             <tr style="border-bottom: 1px solid #e8e8e8;">
-              <td colspan="7" class="text-center text-muted py-4">
+              <td colspan="7" class="text-center text-muted py-4" style="font-size:16px;">
                 <i class="fa-solid fa-spinner fa-spin me-2"></i>Loading transactions...
               </td>
             </tr>
@@ -166,18 +160,18 @@
 
             const row = `
               <tr style="border-bottom: 1px solid #e8e8e8;">
-                <td style="padding: 1rem; color: #666;">0${index + 1}</td>
-                <td style="padding: 1rem;">
+                <td style="padding: 1rem; color: #666; font-size:14px;">0${index + 1}</td>
+                <td style="padding: 1rem; font-size:14px;">
                   <div class="d-flex align-items-center">
-                    <img src="images/winner-round.png" class="rounded-circle me-3" width="40" height="40" style="object-fit: cover; background: #f0f0f0;">
+                    <img src="images/winner-round.png" class="rounded-circle me-3" width="32" height="32" style="object-fit: cover; background: #f0f0f0;">
                     <span style="color: #333; font-weight: 500;">${transaction.user_name || 'N/A'}</span>
                   </div>
                 </td>
-                <td style="padding: 1rem; color: #666;">${new Date(transaction.created_at).toLocaleDateString()}</td>
-                <td style="padding: 1rem; color: #666; font-weight: 500;">${transaction.amount || '0'}</td>
-                <td style="padding: 1rem; color: #666;">${transaction.plan || 'N/A'}</td>
-                <td style="padding: 1rem; color: #666;">${transaction.payment_method || 'N/A'}</td>
-                <td style="padding: 1rem;">
+                <td style="padding: 1rem; color: #666; font-size:14px;">${new Date(transaction.created_at).toLocaleDateString()}</td>
+                <td style="padding: 1rem; color: #666; font-weight: 500; font-size:14px;">${transaction.amount || '0'}</td>
+                <td style="padding: 1rem; color: #666; font-size:14px;">${transaction.plan || 'N/A'}</td>
+                <td style="padding: 1rem; color: #666; font-size:14px;">${transaction.payment_method || 'N/A'}</td>
+                <td style="padding: 1rem; font-size:14px;">
                   <span class="badge" style="background-color: ${statusColor}; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">● ${statusText}</span>
                 </td>
               </tr>
