@@ -549,7 +549,7 @@ main .container {
 .coursedraft {
     background-color: #A3D8DF;
     color: #fff;
-    width:130px;
+    width:150px;
     height: 40px;
     border-radius: 8px;
     padding: 8px 16px;
@@ -564,7 +564,7 @@ main .container {
 .publishcourse {
     background-color: #3BA0AC;
     color: #fff;
-    width:138px;
+    width:150px;
     height: 40px;
     border-radius: 8px;
     padding: 8px 16px;
@@ -578,13 +578,13 @@ main .container {
 
 .connectorbutton
 {
-    width:284px;
+    width:300px;
     height:62px;
     border-radius: 5px;
     border: 1px solid #004A53;
     color:#000F11;
     font:sitka;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .borderlessconnectorbutton
@@ -593,7 +593,7 @@ main .container {
     height:62px;
     color:#004A53;
     font:sitka;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .upload-card {

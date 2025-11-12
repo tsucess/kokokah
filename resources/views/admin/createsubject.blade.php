@@ -29,103 +29,39 @@
 
         <div class = "container">
 
-            <div class = "d-flex">
-                <button type = "button" class = "btn btn-outline-dark border-1 rounded me-4"
-                    style = "background: #004A53; color: #fff; width: 270px;">
-                    <i class="fa-solid fa-dot-circle me-2"></i>
-                    Create New Subject
-                    <i class="fa fa-arrow-right me-2"></i>
-                </button>
-
-
-                <button class = "btn btn-light rounded w-25 me-4" href = "/subjectmedia" type = "button">
-                    <i class="fa-solid fa-dot-circle me-2"></i>
-                    Subject Media
-                    <i class="fa fa-arrow-right me-2"></i>
-                </button>
-
-
-                <button type = "button" class = "btn btn-outline-dark border-1 rounded w-25 me-4">
-                    <i class="fa-solid fa-dot-circle me-2"></i>
-                    Curriculum
-                    <i class="fa fa-arrow-right me-2"></i>
-                </button>
-
-                <button type = "button" class = "btn btn-outline-dark border-1 rounded w-25 me-4">
-                    <i class="fa-solid fa-dot-circle me-2"></i>
-                    Additional Information
-                    <i class="fa fa-arrow-right me-2"></i>
-                </button>
-
-
-            </div>
-
-        </div>
-
-        <div class = "container">
-
-            <div class = "row">
-                <div class = "mb-2  border border-bottom-1 border-top-0 border-start-0 border-end-0">
-                    <h5>
-                        Course Details
-                    </h5>
-                </div>
-            </div>
-
-            <form>
-                <div class="row mt-3">
-
-        <div class = "d-flex gap-4 justify-content-space-between">
-        <button  type = "button" class = "btn btn-light btn-outline-dark border-1 rounded me-3 connectorbutton" data-section="details">
+            <div class = "d-flex gap-1 justify-content-space-between">
+                <button  type = "button" class = "btn btn-light btn-outline-dark border-1 rounded me-3 connectorbutton" data-section="details">
             <i class="fa-solid fa-dot-circle me-2" ></i>
             Create New Subject &nbsp;
             <i class="fa fa-arrow-right me-2"></i>
         </button>
 
-                <div class = "row">
-                    <div class="col">
-                        <label for = "course-category"><b>Course Category</b></label>
-                        <select class="form-select form-select-sm" id = "course-category" aria-label="Small select example">
-                            <option selected>select course category</option>
-                            <option value="1">Category One</option>
-                            <option value="2">Category Two</option>
-                            <option value="3">Category Three</option>
-                        </select>
-                    </div>
+        <button class = "btn btn-light borderlessconnectorbutton" type = "button" data-section="media">
+            <i class="fa-solid fa-dot-circle me-2"></i>
+            Subject Media
+            <i class="fa fa-arrow-right me-2"></i>
+        </button>
 
-                    <div class="col">
-                        <label for = "course-level"><b>Course level</b></label>
-                        <select class="form-select form-select-sm " id = "course-level" aria-label="Small select example">
-                            <option selected>select course level</option>
-                            <option value="1">Level One</option>
-                            <option value="2">Level Two</option>
-                            <option value="3">Level Three</option>
-                        </select>
-                    </div>
+        <button class = "btn btn-light borderlessconnectorbutton" type = "button" data-section="curriculum">
+            <i class="fa-solid fa-dot-circle me-2"></i>
+            Curriculum
+            <i class="fa fa-arrow-right me-2"></i>
+        </button>
 
-                </div>
+        <button class = "btn btn-light borderlessconnectorbutton" type = "button" data-section="publish">
+            <i class="fa-solid fa-dot-circle me-2"></i>
+             Publish Subject
+            <i class="fa fa-arrow-right me-2"></i>
+        </button>
 
-                <div class = "row mt-2">
-                    <div class="col">
-                        <label for="exampleDateInput" class="form-label"><b>Select Date</b></label>
-                        <input type="date" class="form-control" id="exampleDateInput">
-                    </div>
 
-                    <div class="col">
-                        <label for="lesson" class="form-label"><b>Total Lesson</b></label>
-                        <input type="number" class="form-control" id="lesson">
-                    </div>
-
-                </div>
-
-        </div>
-        </form>
+</div>
 
         </div>
 
 
 <!-- New Course Details Section -->
-<div class = "container content-section" id="details">
+<div class = "content-section" id="details">
 
 <div class = "row">
 <div class = "mb-2  border border-bottom-1 border-top-0 border-start-0 border-end-0">
@@ -232,7 +168,7 @@ Course Details
 
 
 <!-- New Subject Media Section -->
- <div class = "container-fluid" id="media" class="content-section d-none">
+ <div id="media" class="content-section d-none">
     <div class = "row">
         <h5>Course Media</h5>
         <p class = "text-muted">Intro Course Overview Provide type (Mp4, Youtube,etc)</p>
@@ -279,12 +215,13 @@ Course Details
         </div>
 </div>
 </div>
+
     </div>
     </div>
 
 
     <!-- Curriculum Section -->
-        <div class = "container content-section d-none" id="curriculum">
+        <div class = "content-section d-none" id="curriculum">
         <!-- Header -->
   <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
@@ -361,7 +298,7 @@ Course Details
 
 
 
-    <div class = "container content-section d-none" id="publish">
+    <div class = "content-section d-none" id="publish">
  <section class="subject-overview-card">
         <h3 class="subject-overview-title">Subject Overview </h3>
         <div class="d-flex flex-column gap-3">
@@ -475,10 +412,12 @@ Course Details
         });
 
 
-        <!-- Navigating across the connectors -->
+        <!-- Navigating across the connectors Javascript code -->
+
         document.querySelectorAll('[data-section]').forEach(btn => {
     btn.addEventListener('click', function() {
-      // Remove active state from all buttons
+
+        // Remove active state from all buttons
       document.querySelectorAll('[data-section]').forEach(b => b.classList.remove('connectorbutton'));
 
       // Add active to clicked one
