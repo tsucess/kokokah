@@ -249,6 +249,14 @@ a.nav-link.active {
   border-radius: 10px;
 }
 
+.product-section-bordered-red{
+  border: 2px solid #F56824;
+}
+
+.product-section-bordered-green{
+  border: 2px solid #004A53;
+}
+
 .product-button {
   background-color: #004A53;
   color: var(--color-secondary-button);

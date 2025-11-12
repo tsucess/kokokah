@@ -1,81 +1,86 @@
 @extends('layouts.template')
 
 @section('content')
+    <!-- Modal Section -->
 
-<!-- Modal Section -->
-
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="false">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-       <div class="d-flex flex-column gap-3 flex-lg-row align-items-center row">
-            <div class="d-flex justify-content-end col"><img src="./images/Group_20-removebg-preview.png" alt="" style="width: 300px; height:200px;"></div>
-             <div class="d-flex flex-column gap-1 col">
-                
-            <h2 class="title"><span>Hey Champion.</span> Ready to pass smarter and better?</h2>
-            <div class="d-flex align-items-center gap-2">
-                <span class="feature">Short Curriculum-based lessons + Practice tests from anywhere</span>
-                <span class="feature">Low data & Offline use</span>
-                <span class="feature">Score higher</span>
-            </div>
-        </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <img src="./images/db368b8f91f2ce3ff4d3b1b6ac05a321bfdc4f9a.png" alt="" class="img-fluid">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        data-bs-backdrop="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                 <div class="col d-flex flex-column gap-5">
-                    <div class="launch-container">We're Launching Soon. Stay Close & Don't Miss a Thing
-                        <div class="node"></div>
-                    </div>
-                    <div class="d-flex flex-column gap-4">
-                        <div class="d-flex flex-column input-container">
-                            <label for="" class="label">Enter first name</label>
-                            <input type="text" name="" id="" class="modal-form-input">
-                        </div>
-                        <div class="d-flex flex-column input-container">
-                            <label for="" class="label">Enter last name</label>
-                            <input type="text" name="" id="" class="modal-form-input">
-                        </div>
-                        <div class="d-flex flex-column input-container">
-                            <label for="" class="label">Enter email address</label>
-                            <input type="email" name="" id="" class="modal-form-input">
+                <div class="modal-body">
+                    <div class="d-flex flex-column gap-3 flex-lg-row align-items-center row">
+                        <div class="d-flex justify-content-end col"><img src="./images/Group_20-removebg-preview.png"
+                                alt="" style="width: 300px; height:200px;"></div>
+                        <div class="d-flex flex-column gap-1 col">
+
+                            <h2 class="title"><span>Hey Champion.</span> Ready to pass smarter and better?</h2>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="feature">Short Curriculum-based lessons + Practice tests from anywhere</span>
+                                <span class="feature">Low data & Offline use</span>
+                                <span class="feature">Score higher</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="d-flex flex-column gap-3">
-                        <button class="align-self-center form-btn">Join Kokokah & Start Learning Now</button>
-                        <div class="d-flex gap-4 align-items-center justify-content-center">
-                            <div class="d-flex align-items-center justify-content-center icon-container"><i class="fa-brands fa-youtube" style="color:#F56824;"></i></div>
-                            <div class="d-flex align-items-center justify-content-center icon-container"><i class="fa-brands fa-linkedin" style="color:#F56824;"></i></div>
-                            <div class="d-flex align-items-center justify-content-center icon-container"><i class="fa-brands fa-x-twitter" style="color:#F56824;"></i></div>
-                            <div class="d-flex align-items-center justify-content-center icon-container"><i class="fa-brands fa-instagram" style="color:#F56824;"></i></div>
-                            <div class="d-flex align-items-center justify-content-center icon-container"><i class="fa-brands fa-facebook-f" style="color:#F56824;"></i></div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <img src="./images/db368b8f91f2ce3ff4d3b1b6ac05a321bfdc4f9a.png" alt=""
+                                    class="img-fluid">
+                            </div>
+                            <div class="col d-flex flex-column gap-5">
+                                <div class="launch-container">We're Launching Soon. Stay Close & Don't Miss a Thing
+                                    <div class="node"></div>
+                                </div>
+                                <div class="d-flex flex-column gap-4">
+                                    <div class="d-flex flex-column input-container">
+                                        <label for="" class="label">Enter first name</label>
+                                        <input type="text" name="" id="" class="modal-form-input">
+                                    </div>
+                                    <div class="d-flex flex-column input-container">
+                                        <label for="" class="label">Enter last name</label>
+                                        <input type="text" name="" id="" class="modal-form-input">
+                                    </div>
+                                    <div class="d-flex flex-column input-container">
+                                        <label for="" class="label">Enter email address</label>
+                                        <input type="email" name="" id="" class="modal-form-input">
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-column gap-3">
+                                    <button class="align-self-center form-btn">Join Kokokah & Start Learning Now</button>
+                                    <div class="d-flex gap-4 align-items-center justify-content-center">
+                                        <div class="d-flex align-items-center justify-content-center icon-container"><i
+                                                class="fa-brands fa-youtube" style="color:#F56824;"></i></div>
+                                        <div class="d-flex align-items-center justify-content-center icon-container"><i
+                                                class="fa-brands fa-linkedin" style="color:#F56824;"></i></div>
+                                        <div class="d-flex align-items-center justify-content-center icon-container"><i
+                                                class="fa-brands fa-x-twitter" style="color:#F56824;"></i></div>
+                                        <div class="d-flex align-items-center justify-content-center icon-container"><i
+                                                class="fa-brands fa-instagram" style="color:#F56824;"></i></div>
+                                        <div class="d-flex align-items-center justify-content-center icon-container"><i
+                                                class="fa-brands fa-facebook-f" style="color:#F56824;"></i></div>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-                    
-                 </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="footer-accent">kokokah.com</div>
+                </div>
             </div>
-            </div>
-      </div>
-      <div class="modal-footer">
-        <div class="footer-accent">kokokah.com</div>
-      </div>
+        </div>
     </div>
-  </div>
-</div>
 
 
     <!-- Hero Section - Yellow Background -->
     <div class="container-fluid hero-section-yellow">
         <div class="row align-items-center">
             <div class="col-12 col-md-6 col-lg-6">
-                <h1 class="fw-bold hero-title">
-                    Quality, Mobile-First, Pay-as-you-Go, Curriculum Based Lessons & Practice Tests for Secondary School Students, Teachers & Schools.
-                </h1>
+                <h1 class="fw-bold hero-title">Quality, Mobile-First, Curriculum Based Lessons & Practice Tests </h1>
                 <p class="mb-4 hero-subtitle">
                     LOW DATA USAGE + OFFLINE ACCESS + SCHOOL MANAGEMENT SYSTEM
                 </p>
@@ -95,7 +100,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-12 col-md-6 col-lg-6 mb-4 mb-md-0">
-                    <img src="images/Video.png" class="img-fluid" alt="Kokokah Platform">
+                    <img src="images/33d07ac37205dee5ed7d04a51aace312e634c69c.jpg" class="img-fluid" alt="Kokokah Platform" style="max-width:752px; width:100%; height:382px; border-radius : 15px; object-fit:cover;">
                 </div>
                 <div class="col-12 col-md-6 col-lg-6 ps-md-4 ps-0">
                     <h2 class="fw-bold mb-4 section-heading">
@@ -107,7 +112,7 @@
                         in South Africa, our mission is simple — to give every learner from any background the opportunity
                         to excel with ease.
                     </p>
-                    <button class="btn btn-primary-action">Discover Kokokah</button>
+                    <button class="btn primaryButton">Discover Kokokah</button>
                 </div>
             </div>
         </div>
@@ -181,7 +186,7 @@
                         <div class="mb-3">
                             <i class="fa-solid fa-download feature-card-icon"></i>
                         </div>
-                        <h5 class="fw-bold mb-3 feature-card-title">Virtual Payment</h5>
+                        <h5 class="fw-bold mb-3 feature-card-title">Virtual Payments</h5>
                         <p class="feature-card-text">Store and track money for any resource purchase on Kokokah — quick,
                             safe, and hassle-free.</p>
                     </div>
@@ -212,15 +217,15 @@
 
 
     <div class = "container mt-5">
-        <div class = "row flex-column-reverse flex-md-row m-2 ourproduct1 product-section-orange">
+        <div class = "row flex-column-reverse flex-md-row m-2 ourproduct1 product-section-bordered-red">
             <div class = "col-12 col-md-7 col-lg-7 p-4 px-5 my-auto">
-                <h5 class = "text-white"> Passnownow </h5>
-                <p class = "text-white">
+                <img src="images/Group 1171274797.png" alt="" class="mb-3"/>
+                <p style = "color :#004A53;">
                     Kokokah houses an exam preparatory platform
                     where African students can prepare adequately
                     for both local and international examinations.
                 </p>
-                <p class = "text-white">
+                <p style = "color :#004A53;">
                     WAEC - NECO - JAMB - GCE - GMAT - SAT - TOEFL - IELTS - GRE - ACT
                 </p>
 
@@ -239,15 +244,15 @@
 
 
     <div class = "container">
-        <div class="row ourproduct2 product-section-bordered">
+        <div class="row ourproduct2 product-section-orange">
             <!-- Image Section -->
             <div class="col-12 col-md-6 col-lg-6">
                 <img src="images/School Admin.png" class="img-fluid" alt="School Admin">
             </div>
             <!-- Text Section -->
             <div class="col-12 col-md-6 col-lg-6  my-auto">
-                <h5>School Management System (SMS)</h5>
-                <p class = "pe-5">
+                <h5 class="text-white">School Management System (SMS)</h5>
+                <p class = "pe-5 text-white">
                     Simplify school administration with fee
                     tracking, digital report cards, attendance, and student
                     portals — all in one secure platform.
@@ -263,10 +268,10 @@
 
 
     <div class = "container">
-        <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-teal">
+        <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-bordered-green">
             <div class = "col-12 col-md-6 col-lg-6 p-5 my-auto">
-                <h4 class = "text-white">kokokah LMS</h4>
-                <p class = "text-white">
+                <div class="d-flex align-items-end gap-1 mb-2"><img src="./images/Kokokah_Logo.png" alt="" style="width:200px; height:61px;"/><h4 style = "color :#004A53;">Learning Management System</h4></div>
+                <p style = "color :#004A53;">
                     Your all-in-one digital classroom — structured lessons, AI-powered
                     tutoring, chatrooms, and  academic & non-academic content for secondary school.
                 </p>
@@ -279,7 +284,7 @@
     </div>
 
     <div class = "container">
-        <div class="row ourproduct2 product-section-bordered">
+        <div class="row ourproduct2 product-section-teal">
             <!-- Image Section -->
             <div class="col-12 col-md-6 my-auto text-center">
                 <img src="images/School Admin.png" class="img-fluid w-100 w-md-75" alt="School Admin">
@@ -287,10 +292,10 @@
 
             <!-- Text Section -->
             <div class="col-12 col-md-6 my-auto d-flex flex-column">
-                <h5>
+                <h5 class="text-white">
                     The Marketplace
                 </h5>
-                <p>
+                <p class="text-white">
                     Africa’s academic forum for parents, teachers, and
                     tutors to connect. Book trusted tutors for academics,
                     test prep, and special needs learning.
@@ -299,6 +304,32 @@
                     <button class = "primaryButton" type = "button">Coming Soon</button>
 
                 </div>
+            </div>
+        </div>
+    </div>
+
+
+     <div class = "container">
+        <div class="row ourproduct2 product-section-bordered" >
+            <!-- Image Section -->
+            <div class="col-12 col-md-6 my-auto text-center">
+                <img src="images/School Admin.png" class="img-fluid w-100 w-md-75" alt="School Admin">
+            </div>
+
+            <!-- Text Section -->
+            <div class="col-12 col-md-6 my-auto d-flex flex-column">
+                <img src="./images/315a2f8c6c60fc789ec0066a0b5bce04b7daa28d.png" alt="" style="width:200px; height:60px;"/>
+                <p style = "color :#004A53;">
+                    Get hands-on STEM bootcamps, summer schools,
+                    and practical learning experiences to prepare
+                    students for the future of science & tech.
+                </p>
+
+                <div class = "mb-3">
+                    <button class = "primaryButton" type = "button">Coming soon</button>
+
+                </div>
+
             </div>
         </div>
     </div>
@@ -318,7 +349,7 @@
                 </p>
 
                 <div>
-                    <button class = "primaryButton greenBtn" type = "button" >Coming Soon</button>
+                    <button class = "primaryButton greenBtn" type = "button">Coming Soon</button>
                 </div>
             </div>
 
@@ -329,21 +360,17 @@
         </div>
     </div>
 
-
-
-    <div class = "container">
-        <div class="row ourproduct2 product-section-bordered" style="background-color : #F56824;">
+     <div class = "container">
+        <div class="row ourproduct2 product-section-bordered" >
             <!-- Image Section -->
             <div class="col-12 col-md-6 my-auto text-center">
-                <img src="images/School Admin.png" class="img-fluid w-100 w-md-75" alt="School Admin">
+                <img src="images/8e967ffd660c50979f3c273bbb9d848dbb48a9db.png" class="img-fluid w-50 w-md-75 " alt="kudikah">
             </div>
 
             <!-- Text Section -->
             <div class="col-12 col-md-6 my-auto d-flex flex-column">
-                <h5 class="text-white">
-                    STEM Labs
-                </h5>
-                <p class="text-white">
+                 <h5 style = "color :#004A53;">Kudikah</h5>
+                <p style = "color :#004A53;">
                     Get hands-on STEM bootcamps, summer schools,
                     and practical learning experiences to prepare
                     students for the future of science & tech.
@@ -389,8 +416,8 @@
 
 
     <div class="container text-center mt-5 py-5 achievement-section">
-    <p class="achievement-label">Kokokah has industry-leading renewals of above 80%
-</p>
+        <p class="achievement-label">Kokokah has industry-leading renewals of above 80%
+        </p>
         <!-- Section Title -->
         <div class="row justify-content-center mb-5">
             <div class="col-12 mt-5">
@@ -445,9 +472,9 @@
         </div>
     </div>
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
-        myModal.show();
-      });
+        document.addEventListener("DOMContentLoaded", function() {
+            var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+            myModal.show();
+        });
     </script>
 @endsection

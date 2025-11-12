@@ -12,7 +12,7 @@ Learning and Management Platform for
 <div class = "container mb-5 d-flex align-items-center" >
 <div class = "row mt-4 bg-white">
 <div class = "col-12 col-md-6 col-lg-6 my-auto">
-<img src = "images/Video.png" class = "img-fluid" style="height:382px;">
+<img src = "images/577d4af220704c24ce21f8c1dcc8966b836fa580.jpg" class = "img-fluid w-100 object-cover" style="height:382px; border-radius:16px;">
 </div>
 
 
@@ -30,7 +30,7 @@ Learning and Management Platform for
         any background the opportunity to excel with ease.
 
     </p>
-    <button class = "btn primaryButton"  type = "button">Explore Product</button>
+    <button class = "btn primaryButton"  type = "button">Discover Kokokah Product</button>
 </div>
 
 </div>
@@ -79,7 +79,7 @@ Learning and Management Platform for
 
 
 <div class = "col-12 col-md-6 col-lg-6 mt-4 my-auto">
-<img src = "images/Mission.png" class = "img-fluid" style="height:540px;">
+<img src = "images/c862c3d4125719cc339915f430e0b2bfa58a8971.png" class = "img-fluid" style="height:540px; border-radius:16px;">
 </div>
 
 
