@@ -284,7 +284,7 @@ a.nav-link.active {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  
+
 }
 .achievement-label{
   font-size: 26px;
@@ -1025,13 +1025,13 @@ footer p {
 /* .navbar-collapse {
   background-color: #FFFFFF;
   margin-top: 8px;
-  /* border-radius: 8px; 
+  /* border-radius: 8px;
   padding: 12px 20px;
   position: absolute;
   top: 100%;
   left: 20px;
   right: 20px;
-   width: calc(100% - 40px); 
+   width: calc(100% - 40px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
@@ -1428,7 +1428,7 @@ footer p {
 
 /* ===== Modal for home page ===== */
 .modal-dialog{
-  max-width: 1528px;
+  max-width: 60vw;
 }
 .modal-content{
   padding: 0;
@@ -1442,15 +1442,15 @@ footer p {
             background-color: #FFBF4D;
             border: 2px solid #000000;
             box-shadow: 6px 6px #000000;
-            padding: 15px;
-            font-size: 20px;
+            padding: 8px;
+            font-size: 0.8rem;
             text-transform: uppercase;
             position: relative;
             overflow: hidden;
         }
         .node{
-            width: 23px;
-            height: 23px;
+            width: 20px;
+            height: 20px;
             border: 3px solid #000;
             position: absolute;
             bottom: -12px;
@@ -1461,7 +1461,7 @@ footer p {
         .input-container{
             border: 1.5px solid #004A53;
             border-radius: 15px;
-            padding: 0px 24px 24px;
+            padding: 0px 20px 4px;
         }
         .label{
            font-size: 14px;
@@ -1482,32 +1482,32 @@ footer p {
         }
         .form-btn{
             color: #000000;
-            font-size: 16px;
+            font-size: 0.8rem;
             font-weight: 600;
             background-color: #FDAF22;
-            padding: 16px 30px;
+            padding: 10px 30px;
             border: none;
         }
         .title{
             color: #004A53;
-            font-size: 32px;
+            font-size: 24px;
             font-weight: 700;
         }
         .title span{
-            font-size: 27px;
+            font-size: 17px;
         }
         .feature{
             color: #101635;
-            font-size: 15px;
+            font-size: 12px;
         }
         .icon-container{
             border: 1px solid #D4D0CF;
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
         }
         .modal-footer{
-            height: 94px;
+            height: 44px;
             background-color: #FDAF22;
             color: #101635;
             font-size: 16px;

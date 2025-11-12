@@ -7,17 +7,17 @@
         data-bs-backdrop="false">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-header pb-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="width:1rem; height:1rem; background-size:1rem;"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body pt-0">
                     <div class="d-flex flex-column gap-3 flex-lg-row align-items-center row">
                         <div class="d-flex justify-content-end col"><img src="./images/Group_20-removebg-preview.png"
-                                alt="" style="width: 300px; height:200px;"></div>
+                                alt="" style="width: 300px; height:150px;"></div>
                         <div class="d-flex flex-column gap-1 col">
 
                             <h2 class="title"><span>Hey Champion.</span> Ready to pass smarter and better?</h2>
-                            <div class="d-flex align-items-center gap-2">
+                            <div class="d-flex align-items-center gap-1">
                                 <span class="feature">Short Curriculum-based lessons + Practice tests from anywhere</span>
                                 <span class="feature">Low data & Offline use</span>
                                 <span class="feature">Score higher</span>
@@ -30,11 +30,11 @@
                                 <img src="./images/db368b8f91f2ce3ff4d3b1b6ac05a321bfdc4f9a.png" alt=""
                                     class="img-fluid">
                             </div>
-                            <div class="col d-flex flex-column gap-5">
+                            <div class="col d-flex flex-column gap-4">
                                 <div class="launch-container">We're Launching Soon. Stay Close & Don't Miss a Thing
                                     <div class="node"></div>
                                 </div>
-                                <div class="d-flex flex-column gap-4">
+                                <div class="d-flex flex-column gap-3">
                                     <div class="d-flex flex-column input-container">
                                         <label for="" class="label">Enter first name</label>
                                         <input type="text" name="" id="" class="modal-form-input">
