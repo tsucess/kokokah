@@ -1,6 +1,74 @@
 @extends('layouts.template')
 
 @section('content')
+
+<!-- Modal Section -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       <div class="d-flex flex-column gap-3 flex-lg-row align-items-center row">
+            <div class="d-flex justify-content-end col"><img src="./images/Group_20-removebg-preview.png" alt="" style="width: 300px; height:200px;"></div>
+             <div class="d-flex flex-column gap-1 col">
+                
+            <h2 class="title"><span>Hey Champion.</span> Ready to pass smarter and better?</h2>
+            <div class="d-flex align-items-center gap-2">
+                <span class="feature">Short Curriculum-based lessons + Practice tests from anywhere</span>
+                <span class="feature">Low data & Offline use</span>
+                <span class="feature">Score higher</span>
+            </div>
+        </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <img src="./images/db368b8f91f2ce3ff4d3b1b6ac05a321bfdc4f9a.png" alt="" class="img-fluid">
+                </div>
+                 <div class="col d-flex flex-column gap-5">
+                    <div class="launch-container">We're Launching Soon. Stay Close & Don't Miss a Thing
+                        <div class="node"></div>
+                    </div>
+                    <div class="d-flex flex-column gap-4">
+                        <div class="d-flex flex-column input-container">
+                            <label for="" class="label">Enter first name</label>
+                            <input type="text" name="" id="" class="modal-form-input">
+                        </div>
+                        <div class="d-flex flex-column input-container">
+                            <label for="" class="label">Enter last name</label>
+                            <input type="text" name="" id="" class="modal-form-input">
+                        </div>
+                        <div class="d-flex flex-column input-container">
+                            <label for="" class="label">Enter email address</label>
+                            <input type="email" name="" id="" class="modal-form-input">
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column gap-3">
+                        <button class="align-self-center form-btn">Join Kokokah & Start Learning Now</button>
+                        <div class="d-flex gap-4 align-items-center justify-content-center">
+                            <div class="d-flex align-items-center justify-content-center icon-container"><i class="fa-brands fa-youtube" style="color:#F56824;"></i></div>
+                            <div class="d-flex align-items-center justify-content-center icon-container"><i class="fa-brands fa-linkedin" style="color:#F56824;"></i></div>
+                            <div class="d-flex align-items-center justify-content-center icon-container"><i class="fa-brands fa-x-twitter" style="color:#F56824;"></i></div>
+                            <div class="d-flex align-items-center justify-content-center icon-container"><i class="fa-brands fa-instagram" style="color:#F56824;"></i></div>
+                            <div class="d-flex align-items-center justify-content-center icon-container"><i class="fa-brands fa-facebook-f" style="color:#F56824;"></i></div>
+                        </div>
+                    </div>
+                    
+                 </div>
+            </div>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <div class="footer-accent">kokokah.com</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
     <!-- Hero Section - Yellow Background -->
     <div class="container-fluid hero-section-yellow">
         <div class="row align-items-center">
@@ -157,7 +225,7 @@
                 </p>
 
                 <div>
-                    <button class = "  primaryButton" type = "button">Explore Passnownow</button>
+                    <button class = "  primaryButton" type = "button">Coming soon</button>
                 </div>
             </div>
 
@@ -185,7 +253,7 @@
                     portals — all in one secure platform.
                 </p>
 
-                <button class = " primaryButton " type="button">Explore SMS</button>
+                <button class = " primaryButton " type="button">Coming soon</button>
 
             </div>
         </div>
@@ -202,7 +270,7 @@
                     Your all-in-one digital classroom — structured lessons, AI-powered
                     tutoring, chatrooms, and  academic & non-academic content for secondary school.
                 </p>
-                <button class = "primaryButton" type = "button">Explore LMS</button>
+                <button class = "primaryButton" type = "button">Coming soon</button>
             </div>
             <div class="col-12 col-md-6 text-center">
                 <img src="images/lms system.png" class="img-fluid w-100 w-md-75" alt="Exam Prep">
@@ -228,7 +296,7 @@
                     test prep, and special needs learning.
                 </p>
                 <div class = "mb-3">
-                    <button class = "primaryButton" type = "button">Explore Marketplace</button>
+                    <button class = "primaryButton" type = "button">Coming Soon</button>
 
                 </div>
             </div>
@@ -282,7 +350,7 @@
                 </p>
 
                 <div class = "mb-3">
-                    <button class = "primaryButton" type = "button">Register</button>
+                    <button class = "primaryButton" type = "button">Coming soon</button>
 
                 </div>
 
@@ -376,4 +444,10 @@
 
         </div>
     </div>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+        myModal.show();
+      });
+    </script>
 @endsection

@@ -1416,3 +1416,97 @@ footer p {
   height: 38px !;
   padding: 8px 16px !;
 }
+
+
+/* ===== Modal for home page ===== */
+.modal-dialog{
+  max-width: 1528px;
+}
+.modal-content{
+  padding: 0;
+  border-radius: 30px;
+}
+.modal-header {
+  border-bottom: none !important;
+}
+
+  .launch-container{
+            background-color: #FFBF4D;
+            border: 2px solid #000000;
+            box-shadow: 6px 6px #000000;
+            padding: 15px;
+            font-size: 20px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+        .node{
+            width: 23px;
+            height: 23px;
+            border: 3px solid #000;
+            position: absolute;
+            bottom: -12px;
+            left: 7rem;
+            background-color: white;
+            border-radius: 50%;
+        }
+        .input-container{
+            border: 1.5px solid #004A53;
+            border-radius: 15px;
+            padding: 0px 24px 24px;
+        }
+        .label{
+           font-size: 14px;
+           color: #004A53;
+           background-color: #fff;
+           padding: 0px 2px;
+           font-weight: 500;
+           top: -12px;
+           position: relative;
+           align-self: flex-start;
+        }
+        input.modal-form-input{
+            font-size: 14px;
+            color: #000000;
+            outline: none;
+            border: none;
+            padding: 0;
+        }
+        .form-btn{
+            color: #000000;
+            font-size: 16px;
+            font-weight: 600;
+            background-color: #FDAF22;
+            padding: 16px 30px;
+            border: none;
+        }
+        .title{
+            color: #004A53;
+            font-size: 32px;
+            font-weight: 700;
+        }
+        .title span{
+            font-size: 27px;
+        }
+        .feature{
+            color: #101635;
+            font-size: 15px;
+        }
+        .icon-container{
+            border: 1px solid #D4D0CF;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        .modal-footer{
+            height: 94px;
+            background-color: #FDAF22;
+            color: #101635;
+            font-size: 16px;
+            padding: 0 20px ;
+            border-bottom-right-radius: 30px;
+            border-bottom-left-radius: 30px;
+            display: flex;
+            justify-content: end;
+            align-items: center;
+        }
