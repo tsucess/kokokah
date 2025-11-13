@@ -11,10 +11,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="width:1rem; height:1rem; background-size:1rem;"></button>
                 </div>
                 <div class="modal-body pt-0 pb-lg-0">
-                    <div class="d-flex flex-column gap-3 flex-lg-row align-items-center row">
-                        <div class="d-flex justify-content-end col"><img src="./images/Group_20-removebg-preview.png"
+                    <div class=" row">
+                        <div class="d-flex justify-content-center justify-content-md-end col col-12 col-lg-5"><img src="./images/Group_20-removebg-preview.png"
                                 alt="" style="width: 300px; height:150px;"></div>
-                        <div class="d-flex flex-column gap-1 col">
+                        <div class="d-flex flex-column gap-1  align-items-center col col-12 col-lg-7">
 
                             <h2 class="title"><span>Hey Champion.</span> Ready to pass smarter and better?</h2>
                             <div class="d-flex align-items-center gap-1">
@@ -477,4 +477,5 @@
             myModal.show();
         });
     </script>
+
 @endsection

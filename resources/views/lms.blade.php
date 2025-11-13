@@ -25,7 +25,7 @@
   <div class="container">
     <div class="row align-items-center">
       <div class="col-12 col-md-6 col-lg-6 mb-4 mb-md-0">
-        <img src="images/Video.png" class="img-fluid" alt="Kokokah LMS">
+        <img src="images/llm-hero-img.jpg" class="img-fluid" alt="Kokokah LMS" style="border-radius: 16px;">
       </div>
       <div class="col-12 col-md-6 col-lg-6 ps-md-4 ps-0">
         <h2 class="fw-bold mb-4 section-heading">
@@ -108,41 +108,122 @@
 </div>
 
 <!-- Our Features Section -->
-<div class="container-fluid section-white section-py">
+<div class="container-fluid section-white section-py" style="background-color: #F56824; position:relative;">
+   <img src="./images/lightbulb-icon.png" alt="" style="width:100px; height:100px; position:absolute; left:30px; top:20px; "/>
   <div class="container">
     <div class="text-center mb-4 mb-md-5">
-      <h2 class="fw-bold section-heading">
+      <h4 class="fw-bold text-white">
         Our Features
-      </h2>
+      </h4>
+    </div>
+    <div class="d-flex flex-column gap-4">
+        <!-- first row -->
+    <div class="d-flex flex-column gap-4 flex-lg-row">
+      <!-- Feature Card 1 -->
+        <div class="w-100 w-lg-50">
+            <div class="d-flex flex-column large-card h-100">
+                    <div class="d-flex justify-content-center align-items-center large-card-icon-container">
+                        <img src="./images/crown-icon.png" alt="">
+                    </div>
+                    <div class="d-flex flex-column gap-2">
+                        <div class="d-flex flex-column gap-1">
+                            <h5 class="large-card-title">Kokokah Chat Room</h5>
+                            <div class="large-card-text"><p>Learning and growth don’t happen in isolation. Our chat room is a community where students, teachers, parents and guardians across Africa discuss topics, share knowledge, and interact all within a safe, moderated digital space.</p></div>
+                        </div>
+                        <button class="large-card-btn w-100">Start a Conversation</button>
+                    </div>
+            </div>
+        </div>
+
+      <!-- Feature Card 2 -->
+      <div class="w-100 w-lg-50">
+        <div class="d-flex flex-column large-card">
+            <div class="d-flex justify-content-center align-items-center large-card-icon-container">
+                <img src="./images/award-icon.png" alt="">
+            </div>
+            <div class="d-flex flex-column gap-2">
+                <div class="d-flex flex-column gap-1">
+                    <h5 class="large-card-title">Kokokah Chat Room</h5>
+                    <div class="d-flex flex-column"><p class="large-card-text mb-0">We deliver up-to-date content across all major subjects, aligned with your class group and school’s curriculum. Teachers gain ready access to comprehensive lesson notes, while students benefit from structured study guides organized by topics — making teaching seamless and exam preparation more effective.</p>
+                        <ul class="large-card-text">
+                        <li>Science</li>
+                        <li>Arts</li>
+                        <li>Commercial</li>
+                        <li>General</li></ul>
+                    </div>
+                </div>
+                <button class="large-card-btn w-100">Start a Conversation</button>
+            </div>
+        </div>
+      </div>
     </div>
 
-    <div class="row g-4">
+    <!-- second row -->
+    <div class="d-flex flex-column gap-4 flex-lg-row">
       <!-- Feature Card 1 -->
-      <div class="col-md-6 col-lg-5 mx-auto">
-        <div class="large-card">
-          <div class="mb-3">
-            <i class="fa-solid fa-crown large-card-icon"></i>
-          </div>
-          <h5 class="fw-bold mb-3 large-card-title">Kokokah Chat Room</h5>
-          <p class="large-card-text">We make learning available anywhere — even with low internet speeds and everyday devices — so no student is left behind.</p>
-          <button class="btn btn-primary-action w-100">Start a Conversation</button>
+      <div class="w-100 w-lg-50">
+        <div class="d-flex flex-column large-card h-100">
+            <div class="d-flex justify-content-center align-items-center large-card-icon-container">
+                <img src="./images/face-icon.png" alt="">
+            </div>
+            <div class="d-flex flex-column gap-2">
+                <div class="d-flex flex-column gap-1">
+                    <h5 class="large-card-title">Non-Academic Content</h5>
+                    <div class="d-flex flex-column"><p class="large-card-text">Because real success goes beyond exams, our LMS also offers practical skills that prepare students for life after school.</p>
+                       <ul class="large-card-text">
+                        <li>Technical Skills</li>
+                        <li>Soft Skills</li></ul></div>
+                </div>
+                <button class="large-card-btn w-100">Start a Conversation</button>
+            </div>
         </div>
       </div>
 
       <!-- Feature Card 2 -->
-      <div class="col-md-6 col-lg-5 mx-auto">
-        <div class="large-card">
-          <div class="mb-3">
-            <i class="fa-solid fa-school large-card-icon"></i>
-          </div>
-          <h5 class="fw-bold mb-3 large-card-title">Academic Content</h5>
-          <p class="large-card-text">We deliver up-to-date content across all major subjects, aligned with your class group and school's curriculum.</p>
-          <button class="btn btn-primary-action w-100">Get Started</button>
+      <div class="w-100 w-lg-50">
+        <div class="d-flex flex-column large-card h-100">
+            <div class="d-flex justify-content-center align-items-center large-card-icon-container">
+                <img src="./images/speed-icon.png" alt=""></div>
+            <div class="d-flex flex-column gap-2">
+                <div class="d-flex flex-column gap-1">
+                    <h5 class="large-card-title">AI-Powered Academic Assistant</h5>
+                    <div ><p class="large-card-text mb-0">Our built-in AI tutor works like your personal academic ChatGPT. It explains tough concepts, answers questions, and supports both independent study and classroom teaching — anytime, anywhere.
+</p>
+
+                    </div>
+                </div>
+                <button class="large-card-btn w-100">Start a Conversation</button>
+            </div>
         </div>
       </div>
     </div>
-  </div>
+
+
+    <!-- Third row -->
+    <div class="d-flex">
+      <!-- Feature Card 1 -->
+      <div class="w-100 ">
+        <div class="d-flex flex-column large-card h-100">
+            <div class="d-flex justify-content-center align-items-center large-card-icon-container">
+                <img src="./images/face-icon.png" alt=""></div>
+            <div class="d-flex flex-column gap-2">
+                <div class="d-flex flex-column gap-1">
+                    <h5 class="large-card-title">Virtual Wallet Integration</h5>
+                    <div class="d-flex flex-column"><p class="large-card-text mb-0">Your money, your way — all within Kokokah.</p>
+                    <ul class="large-card-text mb-0">
+                        <li>Seamless Payments: Deposit funds once and use your wallet to pay for courses, tutoring sessions, STEM bootcamps, or any service on the Kokokah platform.</li>
+                        <li>Flexibility: No need to juggle multiple payment methods — everything happens securely in-app.</li>
+                    <li>Withdrawals: Need your funds back? You can withdraw according to our platform’s simple, transparent directives.</li></ul>
+                <p class="large-card-text"> Parents can preload wallets for their kids, making payments easier and teaching financial responsibility.</p></div>
+                </div>
+                <button class="large-card-btn w-100">Start a Conversation</button>
+            </div>
+        </div>
+      </div>
+    </div>
 </div>
+</div>
+  </div>
 
 <!-- Why Choose Kokokah LMS Section -->
 <div class="container-fluid section-light-gray section-py">

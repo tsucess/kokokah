@@ -29,6 +29,10 @@ body {
   box-sizing: border-box;
 }
 
+html, body {
+  overflow-x: hidden;
+}
+
 .banner {
   background: var(--color-bg-banner);
   margin-bottom: 60px;
@@ -692,11 +696,13 @@ footer p {
 
 /* Default: full width on mobile */
 .top_header {
-  background: url(../../public/images/bg_top_header.png) no-repeat center center;
+  background: url(../../public/images/bg_top_header.jpg) no-repeat center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  background-color: rgba(225, 225, 225, 1); /* overlay tint */
+  background-blend-mode: overlay;
   width: 100%;
   /* height:120px; */
   text-align: center;
@@ -1224,29 +1230,38 @@ footer p {
 }
 
 .large-card {
-  border: none;
-  border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 32px;
-  height: 100%;
+  padding: 30px;
+  gap: 20px;
+  background-color: #FFFFFF;
+  border-radius: 12px;
 }
 
-.large-card-icon {
-  color: #FDAF22;
-  font-size: 32px;
-  margin-bottom: 12px;
+.large-card-icon-container {
+  background-color: #FFF9F0;
+  border-radius: 8px;
+  border: 1px solid #FFEACC;
+  width: 50px;
+  height: 50px;
+}
+.large-card-btn{
+    border: 1px solid #004A53;
+    height: 50px;
+    font-size: 1rem;
+    color: #004A53;
+    background-color: white;
+    border-radius: 4px;
+    font-weight: 600;
 }
 
 .large-card-title {
   color: #004A53;
   font-weight: 700;
-  margin-bottom: 12px;
+  font-size: 24px;
 }
 
 .large-card-text {
-  color: #6b737a;
-  font-size: 14px;
-  margin-bottom: 20px;
+  color: #59595A;
+  font-size: 18px;
 }
 
 /* ===== BUTTONS ===== */
@@ -1428,12 +1443,12 @@ footer p {
 
 /* ===== Modal for home page ===== */
 .modal-dialog{
-  max-width: 60vw;
+  max-width: 70%;
 }
 
 @media screen and (max-width: 1000px) {
   .modal-dialog {
-    max-width: 100vw; /* full width */
+    max-width: 100%; /* full width */
     margin: 0; /* remove side margins */
   }}
 
