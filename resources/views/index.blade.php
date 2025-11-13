@@ -218,7 +218,7 @@
 <div class="d-flex flex-column gap-5">
     <div class = "container">
         <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-bordered-red">
-            <div class = "col-12 col-md-7 col-lg-7 p-4 px-5 my-auto">
+            <div class = "col col-12 col-md-7 col-lg-7 p-4 px-5 my-auto">
                 <img src="images/Group 1171274797.png" alt="" class="mb-1"/>
                 <p style = "color :#004A53;">
                     Kokokah houses an exam preparatory platform
@@ -235,8 +235,8 @@
             </div>
 
 
-            <div class="col-12 col-lg-5 d-flex align-items-center">
-                <img src="images/exam_prep.png" class="img-fluid w-100 " alt="Exam Prep">
+            <div class="col col-12 col-md-5 col-lg-5 d-flex align-items-lg-center justify-content-lg-center">
+                <img src="images/exam_prep.png" class="img-fluid w-100 w-lg-100 " alt="Exam Prep">
             </div>
 
         </div>
@@ -278,7 +278,7 @@
                 <button class = "primaryButton" type = "button">Coming soon</button>
             </div>
             <div class="col-12 col-md-5 text-center">
-                <img src="images/lms system.png" class="img-fluid w-100 w-md-75" alt="Exam Prep">
+                <img src="images/lms system.png" class="img-fluid w-100 w-md-75 h-100" alt="Exam Prep">
             </div>
         </div>
     </div>
@@ -364,7 +364,7 @@
         <div class="row ourproduct2 product-section-bordered" >
             <!-- Image Section -->
             <div class="col-12 col-md-6 my-auto text-center">
-                <img src="images/8e967ffd660c50979f3c273bbb9d848dbb48a9db.png" class="img-fluid w-50" alt="kudikah">
+                <img src="images/8e967ffd660c50979f3c273bbb9d848dbb48a9db.png" class="d-block w-75 w-md-50 w-lg-25 mx-auto" alt="kudikah">
             </div>
 
             <!-- Text Section -->

@@ -84,7 +84,7 @@
     </nav>
 
 
-    <div class = "mb-2">
+    <div class = "mb-0">
         @yield('content')
     </div>
 
