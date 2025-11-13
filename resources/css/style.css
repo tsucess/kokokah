@@ -1459,7 +1459,7 @@ footer p {
   border-bottom: none !important;
 }
 
-  .launch-container{
+.launch-container{
             background-color: #FFBF4D;
             border: 2px solid #000000;
             box-shadow: 6px 6px #000000;
@@ -1468,8 +1468,8 @@ footer p {
             text-transform: uppercase;
             position: relative;
             overflow: hidden;
-        }
-        .node{
+}
+.node{
             width: 20px;
             height: 20px;
             border: 3px solid #000;
@@ -1478,13 +1478,13 @@ footer p {
             left: 7rem;
             background-color: white;
             border-radius: 50%;
-        }
-        .input-container{
+}
+.input-container{
             border: 1.5px solid #004A53;
             border-radius: 15px;
             padding: 0px 20px 4px;
-        }
-        .label{
+}
+.label{
            font-size: 14px;
            color: #004A53;
            background-color: #fff;
@@ -1493,41 +1493,41 @@ footer p {
            top: -12px;
            position: relative;
            align-self: flex-start;
-        }
-        input.modal-form-input{
+}
+input.modal-form-input{
             font-size: 14px;
             color: #000000;
             outline: none;
             border: none;
             padding: 0;
-        }
-        .form-btn{
+}
+.form-btn{
             color: #000000;
             font-size: 0.8rem;
             font-weight: 600;
             background-color: #FDAF22;
             padding: 10px 30px;
             border: none;
-        }
-        .title{
+}
+.title{
             color: #004A53;
             font-size: 24px;
             font-weight: 700;
-        }
-        .title span{
+}
+.title span{
             font-size: 17px;
-        }
-        .feature{
+}
+.feature{
             color: #101635;
             font-size: 12px;
-        }
-        .icon-container{
+}
+.icon-container{
             border: 1px solid #D4D0CF;
             width: 30px;
             height: 30px;
             border-radius: 50%;
-        }
-        .modal-footer{
+}
+.modal-footer{
             height: 44px;
             background-color: #FDAF22;
             color: #101635;
@@ -1538,4 +1538,163 @@ footer p {
             display: flex;
             justify-content: end;
             align-items: center;
-        }
+}
+
+
+/* ===== Contact Page Style ===== */
+.hero-banner{
+height: 480px;
+background-color: #004A53;
+}
+p{
+      margin-bottom: 0px;
+}
+.hero-banner h2{
+        font-family: "Pridi", serif;
+        font-size: 45.6px;
+        font-weight: 700;
+        color: white;
+}
+.hero-banner span{
+        color: #FDAF22;
+}
+.hero-banner p{
+        color: #FFFFFF;
+        font: 18.6px;
+        text-align: center;
+}
+.form-container{
+      border-radius: 16px;
+      background-color: #004A53;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 1, 0.37);
+      backdrop-filter: blur(10px);
+      padding: 33px;
+}
+.form-title{
+     color: #fff;
+     font-size: 23.8px;
+     font-weight: 700;
+}
+label{
+      color: #94A3B8;
+      font-size: 13px;
+}
+.form-input{
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      height: 56px;
+      outline: none;
+      background-color: transparent;
+      font-size: 16px;
+      color: #757575;
+      padding-inline: 17px;
+}
+.form-btn{
+      height: 60px;
+      width: 259px;
+      background-color: #FDAF22;
+      color: #311507;
+      border-radius: 4px;
+      font-size: 16px;
+      border: none;
+}
+.contact-container{
+      background-color: #004A53;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 1, 0.37);
+      padding: 33px;
+}
+.contact-container h3{
+      color: #fff;
+      font-size: 18.9px;
+      font-weight: 700;
+      margin-bottom: 0;
+}
+
+div.contact-container > p{
+      color: #94A3B8;
+      font-size: 15px;
+      margin-bottom: 0;
+}
+div.contact-container a{
+      color: #FDAF22;
+      text-decoration: none;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      font-size: 15px;
+}
+.social-icon-container{
+      background-color: rgba(255, 255, 255, 0.05);
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      color: #fff;
+}
+.time{
+      font-size: 16px;
+      color: #F8FAFC;
+}
+.day{
+      color: #94A3B8;
+      font-size: 15.1px;
+}
+.link-text{
+      color: #94A3B8;
+      font-size: 14.9px;
+}
+.link{
+      color: #FDAF22;
+      font-size: 15.1px;
+}
+.faq-container{
+      background-color: #004A53;
+      padding-inline: 15px;
+      overflow: hidden;
+}
+
+.faq-title {
+  font-size: 29.3px;
+  color: white;
+  font-weight: 600;
+}
+
+.accordion-header{
+  background-color: transparent;
+}
+
+/* Remove background change on open state */
+.accordion-button,
+.accordion-button:not(.collapsed) {
+  background: transparent !important;
+  color: white !important;
+  box-shadow: none !important;
+}
+.accordion-button::before{
+    display: none;
+}
+
+.accordion-item.faq-item-container {
+  box-shadow: 0 8px 32px 0px rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: transparent;
+}
+
+/* Override Bootstrap styles */
+.accordion-button.faq-item-title {
+  font-size: 17px !important;
+  font-weight: 500 !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Accordion body */
+.accordion-body.faq-item-text {
+  color: #94A3B8 !important;
+  font-size: 14.8px !important;
+  background-color: transparent !important;
+}
