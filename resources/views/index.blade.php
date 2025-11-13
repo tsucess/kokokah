@@ -11,12 +11,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="width:1rem; height:1rem; background-size:1rem;"></button>
                 </div>
                 <div class="modal-body pt-0 pb-lg-0">
-                    <div class="d-flex flex-column gap-3 flex-lg-row align-items-center row">
-                        <div class="d-flex justify-content-end col"><img src="./images/Group_20-removebg-preview.png"
+                    <div class=" row">
+                        <div class="d-flex justify-content-center justify-content-md-end col col-12 col-lg-5"><img src="./images/Group_20-removebg-preview.png"
                                 alt="" style="width: 300px; height:150px;"></div>
-                        <div class="d-flex flex-column gap-1 col">
+                        <div class="d-flex flex-column gap-1  align-items-center col col-12 col-lg-7">
 
-                            <h2 class="title"><span>Hey Champion.</span> Ready to pass smarter and better?</h2>
+                            <h2 class="title text-center"><span>Hey Champion.</span> Ready to pass smarter and better?</h2>
                             <div class="d-flex align-items-center gap-1">
                                 <span class="feature">Short Curriculum-based lessons + Practice tests from anywhere</span>
                                 <span class="feature">Low data & Offline use</span>
@@ -215,11 +215,11 @@
 
 
 
-
-    <div class = "container mt-5">
-        <div class = "row flex-column-reverse flex-md-row m-2 ourproduct1 product-section-bordered-red">
+<div class="d-flex flex-column gap-5">
+    <div class = "container">
+        <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-bordered-red">
             <div class = "col-12 col-md-7 col-lg-7 p-4 px-5 my-auto">
-                <img src="images/Group 1171274797.png" alt="" class="mb-3"/>
+                <img src="images/Group 1171274797.png" alt="" class="mb-1"/>
                 <p style = "color :#004A53;">
                     Kokokah houses an exam preparatory platform
                     where African students can prepare adequately
@@ -230,13 +230,13 @@
                 </p>
 
                 <div>
-                    <button class = "  primaryButton" type = "button">Coming soon</button>
+                    <button class = "primaryButton" type = "button">Coming soon</button>
                 </div>
             </div>
 
 
-            <div class="col-12 col-lg-5 col-md-5 text-center p-2">
-                <img src="images/exam_prep.png" class="img-fluid w-100 w-md-75" alt="Exam Prep">
+            <div class="col-12 col-lg-5 d-flex align-items-center">
+                <img src="images/exam_prep.png" class="img-fluid w-100 " alt="Exam Prep">
             </div>
 
         </div>
@@ -269,15 +269,15 @@
 
     <div class = "container">
         <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-bordered-green">
-            <div class = "col-12 col-md-6 col-lg-6 p-5 my-auto">
-                <div class="d-flex align-items-end gap-1 mb-2"><img src="./images/Kokokah_Logo.png" alt="" style="width:200px; height:61px;"/><h4 style = "color :#004A53;">Learning Management System</h4></div>
+            <div class = "col-12 col-md-6 col-lg-7 p-5 my-auto">
+                <div class="d-flex align-items-end gap-1 mb-2"><img src="./images/Kokokah_Logo.png" alt="" style="width:100px; height:51px;" class="object-cover"/><h4 style = "color :#004A53;">Learning Management System</h4></div>
                 <p style = "color :#004A53;">
                     Your all-in-one digital classroom — structured lessons, AI-powered
                     tutoring, chatrooms, and  academic & non-academic content for secondary school.
                 </p>
                 <button class = "primaryButton" type = "button">Coming soon</button>
             </div>
-            <div class="col-12 col-md-6 text-center">
+            <div class="col-12 col-md-5 text-center">
                 <img src="images/lms system.png" class="img-fluid w-100 w-md-75" alt="Exam Prep">
             </div>
         </div>
@@ -312,7 +312,7 @@
      <div class = "container">
         <div class="row ourproduct2 product-section-bordered" >
             <!-- Image Section -->
-            <div class="col-12 col-md-6 my-auto text-center">
+            <div class="col-12 col-md-6 ">
                 <img src="images/School Admin.png" class="img-fluid w-100 w-md-75" alt="School Admin">
             </div>
 
@@ -364,7 +364,7 @@
         <div class="row ourproduct2 product-section-bordered" >
             <!-- Image Section -->
             <div class="col-12 col-md-6 my-auto text-center">
-                <img src="images/8e967ffd660c50979f3c273bbb9d848dbb48a9db.png" class="img-fluid w-50 w-md-75 " alt="kudikah">
+                <img src="images/8e967ffd660c50979f3c273bbb9d848dbb48a9db.png" class="img-fluid w-50" alt="kudikah">
             </div>
 
             <!-- Text Section -->
@@ -383,6 +383,8 @@
 
             </div>
         </div>
+    </div>
+
     </div>
 
 
@@ -477,4 +479,5 @@
             myModal.show();
         });
     </script>
+
 @endsection

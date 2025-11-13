@@ -98,7 +98,7 @@ Learning and Management Platform for
     </div>
 
 <div class = "col-12 col-md-6 col-lg-6 my-auto">
-<img src = "images/Story.png" class = "img-fluid" style="height:840px">
+<img src = "images/our_story_img.jpg" class = "img-fluid" style="height:840px; width:100%; display:block; border-radius:20px;">
 </div>
 
 
