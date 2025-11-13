@@ -423,16 +423,19 @@
                 <div class="form-group-custom mb-3">
                     <label>Upload Subject Image</label>
                     <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
-                        <input type="text" class="form-control" id="fileNameDisplay" placeholder="No file selected" readonly
-                            style="flex: 1;">
-                        <button type="button" class="btn btn-publish" id="uploadButton" style="padding: 0.75rem 1.5rem;">
+                        <input type="text" class="form-control" id="fileNameDisplay" placeholder="No file selected"
+                            readonly style="flex: 1;">
+                        <button type="button" class="btn btn-publish" id="uploadButton"
+                            style="padding: 0.75rem 1.5rem;">
                             Upload File
                         </button>
                     </div>
 
-                    <label style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; border: 2px dashed #ddd; border-radius: 0.375rem; cursor: pointer; transition: all 0.3s ease; background-color: #f9f9f9;"
+                    <label
+                        style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; border: 2px dashed #ddd; border-radius: 0.375rem; cursor: pointer; transition: all 0.3s ease; background-color: #f9f9f9;"
                         for="fileInput">
-                        <i class="fa-solid fa-file-circle-check" style="font-size: 2rem; color: #004A53; margin-bottom: 0.5rem;"></i>
+                        <i class="fa-solid fa-file-circle-check"
+                            style="font-size: 2rem; color: #004A53; margin-bottom: 0.5rem;"></i>
                         <h5 style="margin: 0.5rem 0; color: #333;">Upload Image</h5>
                         <p style="margin: 0; color: #666; font-size: 0.9rem;">PNG, JPEG, GIF (max 2MB)</p>
                     </label>
@@ -860,8 +863,10 @@
                         <h2 id="publishSubjectTitle">English Language</h2>
                     </div>
                     <div class="overview-actions">
-                        <button type="button" title="Edit"><i class="fa-solid fa-check-circle" style="color: #004A53; font-size: 1.5rem;"></i></button>
-                        <button type="button" title="More options"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                        <button type="button" title="Edit"><i class="fa-solid fa-check-circle"
+                                style="color: #004A53; font-size: 1.5rem;"></i></button>
+                        <button type="button" title="More options"><i
+                                class="fa-solid fa-ellipsis-vertical"></i></button>
                     </div>
                 </div>
 
@@ -889,7 +894,8 @@
                 <div class="course-description-section">
                     <h6>Subject Description</h6>
                     <p id="publishDescription">
-                        This comprehensive course covers essential concepts and skills. Students will learn through interactive lessons, practice exercises, and assessments to build a strong foundation.
+                        This comprehensive course covers essential concepts and skills. Students will learn through
+                        interactive lessons, practice exercises, and assessments to build a strong foundation.
                     </p>
                 </div>
 
@@ -959,9 +965,7 @@
         </div>
     </main>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+  
     <script>
         // Navigation between sections
         document.addEventListener('DOMContentLoaded', () => {
@@ -996,7 +1000,8 @@
                 const level = document.getElementById('subjectLevel').value || 'JSS 1';
                 const time = document.getElementById('subjectTime').value || '0 Hours';
                 const lessons = document.getElementById('totalLesson').value || '0';
-                const description = document.getElementById('subjectDescription').value || 'This comprehensive course covers essential concepts and skills.';
+                const description = document.getElementById('subjectDescription').value ||
+                    'This comprehensive course covers essential concepts and skills.';
                 const fileInput = document.getElementById('fileInput');
 
                 // Update publish section

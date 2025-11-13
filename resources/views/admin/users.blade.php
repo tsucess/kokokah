@@ -6,8 +6,7 @@
             <!-- Header Section -->
             <div class="d-flex justify-content-between align-items-start mb-2">
                 <div>
-                    <h1 class="fw-bold mb-2"
-                        >Welcome Back
+                    <h1 class="fw-bold mb-2">Welcome Back
                         Samuel(Admin)</h1>
                     <p class="text-muted" style="font-size: 0.95rem;">Here overview of your</p>
                 </div>
@@ -26,15 +25,16 @@
                         <h5 class="fw-bold mb-0" style="font-size: 1.1rem; color: #1a1a1a;">All Users List</h5>
                         <div class="d-flex gap-3 justify-content-end" style="flex: 1; margin-left: 2rem;">
                             <!-- Search Input -->
-                            <div class="position-relative flex-grow-1 d-flex gap-2 align-items-center search-input-custom py-1 px-2" style="max-width: 300px;">
-                                <i class="fa-solid fa-search fa-lg "
-                                    style="color: #999;"></i>
-                                <input type="text" class="form-control  " style="border:none; outline:none;" id="searchInput"
-                                    placeholder="Search by Name or Email" aria-label="Search">
+                            <div class="position-relative flex-grow-1 d-flex gap-2 align-items-center search-input-custom py-1 px-2"
+                                style="max-width: 300px;">
+                                <i class="fa-solid fa-search fa-lg " style="color: #999;"></i>
+                                <input type="text" class="form-control  " style="border:none; outline:none;"
+                                    id="searchInput" placeholder="Search by Name or Email" aria-label="Search">
                             </div>
 
                             <!-- Filter Dropdown -->
-                            <select class="form-select filter-select-custom" id="filterSelect" style="max-width: 200px; height:45px; font-size:14px;">
+                            <select class="form-select filter-select-custom" id="filterSelect"
+                                style="max-width: 200px; height:45px; font-size:14px;">
                                 <option value="" style="">All Classes</option>
                                 <option value="course">All Courses</option>
                                 <option value="category">All Categories</option>
@@ -61,7 +61,8 @@
                                     <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">No</th>
                                     <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Users</th>
                                     <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">ID</th>
-                                    <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Email Address</th>
+                                    <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Email Address
+                                    </th>
                                     <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Gender</th>
                                     <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Contact</th>
                                     <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Role</th>
@@ -308,7 +309,7 @@
                     // Show confirmation modal
                     if (confirm(
                             'Are you sure you want to delete this user? This action cannot be undone.'
-                            )) {
+                        )) {
                         try {
                             btn.disabled = true;
                             btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
@@ -352,11 +353,11 @@
             const alertContainer = document.getElementById('alertContainer') || createAlertContainer();
             const alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
             const alertHTML = `
-      <div class="alert ${alertClass} alert-dismissible fade show" role="alert" style="position: fixed; top: 20px; right: 20px; z-index: 9999; max-width: 400px;">
-        ${message}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-    `;
+            <div class="alert ${alertClass} alert-dismissible fade show" role="alert" style="position: fixed; top: 20px; right: 20px; z-index: 9999; max-width: 400px;">
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            `;
             alertContainer.innerHTML = alertHTML;
 
             // Auto-dismiss after 5 seconds
@@ -377,10 +378,10 @@
 
         // Wrap loadUsers to attach delete listeners after loading
         const originalLoadUsers = loadUsers;
-        loadUsers = async function(page = 1) {
-            await originalLoadUsers(page);
-            attachDeleteListeners();
-        };
+            loadUsers = async function(page = 1) {
+                await originalLoadUsers(page);
+                attachDeleteListeners();
+            };
     </script>
 
     <style>
