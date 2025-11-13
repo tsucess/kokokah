@@ -1962,7 +1962,7 @@ main .container {
         .modal-container {
             background-color: #fff;
             border-radius: 10px;
-            padding: 20px 16px;
+            padding: 0px 20px 16px;
         }
 
         .modal-content {
@@ -1970,7 +1970,7 @@ main .container {
         }
 
         .modal-header {
-            padding: 20px;
+            padding:10px 10px 40px ;
         }
 
         .modal-title {
@@ -2032,4 +2032,5 @@ main .container {
             background-color: #fdaf22;
             padding-block: 16px;
             border: none;
+            border-radius: 10px;
         }
