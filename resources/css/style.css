@@ -1448,7 +1448,7 @@ footer p {
 @media screen and (max-width: 1000px) {
   .modal-dialog {
     max-width: 100%; /* full width */
-    margin: 0; /* remove side margins */
+    margin: 20px; /* remove side margins */
   }}
 
 .modal-content{

@@ -52,8 +52,8 @@
     <div class="row g-4">
       <div class="col-md-6">
         <div class="achievement-card">
-          <div class="d-flex align-items-start">
-            <div class="me-3 achievement-card-dot"></div>
+          <div class="d-flex align-items-start gap-2">
+            <div class=" achievement-card-dot flex-shrink-0"></div>
             <p class="mb-0 achievement-card-text">Over 50,000 hours of lessons delivered across Africa</p>
           </div>
         </div>
@@ -61,8 +61,8 @@
 
       <div class="col-md-6">
         <div class="achievement-card">
-          <div class="d-flex align-items-start">
-            <div class="me-3 achievement-card-dot"></div>
+          <div class="d-flex align-items-start gap-2">
+            <div class=" achievement-card-dot flex-shrink-0"></div>
             <p class="mb-0 achievement-card-text">5000+ secondary students have excelled in exams with Kokokah</p>
           </div>
         </div>
@@ -70,8 +70,8 @@
 
       <div class="col-md-6">
         <div class="achievement-card">
-          <div class="d-flex align-items-start">
-            <div class="me-3 achievement-card-dot"></div>
+          <div class="d-flex align-items-start gap-2">
+            <div class=" achievement-card-dot flex-shrink-0"></div>
             <p class="mb-0 achievement-card-text">Over 650 educators empowered with digital teaching resources</p>
           </div>
         </div>
@@ -79,8 +79,8 @@
 
       <div class="col-md-6">
         <div class="achievement-card">
-          <div class="d-flex align-items-start">
-            <div class="me-3 achievement-card-dot"></div>
+          <div class="d-flex align-items-start gap-2">
+            <div class=" achievement-card-dot flex-shrink-0"></div>
             <p class="mb-0 achievement-card-text">24/7 study time and practice. No restrictions</p>
           </div>
         </div>
@@ -88,8 +88,8 @@
 
       <div class="col-md-6">
         <div class="achievement-card">
-          <div class="d-flex align-items-start">
-            <div class="me-3 achievement-card-dot"></div>
+          <div class="d-flex align-items-start gap-2">
+            <div class=" achievement-card-dot flex-shrink-0"></div>
             <p class="mb-0 achievement-card-text">95% of Users Report Faster Payments and smoother learning experiences with our integrated wallet system.</p>
           </div>
         </div>
@@ -97,8 +97,8 @@
 
       <div class="col-md-6">
         <div class="achievement-card">
-          <div class="d-flex align-items-start">
-            <div class="me-3 achievement-card-dot"></div>
+          <div class="d-flex align-items-start gap-2">
+            <div class=" achievement-card-dot flex-shrink-0"></div>
             <p class="mb-0 achievement-card-text">Scalable for Growth: Expand easily as your school adds new campuses or students. Best growing Pan-African learning community</p>
           </div>
         </div>

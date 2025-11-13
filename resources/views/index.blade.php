@@ -16,7 +16,7 @@
                                 alt="" style="width: 300px; height:150px;"></div>
                         <div class="d-flex flex-column gap-1  align-items-center col col-12 col-lg-7">
 
-                            <h2 class="title"><span>Hey Champion.</span> Ready to pass smarter and better?</h2>
+                            <h2 class="title text-center"><span>Hey Champion.</span> Ready to pass smarter and better?</h2>
                             <div class="d-flex align-items-center gap-1">
                                 <span class="feature">Short Curriculum-based lessons + Practice tests from anywhere</span>
                                 <span class="feature">Low data & Offline use</span>
