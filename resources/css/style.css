@@ -1670,6 +1670,7 @@ div.contact-container a{
   background: transparent !important;
   color: white !important;
   box-shadow: none !important;
+  border-radius: 30px;
 }
 .accordion-button::before{
     display: none;
@@ -1707,4 +1708,9 @@ div.contact-container a{
   color: #94A3B8 !important;
   font-size: 14.8px !important;
   background-color: transparent !important;
+}
+
+.accordion-item:first-of-type,
+.accordion-item:last-of-type {
+  border-radius: 0.5rem !important;
 }
