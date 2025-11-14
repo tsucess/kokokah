@@ -168,6 +168,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            font-size: 16px;
         }
 
         .add-btn:hover {
@@ -220,8 +221,8 @@
             background-color: white;
             border: 1px solid #ddd;
             color: #666;
-            width: 36px;
-            height: 36px;
+            width: 26px;
+            height: 26px;
             border-radius: 6px;
             cursor: pointer;
             display: flex;
@@ -319,7 +320,7 @@
         <!-- Header Section -->
         <div class="header-section">
             <div class="header-text">
-                <h1>Levels & Classes</h1>
+                <h1 class="text-white">Levels & Classes</h1>
                 <p>Manage education levels (JS1-SS3, Grade 1-11, 100level-500level)</p>
             </div>
             <button class="add-btn" data-bs-toggle="modal" data-bs-target="#addLevelModal">
@@ -407,10 +408,10 @@
                         <h3 class="level-card-title">${level.name}</h3>
                         <div class="level-card-actions">
                             <button class="action-btn" onclick="editLevel(${level.id})" title="Edit">
-                                <i class="fa-solid fa-pen"></i>
+                                <i class="fa-solid fa-pen fa-xs"></i>
                             </button>
                             <button class="action-btn delete" onclick="deleteLevel(${level.id})" title="Delete">
-                                <i class="fa-solid fa-trash"></i>
+                                <i class="fa-solid fa-trash fa-xs"></i>
                             </button>
                         </div>
                     </div>
