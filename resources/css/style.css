@@ -1132,12 +1132,13 @@ footer p {
 
 .hero-title {
   line-height: 1.2;
-  color: #000000;
+  color: #004A53;
   font-family: 'Fredoka', sans-serif;
   margin-bottom: 24px;
   display: block;
   white-space: normal;
   position: relative;
+  font-weight: 600;
 }
 
 .hero-title::after {
@@ -1147,7 +1148,7 @@ footer p {
   top: 0;
   height: 100%;
   width: 2px;
-  background-color: #Fff;
+  background-color: #004A53;
   animation: cursor-blink 0.8s infinite;
 }
 

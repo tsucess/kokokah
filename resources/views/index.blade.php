@@ -79,7 +79,7 @@
     <!-- Hero Section - Yellow Background -->
     <div class="container-fluid hero-section-yellow">
         <div class="row align-items-center">
-            <div class="col-12 col-md-7 col-lg-7">
+            <div class="col-12 col-md-6 col-lg-6">
                <div class="hero-title-container">
   <span class="hero-title" id="typing-text"></span>
 </div>
@@ -91,7 +91,7 @@
                     <a href="/register" class="btn btn-secondary-action">Signup Now</a>
                 </div>
             </div>
-            <div class="col-12 col-md-5 col-lg-5 mt-4 mt-md-0 hero_img p-0 text-center">
+            <div class="col-12 col-md-6 col-lg-6 mt-4 mt-md-0 hero_img text-center">
                 <img src="images/LMS.png" class="img-fluid animate__animated animate__pulse hero-img" alt="LMS Illustration" >
             </div>
         </div>
