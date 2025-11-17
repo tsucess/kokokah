@@ -79,8 +79,10 @@
     <!-- Hero Section - Yellow Background -->
     <div class="container-fluid hero-section-yellow">
         <div class="row align-items-center">
-            <div class="col-12 col-md-6 col-lg-6">
-                <h1 class="fw-bold hero-title">Quality, Mobile-First, Curriculum Based Lessons & Practice Tests </h1>
+            <div class="col-12 col-md-7 col-lg-7">
+               <div class="hero-title-container">
+  <span class="hero-title" id="typing-text"></span>
+</div>
                 <p class="mb-4 hero-subtitle">
                     LOW DATA USAGE + OFFLINE ACCESS + SCHOOL MANAGEMENT SYSTEM
                 </p>
@@ -89,8 +91,8 @@
                     <a href="/register" class="btn btn-secondary-action">Signup Now</a>
                 </div>
             </div>
-            <div class="col-12 col-md-6 col-lg-6 text-center mt-4 mt-md-0 hero_img">
-                <img src="images/LMS.png" class="img-fluid" alt="LMS Illustration">
+            <div class="col-12 col-md-5 col-lg-5 mt-4 mt-md-0 hero_img p-0 text-center">
+                <img src="images/LMS.png" class="img-fluid animate__animated animate__pulse hero-img" alt="LMS Illustration" >
             </div>
         </div>
     </div>
@@ -218,8 +220,8 @@
 <div class="d-flex flex-column gap-5">
     <div class = "container">
         <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-bordered-red">
-            <div class = "col col-12 col-md-7 col-lg-7 p-4 px-5 my-auto">
-                <img src="images/Group 1171274797.png" alt="" class="mb-1"/>
+            <div class = "col col-12 col-md-7 col-lg-7 p-4 px-5 my-auto d-flex flex-column gap-3">
+                <img src="images/Group 1171274797.png" alt="" style="width:200px"/>
                 <p style = "color :#004A53;">
                     Kokokah houses an exam preparatory platform
                     where African students can prepare adequately
@@ -250,9 +252,9 @@
                 <img src="images/School Admin.png" class="img-fluid" alt="School Admin">
             </div>
             <!-- Text Section -->
-            <div class="col-12 col-md-6 col-lg-6  my-auto">
+            <div class="col-12 col-md-6 col-lg-6  my-auto d-flex flex-column gap-3">
                 <h5 class="text-white">School Management System (SMS)</h5>
-                <p class = "pe-5 text-white">
+                <p class = " text-white">
                     Simplify school administration with fee
                     tracking, digital report cards, attendance, and student
                     portals — all in one secure platform.
@@ -269,8 +271,8 @@
 
     <div class = "container">
         <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-bordered-green">
-            <div class = "col-12 col-md-6 col-lg-7 p-5 my-auto">
-                <div class="d-flex align-items-end gap-1 mb-2"><img src="./images/Kokokah_Logo.png" alt="" style="width:100px; height:51px;" class="object-cover"/><h4 style = "color :#004A53;">Learning Management System</h4></div>
+            <div class = "col-12 col-md-6 col-lg-7 p-5 my-auto d-flex flex-column gap-3">
+                <div class="d-flex align-items-end gap-1"><img src="./images/Kokokah_Logo.png" alt="" style="width:100px; height:51px;" class="object-cover"/><h4 style = "color :#004A53;">Learning Management System</h4></div>
                 <p style = "color :#004A53;">
                     Your all-in-one digital classroom — structured lessons, AI-powered
                     tutoring, chatrooms, and  academic & non-academic content for secondary school.
@@ -291,7 +293,7 @@
             </div>
 
             <!-- Text Section -->
-            <div class="col-12 col-md-6 my-auto d-flex flex-column">
+            <div class="col-12 col-md-6 my-auto d-flex flex-column gap-3">
                 <h5 class="text-white">
                     The Marketplace
                 </h5>
@@ -300,7 +302,7 @@
                     tutors to connect. Book trusted tutors for academics,
                     test prep, and special needs learning.
                 </p>
-                <div class = "mb-3">
+                <div class = "">
                     <button class = "primaryButton" type = "button">Coming Soon</button>
 
                 </div>
@@ -317,7 +319,7 @@
             </div>
 
             <!-- Text Section -->
-            <div class="col-12 col-md-6 my-auto d-flex flex-column">
+            <div class="col-12 col-md-6 my-auto d-flex flex-column gap-3">
                 <img src="./images/315a2f8c6c60fc789ec0066a0b5bce04b7daa28d.png" alt="" style="width:200px; height:60px;"/>
                 <p style = "color :#004A53;">
                     Get hands-on STEM bootcamps, summer schools,
@@ -325,7 +327,7 @@
                     students for the future of science & tech.
                 </p>
 
-                <div class = "mb-3">
+                <div class = "">
                     <button class = "primaryButton" type = "button">Coming soon</button>
 
                 </div>
@@ -339,7 +341,7 @@
         {{-- <div class="row  my-4 p-2 flex-column-reverse flex-md-row m-2 ourproduct1 product-section-yellow"> --}}
         <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-yellow">
             <!-- Text Section -->
-            <div class="col-12 col-md-6 d-flex flex-column justify-content-center p-5">
+            <div class="col-12 col-md-6 d-flex flex-column justify-content-center gap-3 ps-lg-5">
                 <h5>
                     AI Chatbot
                 </h5>
@@ -368,7 +370,7 @@
             </div>
 
             <!-- Text Section -->
-            <div class="col-12 col-md-6 my-auto d-flex flex-column">
+            <div class="col-12 col-md-6 my-auto d-flex flex-column gap-3">
                  <h5 style = "color :#004A53;">Kudikah</h5>
                 <p style = "color :#004A53;">
                     Get hands-on STEM bootcamps, summer schools,
@@ -478,6 +480,76 @@
             var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
             myModal.show();
         });
+
+        class AdvancedTypingAnimation {
+  constructor(elementId, words, options = {}) {
+    this.element = document.getElementById(elementId);
+    this.words = words;
+    this.options = {
+      typeSpeed: 60,
+      deleteSpeed: 40,
+      pauseTime: 1500,
+      loop: true,
+      ...options
+    };
+
+    this.currentWordIndex = 0;
+    this.currentCharIndex = 0;
+    this.isDeleting = false;
+
+    this.start();
+  }
+
+  start() {
+    this.type();
+  }
+
+  type() {
+    const currentWord = this.words[this.currentWordIndex];
+
+    if (this.isDeleting) {
+      this.currentCharIndex--;
+    } else {
+      this.currentCharIndex++;
+    }
+
+    this.element.textContent = currentWord.substring(0, this.currentCharIndex);
+
+    let speed = this.isDeleting ? this.options.deleteSpeed : this.options.typeSpeed;
+
+    if (!this.isDeleting && this.currentCharIndex === currentWord.length) {
+      speed = this.options.pauseTime;
+      this.isDeleting = true;
+    } else if (this.isDeleting && this.currentCharIndex === 0) {
+      this.isDeleting = false;
+      this.currentWordIndex++;
+
+      if (this.currentWordIndex >= this.words.length) {
+        if (this.options.loop) {
+          this.currentWordIndex = 0;
+        } else {
+          return;
+        }
+      }
+      speed = 500; // Delay before starting next word
+    }
+
+    setTimeout(() => this.type(), speed);
+  }
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+  new AdvancedTypingAnimation('typing-text', [
+    "Quality",
+    "Mobile-First",
+    "Curriculum Based Lessons & Practice Tests"
+  ], {
+    typeSpeed: 80,
+    deleteSpeed: 30,
+    pauseTime: 2000
+  });
+});
     </script>
 
 @endsection
