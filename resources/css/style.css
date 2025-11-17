@@ -1128,10 +1128,10 @@ footer p {
   display: inline-block;
   max-width: 450px;
   position: relative;
+  height: 110px;
 }
 
 .hero-title {
-  line-height: 1.2;
   color: #004A53;
   font-family: 'Fredoka', sans-serif;
   margin-bottom: 24px;
@@ -1145,8 +1145,8 @@ footer p {
   content: "";
   position: absolute;
   right: -2px;
-  top: 0;
-  height: 100%;
+  bottom: 10px;
+  height: 30px;
   width: 2px;
   background-color: #004A53;
   animation: cursor-blink 0.8s infinite;
@@ -1817,3 +1817,16 @@ div.contact-container a{
 .accordion-item:last-of-type {
   border-radius: 0.5rem !important;
 }
+
+
+.fade-section {
+  opacity: 1;
+  transform: translateY(0px);
+  transition: opacity 0.3s, transform 0.3s;
+  height: auto;
+}
+
+.feature-item {
+      opacity: 1;
+      transform: translateY(50px);
+     }

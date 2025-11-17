@@ -80,9 +80,10 @@
     <div class="container-fluid hero-section-yellow">
         <div class="row align-items-center">
             <div class="col-12 col-md-6 col-lg-6">
-               <div class="hero-title-container">
+               {{-- <div class="hero-title-container">
   <span class="hero-title" id="typing-text"></span>
-</div>
+</div> --}}
+  <h1 class="header-text">Welcome!</h1>
                 <p class="mb-4 hero-subtitle">
                     LOW DATA USAGE + OFFLINE ACCESS + SCHOOL MANAGEMENT SYSTEM
                 </p>
@@ -98,7 +99,7 @@
     </div>
 
     <!-- Kokokah for All Section - White Background -->
-    <div class="container-fluid section-white section-py">
+    <div class="container-fluid section-white section-py fade-section" >
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-12 col-md-6 col-lg-6 mb-4 mb-md-0">
@@ -134,10 +135,10 @@
                 </p>
             </div>
 
-            <div class="row g-4">
+            <div class="row g-4 features">
                 <!-- Feature 1 -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="feature-card">
+                <div class="col-12 col-md-6 col-lg-4 feature-item">
+                    <div class="feature-card ">
                         <div class="mb-3">
                             <i class="fa-solid fa-download feature-card-icon"></i>
                         </div>
@@ -147,7 +148,7 @@
                 </div>
 
                 <!-- Feature 2 -->
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-md-6 col-lg-4 feature-item">
                     <div class="feature-card">
                         <div class="mb-3">
                             <i class="fa-solid fa-download feature-card-icon"></i>
@@ -159,7 +160,7 @@
                 </div>
 
                 <!-- Feature 3 -->
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-md-6 col-lg-4 feature-item">
                     <div class="feature-card">
                         <div class="mb-3">
                             <i class="fa-solid fa-download feature-card-icon"></i>
@@ -171,7 +172,7 @@
                 </div>
 
                 <!-- Feature 4 -->
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-md-6 col-lg-4 feature-item">
                     <div class="feature-card">
                         <div class="mb-3">
                             <i class="fa-solid fa-download feature-card-icon"></i>
@@ -183,7 +184,7 @@
                 </div>
 
                 <!-- Feature 5 -->
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-md-6 col-lg-4 feature-item">
                     <div class="feature-card">
                         <div class="mb-3">
                             <i class="fa-solid fa-download feature-card-icon"></i>
@@ -218,7 +219,7 @@
 
 
 <div class="d-flex flex-column gap-5">
-    <div class = "container">
+    <div class = "container fade-section">
         <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-bordered-red">
             <div class = "col col-12 col-md-7 col-lg-7 p-4 px-5 my-auto d-flex flex-column gap-3">
                 <img src="images/Group 1171274797.png" alt="" style="width:200px"/>
@@ -245,7 +246,7 @@
     </div>
 
 
-    <div class = "container">
+    <div class = "container fade-section">
         <div class="row ourproduct2 product-section-orange">
             <!-- Image Section -->
             <div class="col-12 col-md-6 col-lg-6">
@@ -269,7 +270,7 @@
 
 
 
-    <div class = "container">
+    <div class = "container fade-section">
         <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-bordered-green">
             <div class = "col-12 col-md-6 col-lg-7 p-5 my-auto d-flex flex-column gap-3">
                 <div class="d-flex align-items-end gap-1"><img src="./images/Kokokah_Logo.png" alt="" style="width:100px; height:51px;" class="object-cover"/><h4 style = "color :#004A53;">Learning Management System</h4></div>
@@ -285,7 +286,7 @@
         </div>
     </div>
 
-    <div class = "container">
+    <div class = "container fade-section">
         <div class="row ourproduct2 product-section-teal">
             <!-- Image Section -->
             <div class="col-12 col-md-6 my-auto text-center">
@@ -311,7 +312,7 @@
     </div>
 
 
-     <div class = "container">
+     <div class = "container fade-section">
         <div class="row ourproduct2 product-section-bordered" >
             <!-- Image Section -->
             <div class="col-12 col-md-6 ">
@@ -337,7 +338,7 @@
     </div>
 
 
-    <div class = "container">
+    <div class = "container fade-section">
         {{-- <div class="row  my-4 p-2 flex-column-reverse flex-md-row m-2 ourproduct1 product-section-yellow"> --}}
         <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-yellow">
             <!-- Text Section -->
@@ -362,7 +363,7 @@
         </div>
     </div>
 
-     <div class = "container">
+     <div class = "container fade-section">
         <div class="row ourproduct2 product-section-bordered" >
             <!-- Image Section -->
             <div class="col-12 col-md-6 my-auto text-center">
@@ -475,7 +476,69 @@
 
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+
     <script>
+         gsap.registerPlugin(ScrollTrigger, TextPlugin);
+
+
+
+  const phrases = [
+    "Quality",
+    "Mobile-First",
+    "Curriculum Based Lessons & Practice Tests"
+  ];
+
+  const tl = gsap.timeline({ repeat: -1, repeatDelay: 0.5 });
+
+  phrases.forEach((phrase) => {
+    // Animate text to current phrase
+    tl.to(".header-text", {
+      duration: 2,
+      text: phrase,
+      ease: "none"
+    });
+
+    // Small pause on each phrase
+    tl.to({}, { duration: 1 });
+  });
+
+  gsap.utils.toArray(".fade-section").forEach((section) => {
+  gsap.from(section, {          // use `from` so it starts offscreen
+    opacity: 1,
+    x: 100,                     // start 100px to the right
+    duration: 1.5,
+    ease: "power2.out",
+    scrollTrigger: {
+      trigger: section,
+      start: "top 85%",
+      toggleActions: "play reverse play reverse",
+    }
+  });
+});
+
+
+
+ gsap.from(".feature-item", {
+  scrollTrigger: {
+    trigger: ".features",
+    start: "top 80%",
+    toggleActions: "play reverse play reverse",
+  },
+  opacity: 0,
+  y: 80,
+  duration: 0.8,
+  ease: "back.out(1.7)", // “pop-out” effect
+  stagger: {
+    each: 0.8,       // stagger each by 0.2s
+    from: "start"    // options: "start", "center", "end", or index
+  }
+});
+
+
+
         document.addEventListener("DOMContentLoaded", function() {
             var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
             myModal.show();
@@ -520,7 +583,7 @@
     if (!this.isDeleting && this.currentCharIndex === currentWord.length) {
       speed = this.options.pauseTime;
       this.isDeleting = true;
-    } else if (this.isDeleting && this.currentCharIndex === 0) {
+    } else if (this.isDeleting && this.currentCharIndex === 1) {
       this.isDeleting = false;
       this.currentWordIndex++;
 
