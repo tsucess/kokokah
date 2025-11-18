@@ -558,7 +558,7 @@ gsap.utils.toArray(".fade-section-left").forEach((section) => {
 
 gsap.utils.toArray(".section-title").forEach((section) => {
 gsap.from(section, {
-  scale: 0.2,
+  scale: 0.6,
   duration: 1,
   ease: "power2.out",
   scrollTrigger: {
