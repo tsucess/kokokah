@@ -2,31 +2,20 @@
 
 @section('content')
 <div class = "container-fluid p-5 banner d-flex align-items-center justify-content-center" style="background-color : #FDAF22; height:501px;">
-<h1 class = "heroheading text-center word-drop" style = "font-weight: bolder; max-width:40ch;">
-<span>Kokokah</span>
-  <span>is</span>
-  <span>Africa’s</span>
-  <span>Leading</span>
-  <span>Digital</span>
-  <span>Learning</span>
-  <span>and</span>
-  <span>Management</span>
-  <span>Platform</span>
-  <span>for</span>
-  <span>Secondary</span>
-  <span>Schools</span>
+<h1 class = "heroheading text-center typewriter" style = "font-weight: bolder; max-width:40ch;">
+Kokokah is Africa’s Leading Digital Learning and Management Platform for Secondary Schools
 </h1>
 </div>
 
 <div class = "container mb-5 d-flex align-items-center" >
 <div class = "row mt-4 bg-white">
 <div class = "col-12 col-md-6 col-lg-6 my-auto fade-section-left">
-<img src = "images/577d4af220704c24ce21f8c1dcc8966b836fa580.jpg" class = "img-fluid w-100 object-cover" style="height:382px; border-radius:16px;">
+<img src = "images/577d4af220704c24ce21f8c1dcc8966b836fa580.jpg" class = "img-fluid w-100 " style="height:auto; max-height:382px; border-radius:16px; object-attachment:center;">
 </div>
 
 
 <div class = "col-12 col-md-6 col-lg-6 d-flex flex-column gap-3 justify-content-center fade-section">
-    <h4>
+    <h4 style="color:#004A53; font-size:32px;">
         Kokokah for All.
     </h4>
     <p class = "heroparagraph">
@@ -50,7 +39,7 @@
 <div class = "row">
 
 <div class = "col-12 col-md-6 col-lg-6 my-auto fade-section-left">
-    <h4 class = "mb-3">
+    <h4 class = "mb-3" style="color:#004A53; font-size:32px;">
         Our Mission & Vision
     </h4>
 
@@ -107,7 +96,7 @@
     </div>
 
 <div class = "col-12 col-md-6 col-lg-6 my-auto">
-<img src = "images/our_story_img.jpg" class = "img-fluid" style="height:640px; width:100%; display:block; border-radius:20px;">
+<img src = "images/our_story_img.jpg" class = "img-fluid" style="max-height:640px; height:auto; width:100%; display:block; border-radius:20px;">
 </div>
 
 
@@ -148,7 +137,7 @@ We’ve gone from limited resources to limitless possibilities. From local impac
 
 
     <div class="d-flex flex-column justify-content-center gap-3">
-        <h4 class = "text-center section-title">Our Core Values</h4>
+        <h4 class = "text-center section-title" style="color:#004A53; font-size:32px;">Our Core Values</h4>
         <p class = "text-center pe-5">
             Learning should be accessible, engaging, and
             empowering for every student. These values guide
@@ -164,7 +153,7 @@ We’ve gone from limited resources to limitless possibilities. From local impac
 
     <!-- Card 1 -->
     <div class="col-md-6 mb-4 col-lg-5 shakeX-on-scroll">
-      <div class="card border-1 shadow-sm  rounded-4 position-relative text-center mt-3 p-3" style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
+      <div class="card border-1 shadow-sm  rounded-4 position-relative text-center mt-3 p-5" style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
         <!-- Icon -->
         <div class="position-absolute top-0 start-50 translate-middle rounded-4 " style="background: #FFF9F0;">
           <i class="fa-solid fa-user-circle text-warning fs-3"></i>
@@ -184,7 +173,7 @@ We’ve gone from limited resources to limitless possibilities. From local impac
 
     <!-- Card 2 -->
     <div class="col-md-6 mb-4 col-lg-5 shakeX-on-scroll">
-    <div class="card border-1 shadow-sm  rounded-4 position-relative text-center mt-3 p-3" style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
+    <div class="card border-1 shadow-sm  rounded-4 position-relative text-center mt-3 p-5" style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
         <!-- Icon -->
         <div class="position-absolute top-0 start-50 translate-middle rounded-4" style="background: #FFF9F0;">
           <i class="fa-solid fa-lightbulb text-warning fs-3"></i>
@@ -207,7 +196,7 @@ We’ve gone from limited resources to limitless possibilities. From local impac
 
     <!-- Card 3 -->
     <div class="col-md-6 col-lg-5 shakeX-on-scroll">
-      <div class="card border-1 shadow-sm rounded-4 position-relative text-center mt-3 p-3" style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
+      <div class="card border-1 shadow-sm rounded-4 position-relative text-center mt-3 p-5" style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
         <!-- Icon -->
         <div class="position-absolute top-0 start-50 translate-middle rounded-4" style="background: #FFF9F0;">
           <i class="fa-solid fa-graduation-cap text-warning fs-3"></i>
@@ -227,7 +216,7 @@ We’ve gone from limited resources to limitless possibilities. From local impac
 
     <!-- Card 4 -->
     <div class="col-md-6 col-lg-5 shakeX-on-scroll">
-      <div class="card border-1 shadow-sm rounded-4 position-relative text-center mt-3 p-3" style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
+      <div class="card border-1 shadow-sm rounded-4 position-relative text-center mt-3 p-5" style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
         <!-- Icon -->
         <div class="position-absolute top-0 start-50 translate-middle rounded-4" style="background: #FFF9F0;">
           <i class="fa-solid fa-shield text-warning fs-3"></i>
@@ -251,7 +240,7 @@ We’ve gone from limited resources to limitless possibilities. From local impac
 
     <!-- Card 5 -->
     <div class="col-md-6 col-lg-5  mt-4 shakeX-on-scroll">
-      <div class="card border-1 shadow-sm rounded-4 position-relative text-center mt-3 p-3" style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
+      <div class="card border-1 shadow-sm rounded-4 position-relative text-center mt-3 p-5" style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
         <!-- Icon -->
         <div class="position-absolute top-0 start-50 translate-middle rounded-4" style="background: #FFF9F0;">
           <i class="fa-solid fa-people-group text-warning fs-3"></i>
@@ -355,41 +344,37 @@ gsap.utils.toArray(".fade-section-left").forEach((section) => {
   .to(el, { x: 0, duration: 0.1, ease: "power1.inOut" });
 });
 
-gsap.utils.toArray(".word-drop").forEach((el) => {
-  // Wrap each word in a span
-  const words = el.textContent.split(" ");
-  el.textContent = ""; // clear original text
+gsap.utils.toArray(".typewriter").forEach((el) => {
+  const text = el.textContent;
+  el.textContent = ""; // clear text to start typing
 
-  words.forEach((word, index) => {
+  const letters = text.split("");
+
+  letters.forEach((letter) => {
     const span = document.createElement("span");
-    span.textContent = word;
-    span.style.display = "inline-block"; // needed for GSAP transform
+    span.textContent = letter;
+    span.style.opacity = 0; // hide initially
     el.appendChild(span);
-
-    // Add a space after each word except the last one
-    if (index < words.length - 1) {
-      el.appendChild(document.createTextNode(" "));
-    }
   });
 
-  // Animate each word dropping from above
   const spans = el.querySelectorAll("span");
 
-  gsap.from(spans, {
-    y: -50,             // start 50px above
-    opacity: 0,
-    duration: 0.6,
-    ease: "bounce.out",
-    stagger: 0.15,       // delay between words
-    scrollTrigger: {
-      trigger: el,
-      start: "top 85%",
-      toggleActions: "play reverse play reverse",
-      // markers: true  // for debugging
+  gsap.fromTo(spans,
+    { opacity: 0 },
+    {
+      opacity: 1,
+      duration: 0.05,      // speed of typing
+      stagger: 0.05,       // delay between letters
+      ease: "none",
+      scrollTrigger: {
+        trigger: el,
+        start: "top 85%",
+        toggleActions: "play reverse play reverse",
+        // markers: true   // for debugging
+      }
     }
-  });
+  );
 });
-
 
 
 

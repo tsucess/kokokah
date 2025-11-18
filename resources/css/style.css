@@ -399,13 +399,13 @@ p {
 
 
 .heroheading {
-  font-family: Fredoka, serif;
+  font-family: 'Fredoka', sans-serif;
   font-weight: bolder;
   font-size: 43px;
-  line-height: 150%;
+  line-height: 120%;
   vertical-align: middle;
   letter-spacing: 1%;
-  color: #000F11;
+  color: #004A53;
 }
 
 /* Media queries moved to responsiveness.css */
@@ -1837,6 +1837,6 @@ div.contact-container a{
       transform: translateY(50px);
      }
 .header-text{
-font-size: 32px;
-min-height: 75px;
+font-size: 43px;
+min-height: 110px;
      }

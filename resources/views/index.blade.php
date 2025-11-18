@@ -83,7 +83,7 @@
                {{-- <div class="hero-title-container">
   <span class="hero-title" id="typing-text"></span>
 </div> --}}
-  <h1 class="header-text">Welcome!</h1>
+  <h1 class="header-text heroheading">Welcome!</h1>
                 <p class="mb-4 hero-subtitle">
                     LOW DATA USAGE + OFFLINE ACCESS + SCHOOL MANAGEMENT SYSTEM
                 </p>
@@ -106,7 +106,7 @@
                     <img src="images/33d07ac37205dee5ed7d04a51aace312e634c69c.jpg" class="img-fluid" alt="Kokokah Platform" style="max-width:752px; width:100%; height:382px; border-radius : 15px; object-fit:cover;">
                 </div>
                 <div class="col-12 col-md-6 col-lg-6 ps-md-4 ps-0 fade-section">
-                    <h2 class="fw-bold mb-4 section-heading">
+                    <h2 class="fw-bold mb-4 section-heading" style="font-size :38px;">
                         Kokokah for All
                     </h2>
                     <p class="mb-4 hero-subtitle">
@@ -125,7 +125,7 @@
     <div class="container-fluid section-light-gray section-py">
         <div class="container">
             <div class="text-center mb-4 mb-md-5">
-                <h2 class="fw-bold mb-3 section-heading section-title">
+                <h2 class="fw-bold mb-3 section-heading section-title" style="font-size :38px;">
                     Why Kokokah Is the Best
                 </h2>
                 <p class="section-description">
@@ -202,7 +202,7 @@
     <div class="container-fluid section-white section-py">
         <div class="container">
             <div class="text-center mb-4 mb-md-5">
-                <h2 class="fw-bold mb-3 section-heading section-title">
+                <h2 class="fw-bold mb-3 section-heading section-title" style="font-size :38px;">
                     Our Products
                 </h2>
                 <p class="section-description">
@@ -470,7 +470,7 @@
         <div class = "row justify-content-center p-5 text-white">
 
             <div class = "col-12 col-lg-12 col-md-12 text-center">
-                <h5 class = "mb-3 " style="color:#004A53; font-size : 32px;">Message from the founder</h5>
+                <h5 class = "mb-3 section-title" style="color:#004A53; font-size : 32px;">Message from the founder</h5>
                 <img src = "images/youtube.png" class="img-fluid founder-video">
             </div>
 
@@ -513,8 +513,8 @@ gsap.registerPlugin(ScrollTrigger, TextPlugin);
   gsap.utils.toArray(".fade-section").forEach((section) => {
   gsap.from(section, {          // use `from` so it starts offscreen
     opacity: 1,
-    x: 100,                     // start 100px to the right
-    duration: 0.2,
+    x: 600,                     // start 100px to the right
+    duration: 0.1,
     ease: "power2.out",
     scrollTrigger: {
       trigger: section,
@@ -527,8 +527,8 @@ gsap.registerPlugin(ScrollTrigger, TextPlugin);
 gsap.utils.toArray(".fade-section-left").forEach((section) => {
  gsap.from(section, {          // use `from` so it starts offscreen
     opacity: 1,
-    x: -100,                     // start 100px to the right
-    duration: 0.2,
+    x: -600,                     // start 100px to the right
+    duration: 0.1,
     ease: "power2.out",
     scrollTrigger: {
       trigger: section,

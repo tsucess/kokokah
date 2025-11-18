@@ -102,7 +102,7 @@
         <div class="container">
             <div class="row align-items-center gap-3 gap-md-0">
                 <div class="col-12 col-md-6 col-lg-6 mb-4 mb-md-0">
-                    <h2 class="newsletter-title">
+                    <h2 class="newsletter-title section-title">
                         Don't Miss Out on the Future of Learning!
                     </h2>
                     <p class="newsletter-description">
@@ -114,7 +114,7 @@
 
                 <div class="col-12 col-md-6 col-lg-6">
                     <div class="input-group">
-                        <input type="email" class="form-control newsletter-input" placeholder="Enter your email"
+                        <input type="email" class="form-control newsletter-input p-3" placeholder="Enter your email"
                             aria-label="Enter your email">
                         <button class="btn fw-bold newsletter-button" type="button">Subscribe Now</button>
                     </div>
@@ -193,8 +193,25 @@
     <!-- Ending footer section -->
 
     <!-- Scripts needed -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+    <script>
+        gsap.utils.toArray(".section-title").forEach((section) => {
+gsap.from(section, {
+  scale: 0.2,
+  duration: 1,
+  ease: "power2.out",
+  scrollTrigger: {
+    trigger: section,
+    start: "top 85%",
+    toggleActions: "play reverse play reverse"
+  }
+})
+});
     </script>
 </body>
 
