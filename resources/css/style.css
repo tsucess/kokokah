@@ -1825,8 +1825,18 @@ div.contact-container a{
   transition: opacity 0.3s, transform 0.3s;
   height: auto;
 }
+.fade-section-left{
+    opacity: 1;
+  transform: translateY(0px);
+  transition: opacity 0.3s, transform 0.3s;
+  height: auto;
+}
 
 .feature-item {
       opacity: 1;
       transform: translateY(50px);
+     }
+.header-text{
+font-size: 32px;
+min-height: 75px;
      }

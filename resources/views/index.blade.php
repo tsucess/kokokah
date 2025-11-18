@@ -99,13 +99,13 @@
     </div>
 
     <!-- Kokokah for All Section - White Background -->
-    <div class="container-fluid section-white section-py fade-section" >
+    <div class="container-fluid section-white section-py " >
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-12 col-md-6 col-lg-6 mb-4 mb-md-0">
+                <div class="col-12 col-md-6 col-lg-6 mb-4 mb-md-0 fade-section-left">
                     <img src="images/33d07ac37205dee5ed7d04a51aace312e634c69c.jpg" class="img-fluid" alt="Kokokah Platform" style="max-width:752px; width:100%; height:382px; border-radius : 15px; object-fit:cover;">
                 </div>
-                <div class="col-12 col-md-6 col-lg-6 ps-md-4 ps-0">
+                <div class="col-12 col-md-6 col-lg-6 ps-md-4 ps-0 fade-section">
                     <h2 class="fw-bold mb-4 section-heading">
                         Kokokah for All
                     </h2>
@@ -125,7 +125,7 @@
     <div class="container-fluid section-light-gray section-py">
         <div class="container">
             <div class="text-center mb-4 mb-md-5">
-                <h2 class="fw-bold mb-3 section-heading">
+                <h2 class="fw-bold mb-3 section-heading section-title">
                     Why Kokokah Is the Best
                 </h2>
                 <p class="section-description">
@@ -202,7 +202,7 @@
     <div class="container-fluid section-white section-py">
         <div class="container">
             <div class="text-center mb-4 mb-md-5">
-                <h2 class="fw-bold mb-3 section-heading">
+                <h2 class="fw-bold mb-3 section-heading section-title">
                     Our Products
                 </h2>
                 <p class="section-description">
@@ -398,7 +398,7 @@
             </div>
 
             <div class = "col-12 col-md-7 col-lg-7 mt-lg-5">
-                <h6>
+                <h6 class="">
                     Kokoplay
                 </h6>
                 <p>
@@ -426,7 +426,7 @@
         <!-- Section Title -->
         <div class="row justify-content-center mb-5">
             <div class="col-12 mt-5">
-                <h5 class="fw-bold achievement-title">Why People Love Kokokah</h5>
+                <h5 class="fw-bold achievement-title section-title">Why People Love Kokokah</h5>
             </div>
         </div>
 
@@ -509,7 +509,7 @@
   gsap.from(section, {          // use `from` so it starts offscreen
     opacity: 1,
     x: 100,                     // start 100px to the right
-    duration: 1.5,
+    duration: 0.4,
     ease: "power2.out",
     scrollTrigger: {
       trigger: section,
@@ -518,6 +518,18 @@
     }
   });
 });
+
+ gsap.from('.fade-section-left', {          // use `from` so it starts offscreen
+    opacity: 1,
+    x: -100,                     // start 100px to the right
+    duration: 0.4,
+    ease: "power2.out",
+    scrollTrigger: {
+      trigger: '.fade-section-left',
+      start: "top 85%",
+      toggleActions: "play reverse play reverse",
+    }
+  });
 
 
 
@@ -529,13 +541,29 @@
   },
   opacity: 0,
   y: 80,
-  duration: 0.8,
+  duration: 0.5,
   ease: "back.out(1.7)", // “pop-out” effect
   stagger: {
-    each: 0.8,       // stagger each by 0.2s
+    each: 0.5,       // stagger each by 0.2s
     from: "start"    // options: "start", "center", "end", or index
   }
 });
+
+gsap.utils.toArray(".section-title").forEach((section) => {
+gsap.from(section, {
+  scale: 1.5,
+  duration: 1,
+  ease: "power2.out",
+  scrollTrigger: {
+    trigger: section,
+    start: "top 85%",
+    toggleActions: "play reverse play reverse"
+  }
+})
+});
+
+
+
 
 
 
