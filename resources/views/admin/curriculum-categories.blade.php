@@ -21,9 +21,9 @@
 
         .modal-title {
             font-family: "Fredoka One", sans-serif;
-            color: #004A53;
             font-size: 22px;
             font-weight: 600;
+            color: white;
         }
 
         .btn-close {
@@ -168,6 +168,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            font-size: 16px;
         }
 
         .add-btn:hover {
@@ -219,8 +220,8 @@
             background-color: white;
             border: 1px solid #ddd;
             color: #666;
-            width: 36px;
-            height: 36px;
+            width: 26px;
+            height: 26px;
             border-radius: 6px;
             cursor: pointer;
             display: flex;
@@ -314,7 +315,7 @@
         <!-- Header Section -->
         <div class="header-section">
             <div class="header-text">
-                <h1>Curriculum Categories</h1>
+                <h1 class="text-white">Curriculum Categories</h1>
                 <p>Manage curriculum types (WAEC, Cambridge, IELTS, Undergraduate)</p>
             </div>
             <button class="add-btn" data-bs-toggle="modal" data-bs-target="#addCurriculumModal">
@@ -396,10 +397,10 @@
                         <h3 class="category-card-title">${cat.name}</h3>
                         <div class="category-card-actions">
                             <button class="action-btn" onclick="editCategory(${cat.id})" title="Edit">
-                                <i class="fa-solid fa-pen"></i>
+                                <i class="fa-solid fa-pen fa-xs"></i>
                             </button>
                             <button class="action-btn delete" onclick="deleteCategory(${cat.id})" title="Delete">
-                                <i class="fa-solid fa-trash"></i>
+                                <i class="fa-solid fa-trash fa-xs"></i>
                             </button>
                         </div>
                     </div>

@@ -395,12 +395,12 @@ main .container {
 .stat-card {
     background: var(--card-bg);
     border-radius: 18px;
-    padding: 14px 15px;
+    padding: 14px 12px;
     display: flex;
     align-items: center;
     box-shadow: 0 6px 18px rgba(15, 28, 36, .04);
     border: 1px solid #eef6fa;
-    gap: 18px;
+    gap: 10px;
 }
 
 @media(max-width:320px) {
@@ -447,7 +447,7 @@ main .container {
 
 
 .stat-meta .label {
-    font-size: 16px;
+    font-size: 14px;
     color: var(--muted);
     font-weight: 700;
     text-transform: uppercase;
@@ -586,6 +586,7 @@ main .container {
     border-radius: 5px;
     color: #004A53;
     height: 62px;
+    font-size: 14px;
 }
 .course-btn-active{
     border: 1px solid #004A53;
@@ -1363,9 +1364,9 @@ main .container {
 /* header section */
 .header-section {
     background-color: #FFA800;
-    border-bottom-left-radius: 60px;
-    border-bottom-right-radius: 60px;
-    padding: 0.1rem 1rem;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    padding: 0.1rem 1.5rem;
     color: #fff;
     position: relative;
     overflow: hidden;
@@ -1962,7 +1963,7 @@ main .container {
         .modal-container {
             background-color: #fff;
             border-radius: 10px;
-            padding: 20px 16px;
+            padding: 0px 20px 16px;
         }
 
         .modal-content {
@@ -1970,7 +1971,7 @@ main .container {
         }
 
         .modal-header {
-            padding: 20px;
+            padding:10px 10px 40px ;
         }
 
         .modal-title {
@@ -2032,4 +2033,5 @@ main .container {
             background-color: #fdaf22;
             padding-block: 16px;
             border: none;
+            border-radius: 10px;
         }

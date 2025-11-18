@@ -168,6 +168,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            font-size: 16px;
         }
 
         .add-btn:hover {
@@ -219,8 +220,8 @@
             background-color: white;
             border: 1px solid #ddd;
             color: #666;
-            width: 36px;
-            height: 36px;
+            width: 26px;
+            height: 26px;
             border-radius: 6px;
             cursor: pointer;
             display: flex;
@@ -314,7 +315,7 @@
         <!-- Header Section -->
         <div class="header-section">
             <div class="header-text">
-                <h1>Academic Terms</h1>
+                <h1 class="text-white">Academic Terms</h1>
                 <p>Manage academic terms (First Term, Second Term, Third Term)</p>
             </div>
             <button class="add-btn" data-bs-toggle="modal" data-bs-target="#addTermModal">
@@ -405,10 +406,10 @@
                         <h3 class="term-card-title">${term.name}</h3>
                         <div class="term-card-actions">
                             <button class="action-btn" onclick="editTerm(${term.id})" title="Edit">
-                                <i class="fa-solid fa-pen"></i>
+                                <i class="fa-solid fa-pen fa-xs"></i>
                             </button>
                             <button class="action-btn delete" onclick="deleteTerm(${term.id})" title="Delete">
-                                <i class="fa-solid fa-trash"></i>
+                                <i class="fa-solid fa-trash fa-xs"></i>
                             </button>
                         </div>
                     </div>

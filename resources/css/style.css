@@ -1124,13 +1124,111 @@ footer p {
 }
 
 /* Media queries moved to responsiveness.css */
+.hero-title-container {
+  display: inline-block;
+  max-width: 450px;
+  position: relative;
+  height: 110px;
+}
+
+.hero-title {
+  color: #004A53;
+  font-family: 'Fredoka', sans-serif;
+  margin-bottom: 24px;
+  display: block;
+  white-space: normal;
+  position: relative;
+  font-weight: 600;
+}
+
+.hero-title::after {
+  content: "";
+  position: absolute;
+  right: -2px;
+  bottom: 10px;
+  height: 30px;
+  width: 2px;
+  background-color: #004A53;
+  animation: cursor-blink 0.8s infinite;
+}
+
+@keyframes cursor-blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+/* .hero-title-container {
+  display: inline-block;
+  max-width: 450px;
+}
 
 .hero-title {
   line-height: 1.2;
   color: #000000;
   font-family: 'Fredoka', sans-serif;
   margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+  white-space: wrap;
+  display: block;
 }
+
+.hero-title::before {
+  content: "Quality";
+  animation: words 15s infinite;
+  white-space: wrap;
+  display: block;
+}
+
+.hero-title::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 0%;
+  height: 100%;
+  background-color: #FDAF22;
+  border-left: 2px solid #fff;
+  animation: typing 12s infinite, cursor 0.8s infinite;
+}
+
+@keyframes cursor {
+  50% {
+    border-color: transparent;
+  }
+}
+
+@keyframes words {
+  0%, 25% {
+    content: "Quality";
+  }
+  26%, 50% {
+    content: "Mobile-First";
+  }
+  51%, 100% {
+    content: "Curriculum Based Lessons & Practice Tests";
+  }
+}
+@keyframes typing {
+  0%, 20% {
+    width: 0%;
+  }
+  22%, 25% {
+    width: 100%;
+  }
+  27%, 45% {
+    width: 0%;
+  }
+  47%, 50% {
+    width: 100%;
+  }
+  52%, 100% {
+    width: 0%;
+  }} */
+
 
 .hero-subtitle {
   font-size: 16px;
@@ -1142,6 +1240,11 @@ footer p {
   font-size: 14px;
   color: #004A53;
   font-weight: bold;
+}
+
+.hero-img{
+  --animate-duration: 1.5s; /* optional: adjust speed */
+  animation-iteration-count: infinite !important;
 }
 
 /* ===== SECTION BACKGROUNDS ===== */
@@ -1714,3 +1817,26 @@ div.contact-container a{
 .accordion-item:last-of-type {
   border-radius: 0.5rem !important;
 }
+
+
+.fade-section {
+  opacity: 1;
+  transform: translateY(0px);
+  transition: opacity 0.3s, transform 0.3s;
+  height: auto;
+}
+.fade-section-left{
+    opacity: 1;
+  transform: translateY(0px);
+  transition: opacity 0.3s, transform 0.3s;
+  height: auto;
+}
+
+.feature-item {
+      opacity: 1;
+      transform: translateY(50px);
+     }
+.header-text{
+font-size: 32px;
+min-height: 75px;
+     }

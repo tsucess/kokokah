@@ -80,7 +80,10 @@
     <div class="container-fluid hero-section-yellow">
         <div class="row align-items-center">
             <div class="col-12 col-md-6 col-lg-6">
-                <h1 class="fw-bold hero-title">Quality, Mobile-First, Curriculum Based Lessons & Practice Tests </h1>
+               {{-- <div class="hero-title-container">
+  <span class="hero-title" id="typing-text"></span>
+</div> --}}
+  <h1 class="header-text">Welcome!</h1>
                 <p class="mb-4 hero-subtitle">
                     LOW DATA USAGE + OFFLINE ACCESS + SCHOOL MANAGEMENT SYSTEM
                 </p>
@@ -89,20 +92,20 @@
                     <a href="/register" class="btn btn-secondary-action">Signup Now</a>
                 </div>
             </div>
-            <div class="col-12 col-md-6 col-lg-6 text-center mt-4 mt-md-0 hero_img">
-                <img src="images/LMS.png" class="img-fluid" alt="LMS Illustration">
+            <div class="col-12 col-md-6 col-lg-6 mt-4 mt-md-0 hero_img text-center">
+                <img src="images/LMS.png" class="img-fluid animate__animated animate__pulse hero-img" alt="LMS Illustration" >
             </div>
         </div>
     </div>
 
     <!-- Kokokah for All Section - White Background -->
-    <div class="container-fluid section-white section-py">
+    <div class="container-fluid section-white section-py " >
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-12 col-md-6 col-lg-6 mb-4 mb-md-0">
+                <div class="col-12 col-md-6 col-lg-6 mb-4 mb-md-0 fade-section-left">
                     <img src="images/33d07ac37205dee5ed7d04a51aace312e634c69c.jpg" class="img-fluid" alt="Kokokah Platform" style="max-width:752px; width:100%; height:382px; border-radius : 15px; object-fit:cover;">
                 </div>
-                <div class="col-12 col-md-6 col-lg-6 ps-md-4 ps-0">
+                <div class="col-12 col-md-6 col-lg-6 ps-md-4 ps-0 fade-section">
                     <h2 class="fw-bold mb-4 section-heading">
                         Kokokah for All
                     </h2>
@@ -122,7 +125,7 @@
     <div class="container-fluid section-light-gray section-py">
         <div class="container">
             <div class="text-center mb-4 mb-md-5">
-                <h2 class="fw-bold mb-3 section-heading">
+                <h2 class="fw-bold mb-3 section-heading section-title">
                     Why Kokokah Is the Best
                 </h2>
                 <p class="section-description">
@@ -132,10 +135,10 @@
                 </p>
             </div>
 
-            <div class="row g-4">
+            <div class="row g-4 features">
                 <!-- Feature 1 -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="feature-card">
+                <div class="col-12 col-md-6 col-lg-4 feature-item">
+                    <div class="feature-card ">
                         <div class="mb-3">
                             <i class="fa-solid fa-download feature-card-icon"></i>
                         </div>
@@ -145,7 +148,7 @@
                 </div>
 
                 <!-- Feature 2 -->
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-md-6 col-lg-4 feature-item">
                     <div class="feature-card">
                         <div class="mb-3">
                             <i class="fa-solid fa-download feature-card-icon"></i>
@@ -157,7 +160,7 @@
                 </div>
 
                 <!-- Feature 3 -->
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-md-6 col-lg-4 feature-item">
                     <div class="feature-card">
                         <div class="mb-3">
                             <i class="fa-solid fa-download feature-card-icon"></i>
@@ -169,7 +172,7 @@
                 </div>
 
                 <!-- Feature 4 -->
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-md-6 col-lg-4 feature-item">
                     <div class="feature-card">
                         <div class="mb-3">
                             <i class="fa-solid fa-download feature-card-icon"></i>
@@ -181,7 +184,7 @@
                 </div>
 
                 <!-- Feature 5 -->
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-md-6 col-lg-4 feature-item">
                     <div class="feature-card">
                         <div class="mb-3">
                             <i class="fa-solid fa-download feature-card-icon"></i>
@@ -199,7 +202,7 @@
     <div class="container-fluid section-white section-py">
         <div class="container">
             <div class="text-center mb-4 mb-md-5">
-                <h2 class="fw-bold mb-3 section-heading">
+                <h2 class="fw-bold mb-3 section-heading section-title">
                     Our Products
                 </h2>
                 <p class="section-description">
@@ -216,10 +219,10 @@
 
 
 <div class="d-flex flex-column gap-5">
-    <div class = "container">
+    <div class = "container fade-section">
         <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-bordered-red">
-            <div class = "col col-12 col-md-7 col-lg-7 p-4 px-5 my-auto">
-                <img src="images/Group 1171274797.png" alt="" class="mb-1"/>
+            <div class = "col col-12 col-md-7 col-lg-7 p-4 px-5 my-auto d-flex flex-column gap-3">
+                <img src="images/Group 1171274797.png" alt="" style="width:200px"/>
                 <p style = "color :#004A53;">
                     Kokokah houses an exam preparatory platform
                     where African students can prepare adequately
@@ -243,16 +246,16 @@
     </div>
 
 
-    <div class = "container">
+    <div class = "container fade-section">
         <div class="row ourproduct2 product-section-orange">
             <!-- Image Section -->
             <div class="col-12 col-md-6 col-lg-6">
                 <img src="images/School Admin.png" class="img-fluid" alt="School Admin">
             </div>
             <!-- Text Section -->
-            <div class="col-12 col-md-6 col-lg-6  my-auto">
+            <div class="col-12 col-md-6 col-lg-6  my-auto d-flex flex-column gap-3">
                 <h5 class="text-white">School Management System (SMS)</h5>
-                <p class = "pe-5 text-white">
+                <p class = " text-white">
                     Simplify school administration with fee
                     tracking, digital report cards, attendance, and student
                     portals — all in one secure platform.
@@ -267,10 +270,10 @@
 
 
 
-    <div class = "container">
+    <div class = "container fade-section">
         <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-bordered-green">
-            <div class = "col-12 col-md-6 col-lg-7 p-5 my-auto">
-                <div class="d-flex align-items-end gap-1 mb-2"><img src="./images/Kokokah_Logo.png" alt="" style="width:100px; height:51px;" class="object-cover"/><h4 style = "color :#004A53;">Learning Management System</h4></div>
+            <div class = "col-12 col-md-6 col-lg-7 p-5 my-auto d-flex flex-column gap-3">
+                <div class="d-flex align-items-end gap-1"><img src="./images/Kokokah_Logo.png" alt="" style="width:100px; height:51px;" class="object-cover"/><h4 style = "color :#004A53;">Learning Management System</h4></div>
                 <p style = "color :#004A53;">
                     Your all-in-one digital classroom — structured lessons, AI-powered
                     tutoring, chatrooms, and  academic & non-academic content for secondary school.
@@ -283,7 +286,7 @@
         </div>
     </div>
 
-    <div class = "container">
+    <div class = "container fade-section">
         <div class="row ourproduct2 product-section-teal">
             <!-- Image Section -->
             <div class="col-12 col-md-6 my-auto text-center">
@@ -291,7 +294,7 @@
             </div>
 
             <!-- Text Section -->
-            <div class="col-12 col-md-6 my-auto d-flex flex-column">
+            <div class="col-12 col-md-6 my-auto d-flex flex-column gap-3">
                 <h5 class="text-white">
                     The Marketplace
                 </h5>
@@ -300,7 +303,7 @@
                     tutors to connect. Book trusted tutors for academics,
                     test prep, and special needs learning.
                 </p>
-                <div class = "mb-3">
+                <div class = "">
                     <button class = "primaryButton" type = "button">Coming Soon</button>
 
                 </div>
@@ -309,7 +312,7 @@
     </div>
 
 
-     <div class = "container">
+     <div class = "container fade-section">
         <div class="row ourproduct2 product-section-bordered" >
             <!-- Image Section -->
             <div class="col-12 col-md-6 ">
@@ -317,7 +320,7 @@
             </div>
 
             <!-- Text Section -->
-            <div class="col-12 col-md-6 my-auto d-flex flex-column">
+            <div class="col-12 col-md-6 my-auto d-flex flex-column gap-3">
                 <img src="./images/315a2f8c6c60fc789ec0066a0b5bce04b7daa28d.png" alt="" style="width:200px; height:60px;"/>
                 <p style = "color :#004A53;">
                     Get hands-on STEM bootcamps, summer schools,
@@ -325,7 +328,7 @@
                     students for the future of science & tech.
                 </p>
 
-                <div class = "mb-3">
+                <div class = "">
                     <button class = "primaryButton" type = "button">Coming soon</button>
 
                 </div>
@@ -335,11 +338,11 @@
     </div>
 
 
-    <div class = "container">
+    <div class = "container fade-section">
         {{-- <div class="row  my-4 p-2 flex-column-reverse flex-md-row m-2 ourproduct1 product-section-yellow"> --}}
         <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-yellow">
             <!-- Text Section -->
-            <div class="col-12 col-md-6 d-flex flex-column justify-content-center p-5">
+            <div class="col-12 col-md-6 d-flex flex-column justify-content-center gap-3 ps-lg-5">
                 <h5>
                     AI Chatbot
                 </h5>
@@ -360,7 +363,7 @@
         </div>
     </div>
 
-     <div class = "container">
+     <div class = "container fade-section">
         <div class="row ourproduct2 product-section-bordered" >
             <!-- Image Section -->
             <div class="col-12 col-md-6 my-auto text-center">
@@ -368,7 +371,7 @@
             </div>
 
             <!-- Text Section -->
-            <div class="col-12 col-md-6 my-auto d-flex flex-column">
+            <div class="col-12 col-md-6 my-auto d-flex flex-column gap-3">
                  <h5 style = "color :#004A53;">Kudikah</h5>
                 <p style = "color :#004A53;">
                     Get hands-on STEM bootcamps, summer schools,
@@ -395,7 +398,7 @@
             </div>
 
             <div class = "col-12 col-md-7 col-lg-7 mt-lg-5">
-                <h6>
+                <h6 class="">
                     Kokoplay
                 </h6>
                 <p>
@@ -423,7 +426,7 @@
         <!-- Section Title -->
         <div class="row justify-content-center mb-5">
             <div class="col-12 mt-5">
-                <h5 class="fw-bold achievement-title">Why People Love Kokokah</h5>
+                <h5 class="fw-bold achievement-title section-title">Why People Love Kokokah</h5>
             </div>
         </div>
 
@@ -473,11 +476,171 @@
 
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+
     <script>
+         gsap.registerPlugin(ScrollTrigger, TextPlugin);
+
+
+
+  const phrases = [
+    "Quality",
+    "Mobile-First",
+    "Curriculum Based Lessons & Practice Tests"
+  ];
+
+  const tl = gsap.timeline({ repeat: -1, repeatDelay: 0.5 });
+
+  phrases.forEach((phrase) => {
+    // Animate text to current phrase
+    tl.to(".header-text", {
+      duration: 2,
+      text: phrase,
+      ease: "none"
+    });
+
+    // Small pause on each phrase
+    tl.to({}, { duration: 1 });
+  });
+
+  gsap.utils.toArray(".fade-section").forEach((section) => {
+  gsap.from(section, {          // use `from` so it starts offscreen
+    opacity: 1,
+    x: 100,                     // start 100px to the right
+    duration: 0.4,
+    ease: "power2.out",
+    scrollTrigger: {
+      trigger: section,
+      start: "top 85%",
+      toggleActions: "play reverse play reverse",
+    }
+  });
+});
+
+ gsap.from('.fade-section-left', {          // use `from` so it starts offscreen
+    opacity: 1,
+    x: -100,                     // start 100px to the right
+    duration: 0.4,
+    ease: "power2.out",
+    scrollTrigger: {
+      trigger: '.fade-section-left',
+      start: "top 85%",
+      toggleActions: "play reverse play reverse",
+    }
+  });
+
+
+
+ gsap.from(".feature-item", {
+  scrollTrigger: {
+    trigger: ".features",
+    start: "top 80%",
+    toggleActions: "play reverse play reverse",
+  },
+  opacity: 0,
+  y: 80,
+  duration: 0.5,
+  ease: "back.out(1.7)", // “pop-out” effect
+  stagger: {
+    each: 0.5,       // stagger each by 0.2s
+    from: "start"    // options: "start", "center", "end", or index
+  }
+});
+
+gsap.utils.toArray(".section-title").forEach((section) => {
+gsap.from(section, {
+  scale: 1.5,
+  duration: 1,
+  ease: "power2.out",
+  scrollTrigger: {
+    trigger: section,
+    start: "top 85%",
+    toggleActions: "play reverse play reverse"
+  }
+})
+});
+
+
+
+
+
+
         document.addEventListener("DOMContentLoaded", function() {
             var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
             myModal.show();
         });
+
+        class AdvancedTypingAnimation {
+  constructor(elementId, words, options = {}) {
+    this.element = document.getElementById(elementId);
+    this.words = words;
+    this.options = {
+      typeSpeed: 60,
+      deleteSpeed: 40,
+      pauseTime: 1500,
+      loop: true,
+      ...options
+    };
+
+    this.currentWordIndex = 0;
+    this.currentCharIndex = 0;
+    this.isDeleting = false;
+
+    this.start();
+  }
+
+  start() {
+    this.type();
+  }
+
+  type() {
+    const currentWord = this.words[this.currentWordIndex];
+
+    if (this.isDeleting) {
+      this.currentCharIndex--;
+    } else {
+      this.currentCharIndex++;
+    }
+
+    this.element.textContent = currentWord.substring(0, this.currentCharIndex);
+
+    let speed = this.isDeleting ? this.options.deleteSpeed : this.options.typeSpeed;
+
+    if (!this.isDeleting && this.currentCharIndex === currentWord.length) {
+      speed = this.options.pauseTime;
+      this.isDeleting = true;
+    } else if (this.isDeleting && this.currentCharIndex === 1) {
+      this.isDeleting = false;
+      this.currentWordIndex++;
+
+      if (this.currentWordIndex >= this.words.length) {
+        if (this.options.loop) {
+          this.currentWordIndex = 0;
+        } else {
+          return;
+        }
+      }
+      speed = 500; // Delay before starting next word
+    }
+
+    setTimeout(() => this.type(), speed);
+  }
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+  new AdvancedTypingAnimation('typing-text', [
+    "Quality",
+    "Mobile-First",
+    "Curriculum Based Lessons & Practice Tests"
+  ], {
+    typeSpeed: 80,
+    deleteSpeed: 30,
+    pauseTime: 2000
+  });
+});
     </script>
 
 @endsection

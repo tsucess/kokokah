@@ -84,7 +84,7 @@
   }
 
   .hero_img img {
-    width: 80%;
+    width: 100%;
   }
 
   .hero-section-orange {
@@ -104,7 +104,7 @@
     /* width: 30%; */
   }
 
-  
+
 .custom-width {
   width: 45%;
 }

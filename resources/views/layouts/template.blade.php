@@ -16,6 +16,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
 
+    <!-- Animate css -->
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
     <!-- Bootstrap file -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -44,7 +51,7 @@
     <nav class="navbar navbar-expand-lg sticky-top px-md-3 px-lg-2 px-xl-5" aria-label="Fifth navbar example">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
-                <img src="{{ asset('images/Kokokah_Logo.png') }}" alt="Kokokah Logo">
+                <img src="{{ asset('images/Kokokah_Logo.png') }}" alt="Kokokah Logo" class="animate__animated animate__pulse hero-img">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample05"
                 aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
