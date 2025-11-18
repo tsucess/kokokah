@@ -218,7 +218,7 @@
 
 
 
-<div class="d-flex flex-column gap-5">
+<div class="d-flex flex-column gap-5 mx-4 mx-md-0">
     <div class = "container fade-section">
         <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-bordered-red">
             <div class = "col col-12 col-md-7 col-lg-7 p-4 px-5 my-auto d-flex flex-column gap-3">
@@ -246,7 +246,7 @@
     </div>
 
 
-    <div class = "container fade-section">
+    <div class = "container fade-section-left">
         <div class="row ourproduct2 product-section-orange">
             <!-- Image Section -->
             <div class="col-12 col-md-6 col-lg-6">
@@ -286,7 +286,7 @@
         </div>
     </div>
 
-    <div class = "container fade-section">
+    <div class = "container fade-section-left">
         <div class="row ourproduct2 product-section-teal">
             <!-- Image Section -->
             <div class="col-12 col-md-6 my-auto text-center">
@@ -338,11 +338,11 @@
     </div>
 
 
-    <div class = "container fade-section">
+    <div class = "container fade-section-left">
         {{-- <div class="row  my-4 p-2 flex-column-reverse flex-md-row m-2 ourproduct1 product-section-yellow"> --}}
         <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-yellow">
             <!-- Text Section -->
-            <div class="col-12 col-md-6 d-flex flex-column justify-content-center gap-3 ps-lg-5">
+            <div class="col-12 col-md-6 d-flex flex-column justify-content-center gap-3 ps-lg-5 pb-4 pb-lg-0">
                 <h5>
                     AI Chatbot
                 </h5>
@@ -394,7 +394,7 @@
     <div class = "container">
         <div class = "row mt-4">
             <div class = "col-12 col-md-5 col-lg-5">
-                <img src = "images/LMS.png" class = "img-fluid">
+                <img src = "images/LMS.png" class = "img-fluid animate__animated animate__pulse hero-img">
             </div>
 
             <div class = "col-12 col-md-7 col-lg-7 mt-lg-5">
@@ -412,7 +412,7 @@
                 <button class = "primaryButton mt-3" type = "button">Coming Soon</button>
 
                 <div>
-                    <img src = "images/koodies.png" class = "img-fluid  w-md-75 float-end">
+                    <img src = "images/koodies.png" class = "img-fluid  w-md-75 float-end slide-up-image">
                 </div>
             </div>
 
@@ -433,7 +433,7 @@
         <!-- Testimonials -->
         <div class="row g-5 justify-content-center">
             <!-- Testimonial 1 -->
-            <div class="col-12 col-md-6 col-lg-5 custom-width">
+            <div class="col-12 col-md-6 col-lg-5 custom-width tada-on-scroll">
                 <div class="testimonial-card position-relative p-4">
                     <i class="bi bi-quote text-success fs-2 float-start"></i><br>
                     <p class="mt-3">
@@ -447,8 +447,8 @@
             </div>
 
             <!-- Testimonial 2 -->
-            <div class="col-12 col-md-6 col-lg-5 custom-width">
-                <div class="testimonial-card position-relative p-4">
+            <div class="col-12 col-md-6 col-lg-5 custom-width ">
+                <div class="testimonial-card position-relative p-4 tada-on-scroll">
                     <i class="bi bi-quote text-success fs-2 float-start"></i><br>
                     <p class="mt-3">
                         With Kokokah, we conduct online tests, share lessons digitally, and manage
@@ -481,7 +481,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
 
     <script>
-         gsap.registerPlugin(ScrollTrigger, TextPlugin);
+    document.addEventListener("DOMContentLoaded", function() {
+            var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+            myModal.show();
+        });
+
+gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
 
 
@@ -509,7 +514,7 @@
   gsap.from(section, {          // use `from` so it starts offscreen
     opacity: 1,
     x: 100,                     // start 100px to the right
-    duration: 0.4,
+    duration: 0.2,
     ease: "power2.out",
     scrollTrigger: {
       trigger: section,
@@ -519,17 +524,19 @@
   });
 });
 
- gsap.from('.fade-section-left', {          // use `from` so it starts offscreen
+gsap.utils.toArray(".fade-section-left").forEach((section) => {
+ gsap.from(section, {          // use `from` so it starts offscreen
     opacity: 1,
     x: -100,                     // start 100px to the right
-    duration: 0.4,
+    duration: 0.2,
     ease: "power2.out",
     scrollTrigger: {
-      trigger: '.fade-section-left',
+      trigger: section,
       start: "top 85%",
       toggleActions: "play reverse play reverse",
     }
-  });
+  })
+});
 
 
 
@@ -551,7 +558,7 @@
 
 gsap.utils.toArray(".section-title").forEach((section) => {
 gsap.from(section, {
-  scale: 1.5,
+  scale: 0.2,
   duration: 1,
   ease: "power2.out",
   scrollTrigger: {
@@ -563,84 +570,52 @@ gsap.from(section, {
 });
 
 
-
-
-
-
-        document.addEventListener("DOMContentLoaded", function() {
-            var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
-            myModal.show();
-        });
-
-        class AdvancedTypingAnimation {
-  constructor(elementId, words, options = {}) {
-    this.element = document.getElementById(elementId);
-    this.words = words;
-    this.options = {
-      typeSpeed: 60,
-      deleteSpeed: 40,
-      pauseTime: 1500,
-      loop: true,
-      ...options
-    };
-
-    this.currentWordIndex = 0;
-    this.currentCharIndex = 0;
-    this.isDeleting = false;
-
-    this.start();
-  }
-
-  start() {
-    this.type();
-  }
-
-  type() {
-    const currentWord = this.words[this.currentWordIndex];
-
-    if (this.isDeleting) {
-      this.currentCharIndex--;
-    } else {
-      this.currentCharIndex++;
+gsap.utils.toArray(".tada-on-scroll").forEach((el) => {
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: el,
+      start: "top 75%",
+      toggleActions: "play reverse play reverse",
+      // markers: true
     }
-
-    this.element.textContent = currentWord.substring(0, this.currentCharIndex);
-
-    let speed = this.isDeleting ? this.options.deleteSpeed : this.options.typeSpeed;
-
-    if (!this.isDeleting && this.currentCharIndex === currentWord.length) {
-      speed = this.options.pauseTime;
-      this.isDeleting = true;
-    } else if (this.isDeleting && this.currentCharIndex === 1) {
-      this.isDeleting = false;
-      this.currentWordIndex++;
-
-      if (this.currentWordIndex >= this.words.length) {
-        if (this.options.loop) {
-          this.currentWordIndex = 0;
-        } else {
-          return;
-        }
-      }
-      speed = 500; // Delay before starting next word
-    }
-
-    setTimeout(() => this.type(), speed);
-  }
-}
-
-// Initialize
-document.addEventListener('DOMContentLoaded', function() {
-  new AdvancedTypingAnimation('typing-text', [
-    "Quality",
-    "Mobile-First",
-    "Curriculum Based Lessons & Practice Tests"
-  ], {
-    typeSpeed: 80,
-    deleteSpeed: 30,
-    pauseTime: 2000
+  })
+  .to(el, {
+    duration: 0.2,
+    scale: 0.9,
+    rotation: -3,
+    ease: "power2.out"
+  })
+  .to(el, {
+    duration: 0.2,
+    scale: 1.1,
+    rotation: 3,
+    ease: "power2.out",
+    yoyo: true,
+    repeat: 3
+  })
+  .to(el, {
+    duration: 0.2,
+    scale: 1,
+    rotation: 0,
+    ease: "power2.out"
   });
 });
+
+gsap.utils.toArray(".slide-up-image").forEach((img) => {
+  gsap.from(img, {
+    y: 300,              // start 100px below
+    opacity: 0,           // start fully transparent
+    duration: 1,        // animation duration
+    ease: "power2.out",
+    scrollTrigger: {
+      trigger: img,
+      start: "top 85%",   // when image enters the viewport
+      toggleActions: "play reverse play reverse",
+      // markers: true    // optional, for debugging
+    }
+  });
+});
+
     </script>
 
 @endsection
