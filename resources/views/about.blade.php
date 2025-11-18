@@ -194,53 +194,58 @@ We’ve gone from limited resources to limitless possibilities. From local impac
 
   <div class="row justify-content-center">
 
-    <!-- Card 3 -->
-    <div class="col-md-6 col-lg-5 shakeX-on-scroll">
-      <div class="card border-1 shadow-sm rounded-4 position-relative text-center mt-3 p-5" style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
-        <!-- Icon -->
-        <div class="position-absolute top-0 start-50 translate-middle rounded-4" style="background: #FFF9F0;">
-          <i class="fa-solid fa-graduation-cap text-warning fs-3"></i>
+  <!-- Card 3 -->
+  <div class="col-md-6 col-lg-5 d-flex shakeX-on-scroll">
+    <div class="card h-100 border-1 shadow-sm rounded-4 position-relative text-center mt-3 p-5"
+         style="border-top-right-radius:60px; border-bottom-left-radius:60px;">
 
-        </div>
-        <!-- Content -->
-        <div class="mt-3">
-          <h6>Excellence in learning</h6>
-          <p class="text-muted">
-                We align our platform to African curricula and
-                 global standards, ensuring students get the best
-                 tools to master concepts and excel in exams.
-          </p>
-        </div>
+      <!-- Icon -->
+      <div class="position-absolute top-0 start-50 translate-middle rounded-4" style="background:#FFF9F0;">
+        <i class="fa-solid fa-graduation-cap text-warning fs-3"></i>
+      </div>
+
+      <!-- Content -->
+      <div class="mt-3">
+        <h6>Excellence in learning</h6>
+        <p class="text-muted">
+          We align our platform to African curricula and
+          global standards, ensuring students get the best
+          tools to master concepts and excel in exams.
+        </p>
       </div>
     </div>
-
-    <!-- Card 4 -->
-    <div class="col-md-6 col-lg-5 shakeX-on-scroll">
-      <div class="card border-1 shadow-sm rounded-4 position-relative text-center mt-3 p-5" style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
-        <!-- Icon -->
-        <div class="position-absolute top-0 start-50 translate-middle rounded-4" style="background: #FFF9F0;">
-          <i class="fa-solid fa-shield text-warning fs-3"></i>
-
-        </div>
-        <!-- Content -->
-        <div class="mt-3">
-          <h6>Integrity & Trust</h6>
-          <p class="text-muted">
-            We protect user data, offer transparent pricing,
-            and provide safe, moderated spaces for learning.
-          </p>
-        </div>
-      </div>
-    </div>
-
   </div>
+
+  <!-- Card 4 -->
+  <div class="col-md-6 col-lg-5 d-flex shakeX-on-scroll">
+    <div class="card h-100 border-1 shadow-sm rounded-4 position-relative text-center mt-3 p-5"
+         style="border-top-right-radius:60px; border-bottom-left-radius:60px;">
+
+      <!-- Icon -->
+      <div class="position-absolute top-0 start-50 translate-middle rounded-4" style="background:#FFF9F0;">
+        <i class="fa-solid fa-shield text-warning fs-3"></i>
+      </div>
+
+      <!-- Content -->
+      <div class="mt-3">
+        <h6>Integrity & Trust</h6>
+        <p class="text-muted">
+          We protect user data, offer transparent pricing,
+          and provide safe, moderated spaces for learning.
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
 
 
   <div class="row justify-content-center">
 
     <!-- Card 5 -->
-    <div class="col-md-6 col-lg-5  mt-4 shakeX-on-scroll">
-      <div class="card border-1 shadow-sm rounded-4 position-relative text-center mt-3 p-5" style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
+    <div class="col-md-6 col-lg-5 d-flex  mt-4 shakeX-on-scroll">
+      <div class="card border-1 shadow-sm h-100 rounded-4 position-relative text-center mt-3 p-5" style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
         <!-- Icon -->
         <div class="position-absolute top-0 start-50 translate-middle rounded-4" style="background: #FFF9F0;">
           <i class="fa-solid fa-people-group text-warning fs-3"></i>
@@ -259,8 +264,8 @@ We’ve gone from limited resources to limitless possibilities. From local impac
     </div>
 
     <!-- Card 6  -->
-    <div class="col-md-6 col-lg-5 mt-4 shakeX-on-scroll">
-      <div class="card border-1 shadow-sm h-100 rounded-4 position-relative text-center mt-3 p-3" style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
+    <div class="col-md-6 col-lg-5 mt-4 d-flex shakeX-on-scroll">
+      <div class="card border-1 shadow-sm h-100 rounded-4 position-relative text-center mt-3 p-5" style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
         <!-- Icon -->
         <div class="position-absolute top-0 start-50 translate-middle rounded-4" style="background: #FFF9F0;">
           <i class="fa-solid fa-chart-line text-warning fs-3"></i>
@@ -290,13 +295,13 @@ We’ve gone from limited resources to limitless possibilities. From local impac
 
     gsap.utils.toArray(".section-title").forEach((section) => {
 gsap.from(section, {
-  scale: 0.2,
-  duration: 1,
+  scale: 0.6,
+  duration: 0.6,
   ease: "power2.out",
   scrollTrigger: {
     trigger: section,
     start: "top 85%",
-    toggleActions: "play reverse play reverse"
+    toggleActions: "play none none none"
   }
 })
 });

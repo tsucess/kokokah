@@ -20,12 +20,17 @@
   margin: 0;
   padding: 0;
 }
+body.modal-open {
+  padding-right: 0 !important;
+}
+
 
 body {
   font-family: sitka;
   font-size: 20px;
   margin: 0;
   padding: 0;
+
   box-sizing: border-box;
 }
 
@@ -1840,3 +1845,8 @@ div.contact-container a{
 font-size: 43px;
 min-height: 110px;
      }
+
+     .section-title {
+  transform-origin: center;
+}
+
