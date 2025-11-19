@@ -222,7 +222,7 @@
     <div class = "container fade-section">
         <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-bordered-red">
             <div class = "col col-12 col-md-7 col-lg-7 p-4 px-5 my-auto d-flex flex-column gap-3">
-                <img src="images/Group 1171274797.png" alt="" style="width:200px"/>
+                <img src="images/Group 1171274797.png" alt="" style="width:200px; height:auto;"/>
                 <p style = "color :#004A53;">
                     Kokokah houses an exam preparatory platform
                     where African students can prepare adequately
@@ -273,7 +273,7 @@
     <div class = "container fade-section">
         <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-bordered-green">
             <div class = "col-12 col-md-6 col-lg-7 p-5 my-auto d-flex flex-column gap-3">
-                <div class="d-flex align-items-end gap-1"><img src="./images/Kokokah_Logo.png" alt="" style="width:100px; height:51px;" class="object-cover"/><h4 style = "color :#004A53;">Learning Management System</h4></div>
+                <div class="d-flex align-items-end gap-1"><img src="./images/Kokokah_Logo.png" alt="" style="width:150px; height:auto;" class="object-cover"/><h4 style = "color :#004A53;">Learning Management System</h4></div>
                 <p style = "color :#004A53;">
                     Your all-in-one digital classroom — structured lessons, AI-powered
                     tutoring, chatrooms, and  academic & non-academic content for secondary school.

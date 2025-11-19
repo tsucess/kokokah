@@ -102,7 +102,7 @@
         <div class="container">
             <div class="row align-items-center gap-3 gap-md-0">
                 <div class="col-12 col-md-6 col-lg-6 mb-4 mb-md-0">
-                    <h2 class="newsletter-title section-title">
+                    <h2 class="newsletter-title typewriter">
                         Don't Miss Out on the Future of Learning!
                     </h2>
                     <p class="newsletter-description">
@@ -200,17 +200,36 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
     <script>
-        gsap.utils.toArray(".section-title").forEach((section) => {
-gsap.from(section, {
-  scale: 0.2,
-  duration: 1,
-  ease: "power2.out",
-  scrollTrigger: {
-    trigger: section,
-    start: "top 85%",
-    toggleActions: "play reverse play reverse"
-  }
-})
+      gsap.utils.toArray(".typewriter").forEach((el) => {
+  const text = el.textContent;
+  el.textContent = ""; // clear text to start typing
+
+  const letters = text.split("");
+
+  letters.forEach((letter) => {
+    const span = document.createElement("span");
+    span.textContent = letter;
+    span.style.opacity = 0; // hide initially
+    el.appendChild(span);
+  });
+
+  const spans = el.querySelectorAll("span");
+
+  gsap.fromTo(spans,
+    { opacity: 0 },
+    {
+      opacity: 1,
+      duration: 0.05,      // speed of typing
+      stagger: 0.05,       // delay between letters
+      ease: "none",
+      scrollTrigger: {
+        trigger: el,
+        start: "top 85%",
+        toggleActions: "play reverse play reverse",
+        // markers: true   // for debugging
+      }
+    }
+  );
 });
     </script>
 </body>
