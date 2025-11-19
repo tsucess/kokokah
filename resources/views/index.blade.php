@@ -83,7 +83,7 @@
                {{-- <div class="hero-title-container">
   <span class="hero-title" id="typing-text"></span>
 </div> --}}
-  <h1 class="header-text heroheading">Welcome!</h1>
+  <h1 class="hero_header">Welcome!</h1>
                 <p class="mb-4 hero-subtitle">
                     LOW DATA USAGE + OFFLINE ACCESS + SCHOOL MANAGEMENT SYSTEM
                 </p>
@@ -500,8 +500,8 @@ gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
   phrases.forEach((phrase) => {
     // Animate text to current phrase
-    tl.to(".header-text", {
-      duration: 2,
+    tl.to(".hero_header", {
+      duration: 1,
       text: phrase,
       ease: "none"
     });

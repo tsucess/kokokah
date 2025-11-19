@@ -2,7 +2,7 @@
 
 @section('content')
 <div class = "container-fluid p-5 banner d-flex align-items-center justify-content-center" style="background-color : #FDAF22; height:501px;">
-<h1 class = "heroheading text-center typewriter" style = "font-weight: bolder; max-width:40ch;">
+<h1 class = "hero_header text-center typewriter" style = "font-weight: bolder; max-width:40ch;">
 Kokokah is Africa’s Leading Digital Learning and Management Platform for Secondary Schools
 </h1>
 </div>
