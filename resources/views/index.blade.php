@@ -7,14 +7,14 @@
         data-bs-backdrop="false">
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
-                <div class="modal-header pb-0">
+                <div class="modal-header pb-3 px-4 pt-4">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="width:1rem; height:1rem; background-size:1rem;"></button>
                 </div>
                 <div class="modal-body pt-0 pb-lg-0">
-                    <div class=" row">
+                    <div class="row">
                         <div class="d-flex justify-content-center justify-content-md-end col col-12 col-lg-5"><img src="./images/Group_20-removebg-preview.png"
                                 alt="" style="width: 300px; height:150px;"></div>
-                        <div class="d-flex flex-column gap-1  align-items-center col col-12 col-lg-7">
+                        <div class="d-flex flex-column gap-1 align-items-center justify-content-center col col-12 col-lg-7">
 
                             <h2 class="title text-center"><span>Hey Champion.</span> Ready to pass smarter and better?</h2>
                             <div class="d-flex align-items-center gap-1">
@@ -48,7 +48,7 @@
                                         <input type="email" name="" id="" class="modal-form-input">
                                     </div>
                                 </div>
-                                <div class="d-flex flex-column gap-3">
+                                <div class="d-flex flex-column gap-3 mb-lg-3">
                                     <button class="align-self-center form-btn">Join Kokokah & Start Learning Now</button>
                                     <div class="d-flex gap-4 align-items-center justify-content-center">
                                         <div class="d-flex align-items-center justify-content-center icon-container"><i
@@ -220,8 +220,8 @@
 
 <div class="d-flex flex-column gap-5 mx-4 mx-md-0">
     <div class = "container fade-section">
-        <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-bordered-red">
-            <div class = "col col-12 col-md-7 col-lg-7 p-4 px-5 my-auto d-flex flex-column gap-3">
+        <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-bordered-red p-3 p-md-5">
+            <div class = "col col-12 col-md-7 col-lg-7  my-auto d-flex flex-column gap-3">
                 <img src="images/Group 1171274797.png" alt="" style="width:200px; height:auto;"/>
                 <p style = "color :#004A53;">
                     Kokokah houses an exam preparatory platform
@@ -239,7 +239,7 @@
 
 
             <div class="col col-12 col-md-5 col-lg-5 d-flex align-items-lg-center justify-content-lg-center">
-                <img src="images/exam_prep.png" class="img-fluid w-100 w-lg-100 " alt="Exam Prep">
+                <img src="images/exam_prep.png" class="img-fluid w-100 w-lg-100 " alt="Exam Prep" style="height: auto; object-fit: auto;">
             </div>
 
         </div>
@@ -254,7 +254,7 @@
             </div>
             <!-- Text Section -->
             <div class="col-12 col-md-6 col-lg-6  my-auto d-flex flex-column gap-3">
-                <h5 class="text-white">School Management System (SMS)</h5>
+                <h4 class="text-white">School Management System (SMS)</h4>
                 <p class = " text-white">
                     Simplify school administration with fee
                     tracking, digital report cards, attendance, and student
@@ -272,15 +272,15 @@
 
     <div class = "container fade-section">
         <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-bordered-green">
-            <div class = "col-12 col-md-6 col-lg-7 p-5 my-auto d-flex flex-column gap-3">
-                <div class="d-flex align-items-end gap-1"><img src="./images/Kokokah_Logo.png" alt="" style="width:150px; height:auto;" class="object-cover"/><h4 style = "color :#004A53;">Learning Management System</h4></div>
+            <div class = "col-12 col-md-7 col-lg-7 p-4 p-lg-5 my-auto d-flex flex-column gap-3">
+                <div class="d-flex flex-column flex-md-row align-items-start align-items-md-end gap-2"><img src="./images/Kokokah_Logo.png" alt="" style="width:200px; height:auto;" class="object-cover"/><h4 style = "color :#004A53;">Learning Management System</h4></div>
                 <p style = "color :#004A53;">
                     Your all-in-one digital classroom — structured lessons, AI-powered
                     tutoring, chatrooms, and  academic & non-academic content for secondary school.
                 </p>
                 <button class = "primaryButton" type = "button">Coming soon</button>
             </div>
-            <div class="col-12 col-md-5 text-center">
+            <div class="col-12 col-md-5 text-center p-0">
                 <img src="images/lms system.png" class="img-fluid w-100 w-md-75 h-100" alt="Exam Prep">
             </div>
         </div>
@@ -295,9 +295,9 @@
 
             <!-- Text Section -->
             <div class="col-12 col-md-6 my-auto d-flex flex-column gap-3">
-                <h5 class="text-white">
+                <h4 class="text-white">
                     The Marketplace
-                </h5>
+                </h4>
                 <p class="text-white">
                     Africa’s academic forum for parents, teachers, and
                     tutors to connect. Book trusted tutors for academics,
@@ -342,10 +342,10 @@
         {{-- <div class="row  my-4 p-2 flex-column-reverse flex-md-row m-2 ourproduct1 product-section-yellow"> --}}
         <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-yellow">
             <!-- Text Section -->
-            <div class="col-12 col-md-6 d-flex flex-column justify-content-center gap-3 ps-lg-5 pb-4 pb-lg-0">
-                <h5>
+            <div class="col-12 col-md-6 d-flex flex-column justify-content-center gap-3 p-4 ps-lg-5 pb-4 pb-lg-0">
+                <h4>
                     AI Chatbot
-                </h5>
+                </h4>
                 <p>
                     Your personal academic assistant — ask questions, get explanations,
                     and enjoy instant feedback tailored to your study needs.
@@ -372,7 +372,7 @@
 
             <!-- Text Section -->
             <div class="col-12 col-md-6 my-auto d-flex flex-column gap-3">
-                 <h5 style = "color :#004A53;">Kudikah</h5>
+                 <h4 style = "color :#004A53;">Kudikah</h4>
                 <p style = "color :#004A53;">
                     Get hands-on STEM bootcamps, summer schools,
                     and practical learning experiences to prepare
@@ -397,10 +397,10 @@
                 <img src = "images/LMS.png" class = "img-fluid animate__animated animate__pulse hero-img">
             </div>
 
-            <div class = "col-12 col-md-7 col-lg-7 mt-lg-5">
-                <h6 class="">
+            <div class = "col-12 col-md-7 col-lg-7 mt-lg-5 d-flex flex-column gap-3">
+                <h3 class="" style="color :#004A53;">
                     Kokoplay
-                </h6>
+                </h3>
                 <p>
                     Kokokah combines School Management, Exam Prep, and a
                     Learning Management System (LMS)—helping schools automate admin tasks,
@@ -409,7 +409,7 @@
                     Learning Management System (LMS)—helping schools automate admin tasks, boost
                     student performance, and deliver modern digital learning in one seamless platform.
                 </p>
-                <button class = "primaryButton mt-3" type = "button">Coming Soon</button>
+                <button class = "primaryButton" type = "button">Coming Soon</button>
 
                 <div>
                     <img src = "images/koodies.png" class = "img-fluid  w-md-75 float-end slide-up-image">
@@ -610,7 +610,7 @@ gsap.utils.toArray(".slide-up-image").forEach((img) => {
     scrollTrigger: {
       trigger: img,
       start: "top 85%",   // when image enters the viewport
-      toggleActions: "play reverse play reverse",
+      toggleActions: "play none none none",
       // markers: true    // optional, for debugging
     }
   });

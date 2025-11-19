@@ -67,13 +67,18 @@ h6 {
   color: #000F11;
   font-size: 16px;
   font-weight: 600;
-  width: 275px;
+  max-width: 275px;
+  width: 100%;
   border: none;
 }
 
 .greenBtn {
   background-color: #004A53;
   color: white;
+}
+
+h1, h2, h3, h4, h5, h6, p{
+    margin-bottom: 0;
 }
 
 /* Typography styles moved to Tailwind - see resources/css/app.css */
@@ -487,7 +492,7 @@ margin: 10px;
 
 .ourproduct2 {
   border-radius: 30px;
-  padding: 1.5rem;
+  padding: 1rem;
 }
 
 .pricingcolor {
@@ -1572,9 +1577,7 @@ footer p {
 @media screen and (max-width: 1000px) {
   .modal-dialog {
     max-width: 100%;
-    /* full width */
     margin: 20px;
-    /* remove side margins */
   }
 }
 
