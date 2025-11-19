@@ -374,7 +374,7 @@ p {
 
 /* H1 Headers - Responsive sizing (Mobile First) */
 h1 {
-  font-size: clamp(24px, 5vw, 56px);
+  font-size: clamp(24px, 5vw, 38px);
 }
 
 /* H2 Headers - Responsive sizing (Mobile First) */
