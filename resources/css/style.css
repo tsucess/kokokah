@@ -1876,6 +1876,8 @@ div.contact-container a {
 }
  .beta-overlay-container {
         background-color: rgba(0, 74, 83, 0.9);
+        height: 100%;
+        overflow-y: scroll;
       }
       .beta-dialog-container {
         border-radius: 24px;
@@ -1885,8 +1887,8 @@ div.contact-container a {
         background-color: transparent;
         max-width: 600px;
         margin-inline: auto;
-        overflow-y: scroll;
-        max-height: 90vh;
+
+        height: auto;
       }
       .beta-content-container {
         padding-inline: 24px;
