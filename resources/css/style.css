@@ -1870,3 +1870,90 @@ div.contact-container a {
 .hero_img_container img {
         width: 80%;
     }
+
+.form-label{
+    margin-bottom: 0;
+}
+ .beta-overlay-container {
+        background-color: rgba(0, 74, 83, 0.9);
+      }
+      .beta-dialog-container {
+        border-radius: 24px;
+        border: 1px solid #ffffff33;
+        box-shadow: 0 0 0 1px #ffffff0d, 0 25px 50px -12px #00000040;
+        backdrop-filter: blur(20px);
+        background-color: transparent;
+        max-width: 600px;
+        margin-inline: auto;
+        overflow-y: scroll;
+        max-height: 90vh;
+      }
+      .beta-content-container {
+        padding-inline: 24px;
+        padding-top: 24px;
+      }
+      .beta-overlay-line {
+        width: 96px;
+        height: 4px;
+        border-radius: 2px;
+        background-color: #ffffff66;
+      }
+      .beta-modal-title {
+        font-size: 24.2px;
+        font-weight: 700;
+        color: #ffffff;
+        line-height: 36px;
+      }
+      .beta-modal-text {
+        font-size: 12px;
+        color: #ffffffcc;
+      }
+      .beta-form-container {
+        padding-inline: 24px;
+        padding-bottom: 24px;
+        gap: 16px;
+      }
+      .beta-form-input-container {
+        gap: 8px;
+        display: flex;
+        flex-direction: column;
+      }
+      .beta-form-label {
+        font-size: 12px;
+        color: #ffffffcc;
+        line-height: 21px;
+      }
+      .beta-form-input {
+        border: 1px solid #ffbf4db2;
+        color: #ffffff80;
+        border-radius: 12px;
+        padding: 13px 17px;
+        box-shadow: 0 0 0 3px #4f46e51a;
+        font-size: 12px;
+        background-color: #ffffff1a;
+      }
+      .beta-border-white {
+        border: 1px solid #FFFFFF33;
+      }
+      .beta-form-divider {
+        background-color: #ffffff1a;
+        height: 1px;
+        width: 100%;
+      }
+      .beta-join-btn {
+        background-color: #ffbf4d;
+        padding: 13px 25px;
+        border-radius: 16px;
+        color: #1a1a2e;
+        font-size: 15.4px;
+        font-weight: 700;
+        border: 1px solid #ffffff33;
+      }
+      .beta-close-btn {
+        border-radius: 16px;
+        padding: 12px 16px;
+        background-color: transparent;
+        font-size: 14.6px;
+        color: #ffffffcc;
+        border: none;
+      }
