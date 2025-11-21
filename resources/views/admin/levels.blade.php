@@ -54,7 +54,7 @@
         .form-control {
             border: 1.5px solid #004A53;
             border-radius: 8px;
-            padding: 12px 16px;
+            padding: 16px !important;
             font-size: 14px;
             color: #333;
             transition: all 0.3s ease;
@@ -349,8 +349,8 @@
                             <input type="text" class="form-control" id="levelName" placeholder="e.g., JS1" required>
                         </div>
                         <div class="form-group">
-                            <label for="levelDescription" class="form-label">Description</label>
-                            <input type="text" class="form-control" id="levelDescription" placeholder="e.g., Junior Secondary 1">
+                            <label for="levelType" class="form-label">Level Type</label>
+                            <input type="text" class="form-control" id="levelType" placeholder="e.g., Junior Secondary 1">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -424,7 +424,7 @@
         document.getElementById('levelForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const name = document.getElementById('levelName').value;
-            const description = document.getElementById('levelDescription').value;
+            const description = document.getElementById('levelType').value;
 
             if (currentEditId) {
                 const level = levels.find(l => l.id === currentEditId);
@@ -452,7 +452,7 @@
             if (level) {
                 currentEditId = id;
                 document.getElementById('levelName').value = level.name;
-                document.getElementById('levelDescription').value = level.description;
+                document.getElementById('levelType').value = level.description;
                 document.getElementById('modalTitle').textContent = 'Edit Level';
                 new bootstrap.Modal(document.getElementById('addLevelModal')).show();
             }
