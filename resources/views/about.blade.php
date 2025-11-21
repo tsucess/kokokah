@@ -12,7 +12,7 @@
         <div class = "row mt-4 bg-white">
             <div class = "col-12 col-md-6 col-lg-6 my-auto fade-section-left">
                 <img src = "images/577d4af220704c24ce21f8c1dcc8966b836fa580.jpg" class = "img-fluid w-100 "
-                    style="height:auto; max-height:382px; border-radius:16px; object-attachment:center;">
+                    style="height:auto; max-height:332px; border-radius:16px;">
             </div>
 
 
@@ -78,7 +78,7 @@
             </div>
 
 
-            <div class = "col-12 col-md-6 col-lg-6 mt-4 my-auto fade-section-left">
+            <div class = "col-12 col-md-6 col-lg-6 mt-4 my-auto fade-section">
                 <img src = "images/c862c3d4125719cc339915f430e0b2bfa58a8971.png" class = "img-fluid"
                     style="height:540px; border-radius:16px;">
             </div>
@@ -95,11 +95,11 @@
             <div class = "row mt-4 ">
 
                 <div class ="mb-3 justify-content-center">
-                    <h4 class = "fw-bold text-center text-white section-title">Our Story</h4>
+                    <h3 class = "fw-bold text-center text-white section-title">Our Story</h3>
                 </div>
 
                 <div class = "col-12 col-md-6 col-lg-6 my-auto">
-                    <img src = "images/our_story_img.jpg" class = "img-fluid"
+                    <img src = "images/our_story_img.jpg" class = "img-fluid animate__animated animate__pulse hero-img"
                         style="max-height:640px; height:auto; width:100%; display:block; border-radius:20px;">
                 </div>
 
@@ -144,7 +144,7 @@
 
 
         <div class="d-flex flex-column justify-content-center gap-3">
-            <h4 class = "text-center section-title" style="color:#004A53; font-size:32px;">Our Core Values</h4>
+            <h3 class = "text-center section-title" style="color:#004A53;">Our Core Values</h3>
             <p class = "text-center pe-5">
                 Learning should be accessible, engaging, and
                 empowering for every student. These values guide

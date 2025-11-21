@@ -91,7 +91,7 @@
                 </p>
                 <div class="d-flex flex-column flex-sm-row gap-3">
                     <a href="/login" class="btn btn-primary-action">Start Using Kokokah</a>
-                    <a href="/register" class="btn btn-secondary-action">Signup Now</a>
+                    <a href="/register" class=" btn btn-secondary-action">Signup Now</a>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-6 mt-5  mt-md-0 hero_img_container  text-center">
