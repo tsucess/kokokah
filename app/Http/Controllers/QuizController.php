@@ -351,7 +351,7 @@ class QuizController extends Controller
 
             // Prepare questions for attempt
             $questions = $quiz->questions->map(function ($question) {
-                return [
+                return [  
                     'id' => $question->id,
                     'question_text' => $question->question_text,
                     'type' => $question->type,

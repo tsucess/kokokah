@@ -30,9 +30,6 @@
     font-size: 20px;
   }
 
-  .heroheading {
-    font-size: 18px;
-  }
 
   .off {
     display: block;
@@ -51,6 +48,10 @@
 
 @media (min-width: 768px) {
 
+  .hero_header {
+    font-size: 1.8rem;
+    height: 70px;
+  }
 
   .hero-title {
     font-size: 1.5rem;
@@ -105,16 +106,17 @@
   }
 
 
-.custom-width {
-  width: 45%;
-}
-.product-button {
-  width: 70%;
-}
+  .custom-width {
+    width: 45%;
+  }
 
-.product-button-yellow {
-  width: 70%;
-}
+  .product-button {
+    width: 70%;
+  }
+
+  .product-button-yellow {
+    width: 70%;
+  }
 
 }
 
@@ -269,12 +271,12 @@
   }
 
   .product-button {
-  width: 60%;
-}
+    width: 60%;
+  }
 
-.product-button-yellow {
-  width: 60%;
-}
+  .product-button-yellow {
+    width: 60%;
+  }
 }
 
 /* ===== EXTRA LARGE DESKTOP BREAKPOINTS (min-width: 1440px) ===== */
@@ -296,34 +298,34 @@
     padding: 1rem;
   }
 
- h1 {
-  font-size: clamp(1.75rem, 5vw, 3rem);
-}
+  h1 {
+    font-size: clamp(1.75rem, 5vw, 3rem);
+  }
 
-h2 {
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
-}
+  h2 {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+  }
 
-h3 {
-  font-size: clamp(1.25rem, 3vw, 2rem);
-}
+  h3 {
+    font-size: clamp(1.25rem, 3vw, 2rem);
+  }
 
-h4 {
-  font-size: clamp(1.125rem, 2.5vw, 1.75rem);
-}
+  h4 {
+    font-size: clamp(1.125rem, 2.5vw, 1.75rem);
+  }
 
-h5 {
-  font-size: clamp(1rem, 2vw, 1.5rem);
-}
+  h5 {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+  }
 
-h6 {
-  font-size: clamp(0.875rem, 1.5vw, 1.25rem);
-}
+  h6 {
+    font-size: clamp(0.875rem, 1.5vw, 1.25rem);
+  }
 
-p {
-  font-size: clamp(0.875rem, 1.2vw, 1.125rem);
-  line-height: 1.6;
-}
+  p {
+    font-size: clamp(0.875rem, 1.2vw, 1.125rem);
+    line-height: 1.6;
+  }
 
 
 
