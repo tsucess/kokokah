@@ -423,7 +423,7 @@
                 <button class = "primaryButton" type = "button">Coming Soon</button>
 
                 <div>
-                    <img src = "images/koodies.png" class = "img-fluid  w-md-75 float-end slide-up-image">
+                    <img src = "images/koodies.png" style="margin-top: -100px" class = "img-fluid w-100 w-md-50 h-auto float-end slide-up-image">
                 </div>
             </div>
 

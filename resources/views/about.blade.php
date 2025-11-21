@@ -41,7 +41,7 @@
         <div class = "row">
 
             <div class = "col-12 col-md-6 col-lg-6 my-auto fade-section-left">
-                <h4 class = "mb-3" style="color:#004A53; font-size:32px;">
+                <h4 class = "mb-3" style="color:#004A53;">
                     Our Mission & Vision
                 </h4>
 
@@ -160,7 +160,7 @@
 
             <!-- Card 1 -->
             <div class="col-md-6 mb-4 col-lg-5 shakeX-on-scroll">
-                <div class="card border-1 shadow-sm  rounded-4 position-relative text-center mt-3 p-5"
+                <div class="card h-100 border-1 shadow-sm  rounded-4 position-relative text-center mt-3 p-5"
                     style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
                     <!-- Icon -->
                     <div class="position-absolute top-0 start-50 translate-middle rounded-4 " style="background: #FFF9F0;">
@@ -181,7 +181,7 @@
 
             <!-- Card 2 -->
             <div class="col-md-6 mb-4 col-lg-5 shakeX-on-scroll">
-                <div class="card border-1 shadow-sm  rounded-4 position-relative text-center mt-3 p-5"
+                <div class="card h-100 border-1 shadow-sm  rounded-4 position-relative text-center mt-3 p-5"
                     style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
                     <!-- Icon -->
                     <div class="position-absolute top-0 start-50 translate-middle rounded-4" style="background: #FFF9F0;">
