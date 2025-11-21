@@ -51,7 +51,7 @@
 
     <div class="row g-4">
       <div class="col-md-6">
-        <div class="achievement-card">
+        <div class="achievement-card h-100">
           <div class="d-flex align-items-start gap-2">
             <div class=" achievement-card-dot flex-shrink-0"></div>
             <p class="mb-0 achievement-card-text">Over 50,000 hours of lessons delivered across Africa</p>
@@ -60,7 +60,7 @@
       </div>
 
       <div class="col-md-6">
-        <div class="achievement-card">
+        <div class="achievement-card h-100">
           <div class="d-flex align-items-start gap-2">
             <div class=" achievement-card-dot flex-shrink-0"></div>
             <p class="mb-0 achievement-card-text">5000+ secondary students have excelled in exams with Kokokah</p>
@@ -69,7 +69,7 @@
       </div>
 
       <div class="col-md-6">
-        <div class="achievement-card">
+        <div class="achievement-card h-100">
           <div class="d-flex align-items-start gap-2">
             <div class=" achievement-card-dot flex-shrink-0"></div>
             <p class="mb-0 achievement-card-text">Over 650 educators empowered with digital teaching resources</p>
@@ -78,7 +78,7 @@
       </div>
 
       <div class="col-md-6">
-        <div class="achievement-card">
+        <div class="achievement-card h-100">
           <div class="d-flex align-items-start gap-2">
             <div class=" achievement-card-dot flex-shrink-0"></div>
             <p class="mb-0 achievement-card-text">24/7 study time and practice. No restrictions</p>
@@ -87,7 +87,7 @@
       </div>
 
       <div class="col-md-6">
-        <div class="achievement-card">
+        <div class="achievement-card h-100">
           <div class="d-flex align-items-start gap-2">
             <div class=" achievement-card-dot flex-shrink-0"></div>
             <p class="mb-0 achievement-card-text">95% of Users Report Faster Payments and smoother learning experiences with our integrated wallet system.</p>
@@ -96,7 +96,7 @@
       </div>
 
       <div class="col-md-6">
-        <div class="achievement-card">
+        <div class="achievement-card h-100">
           <div class="d-flex align-items-start gap-2">
             <div class=" achievement-card-dot flex-shrink-0"></div>
             <p class="mb-0 achievement-card-text">Scalable for Growth: Expand easily as your school adds new campuses or students. Best growing Pan-African learning community</p>
@@ -125,12 +125,12 @@
                     <div class="d-flex justify-content-center align-items-center large-card-icon-container">
                         <img src="./images/crown-icon.png" alt="">
                     </div>
-                    <div class="d-flex flex-column gap-2">
+                    <div class="d-flex flex-column gap-2 flex-grow-1">
                         <div class="d-flex flex-column gap-1">
                             <h5 class="large-card-title">Kokokah Chat Room</h5>
                             <div class="large-card-text"><p>Learning and growth don’t happen in isolation. Our chat room is a community where students, teachers, parents and guardians across Africa discuss topics, share knowledge, and interact all within a safe, moderated digital space.</p></div>
                         </div>
-                        <button class="large-card-btn w-100">Start a Conversation</button>
+                        <button class="large-card-btn w-100 mt-auto">Start a Conversation</button>
                     </div>
             </div>
         </div>
@@ -141,7 +141,7 @@
             <div class="d-flex justify-content-center align-items-center large-card-icon-container">
                 <img src="./images/award-icon.png" alt="">
             </div>
-            <div class="d-flex flex-column gap-2">
+            <div class="d-flex flex-column gap-2 flex-grow-1">
                 <div class="d-flex flex-column gap-1">
                     <h5 class="large-card-title">Kokokah Chat Room</h5>
                     <div class="d-flex flex-column"><p class="large-card-text mb-0">We deliver up-to-date content across all major subjects, aligned with your class group and school’s curriculum. Teachers gain ready access to comprehensive lesson notes, while students benefit from structured study guides organized by topics — making teaching seamless and exam preparation more effective.</p>
@@ -152,7 +152,7 @@
                         <li>General</li></ul>
                     </div>
                 </div>
-                <button class="large-card-btn w-100">Start a Conversation</button>
+                <button class="large-card-btn w-100 mt-auto">Start a Conversation</button>
             </div>
         </div>
       </div>
@@ -166,7 +166,7 @@
             <div class="d-flex justify-content-center align-items-center large-card-icon-container">
                 <img src="./images/face-icon.png" alt="">
             </div>
-            <div class="d-flex flex-column gap-2">
+            <div class="d-flex flex-column gap-2 flex-grow-1">
                 <div class="d-flex flex-column gap-1">
                     <h5 class="large-card-title">Non-Academic Content</h5>
                     <div class="d-flex flex-column"><p class="large-card-text">Because real success goes beyond exams, our LMS also offers practical skills that prepare students for life after school.</p>
@@ -174,7 +174,7 @@
                         <li>Technical Skills</li>
                         <li>Soft Skills</li></ul></div>
                 </div>
-                <button class="large-card-btn w-100">Start a Conversation</button>
+                <button class="large-card-btn w-100 mt-auto">Start a Conversation</button>
             </div>
         </div>
       </div>
@@ -184,7 +184,7 @@
         <div class="d-flex flex-column large-card h-100">
             <div class="d-flex justify-content-center align-items-center large-card-icon-container">
                 <img src="./images/speed-icon.png" alt=""></div>
-            <div class="d-flex flex-column gap-2">
+            <div class="d-flex flex-column gap-2 flex-grow-1">
                 <div class="d-flex flex-column gap-1">
                     <h5 class="large-card-title">AI-Powered Academic Assistant</h5>
                     <div ><p class="large-card-text mb-0">Our built-in AI tutor works like your personal academic ChatGPT. It explains tough concepts, answers questions, and supports both independent study and classroom teaching — anytime, anywhere.
@@ -192,7 +192,7 @@
 
                     </div>
                 </div>
-                <button class="large-card-btn w-100">Start a Conversation</button>
+                <button class="large-card-btn w-100 mt-auto">Start a Conversation</button>
             </div>
         </div>
       </div>
@@ -206,7 +206,7 @@
         <div class="d-flex flex-column large-card h-100">
             <div class="d-flex justify-content-center align-items-center large-card-icon-container">
                 <img src="./images/face-icon.png" alt=""></div>
-            <div class="d-flex flex-column gap-2">
+            <div class="d-flex flex-column gap-2 flex-grow-1">
                 <div class="d-flex flex-column gap-1">
                     <h5 class="large-card-title">Virtual Wallet Integration</h5>
                     <div class="d-flex flex-column"><p class="large-card-text mb-0">Your money, your way — all within Kokokah.</p>
@@ -216,7 +216,7 @@
                     <li>Withdrawals: Need your funds back? You can withdraw according to our platform’s simple, transparent directives.</li></ul>
                 <p class="large-card-text"> Parents can preload wallets for their kids, making payments easier and teaching financial responsibility.</p></div>
                 </div>
-                <button class="large-card-btn w-100">Start a Conversation</button>
+                <button class="large-card-btn w-100 mt-auto">Start a Conversation</button>
             </div>
         </div>
       </div>
