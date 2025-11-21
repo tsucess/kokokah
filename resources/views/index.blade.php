@@ -412,7 +412,7 @@
                 <button class = "primaryButton" type = "button">Coming Soon</button>
 
                 <div>
-                    <img src = "images/koodies.png" class = "img-fluid  w-md-75 float-end slide-up-image">
+                    <img src = "images/koodies.png" style="margin-top: -100px" class = "img-fluid w-100 w-md-50 h-auto float-end slide-up-image">
                 </div>
             </div>
 
@@ -447,8 +447,8 @@
             </div>
 
             <!-- Testimonial 2 -->
-            <div class="col-12 col-md-6 col-lg-5 custom-width ">
-                <div class="testimonial-card position-relative p-4 tada-on-scroll">
+            <div class="col-12 col-md-6 col-lg-5 custom-width tada-on-scroll">
+                <div class="testimonial-card position-relative p-4 ">
                     <i class="bi bi-quote text-success fs-2 float-start"></i><br>
                     <p class="mt-3">
                         With Kokokah, we conduct online tests, share lessons digitally, and manage

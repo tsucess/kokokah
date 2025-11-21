@@ -54,7 +54,6 @@ h1 {
 }
 
 h6 {
-  font-size: 24px;
   color: #004A53;
   font-weight: 600;
 }
@@ -1144,7 +1143,7 @@ footer p {
 }
 
 /* Media queries moved to responsiveness.css */
-.hero-title-container {
+/* .hero-title-container {
   display: inline-block;
   max-width: 450px;
   position: relative;
@@ -1183,7 +1182,7 @@ footer p {
   100% {
     opacity: 0;
   }
-}
+} */
 
 /* .hero-title-container {
   display: inline-block;
@@ -1384,7 +1383,7 @@ footer p {
 .large-card-title {
   color: #004A53;
   font-weight: 700;
-  font-size: 24px;
+  /* font-size: 22px; */
 }
 
 .large-card-text {
@@ -1401,10 +1400,8 @@ footer p {
   border-radius: 8px;
   font-size: 14px;
   font-weight: 700;
-  padding: 12px 20px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  padding: 12px 30px;
+  width: auto;
 }
 
 .btn-primary-action:hover {
@@ -1419,10 +1416,8 @@ footer p {
   border-radius: 8px;
   font-size: 14px;
   font-weight: 700;
-  padding: 12px 20px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  padding: 12px 40px;
+  width: auto;
 
 }
 
