@@ -1,4 +1,4 @@
-@extends('admin.dashboardtemp')
+@extends('layouts.dashboardtemp')
 
 @section('content')
 <main>
@@ -121,8 +121,6 @@
                 </ul>
                 </nav>
             </div>
-
-
             <div>
                 <nav aria-label="Page navigation example">
                 <ul class="pagination">
