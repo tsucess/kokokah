@@ -707,7 +707,38 @@
                     <h5>Curriculum</h5>
                     <p>Manage course topics and lessons</p>
                 </div>
-                <button type="button" class="btn btn-add-topic">
+
+                {{-- add new topic modal --}}
+                <div class="modal fade" id="addNewTopicModal" data-bs-keyboard="false" tabindex="-1"
+                    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content border-0 modal-container">
+                            <div class="modal-header border-0 d-flex justify-content-between align-items-center">
+                                <h1 class="modal-title" id="staticBackdropLabel">Add Topic</h1>
+                                <button type="button" class="modal-header-btn" data-bs-dismiss="modal"
+                                    aria-label="Close">
+                                    <i class="fa-solid fa-circle-xmark"></i>
+                                </button>
+                            </div>
+                            <form class="modal-form-container">
+                                <div class="modal-form">
+                                    <div class="modal-form-input-border">
+                                        <label for="" class="modal-label">Title</label>
+                                        <input class="modal-input" type="text" placeholder="Enter Title" />
+                                    </div>
+                                    <div class="modal-form-input-border">
+                                        <label for="" class="modal-label">Topic Description</label>
+                                        <textarea name="" id="" class="modal-input"></textarea>
+                                    </div>
+                                </div>
+                                <button class="modal-form-btn">Save</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-add-topic" data-bs-toggle="modal"
+                    data-bs-target="#addNewTopicModal">
                     <i class="fa-solid fa-plus me-2"></i> Add New Topic
                 </button>
             </div>
@@ -753,7 +784,7 @@
 
             {{-- add lesson modal --}}
 
-            <div class="modal fade" id="staticBackdrop" data-bs-keyboard="false" tabindex="-1"
+            <div class="modal fade" id="addLessonModal" data-bs-keyboard="false" tabindex="-1"
                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content border-0 modal-container">
@@ -878,7 +909,7 @@
                 </div>
             </div>
 
-            <button type="button" class="btn btn-add-lesson" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <button type="button" class="btn btn-add-lesson" data-bs-toggle="modal" data-bs-target="#addLessonModal">
                 <i class="fa-solid fa-plus me-2"></i> Add Lesson
             </button>
 
