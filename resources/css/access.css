@@ -418,8 +418,7 @@ a {
 
 .alert-success .btn-close {
   color: #155724 !important;
-  border-radius: 50%;
-  border: solid 1px #155724;
+  font-size: 0.9rem;
 }
 
 /* Danger Alert */
@@ -432,10 +431,10 @@ a {
 
 .alert-danger .btn-close {
   color: #721c24 !important;
-  border-radius: 50%;
+  /* border-radius: 50%; */
   height: 0.75rem;
   width: 0.75rem;
-  border: solid 1px #721c24;
+  /* border: solid 1px #721c24; */
 }
 
 /* Warning Alert */
