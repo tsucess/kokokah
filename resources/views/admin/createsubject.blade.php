@@ -243,6 +243,10 @@
             background-color: #f0f8f9;
         }
 
+        .accordion-button::before {
+            display: none;
+        }
+
         /* ===== Mobile Responsiveness ===== */
         @media (max-width: 768px) {
             .subject-header {
@@ -560,6 +564,129 @@
                     flex-wrap: wrap;
                 }
 
+                .modal-backdrop.show {
+                    background-color: #004a53 !important;
+                }
+
+                .modal-dialog {
+                    max-width: 600px;
+                    margin: auto;
+                }
+
+                .modal-container {
+                    background-color: #fff;
+                    border-radius: 10px;
+                    padding: 20px 16px;
+                }
+
+                .modal-content {
+                    border: none;
+                }
+
+                .modal-header {
+                    padding: 20px;
+                }
+
+                .modal-title {
+                    font-family: "Fredoka", sans-serif;
+                    color: #000;
+                    font-size: 24px;
+                }
+
+                .modal-header-btn {
+                    background-color: transparent;
+                    border: none;
+                }
+
+                .modal-form-container {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+                    width: 100%;
+                }
+
+                .modal-form {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 24px;
+                }
+
+                .modal-form-input-border {
+                    border: 1.5px solid #004a53;
+                    display: flex;
+                    flex-direction: column;
+                    padding: 14px 27px 14px;
+                    border-radius: 15px;
+                    position: relative;
+                }
+
+                .modal-label {
+                    position: absolute;
+                    top: -15px;
+                    color: #004a53;
+                    font-size: 14px;
+                    background-color: white;
+                    padding: 0px 4px;
+                    align-self: start;
+                }
+
+                .modal-input {
+                    outline: none;
+                    border: none;
+                    font-size: 14px;
+                    color: #aebaca;
+                    background-color: transparent;
+                }
+
+                .modal-form-btn {
+                    color: #f2f2f2;
+                    font-size: 16px;
+                    font-weight: 600;
+                    background-color: #004a53;
+                    padding-block: 16px;
+                    border: none;
+                }
+
+                .upload-file-container {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+                }
+
+                .upload-label {
+                    color: #004a53;
+                    font-size: 14px;
+                    font-weight: 600;
+                }
+
+                .upload-btn {
+                    background-color: #004a53;
+                    color: #ffffff;
+                    font-size: 16px;
+                    border: 1.5px solid #004a53;
+                    border-top-right-radius: 15px;
+                    border-bottom-right-radius: 15px;
+                    padding-inline: 15px;
+                }
+
+                .upload-input {
+                    border: 1.5px solid #004a53;
+                    border-radius: 15px;
+                    padding: 12px 15px;
+                }
+
+                .textarea {
+                    outline: none;
+                    border: none;
+                    font-size: 14px;
+                    color: #aebaca;
+                    height: 150px;
+                }
+
+                .hide {
+                    display: none;
+                }
+
                 @media (max-width: 768px) {
                     .curriculum-header {
                         flex-direction: column;
@@ -623,7 +750,135 @@
                 </div>
             </div>
 
-            <button type="button" class="btn btn-add-lesson">
+
+            {{-- add lesson modal --}}
+
+            <div class="modal fade" id="staticBackdrop" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content border-0 modal-container">
+                        <div class="modal-header border-0 d-flex justify-content-between align-items-center">
+                            <h1 class="modal-title" id="staticBackdropLabel">New Lesson</h1>
+                            <button type="button" class="modal-header-btn" data-bs-dismiss="modal" aria-label="Close">
+                                <i class="fa-solid fa-circle-xmark"></i>
+                            </button>
+                        </div>
+                        <form class="modal-form-container">
+                            <div class="modal-form">
+                                <div class="modal-form-input-border">
+                                    <label for="" class="modal-label">Lesson Type</label>
+                                    <select name="" id="addContent" class="modal-input">
+                                        <option value="image">Image</option>
+                                        <option value="youtube">Youtube</option>
+                                        <option value="audio">Audio</option>
+                                        <option value="content">Content</option>
+                                        <option value="document">Document</option>
+                                    </select>
+                                </div>
+
+                                <!-- image container -->
+                                <div class="flex-column gap-3 select-children" id="image-container">
+                                    <div class="modal-form-input-border">
+                                        <label for="" class="modal-label">Title</label>
+                                        <input class="modal-input" type="text" placeholder="Art" />
+                                    </div>
+                                    <div class="upload-file-container">
+                                        <label for="" class="upload-label">Upload File (Size:2mb, Dimension:400px
+                                            by 250px)
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control upload-input p-3"
+                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
+                                                placeholder="Upload file" aria-label="Recipient’s username"
+                                                aria-describedby="basic-addon2" />
+                                            <button class="upload-btn" type="button" id="button-addon2">
+                                                Upload File
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- youtube container -->
+                                <div class="flex-column gap-3 hide select-children" id="youtube-container">
+                                    <div class="modal-form-input-border">
+                                        <label for="" class="modal-label">Title</label>
+                                        <input class="modal-input" type="text" placeholder="Enter title" />
+                                    </div>
+                                    <div class="modal-form-input-border">
+                                        <label for="" class="modal-label">Youtube Url</label>
+                                        <input class="modal-input" type="text" placeholder="Enter url" />
+                                    </div>
+                                </div>
+
+                                <!-- content container -->
+                                <div class="flex-column gap-3 hide select-children" id="content-container">
+                                    <div class="modal-form-input-border">
+                                        <label for="" class="modal-label">Title</label>
+                                        <input class="modal-input" type="text" placeholder="Enter title" />
+                                    </div>
+                                    <div class="modal-form-input-border">
+                                        <label for="" class="modal-label">Lesson Content</label>
+                                        <textarea name="" id="" class="modal-input"></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- audio-container -->
+                                <div class="flex-column gap-3 hide select-children" id="audio-container">
+                                    <div class="modal-form-input-border">
+                                        <label for="" class="modal-label">Title</label>
+                                        <input class="modal-input" type="text" placeholder="Enter title" />
+                                    </div>
+                                    <div class="upload-file-container">
+                                        <label for="" class="upload-label">Upload File (Size:2mb, Dimension:400px
+                                            by 250px)
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control upload-input p-3"
+                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
+                                                placeholder="Upload file" aria-label="Recipient’s username"
+                                                aria-describedby="basic-addon2" />
+                                            <button class="upload-btn" type="button" id="button-addon2">
+                                                Upload File
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- document-container -->
+                                <div class="flex-column gap-3 hide select-children" id="document-container">
+                                    <div class="modal-form-input-border">
+                                        <label for="" class="modal-label">Lesson Type</label>
+                                        <select name="" id="" class="modal-input">
+                                            <option value="">image</option>
+                                        </select>
+                                    </div>
+                                    <div class="modal-form-input-border">
+                                        <label for="" class="modal-label">Title</label>
+                                        <input class="modal-input" type="text" placeholder="Enter title" />
+                                    </div>
+                                    <div class="upload-file-container">
+                                        <label for="" class="upload-label">Upload File (Size:2mb, Dimension:400px
+                                            by 250px)
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control upload-input p-3"
+                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
+                                                placeholder="Upload file" aria-label="Recipient’s username"
+                                                aria-describedby="basic-addon2" />
+                                            <button class="upload-btn" type="button" id="button-addon2">
+                                                Upload File
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="modal-form-btn">Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-add-lesson" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 <i class="fa-solid fa-plus me-2"></i> Add Lesson
             </button>
 
@@ -965,7 +1220,7 @@
         </div>
     </main>
 
-  
+
     <script>
         // Navigation between sections
         document.addEventListener('DOMContentLoaded', () => {
@@ -992,6 +1247,40 @@
                     populatePublishSection();
                 }
             }
+
+            // addlessong modal js
+
+            const selectContainer = document.getElementById("addContent");
+
+            function showSelectedContainer(contentType) {
+                document
+                    .querySelectorAll(".select-children")
+                    .forEach((container) => (container.style.display = "none"));
+
+                if (contentType === "image") {
+                    document.getElementById("image-container").style.display = "flex";
+                }
+                if (contentType === "youtube") {
+                    document.getElementById("youtube-container").style.display = "flex";
+                }
+                if (contentType === "audio") {
+                    document.getElementById("audio-container").style.display = "flex";
+                }
+                if (contentType === "content") {
+                    document.getElementById("content-container").style.display = "flex";
+                }
+                if (contentType === "document") {
+                    document.getElementById("document-container").style.display = "flex";
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", () => {
+                showSelectedContainer(selectContainer.value);
+            });
+
+            selectContainer.addEventListener("change", (e) => {
+                showSelectedContainer(e.target.value);
+            });
 
             function populatePublishSection() {
                 // Get data from form fields
