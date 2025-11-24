@@ -78,207 +78,129 @@
     </div> --}}
 
     <!-- Modal -->
-    <div
-      class="modal fade beta-overlay-container"
-      id="exampleModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content beta-dialog-container">
-          <div class="modal-body p-0 d-flex flex-column gap-4">
-            <div class="d-flex flex-column gap-2 beta-content-container">
-              <div class="beta-overlay-line"></div>
-              <h2 class="beta-modal-title">
-                Join Our Beta Testing Phase Sessions - Collab with us to test as
-                we prep for Launch
-              </h2>
-              <p class="beta-modal-text">
-                We've designed & developed Kokokah as a super all-in-one EdTech
-                platform built to transform education by solving its three
-                biggest problems namely access, funding and quality for the four
-                core groups in the education ecosystem being students, teachers,
-                parents and schools
-              </p>
-            </div>
-            <form action="" class="d-flex flex-column beta-form-container">
-              <div class="beta-form-input-container">
-                <label for="exampleFormControlInput1" class="form-label beta-form-label"
-                  >Full Name</label
-                >
-                <input
-                  type="text"
-                  class="form-control beta-form-input"
-                  id="exampleFormControlInput1"
-                  placeholder="name@example.com"
-                />
-              </div>
-              <div class="beta-form-input-container">
-                <label for="exampleFormControlInput1" class="form-label beta-form-label"
-                  >Email address</label
-                >
-                <input
-                  type="email"
-                  class="form-control beta-form-input"
-                  id="exampleFormControlInput1"
-                  placeholder="name@example.com"
-                />
-              </div>
-              <div class="d-flex flex-column flex-md-row gap-3">
-                <div class="beta-form-input-container flex-md-fill">
-                  <label for="exampleFormControlInput1" class="form-label beta-form-label"
-                    >Role</label
-                  >
-                  <select
-                    class="form-select beta-form-input beta-border-white"
-                    aria-label="Default select example"
-                  >
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                </div>
-                <div class="beta-form-input-container flex-md-fill">
-                  <label for="exampleFormControlInput1" class="form-label beta-form-label"
-                    >Country</label
-                  >
-                  <input
-                    type="email"
-                    class="form-control beta-form-input"
-                    id="exampleFormControlInput1"
-                    placeholder="name@example.com"
-                  />
-                </div>
-              </div>
-              <div class="d-flex flex-column flex-md-row gap-3">
-                <div class="beta-form-input-container flex-md-fill">
-                  <label for="exampleFormControlInput1" class="form-label beta-form-label"
-                    >Country Code</label
-                  >
-                  <select
-                    class="form-select beta-form-input beta-border-white"
-                    aria-label="Default select example"
-                  >
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                </div>
-                <div class="beta-form-input-container flex-md-fill">
-                  <label for="exampleFormControlInput1" class="form-label beta-form-label"
-                    >Phone Number</label
-                  >
-                  <input
-                    type="email"
-                    class="form-control beta-form-input"
-                    id="exampleFormControlInput1"
-                    placeholder="name@example.com"
-                  />
-                </div>
-              </div>
-              <div class="d-flex flex-column gap-1">
-                <label for="exampleFormControlInput1" class="form-label beta-form-label"
-                  >Platform</label
-                >
+    <div class="modal fade beta-overlay-container" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content beta-dialog-container">
+                <div class="modal-body p-0 d-flex flex-column gap-4">
+                    <div class="d-flex flex-column gap-2 beta-content-container">
+                        <div class="beta-overlay-line"></div>
+                        <h2 class="beta-modal-title">
+                            Join Our Beta Testing Phase Sessions - Collab with us to test as
+                            we prep for Launch
+                        </h2>
+                        <p class="beta-modal-text">
+                            We've designed & developed Kokokah as a super all-in-one EdTech
+                            platform built to transform education by solving its three
+                            biggest problems namely access, funding and quality for the four
+                            core groups in the education ecosystem being students, teachers,
+                            parents and schools
+                        </p>
+                    </div>
+                    <form action="" class="d-flex flex-column beta-form-container">
+                        <div class="beta-form-input-container">
+                            <label for="exampleFormControlInput1" class="form-label beta-form-label">Full Name</label>
+                            <input type="text" class="form-control beta-form-input" id="exampleFormControlInput1"
+                                placeholder="name@example.com" />
+                        </div>
+                        <div class="beta-form-input-container">
+                            <label for="exampleFormControlInput1" class="form-label beta-form-label">Email address</label>
+                            <input type="email" class="form-control beta-form-input" id="exampleFormControlInput1"
+                                placeholder="name@example.com" />
+                        </div>
+                        <div class="d-flex flex-column flex-md-row gap-3">
+                            <div class="beta-form-input-container flex-md-fill">
+                                <label for="exampleFormControlInput1" class="form-label beta-form-label">Role</label>
+                                <select class="form-select beta-form-input beta-border-white"
+                                    aria-label="Default select example">
+                                    <option selected>Open this select menu</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </div>
+                            <div class="beta-form-input-container flex-md-fill">
+                                <label for="exampleFormControlInput1" class="form-label beta-form-label">Country</label>
+                                <input type="email" class="form-control beta-form-input" id="exampleFormControlInput1"
+                                    placeholder="name@example.com" />
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column flex-md-row gap-3">
+                            <div class="beta-form-input-container flex-md-fill">
+                                <label for="exampleFormControlInput1" class="form-label beta-form-label">Country
+                                    Code</label>
+                                <select class="form-select beta-form-input beta-border-white"
+                                    aria-label="Default select example">
+                                    <option selected>Open this select menu</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </div>
+                            <div class="beta-form-input-container flex-md-fill">
+                                <label for="exampleFormControlInput1" class="form-label beta-form-label">Phone
+                                    Number</label>
+                                <input type="email" class="form-control beta-form-input" id="exampleFormControlInput1"
+                                    placeholder="name@example.com" />
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column gap-1">
+                            <label for="exampleFormControlInput1" class="form-label beta-form-label">Platform</label>
 
-                <div class="d-flex align-items-center gap-4">
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      style="border: 1px solid #767676"
-                      type="checkbox"
-                      value=""
-                      id="checkDefault"
-                    />
-                    <label
-                      class="form-check-label beta-form-label"
-                      for="checkDefault"
-                    >
-                      IOS
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      style="border: 1px solid #767676"
-                      type="checkbox"
-                      value=""
-                      id="checkChecked"
-                      checked
-                    />
-                    <label
-                      class="form-check-label form-label beta-form-label"
-                      for="checkChecked"
-                    >
-                      Android
-                    </label>
-                  </div>
+                            <div class="d-flex align-items-center gap-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" style="border: 1px solid #767676" type="checkbox"
+                                        value="" id="checkDefault" />
+                                    <label class="form-check-label beta-form-label" for="checkDefault">
+                                        IOS
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" style="border: 1px solid #767676" type="checkbox"
+                                        value="" id="checkChecked" checked />
+                                    <label class="form-check-label form-label beta-form-label" for="checkChecked">
+                                        Android
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-input-container">
+                            <label for="exampleFormControlInput1" class="form-label beta-form-label">Twitter Handle
+                                (optional)</label>
+                            <input type="email" class="form-control beta-form-input beta-border-white"
+                                id="exampleFormControlInput1" placeholder="@username" />
+                        </div>
+                        <div class="d-flex flex-column gap-1 pt-3">
+                            <div class="form-divider"></div>
+                            <div class="form-check mb-0">
+                                <input class="form-check-input" style="border: 1px solid #767676" type="checkbox"
+                                    value="" id="checkDefault" />
+                                <label class="form-check-label beta-form-label" for="checkDefault">
+                                    I agree to the
+                                    <a href="#" class="fw-bold" style="color: #ffbf4d">Terms</a>
+                                    &
+                                    <a href="#" class="fw-bold" style="color: #ffbf4d">Privacy</a>
+                                </label>
+                            </div>
+                            <div class="form-check mb-0">
+                                <input class="form-check-input" style="border: 1px solid #767676" type="checkbox"
+                                    value="" id="checkChecked" checked />
+                                <label class="form-check-label beta-form-label" for="checkChecked">
+                                    Send me early access tips & updates
+                                </label>
+                            </div>
+                            <div class="d-flex flex-column flex-md-row align-items-md-center gap-3 pt-4">
+                                <button class="beta-join-btn">Join the Beta</button>
+                                <button type="button" class="beta-close-btn" data-bs-dismiss="modal"
+                                    aria-label="Close">
+                                    Not now
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-              </div>
-              <div class="form-input-container">
-                <label for="exampleFormControlInput1" class="form-label beta-form-label"
-                  >Twitter Handle (optional)</label
-                >
-                <input
-                  type="email"
-                  class="form-control beta-form-input beta-border-white"
-                  id="exampleFormControlInput1"
-                  placeholder="@username"
-                />
-              </div>
-              <div class="d-flex flex-column gap-1 pt-3">
-                <div class="form-divider"></div>
-                <div class="form-check mb-0">
-                  <input
-                    class="form-check-input"
-                    style="border: 1px solid #767676"
-                    type="checkbox"
-                    value=""
-                    id="checkDefault"
-                  />
-                  <label class="form-check-label beta-form-label" for="checkDefault">
-                    I agree to the
-                    <a href="#" class="fw-bold" style="color: #ffbf4d">Terms</a>
-                    &
-                    <a href="#" class="fw-bold" style="color: #ffbf4d"
-                      >Privacy</a
-                    >
-                  </label>
-                </div>
-                <div class="form-check mb-0">
-                  <input
-                    class="form-check-input"
-                    style="border: 1px solid #767676"
-                    type="checkbox"
-                    value=""
-                    id="checkChecked"
-                    checked
-                  />
-                  <label class="form-check-label beta-form-label" for="checkChecked">
-                    Send me early access tips & updates
-                  </label>
-                </div>
-                <div
-                  class="d-flex flex-column flex-md-row align-items-md-center gap-3 pt-4"
-                >
-                  <button class="beta-join-btn">Join the Beta</button>
-                  <button
-                    type="button"
-                    class="beta-close-btn"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    Not now
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
+            </div>
         </div>
-      </div>
     </div>
 
 
@@ -310,7 +232,8 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-12 col-md-6 col-lg-6 mb-4 mb-md-0 fade-section-left">
-                    <img src="images/33d07ac37205dee5ed7d04a51aace312e634c69c.jpg" class="img-fluid" alt="Kokokah Platform"
+                    <img src="images/33d07ac37205dee5ed7d04a51aace312e634c69c.jpg" class="img-fluid"
+                        alt="Kokokah Platform"
                         style="max-width:752px; width:100%; height:382px; border-radius : 15px; object-fit:cover;">
                 </div>
                 <div class="col-12 col-md-6 col-lg-6 ps-md-4 ps-0 fade-section">
@@ -627,7 +550,8 @@
                 <button class = "primaryButton" type = "button">Coming Soon</button>
 
                 <div>
-                    <img src = "images/koodies.png" style="margin-top: -100px" class = "img-fluid w-100 w-md-50 h-auto float-end slide-up-image">
+                    <img src = "images/koodies.png" style="margin-top: -100px"
+                        class = "img-fluid w-100 w-md-50 h-auto float-end slide-up-image">
                 </div>
             </div>
 
