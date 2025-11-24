@@ -3,7 +3,7 @@
 @section('content')
     <!-- Modal Section -->
 
-    {{-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    {{-- <div class="modal fade" id="test_popupModal" tabindex="-1" aria-labelledby="test_popupModalLabel" aria-hidden="true"
         data-bs-backdrop="false">
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
@@ -78,8 +78,7 @@
     </div> --}}
 
     <!-- Modal -->
-    <div class="modal fade beta-overlay-container" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade beta-overlay-container" id="test_popupModal" tabindex="-1" >
         <div class="modal-dialog">
             <div class="modal-content beta-dialog-container">
                 <div class="modal-body p-0 d-flex flex-column gap-4">
@@ -433,6 +432,8 @@
             </div>
         </div>
     </div>
+
+    
 
 
     <!-- Hero Section - Yellow Background -->
@@ -852,7 +853,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+            var myModal = new bootstrap.Modal(document.getElementById('test_popupModal'));
             myModal.show();
         });
 
