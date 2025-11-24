@@ -23,6 +23,7 @@
 
 body.modal-open {
     padding-right: 0 !important;
+    overflow: hidden;
 }
 
 body {
@@ -53,8 +54,8 @@ h1 {
 }
 
 h6 {
-  color: #004A53;
-  font-weight: 600;
+    color: #004a53;
+    font-weight: 600;
 }
 
 .primaryButton {
@@ -1352,9 +1353,9 @@ footer p {
 }
 
 .large-card-title {
-  color: #004A53;
-  font-weight: 700;
-  /* font-size: 22px; */
+    color: #004a53;
+    font-weight: 700;
+    /* font-size: 22px; */
 }
 
 .large-card-text {
@@ -1365,14 +1366,14 @@ footer p {
 /* ===== BUTTONS ===== */
 
 .btn-primary-action {
-  background-color: #004A53;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 700;
-  padding: 12px 30px;
-  width: auto;
+    background-color: #004a53;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 12px 30px;
+    width: auto;
 }
 
 .btn-primary-action:hover {
@@ -1381,15 +1382,14 @@ footer p {
 }
 
 .btn-secondary-action {
-  background-color: white;
-  color: #004A53;
-  border: 2px solid #004A53;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 700;
-  padding: 12px 40px;
-  width: auto;
-
+    background-color: white;
+    color: #004a53;
+    border: 2px solid #004a53;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 12px 40px;
+    width: auto;
 }
 
 .btn-secondary-action:hover {
@@ -1868,94 +1868,108 @@ div.contact-container a {
 }
 
 .hero_img_container img {
-        width: 80%;
-    }
+    width: 80%;
+}
 
-.form-label{
+.form-label {
     margin-bottom: 0;
 }
- .beta-overlay-container {
-        background-color: rgba(0, 74, 83, 0.9);
-        height: 100%;
-        overflow-y: scroll;
-      }
-      .beta-dialog-container {
-        border-radius: 24px;
-        border: 1px solid #ffffff33;
-        box-shadow: 0 0 0 1px #ffffff0d, 0 25px 50px -12px #00000040;
-        backdrop-filter: blur(20px);
-        background-color: transparent;
-        max-width: 600px;
-        margin-inline: auto;
+.beta-overlay-container {
+    background-color: rgba(0, 74, 83, 0.9);
+    height: 100%;
+    overflow-y: scroll;
+    position: fixed;
+    inset: 0;
+}
+.beta-dialog-container {
+    border-radius: 24px;
+    border: 1px solid #ffffff33;
+    box-shadow: 0 0 0 1px #ffffff0d, 0 25px 50px -12px #00000040;
+    backdrop-filter: blur(20px);
+    background-color: transparent;
+    max-width: 600px;
+    margin-inline: auto;
 
-        height: auto;
-      }
-      .beta-content-container {
-        padding-inline: 24px;
-        padding-top: 24px;
-      }
-      .beta-overlay-line {
-        width: 96px;
-        height: 4px;
-        border-radius: 2px;
-        background-color: #ffffff66;
-      }
-      .beta-modal-title {
-        font-size: 24.2px;
-        font-weight: 700;
-        color: #ffffff;
-        line-height: 36px;
-      }
-      .beta-modal-text {
-        font-size: 12px;
-        color: #ffffffcc;
-      }
-      .beta-form-container {
-        padding-inline: 24px;
-        padding-bottom: 24px;
-        gap: 16px;
-      }
-      .beta-form-input-container {
-        gap: 8px;
-        display: flex;
-        flex-direction: column;
-      }
-      .beta-form-label {
-        font-size: 12px;
-        color: #ffffffcc;
-        line-height: 21px;
-      }
-      .beta-form-input {
-        border: 1px solid #ffbf4db2;
-        color: #ffffff80;
-        border-radius: 12px;
-        padding: 13px 17px;
-        box-shadow: 0 0 0 3px #4f46e51a;
-        font-size: 12px;
-        background-color: #ffffff1a;
-      }
-      .beta-border-white {
-        border: 1px solid #FFFFFF33;
-      }
-      .beta-form-divider {
-        background-color: #ffffff1a;
-        height: 1px;
-        width: 100%;
-      }
-      .beta-join-btn {
-        background-color: #ffbf4d;
-        padding: 13px 25px;
-        border-radius: 16px;
-        color: #1a1a2e;
-        font-size: 15.4px;
-        font-weight: 700;
-        border: 1px solid #ffffff33;
-      }
-      .beta-close-btn {
-        border-radius: 16px;
-        padding: 12px 16px;
-        background-color: transparent;
-        font-size: 14.6px;
-        color: #ffffffcc;
-        border: none;
-      }
+    height: auto;
+}
+.beta-content-container {
+    padding-inline: 24px;
+    padding-top: 24px;
+}
+.beta-overlay-line {
+    width: 96px;
+    height: 4px;
+    border-radius: 2px;
+    background-color: #ffffff66;
+}
+.beta-modal-title {
+    font-size: 24.2px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 36px;
+}
+.beta-modal-text {
+    font-size: 12px;
+    color: #ffffffcc;
+}
+.beta-form-container {
+    padding-inline: 24px;
+    padding-bottom: 24px;
+    gap: 16px;
+}
+.beta-form-input-container {
+    gap: 8px;
+    display: flex;
+    flex-direction: column;
+}
+.beta-form-label {
+    font-size: 12px;
+    color: #ffffffcc;
+    line-height: 21px;
+}
+.beta-form-input {
+    border: 1px solid #ffbf4db2;
+    color: #ffffff80;
+    border-radius: 12px;
+    padding: 13px 17px;
+    box-shadow: 0 0 0 3px #4f46e51a;
+    font-size: 12px;
+    background-color: #ffffff1a;
+}
+.beta-border-white {
+    border: 1px solid #ffffff33;
+}
+/* Customize the select itself */
+.custom-select {
+    color: #333;
+}
+
+/* Customize the dropdown when opened (limited in native select) */
+.custom-select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.beta-form-divider {
+    background-color: #ffffff1a;
+    height: 1px;
+    width: 100%;
+}
+.beta-join-btn {
+    background-color: #ffbf4d;
+    padding: 13px 25px;
+    border-radius: 16px;
+    color: #1a1a2e;
+    font-size: 15.4px;
+    font-weight: 700;
+    border: 1px solid #ffffff33;
+}
+.beta-close-btn {
+    border-radius: 16px;
+    padding: 12px 16px;
+    background-color: transparent;
+    font-size: 14.6px;
+    color: #ffffffcc;
+    border: none;
+}
+
