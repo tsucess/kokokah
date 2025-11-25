@@ -6,7 +6,7 @@
             <!-- Header Section -->
             <div class="d-flex justify-content-between align-items-start mb-5">
                 <div>
-                    <h1 class="fw-bold mb-2" style="font-size: 32px; color: #004A53; font-family: 'Fredoka One', sans-serif;">
+                    <h1 class="">
                         User Activity Logs</h1>
                     <p class="text-muted" style="font-size: 0.95rem;">Here overview of your</p>
                 </div>

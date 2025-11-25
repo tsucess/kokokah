@@ -23,7 +23,8 @@
 
 body.modal-open {
     padding-right: 0 !important;
-    overflow: hidden;
+    overflow: hidden !important;
+    margin-right: 0;
 }
 
 body {
