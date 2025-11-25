@@ -63,7 +63,7 @@
                                     <th style="color: #333; font-weight: 600; padding: 1rem;">Status</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="usersActivitiesTableBody">
                                 <!-- Row 1 -->
                                 <tr style="border-bottom: 1px solid #e8e8e8;">
                                     <td style="padding: 1rem; color: #666;">01</td>
@@ -268,4 +268,129 @@
             }
         }
     </style>
+
+
+    <script>
+        // Get auth token
+        const token = localStorage.getItem('auth_token');
+        let currentPage = 1;
+
+        // Fetch dashboard data on page load
+        document.addEventListener('DOMContentLoaded', function() {
+
+            loadUsersActivities(1);
+        });
+
+        // Load dashboard statistics
+        // async function loadDashboardStats() {
+        //     try {
+        //         const response = await fetch('/api/admin/dashboard', {
+        //             method: 'GET',
+        //             headers: {
+        //                 'Authorization': `Bearer ${token}`,
+        //                 'Accept': 'application/json'
+        //             }
+        //         });
+
+        //         if (!response.ok) {
+        //             console.error('Failed to fetch dashboard stats:', response.status);
+        //             return;
+        //         }
+
+        //         const data = await response.json();
+        //         console.log('Dashboard API Response:', data);
+
+        //         if (data.success && data.data && data.data.statistics) {
+
+        //         } else {
+        //             console.error('Unexpected response structure:', data);
+        //         }
+        //     } catch (error) {
+        //         console.error('Error loading dashboard stats:', error);
+        //     }
+        // }
+
+        // Load users Activities
+        async function loadUsersActivities(page = 1) {
+            try {
+                const response = await fetch(`/api/admin/dashboard`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    console.error('Failed to fetch recent users');
+                    return;
+                }
+
+                const data = await response.json();
+                if (data.success && data.data) {
+                    currentPage = page;
+                    const activities = data.data.recent_activity;
+                    const pagination = data.data;
+                    console.log(data);
+                    console.log(activities);
+                    // Update table
+                    const tbody = document.getElementById('usersActivitiesTableBody');
+                    tbody.innerHTML = '';
+
+                    if (activities.length === 0) {
+                        tbody.innerHTML =
+                            '<tr><td colspan="6" class="text-center text-muted py-4">No activities found</td></tr>';
+                    } else {
+                        activities.forEach((activity, index) => {
+                            const statusBadge = activity.is_active ?
+                                '<span class="badge text-success" style="background: #DCFCE7;"><i class="fa fa-circle p-1 text-success" style="font-size:10px;"></i>Active</span>' :
+                                '<span class="badge bg-danger text-white"><i class="fa fa-circle p-1 text-white" style="font-size:10px;"></i>Inactive</span>';
+
+                            const row = `
+                                     <tr style="border-bottom: 1px solid #e8e8e8;">
+                                            <td style="padding: 1rem; color: #666;">03</td>
+                                            <td style="padding: 1rem;">
+                                                <div class="d-flex align-items-center">
+                                                    <img src="images/jimmy.png" class="rounded-circle me-3" alt="User"
+                                                        width="40" height="40" style="object-fit: cover;">
+                                                    <span style="color: #333; font-weight: 500;">${activity.user ? activity.user.first_name : activity.course.instructor.first_name } ${activity.user ? activity.user.last_name : activity.course.instructor.last_name }</span>
+                                                </div>
+                                            </td>
+                                            <td style="padding: 1rem; color: #666;">${activity.description ? activity.description : 0}</td>
+                                            <td style="padding: 1rem; color: #666;">${formatDate(activity.timestamp) }</td>
+                                            <td style="padding: 1rem;">
+                                                <span class="badge"
+                                                    style="background-color: #ffc107; color: #333; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">Pending</span>
+                                            </td>
+                                        </tr>
+                                `;
+                            tbody.innerHTML += row;
+                        });
+                    }
+
+
+                    // Update pagination info
+                    // const info = `Showing ${activities.length} of ${pagination.total} Activities`;
+                    // document.getElementById('recentUsersInfo').textContent = info;
+
+                    // // Update pagination buttons
+                    // document.getElementById('prevBtn').disabled = !pagination.prev_page_url;
+                    // document.getElementById('nextBtn').disabled = !pagination.next_page_url;
+                }
+            } catch (error) {
+                console.error('Error loading recent Activities:', error);
+            }
+        }
+
+
+        function formatDate(dateString) {
+            return new Date(dateString).toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric"
+            });
+        }
+
+        console.log(formatDate("2025-10-29T16:32:55.000000Z"));
+    </script>
 @endsection
