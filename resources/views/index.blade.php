@@ -837,7 +837,7 @@
 
 
     <div class = "container-fluid founder-section">
-        <div class = "row justify-content-center pt-2 px-2 pb-4 text-white">
+        <div class = "row justify-content-center px-2 py-4 text-white">
 
             <div class = "col-12 col-lg-12 col-md-12 text-center">
                 <h5 class = "mb-3 section-title" style="color:#004A53;">Message from the founder</h5>
