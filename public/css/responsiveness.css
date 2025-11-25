@@ -22,11 +22,11 @@
     .btn-secondary-action {
         width: 70%;
     }
-    .primaryButton{
+    .primaryButton {
         width: 70%;
-        height: 50px;
+        height: 40px;
         vertical-align: middle;
-        padding-block: 10px;
+        padding-block: 7px;
     }
 
     h1 {
@@ -156,7 +156,6 @@
 
     .ourproduct2 {
         border-radius: 30px;
-        padding: 1.5rem;
     }
 
     h3 {

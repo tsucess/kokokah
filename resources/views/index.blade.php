@@ -581,10 +581,12 @@
 
 
     <div class="d-flex flex-column gap-5 mx-4 mx-md-0">
+
         <div class = "container fade-section">
-            <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-bordered-red p-3 p-md-5">
-                <div class = "col col-12 col-md-7 col-lg-7  my-auto d-flex flex-column gap-3">
-                    <img src="images/Group 1171274797.png" alt="" style="width:200px; height:auto;" />
+            <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-bordered-red ">
+                <div class = "col col-12 col-md-7 col-lg-7 p-4 p-lg-5  my-auto d-flex flex-column gap-3">
+                    <img src="images/Group 1171274797.png" alt="" class="w-75"
+                        style=" height:auto; max-width:200px;" />
                     <p style = "color :#004A53;">
                         Kokokah houses an exam preparatory platform
                         where African students can prepare adequately
@@ -600,9 +602,8 @@
                 </div>
 
 
-                <div class="col col-12 col-md-5 col-lg-5 d-flex align-items-lg-center justify-content-lg-center">
-                    <img src="images/exam_prep.png" class="img-fluid w-100 w-lg-100 " alt="Exam Prep"
-                        style="height: auto; object-fit: auto;">
+                <div class="col col-12 col-md-5 col-lg-5 d-flex align-items-lg-center justify-content-lg-center px-0">
+                    <img src="images/exam_prep.png" class="img-fluid w-100 " alt="Exam Prep" style="height: auto;">
                 </div>
 
             </div>
@@ -612,20 +613,20 @@
         <div class = "container fade-section-left">
             <div class="row ourproduct2 product-section-orange">
                 <!-- Image Section -->
-                <div class="col-12 col-md-6 col-lg-6">
+                <div class="col-12 col-md-6 col-lg-6 px-0">
                     <img src="images/School Admin.png" class="img-fluid" alt="School Admin">
                 </div>
                 <!-- Text Section -->
-                <div class="col-12 col-md-6 col-lg-6  my-auto d-flex flex-column gap-3">
+                <div class="col-12 col-md-6 col-lg-6 p-4 p-lg-5  my-auto d-flex flex-column gap-3">
                     <h4 class="text-white">School Management System (SMS)</h4>
                     <p class = " text-white">
                         Simplify school administration with fee
                         tracking, digital report cards, attendance, and student
                         portals — all in one secure platform.
                     </p>
-        <div class="d-flex justify-content-center justify-content-md-start">
-                    <button class = " primaryButton " type="button">Coming soon</button>
-        </div>
+                    <div class="d-flex justify-content-center justify-content-md-start">
+                        <button class = " primaryButton " type="button">Coming soon</button>
+                    </div>
 
                 </div>
             </div>
@@ -647,7 +648,7 @@
                         tutoring, chatrooms, and  academic & non-academic content for secondary school.
                     </p>
                     <div class="d-flex justify-content-center justify-content-md-start">
-                    <button class = "primaryButton" type = "button">Coming soon</button>
+                        <button class = "primaryButton" type = "button">Coming soon</button>
                     </div>
                 </div>
                 <div class="col-12 col-md-5 text-center p-0">
@@ -664,7 +665,7 @@
                 </div>
 
                 <!-- Text Section -->
-                <div class="col-12 col-md-6 my-auto d-flex flex-column gap-3">
+                <div class="col-12 col-md-6 p-4 p-lg-5 my-auto d-flex flex-column gap-3">
                     <h4 class="text-white">
                         The Marketplace
                     </h4>
@@ -690,7 +691,7 @@
                 </div>
 
                 <!-- Text Section -->
-                <div class="col-12 col-md-6 my-auto d-flex flex-column gap-3">
+                <div class="col-12 col-md-6 p-4 p-lg-5 my-auto d-flex flex-column gap-3">
                     <img src="./images/315a2f8c6c60fc789ec0066a0b5bce04b7daa28d.png" alt=""
                         style="width:200px; height:60px;" />
                     <p style = "color :#004A53;">
@@ -713,7 +714,7 @@
             {{-- <div class="row  my-4 p-2 flex-column-reverse flex-md-row m-2 ourproduct1 product-section-yellow"> --}}
             <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-yellow">
                 <!-- Text Section -->
-                <div class="col-12 col-md-6 d-flex flex-column justify-content-center gap-3 p-4 ps-lg-5 pb-4 pb-lg-0">
+                <div class="col-12 col-md-6 d-flex flex-column justify-content-center gap-3  p-4 ps-lg-5 pb-4 pb-lg-0">
                     <h4>
                         AI Chatbot
                     </h4>
@@ -743,7 +744,7 @@
                 </div>
 
                 <!-- Text Section -->
-                <div class="col-12 col-md-6 my-auto d-flex flex-column gap-3">
+                <div class="col-12 col-md-6 my-auto p-4 p-lg-5 d-flex flex-column gap-3">
                     <h4 style = "color :#004A53;">Kudikah</h4>
                     <p style = "color :#004A53;">
                         Get hands-on STEM bootcamps, summer schools,
@@ -843,7 +844,7 @@
         <div class = "row justify-content-center px-2 py-4 text-white">
 
             <div class = "col-12 col-lg-12 col-md-12 text-center">
-                <h4 class = "mb-3 section-title" style="color:#004A53;">Message from the founder</h4>
+                <h5 class = "mb-3 section-title" style="color:#004A53;">Message from the founder</h5>
                 <img src = "images/youtube.png" class="img-fluid founder-video">
             </div>
 
