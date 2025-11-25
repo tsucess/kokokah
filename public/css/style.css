@@ -168,7 +168,7 @@ a.nav-link.active {
 }
 
 .newsletter-title {
-    font-size: clamp(22px, 4.5vw, 40px);
+    font-size: clamp(22px, 4.5vw, 32px);
     color: #000000;
     font-family: "Fredoka", sans-serif;
     font-weight: bold;
@@ -1130,6 +1130,11 @@ footer p {
     background-color: #fdaf22;
     padding: 60px 20px;
     /* margin-top: 60px; */
+}
+
+.bgLms{
+    background: url('../images/bg-lms.png');
+    padding: 60px 20px;
 }
 
 .hero-section-orange {
