@@ -594,7 +594,7 @@
                         WAEC - NECO - JAMB - GCE - GMAT - SAT - TOEFL - IELTS - GRE - ACT
                     </p>
 
-                    <div>
+                    <div class="d-flex justify-content-center justify-content-md-start">
                         <button class = "primaryButton" type = "button">Coming soon</button>
                     </div>
                 </div>
@@ -623,8 +623,9 @@
                         tracking, digital report cards, attendance, and student
                         portals — all in one secure platform.
                     </p>
-
+        <div class="d-flex justify-content-center justify-content-md-start">
                     <button class = " primaryButton " type="button">Coming soon</button>
+        </div>
 
                 </div>
             </div>
@@ -645,7 +646,9 @@
                         Your all-in-one digital classroom — structured lessons, AI-powered
                         tutoring, chatrooms, and  academic & non-academic content for secondary school.
                     </p>
+                    <div class="d-flex justify-content-center justify-content-md-start">
                     <button class = "primaryButton" type = "button">Coming soon</button>
+                    </div>
                 </div>
                 <div class="col-12 col-md-5 text-center p-0">
                     <img src="images/lms system.png" class="img-fluid w-100 w-md-75 h-100" alt="Exam Prep">
@@ -670,7 +673,7 @@
                         tutors to connect. Book trusted tutors for academics,
                         test prep, and special needs learning.
                     </p>
-                    <div class = "">
+                    <div class="d-flex justify-content-center justify-content-md-start">
                         <button class = "primaryButton" type = "button">Coming Soon</button>
 
                     </div>
@@ -696,7 +699,7 @@
                         students for the future of science & tech.
                     </p>
 
-                    <div class = "">
+                    <div class="d-flex justify-content-center justify-content-md-start">
                         <button class = "primaryButton" type = "button">Coming soon</button>
 
                     </div>
@@ -719,7 +722,7 @@
                         and enjoy instant feedback tailored to your study needs.
                     </p>
 
-                    <div>
+                    <div class="d-flex justify-content-center justify-content-md-start">
                         <button class = "primaryButton greenBtn" type = "button">Coming Soon</button>
                     </div>
                 </div>
@@ -748,7 +751,7 @@
                         students for the future of science & tech.
                     </p>
 
-                    <div class = "mb-3">
+                    <div class="d-flex justify-content-center justify-content-md-start">
                         <button class = "primaryButton" type = "button">Coming soon</button>
 
                     </div>
@@ -840,7 +843,7 @@
         <div class = "row justify-content-center px-2 py-4 text-white">
 
             <div class = "col-12 col-lg-12 col-md-12 text-center">
-                <h5 class = "mb-3 section-title" style="color:#004A53;">Message from the founder</h5>
+                <h4 class = "mb-3 section-title" style="color:#004A53;">Message from the founder</h4>
                 <img src = "images/youtube.png" class="img-fluid founder-video">
             </div>
 
