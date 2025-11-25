@@ -94,47 +94,54 @@
         <div class = "container-fluid p-0 m-0">
             <div class = "row mt-4 ">
 
-                <div class ="mb-3 justify-content-center">
+                <div class ="mb-5 justify-content-center">
                     <h3 class = "fw-bold text-center text-white section-title">Our Story</h3>
                 </div>
             </div>
             <div class="row">
                 <div class = "col-12 col-md-6 col-lg-6 ">
-                    <img src = "images/our_story_img.jpg" class = "img-fluid animate__animated animate__pulse hero-img"
-                        style="max-height:640px; height:auto; width:100%; display:block; border-radius:20px;">
+                    <img src = "images/our_story_img.jpg" class = "img-fluid w-100  animate__animated animate__pulse hero-img"
+                        style="height:auto; display:block; border-radius:20px;">
                 </div>
 
 
                 <div class = "col-12 col-md-6 col-lg-6 my-auto">
-                    <p class="heroparagraph text-white">
-                        We began as a small but determined platform with a single goal:
-                        <b>to help Nigerian secondary school students study and pass their exams.</b>
-                        Back then, our offerings were limited — a narrow curriculum, few resources,
-                        and a focus solely on preparing students for tests. It worked, but we knew
-                        education could be so much more.<br><br>
-
-                        Over time, we listened to students, parents, and educators. We saw the challenges
-                        African learners face — from unequal access to quality materials, to the need for
-                        engaging, relevant content that goes beyond the exam hall. We realised we had to evolve.<br><br>
-
-                        That’s how <b>Kokokah</b> was born.<br><br>
-
-                        Today, Kokokah is more than just an exam-prep tool — it’s a complete <b>AI-powered
-                            Learning Management System</b> designed for African secondary schools and learners from
-                        <b>junior secondary to senior secondary level</b> wherever they are on the continent.
-                        We’ve expanded from a single-country focus to a <b>pan-African mission.</b><br><br>
-
-                        With <b>accessible mobile learning,</b> students can learn anywhere, even with
-                        low internet connectivity. Our <b>AI chatbot</b>
-                        tutor gives instant answers and personalised support.
-                        <b>Automated grading and feedback</b> make assessment faster and smarter.
-                        Our <b>content integration tools</b> empower educators to bring the best learning materials together
-                        in one place.<br><br>
-
-                        We’ve gone from limited resources to limitless possibilities. From local impact to continental
-                        reach. From preparing students for the next exam — to preparing them for the future.
-                    </p>
-
+                    <div class="d-flex flex-column gap-2">
+                        <p class="text-white">
+                            We began as a small but determined platform with a single goal:
+                            <b>to help Nigerian secondary school students study and pass their exams.</b>
+                            Back then, our offerings were limited — a narrow curriculum, few resources,
+                            and a focus solely on preparing students for tests. It worked, but we knew
+                            education could be so much more.
+                        </p>
+                        <p class="text-white">
+                            Over time, we listened to students, parents, and educators. We saw the challenges
+                            African learners face — from unequal access to quality materials, to the need for
+                            engaging, relevant content that goes beyond the exam hall. We realised we had to evolve.
+                        </p>
+                        <p class="text-white">
+                            That’s how <b>Kokokah</b> was born.
+                        </p>
+                        <p class="text-white">
+                            Today, Kokokah is more than just an exam-prep tool — it’s a complete <b>AI-powered
+                                Learning Management System</b> designed for African secondary schools and learners from
+                            <b>junior secondary to senior secondary level</b> wherever they are on the continent.
+                            We’ve expanded from a single-country focus to a <b>pan-African mission.</b>
+                        </p>
+                        <p class="text-white">
+                            With <b>accessible mobile learning,</b> students can learn anywhere, even with
+                            low internet connectivity. Our <b>AI chatbot</b>
+                            tutor gives instant answers and personalised support.
+                            <b>Automated grading and feedback</b> make assessment faster and smarter.
+                            Our <b>content integration tools</b> empower educators to bring the best learning materials
+                            together
+                            in one place.
+                        </p>
+                        <p class="text-white">
+                            We’ve gone from limited resources to limitless possibilities. From local impact to continental
+                            reach. From preparing students for the next exam — to preparing them for the future.
+                        </p>
+                    </div>
                 </div>
 
             </div>
