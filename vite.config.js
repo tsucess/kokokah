@@ -8,8 +8,6 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
-                'resources/js/api/authClient.js',
-                'resources/js/utils/uiHelpers.js',
             ],
             refresh: true,
         }),
