@@ -1,15 +1,15 @@
 @extends('layouts.template')
 
 @section('content')
-    <div class = "container-fluid p-5 banner d-flex align-items-center justify-content-center"
-        style="background-color : #FDAF22; height:501px;">
-        <h1 class = "hero_header text-center typewriter" style = "font-weight: bolder; max-width:40ch;">
+    <div class = "container-fluid p-3 banner d-flex align-items-center justify-content-center"
+        style="background-color : #FDAF22; height:301px;">
+        <h1 class = "hero_header text-center typewriter">
             Kokokah is Africa’s Leading Digital Learning and Management Platform for Secondary Schools
         </h1>
     </div>
 
-    <div class = "container mb-5 d-flex align-items-center">
-        <div class = "row mt-4 bg-white">
+    <div class = "container-fluid px-3 px-lg-5 d-flex align-items-center">
+        <div class = "row mt-4 bg-white g-4">
             <div class = "col-12 col-md-6 col-lg-6 my-auto fade-section-left">
                 <img src = "images/577d4af220704c24ce21f8c1dcc8966b836fa580.jpg" class = "img-fluid w-100 "
                     style="height:auto; max-height:332px; border-radius:16px;">
@@ -17,10 +17,10 @@
 
 
             <div class = "col-12 col-md-6 col-lg-6 d-flex flex-column gap-3 justify-content-center fade-section">
-                <h4 style="color:#004A53; font-size:32px;">
+                <h3 style="color:#004A53;">
                     Kokokah for All.
-                </h4>
-                <p class = "heroparagraph">
+                </h3>
+                <p>
                     Kokokah is a smart, pan-African learning
                     and school management platform built for
                     the realities of African education.
@@ -30,44 +30,44 @@
                     any background the opportunity to excel with ease.
 
                 </p>
-                <button class = "btn primaryButton" type = "button">Discover Kokokah Product</button>
+                <button class = "btn aboutPrimaryButton" type = "button">Discover Kokokah Product</button>
             </div>
 
         </div>
     </div>
 
 
-    <div class = "container mt-5 mb-5">
+    <div class = "container-fluid px-3 py-5 px-lg-5">
         <div class = "row">
 
-            <div class = "col-12 col-md-6 col-lg-6 my-auto fade-section-left">
-                <h4 class = "mb-3" style="color:#004A53;">
+            <div class = "col-12 col-md-6 col-lg-6 my-auto fade-section-left d-flex flex-column gap-3">
+                <h4 class = "" style="color:#004A53;">
                     Our Mission & Vision
                 </h4>
 
 
-                <div class="d-flex align-items-center">
-                    <div class="outer-square me-3">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="outer-square ">
                         <div class="inner-circle"></div>
                     </div>
                     {{-- <span class="fw-bold" style="color:#004A53;">Our Vision</span> --}}
                     <h6 style="color:#004A53;">Our Vision</h6>
 
                 </div>
-                <p class = "heropraragraph ms-5">
+                <p class = "">
                     We strive for a connected Africa where every
                     student has equal access to quality education.
                 </p>
 
-                <div class="d-flex align-items-center">
-                    <div class="outer-square me-3">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="outer-square">
                         <div class="inner-circle"></div>
                     </div>
                     {{-- <span class="fw-bold" style="color:#004A53;">Our Mision</span> --}}
                     <h6 style="color:#004A53;">Our Mision</h6>
 
                 </div>
-                <p class = "heroparagraph ms-5">
+                <p class = "">
                     To empower students, parents, and educators
                     with accessible and affordable AI-powered learning
                     tools designed for African schools and curriculums..
@@ -80,7 +80,7 @@
 
             <div class = "col-12 col-md-6 col-lg-6 mt-4 my-auto fade-section">
                 <img src = "images/c862c3d4125719cc339915f430e0b2bfa58a8971.png" class = "img-fluid"
-                    style="height:540px; border-radius:16px;">
+                    style="height:auto; border-radius:16px;">
             </div>
 
 
@@ -90,14 +90,15 @@
 
 
 
-    <section class="py-5" style="background-color: #F56824;">
-        <div class = "container">
+    <section class="px-3 py-5 px-lg-5" style="background-color: #F56824;">
+        <div class = "container-fluid p-0 m-0">
             <div class = "row mt-4 ">
 
                 <div class ="mb-3 justify-content-center">
                     <h3 class = "fw-bold text-center text-white section-title">Our Story</h3>
                 </div>
-
+            </div>
+            <div class="row">
                 <div class = "col-12 col-md-6 col-lg-6 my-auto">
                     <img src = "images/our_story_img.jpg" class = "img-fluid animate__animated animate__pulse hero-img"
                         style="max-height:640px; height:auto; width:100%; display:block; border-radius:20px;">
@@ -139,13 +140,12 @@
             </div>
         </div>
     </section>
-    <div class = "container-fluid d-flex flex-column gap-4"
-        style="padding-top: 80px; padding-bottom:100px; background-image: url('images/kokokah_best.png'); background-size: cover; background-repeat: no-repeat;">
+    <div class = "container-fluid d-flex flex-column gap-4 background px-3 px-lg-5">
 
 
         <div class="d-flex flex-column justify-content-center gap-3">
             <h3 class = "text-center section-title" style="color:#004A53;">Our Core Values</h3>
-            <p class = "text-center pe-5">
+            <p class = "text-center ">
                 Learning should be accessible, engaging, and
                 empowering for every student. These values guide
                 how we
@@ -155,148 +155,154 @@
         </div>
 
 
+        <div class="d-flex flex-column gap-5">
+            <div class="row g-5">
 
-        <div class="row justify-content-center">
+                <!-- Card 1 -->
+                <div class="col-md-6 col-lg-6 shakeX-on-scroll">
+                    <div class="card h-100 border-1 shadow-sm  rounded-4 position-relative text-center p-3 p-lg-5"
+                        style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
+                        <!-- Icon -->
+                        <div class="position-absolute top-0 start-50 translate-middle rounded-4 "
+                            style="background: #FFF9F0;">
+                            <i class="fa-solid fa-user-circle text-warning fs-3"></i>
 
-            <!-- Card 1 -->
-            <div class="col-md-6 mb-4 col-lg-5 shakeX-on-scroll">
-                <div class="card h-100 border-1 shadow-sm  rounded-4 position-relative text-center mt-3 p-5"
-                    style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
-                    <!-- Icon -->
-                    <div class="position-absolute top-0 start-50 translate-middle rounded-4 " style="background: #FFF9F0;">
-                        <i class="fa-solid fa-user-circle text-warning fs-3"></i>
-
-                    </div>
-                    <!-- Content -->
-                    <div class="mt-3">
-                        <h6>Accessiblility</h6>
-                        <p class="text-muted">
-                            We make learning available anywhere — even
-                            with low internet speeds and everyday
-                            devices — so no student is left behind.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="col-md-6 mb-4 col-lg-5 shakeX-on-scroll">
-                <div class="card h-100 border-1 shadow-sm  rounded-4 position-relative text-center mt-3 p-5"
-                    style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
-                    <!-- Icon -->
-                    <div class="position-absolute top-0 start-50 translate-middle rounded-4" style="background: #FFF9F0;">
-                        <i class="fa-solid fa-lightbulb text-warning fs-3"></i>
-                    </div>
-                    <!-- Content -->
-                    <div class="mt-3">
-                        <h6>Innovation with purpose</h6>
-                        <p class="text-muted">
-                            Every feature we create — from our AI integration to
-                            our marketplace — solves real classroom and study challenges.
-                        </p>
+                        </div>
+                        <!-- Content -->
+                        <div class="d-flex flex-column gap-2">
+                            <h6>Accessiblility</h6>
+                            <p class="text-muted">
+                                We make learning available anywhere — even
+                                with low internet speeds and everyday
+                                devices — so no student is left behind.
+                            </p>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Card 2 -->
+                <div class="col-md-6 col-lg-6 shakeX-on-scroll">
+                    <div class="card h-100 border-1 shadow-sm  rounded-4 position-relative text-center p-3 p-lg-5"
+                        style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
+                        <!-- Icon -->
+                        <div class="position-absolute top-0 start-50 translate-middle rounded-4"
+                            style="background: #FFF9F0;">
+                            <i class="fa-solid fa-lightbulb text-warning fs-3"></i>
+                        </div>
+                        <!-- Content -->
+                        <div class="d-flex flex-column gap-2">
+                            <h6>Innovation with purpose</h6>
+                            <p class="text-muted">
+                                Every feature we create — from our AI integration to
+                                our marketplace — solves real classroom and study challenges.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
+
+            <div class="row g-5">
+
+                <!-- Card 3 -->
+                <div class="col-md-6 col-lg-6 d-flex shakeX-on-scroll">
+                    <div class="card h-100 border-1 shadow-sm rounded-4 position-relative text-center p-3 p-lg-5"
+                        style="border-top-right-radius:60px; border-bottom-left-radius:60px;">
+
+                        <!-- Icon -->
+                        <div class="position-absolute top-0 start-50 translate-middle rounded-4"
+                            style="background:#FFF9F0;">
+                            <i class="fa-solid fa-graduation-cap text-warning fs-3"></i>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="d-flex flex-column gap-2">
+                            <h6>Excellence in learning</h6>
+                            <p class="text-muted">
+                                We align our platform to African curricula and
+                                global standards, ensuring students get the best
+                                tools to master concepts and excel in exams.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="col-md-6 col-lg-6 d-flex shakeX-on-scroll">
+                    <div class="card h-100 border-1 shadow-sm rounded-4 position-relative text-center p-3 p-lg-5"
+                        style="border-top-right-radius:60px; border-bottom-left-radius:60px;">
+
+                        <!-- Icon -->
+                        <div class="position-absolute top-0 start-50 translate-middle rounded-4"
+                            style="background:#FFF9F0;">
+                            <i class="fa-solid fa-shield text-warning fs-3"></i>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="d-flex flex-column gap-2">
+                            <h6>Integrity & Trust</h6>
+                            <p class="text-muted">
+                                We protect user data, offer transparent pricing,
+                                and provide safe, moderated spaces for learning.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <div class="row g-5">
+
+                <!-- Card 5 -->
+                <div class="col-md-6 col-lg-6 d-flex shakeX-on-scroll">
+                    <div class="card border-1 shadow-sm h-100 rounded-4 position-relative text-center p-3 p-lg-5"
+                        style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
+                        <!-- Icon -->
+                        <div class="position-absolute top-0 start-50 translate-middle rounded-4"
+                            style="background: #FFF9F0;">
+                            <i class="fa-solid fa-people-group text-warning fs-3"></i>
+
+                        </div>
+                        <!-- Content -->
+                        <div class="d-flex flex-column gap-2">
+                            <h6>Community & Collaboration</h6>
+                            <p class="text-muted">
+                                We connect students, parents, and educators,
+                                creating a supportive learning ecosystem that
+                                works together for student success.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 6  -->
+                <div class="col-md-6 col-lg-6 d-flex shakeX-on-scroll">
+                    <div class="card border-1 shadow-sm h-100 rounded-4 position-relative text-center p-3 p-lg-5"
+                        style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
+                        <!-- Icon -->
+                        <div class="position-absolute top-0 start-50 translate-middle rounded-4"
+                            style="background: #FFF9F0;">
+                            <i class="fa-solid fa-chart-line text-warning fs-3"></i>
+
+
+                        </div>
+                        <!-- Content -->
+                        <div class="d-flex flex-column gap-2">
+                            <h6>Lifelong Growth</h6>
+                            <p class="text-muted">
+                                Through Koodies and our learning tools, we prepare students
+                                not only for examinations, but for real-world situations and
+                                future opportunities.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
-
-
-        <div class="row justify-content-center">
-
-            <!-- Card 3 -->
-            <div class="col-md-6 col-lg-5 d-flex shakeX-on-scroll">
-                <div class="card h-100 border-1 shadow-sm rounded-4 position-relative text-center mt-3 p-5"
-                    style="border-top-right-radius:60px; border-bottom-left-radius:60px;">
-
-                    <!-- Icon -->
-                    <div class="position-absolute top-0 start-50 translate-middle rounded-4" style="background:#FFF9F0;">
-                        <i class="fa-solid fa-graduation-cap text-warning fs-3"></i>
-                    </div>
-
-                    <!-- Content -->
-                    <div class="mt-3">
-                        <h6>Excellence in learning</h6>
-                        <p class="text-muted">
-                            We align our platform to African curricula and
-                            global standards, ensuring students get the best
-                            tools to master concepts and excel in exams.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 4 -->
-            <div class="col-md-6 col-lg-5 d-flex shakeX-on-scroll">
-                <div class="card h-100 border-1 shadow-sm rounded-4 position-relative text-center mt-3 p-5"
-                    style="border-top-right-radius:60px; border-bottom-left-radius:60px;">
-
-                    <!-- Icon -->
-                    <div class="position-absolute top-0 start-50 translate-middle rounded-4" style="background:#FFF9F0;">
-                        <i class="fa-solid fa-shield text-warning fs-3"></i>
-                    </div>
-
-                    <!-- Content -->
-                    <div class="mt-3">
-                        <h6>Integrity & Trust</h6>
-                        <p class="text-muted">
-                            We protect user data, offer transparent pricing,
-                            and provide safe, moderated spaces for learning.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-
-
-        <div class="row justify-content-center">
-
-            <!-- Card 5 -->
-            <div class="col-md-6 col-lg-5 d-flex  mt-4 shakeX-on-scroll">
-                <div class="card border-1 shadow-sm h-100 rounded-4 position-relative text-center mt-3 p-5"
-                    style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
-                    <!-- Icon -->
-                    <div class="position-absolute top-0 start-50 translate-middle rounded-4" style="background: #FFF9F0;">
-                        <i class="fa-solid fa-people-group text-warning fs-3"></i>
-
-                    </div>
-                    <!-- Content -->
-                    <div class="mt-3">
-                        <h6>Community & Collaboration</h6>
-                        <p class="text-muted">
-                            We connect students, parents, and educators,
-                            creating a supportive learning ecosystem that
-                            works together for student success.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 6  -->
-            <div class="col-md-6 col-lg-5 mt-4 d-flex shakeX-on-scroll">
-                <div class="card border-1 shadow-sm h-100 rounded-4 position-relative text-center mt-3 p-5"
-                    style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
-                    <!-- Icon -->
-                    <div class="position-absolute top-0 start-50 translate-middle rounded-4" style="background: #FFF9F0;">
-                        <i class="fa-solid fa-chart-line text-warning fs-3"></i>
-
-
-                    </div>
-                    <!-- Content -->
-                    <div class="mt-3">
-                        <h6>Lifelong Growth</h6>
-                        <p class="text-muted">
-                            Through Koodies and our learning tools, we prepare students
-                            not only for examinations, but for real-world situations and
-                            future opportunities.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
