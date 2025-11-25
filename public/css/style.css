@@ -299,7 +299,7 @@ a.nav-link.active {
 /* ===== ACHIEVEMENT SECTION ===== */
 .achievement-section {
     min-height: 650px;
-    background-image: url("../../public/images/trophys.png");
+    background-image: url("../images/trophys.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -321,7 +321,7 @@ a.nav-link.active {
 
 /* ===== FOUNDER MESSAGE SECTION ===== */
 .founder-section {
-    background-image: url("../../public/images/founder.png");
+    background-image: url("../images/founder.png");
     background-repeat: no-repeat;
     background-size: contain;
 }
@@ -686,7 +686,7 @@ footer p {
 
 /* Default: full width on mobile */
 .top_header {
-    background: url(../../public/images/bg_top_header.jpg) no-repeat center
+    background: url("../images/bg_top_header.jpg") no-repeat center
         center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
