@@ -467,8 +467,8 @@
                         alt="Kokokah Platform"
                         style="max-width:752px; width:100%; height:382px; border-radius : 15px; object-fit:cover;">
                 </div>
-                <div class="col-12 col-md-6 col-lg-6 ps-md-4 ps-0 fade-section">
-                    <h2 class="fw-bold mb-4 section-heading" style="font-size :38px;">
+                <div class="col-12 col-md-6 col-lg-6 ps-md-4 fade-section">
+                    <h2 class="fw-bold mb-4 section-heading">
                         Kokokah for All
                     </h2>
                     <p class="mb-4 hero-subtitle">
@@ -487,7 +487,7 @@
     <div class="container-fluid section-light-gray section-py">
         <div class="container">
             <div class="text-center mb-4 mb-md-5">
-                <h2 class="fw-bold mb-3 section-heading section-title" style="font-size :38px;">
+                <h2 class="fw-bold mb-3 section-heading section-title">
                     Why Kokokah Is the Best
                 </h2>
                 <p class="section-description">
@@ -564,7 +564,7 @@
     <div class="container-fluid section-white section-py">
         <div class="container">
             <div class="text-center mb-4 mb-md-5">
-                <h2 class="fw-bold mb-3 section-heading section-title" style="font-size :38px;">
+                <h2 class="fw-bold mb-3 section-heading section-title">
                     Our Products
                 </h2>
                 <p class="section-description">
@@ -837,10 +837,10 @@
 
 
     <div class = "container-fluid founder-section">
-        <div class = "row justify-content-center p-5 text-white">
+        <div class = "row justify-content-center pt-2 px-2 pb-4 text-white">
 
             <div class = "col-12 col-lg-12 col-md-12 text-center">
-                <h5 class = "mb-3 section-title" style="color:#004A53; font-size : 32px;">Message from the founder</h5>
+                <h5 class = "mb-3 section-title" style="color:#004A53;">Message from the founder</h5>
                 <img src = "images/youtube.png" class="img-fluid founder-video">
             </div>
 

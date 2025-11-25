@@ -15,6 +15,19 @@
         font-size: 12px;
     }
 
+    .btn-primary-action {
+        width: 70%;
+    }
+    .btn-secondary-action {
+        width: 70%;
+    }
+    .primaryButton{
+        width: 70%;
+        height: 50px;
+        vertical-align: middle;
+        padding-block: 10px;
+    }
+
     h1 {
         font-size: 1.75rem;
     }
@@ -58,7 +71,7 @@
         font-family: Fredoka One;
         color: var(--color-primary-button);
         font-weight: bolder;
-        font-size: 20px;
+        font-size: 26px;
     }
 
     .heroheading {
@@ -102,8 +115,8 @@
         width: 50%;
     } */
 
-    .row.g-1>div:nth-child(1),
-    .row.g-1>div:nth-child(2) {
+    .row.g-1 > div:nth-child(1),
+    .row.g-1 > div:nth-child(2) {
         margin-bottom: 1px;
     }
 
@@ -288,7 +301,6 @@
     }
 }
 
-
 /* ===== DESKTOP BREAKPOINTS (min-width: 992px) ===== */
 
 @media (min-width: 992px) {
@@ -351,10 +363,8 @@
 
     .btn-primary-action {
         font-size: 14px;
-        width: auto
+        width: auto;
     }
-
-
 
     .btn-nav-primary,
     .btn-nav-secondary {
