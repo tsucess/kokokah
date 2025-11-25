@@ -28,9 +28,26 @@
         vertical-align: middle;
         padding-block: 7px;
     }
- .img-margin{
-    margin-top: -70px;
- }
+    .aboutPrimaryButton{
+         width: 70%;
+        height: 40px;
+        vertical-align: middle;
+        padding-block: 7px;
+        padding-inline: 10px;
+        font-size: 13px;
+    }
+    .img-margin {
+        margin-top: -70px;
+    }
+    .outer-square {
+        width: 18px;
+        height: 18px;
+        border-radius: 4px;
+    }
+    .inner-circle {
+        width: 9px;
+        height: 9px;
+    }
     h1 {
         font-size: 1.75rem;
     }
@@ -166,6 +183,9 @@
 
     h4 {
         font-weight: bold;
+    }
+    .achievement-label {
+        font-size: 24px;
     }
 }
 
