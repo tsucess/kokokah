@@ -117,7 +117,7 @@
                     <div class="input-group">
                         <input type="email" class="form-control newsletter-input p-3" placeholder="Enter your email"
                             aria-label="Enter your email">
-                        <button class="btn fw-bold newsletter-button" type="button">Subscribe Now</button>
+                        <button class="btn fw-bold newsletter-button" type="button" >Subscribe Now</button>
                     </div>
                 </div>
             </div>
