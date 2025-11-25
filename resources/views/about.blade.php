@@ -3,16 +3,16 @@
 @section('content')
     <div class = "container-fluid p-3 banner d-flex align-items-center justify-content-center"
         style="background-color : #FDAF22; height:301px;">
-        <h1 class = "hero_header text-center typewriter">
+        <h2 class = "hero_header text-center typewriter">
             Kokokah is Africa’s Leading Digital Learning and Management Platform for Secondary Schools
-        </h1>
+        </h2>
     </div>
 
     <div class = "container-fluid px-3 px-lg-5 d-flex align-items-center">
         <div class = "row mt-4 bg-white g-4">
             <div class = "col-12 col-md-6 col-lg-6 my-auto fade-section-left">
                 <img src = "images/577d4af220704c24ce21f8c1dcc8966b836fa580.jpg" class = "img-fluid w-100 "
-                    style="height:auto; max-height:332px; border-radius:16px;">
+                    style="height:auto; border-radius:16px; max-height:440px;">
             </div>
 
 
@@ -79,8 +79,8 @@
 
 
             <div class = "col-12 col-md-6 col-lg-6 mt-4 my-auto fade-section">
-                <img src = "images/c862c3d4125719cc339915f430e0b2bfa58a8971.png" class = "img-fluid"
-                    style="height:auto; border-radius:16px;">
+                <img src = "images/c862c3d4125719cc339915f430e0b2bfa58a8971.png" class = "img-fluid w-100"
+                    style="height:auto; border-radius:16px; max-height:440px;">
             </div>
 
 
@@ -99,7 +99,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class = "col-12 col-md-6 col-lg-6 my-auto">
+                <div class = "col-12 col-md-6 col-lg-6 ">
                     <img src = "images/our_story_img.jpg" class = "img-fluid animate__animated animate__pulse hero-img"
                         style="max-height:640px; height:auto; width:100%; display:block; border-radius:20px;">
                 </div>
@@ -161,7 +161,7 @@
                 <!-- Card 1 -->
                 <div class="col-md-6 col-lg-6 shakeX-on-scroll">
                     <div class="card h-100 border-1 shadow-sm  rounded-4 position-relative text-center p-3 p-lg-5"
-                        style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
+                        style = "border-top-right-radius: 40px; border-bottom-left-radius:40px;">
                         <!-- Icon -->
                         <div class="position-absolute top-0 start-50 translate-middle rounded-4 "
                             style="background: #FFF9F0;">
@@ -183,7 +183,7 @@
                 <!-- Card 2 -->
                 <div class="col-md-6 col-lg-6 shakeX-on-scroll">
                     <div class="card h-100 border-1 shadow-sm  rounded-4 position-relative text-center p-3 p-lg-5"
-                        style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
+                        style = "border-top-right-radius: 40px; border-bottom-left-radius:40px;">
                         <!-- Icon -->
                         <div class="position-absolute top-0 start-50 translate-middle rounded-4"
                             style="background: #FFF9F0;">
@@ -208,7 +208,7 @@
                 <!-- Card 3 -->
                 <div class="col-md-6 col-lg-6 d-flex shakeX-on-scroll">
                     <div class="card h-100 border-1 shadow-sm rounded-4 position-relative text-center p-3 p-lg-5"
-                        style="border-top-right-radius:60px; border-bottom-left-radius:60px;">
+                        style="border-top-right-radius:40px; border-bottom-left-radius:40px;">
 
                         <!-- Icon -->
                         <div class="position-absolute top-0 start-50 translate-middle rounded-4"
@@ -231,7 +231,7 @@
                 <!-- Card 4 -->
                 <div class="col-md-6 col-lg-6 d-flex shakeX-on-scroll">
                     <div class="card h-100 border-1 shadow-sm rounded-4 position-relative text-center p-3 p-lg-5"
-                        style="border-top-right-radius:60px; border-bottom-left-radius:60px;">
+                        style="border-top-right-radius:40px; border-bottom-left-radius:40px;">
 
                         <!-- Icon -->
                         <div class="position-absolute top-0 start-50 translate-middle rounded-4"
@@ -259,7 +259,7 @@
                 <!-- Card 5 -->
                 <div class="col-md-6 col-lg-6 d-flex shakeX-on-scroll">
                     <div class="card border-1 shadow-sm h-100 rounded-4 position-relative text-center p-3 p-lg-5"
-                        style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
+                        style = "border-top-right-radius: 40px; border-bottom-left-radius:40px;">
                         <!-- Icon -->
                         <div class="position-absolute top-0 start-50 translate-middle rounded-4"
                             style="background: #FFF9F0;">
@@ -281,7 +281,7 @@
                 <!-- Card 6  -->
                 <div class="col-md-6 col-lg-6 d-flex shakeX-on-scroll">
                     <div class="card border-1 shadow-sm h-100 rounded-4 position-relative text-center p-3 p-lg-5"
-                        style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
+                        style = "border-top-right-radius: 40px; border-bottom-left-radius:40px;">
                         <!-- Icon -->
                         <div class="position-absolute top-0 start-50 translate-middle rounded-4"
                             style="background: #FFF9F0;">

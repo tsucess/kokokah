@@ -48,6 +48,9 @@
         width: 9px;
         height: 9px;
     }
+    .newsletter-button{
+        padding: 10px 6px;
+    }
     h1 {
         font-size: 1.75rem;
     }
