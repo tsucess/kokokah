@@ -26,11 +26,12 @@ body {
 
 /* Typography styles moved to Tailwind - see resources/css/app.css */
 h1{
-  font-size: 32px;
+  font-size: 24px;
   color: var(--color-primary-button);
   line-height: 120%;
   font-weight: 600;
   font-family: 'Fredoka One', sans-serif;
+  
 }
 
 p {

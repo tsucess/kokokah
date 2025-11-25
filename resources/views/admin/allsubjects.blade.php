@@ -19,7 +19,7 @@
     <!-- Stats Row -->
     <div class="row g-4 mb-5">
       <div class="col-md-6 col-lg-3">
-        <div class="card border-0 shadow-sm rounded-4" style="background: linear-gradient(135deg, #004A53 0%, #006b7d 100%); border: 1px solid #e8e8e8;">
+        <div class="card h-100 border-0 shadow-sm rounded-4" style="background: linear-gradient(135deg, #004A53 0%, #006b7d 100%); border: 1px solid #e8e8e8;">
           <div class="card-body p-4">
             <div class="d-flex justify-content-between align-items-start">
               <div>
@@ -35,7 +35,7 @@
       </div>
 
       <div class="col-md-6 col-lg-3">
-        <div class="card border-0 shadow-sm rounded-4" style="background: linear-gradient(135deg, #FDAF22 0%, #ffc857 100%); border: 1px solid #e8e8e8;">
+        <div class="card h-100 border-0 shadow-sm rounded-4" style="background: linear-gradient(135deg, #FDAF22 0%, #ffc857 100%); border: 1px solid #e8e8e8;">
           <div class="card-body p-4">
             <div class="d-flex justify-content-between align-items-start">
               <div>
@@ -51,7 +51,7 @@
       </div>
 
       <div class="col-md-6 col-lg-3">
-        <div class="card border-0 shadow-sm rounded-4" style="background: linear-gradient(135deg, #6c757d 0%, #8a92a0 100%); border: 1px solid #e8e8e8;">
+        <div class="card h-100 border-0 shadow-sm rounded-4" style="background: linear-gradient(135deg, #6c757d 0%, #8a92a0 100%); border: 1px solid #e8e8e8;">
           <div class="card-body p-4">
             <div class="d-flex justify-content-between align-items-start">
               <div>
@@ -67,7 +67,7 @@
       </div>
 
       <div class="col-md-6 col-lg-3">
-        <div class="card border-0 shadow-sm rounded-4" style="background: linear-gradient(135deg, #28a745 0%, #3dd65f 100%); border: 1px solid #e8e8e8;">
+        <div class="card h-100 border-0 shadow-sm rounded-4" style="background: linear-gradient(135deg, #28a745 0%, #3dd65f 100%); border: 1px solid #e8e8e8;">
           <div class="card-body p-4">
             <div class="d-flex justify-content-between align-items-start">
               <div>
