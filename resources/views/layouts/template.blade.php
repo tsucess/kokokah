@@ -52,7 +52,7 @@
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
                 <img src="{{ asset('images/Kokokah_Logo.png') }}" alt="Kokokah Logo"
-                    class="animate__animated animate__pulse hero-img logo">
+                    class="animate__animated animate__pulse hero-img">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample05"
                 aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,10 +83,10 @@
                     </li>
                 </ul>
 
-                <div class="d-flex flex-column flex-lg-row gap-3 px-0">
+                {{-- <div class="d-flex flex-column flex-lg-row gap-3 px-0">
                     <button class="btn-nav-primary">Explore Kokokah</button>
                     <button class="btn-nav-secondary">Get a Demo</button>
-                </div>
+                </div> --}}
             </div>
         </div>
     </nav>

@@ -447,8 +447,8 @@
                     LOW DATA USAGE + OFFLINE ACCESS + SCHOOL MANAGEMENT SYSTEM
                 </p>
                 <div class="d-flex flex-column flex-sm-row gap-3">
-                    <a href="/login" class="btn btn-primary-action">Start Using Kokokah</a>
-                    <a href="/register" class=" btn btn-secondary-action">Signup Now</a>
+                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary-action">Start Using Kokokah</a>
+                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class=" btn btn-secondary-action">Signup Now</a>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-6 mt-5  mt-md-0 hero_img_container  text-center">
@@ -782,11 +782,13 @@
                     Learning Management System (LMS)—helping schools automate admin tasks, boost
                     student performance, and deliver modern digital learning in one seamless platform.
                 </p>
+                <div class="d-flex justify-content-center justify-content-md-start">
                 <button class = "primaryButton" type = "button">Coming Soon</button>
+                </div>
 
                 <div>
-                    <img src = "images/koodies.png" style="margin-top: -100px"
-                        class = "img-fluid w-100 w-md-50 h-auto float-end slide-up-image">
+                    <img src = "images/koodies.png"
+                        class = "img-fluid w-100 w-md-50 h-auto float-end slide-up-image img-margin">
                 </div>
             </div>
 

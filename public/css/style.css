@@ -482,6 +482,9 @@ margin: 10px;
 .ourproduct2 {
     border-radius: 30px;
 }
+.img-margin{
+    margin-top: -100px;
+}
 
 .pricingcolor {
     color: #454545;

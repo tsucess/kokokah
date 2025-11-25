@@ -28,7 +28,9 @@
         vertical-align: middle;
         padding-block: 7px;
     }
-
+ .img-margin{
+    margin-top: -70px;
+ }
     h1 {
         font-size: 1.75rem;
     }
