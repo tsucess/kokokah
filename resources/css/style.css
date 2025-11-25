@@ -1874,13 +1874,14 @@ div.contact-container a {
 .form-label {
     margin-bottom: 0;
 }
+
+
 .beta-overlay-container {
     background-color: rgba(0, 74, 83, 0.9);
-    height: 100%;
-    overflow-y: scroll;
-    position: fixed;
-    inset: 0;
+    /* position: fixed; */
 }
+
+
 .beta-dialog-container {
     border-radius: 24px;
     border: 1px solid #ffffff33;
@@ -1889,13 +1890,14 @@ div.contact-container a {
     background-color: transparent;
     max-width: 600px;
     margin-inline: auto;
-
-    height: auto;
 }
+
+
 .beta-content-container {
     padding-inline: 24px;
     padding-top: 24px;
 }
+
 .beta-overlay-line {
     width: 96px;
     height: 4px;
@@ -1955,6 +1957,7 @@ div.contact-container a {
     height: 1px;
     width: 100%;
 }
+
 .beta-join-btn {
     background-color: #ffbf4d;
     padding: 13px 25px;
