@@ -12,7 +12,7 @@
         <div class = "row mt-4 bg-white g-4">
             <div class = "col-12 col-md-6 col-lg-6 my-auto fade-section-left">
                 <img src = "images/577d4af220704c24ce21f8c1dcc8966b836fa580.jpg" class = "img-fluid w-100 "
-                    style="height:auto; border-radius:16px; max-height:440px;">
+                    style="max-width:752px; width:100%; height:382px; border-radius : 15px; object-fit:cover;">
             </div>
 
 
@@ -72,15 +72,11 @@
                     with accessible and affordable AI-powered learning
                     tools designed for African schools and curriculums..
                 </p>
-
-
-
             </div>
-
 
             <div class = "col-12 col-md-6 col-lg-6 mt-4 my-auto fade-section">
                 <img src = "images/c862c3d4125719cc339915f430e0b2bfa58a8971.png" class = "img-fluid w-100"
-                    style="height:auto; border-radius:16px; max-height:440px;">
+                    style="max-width:752px; width:100%; height:382px; border-radius : 15px; object-fit:cover;">
             </div>
 
 

@@ -1,12 +1,12 @@
 @extends('layouts.template')
 
 @section('content')
-    <section class="d-flex flex-column gap-1 justify-content-center align-items-center hero-banner">
+    <section class="container-fluid px-2 px-lg-5 d-flex flex-column gap-1 justify-content-center align-items-center hero-banner">
         <h2>Get in <span>Touch</span></h2>
         <p>Have questions about Kokokah? Our team is here to help you with anything you need.</p>
     </section>
-    <section class="py-5 px-5" style="background-color: #F18338;">
-        <div class="container">
+    <section class="" style="background-color: #F18338;">
+        <div class="container-fluid py-5 ">
             <div class="row g-5">
                 <div class="col col-12 col-lg-6 d-flex flex-column gap-3 form-container ">
                     <h2 class="form-title">Send us a <span style="color : #FDAF22;">Message</span></h2>
@@ -33,7 +33,7 @@
 
                 </div>
                 <div class="col col-12 col-lg-6">
-                    <div class="">
+                    <div class="container-fluid">
                         <div class="row mb-4">
                             <div class="col d-flex flex-column gap-3 contact-container">
                                 <h3><span style="color: #FDAF22;">Contact</span> Information</h3>

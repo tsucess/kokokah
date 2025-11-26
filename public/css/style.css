@@ -346,7 +346,6 @@ a.nav-link.active {
     background-size: contain;
 }
 
-
 .founder-video {
     max-width: 800px;
     width: 100%;
@@ -423,7 +422,7 @@ li {
 
 /* Media queries moved to responsiveness.css */
 
-p {
+p, ul, li {
     font-family: sitka;
     font-size: 15px;
     color: #4d525f;
@@ -1132,8 +1131,8 @@ footer p {
     /* margin-top: 60px; */
 }
 
-.bgLms{
-    background: url('../images/bg-lms.png');
+.bgLms {
+    background: url("../images/bg-lms.png");
     padding: 60px 20px;
 }
 
@@ -2002,4 +2001,13 @@ div.contact-container a {
     font-size: 14.6px;
     color: #ffffffcc;
     border: none;
+}
+
+ .kokokah-logo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 60px; /* Adjust */
+  pointer-events: none;
+  z-index: 9999;
 }

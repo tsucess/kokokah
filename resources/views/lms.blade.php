@@ -12,7 +12,7 @@
                     Kokokah's learning management system is built to revolutionize how students study, how teachers teach,
                     and how schools manage learning.
                 </p>
-                <button class="btn btn-primary-action">Create a free account</button>
+                <button class="btn btn-primary-action align-self-start">Create a free account</button>
             </div>
             <div class="col-12 col-md-6 col-lg-6 text-center mt-4 mt-md-0">
                 <img src="images/objects.png" class="img-fluid" alt="LMS Illustration">
@@ -25,7 +25,7 @@
 
         <div class="row align-items-center">
             <div class="col-12 col-md-6 col-lg-6 mb-4 mb-md-0">
-                <img src="images/llm-hero-img.jpg" class="img-fluid" alt="Kokokah LMS" style="border-radius: 16px;">
+                <img src="images/llm-hero-img.jpg" class="img-fluid" alt="Kokokah LMS" style="max-width:752px; width:100%; height:382px; border-radius : 15px; object-fit:cover;">
             </div>
             <div class="col-12 col-md-6 col-lg-6 d-flex flex-column gap-3">
                 <h2 class="fw-bold section-heading">
@@ -37,7 +37,7 @@
                     South Africa, our mission is simple — to give every learner from any background the opportunity to excel
                     with ease.
                 </p>
-                <button class="btn btn-primary-action">Create a free account</button>
+                <button class="btn btn-primary-action align-self-start">Create a free account</button>
             </div>
         </div>
 
