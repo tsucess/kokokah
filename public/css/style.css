@@ -2002,3 +2002,109 @@ div.contact-container a {
     color: #ffffffcc;
     border: none;
 }
+.sms-hero{
+    background-color: #F56824;
+}
+.tagline-text{
+    font-size: 14px;
+    color: #FFFFFF;
+
+}
+.sms-hero-btn{
+    background-color: #FDAF22;
+    padding: 16px 20px;
+    border-radius: 4px;
+    color: #311507;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+}
+.sms-hero-label{
+    color: #FFFFFF;
+    font-size: 16px;
+    margin-bottom: 0;
+}
+.sms-feature-title{
+    color: #F56824;
+    font-weight: 600;
+    padding-block: 26px;
+}
+.sms-feature-card{
+    border: 1px solid #DFE1E6;
+    gap: 12px;
+    padding: 20px 24px;
+    color: #000F11;
+    background-color: transparent;
+    border-radius: 12px;
+}
+.sms-feature-card-accent{
+    background-color: #FDAF22;
+    color: #fff;
+    border: none;
+}
+.sms-feature-icon-container{
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #FFFFFF80;
+}
+.sms-feature-icon-container-accent{
+    background-color: #00000080;
+}
+.sms-reason-card{
+    border: 0.5px solid #C4C4C4;
+    border-radius: 20px;
+    padding: 20px;
+
+}
+
+.swiper {
+  width: 100%;
+  padding: 30px 0;
+}
+
+.swiper-slide {
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  border-radius: 20px;
+  padding: 20px;
+
+}
+
+.swiper-slide-quote{
+font-size: 96px;
+color: #34364A;
+font-weight: 600;
+display: inline-block;
+max-height: 50px;
+}
+.swiper-slide-img{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+
+/* Remove default Swiper arrow icons completely */
+.button-prev::after,
+.button-next::after {
+  content: "";
+  background: none !important;
+  display: none !important;
+}
+
+
+.swiper-button-next,
+.swiper-button-prev {
+  border: 2px solid #888888;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+}
+
+
