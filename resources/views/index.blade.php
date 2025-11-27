@@ -1,6 +1,11 @@
 @extends('layouts.template')
 
 @section('content')
+    {{-- mascot  --}}
+
+
+  <img src="./images/book-icon.png" class="kokokah-logo" />
+
     <!-- Modal Section -->
 
     {{-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
@@ -447,8 +452,10 @@
                     LOW DATA USAGE + OFFLINE ACCESS + SCHOOL MANAGEMENT SYSTEM
                 </p>
                 <div class="d-flex flex-column flex-sm-row gap-3">
-                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary-action">Start Using Kokokah</a>
-                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class=" btn btn-secondary-action">Signup Now</a>
+                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary-action">Start Using
+                        Kokokah</a>
+                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class=" btn btn-secondary-action">Signup
+                        Now</a>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-6 mt-5  mt-md-0 hero_img_container  text-center">
@@ -783,7 +790,7 @@
                     student performance, and deliver modern digital learning in one seamless platform.
                 </p>
                 <div class="d-flex justify-content-center justify-content-md-start">
-                <button class = "primaryButton" type = "button">Coming Soon</button>
+                    <button class = "primaryButton" type = "button">Coming Soon</button>
                 </div>
 
                 <div>
@@ -796,7 +803,7 @@
     </div>
 
 
-    <div class="container text-center mt-5 py-5 achievement-section">
+    <div class="container-fluid text-center mt-5 px-3 px-lg-5 py-5 achievement-section">
         <p class="achievement-label">Kokokah has industry-leading renewals of above 80%
         </p>
         <!-- Section Title -->
@@ -996,5 +1003,20 @@
                 }
             });
         });
+const logo = document.querySelector(".kokokah-logo");
+
+gsap.set(logo, { xPercent: -50, yPercent: -50 });
+
+window.addEventListener("mousemove", (e) => {
+  gsap.to(logo, {
+    x: e.clientX,
+    y: e.clientY,
+    rotation: (e.clientX / window.innerWidth - 0.5) * 15,
+    duration: 0.35,
+    ease: "power3.out"
+  });
+});
+
+
     </script>
 @endsection

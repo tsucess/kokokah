@@ -3,16 +3,16 @@
 @section('content')
     <div class = "container-fluid p-3 banner d-flex align-items-center justify-content-center"
         style="background-color : #FDAF22; height:301px;">
-        <h1 class = "hero_header text-center typewriter">
+        <h2 class = "hero_header text-center typewriter">
             Kokokah is Africa’s Leading Digital Learning and Management Platform for Secondary Schools
-        </h1>
+        </h2>
     </div>
 
     <div class = "container-fluid px-3 px-lg-5 d-flex align-items-center">
         <div class = "row mt-4 bg-white g-4">
             <div class = "col-12 col-md-6 col-lg-6 my-auto fade-section-left">
                 <img src = "images/577d4af220704c24ce21f8c1dcc8966b836fa580.jpg" class = "img-fluid w-100 "
-                    style="height:auto; max-height:332px; border-radius:16px;">
+                    style="max-width:752px; width:100%; height:382px; border-radius : 15px; object-fit:cover;">
             </div>
 
 
@@ -72,15 +72,11 @@
                     with accessible and affordable AI-powered learning
                     tools designed for African schools and curriculums..
                 </p>
-
-
-
             </div>
 
-
             <div class = "col-12 col-md-6 col-lg-6 mt-4 my-auto fade-section">
-                <img src = "images/c862c3d4125719cc339915f430e0b2bfa58a8971.png" class = "img-fluid"
-                    style="height:auto; border-radius:16px;">
+                <img src = "images/c862c3d4125719cc339915f430e0b2bfa58a8971.png" class = "img-fluid w-100"
+                    style="max-width:752px; width:100%; height:382px; border-radius : 15px; object-fit:cover;">
             </div>
 
 
@@ -94,47 +90,54 @@
         <div class = "container-fluid p-0 m-0">
             <div class = "row mt-4 ">
 
-                <div class ="mb-3 justify-content-center">
+                <div class ="mb-5 justify-content-center">
                     <h3 class = "fw-bold text-center text-white section-title">Our Story</h3>
                 </div>
             </div>
             <div class="row">
-                <div class = "col-12 col-md-6 col-lg-6 my-auto">
-                    <img src = "images/our_story_img.jpg" class = "img-fluid animate__animated animate__pulse hero-img"
-                        style="max-height:640px; height:auto; width:100%; display:block; border-radius:20px;">
+                <div class = "col-12 col-md-6 col-lg-6 mb-4 mb-mb-0 fade-section-left">
+                    <img src = "images/our_story_img.jpg" class = "img-fluid w-100"
+                        style="height:auto; display:block; border-radius:20px;">
                 </div>
 
 
-                <div class = "col-12 col-md-6 col-lg-6 my-auto">
-                    <p class="heroparagraph text-white">
-                        We began as a small but determined platform with a single goal:
-                        <b>to help Nigerian secondary school students study and pass their exams.</b>
-                        Back then, our offerings were limited — a narrow curriculum, few resources,
-                        and a focus solely on preparing students for tests. It worked, but we knew
-                        education could be so much more.<br><br>
-
-                        Over time, we listened to students, parents, and educators. We saw the challenges
-                        African learners face — from unequal access to quality materials, to the need for
-                        engaging, relevant content that goes beyond the exam hall. We realised we had to evolve.<br><br>
-
-                        That’s how <b>Kokokah</b> was born.<br><br>
-
-                        Today, Kokokah is more than just an exam-prep tool — it’s a complete <b>AI-powered
-                            Learning Management System</b> designed for African secondary schools and learners from
-                        <b>junior secondary to senior secondary level</b> wherever they are on the continent.
-                        We’ve expanded from a single-country focus to a <b>pan-African mission.</b><br><br>
-
-                        With <b>accessible mobile learning,</b> students can learn anywhere, even with
-                        low internet connectivity. Our <b>AI chatbot</b>
-                        tutor gives instant answers and personalised support.
-                        <b>Automated grading and feedback</b> make assessment faster and smarter.
-                        Our <b>content integration tools</b> empower educators to bring the best learning materials together
-                        in one place.<br><br>
-
-                        We’ve gone from limited resources to limitless possibilities. From local impact to continental
-                        reach. From preparing students for the next exam — to preparing them for the future.
-                    </p>
-
+                <div class = "col-12 col-md-6 col-lg-6 my-auto fade-section">
+                    <div class="d-flex flex-column gap-2">
+                        <p class="text-white">
+                            We began as a small but determined platform with a single goal:
+                            <b>to help Nigerian secondary school students study and pass their exams.</b>
+                            Back then, our offerings were limited — a narrow curriculum, few resources,
+                            and a focus solely on preparing students for tests. It worked, but we knew
+                            education could be so much more.
+                        </p>
+                        <p class="text-white">
+                            Over time, we listened to students, parents, and educators. We saw the challenges
+                            African learners face — from unequal access to quality materials, to the need for
+                            engaging, relevant content that goes beyond the exam hall. We realised we had to evolve.
+                        </p>
+                        <p class="text-white">
+                            That’s how <b>Kokokah</b> was born.
+                        </p>
+                        <p class="text-white">
+                            Today, Kokokah is more than just an exam-prep tool — it’s a complete <b>AI-powered
+                                Learning Management System</b> designed for African secondary schools and learners from
+                            <b>junior secondary to senior secondary level</b> wherever they are on the continent.
+                            We’ve expanded from a single-country focus to a <b>pan-African mission.</b>
+                        </p>
+                        <p class="text-white">
+                            With <b>accessible mobile learning,</b> students can learn anywhere, even with
+                            low internet connectivity. Our <b>AI chatbot</b>
+                            tutor gives instant answers and personalised support.
+                            <b>Automated grading and feedback</b> make assessment faster and smarter.
+                            Our <b>content integration tools</b> empower educators to bring the best learning materials
+                            together
+                            in one place.
+                        </p>
+                        <p class="text-white">
+                            We’ve gone from limited resources to limitless possibilities. From local impact to continental
+                            reach. From preparing students for the next exam — to preparing them for the future.
+                        </p>
+                    </div>
                 </div>
 
             </div>
@@ -161,7 +164,7 @@
                 <!-- Card 1 -->
                 <div class="col-md-6 col-lg-6 shakeX-on-scroll">
                     <div class="card h-100 border-1 shadow-sm  rounded-4 position-relative text-center p-3 p-lg-5"
-                        style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
+                        style = "border-top-right-radius: 40px; border-bottom-left-radius:40px;">
                         <!-- Icon -->
                         <div class="position-absolute top-0 start-50 translate-middle rounded-4 "
                             style="background: #FFF9F0;">
@@ -183,7 +186,7 @@
                 <!-- Card 2 -->
                 <div class="col-md-6 col-lg-6 shakeX-on-scroll">
                     <div class="card h-100 border-1 shadow-sm  rounded-4 position-relative text-center p-3 p-lg-5"
-                        style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
+                        style = "border-top-right-radius: 40px; border-bottom-left-radius:40px;">
                         <!-- Icon -->
                         <div class="position-absolute top-0 start-50 translate-middle rounded-4"
                             style="background: #FFF9F0;">
@@ -208,7 +211,7 @@
                 <!-- Card 3 -->
                 <div class="col-md-6 col-lg-6 d-flex shakeX-on-scroll">
                     <div class="card h-100 border-1 shadow-sm rounded-4 position-relative text-center p-3 p-lg-5"
-                        style="border-top-right-radius:60px; border-bottom-left-radius:60px;">
+                        style="border-top-right-radius:40px; border-bottom-left-radius:40px;">
 
                         <!-- Icon -->
                         <div class="position-absolute top-0 start-50 translate-middle rounded-4"
@@ -231,7 +234,7 @@
                 <!-- Card 4 -->
                 <div class="col-md-6 col-lg-6 d-flex shakeX-on-scroll">
                     <div class="card h-100 border-1 shadow-sm rounded-4 position-relative text-center p-3 p-lg-5"
-                        style="border-top-right-radius:60px; border-bottom-left-radius:60px;">
+                        style="border-top-right-radius:40px; border-bottom-left-radius:40px;">
 
                         <!-- Icon -->
                         <div class="position-absolute top-0 start-50 translate-middle rounded-4"
@@ -259,7 +262,7 @@
                 <!-- Card 5 -->
                 <div class="col-md-6 col-lg-6 d-flex shakeX-on-scroll">
                     <div class="card border-1 shadow-sm h-100 rounded-4 position-relative text-center p-3 p-lg-5"
-                        style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
+                        style = "border-top-right-radius: 40px; border-bottom-left-radius:40px;">
                         <!-- Icon -->
                         <div class="position-absolute top-0 start-50 translate-middle rounded-4"
                             style="background: #FFF9F0;">
@@ -281,7 +284,7 @@
                 <!-- Card 6  -->
                 <div class="col-md-6 col-lg-6 d-flex shakeX-on-scroll">
                     <div class="card border-1 shadow-sm h-100 rounded-4 position-relative text-center p-3 p-lg-5"
-                        style = "border-top-right-radius: 60px; border-bottom-left-radius:60px;">
+                        style = "border-top-right-radius: 40px; border-bottom-left-radius:40px;">
                         <!-- Icon -->
                         <div class="position-absolute top-0 start-50 translate-middle rounded-4"
                             style="background: #FFF9F0;">
