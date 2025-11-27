@@ -99,9 +99,9 @@
                         </div>
                         <div class="d-flex align-items-center gap-3 information2">
                             <div class="legend-dot"><span class="dot" style="background:var(--brand-green)"></span>
-                                Income</div>
+                                <p>Income</p></div>
                             <div class="legend-dot"><span class="dot" style="background:var(--brand-yellow)"></span>
-                                Profit</div>
+                               <p>Profit</p> </div>
                             <select class="form-select form-select-sm w-auto ms-2" style="border-radius:12px;">
                                 <option selected>Yearly</option>
                                 <option>Monthly</option>
@@ -119,11 +119,11 @@
             <!-- Recently Registered Users table (restored) -->
             <div class="table-card">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                    <div>
+                    <div class="d-flex flex-column gap-2">
                         <h6 class = "registeredusers">Recently Registered Users</h6>
                         <p class="small text-muted registeredusers" style="line-height: 1px;">Latest 10 registered users</p>
                     </div>
-                    <a href="/users" class="small text-dark fw-semibold text-decoration-none">View all users</a>
+                    <a href="/users" class=" text-dark fw-semibold text-decoration-none link-alluser">View all users</a>
                 </div>
 
                 <div class="table-responsive">

@@ -31,7 +31,7 @@ h1{
   line-height: 120%;
   font-weight: 600;
   font-family: 'Fredoka One', sans-serif;
-  
+
 }
 
 p {
@@ -75,15 +75,23 @@ p {
 h6.registeredusers {
     font-family: quicksand;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 16px;
     color: #000;
 }
 
 .registeredusers {
     font-family: quicksand;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 13px;
     color: #000;
+}
+a.link-alluser{
+    font-size: 14px;
+}
+
+thead.table-light th{
+    font-size: 14px;
+    color: #233255CC;
 }
 
 
@@ -387,7 +395,7 @@ main .container {
 
 
 
-@media(max-width:991px) {
+@media(max-width:1300px) {
     .stats-row {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -448,7 +456,7 @@ main .container {
 
 
 .stat-meta .label {
-    font-size: 14px;
+    font-size: 16px;
     color: var(--muted);
     font-weight: 700;
     text-transform: uppercase;
@@ -512,6 +520,9 @@ main .container {
     padding: 16px;
     border: 1px solid #eef6fa;
     box-shadow: 0 6px 18px rgba(15, 28, 36, .04);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
 }
 
 /* Footer */
