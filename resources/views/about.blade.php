@@ -95,13 +95,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class = "col-12 col-md-6 col-lg-6 ">
-                    <img src = "images/our_story_img.jpg" class = "img-fluid w-100  animate__animated animate__pulse hero-img"
+                <div class = "col-12 col-md-6 col-lg-6 mb-4 mb-mb-0 fade-section-left">
+                    <img src = "images/our_story_img.jpg" class = "img-fluid w-100"
                         style="height:auto; display:block; border-radius:20px;">
                 </div>
 
 
-                <div class = "col-12 col-md-6 col-lg-6 my-auto">
+                <div class = "col-12 col-md-6 col-lg-6 my-auto fade-section">
                     <div class="d-flex flex-column gap-2">
                         <p class="text-white">
                             We began as a small but determined platform with a single goal:
