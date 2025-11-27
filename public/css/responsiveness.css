@@ -200,6 +200,12 @@
     .achievement-label {
         font-size: 24px;
     }
+    .swiper-button-prev {
+  --swiper-navigation-sides-offset: 20%;
+}
+.swiper-button-next {
+  --swiper-navigation-sides-offset: 20%;
+}
 }
 
 @media (min-width: 768px) and (max-width: 991px) {

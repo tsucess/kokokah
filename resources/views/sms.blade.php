@@ -166,114 +166,119 @@
 
         </section>
         <!-- Swiper Container -->
-<div class="swiper mySwiper py-5" style="width: 100%;">
-  <div class="swiper-wrapper">
-    <div class="swiper-slide d-flex flex-column gap-5 flex-lg-row">
-        <div class="d-flex flex-column align-items-center gap-2 my-auto">
-            <h2>4.8</h2>
-            <div class="d-flex align-items-center gap-1">
-                <i class="fa-solid fa-star fa-xs" style="color: #FFC700;" ></i>
-                <i class="fa-solid fa-star fa-xs" style="color: #FFC700;"></i>
-                <i class="fa-solid fa-star fa-xs" style="color: #FFC700;"></i>
-                <i class="fa-solid fa-star fa-xs" style="color: #FFC700;"></i>
-                <i class="fa-regular fa-star fa-xs" style="color: #FFC700;"></i>
-            </div>
-        </div>
-        <div class="d-flex flex-column gap-4 align-items-center align-items-lg-start">
-            <div><i class="fa-solid fa-quote-left fa-2xl"></i></div>
+        <div class="swiper mySwiper py-5" style="width: 100%;">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide d-flex flex-column gap-5 flex-lg-row">
+                    <div class="d-flex flex-column align-items-center gap-2 my-auto">
+                        <h2>4.8</h2>
+                        <div class="d-flex align-items-center gap-1">
+                            <i class="fa-solid fa-star fa-xs" style="color: #FFC700;"></i>
+                            <i class="fa-solid fa-star fa-xs" style="color: #FFC700;"></i>
+                            <i class="fa-solid fa-star fa-xs" style="color: #FFC700;"></i>
+                            <i class="fa-solid fa-star fa-xs" style="color: #FFC700;"></i>
+                            <i class="fa-regular fa-star fa-xs" style="color: #FFC700;"></i>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column gap-4 align-items-center align-items-lg-start">
+                        <div><i class="fa-solid fa-quote-left fa-2xl"></i></div>
 
-            <div class="d-flex align-items-center gap-2">
-                <img src="./images/sms-testimonial-img.jpg" alt="" class="swiper-slide-img">
-                <div class="d-flex flex-column gap-1">
-                    <h6>Rizka Amalia</h6>
-                    <p>Penanya</p>
+                        <div class="d-flex align-items-center gap-2">
+                            <img src="./images/sms-testimonial-img.jpg" alt="" class="swiper-slide-img">
+                            <div class="d-flex flex-column gap-1">
+                                <h6>Rizka Amalia</h6>
+                                <p>Penanya</p>
+                            </div>
+                        </div>
+                        <p>Saya sudah banyak mencari tentang pertanyaan yang
+                            saya cari saat ini, dan di Brainly Reborn ini saya mendapatkan jawaban yang akurat dan simple.
+                        </p>
+                    </div>
                 </div>
-            </div>
-            <p >Saya sudah banyak mencari tentang pertanyaan yang
-saya cari saat ini, dan di Brainly Reborn ini saya mendapatkan jawaban yang akurat dan simple.</p>
-        </div>
-    </div>
-    <div class="swiper-slide d-flex flex-column gap-5 flex-lg-row">
-        <div class="d-flex flex-column align-items-center gap-2 my-auto">
-            <h2>4.8</h2>
-            <div class="d-flex align-items-center gap-1">
-                <i class="fa-solid fa-star fa-xs" style="color: #FFC700;" ></i>
-                <i class="fa-solid fa-star fa-xs" style="color: #FFC700;"></i>
-                <i class="fa-solid fa-star fa-xs" style="color: #FFC700;"></i>
-                <i class="fa-solid fa-star fa-xs" style="color: #FFC700;"></i>
-                <i class="fa-regular fa-star fa-xs" style="color: #FFC700;"></i>
-            </div>
-        </div>
-        <div class="d-flex flex-column gap-4 align-items-center align-items-lg-start">
-            <div><i class="fa-solid fa-quote-left fa-2xl"></i></div>
+                <div class="swiper-slide d-flex flex-column gap-5 flex-lg-row">
+                    <div class="d-flex flex-column align-items-center gap-2 my-auto">
+                        <h2>4.8</h2>
+                        <div class="d-flex align-items-center gap-1">
+                            <i class="fa-solid fa-star fa-xs" style="color: #FFC700;"></i>
+                            <i class="fa-solid fa-star fa-xs" style="color: #FFC700;"></i>
+                            <i class="fa-solid fa-star fa-xs" style="color: #FFC700;"></i>
+                            <i class="fa-solid fa-star fa-xs" style="color: #FFC700;"></i>
+                            <i class="fa-regular fa-star fa-xs" style="color: #FFC700;"></i>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column gap-4 align-items-center align-items-lg-start">
+                        <div><i class="fa-solid fa-quote-left fa-2xl"></i></div>
 
-            <div class="d-flex align-items-center gap-2">
-                <img src="./images/sms-testimonial-img.jpg" alt="" class="swiper-slide-img">
-                <div class="d-flex flex-column gap-1">
-                    <h6>Rizka Amalia</h6>
-                    <p>Penanya</p>
+                        <div class="d-flex align-items-center gap-2">
+                            <img src="./images/sms-testimonial-img.jpg" alt="" class="swiper-slide-img">
+                            <div class="d-flex flex-column gap-1">
+                                <h6>Rizka Amalia</h6>
+                                <p>Penanya</p>
+                            </div>
+                        </div>
+                        <p>Saya sudah banyak mencari tentang pertanyaan yang
+                            saya cari saat ini, dan di Brainly Reborn ini saya mendapatkan jawaban yang akurat dan simple.
+                        </p>
+                    </div>
                 </div>
-            </div>
-            <p >Saya sudah banyak mencari tentang pertanyaan yang
-saya cari saat ini, dan di Brainly Reborn ini saya mendapatkan jawaban yang akurat dan simple.</p>
-        </div>
-    </div>
-    <div class="swiper-slide d-flex flex-column gap-5 flex-lg-row">
-        <div class="d-flex flex-column align-items-center gap-2 my-auto">
-            <h2>4.8</h2>
-            <div class="d-flex align-items-center gap-1">
-                <i class="fa-solid fa-star fa-xs" style="color: #FFC700;" ></i>
-                <i class="fa-solid fa-star fa-xs" style="color: #FFC700;"></i>
-                <i class="fa-solid fa-star fa-xs" style="color: #FFC700;"></i>
-                <i class="fa-solid fa-star fa-xs" style="color: #FFC700;"></i>
-                <i class="fa-regular fa-star fa-xs" style="color: #FFC700;"></i>
-            </div>
-        </div>
-        <div class="d-flex flex-column gap-4 align-items-center align-items-lg-start">
-            <div><i class="fa-solid fa-quote-left fa-2xl"></i></div>
+                <div class="swiper-slide d-flex flex-column gap-5 flex-lg-row">
+                    <div class="d-flex flex-column align-items-center gap-2 my-auto">
+                        <h2>4.8</h2>
+                        <div class="d-flex align-items-center gap-1">
+                            <i class="fa-solid fa-star fa-xs" style="color: #FFC700;"></i>
+                            <i class="fa-solid fa-star fa-xs" style="color: #FFC700;"></i>
+                            <i class="fa-solid fa-star fa-xs" style="color: #FFC700;"></i>
+                            <i class="fa-solid fa-star fa-xs" style="color: #FFC700;"></i>
+                            <i class="fa-regular fa-star fa-xs" style="color: #FFC700;"></i>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column gap-4 align-items-center align-items-lg-start">
+                        <div><i class="fa-solid fa-quote-left fa-2xl"></i></div>
 
-            <div class="d-flex align-items-center gap-2">
-                <img src="./images/sms-testimonial-img.jpg" alt="" class="swiper-slide-img">
-                <div class="d-flex flex-column gap-1">
-                    <h6>Rizka Amalia</h6>
-                    <p>Penanya</p>
+                        <div class="d-flex align-items-center gap-2">
+                            <img src="./images/sms-testimonial-img.jpg" alt="" class="swiper-slide-img">
+                            <div class="d-flex flex-column gap-1">
+                                <h6>Rizka Amalia</h6>
+                                <p>Penanya</p>
+                            </div>
+                        </div>
+                        <p>Saya sudah banyak mencari tentang pertanyaan yang
+                            saya cari saat ini, dan di Brainly Reborn ini saya mendapatkan jawaban yang akurat dan simple.
+                        </p>
+                    </div>
                 </div>
+
             </div>
-            <p >Saya sudah banyak mencari tentang pertanyaan yang
-saya cari saat ini, dan di Brainly Reborn ini saya mendapatkan jawaban yang akurat dan simple.</p>
+
+            <!-- arrows -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
         </div>
-    </div>
-
-  </div>
-
-  <!-- arrows -->
-  <div class="swiper-button-next"><i class="fa-solid fa-angle-right" style="color: #888888;"></i></div>
-  <div class="swiper-button-prev"><i class="fa-solid fa-angle-left" style="color: #888888;"></i></div>
-</div>
 
 
 
     </section>
     <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
     <script>
-var swiper = new Swiper(".mySwiper", {
-  slidesPerView: 1.2,
-  centeredSlides: true,
-  spaceBetween: 20,
-  loop: true,
-  grabCursor: true,
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: 1.2,
+            centeredSlides: true,
+            spaceBetween: 20,
+            loop: true,
+            grabCursor: true,
 
-  navigation: {
-    nextEl: ".swiper-button-next",
-    prevEl: ".swiper-button-prev",
-  },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
 
-  breakpoints: {
-    768: { slidesPerView: 1.5 },
-    1024: { slidesPerView: 2 }
-  }
-});
-
-
+            breakpoints: {
+                768: {
+                    slidesPerView: 1.5
+                },
+                1024: {
+                    slidesPerView: 2
+                }
+            }
+        });
     </script>
 @endsection

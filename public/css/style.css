@@ -2088,23 +2088,58 @@ max-height: 50px;
 }
 
 /* Remove default Swiper arrow icons completely */
-.button-prev::after,
-.button-next::after {
-  content: "";
-  background: none !important;
+.swiper-button-next,
+.swiper-button-prev {
+  --swiper-navigation-size: 30px;
+   --swiper-navigation-color: #888888;/* reduce button size */
+
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  content: '' !important;
   display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  opacity: 0 !important;
 }
 
 
 .swiper-button-next,
 .swiper-button-prev {
-  border: 2px solid #888888;
+  border: 1.5px solid #888888;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 42px;
-  height: 42px;
+  width: 62px;
+  height: 62px;
   border-radius: 50%;
+  padding: 8px;
+}
+.swiper-slide {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.swiper-slide-active {
+  transform: scale(1.25);             /* pop forward */
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);  /* stronger shadow */
+  z-index: 10;                         /* ensure it's in front */
+  border-radius: 12px;                 /* optional */
+}
+
+.swiper-slide-next,
+.swiper-slide-prev {
+  transform: scale(0.95);              /* push other slides back slightly */
+  opacity: 0.8;                        /* optional dim effect */
+}
+
+.kokokah-logo{
+    width: 60px;
+    height: 60px;
+    position: fixed;
+  left: 0;
+  top: 0;
+  pointer-events: none; /* important so it doesn't block the mouse */
+  z-index: 9999;
+}
 
