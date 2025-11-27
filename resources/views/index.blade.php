@@ -4,7 +4,7 @@
     {{-- mascot  --}}
 
 
-  <img src="./images/book-icon.png" class="kokokah-logo" />
+    <img src="./images/book-icon.png" class="kokokah-logo" />
 
     <!-- Modal Section -->
 
@@ -1003,20 +1003,21 @@
                 }
             });
         });
-const logo = document.querySelector(".kokokah-logo");
+        const logo = document.querySelector(".kokokah-logo");
 
-gsap.set(logo, { xPercent: -50, yPercent: -50 });
+        gsap.set(logo, {
+            xPercent: -50,
+            yPercent: -50
+        });
 
-window.addEventListener("mousemove", (e) => {
-  gsap.to(logo, {
-    x: e.clientX,
-    y: e.clientY,
-    rotation: (e.clientX / window.innerWidth - 0.5) * 15,
-    duration: 0.35,
-    ease: "power3.out"
-  });
-});
-
-
+        window.addEventListener("mousemove", (e) => {
+            gsap.to(logo, {
+                x: e.clientX,
+                y: e.clientY,
+                rotation: (e.clientX / window.innerWidth - 0.5) * 15,
+                duration: 0.35,
+                ease: "power3.out"
+            });
+        });
     </script>
 @endsection
