@@ -94,6 +94,16 @@ thead.table-light th{
     color: #233255CC;
 }
 
+thead th.allSubject{
+    font-size: 14px;
+    color: #000000;
+    font-weight: 600;
+}
+thead th.useractivity-table-title{
+    font-size: 14px;
+    color: #000000;
+    font-weight: 600;
+}
 
 .subjects {
     font-family: Sitka;

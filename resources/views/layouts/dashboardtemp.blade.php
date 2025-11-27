@@ -21,10 +21,10 @@
 
     <!-- Inter font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    
-    
+
+
      <link rel="stylesheet" href="{{ asset('css/style_theme.css') }}">
      <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
     <link rel="stylesheet" href="{{ asset('css/access.css') }}">
@@ -79,21 +79,21 @@
             <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
                 data-bs-toggle="collapse" href="#subjectsMenu" role="button" aria-expanded="true"
                 aria-controls="subjectsMenu">
-                <span><i class="fa-solid fa-book-open me-2 pe-2"></i> Subject Management</span>
+                <span><i class="fa-solid fa-book-open me-2 pe-2"></i> Course Management</span>
                 <i class="fa-solid fa-chevron-down chevron-icon"></i>
             </a>
 
 
             <!-- Dropdown items -->
             <div class="collapse ps-4" id="subjectsMenu">
-                <a class="nav-item-link d-block nav-child" href="/subjects">All Subject</a>
-                <a class="nav-item-link d-block nav-child" href="/createsubject">Create New Subject</a>
-                <a class="nav-item-link d-block nav-child" href="/categories">Subject Categories</a>
+                <a class="nav-item-link d-block nav-child" href="/subjects">All Courses</a>
+                <a class="nav-item-link d-block nav-child" href="/createsubject">Create New Course</a>
+                <a class="nav-item-link d-block nav-child" href="/categories">Course Categories</a>
                 <a class="nav-item-link d-block nav-child" href="/curriculum-categories">Curriculum Categories</a>
                 <a class="nav-item-link d-block nav-child" href="/levels">Levels & Classes</a>
                 <a class="nav-item-link d-block nav-child" href="/terms">Academic Terms</a>
-                <a class="nav-item-link d-block nav-child" href="/rating">Subject Reviews & Rating</a>
-                <a class="nav-item-link d-block nav-child" href="#">Subject Approval</a>
+                <a class="nav-item-link d-block nav-child" href="/rating">Course Reviews & Rating</a>
+                <a class="nav-item-link d-block nav-child" href="#">Course Approval</a>
             </div>
 
             <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
@@ -264,42 +264,45 @@
 
         // Active navigation state detection
         function setActiveNavigation() {
-            const currentPath = window.location.pathname;
+    const currentPath = window.location.pathname;
 
-            // Remove active class from all nav items
-            document.querySelectorAll('.nav-item-link, .nav-child').forEach(link => {
-                link.classList.remove('active');
-            });
+    // Clear previous active states
+    document.querySelectorAll('.nav-item-link, .nav-child').forEach(link => {
+        link.classList.remove('active');
+    });
 
-            // Check each nav link
-            document.querySelectorAll('.nav-item-link, .nav-child').forEach(link => {
-                const href = link.getAttribute('href');
-                if (href && currentPath.includes(href.replace('/', ''))) {
-                    link.classList.add('active');
+    // Loop each nav link
+    document.querySelectorAll('.nav-item-link, .nav-child').forEach(link => {
+        const href = link.getAttribute('href');
 
-                    // If it's a child item, expand parent and mark parent as active
-                    if (link.classList.contains('nav-child')) {
-                        const parentMenu = link.closest('.collapse');
-                        if (parentMenu) {
-                            const parentToggle = document.querySelector(`[href="#${parentMenu.id}"]`);
-                            if (parentToggle) {
-                                parentToggle.classList.add('active');
-                                // Expand the menu
-                                const bsCollapse = new bootstrap.Collapse(parentMenu, {
-                                    toggle: false
-                                });
-                                bsCollapse.show();
-                            }
-                        }
-                    }
+        // Skip non-URL links (e.g., parent toggles with href="#subjectsMenu")
+        if (!href || href.startsWith('#')) return;
+
+        // Exact match only
+        if (href === currentPath) {
+            link.classList.add('active');
+
+            // If it's a child link, open parent dropdown & activate parent
+            if (link.classList.contains('nav-child')) {
+                const parentMenu = link.closest('.collapse');
+                if (parentMenu) {
+                    const parentToggle = document.querySelector(`[href="#${parentMenu.id}"]`);
+                   
+
+                    const bsCollapse = new bootstrap.Collapse(parentMenu, {
+                        toggle: false
+                    });
+                    bsCollapse.show();
                 }
-            });
-
-            // Special case for dashboard
-            if (currentPath === '/dashboard' || currentPath === '/') {
-                document.getElementById('dashboardLink')?.classList.add('active');
             }
         }
+    });
+
+    // Dashboard special case
+    if (currentPath === '/dashboard' || currentPath === '/') {
+        document.getElementById('dashboardLink')?.classList.add('active');
+    }
+}
 
         // Call on page load
         document.addEventListener('DOMContentLoaded', setActiveNavigation);

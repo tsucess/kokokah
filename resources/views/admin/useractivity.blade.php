@@ -8,7 +8,7 @@
                 <div>
                     <h1 class="">
                         User Activity Logs</h1>
-                    <p class="text-muted" style="font-size: 0.95rem;">Here overview of your</p>
+                    <p class="text-muted" >Here overview of your</p>
                 </div>
                 <div>
                     <button class="btn px-4 py-2 fw-semibold" style="background-color: #FDAF22; border: none; color: white;">
@@ -56,85 +56,33 @@
                         <table class="table table-hover align-middle activity-table">
                             <thead>
                                 <tr style="background-color: #f0f0f0; border-bottom: 2px solid #e8e8e8;">
-                                    <th style="color: #333; font-weight: 600; padding: 1rem;">No</th>
-                                    <th style="color: #333; font-weight: 600; padding: 1rem;">Users</th>
-                                    <th style="color: #333; font-weight: 600; padding: 1rem;">Action</th>
-                                    <th style="color: #333; font-weight: 600; padding: 1rem;">Timestamp</th>
-                                    <th style="color: #333; font-weight: 600; padding: 1rem;">Status</th>
+                                    <th class="useractivity-table-title">No</th>
+                                    <th class="useractivity-table-title">Users</th>
+                                    <th class="useractivity-table-title">Action</th>
+                                    <th class="useractivity-table-title">Timestamp</th>
+                                    <th class="useractivity-table-title">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <!-- Row 1 -->
                                 <tr style="border-bottom: 1px solid #e8e8e8;">
-                                    <td style="padding: 1rem; color: #666;">01</td>
+                                    <td style="padding: 1rem; color: #666; font-size:14px;">01</td>
                                     <td style="padding: 1rem;">
                                         <div class="d-flex align-items-center">
                                             <img src="images/jimmy.png" class="rounded-circle me-3" alt="User"
                                                 width="40" height="40" style="object-fit: cover;">
-                                            <span style="color: #333; font-weight: 500;">Winner Effiong</span>
+                                            <span style="color: #333; font-weight: 500; font-size:14px;">Winner Effiong</span>
                                         </div>
                                     </td>
-                                    <td style="padding: 1rem; color: #666;">Enrolled in "React"</td>
-                                    <td style="padding: 1rem; color: #666;">Sept 01, 2025</td>
+                                    <td style="padding: 1rem; color: #666; font-size:14px;">Enrolled in "React"</td>
+                                    <td style="padding: 1rem; color: #666; font-size:14px;">Sept 01, 2025</td>
                                     <td style="padding: 1rem;">
                                         <span class="badge"
-                                            style="background-color: #28a745; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">Completed</span>
+                                            style="background-color: #28a745; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem; font-size:14px;">Completed</span>
                                     </td>
                                 </tr>
 
-                                <!-- Row 2 -->
-                                <tr style="border-bottom: 1px solid #e8e8e8;">
-                                    <td style="padding: 1rem; color: #666;">02</td>
-                                    <td style="padding: 1rem;">
-                                        <div class="d-flex align-items-center">
-                                            <img src="images/jimmy.png" class="rounded-circle me-3" alt="User"
-                                                width="40" height="40" style="object-fit: cover;">
-                                            <span style="color: #333; font-weight: 500;">Winner Effiong</span>
-                                        </div>
-                                    </td>
-                                    <td style="padding: 1rem; color: #666;">Subscribed to "Premium"</td>
-                                    <td style="padding: 1rem; color: #666;">Sept 01, 2025</td>
-                                    <td style="padding: 1rem;">
-                                        <span class="badge"
-                                            style="background-color: #004A53; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">Active</span>
-                                    </td>
-                                </tr>
 
-                                <!-- Row 3 -->
-                                <tr style="border-bottom: 1px solid #e8e8e8;">
-                                    <td style="padding: 1rem; color: #666;">03</td>
-                                    <td style="padding: 1rem;">
-                                        <div class="d-flex align-items-center">
-                                            <img src="images/jimmy.png" class="rounded-circle me-3" alt="User"
-                                                width="40" height="40" style="object-fit: cover;">
-                                            <span style="color: #333; font-weight: 500;">Winner Effiong</span>
-                                        </div>
-                                    </td>
-                                    <td style="padding: 1rem; color: #666;">Completed "Python Basics"</td>
-                                    <td style="padding: 1rem; color: #666;">Aug 28, 2025</td>
-                                    <td style="padding: 1rem;">
-                                        <span class="badge"
-                                            style="background-color: #ffc107; color: #333; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">Pending</span>
-                                    </td>
-                                </tr>
-
-                                <!-- Row 4 -->
-                                <tr style="border-bottom: 1px solid #e8e8e8;">
-                                    <td style="padding: 1rem; color: #666;">04</td>
-                                    <td style="padding: 1rem;">
-                                        <div class="d-flex align-items-center">
-                                            <img src="images/jimmy.png" class="rounded-circle me-3" alt="User"
-                                                width="40" height="40" style="object-fit: cover;">
-                                            <span style="color: #333; font-weight: 500;">Winner Effiong</span>
-                                        </div>
-                                    </td>
-                                    <td style="padding: 1rem; color: #666;">Dropped "Advanced CSS"</td>
-                                    <td style="padding: 1rem; color: #666;">Aug 25, 2025</td>
-                                    <td style="padding: 1rem;">
-                                        <span class="badge"
-                                            style="background-color: #dc3545; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">Dropped</span>
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>

@@ -6,13 +6,13 @@
     <!-- Header Section -->
     <div class="d-flex justify-content-between align-items-start mb-5">
       <div>
-        <h1 class="fw-bold mb-2" >All Subjects</h1>
+        <h1 class="fw-bold mb-2" >All Courses</h1>
         <p class="text-muted" style="font-size: 0.95rem;">Here overview of your</p>
       </div>
       <div>
-        <button class="btn px-4 py-2 fw-semibold" style="background-color: #004A53; border: none; color: white;">
+        <a href='/createsubject' class="btn px-4 py-2 fw-semibold" style="background-color: #004A53; border: none; color: white;">
           <i class="fa-solid fa-plus me-2"></i> Create New Course
-        </button>
+        </a>
       </div>
     </div>
 
@@ -21,7 +21,7 @@
       <div class="col-md-6 col-lg-3">
         <div class="card h-100 border-0 shadow-sm rounded-4" style="background: linear-gradient(135deg, #004A53 0%, #006b7d 100%); border: 1px solid #e8e8e8;">
           <div class="card-body p-4">
-            <div class="d-flex justify-content-between align-items-start">
+            <div class="d-flex justify-content-between align-items-start gap-2">
               <div>
                 <p class="text-white-50 mb-2" style="font-size: 0.9rem;">Active Subjects</p>
                 <h3 class="fw-bold text-white mb-0">50</h3>
@@ -37,7 +37,7 @@
       <div class="col-md-6 col-lg-3">
         <div class="card h-100 border-0 shadow-sm rounded-4" style="background: linear-gradient(135deg, #FDAF22 0%, #ffc857 100%); border: 1px solid #e8e8e8;">
           <div class="card-body p-4">
-            <div class="d-flex justify-content-between align-items-start">
+            <div class="d-flex justify-content-between align-items-start gap-2">
               <div>
                 <p class="text-white-50 mb-2" style="font-size: 0.9rem; color: rgba(0,0,0,0.3);">Pending Students</p>
                 <h3 class="fw-bold text-white mb-0" style="color: #333;">308</h3>
@@ -53,7 +53,7 @@
       <div class="col-md-6 col-lg-3">
         <div class="card h-100 border-0 shadow-sm rounded-4" style="background: linear-gradient(135deg, #6c757d 0%, #8a92a0 100%); border: 1px solid #e8e8e8;">
           <div class="card-body p-4">
-            <div class="d-flex justify-content-between align-items-start">
+            <div class="d-flex justify-content-between align-items-start gap-2">
               <div>
                 <p class="text-white-50 mb-2" style="font-size: 0.9rem;">Draft Courses</p>
                 <h3 class="fw-bold text-white mb-0">100</h3>
@@ -69,7 +69,7 @@
       <div class="col-md-6 col-lg-3">
         <div class="card h-100 border-0 shadow-sm rounded-4" style="background: linear-gradient(135deg, #28a745 0%, #3dd65f 100%); border: 1px solid #e8e8e8;">
           <div class="card-body p-4">
-            <div class="d-flex justify-content-between align-items-start">
+            <div class="d-flex justify-content-between align-items-start gap-2">
               <div>
                 <p class="text-white-50 mb-2" style="font-size: 0.9rem;">Free Subjects</p>
                 <h3 class="fw-bold text-white mb-0">50</h3>
@@ -124,35 +124,35 @@
           <table class="table table-hover align-middle subjects-table">
             <thead>
               <tr style="background-color: #f0f0f0; border-bottom: 2px solid #e8e8e8;">
-                <th style="color: #333; font-weight: 600; padding: 1rem;">No</th>
-                <th style="color: #333; font-weight: 600; padding: 1rem;">Course Name</th>
-                <th style="color: #333; font-weight: 600; padding: 1rem;">Date Created</th>
-                <th style="color: #333; font-weight: 600; padding: 1rem;">Progress</th>
-                <th style="color: #333; font-weight: 600; padding: 1rem;">Ratings</th>
-                <th style="color: #333; font-weight: 600; padding: 1rem;">Status</th>
-                <th style="color: #333; font-weight: 600; padding: 1rem;">Action</th>
+                <th class="allSubject">No</th>
+                <th class="allSubject">Course Name</th>
+                <th class="allSubject">Date Created</th>
+                <th class="allSubject">Progress</th>
+                <th class="allSubject">Ratings</th>
+                <th class="allSubject">Status</th>
+                <th class="allSubject">Action</th>
               </tr>
             </thead>
             <tbody>
               <!-- Row 1 -->
               <tr style="border-bottom: 1px solid #e8e8e8;">
-                <td style="padding: 1rem; color: #666;">01</td>
+                <td style="padding: 1rem; color: #666; font-size:14px;">01</td>
                 <td style="padding: 1rem;">
                   <div class="d-flex align-items-center">
                     <img src="https://randomuser.me/api/portraits/men/1.jpg" class="rounded-circle me-3" width="40" height="40" style="object-fit: cover;">
-                    <span style="color: #333; font-weight: 500;">English Language</span>
+                    <span style="color: #333; font-weight: 500; font-size:14px;">English Language</span>
                   </div>
                 </td>
-                <td style="padding: 1rem; color: #666;">02 August 2025</td>
+                <td style="padding: 1rem; color: #666; font-size:14px;">02 August 2025</td>
                 <td style="padding: 1rem;">
                   <div class="d-flex align-items-center gap-2">
                     <div class="progress" style="width: 100px; height: 6px;">
                       <div class="progress-bar" style="width: 70%; background-color: #28a745;"></div>
                     </div>
-                    <span style="color: #666; font-size: 0.85rem;">70%</span>
+                    <span style="color: #666; font-size:14px;">70%</span>
                   </div>
                 </td>
-                <td style="padding: 1rem; color: #666;"><i class="fa fa-star" style="color: #FDAF22;"></i> 4.5</td>
+                <td style="padding: 1rem; color: #666; font-size:14px; "><i class="fa fa-star" style="color: #FDAF22;"></i> <span>4.5</span> </td>
                 <td style="padding: 1rem;">
                   <span class="badge" style="background-color: #28a745; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">Published</span>
                 </td>
@@ -168,73 +168,7 @@
                 </td>
               </tr>
 
-              <!-- Row 2 -->
-              <tr style="border-bottom: 1px solid #e8e8e8;">
-                <td style="padding: 1rem; color: #666;">02</td>
-                <td style="padding: 1rem;">
-                  <div class="d-flex align-items-center">
-                    <img src="https://randomuser.me/api/portraits/men/2.jpg" class="rounded-circle me-3" width="40" height="40" style="object-fit: cover;">
-                    <span style="color: #333; font-weight: 500;">Mathematics</span>
-                  </div>
-                </td>
-                <td style="padding: 1rem; color: #666;">02 August 2025</td>
-                <td style="padding: 1rem;">
-                  <div class="d-flex align-items-center gap-2">
-                    <div class="progress" style="width: 100px; height: 6px;">
-                      <div class="progress-bar" style="width: 85%; background-color: #28a745;"></div>
-                    </div>
-                    <span style="color: #666; font-size: 0.85rem;">85%</span>
-                  </div>
-                </td>
-                <td style="padding: 1rem; color: #666;"><i class="fa fa-star" style="color: #FDAF22;"></i> 4.8</td>
-                <td style="padding: 1rem;">
-                  <span class="badge" style="background-color: #28a745; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">Published</span>
-                </td>
-                <td style="padding: 1rem;">
-                  <div class="d-flex gap-2">
-                    <button class="btn btn-sm btn-light" style="border: 1px solid #ddd; padding: 0.5rem 0.75rem;" title="Edit">
-                      <i class="fa fa-edit" style="color: #004A53;"></i>
-                    </button>
-                    <button class="btn btn-sm btn-light" style="border: 1px solid #ddd; padding: 0.5rem 0.75rem;" title="Delete">
-                      <i class="fa fa-trash" style="color: #dc3545;"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
 
-              <!-- Row 3 -->
-              <tr style="border-bottom: 1px solid #e8e8e8;">
-                <td style="padding: 1rem; color: #666;">03</td>
-                <td style="padding: 1rem;">
-                  <div class="d-flex align-items-center">
-                    <img src="https://randomuser.me/api/portraits/men/3.jpg" class="rounded-circle me-3" width="40" height="40" style="object-fit: cover;">
-                    <span style="color: #333; font-weight: 500;">Science</span>
-                  </div>
-                </td>
-                <td style="padding: 1rem; color: #666;">15 July 2025</td>
-                <td style="padding: 1rem;">
-                  <div class="d-flex align-items-center gap-2">
-                    <div class="progress" style="width: 100px; height: 6px;">
-                      <div class="progress-bar" style="width: 45%; background-color: #ffc107;"></div>
-                    </div>
-                    <span style="color: #666; font-size: 0.85rem;">45%</span>
-                  </div>
-                </td>
-                <td style="padding: 1rem; color: #666;"><i class="fa fa-star" style="color: #FDAF22;"></i> 4.2</td>
-                <td style="padding: 1rem;">
-                  <span class="badge" style="background-color: #ffc107; color: #333; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">Draft</span>
-                </td>
-                <td style="padding: 1rem;">
-                  <div class="d-flex gap-2">
-                    <button class="btn btn-sm btn-light" style="border: 1px solid #ddd; padding: 0.5rem 0.75rem;" title="Edit">
-                      <i class="fa fa-edit" style="color: #004A53;"></i>
-                    </button>
-                    <button class="btn btn-sm btn-light" style="border: 1px solid #ddd; padding: 0.5rem 0.75rem;" title="Delete">
-                      <i class="fa fa-trash" style="color: #dc3545;"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
             </tbody>
           </table>
         </div>
