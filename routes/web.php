@@ -227,6 +227,10 @@ Route::get('/createsubject', function () {
     return view('admin.createsubject');
 });
 
+Route::get('/editsubject', function () {
+    return view('admin.editsubject');
+});
+
 Route::get('/publish', function () {
     return view('admin.publish');
 });

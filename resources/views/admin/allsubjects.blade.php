@@ -91,7 +91,7 @@
           <h5 class="fw-bold mb-0" style="font-size: 1.1rem; color: #1a1a1a;">Courses</h5>
           <div class="d-flex gap-3 justify-content-end" style="flex: 1; margin-left: 2rem;">
             <!-- Search Input -->
-            <div class="position-relative flex-grow-1" style="max-width: 300px;">
+            {{-- <div class="position-relative flex-grow-1" style="max-width: 300px;">
               <i class="fa-solid fa-search position-absolute top-50 start-0 translate-middle-y ms-3" style="color: #999;"></i>
               <input
                 type="text"
@@ -107,7 +107,25 @@
               <option value="published">Published</option>
               <option value="draft">Draft</option>
               <option value="archived">Archived</option>
-            </select>
+            </select> --}}
+
+             <div class="d-flex gap-2 align-items-center search-border-custom"
+                                >
+                                <i class="fa-solid fa-search fa-xs " style="color: #999;"></i>
+                                <input type="search" class="search-input-custom-input"
+                                    id="searchInput" placeholder="Search by Name or Email" aria-label="Search">
+                            </div>
+
+                            <!-- Filter Dropdown -->
+                            <select class="custom-select" id="filterSelect"
+                                >
+                                <option value="" style="">All Classes</option>
+                                <option value="course">All Courses</option>
+                                <option value="category">All Categories</option>
+                                <option value="role-student">Students</option>
+                                <option value="role-instructor">Instructors</option>
+                                <option value="role-admin">Admins</option>
+                            </select>
 
             <!-- View Options -->
             {{-- <button class="btn btn-light" style="border: 1px solid #ddd; padding: 0.625rem 1rem;" title="List View">
@@ -158,9 +176,9 @@
                 </td>
                 <td style="padding: 1rem;">
                   <div class="d-flex gap-2">
-                    <button class="btn btn-sm btn-light" style="border: 1px solid #ddd; padding: 0.5rem 0.75rem;" title="Edit">
+                    <a href="/editsubject" class="btn btn-sm btn-light" style="border: 1px solid #ddd; padding: 0.5rem 0.75rem;" title="Edit">
                       <i class="fa fa-edit" style="color: #004A53;"></i>
-                    </button>
+                    </a>
                     <button class="btn btn-sm btn-light" style="border: 1px solid #ddd; padding: 0.5rem 0.75rem;" title="Delete">
                       <i class="fa fa-trash" style="color: #dc3545;"></i>
                     </button>
