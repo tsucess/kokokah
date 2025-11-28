@@ -315,7 +315,7 @@
         <!-- Navigation Buttons -->
         <div class="container bg-white">
             <div class="nav-buttons-container">
-                 <button type="button" class="coursebtn" data-section="curriculum">
+                <button type="button" class="coursebtn" data-section="curriculum">
                     <i class="fa-solid fa-circle fa-2xs"></i>
                     Curriculum
                     <i class="fa fa-arrow-right"></i>
@@ -333,8 +333,6 @@
                     <i class="fa fa-arrow-right"></i>
                 </button>
 
-               
-
                 <button type="button" class="coursebtn" data-section="publish">
                     <i class="fa-solid fa-circle fa-2xs"></i>
                     Additional Information
@@ -344,7 +342,7 @@
         </div>
 
         <!-- Course Details Section -->
-        <div class="container bg-white content-section" id="details">
+        <div class="container bg-white content-section d-none" id="details">
             <div class="section-header">
                 <h5>Course Details</h5>
             </div>
@@ -414,6 +412,9 @@
             </form>
 
             <div class="button-group">
+                <button type="button" class="btn btn-back back-btn" data-next="curriculum">
+                    Previous
+                </button>
                 <button type="button" class="btn btn-continue continue-btn" data-next="media">
                     Continue
                 </button>
@@ -456,14 +457,14 @@
                 <button type="button" class="btn btn-back back-btn" data-next="details">
                     Previous
                 </button>
-                <button type="button" class="btn btn-continue continue-btn" data-next="curriculum">
+                <button type="button" class="btn btn-continue continue-btn" data-next="publish">
                     Continue
                 </button>
             </div>
         </div>
 
         <!-- Curriculum Section -->
-        <div class="container bg-white d-none content-section" id="curriculum">
+        <div class="container bg-white content-section" id="curriculum">
             <style>
                 .curriculum-header {
                     display: flex;
@@ -919,10 +920,7 @@
             </button>
 
             <div class="curriculum-actions">
-                <button type="button" class="btn btn-back back-btn" data-next="media">
-                    Previous
-                </button>
-                <button type="button" class="btn btn-continue continue-btn" data-next="publish">
+                <button type="button" class="btn btn-continue continue-btn" data-next="details">
                     Continue
                 </button>
             </div>
@@ -1429,7 +1427,7 @@
                 });
             }
 
-            showSection('details');
+            showSection('curriculum');
         });
     </script>
 @endsection
