@@ -458,7 +458,7 @@
         </div>
 
         <!-- Curriculum Section -->
-        <div class="container bg-white d-none content-section" id="curriculum">
+        {{-- <div class="container bg-white d-none content-section" id="curriculum">
             <style>
                 .curriculum-header {
                     display: flex;
@@ -708,7 +708,7 @@
                     <p>Manage course topics and lessons</p>
                 </div>
 
-                {{-- add new topic modal --}}
+                add new topic modal
                 <div class="modal fade" id="addNewTopicModal" data-bs-keyboard="false" tabindex="-1"
                     aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
@@ -782,7 +782,7 @@
             </div>
 
 
-            {{-- <div class="modal fade" id="addLessonModal" data-bs-keyboard="false" tabindex="-1"
+        <div class="modal fade" id="addLessonModal" data-bs-keyboard="false" tabindex="-1"
                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content border-0 modal-container">
@@ -908,7 +908,7 @@
 
             <button type="button" class="btn btn-add-lesson" data-bs-toggle="modal" data-bs-target="#addLessonModal">
                 <i class="fa-solid fa-plus me-2"></i> Add Lesson
-            </button> --}}
+            </button> 
 
             <div class="curriculum-actions">
                 <button type="button" class="btn btn-back back-btn" data-next="media">
@@ -918,7 +918,7 @@
                     Continue
                 </button>
             </div>
-        </div>
+        </div> --}}
 
         <!-- Publish Section -->
         <div class="container bg-white d-none content-section" id="publish">
