@@ -293,7 +293,7 @@
         <div class="container bg-white">
             <div class="subject-header">
                 <div>
-                    <h1>Create New Course</h1>
+                    <h1>Edit Course</h1>
                     <p>Here overview of your</p>
                 </div>
 
@@ -301,9 +301,12 @@
                     <button type="button" class="btn btn-draft" id="saveDraftBtn">
                         Save As Draft
                     </button>
-
-                    <button type="button" class="btn btn-publish" id="publishBtn">
+                    <button type="button" class="btn btn-draft" id="publishBtn">
                         Publish Course
+                    </button>
+
+                    <button type="button" class="btn btn-publish" id="updateBtn">
+                        Update Course
                     </button>
                 </div>
             </div>
@@ -312,9 +315,15 @@
         <!-- Navigation Buttons -->
         <div class="container bg-white">
             <div class="nav-buttons-container">
+                 <button type="button" class="coursebtn" data-section="curriculum">
+                    <i class="fa-solid fa-circle fa-2xs"></i>
+                    Curriculum
+                    <i class="fa fa-arrow-right"></i>
+                </button>
+
                 <button type="button" class="coursebtn" data-section="details">
                     <i class="fa-solid fa-circle fa-2xs"></i>
-                    Create New Subject
+                    Course Details
                     <i class="fa fa-arrow-right"></i>
                 </button>
 
@@ -324,11 +333,7 @@
                     <i class="fa fa-arrow-right"></i>
                 </button>
 
-                {{-- <button type="button" class="coursebtn" data-section="curriculum">
-                    <i class="fa-solid fa-circle fa-2xs"></i>
-                    Curriculum
-                    <i class="fa fa-arrow-right"></i>
-                </button> --}}
+               
 
                 <button type="button" class="coursebtn" data-section="publish">
                     <i class="fa-solid fa-circle fa-2xs"></i>
@@ -782,7 +787,9 @@
             </div>
 
 
-            {{-- <div class="modal fade" id="addLessonModal" data-bs-keyboard="false" tabindex="-1"
+            {{-- add lesson modal --}}
+
+            <div class="modal fade" id="addLessonModal" data-bs-keyboard="false" tabindex="-1"
                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content border-0 modal-container">
@@ -805,7 +812,7 @@
                                     </select>
                                 </div>
 
-                            
+                                <!-- image container -->
                                 <div class="flex-column gap-3 select-children" id="image-container">
                                     <div class="modal-form-input-border">
                                         <label for="" class="modal-label">Title</label>
@@ -827,7 +834,7 @@
                                     </div>
                                 </div>
 
-                              
+                                <!-- youtube container -->
                                 <div class="flex-column gap-3 hide select-children" id="youtube-container">
                                     <div class="modal-form-input-border">
                                         <label for="" class="modal-label">Title</label>
@@ -839,7 +846,7 @@
                                     </div>
                                 </div>
 
-                               
+                                <!-- content container -->
                                 <div class="flex-column gap-3 hide select-children" id="content-container">
                                     <div class="modal-form-input-border">
                                         <label for="" class="modal-label">Title</label>
@@ -851,7 +858,7 @@
                                     </div>
                                 </div>
 
-                              
+                                <!-- audio-container -->
                                 <div class="flex-column gap-3 hide select-children" id="audio-container">
                                     <div class="modal-form-input-border">
                                         <label for="" class="modal-label">Title</label>
@@ -873,6 +880,7 @@
                                     </div>
                                 </div>
 
+                                <!-- document-container -->
                                 <div class="flex-column gap-3 hide select-children" id="document-container">
                                     <div class="modal-form-input-border">
                                         <label for="" class="modal-label">Lesson Type</label>
@@ -908,7 +916,7 @@
 
             <button type="button" class="btn btn-add-lesson" data-bs-toggle="modal" data-bs-target="#addLessonModal">
                 <i class="fa-solid fa-plus me-2"></i> Add Lesson
-            </button> --}}
+            </button>
 
             <div class="curriculum-actions">
                 <button type="button" class="btn btn-back back-btn" data-next="media">
