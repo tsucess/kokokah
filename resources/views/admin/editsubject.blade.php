@@ -1244,7 +1244,7 @@
             </div>
 
             <div class="publish-actions">
-                <button type="button" class="btn btn-back back-btn" data-next="curriculum">
+                <button type="button" class="btn btn-back back-btn" data-next="media">
                     Back
                 </button>
                 <button type="button" class="btn btn-publish" id="finalPublishBtn">
