@@ -789,8 +789,6 @@
                     <i class="fa fa-arrow-right"></i>
                 </button>
 
-
-
                 <button type="button" class="coursebtn" data-section="publish">
                     <i class="fa-solid fa-circle fa-2xs"></i>
                     Additional Information
@@ -800,7 +798,7 @@
         </div>
 
         <!-- Course Details Section -->
-        <div class="container bg-white content-section" id="details">
+        <div class="container bg-white content-section d-none" id="details">
             <div class="section-header">
                 <h5>Course Details</h5>
             </div>
@@ -869,12 +867,11 @@
                 </div>
             </form>
 
-
-            <div class="curriculum-actions">
-                <button type="button" class="btn btn-back back-btn" data-next="media">
+            <div class="button-group">
+                <button type="button" class="btn btn-back back-btn" data-next="curriculum">
                     Previous
                 </button>
-                <button type="button" class="btn btn-continue continue-btn" data-next="publish">
+                <button type="button" class="btn btn-continue continue-btn" data-next="media">
                     Continue
                 </button>
             </div>
@@ -916,14 +913,23 @@
                 <button type="button" class="btn btn-back back-btn" data-next="details">
                     Previous
                 </button>
-                <button type="button" class="btn btn-continue continue-btn" data-next="curriculum">
+                <button type="button" class="btn btn-continue continue-btn" data-next="publish">
                     Continue
                 </button>
             </div>
         </div>
 
         <!-- Curriculum Section -->
-        <div class="container bg-white d-none content-section" id="curriculum">
+        <div class="container bg-white content-section" id="curriculum">
+            <style>
+                .curriculum-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    margin-bottom: 2rem;
+                    flex-wrap: wrap;
+                    gap: 1rem;
+                }
 
 
             <div class="curriculum-header">
@@ -1137,8 +1143,8 @@
                 <i class="fa-solid fa-plus me-2"></i> Add Lesson
             </button>
 
-            <div class="button-group">
-                <button type="button" class="btn btn-continue continue-btn" data-next="media">
+            <div class="curriculum-actions">
+                <button type="button" class="btn btn-continue continue-btn" data-next="details">
                     Continue
                 </button>
             </div>
@@ -1247,7 +1253,7 @@
             </div>
 
             <div class="publish-actions">
-                <button type="button" class="btn btn-back back-btn" data-next="curriculum">
+                <button type="button" class="btn btn-back back-btn" data-next="media">
                     Back
                 </button>
                 <button type="button" class="btn btn-publish" id="finalPublishBtn">
@@ -1430,7 +1436,7 @@
                 });
             }
 
-            showSection('details');
+            showSection('curriculum');
         });
     </script>
 @endsection
