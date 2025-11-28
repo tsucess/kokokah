@@ -23,18 +23,18 @@
                     <!-- Table Header with Search and Filters -->
                     <div class="d-flex justify-content-between align-items-center mb-5">
                         <h5 class="fw-bold mb-0" style="font-size: 1.1rem; color: #1a1a1a;">All Users List</h5>
-                        <div class="d-flex gap-3 justify-content-end" style="flex: 1; margin-left: 2rem;">
+                        <div class="d-flex gap-3 justify-content-end" >
                             <!-- Search Input -->
-                            <div class="position-relative flex-grow-1 d-flex gap-2 align-items-center search-input-custom py-1 px-2"
-                                style="max-width: 300px;">
-                                <i class="fa-solid fa-search fa-lg " style="color: #999;"></i>
-                                <input type="text" class="form-control  " style="border:none; outline:none;"
+                            <div class="d-flex gap-2 align-items-center search-border-custom"
+                                >
+                                <i class="fa-solid fa-search fa-xs " style="color: #999;"></i>
+                                <input type="search" class="search-input-custom-input"
                                     id="searchInput" placeholder="Search by Name or Email" aria-label="Search">
                             </div>
 
                             <!-- Filter Dropdown -->
-                            <select class="form-select filter-select-custom" id="filterSelect"
-                                style="max-width: 200px; height:45px; font-size:14px;">
+                            <select class="custom-select" id="filterSelect"
+                                >
                                 <option value="" style="">All Classes</option>
                                 <option value="course">All Courses</option>
                                 <option value="category">All Categories</option>

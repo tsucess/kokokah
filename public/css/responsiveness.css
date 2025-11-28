@@ -311,9 +311,15 @@
         color: #004a53;
     }
 
-    p, ul, li {
+    p {
         font-size: 1rem;
         line-height: 1.7;
+        color: #004a53;
+    }
+
+    p.feature, ul, li {
+        font-size: 0.9rem;
+        line-height: 1.5;
         color: #004a53;
     }
 }
@@ -349,9 +355,14 @@
         color: #004a53;
     }
 
-    p, ul, li {
+    p {
         font-size: 1.1rem;
         line-height: 1.8;
+        color: #004a53;
+    }
+    p.feature, ul, li {
+        font-size: 1rem;
+        line-height: 1.5;
         color: #004a53;
     }
     .img-margin{
