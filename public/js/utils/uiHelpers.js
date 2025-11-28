@@ -283,6 +283,18 @@ class UIHelpers {
   /**
    * Copy to clipboard
    */
+  static formatDate(dateString) {
+            return new Date(dateString).toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric"
+            });
+        }
+
+
+  /**
+   * Copy to clipboard
+   */
   static copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(() => {
       this.showSuccess('Copied to clipboard!');

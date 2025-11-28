@@ -34,6 +34,10 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\LanguageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use App\Http\Controllers\TopicController;
+
+
+
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -181,6 +185,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/', [LessonController::class, 'index']);
         Route::post('/', [LessonController::class, 'store']);
     });
+
+// Topic management route 
+    Route::apiResource('topics', TopicController::class);
 
     Route::prefix('lessons')->group(function () {
         Route::get('/{id}', [LessonController::class, 'show']);

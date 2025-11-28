@@ -270,46 +270,20 @@
     </style>
 
 
-    <script>
+    <script type="module">
+        import UIHelpers from '{{ asset('js/utils/uiHelpers.js') }}';
+
+
         // Get auth token
         const token = localStorage.getItem('auth_token');
         let currentPage = 1;
 
         // Fetch dashboard data on page load
         document.addEventListener('DOMContentLoaded', function() {
-
             loadUsersActivities(1);
         });
 
-        // Load dashboard statistics
-        // async function loadDashboardStats() {
-        //     try {
-        //         const response = await fetch('/api/admin/dashboard', {
-        //             method: 'GET',
-        //             headers: {
-        //                 'Authorization': `Bearer ${token}`,
-        //                 'Accept': 'application/json'
-        //             }
-        //         });
-
-        //         if (!response.ok) {
-        //             console.error('Failed to fetch dashboard stats:', response.status);
-        //             return;
-        //         }
-
-        //         const data = await response.json();
-        //         console.log('Dashboard API Response:', data);
-
-        //         if (data.success && data.data && data.data.statistics) {
-
-        //         } else {
-        //             console.error('Unexpected response structure:', data);
-        //         }
-        //     } catch (error) {
-        //         console.error('Error loading dashboard stats:', error);
-        //     }
-        // }
-
+    
         // Load users Activities
         async function loadUsersActivities(page = 1) {
             try {
@@ -348,19 +322,19 @@
 
                             const row = `
                                      <tr style="border-bottom: 1px solid #e8e8e8;">
-                                            <td style="padding: 1rem; color: #666;">03</td>
+                                            <td style="padding: 1rem; color: #666;">${++index}</td>
                                             <td style="padding: 1rem;">
                                                 <div class="d-flex align-items-center">
-                                                    <img src="images/jimmy.png" class="rounded-circle me-3" alt="User"
+                                                    <img src="${activity.user ? activity.user.profile_photo ? 'storage/'+ activity.user.profile_photo : 'images/jimmy.png'  : 'images/jimmy.png'}" class="rounded-circle me-3" alt="User"
                                                         width="40" height="40" style="object-fit: cover;">
                                                     <span style="color: #333; font-weight: 500;">${activity.user ? activity.user.first_name : activity.course.instructor.first_name } ${activity.user ? activity.user.last_name : activity.course.instructor.last_name }</span>
                                                 </div>
                                             </td>
                                             <td style="padding: 1rem; color: #666;">${activity.description ? activity.description : 0}</td>
-                                            <td style="padding: 1rem; color: #666;">${formatDate(activity.timestamp) }</td>
+                                            <td style="padding: 1rem; color: #666;">${UIHelpers.formatDate(activity.timestamp) }</td>
+                                           
                                             <td style="padding: 1rem;">
-                                                <span class="badge"
-                                                    style="background-color: #ffc107; color: #333; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">Pending</span>
+                                                <span class="badge" style="background-color: #28a745; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">Completed</span>
                                             </td>
                                         </tr>
                                 `;
@@ -383,14 +357,5 @@
         }
 
 
-        function formatDate(dateString) {
-            return new Date(dateString).toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-                year: "numeric"
-            });
-        }
-
-        console.log(formatDate("2025-10-29T16:32:55.000000Z"));
     </script>
 @endsection
