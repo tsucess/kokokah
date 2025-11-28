@@ -774,7 +774,7 @@
     <div class = "container">
         <div class = "row mt-4">
             <div class = "col-12 col-md-5 col-lg-5">
-                <img src = "images/LMS.png" class = "img-fluid animate__animated animate__pulse hero-img">
+                <img src = "{{ asset('images/LMS.png') }}" class = "img-fluid animate__animated animate__pulse hero-img">
             </div>
 
             <div class = "col-12 col-md-7 col-lg-7 mt-lg-5 d-flex flex-column gap-3">
@@ -824,7 +824,7 @@
                         school operations all from one dashboard.
                     </p>
                     <i class="bi bi-quote text-success fs-2 float-end"></i>
-                    <img src="images/lisa.png" alt="Lisa" class="testimonial-img position-absolute rounded-circle">
+                    <img src="{{asset('images/lisa.png')}}" alt="Lisa" class="testimonial-img position-absolute rounded-circle">
                     <p class="fw-bold text-end mb-0">- Lisa</p>
                 </div>
             </div>
@@ -838,7 +838,7 @@
                         school operations all from one dashboard.
                     </p>
                     <i class="bi bi-quote text-success fs-2 float-end"></i>
-                    <img src="images/jimmy.png" alt="Jimmy" class="testimonial-img position-absolute rounded-circle">
+                    <img src="{{ asset('images/jimmy.png') }}" alt="Jimmy" class="testimonial-img position-absolute rounded-circle">
                     <p class="fw-bold text-end mb-0">- Jimmy</p>
                 </div>
             </div>
