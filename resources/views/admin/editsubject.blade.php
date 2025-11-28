@@ -286,6 +286,462 @@
                 width: 100%;
             }
         }
+
+        .curriculum-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .curriculum-header-text h5 {
+            font-size: 1.25rem;
+            color: #004A53;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .curriculum-header-text p {
+            color: #666;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        .btn-add-topic {
+            background-color: #FDAF22;
+            border: none;
+            color: white;
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .btn-add-topic:hover {
+            background-color: #e59a0f;
+        }
+
+        .lesson-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 0.375rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .lesson-item:hover {
+            border-color: #004A53;
+            background-color: #f9f9f9;
+        }
+
+        .lesson-item-content {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: #333;
+        }
+
+        .lesson-item-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .lesson-item-actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s ease;
+            padding: 0.25rem 0.5rem;
+        }
+
+        .lesson-item-actions button:hover {
+            color: #004A53;
+        }
+
+        .btn-add-lesson {
+            background-color: white;
+            border: 1px solid #004A53;
+            color: #004A53;
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .btn-add-lesson:hover {
+            background-color: #f0f8f9;
+        }
+
+        .curriculum-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .modal-backdrop.show {
+            background-color: #004a53 !important;
+        }
+
+        .modal-dialog {
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .modal-container {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px 16px;
+        }
+
+        .modal-content {
+            border: none;
+        }
+
+        .modal-header {
+            padding: 20px;
+        }
+
+        .modal-title {
+            font-family: "Fredoka", sans-serif;
+            color: #000;
+            font-size: 24px;
+        }
+
+        .modal-header-btn {
+            background-color: transparent;
+            border: none;
+        }
+
+        .modal-form-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .modal-form-input-border {
+            border: 1.5px solid #004a53;
+            display: flex;
+            flex-direction: column;
+            padding: 14px 27px 14px;
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .modal-label {
+            position: absolute;
+            top: -15px;
+            color: #004a53;
+            font-size: 14px;
+            background-color: white;
+            padding: 0px 4px;
+            align-self: start;
+        }
+
+        .modal-input {
+            outline: none;
+            border: none;
+            font-size: 14px;
+            color: #aebaca;
+            background-color: transparent;
+        }
+
+        .modal-form-btn {
+            color: #f2f2f2;
+            font-size: 16px;
+            font-weight: 600;
+            background-color: #004a53;
+            padding-block: 16px;
+            border: none;
+        }
+
+        .upload-file-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .upload-label {
+            color: #004a53;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .upload-btn {
+            background-color: #004a53;
+            color: #ffffff;
+            font-size: 16px;
+            border: 1.5px solid #004a53;
+            border-top-right-radius: 15px;
+            border-bottom-right-radius: 15px;
+            padding-inline: 15px;
+        }
+
+        .upload-input {
+            border: 1.5px solid #004a53;
+            border-radius: 15px;
+            padding: 12px 15px;
+        }
+
+        .textarea {
+            outline: none;
+            border: none;
+            font-size: 14px;
+            color: #aebaca;
+            height: 150px;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .curriculum-header {
+                flex-direction: column;
+            }
+
+            .curriculum-actions {
+                flex-direction: column;
+            }
+
+            .curriculum-actions button {
+                width: 100%;
+            }
+        }
+
+        .publish-overview {
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .overview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .overview-title {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .overview-title h6 {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        .overview-title h2 {
+            font-size: 1.75rem;
+            color: #004A53;
+            font-weight: 600;
+            margin: 0;
+            font-family: 'Fredoka One', sans-serif;
+        }
+
+        .overview-meta {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .meta-item i {
+            color: #004A53;
+        }
+
+        .overview-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .overview-actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            padding: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .overview-actions button:hover {
+            color: #004A53;
+        }
+
+        .course-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .course-description-section {
+            margin-bottom: 2rem;
+        }
+
+        .course-description-section h6 {
+            font-size: 1rem;
+            color: #004A53;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .course-description-section p {
+            color: #333;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .key-areas-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .key-areas-list li {
+            color: #333;
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .key-areas-list li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #FDAF22;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .curriculum-preview {
+            margin-top: 2rem;
+        }
+
+        .curriculum-preview h6 {
+            font-size: 1rem;
+            color: #004A53;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .curriculum-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 0.375rem;
+            margin-bottom: 0.75rem;
+            background-color: white;
+        }
+
+        .curriculum-item-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .curriculum-item-icon {
+            color: #004A53;
+            font-size: 1.25rem;
+        }
+
+        .curriculum-item-text h6 {
+            font-size: 0.95rem;
+            color: #333;
+            font-weight: 600;
+            margin: 0 0 0.25rem 0;
+        }
+
+        .curriculum-item-text p {
+            font-size: 0.85rem;
+            color: #666;
+            margin: 0;
+        }
+
+        .curriculum-item-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .curriculum-item-check {
+            color: #004A53;
+            font-size: 1.25rem;
+        }
+
+        .publish-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .publish-overview {
+                padding: 1.5rem;
+            }
+
+            .overview-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .overview-meta {
+                gap: 1rem;
+            }
+
+            .course-image {
+                height: 200px;
+            }
+
+            .publish-actions {
+                flex-direction: column;
+            }
+
+            .publish-actions button {
+                width: 100%;
+            }
+        }
     </style>
 
     <main>
@@ -315,7 +771,7 @@
         <!-- Navigation Buttons -->
         <div class="container bg-white">
             <div class="nav-buttons-container">
-                 <button type="button" class="coursebtn" data-section="curriculum">
+                <button type="button" class="coursebtn" data-section="curriculum">
                     <i class="fa-solid fa-circle fa-2xs"></i>
                     Curriculum
                     <i class="fa fa-arrow-right"></i>
@@ -333,7 +789,7 @@
                     <i class="fa fa-arrow-right"></i>
                 </button>
 
-               
+
 
                 <button type="button" class="coursebtn" data-section="publish">
                     <i class="fa-solid fa-circle fa-2xs"></i>
@@ -413,8 +869,12 @@
                 </div>
             </form>
 
-            <div class="button-group">
-                <button type="button" class="btn btn-continue continue-btn" data-next="media">
+
+            <div class="curriculum-actions">
+                <button type="button" class="btn btn-back back-btn" data-next="media">
+                    Previous
+                </button>
+                <button type="button" class="btn btn-continue continue-btn" data-next="publish">
                     Continue
                 </button>
             </div>
@@ -464,248 +924,7 @@
 
         <!-- Curriculum Section -->
         <div class="container bg-white d-none content-section" id="curriculum">
-            <style>
-                .curriculum-header {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: flex-start;
-                    margin-bottom: 2rem;
-                    flex-wrap: wrap;
-                    gap: 1rem;
-                }
 
-                .curriculum-header-text h5 {
-                    font-size: 1.25rem;
-                    color: #004A53;
-                    font-weight: 600;
-                    margin-bottom: 0.5rem;
-                }
-
-                .curriculum-header-text p {
-                    color: #666;
-                    font-size: 0.95rem;
-                    margin: 0;
-                }
-
-                .btn-add-topic {
-                    background-color: #FDAF22;
-                    border: none;
-                    color: white;
-                    font-weight: 500;
-                    padding: 0.75rem 1.5rem;
-                    border-radius: 0.375rem;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                    white-space: nowrap;
-                }
-
-                .btn-add-topic:hover {
-                    background-color: #e59a0f;
-                }
-
-                .lesson-item {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    padding: 1rem;
-                    border: 1px solid #ddd;
-                    border-radius: 0.375rem;
-                    margin-bottom: 1rem;
-                    transition: all 0.3s ease;
-                }
-
-                .lesson-item:hover {
-                    border-color: #004A53;
-                    background-color: #f9f9f9;
-                }
-
-                .lesson-item-content {
-                    display: flex;
-                    align-items: center;
-                    gap: 0.75rem;
-                    color: #333;
-                }
-
-                .lesson-item-actions {
-                    display: flex;
-                    gap: 1rem;
-                    align-items: center;
-                }
-
-                .lesson-item-actions button {
-                    background: none;
-                    border: none;
-                    cursor: pointer;
-                    color: #666;
-                    transition: color 0.3s ease;
-                    padding: 0.25rem 0.5rem;
-                }
-
-                .lesson-item-actions button:hover {
-                    color: #004A53;
-                }
-
-                .btn-add-lesson {
-                    background-color: white;
-                    border: 1px solid #004A53;
-                    color: #004A53;
-                    font-weight: 500;
-                    padding: 0.75rem 1.5rem;
-                    border-radius: 0.375rem;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                    margin-bottom: 2rem;
-                }
-
-                .btn-add-lesson:hover {
-                    background-color: #f0f8f9;
-                }
-
-                .curriculum-actions {
-                    display: flex;
-                    gap: 1rem;
-                    justify-content: flex-end;
-                    margin-top: 2rem;
-                    flex-wrap: wrap;
-                }
-
-                .modal-backdrop.show {
-                    background-color: #004a53 !important;
-                }
-
-                .modal-dialog {
-                    max-width: 600px;
-                    margin: auto;
-                }
-
-                .modal-container {
-                    background-color: #fff;
-                    border-radius: 10px;
-                    padding: 20px 16px;
-                }
-
-                .modal-content {
-                    border: none;
-                }
-
-                .modal-header {
-                    padding: 20px;
-                }
-
-                .modal-title {
-                    font-family: "Fredoka", sans-serif;
-                    color: #000;
-                    font-size: 24px;
-                }
-
-                .modal-header-btn {
-                    background-color: transparent;
-                    border: none;
-                }
-
-                .modal-form-container {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 20px;
-                    width: 100%;
-                }
-
-                .modal-form {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 24px;
-                }
-
-                .modal-form-input-border {
-                    border: 1.5px solid #004a53;
-                    display: flex;
-                    flex-direction: column;
-                    padding: 14px 27px 14px;
-                    border-radius: 15px;
-                    position: relative;
-                }
-
-                .modal-label {
-                    position: absolute;
-                    top: -15px;
-                    color: #004a53;
-                    font-size: 14px;
-                    background-color: white;
-                    padding: 0px 4px;
-                    align-self: start;
-                }
-
-                .modal-input {
-                    outline: none;
-                    border: none;
-                    font-size: 14px;
-                    color: #aebaca;
-                    background-color: transparent;
-                }
-
-                .modal-form-btn {
-                    color: #f2f2f2;
-                    font-size: 16px;
-                    font-weight: 600;
-                    background-color: #004a53;
-                    padding-block: 16px;
-                    border: none;
-                }
-
-                .upload-file-container {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 8px;
-                }
-
-                .upload-label {
-                    color: #004a53;
-                    font-size: 14px;
-                    font-weight: 600;
-                }
-
-                .upload-btn {
-                    background-color: #004a53;
-                    color: #ffffff;
-                    font-size: 16px;
-                    border: 1.5px solid #004a53;
-                    border-top-right-radius: 15px;
-                    border-bottom-right-radius: 15px;
-                    padding-inline: 15px;
-                }
-
-                .upload-input {
-                    border: 1.5px solid #004a53;
-                    border-radius: 15px;
-                    padding: 12px 15px;
-                }
-
-                .textarea {
-                    outline: none;
-                    border: none;
-                    font-size: 14px;
-                    color: #aebaca;
-                    height: 150px;
-                }
-
-                .hide {
-                    display: none;
-                }
-
-                @media (max-width: 768px) {
-                    .curriculum-header {
-                        flex-direction: column;
-                    }
-
-                    .curriculum-actions {
-                        flex-direction: column;
-                    }
-
-                    .curriculum-actions button {
-                        width: 100%;
-                    }
-                }
-            </style>
 
             <div class="curriculum-header">
                 <div class="curriculum-header-text">
@@ -918,11 +1137,8 @@
                 <i class="fa-solid fa-plus me-2"></i> Add Lesson
             </button>
 
-            <div class="curriculum-actions">
-                <button type="button" class="btn btn-back back-btn" data-next="media">
-                    Previous
-                </button>
-                <button type="button" class="btn btn-continue continue-btn" data-next="publish">
+            <div class="button-group">
+                <button type="button" class="btn btn-continue continue-btn" data-next="media">
                     Continue
                 </button>
             </div>
@@ -930,222 +1146,7 @@
 
         <!-- Publish Section -->
         <div class="container bg-white d-none content-section" id="publish">
-            <style>
-                .publish-overview {
-                    background-color: #f9f9f9;
-                    border: 1px solid #e0e0e0;
-                    border-radius: 0.5rem;
-                    padding: 2rem;
-                    margin-bottom: 2rem;
-                }
 
-                .overview-header {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: flex-start;
-                    margin-bottom: 1.5rem;
-                }
-
-                .overview-title {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 0.5rem;
-                }
-
-                .overview-title h6 {
-                    font-size: 0.9rem;
-                    color: #666;
-                    font-weight: 500;
-                    margin: 0;
-                }
-
-                .overview-title h2 {
-                    font-size: 1.75rem;
-                    color: #004A53;
-                    font-weight: 600;
-                    margin: 0;
-                    font-family: 'Fredoka One', sans-serif;
-                }
-
-                .overview-meta {
-                    display: flex;
-                    gap: 1.5rem;
-                    flex-wrap: wrap;
-                    font-size: 0.9rem;
-                    color: #666;
-                }
-
-                .meta-item {
-                    display: flex;
-                    align-items: center;
-                    gap: 0.5rem;
-                }
-
-                .meta-item i {
-                    color: #004A53;
-                }
-
-                .overview-actions {
-                    display: flex;
-                    gap: 0.5rem;
-                    align-items: center;
-                }
-
-                .overview-actions button {
-                    background: none;
-                    border: none;
-                    cursor: pointer;
-                    color: #666;
-                    padding: 0.5rem;
-                    transition: color 0.3s ease;
-                }
-
-                .overview-actions button:hover {
-                    color: #004A53;
-                }
-
-                .course-image {
-                    width: 100%;
-                    height: 250px;
-                    object-fit: cover;
-                    border-radius: 0.5rem;
-                    margin-bottom: 2rem;
-                }
-
-                .course-description-section {
-                    margin-bottom: 2rem;
-                }
-
-                .course-description-section h6 {
-                    font-size: 1rem;
-                    color: #004A53;
-                    font-weight: 600;
-                    margin-bottom: 1rem;
-                }
-
-                .course-description-section p {
-                    color: #333;
-                    line-height: 1.7;
-                    margin-bottom: 1rem;
-                }
-
-                .key-areas-list {
-                    list-style: none;
-                    padding: 0;
-                    margin: 0;
-                }
-
-                .key-areas-list li {
-                    color: #333;
-                    padding: 0.5rem 0;
-                    padding-left: 1.5rem;
-                    position: relative;
-                    line-height: 1.6;
-                }
-
-                .key-areas-list li:before {
-                    content: "•";
-                    position: absolute;
-                    left: 0;
-                    color: #FDAF22;
-                    font-weight: bold;
-                    font-size: 1.2rem;
-                }
-
-                .curriculum-preview {
-                    margin-top: 2rem;
-                }
-
-                .curriculum-preview h6 {
-                    font-size: 1rem;
-                    color: #004A53;
-                    font-weight: 600;
-                    margin-bottom: 1rem;
-                }
-
-                .curriculum-item {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    padding: 1rem;
-                    border: 1px solid #e0e0e0;
-                    border-radius: 0.375rem;
-                    margin-bottom: 0.75rem;
-                    background-color: white;
-                }
-
-                .curriculum-item-content {
-                    display: flex;
-                    align-items: center;
-                    gap: 1rem;
-                    flex: 1;
-                }
-
-                .curriculum-item-icon {
-                    color: #004A53;
-                    font-size: 1.25rem;
-                }
-
-                .curriculum-item-text h6 {
-                    font-size: 0.95rem;
-                    color: #333;
-                    font-weight: 600;
-                    margin: 0 0 0.25rem 0;
-                }
-
-                .curriculum-item-text p {
-                    font-size: 0.85rem;
-                    color: #666;
-                    margin: 0;
-                }
-
-                .curriculum-item-meta {
-                    display: flex;
-                    gap: 1rem;
-                    font-size: 0.85rem;
-                    color: #666;
-                }
-
-                .curriculum-item-check {
-                    color: #004A53;
-                    font-size: 1.25rem;
-                }
-
-                .publish-actions {
-                    display: flex;
-                    gap: 1rem;
-                    justify-content: flex-end;
-                    margin-top: 2rem;
-                    flex-wrap: wrap;
-                }
-
-                @media (max-width: 768px) {
-                    .publish-overview {
-                        padding: 1.5rem;
-                    }
-
-                    .overview-header {
-                        flex-direction: column;
-                        gap: 1rem;
-                    }
-
-                    .overview-meta {
-                        gap: 1rem;
-                    }
-
-                    .course-image {
-                        height: 200px;
-                    }
-
-                    .publish-actions {
-                        flex-direction: column;
-                    }
-
-                    .publish-actions button {
-                        width: 100%;
-                    }
-                }
-            </style>
 
             <div class="publish-overview">
                 <div class="overview-header">
