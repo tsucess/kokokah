@@ -143,7 +143,6 @@
         }
 
         .header-text h1 {
-            font-size: 32px;
             color: #004A53;
             font-family: 'Fredoka One', sans-serif;
             font-weight: 600;
@@ -311,11 +310,11 @@
         }
     </style>
 
-    <div class="container-fluid px-4 py-4">
+    <div class="container-fluid px-4 py-4 d-flex flex-column gap-5">
         <!-- Header Section -->
-        <div class="header-section">
+        <div class="d-flex flex-row align-items-center justify-content-between">
             <div class="header-text">
-                <h1 class="text-white">Curriculum Categories</h1>
+                <h1>Curriculum Categories</h1>
                 <p>Manage curriculum types (WAEC, Cambridge, IELTS, Undergraduate)</p>
             </div>
             <button class="add-btn" data-bs-toggle="modal" data-bs-target="#addCurriculumModal">

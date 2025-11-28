@@ -5,7 +5,7 @@
     <div class="container-fluid bgLms">
         <div class="row align-items-center">
             <div class="col-12 col-md-6 col-lg-6 d-flex flex-column gap-3">
-                <h1 class="fw-bold hero-title">
+                <h1 class="fw-bold hero-title typewriter">
                     Your Complete Ecosystem for Learning and Growth
                 </h1>
                 <p>
@@ -124,9 +124,9 @@
                     Our Features
                 </h4>
             </div>
-            <div class="d-flex flex-column gap-4">
+            <div class="d-flex flex-column gap-5 px-lg-5">
                 <!-- first row -->
-                <div class="d-flex flex-column gap-4 flex-lg-row">
+                <div class="d-flex flex-column gap-5 flex-lg-row">
                     <!-- Feature Card 1 -->
                     <div class="w-100 w-lg-50 fade-section-left">
                         <div class="d-flex flex-column large-card h-100">
@@ -135,9 +135,9 @@
                             </div>
                             <div class="d-flex flex-column gap-2 flex-grow-1">
                                 <div class="d-flex flex-column gap-1">
-                                    <h5 class="large-card-title">Kokokah Chat Room</h5>
+                                    <h6 class="large-card-title">Kokokah Chat Room</h6>
                                     <div class="large-card-text">
-                                        <p>Learning and growth don’t happen in isolation. Our chat room is a community where
+                                        <p class="feature">Learning and growth don’t happen in isolation. Our chat room is a community where
                                             students, teachers, parents and guardians across Africa discuss topics, share
                                             knowledge, and interact all within a safe, moderated digital space.</p>
                                     </div>
@@ -155,9 +155,9 @@
                             </div>
                             <div class="d-flex flex-column gap-2 flex-grow-1">
                                 <div class="d-flex flex-column gap-1">
-                                    <h5 class="">Kokokah Chat Room</h5>
+                                    <h6 class="">Academic Content</h6>
                                     <div class="d-flex flex-column">
-                                        <p class=" mb-0">We deliver up-to-date content across all major
+                                        <p class=" mb-0 feature">We deliver up-to-date content across all major
                                             subjects, aligned with your class group and school’s curriculum. Teachers gain
                                             ready access to comprehensive lesson notes, while students benefit from
                                             structured study guides organized by topics — making teaching seamless and exam
@@ -177,7 +177,7 @@
                 </div>
 
                 <!-- second row -->
-                <div class="d-flex flex-column gap-4 flex-lg-row">
+                <div class="d-flex flex-column gap-5 flex-lg-row">
                     <!-- Feature Card 1 -->
                     <div class="w-100 w-lg-50 fade-section-left">
                         <div class="d-flex flex-column large-card h-100">
@@ -186,9 +186,9 @@
                             </div>
                             <div class="d-flex flex-column gap-2 flex-grow-1">
                                 <div class="d-flex flex-column gap-1">
-                                    <h5 class="">Non-Academic Content</h5>
+                                    <h6 class="">Non-Academic Content</h6>
                                     <div class="d-flex flex-column">
-                                        <p class="">Because real success goes beyond exams, our LMS also
+                                        <p class="feature">Because real success goes beyond exams, our LMS also
                                             offers practical skills that prepare students for life after school.</p>
                                         <ul class="">
                                             <li>Technical Skills</li>
@@ -209,9 +209,9 @@
                             </div>
                             <div class="d-flex flex-column gap-2 flex-grow-1">
                                 <div class="d-flex flex-column gap-1">
-                                    <h5 class="">AI-Powered Academic Assistant</h5>
+                                    <h6 class="">AI-Powered Academic Assistant</h6>
                                     <div>
-                                        <p class=" mb-0">Our built-in AI tutor works like your personal
+                                        <p class="feature mb-0">Our built-in AI tutor works like your personal
                                             academic ChatGPT. It explains tough concepts, answers questions, and supports
                                             both independent study and classroom teaching — anytime, anywhere.
                                         </p>
@@ -235,9 +235,9 @@
                             </div>
                             <div class="d-flex flex-column gap-2 flex-grow-1">
                                 <div class="d-flex flex-column gap-1">
-                                    <h5 class="">Virtual Wallet Integration</h5>
+                                    <h6 class="">Virtual Wallet Integration</h6>
                                     <div class="d-flex flex-column">
-                                        <p class=" mb-0">Your money, your way — all within Kokokah.</p>
+                                        <p class="feature mb-0">Your money, your way — all within Kokokah.</p>
                                         <ul class=" mb-0">
                                             <li>Seamless Payments: Deposit funds once and use your wallet to pay for
                                                 courses, tutoring sessions, STEM bootcamps, or any service on the Kokokah
@@ -247,7 +247,7 @@
                                             <li>Withdrawals: Need your funds back? You can withdraw according to our
                                                 platform’s simple, transparent directives.</li>
                                         </ul>
-                                        <p class=""> Parents can preload wallets for their kids, making
+                                        <p class="feature"> Parents can preload wallets for their kids, making
                                             payments easier and teaching financial responsibility.</p>
                                     </div>
                                 </div>
@@ -265,7 +265,7 @@
         <div class="container-fluid">
             <div class="row align-items-center">
                 <div class="col-lg-6 mb-4 mb-lg-0 d-flex justify-content-center">
-                    <img src="images/koodies.png" class="img-fluid" alt="Why Choose Kokokah">
+                    <img src="images/koodies.png" class="img-fluid slide-up-image" alt="Why Choose Kokokah">
                 </div>
                 <div class="col-lg-6 ps-lg-4 ps-0">
                     <h2 class="fw-bold mb-4 text-center section-heading section-title">
@@ -403,7 +403,7 @@
 
          gsap.utils.toArray(".slide-up-image").forEach((img) => {
             gsap.from(img, {
-                y: 300, // start 100px below
+                y: 200, // start 100px below
                 opacity: 0, // start fully transparent
                 duration: 1, // animation duration
                 ease: "power2.out",
@@ -415,5 +415,38 @@
                 }
             });
         });
+
+        gsap.utils.toArray(".typewriter").forEach((el) => {
+            const text = el.textContent;
+            el.textContent = ""; // clear text to start typing
+
+            const letters = text.split("");
+
+            letters.forEach((letter) => {
+                const span = document.createElement("span");
+                span.textContent = letter;
+                span.style.opacity = 0; // hide initially
+                el.appendChild(span);
+            });
+
+            const spans = el.querySelectorAll("span");
+
+            gsap.fromTo(spans, {
+                opacity: 0
+            }, {
+                opacity: 1,
+                duration: 0.05, // speed of typing
+                stagger: 0.05, // delay between letters
+                ease: "none",
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 85%",
+                    toggleActions: "play reverse play reverse",
+                    // markers: true   // for debugging
+                }
+            });
+        });
+
+         
     </script>
 @endsection

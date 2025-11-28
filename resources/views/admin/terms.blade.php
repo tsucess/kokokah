@@ -143,7 +143,6 @@
             }
 
             .header-text h1 {
-                font-size: 32px;
                 color: #004A53;
                 font-family: 'Fredoka One', sans-serif;
                 font-weight: 600;
@@ -311,11 +310,11 @@
             }
         </style>
 
-        <div class="container-fluid px-4 py-4">
+        <div class="container-fluid px-4 py-4 d-flex flex-column gap-5">
             <!-- Header Section -->
-            <div class="header-section">
+            <div class="d-flex flex-row align-items-center justify-content-between">
                 <div class="header-text">
-                    <h1 class="text-white">Academic Terms</h1>
+                    <h1>Academic Terms</h1>
                     <p>Manage academic terms (First Term, Second Term, Third Term)</p>
                 </div>
                 <button class="add-btn" data-bs-toggle="modal" data-bs-target="#addTermModal">
@@ -344,15 +343,6 @@
                                 <label for="termName" class="modal-label">Term Name</label>
                                 <input type="text" class="modal-input" id="termName" placeholder="e.g., First Term"
                                     required>
-                            </div>
-                            <div class="modal-form-input-border">
-                                <label for="startDate" class="modal-label">Start Date</label>
-                                <input type="date" class="modal-input"
-                                    id="startDate" required>
-                            </div>
-                            <div class="modal-form-input-border">
-                                <label for="endDate" class="modal-label">End Date</label>
-                                <input type="date" class="modal-input" id="endDate" required>
                             </div>
                         </div>
                         <div class="d-flex gap-2">
@@ -434,10 +424,7 @@
                             </button>
                         </div>
                     </div>
-                    <p class="term-card-info">
-                        <i class="fa-solid fa-calendar me-2" style="color: #004A53;"></i>
-                        ${formatDate(term.startDate)} - ${formatDate(term.endDate)}
-                    </p>
+
                 </div>
             `).join('');
             }
@@ -446,23 +433,17 @@
             document.getElementById('termForm').addEventListener('submit', (e) => {
                 e.preventDefault();
                 const name = document.getElementById('termName').value;
-                const startDate = document.getElementById('startDate').value;
-                const endDate = document.getElementById('endDate').value;
 
                 if (currentEditId) {
                     const term = terms.find(t => t.id === currentEditId);
                     if (term) {
                         term.name = name;
-                        term.startDate = startDate;
-                        term.endDate = endDate;
                     }
                     currentEditId = null;
                 } else {
                     terms.push({
                         id: Math.max(...terms.map(t => t.id), 0) + 1,
                         name,
-                        startDate,
-                        endDate
                     });
                 }
 
@@ -477,8 +458,6 @@
                 if (term) {
                     currentEditId = id;
                     document.getElementById('termName').value = term.name;
-                    document.getElementById('startDate').value = term.startDate;
-                    document.getElementById('endDate').value = term.endDate;
                     document.getElementById('modalTitle').textContent = 'Edit Term';
                     new bootstrap.Modal(document.getElementById('addTermModal')).show();
                 }
