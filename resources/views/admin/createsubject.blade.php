@@ -451,7 +451,7 @@
                 <button type="button" class="btn btn-back back-btn" data-next="details">
                     Previous
                 </button>
-                <button type="button" class="btn btn-continue continue-btn" data-next="curriculum">
+                <button type="button" class="btn btn-continue continue-btn" data-next="publish">
                     Continue
                 </button>
             </div>
@@ -805,7 +805,7 @@
                                     </select>
                                 </div>
 
-                            
+
                                 <div class="flex-column gap-3 select-children" id="image-container">
                                     <div class="modal-form-input-border">
                                         <label for="" class="modal-label">Title</label>
@@ -827,7 +827,7 @@
                                     </div>
                                 </div>
 
-                              
+
                                 <div class="flex-column gap-3 hide select-children" id="youtube-container">
                                     <div class="modal-form-input-border">
                                         <label for="" class="modal-label">Title</label>
@@ -839,7 +839,7 @@
                                     </div>
                                 </div>
 
-                               
+
                                 <div class="flex-column gap-3 hide select-children" id="content-container">
                                     <div class="modal-form-input-border">
                                         <label for="" class="modal-label">Title</label>
@@ -851,7 +851,7 @@
                                     </div>
                                 </div>
 
-                              
+
                                 <div class="flex-column gap-3 hide select-children" id="audio-container">
                                     <div class="modal-form-input-border">
                                         <label for="" class="modal-label">Title</label>
@@ -908,7 +908,7 @@
 
             <button type="button" class="btn btn-add-lesson" data-bs-toggle="modal" data-bs-target="#addLessonModal">
                 <i class="fa-solid fa-plus me-2"></i> Add Lesson
-            </button> 
+            </button>
 
             <div class="curriculum-actions">
                 <button type="button" class="btn btn-back back-btn" data-next="media">
@@ -1238,7 +1238,7 @@
             </div>
 
             <div class="publish-actions">
-                <button type="button" class="btn btn-back back-btn" data-next="curriculum">
+                <button type="button" class="btn btn-back back-btn" data-next="media">
                     Back
                 </button>
                 <button type="button" class="btn btn-publish" id="finalPublishBtn">
@@ -1278,37 +1278,37 @@
 
             // addlessong modal js
 
-            const selectContainer = document.getElementById("addContent");
+            // const selectContainer = document.getElementById("addContent");
 
-            function showSelectedContainer(contentType) {
-                document
-                    .querySelectorAll(".select-children")
-                    .forEach((container) => (container.style.display = "none"));
+            // function showSelectedContainer(contentType) {
+            //     document
+            //         .querySelectorAll(".select-children")
+            //         .forEach((container) => (container.style.display = "none"));
 
-                if (contentType === "image") {
-                    document.getElementById("image-container").style.display = "flex";
-                }
-                if (contentType === "youtube") {
-                    document.getElementById("youtube-container").style.display = "flex";
-                }
-                if (contentType === "audio") {
-                    document.getElementById("audio-container").style.display = "flex";
-                }
-                if (contentType === "content") {
-                    document.getElementById("content-container").style.display = "flex";
-                }
-                if (contentType === "document") {
-                    document.getElementById("document-container").style.display = "flex";
-                }
-            }
+            //     if (contentType === "image") {
+            //         document.getElementById("image-container").style.display = "flex";
+            //     }
+            //     if (contentType === "youtube") {
+            //         document.getElementById("youtube-container").style.display = "flex";
+            //     }
+            //     if (contentType === "audio") {
+            //         document.getElementById("audio-container").style.display = "flex";
+            //     }
+            //     if (contentType === "content") {
+            //         document.getElementById("content-container").style.display = "flex";
+            //     }
+            //     if (contentType === "document") {
+            //         document.getElementById("document-container").style.display = "flex";
+            //     }
+            // }
 
-            document.addEventListener("DOMContentLoaded", () => {
-                showSelectedContainer(selectContainer.value);
-            });
+            // document.addEventListener("DOMContentLoaded", () => {
+            //     showSelectedContainer(selectContainer.value);
+            // });
 
-            selectContainer.addEventListener("change", (e) => {
-                showSelectedContainer(e.target.value);
-            });
+            // selectContainer.addEventListener("change", (e) => {
+            //     showSelectedContainer(e.target.value);
+            // });
 
             function populatePublishSection() {
                 // Get data from form fields
