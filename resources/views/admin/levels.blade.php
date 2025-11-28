@@ -335,25 +335,25 @@
     </div>
 
     <!-- Add/Edit Modal -->
-    <div class="modal fade" id="addLevelModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal fade" id="addLevelModal" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title" id="modalTitle">Add Level</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form id="levelForm">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="levelName" class="form-label">Level Name</label>
-                            <input type="text" class="form-control" id="levelName" placeholder="e.g., JS1" required>
+                <form class="modal-form-container" id="levelForm">
+                    <div class="modal-form">
+                        <div class="modal-form-input-border">
+                            <label for="levelName" class="modal-label">Level Name</label>
+                            <input class="modal-input" type="text" id="levelName" placeholder="e.g., JS1" required/>
                         </div>
-                        <div class="form-group">
-                            <label for="levelType" class="form-label">Level Type</label>
-                            <input type="text" class="form-control" id="levelType" placeholder="e.g., Junior Secondary 1">
+                        <div class="modal-form-input-border">
+                            <label for="levelType" class="modal-label">Level Type</label>
+                            <textarea id="levelType"  class="modal-input" placeholder="Enter level type" ></textarea>
                         </div>
                     </div>
-                    <div class="modal-footer">
+                    <div class="d-flex gap-2">
                         <button type="button" class="btn btn-secondary-custom" data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-primary-custom">Save Level</button>
                     </div>
@@ -363,7 +363,7 @@
     </div>
 
     <!-- Delete Confirmation Modal -->
-    <div class="modal fade" id="deleteConfirmModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal fade" id="deleteConfirmModal" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -373,7 +373,7 @@
                 <div class="modal-body">
                     <p>Are you sure you want to delete this level? This action cannot be undone.</p>
                 </div>
-                <div class="modal-footer">
+                <div class="d-flex gap-2">
                     <button type="button" class="btn btn-secondary-custom" data-bs-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-danger-custom" id="confirmDeleteBtn">Delete</button>
                 </div>

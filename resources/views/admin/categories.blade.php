@@ -6,8 +6,8 @@
         <!-- Header Section -->
         <div class="d-flex justify-content-between align-items-start mb-5">
             <div>
-                <h1 class="fw-bold mb-2">Subject Categories</h1>
-                <p class="text-muted" style="font-size: 0.95rem;">Here overview of your</p>
+                <h1 class="fw-bold mb-2">Course Categories</h1>
+                <p class="text-muted" >Here overview of your</p>
             </div>
             <button class="btn px-4 py-2 fw-semibold" style="background-color: #FDAF22; border: none; color: white;" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 <i class="fa-solid fa-plus me-2"></i> Add Category
@@ -27,12 +27,12 @@
                 <form class="modal-form-container">
                     <div class="modal-form">
                         <div class="modal-form-input-border">
-                            <label for="" class="modal-label">Category Name</label>
+                            <label for="" class="modal-label">Course Name</label>
                             <input class="modal-input" type="text" placeholder="Art" />
                         </div>
                         <div class="modal-form-input-border">
-                            <label for="" class="modal-label">Subject Name</label>
-                            <input type="text" class="modal-input" placeholder="Art" />
+                            <label for="" class="modal-label">Course Description</label>
+                            <textarea  class="modal-input" placeholder="Enter description" ></textarea>
                         </div>
                     </div>
                     <button class="modal-form-btn">Add Category</button>

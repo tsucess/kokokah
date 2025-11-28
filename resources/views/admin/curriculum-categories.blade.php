@@ -23,7 +23,7 @@
             font-family: "Fredoka One", sans-serif;
             font-size: 22px;
             font-weight: 600;
-            color: white;
+            color: #004A53;
         }
 
         .btn-close {
@@ -330,26 +330,26 @@
     </div>
 
     <!-- Add/Edit Modal -->
-    <div class="modal fade" id="addCurriculumModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal fade" id="addCurriculumModal" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title" id="modalTitle">Add Curriculum Category</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form id="curriculumForm">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="categoryName" class="form-label">Category Name</label>
-                            <input type="text" class="form-control" id="categoryName" placeholder="e.g., WAEC" required>
+                <form class="modal-form-container" id="curriculumForm">
+                    <div class="modal-form">
+                        <div class="modal-form-input-border">
+                            <label for="" class="modal-label">Course Name</label>
+                            <input class="modal-input" type="text" placeholder="Art" id="categoryName"/>
                         </div>
-                        <div class="form-group">
-                            <label for="categoryDescription" class="form-label">Description</label>
-                            <input type="text" class="form-control" id="categoryDescription" placeholder="e.g., West African Examination Council">
+                        <div class="modal-form-input-border">
+                            <label for="" class="modal-label">Course Description</label>
+                            <textarea id="categoryDescription"  class="modal-input" placeholder="Enter description" ></textarea>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary-custom" data-bs-dismiss="modal">Cancel</button>
+                    <div>
+                         <button type="button" class="btn btn-secondary-custom" data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-primary-custom">Save Category</button>
                     </div>
                 </form>
@@ -358,7 +358,7 @@
     </div>
 
     <!-- Delete Confirmation Modal -->
-    <div class="modal fade" id="deleteConfirmModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal fade" id="deleteConfirmModal" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">

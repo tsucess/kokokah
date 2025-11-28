@@ -4,7 +4,7 @@
     {{-- mascot  --}}
 
 
-  <img src="./images/book-icon.png" class="kokokah-logo" />
+    <img src="./images/book-icon.png" class="kokokah-logo" />
 
     <!-- Modal Section -->
 
@@ -803,7 +803,7 @@
     </div>
 
 
-    <div class="container-fluid text-center mt-5 px-3 px-lg-5 py-5 achievement-section">
+    <div class="container-fluid text-center mt-5 px-3 px-lg-5 py-5 h-100 achievement-section">
         <p class="achievement-label">Kokokah has industry-leading renewals of above 80%
         </p>
         <!-- Section Title -->
@@ -998,25 +998,26 @@
                 scrollTrigger: {
                     trigger: img,
                     start: "top 85%", // when image enters the viewport
-                    toggleActions: "play none none none",
+                    toggleActions: "play reverse play reverse",
                     // markers: true    // optional, for debugging
                 }
             });
         });
-const logo = document.querySelector(".kokokah-logo");
+        const logo = document.querySelector(".kokokah-logo");
 
-gsap.set(logo, { xPercent: -50, yPercent: -50 });
+        gsap.set(logo, {
+            xPercent: -50,
+            yPercent: -50
+        });
 
-window.addEventListener("mousemove", (e) => {
-  gsap.to(logo, {
-    x: e.clientX,
-    y: e.clientY,
-    rotation: (e.clientX / window.innerWidth - 0.5) * 15,
-    duration: 0.35,
-    ease: "power3.out"
-  });
-});
-
-
+        window.addEventListener("mousemove", (e) => {
+            gsap.to(logo, {
+                x: e.clientX,
+                y: e.clientY,
+                rotation: (e.clientX / window.innerWidth - 0.5) * 15,
+                duration: 0.35,
+                ease: "power3.out"
+            });
+        });
     </script>
 @endsection

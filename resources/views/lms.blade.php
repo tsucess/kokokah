@@ -24,10 +24,10 @@
     <div class="container-fluid section-white section-py px-3 px-lg-5">
 
         <div class="row align-items-center">
-            <div class="col-12 col-md-6 col-lg-6 mb-4 mb-md-0">
+            <div class="col-12 col-md-6 col-lg-6 mb-4 mb-md-0 fade-section-left">
                 <img src="images/llm-hero-img.jpg" class="img-fluid" alt="Kokokah LMS" style="max-width:752px; width:100%; height:382px; border-radius : 15px; object-fit:cover;">
             </div>
-            <div class="col-12 col-md-6 col-lg-6 d-flex flex-column gap-3">
+            <div class="col-12 col-md-6 col-lg-6 d-flex flex-column gap-3 fade-section">
                 <h2 class="fw-bold section-heading">
                     Kokokah LMS
                 </h2>
@@ -47,13 +47,13 @@
     <div class="container-fluid section-light-gray section-py px-3 px-lg-5">
 
         <div class="text-center mb-4 mb-md-5">
-            <h2 class="fw-bold section-heading">
+            <h2 class="fw-bold section-heading section-title">
                 Achievements/Statistics Section
             </h2>
         </div>
 
-        <div class="row g-4">
-            <div class="col col-12 col-md-6">
+        <div class="row g-4 features">
+            <div class="col col-12 col-md-6 feature-item">
                 <div class="achievement-card h-100">
                     <div class="d-flex align-items-start gap-2">
                         <div class=" achievement-card-dot flex-shrink-0"></div>
@@ -62,7 +62,7 @@
                 </div>
             </div>
 
-            <div class="col col-12 col-md-6">
+            <div class="col col-12 col-md-6 feature-item">
                 <div class="achievement-card h-100">
                     <div class="d-flex align-items-start gap-2">
                         <div class=" achievement-card-dot flex-shrink-0"></div>
@@ -72,7 +72,7 @@
                 </div>
             </div>
 
-            <div class="col col-12 col-md-6">
+            <div class="col col-12 col-md-6 feature-item">
                 <div class="achievement-card h-100">
                     <div class="d-flex align-items-start gap-2">
                         <div class=" achievement-card-dot flex-shrink-0"></div>
@@ -82,7 +82,7 @@
                 </div>
             </div>
 
-            <div class="col col-12 col-md-6">
+            <div class="col col-12 col-md-6 feature-item">
                 <div class="achievement-card h-100">
                     <div class="d-flex align-items-start gap-2">
                         <div class=" achievement-card-dot flex-shrink-0"></div>
@@ -91,7 +91,7 @@
                 </div>
             </div>
 
-            <div class="col col-12 col-md-6">
+            <div class="col col-12 col-md-6 feature-item">
                 <div class="achievement-card h-100">
                     <div class="d-flex align-items-start gap-2">
                         <div class=" achievement-card-dot flex-shrink-0"></div>
@@ -101,7 +101,7 @@
                 </div>
             </div>
 
-            <div class="col col-12 col-md-6">
+            <div class="col col-12 col-md-6 feature-item">
                 <div class="achievement-card h-100">
                     <div class="d-flex align-items-start gap-2">
                         <div class=" achievement-card-dot flex-shrink-0"></div>
@@ -120,7 +120,7 @@
             style="width:100px; height:100px; position:absolute; left:30px; top:20px; " />
         <div class="container-fluid">
             <div class="text-center mb-4 mb-md-5">
-                <h4 class="fw-bold text-white">
+                <h4 class="fw-bold text-white section-title">
                     Our Features
                 </h4>
             </div>
@@ -128,7 +128,7 @@
                 <!-- first row -->
                 <div class="d-flex flex-column gap-4 flex-lg-row">
                     <!-- Feature Card 1 -->
-                    <div class="w-100 w-lg-50">
+                    <div class="w-100 w-lg-50 fade-section-left">
                         <div class="d-flex flex-column large-card h-100">
                             <div class="d-flex justify-content-center align-items-center large-card-icon-container">
                                 <img src="./images/crown-icon.png" alt="">
@@ -148,7 +148,7 @@
                     </div>
 
                     <!-- Feature Card 2 -->
-                    <div class="w-100 w-lg-50">
+                    <div class="w-100 w-lg-50 fade-section">
                         <div class="d-flex flex-column large-card">
                             <div class="d-flex justify-content-center align-items-center large-card-icon-container">
                                 <img src="./images/award-icon.png" alt="">
@@ -179,7 +179,7 @@
                 <!-- second row -->
                 <div class="d-flex flex-column gap-4 flex-lg-row">
                     <!-- Feature Card 1 -->
-                    <div class="w-100 w-lg-50">
+                    <div class="w-100 w-lg-50 fade-section-left">
                         <div class="d-flex flex-column large-card h-100">
                             <div class="d-flex justify-content-center align-items-center large-card-icon-container">
                                 <img src="./images/face-icon.png" alt="">
@@ -202,7 +202,7 @@
                     </div>
 
                     <!-- Feature Card 2 -->
-                    <div class="w-100 w-lg-50">
+                    <div class="w-100 w-lg-50 fade-section">
                         <div class="d-flex flex-column large-card h-100">
                             <div class="d-flex justify-content-center align-items-center large-card-icon-container">
                                 <img src="./images/speed-icon.png" alt="">
@@ -228,7 +228,7 @@
                 <!-- Third row -->
                 <div class="d-flex">
                     <!-- Feature Card 1 -->
-                    <div class="w-100 ">
+                    <div class="w-100 fade-section-left">
                         <div class="d-flex flex-column large-card h-100">
                             <div class="d-flex justify-content-center align-items-center large-card-icon-container">
                                 <img src="./images/face-icon.png" alt="">
@@ -268,11 +268,11 @@
                     <img src="images/koodies.png" class="img-fluid" alt="Why Choose Kokokah">
                 </div>
                 <div class="col-lg-6 ps-lg-4 ps-0">
-                    <h2 class="fw-bold mb-4 text-center section-heading">
+                    <h2 class="fw-bold mb-4 text-center section-heading section-title">
                         Why Choose Kokokah LMS
                     </h2>
-                    <div class="row g-3">
-                        <div class="col-12">
+                    <div class="row g-3 reasons">
+                        <div class="col-12 reason-card-item">
                             <div class="achievement-card">
                                 <div class="d-flex gap-2 align-items-start">
                                     <div class=" achievement-card-dot flex-shrink-0"></div>
@@ -283,7 +283,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12">
+                        <div class="col-12 reason-card-item">
                             <div class="achievement-card">
                                 <div class="d-flex gap-2 align-items-start">
                                     <div class=" achievement-card-dot flex-shrink-0"></div>
@@ -293,7 +293,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12">
+                        <div class="col-12 reason-card-item">
                             <div class="achievement-card">
                                 <div class="d-flex gap-2 align-items-start">
                                     <div class=" achievement-card-dot flex-shrink-0"></div>
@@ -303,7 +303,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12">
+                        <div class="col-12 reason-card-item">
                             <div class="achievement-card">
                                 <div class="d-flex gap-2 align-items-start">
                                     <div class=" achievement-card-dot flex-shrink-0"></div>
@@ -322,4 +322,98 @@
             </div>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger, TextPlugin);
+
+        gsap.utils.toArray(".section-title").forEach((section) => {
+            gsap.from(section, {
+                scale: 0.6,
+                duration: 1,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 85%",
+                    toggleActions: "play reverse play reverse"
+                }
+            })
+        });
+
+         gsap.utils.toArray(".fade-section").forEach((section) => {
+            gsap.from(section, { // use `from` so it starts offscreen
+                opacity: 1,
+                x: 600, // start 100px to the right
+                duration: 0.1,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 85%",
+                    toggleActions: "play reverse play reverse",
+                }
+            });
+        });
+
+        gsap.utils.toArray(".fade-section-left").forEach((section) => {
+            gsap.from(section, { // use `from` so it starts offscreen
+                opacity: 1,
+                x: -600, // start 100px to the right
+                duration: 0.1,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 85%",
+                    toggleActions: "play reverse play reverse",
+                }
+            })
+        });
+
+         gsap.from(".feature-item", {
+            scrollTrigger: {
+                trigger: ".features",
+                start: "top 80%",
+                toggleActions: "play reverse play reverse",
+            },
+            opacity: 0,
+            y: 80,
+            duration: 0.5,
+            ease: "back.out(1.7)", // “pop-out” effect
+            stagger: {
+                each: 0.5, // stagger each by 0.2s
+                from: "start" // options: "start", "center", "end", or index
+            }
+        });
+
+        gsap.from(".reason-card-item", {
+            scrollTrigger: {
+                trigger: ".reasons",
+                start: "top 80%",
+                toggleActions: "play reverse play reverse",
+            },
+            opacity: 0,
+            x: 120,
+            duration: 0.5,
+            ease: "back.out(1.7)", // “pop-out” effect
+            stagger: {
+                each: 0.5, // stagger each by 0.2s
+                from: "start" // options: "start", "center", "end", or index
+            }
+        });
+
+         gsap.utils.toArray(".slide-up-image").forEach((img) => {
+            gsap.from(img, {
+                y: 300, // start 100px below
+                opacity: 0, // start fully transparent
+                duration: 1, // animation duration
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: img,
+                    start: "top 85%", // when image enters the viewport
+                    toggleActions: "play reverse play reverse",
+                    // markers: true    // optional, for debugging
+                }
+            });
+        });
+    </script>
 @endsection

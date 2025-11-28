@@ -354,6 +354,13 @@
         line-height: 1.8;
         color: #004a53;
     }
+    .img-margin{
+        margin-top: -150px;
+    }
+    .achievement-section {
+    min-height: 700px;
+
+}
 }
 
 /* ===== DESKTOP BREAKPOINTS (min-width: 992px) ===== */
