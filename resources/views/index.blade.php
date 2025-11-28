@@ -824,7 +824,7 @@
                         school operations all from one dashboard.
                     </p>
                     <i class="bi bi-quote text-success fs-2 float-end"></i>
-                    <img src="{{asset('images/lisa.png')}}" alt="Lisa" class="testimonial-img position-absolute rounded-circle">
+                    <img src="{{asset('images/Lisa.png')}}" alt="Lisa" class="testimonial-img position-absolute rounded-circle">
                     <p class="fw-bold text-end mb-0">- Lisa</p>
                 </div>
             </div>
@@ -838,7 +838,7 @@
                         school operations all from one dashboard.
                     </p>
                     <i class="bi bi-quote text-success fs-2 float-end"></i>
-                    <img src="{{ asset('images/jimmy.png') }}" alt="Jimmy" class="testimonial-img position-absolute rounded-circle">
+                    <img src="{{ asset('images/Jimmy.png') }}" alt="Jimmy" class="testimonial-img position-absolute rounded-circle">
                     <p class="fw-bold text-end mb-0">- Jimmy</p>
                 </div>
             </div>
