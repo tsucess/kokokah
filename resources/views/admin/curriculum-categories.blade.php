@@ -1100,7 +1100,7 @@
                 // 3. Access the ID
                 const currentUserId = authUser ? authUser.id : null;
 
-               
+
 
                 let categories = [];
                 let currentEditId = null;
@@ -1250,9 +1250,10 @@
                     }
 
                     const wrapper = document.createElement('div');
-                    wrapper.style.display = 'grid';
-                    wrapper.style.gridTemplateColumns = 'repeat(3, 1fr)';
-                    wrapper.style.gap = '1rem';
+                    // wrapper.style.display = 'grid';
+                    // wrapper.style.gridTemplateColumns = 'repeat(3, 1fr)';
+                    // wrapper.style.gap = '1rem';
+                    wrapper.style.width = '100%'
 
                     categories.forEach(cat => {
                         const col = document.createElement('div');
@@ -1260,13 +1261,14 @@
                                     <div class="category-card">
                                     <div class="category-card-header d-flex justify-content-between">
                                         <h3 class="category-card-title">${escapeHtml(cat.title)}</h3>
-                                        <div>
-                                        <button class="edit-btn btn btn-link" data-id="${cat.id}">
-                                            <i class="fa-solid fa-pen fa-xs"></i>
+                                        <div class="category-card-actions">
+                                        <button class="action-btn" data-id="${cat.id}">
+                                             <i class="fa-solid fa-pen fa-xs"></i>
                                         </button>
-                                        <button class="delete-btn btn btn-link text-danger" data-id="${cat.id}">
+                                        <button class="action-btn delete" data-id="${cat.id}">
                                             <i class="fa-solid fa-trash fa-xs"></i>
                                         </button>
+
                                         </div>
                                     </div>
                                     <p class="category-card-description">${escapeHtml(cat.description || '')}</p>
