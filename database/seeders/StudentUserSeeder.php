@@ -13,9 +13,9 @@ class StudentUserSeeder extends Seeder
     {
         // Get levels for assignment
         $levels = Level::all();
-        $universityLevels = Level::where('type', 'university')->get();
-        $secondaryLevels = Level::where('type', 'secondary')->get();
-        $gradeLevels = Level::where('type', 'grade')->get();
+        $universityLevels = Level::where('description', 'university')->get();
+        $secondaryLevels = Level::where('description', 'secondary')->get();
+        $gradeLevels = Level::where('description', 'grade')->get();
 
         // Nigerian first names
         $firstNames = [
@@ -38,7 +38,7 @@ class StudentUserSeeder extends Seeder
             $lastName = $lastNames[array_rand($lastNames)];
             $level = $universityLevels->random();
             $city = $cities[array_rand($cities)];
-            
+
             $students[] = [
                 'first_name' => $firstName,
                 'last_name' => $lastName,
@@ -64,7 +64,7 @@ class StudentUserSeeder extends Seeder
             $lastName = $lastNames[array_rand($lastNames)];
             $level = $secondaryLevels->random();
             $city = $cities[array_rand($cities)];
-            
+
             $students[] = [
                 'first_name' => $firstName,
                 'last_name' => $lastName,
@@ -90,7 +90,7 @@ class StudentUserSeeder extends Seeder
             $lastName = $lastNames[array_rand($lastNames)];
             $level = $gradeLevels->random();
             $city = $cities[array_rand($cities)];
-            
+
             $students[] = [
                 'first_name' => $firstName,
                 'last_name' => $lastName,

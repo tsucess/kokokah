@@ -434,7 +434,7 @@
             </div>
         </div>
 
-    
+
 
         <!-- ========== Place near top or bottom of page (paste these helpers once) ========== -->
 
@@ -444,7 +444,7 @@
 
         <!-- ========== End helpers ========== -->
   <!-- ======= Script: copy-paste entire block below to replace your <script> section ======= -->
-
+ 
         <script>
             (function() {
                 // Config

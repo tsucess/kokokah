@@ -152,9 +152,16 @@
         cache: 'no-store'
       });
 
+      console.log('Response status:', response.status);
+console.log('Response headers:', response.headers);
+
+
       if (!response.ok) {
-        console.error('Failed to fetch transactions');
-        return;
+        const text = await response.text();
+  console.error('Failed to fetch transactions:', text);
+  return;
+
+
       }
 
       const data = await response.json();
@@ -171,7 +178,7 @@
           tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted py-4">No transactions found</td></tr>';
         } else {
           transactions.forEach((transaction, index) => {
-            const statusColor = transaction.status === 'paid' ? '#28a745' :
+            const statusColor = transaction.status === 'success' ? '#28a745' :
                                transaction.status === 'pending' ? '#ffc107' : '#dc3545';
             const statusText = transaction.status.charAt(0).toUpperCase() + transaction.status.slice(1);
 

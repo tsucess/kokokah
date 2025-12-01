@@ -43,3 +43,6 @@ class DatabaseSeeder extends Seeder
         echo "   📈 Total: " . User::count() . "\n\n";
     }
 }
+
+$this->call(TransactionsSeeder::class);
+

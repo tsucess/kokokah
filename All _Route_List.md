@@ -15,7 +15,7 @@ GET|HEAD        / ..............................................................
   GET|HEAD        api/admin/reports .............................................................................................................  
   GET|HEAD        api/admin/settings ................................................................................... AdminController@settings  
   GET|HEAD        api/admin/stats ................................................................................. AdminController@databaseStats  
-  GET|HEAD        api/admin/transactions ........................................................................... AdminController@transactions  
+  GET|HEAD        api/admin/transactions ................................................ AdminController@transactions  
   GET|HEAD        api/admin/users ......................................................................................... AdminController@users  
   POST            api/admin/users .................................................................................... AdminController@createUser  
   GET|HEAD        api/admin/users/recent ................................................................ AdminController@recentlyRegisteredUsers  
