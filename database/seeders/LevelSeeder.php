@@ -11,35 +11,35 @@ class LevelSeeder extends Seeder
     {
         $levels = [
             // Secondary School Levels
-            ['name' => 'SS1', 'type' => 'secondary'],
-            ['name' => 'SS2', 'type' => 'secondary'],
-            ['name' => 'SS3', 'type' => 'secondary'],
-            
+            ['name' => 'SS1', 'description' => 'secondary'],
+            ['name' => 'SS2', 'description' => 'secondary'],
+            ['name' => 'SS3', 'description' => 'secondary'],
+
             // University Levels
-            ['name' => '100 Level', 'type' => 'university'],
-            ['name' => '200 Level', 'type' => 'university'],
-            ['name' => '300 Level', 'type' => 'university'],
-            ['name' => '400 Level', 'type' => 'university'],
-            ['name' => '500 Level', 'type' => 'university'],
-            
+            ['name' => '100 Level', 'description' => 'university'],
+            ['name' => '200 Level', 'description' => 'university'],
+            ['name' => '300 Level', 'description' => 'university'],
+            ['name' => '400 Level', 'description' => 'university'],
+            ['name' => '500 Level', 'description' => 'university'],
+
             // Grade School Levels
-            ['name' => 'Grade 1', 'type' => 'grade'],
-            ['name' => 'Grade 2', 'type' => 'grade'],
-            ['name' => 'Grade 3', 'type' => 'grade'],
-            ['name' => 'Grade 4', 'type' => 'grade'],
-            ['name' => 'Grade 5', 'type' => 'grade'],
-            ['name' => 'Grade 6', 'type' => 'grade'],
-            ['name' => 'Grade 7', 'type' => 'grade'],
-            ['name' => 'Grade 8', 'type' => 'grade'],
-            ['name' => 'Grade 9', 'type' => 'grade'],
-            ['name' => 'Grade 10', 'type' => 'grade'],
-            ['name' => 'Grade 11', 'type' => 'grade'],
-            ['name' => 'Grade 12', 'type' => 'grade'],
+            ['name' => 'Grade 1', 'description' => 'grade'],
+            ['name' => 'Grade 2', 'description' => 'grade'],
+            ['name' => 'Grade 3', 'description' => 'grade'],
+            ['name' => 'Grade 4', 'description' => 'grade'],
+            ['name' => 'Grade 5', 'description' => 'grade'],
+            ['name' => 'Grade 6', 'description' => 'grade'],
+            ['name' => 'Grade 7', 'description' => 'grade'],
+            ['name' => 'Grade 8', 'description' => 'grade'],
+            ['name' => 'Grade 9', 'description' => 'grade'],
+            ['name' => 'Grade 10', 'description' => 'grade'],
+            ['name' => 'Grade 11', 'description' => 'grade'],
+            ['name' => 'Grade 12', 'description' => 'grade'],
         ];
 
         foreach ($levels as $level) {
             Level::updateOrCreate(
-                ['name' => $level['name'], 'type' => $level['type']],
+                ['name' => $level['name'], 'description' => $level['description']],
                 $level
             );
         }
