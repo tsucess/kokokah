@@ -177,7 +177,7 @@
             /* ===== CARDS GRID ===== */
             .categories-grid {
                 display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
                 gap: 20px;
                 margin-bottom: 30px;
             }
@@ -1249,16 +1249,17 @@
                         return;
                     }
 
-                    const wrapper = document.createElement('div');
+                    // const wrapper = document.createElement('div');
                     // wrapper.style.display = 'grid';
                     // wrapper.style.gridTemplateColumns = 'repeat(3, 1fr)';
                     // wrapper.style.gap = '1rem';
-                    wrapper.style.width = '100%'
+                    // wrapper.style.width = '100%'
+                    grid.innerHTML = '';
 
                     categories.forEach(cat => {
-                        const col = document.createElement('div');
-                        col.innerHTML = `
-                                    <div class="category-card">
+                        const card = document.createElement('div');
+    card.classList.add('category-card');
+                        card.innerHTML = `
                                     <div class="category-card-header d-flex justify-content-between">
                                         <h3 class="category-card-title">${escapeHtml(cat.title)}</h3>
                                         <div class="category-card-actions">
@@ -1272,13 +1273,13 @@
                                         </div>
                                     </div>
                                     <p class="category-card-description">${escapeHtml(cat.description || '')}</p>
-                                    </div>
+
                                 `;
-                        wrapper.appendChild(col);
+                       grid.appendChild(card);
                     });
 
-                    grid.innerHTML = '';
-                    grid.appendChild(wrapper);
+                    // grid.innerHTML = '';
+                    // grid.appendChild(wrapper);
 
                     grid.querySelectorAll('.edit-btn').forEach(btn => {
                         btn.onclick = () => window.editCategory(btn.dataset.id);
