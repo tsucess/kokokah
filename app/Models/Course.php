@@ -33,9 +33,9 @@ class Course extends Model
     ];
 
     // Relationships
-    public function category()
+    public function curriculumCategory()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(CurriculumCategory::class);
     }
 
     public function instructor()

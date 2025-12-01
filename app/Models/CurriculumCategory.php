@@ -10,6 +10,8 @@ class CurriculumCategory extends Model
 {
     use HasFactory, SoftDeletes;
 
+     protected $table = 'curriculum_categories'; // 🔥 ADD THIS FIX
+
     protected $fillable = [
         'user_id',
         'title',
@@ -24,7 +26,7 @@ class CurriculumCategory extends Model
 
     public function courses()
     {
-        return $this->hasMany(Course::class);
+        return $this->hasMany(Course::class, 'curriculum_category_id');
     }
 
     // Scopes

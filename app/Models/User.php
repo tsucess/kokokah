@@ -102,9 +102,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Level::class);
     }
 
-    public function categories()
+    public function curriculumCategories()
     {
-        return $this->hasMany(Category::class);
+        return $this->hasMany(CurriculumCategory::class);
+    }
+
+    public function courseCategories()
+    {
+        return $this->hasMany(CourseCategory::class);
     }
 
     public function instructedCourses()

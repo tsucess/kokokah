@@ -40,7 +40,7 @@ class CurriculumCategoryController extends Controller implements HasMiddleware
 
 
         // $category = CurriculumCategory::create($data);
-        $category = $request->user()->categories()->create($data);
+        $category = $request->user()->curriculumCategories()->create($data);
 
         return ['status' => 200, 'message' => 'Category created successfully', 'response' => $category];
     }

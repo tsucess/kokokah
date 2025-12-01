@@ -40,7 +40,7 @@ class CourseCategoryController extends Controller implements HasMiddleware
 
 
         // $category = CourseCategory::create($data);
-        $category = $request->user()->categories()->create($data);
+        $category = $request->user()->courseCategories()->create($data);
 
         return ['status' => 200, 'message' => 'Course Category created successfully', 'response' => $category];
     }
