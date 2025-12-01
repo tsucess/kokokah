@@ -3,7 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use App\Models\Category;
+use App\Models\CurriculumCategory;
+use App\Models\CourseCategory;
 use App\Models\Level;
 use App\Models\Term;
 use App\Models\Badge;
@@ -48,7 +49,7 @@ class ProductionSeeder extends Seeder
         ];
 
         foreach ($categories as $categoryData) {
-            Category::firstOrCreate(
+            CurriculumCategory::firstOrCreate(
                 ['title' => $categoryData['title']],
                 array_merge($categoryData, ['user_id' => $admin->id])
             );

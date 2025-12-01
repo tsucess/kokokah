@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
+use App\Models\CurriculumCategory;
 use Illuminate\Database\Seeder;
 
 class CategorySeeder extends Seeder
@@ -74,7 +74,7 @@ class CategorySeeder extends Seeder
         ];
 
         foreach ($categories as $category) {
-            Category::updateOrCreate(
+            CurriculumCategory::updateOrCreate(
                 ['title' => $category['title']],
                 $category
             );

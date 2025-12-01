@@ -822,7 +822,7 @@ class DashboardController extends Controller
                 'draft' => Course::where('status', 'draft')->count(),
                 'pending' => Course::where('status', 'pending')->count()
             ],
-            'popular_categories' => \App\Models\Category::withCount('courses')
+            'popular_categories' => \App\Models\CurriculumCategory::withCount('courses')
                                                        ->orderBy('courses_count', 'desc')
                                                        ->limit(5)
                                                        ->get()
@@ -863,7 +863,7 @@ class DashboardController extends Controller
 
     private function getRevenueByCategoryData()
     {
-        return \App\Models\Category::with(['courses.enrollments'])
+        return \App\Models\CurriculumCategory::with(['courses.enrollments'])
                                   ->get()
                                   ->map(function ($category) {
                                       return [

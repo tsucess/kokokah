@@ -240,7 +240,7 @@ class CacheService
     public static function warmUp()
     {
         // Cache categories
-        $categories = \App\Models\Category::all();
+        $categories = \App\Models\CurriculumCategory::all();
         self::cacheCategories($categories);
 
         // Cache levels

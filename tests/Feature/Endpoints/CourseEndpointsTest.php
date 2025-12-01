@@ -4,7 +4,8 @@ namespace Tests\Feature\Endpoints;
 
 use App\Models\User;
 use App\Models\Course;
-use App\Models\Category;
+use App\Models\CurriculumCategory;
+use App\Models\CourseCategory;
 use App\Models\Term;
 use App\Models\Level;
 use App\Models\Lesson;
@@ -28,7 +29,7 @@ class CourseEndpointsTest extends TestCase
         $this->student = User::factory()->create(['role' => 'student']);
         $this->token = $this->student->createToken('api-token')->plainTextToken;
 
-        $category = Category::factory()->create();
+        $category = CurriculumCategory::factory()->create();
         $term = Term::factory()->create();
         $level = Level::factory()->create();
 
@@ -113,7 +114,7 @@ class CourseEndpointsTest extends TestCase
     public function test_create_course()
     {
         $instructorToken = $this->instructor->createToken('api-token')->plainTextToken;
-        $category = Category::factory()->create();
+        $category = CurriculumCategory::factory()->create();
         $term = Term::factory()->create();
         $level = Level::factory()->create();
 

@@ -4,7 +4,8 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use App\Models\Course;
-use App\Models\Category;
+use App\Models\CurriculumCategory;
+use App\Models\CourseCategory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Sanctum\Sanctum;
@@ -21,7 +22,7 @@ class CourseControllerTest extends TestCase
         parent::setUp();
 
         // Create a category for testing
-        $this->category = Category::factory()->create();
+        $this->category = CurriculumCategory::factory()->create();
     }
 
     public function test_guest_can_view_published_courses()

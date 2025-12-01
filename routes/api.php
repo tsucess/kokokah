@@ -6,7 +6,8 @@ use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BadgeController;
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CurriculumCategoryController;
+use App\Http\Controllers\CourseCategoryController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CourseController;
@@ -35,6 +36,7 @@ use App\Http\Controllers\LanguageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\TopicController;
+use App\Http\Controllers\TermController;
 
 
 
@@ -97,8 +99,12 @@ Route::get('/', function() {
 });
 
 
+// Category Management Routes 
+Route::apiResource('course-category', CurriculumCategoryController::class);
 
-Route::apiResource('category', CategoryController::class);
+// Courser Management Routes 
+Route::apiResource('curriculum-category', CourseCategoryController::class);
+
 
 // Public course routes
 Route::get('/courses', [CourseController::class, 'index']);
@@ -187,7 +193,11 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
 // Topic management route 
-    Route::apiResource('topics', TopicController::class);
+    Route::apiResource('topic', TopicController::class);
+
+
+// Term management route 
+    Route::apiResource('term', TermController::class);
 
     Route::prefix('lessons')->group(function () {
         Route::get('/{id}', [LessonController::class, 'show']);

@@ -9,13 +9,10 @@ class Term extends Model
 {
     use HasFactory;
 
+    protected $table = 'terms';
+
     protected $fillable = [
         'name',
-        'year'
-    ];
-
-    protected $casts = [
-        'year' => 'integer',
     ];
 
     // Relationships
@@ -24,20 +21,9 @@ class Term extends Model
         return $this->hasMany(Course::class);
     }
 
-    // Scopes
-    public function scopeByYear($query, $year)
-    {
-        return $query->where('year', $year);
-    }
-
-    public function scopeCurrent($query)
-    {
-        return $query->where('year', now()->year);
-    }
-
     // Methods
     public function getFullNameAttribute()
     {
-        return $this->name . ' ' . $this->year;
+        return $this->name;
     }
 }

@@ -62,7 +62,7 @@ class AdminController extends Controller
                     'published' => Course::where('status', 'published')->count(),
                     'draft' => Course::where('status', 'draft')->count(),
                     'new_this_month' => Course::where('created_at', '>=', now()->startOfMonth())->count(),
-                    'by_category' => \App\Models\Category::withCount('courses')
+                    'by_category' => \App\Models\CurriculumCategory::withCount('courses')
                                           ->get()
                                           ->pluck('courses_count', 'title'),
                     'most_popular' => Course::withCount('enrollments')

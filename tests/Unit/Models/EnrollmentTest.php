@@ -5,7 +5,8 @@ namespace Tests\Unit\Models;
 use App\Models\Enrollment;
 use App\Models\User;
 use App\Models\Course;
-use App\Models\Category;
+use App\Models\CurriculumCategory;
+use App\Models\CourseCategory;
 use App\Models\Term;
 use App\Models\Level;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -24,7 +25,7 @@ class EnrollmentTest extends TestCase
         
         $this->student = User::factory()->create(['role' => 'student']);
         $instructor = User::factory()->create(['role' => 'instructor']);
-        $category = Category::factory()->create();
+        $category = CurriculumCategory::factory()->create();
         $term = Term::factory()->create();
         $level = Level::factory()->create();
         

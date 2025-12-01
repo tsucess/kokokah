@@ -4,7 +4,8 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use App\Models\Course;
-use App\Models\Category;
+use App\Models\CurriculumCategory;
+use App\Models\CourseCategory;
 use App\Models\Term;
 use App\Models\Level;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -26,7 +27,7 @@ class BasicApiTest extends TestCase
         $user = User::factory()->create(['role' => 'instructor']);
         $term = Term::factory()->create();
         $level = Level::factory()->create();
-        $category = Category::factory()->create(['user_id' => $user->id]);
+        $category = CurriculumCategory::factory()->create(['user_id' => $user->id]);
         
         $course = Course::create([
             'title' => 'Test Course',
@@ -53,7 +54,7 @@ class BasicApiTest extends TestCase
         $user = User::factory()->create(['role' => 'instructor']);
         $term = Term::factory()->create();
         $level = Level::factory()->create();
-        $category = Category::factory()->create(['user_id' => $user->id]);
+        $category = CurriculumCategory::factory()->create(['user_id' => $user->id]);
 
         Course::create([
             'title' => 'Published Course',
