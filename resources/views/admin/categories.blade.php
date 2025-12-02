@@ -285,7 +285,7 @@
                             })
                         });
                         // assume API returns created resource
-                        const newcategory = (payload && payload.id) ? payload : (payload.data || payload);
+                        const newcategory = payload.response
                         categories.push(newcategory);
                         rendercategories();
                         showToast('Success', 'category created successfully.', 'success');
@@ -305,7 +305,7 @@
                                 description
                             })
                         });
-                        const updated = (payload && payload.id) ? payload : (payload.data || payload);
+                        const updated = payload.response
 
                         const idx = categories.findIndex(t => t.id === id);
                         if (idx > -1) categories[idx] = updated;
