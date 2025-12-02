@@ -142,19 +142,19 @@
                 <div class="col-6 col-md-2 col-lg-2">
                     <h6 class="footer-heading">Short Links</h6>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="#" class="footer-link">Features</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="footer-link">How it works</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="footer-link">Security</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="footer-link">Testimonial</a></li>
+                        <li class="nav-item mb-2"><a href="/" class="footer-link">Home</a></li>
+                        <li class="nav-item mb-2"><a href="/about" class="footer-link">About Us</a></li>
+                        <li class="nav-item mb-2"><a href="/lms" class="footer-link">Lms</a></li>
+                        <li class="nav-item mb-2"><a href="/sms" class="footer-link">Sms</a></li>
                     </ul>
                 </div>
 
                 <div class="col-6 col-md-2 col-lg-2">
                     <h6 class="footer-heading">Other Pages</h6>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="#" class="footer-link">Privacy Policy</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="footer-link">Terms & Condition</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="footer-link">404</a></li>
+                        <li class="nav-item mb-2"><a href="/kokoplay" class="footer-link">Kokoplay</a></li>
+                        <li class="nav-item mb-2"><a href="/contact" class="footer-link">Contact</a></li>
+                        {{-- <li class="nav-item mb-2"><a href="#" class="footer-link">404</a></li> --}}
                     </ul>
                 </div>
 
