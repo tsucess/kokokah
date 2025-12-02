@@ -2002,8 +2002,9 @@ select {
     outline: none;
     border: none;
     font-size: 14px;
-    color: #aebaca;
+    color: #004A53;
     padding: 0;
+    font-weight: 500;
 }
 
 .modal-form-btn {
