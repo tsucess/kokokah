@@ -388,106 +388,392 @@
     </div>
 
     <script>
-        // Sample data
-        const levels = [
-            { id: 1, name: 'JS1', description: 'Junior Secondary 1' },
-            { id: 2, name: 'JS2', description: 'Junior Secondary 2' },
-            { id: 3, name: 'JS3', description: 'Junior Secondary 3' },
-            { id: 4, name: 'SS1', description: 'Senior Secondary 1' },
-            { id: 5, name: 'SS2', description: 'Senior Secondary 2' },
-            { id: 6, name: 'SS3', description: 'Senior Secondary 3' },
-            { id: 7, name: 'Grade 1', description: 'Primary Grade 1' },
-            { id: 8, name: 'Grade 6', description: 'Primary Grade 6' },
-            { id: 9, name: '100level', description: 'University 100 Level' },
-            { id: 10, name: '500level', description: 'University 500 Level' }
-        ];
+         (function() {
+                // Config
+                const API_URL = "/api/levels";
+                const token = localStorage.getItem('auth_token') || '';
+                let levels = [];
+                let currentEditId = null;
+                let currentDeleteId = null;
+                let isSaving = false;
 
-        let currentEditId = null;
-        let currentDeleteId = null;
+                // DOM refs
+                const grid = document.getElementById('levelsGrid');
+                const levelForm = document.getElementById('levelForm');
+                const levelNameInput = document.getElementById('levelName');
+                const levelTypeInput = document.getElementById('levelType');
+                const modalEl = document.getElementById('addLevelModal');
+                const modalTitle = document.getElementById('modalTitle');
 
-        // Render levels
-        function renderLevels() {
-            const grid = document.getElementById('levelsGrid');
-            grid.innerHTML = levels.map(level => `
-                <div class="level-card">
-                    <div class="level-card-header">
-                        <h3 class="level-card-title">${level.name}</h3>
-                        <div class="level-card-actions">
-                            <button class="action-btn" onclick="editLevel(${level.id})" title="Edit">
-                                <i class="fa-solid fa-pen fa-xs"></i>
-                            </button>
-                            <button class="action-btn delete" onclick="deleteLevel(${level.id})" title="Delete">
-                                <i class="fa-solid fa-trash fa-xs"></i>
-                            </button>
+                // ---------- Toast helper ----------
+                function showToast(title = '', message = '', type = 'info', timeout = 3500) {
+                    // type: 'success' | 'danger' | 'info'
+                    const container = document.getElementById('toastContainer');
+                    const toastId = 'toast-' + Date.now();
+
+                    const bgClass = (type === 'success') ? 'bg-success text-white' : (type === 'danger') ?
+                        'bg-danger text-white' : 'bg-light';
+                    const headerClass = (type === 'info') ? '' : '';
+
+                    const toastHtml = `
+                            <div id="${toastId}" class="toast ${bgClass}" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="d-flex">
+                                <div class="toast-body" style="padding:0.75rem;">
+                                <strong>${title}</strong>
+                                <div style="font-size:0.9rem; margin-top:0.35rem;">${message}</div>
+                                </div>
+                                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close" style="margin-left:auto;"></button>
+                            </div>
+                            </div>
+                        `;
+                    container.insertAdjacentHTML('beforeend', toastHtml);
+                    const toastEl = document.getElementById(toastId);
+                    const bsToast = new bootstrap.Toast(toastEl, {
+                        delay: timeout
+                    });
+                    bsToast.show();
+
+                    // remove from DOM after hidden
+                    toastEl.addEventListener('hidden.bs.toast', () => toastEl.remove());
+                }
+
+                // ---------- Skeleton UI ----------
+                function showSkeletons(count = 3) {
+                    grid.innerHTML = '';
+                    const wrap = document.createElement('div');
+                    wrap.className = 'skeleton-grid';
+                    for (let i = 0; i < count; i++) {
+                        const card = document.createElement('div');
+                        card.className = 'skeleton-card';
+                        card.innerHTML = `
+                    <div class="skeleton-line mid"></div>
+                    <div class="skeleton-line short"></div>
+                `;
+                        wrap.appendChild(card);
+                    }
+                    grid.appendChild(wrap);
+                }
+
+                // ---------- Render levels ----------
+                function renderlevels() {
+                    if (!Array.isArray(levels) || levels.length === 0) {
+                        grid.innerHTML = `
+                        <div class="p-3 text-muted">No levels found. Click "Add Level" to create one.</div>
+                        `;
+                                        return;
+                                    }
+
+                                    grid.innerHTML = levels.map(level => `
+                        // <div class="level-card">
+                        // <div class="level-card-header d-flex align-items-start justify-content-between">
+                        //     <h3 class="level-card-title mb-0">${escapeHtml(level.name)}</h3>
+                        //     <div class="level-card-actions">
+                        //     <button class="action-btn btn btn-sm btn-link" onclick="editlevel(${level.id})" title="Edit">
+                        //         <i class="fa-solid fa-pen fa-xs"></i>
+                        //     </button>
+                        //     <button class="action-btn btn btn-sm btn-link text-danger" onclick="openDeleteModal(${level.id})" title="Delete">
+                        //         <i class="fa-solid fa-trash fa-xs"></i>
+                        //     </button>
+                        //     </div>
+                        // </div>
+                        // </div>
+
+                        <div class="level-card">
+                     <div class="level-card-header">
+                         <h3 class="level-card-title">${level.name}</h3>
+                         <div class="level-card-actions">
+                             <button class="action-btn" onclick="editLevel(${level.id})" title="Edit">
+                                 <i class="fa-solid fa-pen fa-xs"></i>
+                             </button>
+                             <button class="action-btn delete" onclick="openDeleteModal(${level.id})" title="Delete">
+                                 <i class="fa-solid fa-trash fa-xs"></i>
+                             </button>
                         </div>
-                    </div>
+                     </div>
                     <p class="level-card-description">${level.description}</p>
                 </div>
-            `).join('');
-        }
+                    `).join('');
+                                }
 
-        // Add/Edit level
-        document.getElementById('levelForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const name = document.getElementById('levelName').value;
-            const description = document.getElementById('levelType').value;
-
-            if (currentEditId) {
-                const level = levels.find(l => l.id === currentEditId);
-                if (level) {
-                    level.name = name;
-                    level.description = description;
+                // simple escaping to avoid XSS if API returns unexpected HTML
+                function escapeHtml(str = '') {
+                    return String(str)
+                        .replace(/&/g, "&amp;")
+                        .replace(/</g, "&lt;")
+                        .replace(/>/g, "&gt;")
+                        .replace(/"/g, "&quot;")
+                        .replace(/'/g, "&#039;");
                 }
-                currentEditId = null;
-            } else {
-                levels.push({
-                    id: Math.max(...levels.map(l => l.id), 0) + 1,
-                    name,
-                    description
+
+                // ---------- API helpers ----------
+                async function apiFetch(url, opts = {}) {
+                    const headers = Object.assign({
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                    }, opts.headers || {});
+
+                    if (token) headers["Authorization"] = `Bearer ${token}`;
+
+                    const options = Object.assign({}, opts, {
+                        headers
+                    });
+
+                    const res = await fetch(url, options);
+                    const contentType = res.headers.get('content-type') || '';
+
+                    let data = null;
+                    if (contentType.includes('application/json')) {
+                        data = await res.json();
+                    } else {
+                        data = await res.text();
+                    }
+
+                    if (!res.ok) {
+                        const message = (data && data.message) ? data.message : (typeof data === 'string' ? data :
+                            'Request failed');
+                        const err = new Error(message);
+                        err.status = res.status;
+                        err.payload = data;
+                        throw err;
+                    }
+
+                    return data;
+                }
+
+                // ---------- CRUD operations ----------
+                async function loadlevels() {
+                    showSkeletons(3); // chosen: 3 skeleton cards
+                    try {
+                        const data = await apiFetch(API_URL, {
+                            method: 'GET'
+                        });
+                        levels = Array.isArray(data) ? data : (data.data || []);
+                        renderlevels();
+                    } catch (err) {
+                        grid.innerHTML = `<div class="p-3 text-danger">Failed to load levels.</div>`;
+                        console.error('Load levels error:', err);
+                        showToast('Error', 'Failed to load levels. ' + (err.message || ''), 'danger');
+                    }
+                }
+
+                async function createlevel(name) {
+                    try {
+                        const payload = await apiFetch(API_URL, {
+                            method: 'POST',
+                            body: JSON.stringify({
+                                name
+                            })
+                        });
+                        // assume API returns created resource
+                        const newlevel = (payload && payload.id) ? payload : (payload.data || payload);
+                        levels.push(newlevel);
+                        renderlevels();
+                        showToast('Success', 'level created successfully.', 'success');
+                    } catch (err) {
+                        console.error('Create level error:', err);
+                        showToast('Error', 'Failed to create level. ' + (err.message || ''), 'danger');
+                        throw err;
+                    }
+                }
+
+                async function updatelevel(id, name) {
+                    try {
+                        const payload = await apiFetch(`${API_URL}/${id}`, {
+                            method: 'PUT',
+                            body: JSON.stringify({
+                                name
+                            })
+                        });
+                        const updated = (payload && payload.id) ? payload : (payload.data || payload);
+
+                        const idx = levels.findIndex(t => t.id === id);
+                        if (idx > -1) levels[idx] = updated;
+                        renderlevels();
+                        showToast('Success', 'level updated.', 'success');
+                    } catch (err) {
+                        console.error('Update level error:', err);
+                        showToast('Error', 'Failed to update level. ' + (err.message || ''), 'danger');
+                        throw err;
+                    }
+                }
+
+                async function deletelevelRequest(id) {
+                    try {
+                        await apiFetch(`${API_URL}/${id}`, {
+                            method: 'DELETE'
+                        });
+                        levels = levels.filter(t => t.id !== id);
+                        renderlevels();
+                        showToast('Success', 'level deleted.', 'success');
+                    } catch (err) {
+                        console.error('Delete level error:', err);
+                        showToast('Error', 'Failed to delete level. ' + (err.message || ''), 'danger');
+                        throw err;
+                    }
+                }
+
+                // ---------- Form handling ----------
+                levelForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    if (isSaving) return;
+                    const name = levelNameInput.value.trim();
+                    if (!name) {
+                        showToast('Validation', 'Please enter a level name.', 'info');
+                        return;
+                    }
+
+                    try {
+                        isSaving = true;
+                        // disable submit button
+                        const submitBtn = levelForm.querySelector('button[type="submit"]');
+                        if (submitBtn) submitBtn.setAttribute('disabled', 'disabled');
+
+                        if (currentEditId) {
+                            await updatelevel(currentEditId, name);
+                            currentEditId = null;
+                        } else {
+                            await createlevel(name);
+                        }
+
+                        levelForm.reset();
+                        const bsModal = bootstrap.Modal.getInstance(modalEl);
+                        if (bsModal) bsModal.hide();
+                    } catch (err) {
+                        // errors surfaced in functions
+                    } finally {
+                        isSaving = false;
+                        const submitBtn = levelForm.querySelector('button[type="submit"]');
+                        if (submitBtn) submitBtn.removeAttribute('disabled');
+                    }
                 });
-            }
 
-            renderLevels();
-            document.getElementById('levelForm').reset();
-            bootstrap.Modal.getInstance(document.getElementById('addLevelModal')).hide();
-        });
+                // ---------- Modal helpers (exposed to global for inline onclick use) ----------
+                window.editlevel = function(id) {
+                    const t = levels.find(x => x.id === id);
+                    if (!t) return showToast('Error', 'level not found locally.', 'danger');
+                    currentEditId = id;
+                    levelNameInput.value = t.name || '';
+                    modalTitle.textContent = 'Edit level';
+                    new bootstrap.Modal(modalEl).show();
+                };
 
-        // Edit level
-        function editLevel(id) {
-            const level = levels.find(l => l.id === id);
-            if (level) {
-                currentEditId = id;
-                document.getElementById('levelName').value = level.name;
-                document.getElementById('levelType').value = level.description;
-                document.getElementById('modalTitle').textContent = 'Edit Level';
-                new bootstrap.Modal(document.getElementById('addLevelModal')).show();
-            }
-        }
+                window.openDeleteModal = function(id) {
+                    currentDeleteId = id;
+                    new bootstrap.Modal(document.getElementById('deleteConfirmModal')).show();
+                };
 
-        // Delete level
-        function deleteLevel(id) {
-            currentDeleteId = id;
-            new bootstrap.Modal(document.getElementById('deleteConfirmModal')).show();
-        }
+                // Confirm delete button handler
+                document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
+                    if (!currentDeleteId) return;
+                    const bs = bootstrap.Modal.getInstance(document.getElementById('deleteConfirmModal'));
+                    try {
+                        await deletelevelRequest(currentDeleteId);
+                    } catch (err) {
+                        // handled in deletelevelRequest
+                    } finally {
+                        currentDeleteId = null;
+                        if (bs) bs.hide();
+                    }
+                });
 
-        document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
-            const index = levels.findIndex(l => l.id === currentDeleteId);
-            if (index > -1) {
-                levels.splice(index, 1);
-                renderLevels();
-            }
-            bootstrap.Modal.getInstance(document.getElementById('deleteConfirmModal')).hide();
-        });
+                // Reset add/edit modal on close
+                modalEl.addEventListener('hidden.bs.modal', () => {
+                    currentEditId = null;
+                    modalTitle.textContent = 'Add level';
+                    levelForm.reset();
+                });
 
-        // Reset modal on close
-        document.getElementById('addLevelModal').addEventListener('hidden.bs.modal', () => {
-            currentEditId = null;
-            document.getElementById('modalTitle').textContent = 'Add Level';
-            document.getElementById('levelForm').reset();
-        });
+                // Initial load
+                loadlevels();
 
-        // Initial render
-        renderLevels();
+            })();
+
+        // let currentEditId = null;
+        // let currentDeleteId = null;
+
+        // // Render levels
+        // function renderLevels() {
+        //     const grid = document.getElementById('levelsGrid');
+        //     grid.innerHTML = levels.map(level => `
+        //         <div class="level-card">
+        //             <div class="level-card-header">
+        //                 <h3 class="level-card-title">${level.name}</h3>
+        //                 <div class="level-card-actions">
+        //                     <button class="action-btn" onclick="editLevel(${level.id})" title="Edit">
+        //                         <i class="fa-solid fa-pen fa-xs"></i>
+        //                     </button>
+        //                     <button class="action-btn delete" onclick="deleteLevel(${level.id})" title="Delete">
+        //                         <i class="fa-solid fa-trash fa-xs"></i>
+        //                     </button>
+        //                 </div>
+        //             </div>
+        //             <p class="level-card-description">${level.description}</p>
+        //         </div>
+        //     `).join('');
+        // }
+
+        // // Add/Edit level
+        // document.getElementById('levelForm').addEventListener('submit', (e) => {
+        //     e.preventDefault();
+        //     const name = document.getElementById('levelName').value;
+        //     const description = document.getElementById('levelType').value;
+
+        //     if (currentEditId) {
+        //         const level = levels.find(l => l.id === currentEditId);
+        //         if (level) {
+        //             level.name = name;
+        //             level.description = description;
+        //         }
+        //         currentEditId = null;
+        //     } else {
+        //         levels.push({
+        //             id: Math.max(...levels.map(l => l.id), 0) + 1,
+        //             name,
+        //             description
+        //         });
+        //     }
+
+        //     renderLevels();
+        //     document.getElementById('levelForm').reset();
+        //     bootstrap.Modal.getInstance(document.getElementById('addLevelModal')).hide();
+        // });
+
+        // // Edit level
+        // function editLevel(id) {
+        //     const level = levels.find(l => l.id === id);
+        //     if (level) {
+        //         currentEditId = id;
+        //         document.getElementById('levelName').value = level.name;
+        //         document.getElementById('levelType').value = level.description;
+        //         document.getElementById('modalTitle').textContent = 'Edit Level';
+        //         new bootstrap.Modal(document.getElementById('addLevelModal')).show();
+        //     }
+        // }
+
+        // // Delete level
+        // function deleteLevel(id) {
+        //     currentDeleteId = id;
+        //     new bootstrap.Modal(document.getElementById('deleteConfirmModal')).show();
+        // }
+
+        // document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
+        //     const index = levels.findIndex(l => l.id === currentDeleteId);
+        //     if (index > -1) {
+        //         levels.splice(index, 1);
+        //         renderLevels();
+        //     }
+        //     bootstrap.Modal.getInstance(document.getElementById('deleteConfirmModal')).hide();
+        // });
+
+        // // Reset modal on close
+        // document.getElementById('addLevelModal').addEventListener('hidden.bs.modal', () => {
+        //     currentEditId = null;
+        //     document.getElementById('modalTitle').textContent = 'Add Level';
+        //     document.getElementById('levelForm').reset();
+        // });
+
+        // // Initial render
+        // renderLevels();
     </script>
 </main>
 @endsection
