@@ -39,21 +39,23 @@ class CurriculumCategoryController extends Controller implements HasMiddleware
         ];
     }
 
-    public function show(CurriculumCategory $curriculumCategory)
+    public function show($id)
     {
+        $data = CurriculumCategory::findOrFail($id);
         return [
             'status' => 200,
-            'response' => $curriculumCategory
+            'response' => $data
         ];
     }
 
-    public function update(Request $request, CurriculumCategory $curriculumCategory)
+    public function update(Request $request,  $id)
     {
         $data = $request->validate([
             'title' => 'required|max:255',
             'description' => 'required'
         ]);
 
+        $curriculumCategory = CurriculumCategory::findOrFail($id);
         $curriculumCategory->update($data);
 
         return [
@@ -63,9 +65,9 @@ class CurriculumCategoryController extends Controller implements HasMiddleware
         ];
     }
 
-    public function destroy(CurriculumCategory $curriculumCategory)
+    public function destroy($id)
     {
-        $curriculumCategory->delete();
+        CurriculumCategory::findOrFail($id)->delete();
 
         return [
             'status' => 200,
