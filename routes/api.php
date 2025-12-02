@@ -100,10 +100,10 @@ Route::get('/', function() {
 
 
 // Category Management Routes 
-Route::apiResource('course-category', CurriculumCategoryController::class);
+Route::apiResource('course-category', CourseCategoryController::class);
 
 // Courser Management Routes 
-Route::apiResource('curriculum-category', CourseCategoryController::class);
+Route::apiResource('curriculum-category',  CurriculumCategoryController::class);
 
 
 // Public course routes

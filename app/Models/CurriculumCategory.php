@@ -10,7 +10,7 @@ class CurriculumCategory extends Model
 {
     use HasFactory, SoftDeletes;
 
-     protected $table = 'curriculum_categories'; // 🔥 ADD THIS FIX
+    // protected $table = 'curriculum_categories'; // 🔥 ADD THIS FIX
 
     protected $fillable = [
         'user_id',

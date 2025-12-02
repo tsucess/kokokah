@@ -90,7 +90,7 @@ class CourseController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'curriculum_category_id' => 'required|exists:curriculumcategories,id',
+            'curriculum_category_id' => 'required|exists:curriculum_categories,id',
             'course_category_id' => 'required|exists:course_categories,id',
             'level_id' => 'nullable|exists:levels,id',
             'term_id' => 'nullable|exists:terms,id',

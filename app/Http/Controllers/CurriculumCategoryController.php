@@ -3,14 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\CurriculumCategory;
-// use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
 class CurriculumCategoryController extends Controller implements HasMiddleware
 {
-
     public static function middleware()
     {
         return [
@@ -23,9 +21,11 @@ class CurriculumCategoryController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        return CurriculumCategory::with(['courses' => function($query) {
-            $query->with('level');
-        }])->get();
+        return CurriculumCategory::with([
+            'courses' => function($query) {
+                $query->with('level');
+            }
+        ])->get();
     }
 
     /**
@@ -38,44 +38,56 @@ class CurriculumCategoryController extends Controller implements HasMiddleware
             'description' => 'required'
         ]);
 
-
-        // $category = CurriculumCategory::create($data);
+        // Attach to authenticated user
         $category = $request->user()->curriculumCategories()->create($data);
 
-        return ['status' => 200, 'message' => 'Category created successfully', 'response' => $category];
+        return [
+            'status' => 200,
+            'message' => 'Curriculum Category created successfully',
+            'response' => $category
+        ];
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(CurriculumCategory $category)
+    public function show(CurriculumCategory $curriculumCategory)
     {
-        return ['status' => 200, 'response' => $category];
+        return [
+            'status' => 200,
+            'response' => $curriculumCategory
+        ];
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, CurriculumCategory $category)
+    public function update(Request $request, CurriculumCategory $curriculumCategory)
     {
         $data = $request->validate([
             'title' => 'required|max:255',
             'description' => 'required'
         ]);
 
-        // $category = CurriculumCategory::create($data);
-        $category->update($data);
+        $curriculumCategory->update($data);
 
-        return ['status' => 200, 'message' => 'Category Updated successfully', 'response' => $category];
+        return [
+            'status' => 200,
+            'message' => 'Curriculum Category updated successfully',
+            'response' => $curriculumCategory
+        ];
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CurriculumCategory $category)
+    public function destroy(CurriculumCategory $curriculumCategory)
     {
-        $category->delete();
+        $curriculumCategory->delete();
 
-        return ['status' => 200, 'message' => 'Category deleted successfully'];
+        return [
+            'status' => 200,
+            'message' => 'Curriculum Category deleted successfully'
+        ];
     }
 }
