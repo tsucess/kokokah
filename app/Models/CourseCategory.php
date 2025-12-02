@@ -10,6 +10,8 @@ class CourseCategory extends Model
 {
     use HasFactory, SoftDeletes;
 
+    // protected $table = 'course_categories';
+
     protected $fillable = [
         'user_id',
         'title',

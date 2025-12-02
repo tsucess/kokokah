@@ -99,11 +99,12 @@ Route::get('/', function() {
 });
 
 
-// Category Management Routes 
-Route::apiResource('course-category', CurriculumCategoryController::class);
+// Curriculum Category (LMS curriculum) 
+Route::apiResource('curriculum-category', CurriculumCategoryController::class);
 
-// Courser Management Routes 
-Route::apiResource('curriculum-category', CourseCategoryController::class);
+// Course Category (general category for courses)
+Route::apiResource('course-category', CourseCategoryController::class);
+
 
 
 // Public course routes

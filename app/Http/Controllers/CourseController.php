@@ -32,8 +32,12 @@ class CourseController extends Controller
                       ->where('status', 'published');
 
         // Apply filters
-        if ($request->has('category_id')) {
-            $query->where('category_id', $request->category_id);
+        if ($request->has('curriculum_category_id')) {
+            $query->where('curriculum_category_id', $request->curriculum_category_id);
+        }
+
+        if ($request->has('course_category_id')) {
+            $query->where('course_category_id', $request->course_category_id);
         }
 
         if ($request->has('level_id')) {
@@ -70,7 +74,8 @@ class CourseController extends Controller
             'success' => true,
             'data' => $courses,
             'filters' => [
-                'categories' => Category::all(),
+                'curriculumCategories' => CurriculumCategory::all(),
+                'courseCategories' => CourseCategory::all(),
                 'levels' => Level::all(),
                 'difficulties' => ['beginner', 'intermediate', 'advanced']
             ]
@@ -85,7 +90,8 @@ class CourseController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'category_id' => 'required|exists:categories,id',
+            'curriculum_category_id' => 'required|exists:curriculum_categories,id',
+            'course_category_id' => 'required|exists:course_categories,id',
             'level_id' => 'nullable|exists:levels,id',
             'term_id' => 'nullable|exists:terms,id',
             'price' => 'required|numeric|min:0',
@@ -119,7 +125,7 @@ class CourseController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Course created successfully',
-                'data' => $course->load(['category', 'instructor', 'level', 'term'])
+                'data' => $course->load(['course_category', 'curriculum_category', 'instructor', 'level', 'term'])
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
@@ -136,7 +142,8 @@ class CourseController extends Controller
     {
         try {
             $course = Course::with([
-                'category', 
+                'curriculum_category', 
+                'course_category', 
                 'instructor', 
                 'level', 
                 'term', 
@@ -198,7 +205,8 @@ class CourseController extends Controller
             $validator = Validator::make($request->all(), [
                 'title' => 'sometimes|string|max:255',
                 'description' => 'sometimes|string',
-                'category_id' => 'sometimes|exists:categories,id',
+                'course_category_id' => 'sometimes|exists:course_categories,id',
+                'curriculum_category_id' => 'sometimes|exists:curriculum_categories,id',
                 'level_id' => 'nullable|exists:levels,id',
                 'term_id' => 'nullable|exists:terms,id',
                 'price' => 'sometimes|numeric|min:0',
@@ -293,7 +301,8 @@ class CourseController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'q' => 'required|string|min:2',
-            'category_id' => 'nullable|exists:categories,id',
+            'curriculum_category_id' => 'nullable|exists:curriculum_categories,id',
+            'course_category_id' => 'nullable|exists:course_categories,id',
             'level_id' => 'nullable|exists:levels,id',
             'difficulty' => 'nullable|in:beginner,intermediate,advanced',
             'min_price' => 'nullable|numeric|min:0',
@@ -321,8 +330,12 @@ class CourseController extends Controller
         });
 
         // Apply filters
-        if ($request->has('category_id')) {
-            $query->where('category_id', $request->category_id);
+        if ($request->has('curriculum_category_id')) {
+            $query->where('curriculum_category_id', $request->curriculum_category_id);
+        }
+
+        if ($request->has('course_category_id')) {
+            $query->where('course_category_id', $request->course_category_id);
         }
 
         if ($request->has('level_id')) {
