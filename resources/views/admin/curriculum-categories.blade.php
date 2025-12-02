@@ -1377,9 +1377,10 @@
                         const data = await apiFetch(`${API_URL}/${id}`, {
                             method: 'GET'
                         });
-                        const item = data || {};
+                        const item = data || {}
 
                         currentEditId = id;
+                        
                         nameInput.value = item.title || "";
                         descInput.value = item.description || "";
                         modalTitle.textContent = "Edit Curriculum Category";
