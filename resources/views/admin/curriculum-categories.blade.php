@@ -1263,10 +1263,10 @@
                                     <div class="category-card-header d-flex justify-content-between">
                                         <h3 class="category-card-title">${escapeHtml(cat.title)}</h3>
                                         <div class="category-card-actions">
-                                        <button class="action-btn" data-id="${cat.id}">
+                                        <button class="action-btn edit-btn" data-id="${cat.id}">
                                              <i class="fa-solid fa-pen fa-xs"></i>
                                         </button>
-                                        <button class="action-btn delete" data-id="${cat.id}">
+                                        <button class="action-btn delete delete-btn" data-id="${cat.id}">
                                             <i class="fa-solid fa-trash fa-xs"></i>
                                         </button>
 
