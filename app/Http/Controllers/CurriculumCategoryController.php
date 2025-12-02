@@ -16,21 +16,13 @@ class CurriculumCategoryController extends Controller implements HasMiddleware
         ];
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return CurriculumCategory::with([
-            'courses' => function($query) {
-                $query->with('level');
-            }
-        ])->get();
+        return CurriculumCategory::with(['courses' => function($q) {
+            $q->with('level');
+        }])->get();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -38,7 +30,6 @@ class CurriculumCategoryController extends Controller implements HasMiddleware
             'description' => 'required'
         ]);
 
-        // Attach to authenticated user
         $category = $request->user()->curriculumCategories()->create($data);
 
         return [
@@ -48,9 +39,6 @@ class CurriculumCategoryController extends Controller implements HasMiddleware
         ];
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(CurriculumCategory $curriculumCategory)
     {
         return [
@@ -59,9 +47,6 @@ class CurriculumCategoryController extends Controller implements HasMiddleware
         ];
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, CurriculumCategory $curriculumCategory)
     {
         $data = $request->validate([
@@ -73,14 +58,11 @@ class CurriculumCategoryController extends Controller implements HasMiddleware
 
         return [
             'status' => 200,
-            'message' => 'Curriculum Category updated successfully',
+            'message' => 'Curriculum Category Updated successfully',
             'response' => $curriculumCategory
         ];
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(CurriculumCategory $curriculumCategory)
     {
         $curriculumCategory->delete();

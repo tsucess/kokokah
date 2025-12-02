@@ -333,18 +333,19 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title" id="modalTitle">Add Curriculum Category</h1>
+                        <h1 class="modal-title" id="modalTitle">Curriculum Category</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form class="modal-form-container" id="curriculumForm">
+                    <form class="modal-form-container" id="curriculumForm" onsubmit="submitCategoryForm(event)">
+                        <input type="hidden" id="form_mode" value="create">
                         <div class="modal-form">
                             <div class="modal-form-input-border">
-                                <label for="" class="modal-label">Course Name</label>
-                                <input class="modal-input" type="text" placeholder="Art" id="categoryName" />
+                                <label for="" class="modal-label">Curriculum Name</label>
+                                <input class="modal-input" type="text" placeholder="Art" id="category_title" />
                             </div>
                             <div class="modal-form-input-border">
-                                <label for="" class="modal-label">Course Description</label>
-                                <textarea id="categoryDescription" class="modal-input" placeholder="Enter description"></textarea>
+                                <label for="" class="modal-label">Curriculum Description</label>
+                                <textarea id="category_description" class="modal-input" placeholder="Enter description"></textarea>
                             </div>
                         </div>
                         <div>
@@ -376,101 +377,102 @@
         </div>
 
         {{-- <script>
-        // Sample data
-        const curriculumCategories = [
-            { id: 1, name: 'WAEC', description: 'West African Examination Council' },
-            { id: 2, name: 'Cambridge', description: 'Cambridge International Examinations' },
-            { id: 3, name: 'IELTS', description: 'International English Language Testing System' },
-            { id: 4, name: 'Undergraduate', description: 'University Level Courses' }
-        ];
+            // Sample data
+            const curriculumCategories = [
+                { id: 1, name: 'WAEC', description: 'West African Examination Council' },
+                { id: 2, name: 'Cambridge', description: 'Cambridge International Examinations' },
+                { id: 3, name: 'IELTS', description: 'International English Language Testing System' },
+                { id: 4, name: 'Undergraduate', description: 'University Level Courses' }
+            ];
 
-        let currentEditId = null;
-        let currentDeleteId = null;
+            let currentEditId = null;
+            let currentDeleteId = null;
 
-        // Render categories
-        function renderCategories() {
-            const grid = document.getElementById('curriculumGrid');
-            grid.innerHTML = curriculumCategories.map(cat => `
-                <div class="category-card">
-                    <div class="category-card-header">
-                        <h3 class="category-card-title">${cat.name}</h3>
-                        <div class="category-card-actions">
-                            <button class="action-btn" onclick="editCategory(${cat.id})" title="Edit">
-                                <i class="fa-solid fa-pen fa-xs"></i>
-                            </button>
-                            <button class="action-btn delete" onclick="deleteCategory(${cat.id})" title="Delete">
-                                <i class="fa-solid fa-trash fa-xs"></i>
-                            </button>
+            // Render categories
+            function renderCategories() {
+                const grid = document.getElementById('curriculumGrid');
+                grid.innerHTML = curriculumCategories.map(cat => `
+                    <div class="category-card">
+                        <div class="category-card-header">
+                            <h3 class="category-card-title">${cat.name}</h3>
+                            <div class="category-card-actions">
+                                <button class="action-btn" onclick="editCategory(${cat.id})" title="Edit">
+                                    <i class="fa-solid fa-pen fa-xs"></i>
+                                </button>
+                                <button class="action-btn delete" onclick="deleteCategory(${cat.id})" title="Delete">
+                                    <i class="fa-solid fa-trash fa-xs"></i>
+                                </button>
+                            </div>
                         </div>
+                        <p class="category-card-description">${cat.description}</p>
                     </div>
-                    <p class="category-card-description">${cat.description}</p>
-                </div>
-            `).join('');
-        }
+                `).join('');
+            }
 
-        // Add/Edit category
-        document.getElementById('curriculumForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const name = document.getElementById('categoryName').value;
-            const description = document.getElementById('categoryDescription').value;
+            // Add/Edit category
+            document.getElementById('curriculumForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('categoryName').value;
+                const description = document.getElementById('categoryDescription').value;
 
-            if (currentEditId) {
-                const cat = curriculumCategories.find(c => c.id === currentEditId);
-                if (cat) {
-                    cat.name = name;
-                    cat.description = description;
+                if (currentEditId) {
+                    const cat = curriculumCategories.find(c => c.id === currentEditId);
+                    if (cat) {
+                        cat.name = name;
+                        cat.description = description;
+                    }
+                    currentEditId = null;
+                } else {
+                    curriculumCategories.push({
+                        id: Math.max(...curriculumCategories.map(c => c.id), 0) + 1,
+                        name,
+                        description
+                    });
                 }
-                currentEditId = null;
-            } else {
-                curriculumCategories.push({
-                    id: Math.max(...curriculumCategories.map(c => c.id), 0) + 1,
-                    name,
-                    description
-                });
-            }
 
-            renderCategories();
-            document.getElementById('curriculumForm').reset();
-            bootstrap.Modal.getInstance(document.getElementById('addCurriculumModal')).hide();
-        });
-
-        // Edit category
-        function editCategory(id) {
-            const cat = curriculumCategories.find(c => c.id === id);
-            if (cat) {
-                currentEditId = id;
-                document.getElementById('categoryName').value = cat.name;
-                document.getElementById('categoryDescription').value = cat.description;
-                document.getElementById('modalTitle').textContent = 'Edit Curriculum Category';
-                new bootstrap.Modal(document.getElementById('addCurriculumModal')).show();
-            }
-        }
-
-        // Delete category
-        function deleteCategory(id) {
-            currentDeleteId = id;
-            new bootstrap.Modal(document.getElementById('deleteConfirmModal')).show();
-        }
-
-        document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
-            const index = curriculumCategories.findIndex(c => c.id === currentDeleteId);
-            if (index > -1) {
-                curriculumCategories.splice(index, 1);
                 renderCategories();
+                document.getElementById('curriculumForm').reset();
+                bootstrap.Modal.getInstance(document.getElementById('addCurriculumModal')).hide();
+            });
+
+            // Edit category
+            function editCategory(id) {
+                const cat = curriculumCategories.find(c => c.id === id);
+                if (cat) {
+                    currentEditId = id;
+                    document.getElementById('categoryName').value = cat.name;
+                    document.getElementById('categoryDescription').value = cat.description;
+                    document.getElementById('modalTitle').textContent = 'Edit Curriculum Category';
+                    new bootstrap.Modal(document.getElementById('addCurriculumModal')).show();
+                }
             }
-            bootstrap.Modal.getInstance(document.getElementById('deleteConfirmModal')).hide();
-        });
 
-        // Reset modal on close
-        document.getElementById('addCurriculumModal').addEventListener('hidden.bs.modal', () => {
-            currentEditId = null;
-            document.getElementById('modalTitle').textContent = 'Add Curriculum Category';
-            document.getElementById('curriculumForm').reset();
-        });
+            // Delete category
+            function deleteCategory(id) {
+                currentDeleteId = id;
+                new bootstrap.Modal(document.getElementById('deleteConfirmModal')).show();
+            }
 
-        // Initial render
-        renderCategories();
-    </script> --}}
+            document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
+                const index = curriculumCategories.findIndex(c => c.id === currentDeleteId);
+                if (index > -1) {
+                    curriculumCategories.splice(index, 1);
+                    renderCategories();
+                }
+                bootstrap.Modal.getInstance(document.getElementById('deleteConfirmModal')).hide();
+            });
+
+            // Reset modal on close
+            document.getElementById('addCurriculumModal').addEventListener('hidden.bs.modal', () => {
+                currentEditId = null;
+                document.getElementById('modalTitle').textContent = 'Add Curriculum Category';
+                document.getElementById('curriculumForm').reset();
+            });
+
+            // Initial render
+            renderCategories();
+        </script> --}}
+
         {{-- <script>
             const API_URL = "/api/curriculum-category";
             let currentEditId = null;
@@ -690,8 +692,6 @@
             // ----------------------------
             loadCategories();
         </script> --}}
-
-
 
         {{-- <script>
             (function() {
@@ -1258,24 +1258,24 @@
 
                     categories.forEach(cat => {
                         const card = document.createElement('div');
-    card.classList.add('category-card');
+                        card.classList.add('category-card');
                         card.innerHTML = `
-                                    <div class="category-card-header d-flex justify-content-between">
-                                        <h3 class="category-card-title">${escapeHtml(cat.title)}</h3>
-                                        <div class="category-card-actions">
-                                        <button class="action-btn edit-btn" data-id="${cat.id}">
-                                             <i class="fa-solid fa-pen fa-xs"></i>
-                                        </button>
-                                        <button class="action-btn delete delete-btn" data-id="${cat.id}">
-                                            <i class="fa-solid fa-trash fa-xs"></i>
-                                        </button>
+                                                    <div class="category-card-header d-flex justify-content-between">
+                                                        <h3 class="category-card-title">${escapeHtml(cat.title)}</h3>
+                                                        <div class="category-card-actions">
+                                                        <button class="action-btn edit-btn" data-id="${cat.id}">
+                                                            <i class="fa-solid fa-pen fa-xs"></i>
+                                                        </button>
+                                                        <button class="action-btn delete delete-btn" data-id="${cat.id}">
+                                                            <i class="fa-solid fa-trash fa-xs"></i>
+                                                        </button>
 
-                                        </div>
-                                    </div>
-                                    <p class="category-card-description">${escapeHtml(cat.description || '')}</p>
+                                                        </div>
+                                                    </div>
+                                                    <p class="category-card-description">${escapeHtml(cat.description || '')}</p>
 
-                                `;
-                       grid.appendChild(card);
+                                                `;
+                        grid.appendChild(card);
                     });
 
                     // grid.innerHTML = '';
@@ -1326,7 +1326,10 @@
 
                 async function deleteCategoryRequest(id) {
                     return await apiFetch(`${API_URL}/${id}`, {
-                        method: 'DELETE'
+                        method: 'DELETE',
+                        headers: {
+                            "Authorization": `Bearer ${localStorage.getItem('auth_token')}`,
+                        }
                     });
                 }
 
@@ -1427,5 +1430,127 @@
             })();
         </script>
 
+        {{-- <script>
+            const API_URL = "/api/curriculum-category";
+
+            const userStr = localStorage.getItem('auth_user');
+
+                // 2. Parse it to a JavaScript object
+                const authUser = userStr ? JSON.parse(userStr) : null;
+
+                // 3. Access the ID
+                const currentUserId = authUser ? authUser.id : null;
+            // let currentId = null;
+
+            /* -------------------------------
+               CREATE CATEGORY
+            -------------------------------- */
+            async function createCategory(data) {
+                const res = await fetch(API_URL, {
+                    method: "POST",
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${localStorage.getItem('auth_token')}`,
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                return res.json();
+            }
+
+            /* -------------------------------
+               GET SINGLE CATEGORY (For Editing)
+            -------------------------------- */
+            async function getCategory(id) {
+                const res = await fetch(`${API_URL}/${id}`);
+                return res.json();
+            }
+
+            /* -------------------------------
+               UPDATE CATEGORY
+            -------------------------------- */
+            async function updateCategory(id, data) {
+                const res = await fetch(`${API_URL}/${id}`, {
+                    method: "PUT",
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${localStorage.getItem('auth_token')}`,
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                return res.json();
+            }
+
+            /* -------------------------------
+               DELETE CATEGORY
+            -------------------------------- */
+            async function deleteCategory(id) {
+                const res = await fetch(`${API_URL}/${id}`, {
+                    method: "DELETE",
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem('auth_token')}`,
+                    }
+                });
+
+                return res.json();
+            }
+
+            /* -------------------------------
+               OPEN EDIT MODAL
+            -------------------------------- */
+            async function openEditModal(id) {
+                currentUserId = id;
+
+                const data = await getCategory(id);
+                const item = data.response || {};
+
+                document.getElementById("category_title").value = item.title;
+                document.getElementById("category_description").value = item.description;
+
+                document.getElementById("form_mode").value = "edit";
+
+                new bootstrap.Modal("#categoryModal").show();
+            }
+
+            /* -------------------------------
+               SUBMIT FORM (Create or Update)
+            -------------------------------- */
+            async function submitCategoryForm(event) {
+                event.preventDefault();
+
+                const title = document.getElementById("category_title").value;
+                const description = document.getElementById("category_description").value;
+                const mode = document.getElementById("form_mode").value;
+
+                let response;
+
+                if (mode === "edit") {
+                    response = await updateCategory(currentUserId, {
+                        title,
+                        description
+                    });
+                } else {
+                    response = await createCategory({
+                        title,
+                        description
+                    });
+                }
+
+                alert(response.message);
+                location.reload();
+            }
+
+            /* -------------------------------
+               DELETE CONFIRM
+            -------------------------------- */
+            async function confirmDeleteCategory() {
+                const res = await deleteCategory(currentUserId);
+                alert(res.message);
+                location.reload();
+            }
+        </script> --}}
     </main>
 @endsection
