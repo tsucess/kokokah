@@ -38,43 +38,42 @@ class CourseCategoryController extends Controller implements HasMiddleware
             'description' => 'required'
         ]);
 
+        $courseCategory = $request->user()->courseCategories()->create($data);
 
-        // $category = CourseCategory::create($data);
-        $category = $request->user()->courseCategories()->create($data);
-
-        return ['status' => 200, 'message' => 'Course Category created successfully', 'response' => $category];
+        return ['status' => 200, 'message' => 'Course Category created successfully', 'response' => $courseCategory];
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(CourseCategory $category)
+    public function show($id)
     {
-        return ['status' => 200, 'response' => $category];
+          $data = CourseCategory::findOrFail($id);
+        return ['status' => 200, 'response' => $courseCategory];
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, CourseCategory $category)
+    public function update(Request $request, $id)
     {
         $data = $request->validate([
             'title' => 'required|max:255',
             'description' => 'required'
         ]);
 
-        // $category = CourseCategory::create($data);
-        $category->update($data);
+        $courseCategory = CourseCategory::findOrFail($id);
+        $courseCategory->update($data);
 
-        return ['status' => 200, 'message' => 'Course Category Updated successfully', 'response' => $category];
+        return ['status' => 200, 'message' => 'Course Category Updated successfully', 'response' => $courseCategory];
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CourseCategory $category)
+    public function destroy($id)
     {
-        $category->delete();
+        CourseCategory::findOrFail($id)->delete();
 
         return ['status' => 200, 'message' => 'Course Category deleted successfully'];
     }

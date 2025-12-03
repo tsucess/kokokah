@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CurriculumCategory;
+use App\Models\Level;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
-class CurriculumCategoryController extends Controller implements HasMiddleware
+class LevelController extends Controller implements HasMiddleware
 {
     public static function middleware()
     {
@@ -18,7 +18,7 @@ class CurriculumCategoryController extends Controller implements HasMiddleware
 
     public function index()
     {
-        return CurriculumCategory::with(['courses' => function($q) {
+        return Level::with(['courses' => function($q) {
             $q->with('level');
         }])->get();
     }
@@ -30,18 +30,18 @@ class CurriculumCategoryController extends Controller implements HasMiddleware
             'description' => 'required'
         ]);
 
-        $curriculumCategory = $request->user()->curriculumCategories()->create($data);
+        $level = Level::create($data);
 
         return [
             'status' => 200,
-            'message' => 'Curriculum Category created successfully',
-            'response' => $curriculumCategory
+            'message' => 'Level created successfully',
+            'response' => $level
         ];
     }
 
     public function show($id)
     {
-        $data = CurriculumCategory::findOrFail($id);
+        $data = Level::findOrFail($id);
         return [
             'status' => 200,
             'response' => $data
@@ -55,23 +55,23 @@ class CurriculumCategoryController extends Controller implements HasMiddleware
             'description' => 'required'
         ]);
 
-        $curriculumCategory = CurriculumCategory::findOrFail($id);
-        $curriculumCategory->update($data);
+        $level = Level::findOrFail($id);
+        $level->update($data);
 
         return [
             'status' => 200,
-            'message' => 'Curriculum Category Updated successfully',
-            'response' => $curriculumCategory
+            'message' => 'Level Updated successfully',
+            'response' => $level
         ];
     }
 
     public function destroy($id)
     {
-        CurriculumCategory::findOrFail($id)->delete();
+        Level::findOrFail($id)->delete();
 
         return [
             'status' => 200,
-            'message' => 'Curriculum Category deleted successfully'
+            'message' => 'Level deleted successfully'
         ];
     }
 }

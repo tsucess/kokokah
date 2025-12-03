@@ -8,6 +8,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BadgeController;
 use App\Http\Controllers\CurriculumCategoryController;
 use App\Http\Controllers\CourseCategoryController;
+use App\Http\Controllers\LevelController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CourseController;
@@ -105,6 +106,8 @@ Route::apiResource('curriculum-category', CurriculumCategoryController::class);
 // Course Category (general category for courses)
 Route::apiResource('course-category', CourseCategoryController::class);
 
+// Student Level (general user level)
+Route::apiResource('level', LevelController::class);
 
 
 // Public course routes
