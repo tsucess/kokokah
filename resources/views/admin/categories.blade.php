@@ -179,7 +179,7 @@
                         <div class="modal-header border-0 d-flex justify-content-between align-items-center">
                             <h1 class="modal-title" id="modalTitle">Add Category</h1>
                             <button type="button" class="modal-header-btn" data-bs-dismiss="modal" aria-label="Close">
-                                <i class="fa-solid fa-circle-xmark"></i>
+                                <i class="fa-solid fa-circle-xmark"></i> 
                             </button>
                         </div>
                         <form id="categoryForm" class="modal-form-container">

@@ -332,9 +332,11 @@
         <div class="modal fade" id="addCurriculumModal" data-bs-keyboard="false" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header border-0 d-flex justify-content-between align-items-center">
                         <h1 class="modal-title" id="modalTitle">Curriculum Category</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="modal-header-btn" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="fa-solid fa-circle-xmark"></i> 
+                        </button>
                     </div>
                     <form class="modal-form-container" id="curriculumForm">
                         <input type="hidden" id="form_mode" value="create">
@@ -376,7 +378,7 @@
             </div>
         </div>
 
-      
+
 
 
         <script>
@@ -679,7 +681,7 @@
                             nameInput.value = item.title;
                             descInput.value = item.description;
                             modalTitle.textContent = "Edit Curriculum Category";
-    
+
                             new bootstrap.Modal(modalEl).show();
 
                         }
