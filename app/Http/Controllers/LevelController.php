@@ -16,18 +16,23 @@ class LevelController extends Controller implements HasMiddleware
         ];
     }
 
+
     public function index()
     {
         return Level::with(['courses' => function($q) {
             $q->with('level');
-        }])->get();
+        }])
+        ->orderBy('curriculum_category_id', 'asc') // order by category ID
+        ->get();
     }
+
 
     public function store(Request $request)
     {
         $data = $request->validate([
-            'title' => 'required|max:255',
-            'description' => 'required'
+            'name' => 'required|max:255',
+            'curriculum_category_id' => 'required|integer|exists:curriculum_categories,id',
+            'description' => 'nullable|string'
         ]);
 
         $level = Level::create($data);
@@ -51,8 +56,9 @@ class LevelController extends Controller implements HasMiddleware
     public function update(Request $request,  $id)
     {
         $data = $request->validate([
-            'title' => 'required|max:255',
-            'description' => 'required'
+            'name' => 'required|max:255',
+            'curriculum_category_id' => 'required|integer|exists:curriculum_categories,id',
+            'description' => 'nullable'
         ]);
 
         $level = Level::findOrFail($id);

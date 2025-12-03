@@ -308,9 +308,7 @@
                     padding: 12px 16px;
                 }
             }
-        </style>
-
-        <style>
+    
             /* Skeleton card styles */
             .skeleton-grid {
                 display: grid;
@@ -434,17 +432,13 @@
             </div>
         </div>
 
-
-
         <!-- ========== Place near top or bottom of page (paste these helpers once) ========== -->
-
 
         <!-- Toast container (paste once in your page) -->
         <div id="toastContainer" aria-live="polite" aria-atomic="true"></div>
 
         <!-- ========== End helpers ========== -->
-  <!-- ======= Script: copy-paste entire block below to replace your <script> section ======= -->
- 
+        <!-- ======= Script: copy-paste entire block below to replace your <script> section ======= -->
         <script>
             (function() {
                 // Config

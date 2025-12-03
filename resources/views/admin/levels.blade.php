@@ -353,10 +353,16 @@
                                 <input class="modal-input" type="text" id="levelName" placeholder="e.g., JS1" required />
                             </div>
                             <div class="modal-form-input-border">
-                                <label for="levelType" class="modal-label">Level Type</label>
+                                <label for="levelType" class="modal-label">Level Categories</label>
                                 <select name="" id="levelType" class="select-input">
-                                    <option value="">Enter type</option>
+                                    <option value="">Select Curriculum Category</option>
                                 </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Description <span
+                                        class="text-muted">(Optional)</span></label>
+                                <textarea id="levelDescription" name="description" class="form-control rounded-3" rows="3"
+                                    placeholder="Enter a short description..."></textarea>
                             </div>
                         </div>
                         <div class="d-flex gap-2">
@@ -367,6 +373,64 @@
                 </div>
             </div>
         </div>
+        <!-- Add Level Modal -->
+        {{-- <div class="modal fade" id="addLevelModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content rounded-4 shadow-lg border-0">
+
+                    <!-- Header -->
+                    <div class="modal-header bg-light border-0 rounded-top-4">
+                        <h5 class="modal-title fw-bold">Add New Level</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="modal-body px-4">
+
+                        <form id="addLevelForm">
+
+                            <!-- Level Name -->
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Level Name</label>
+                                <input type="text" name="name" class="form-control form-control-lg rounded-3"
+                                    placeholder="Enter level name" required>
+                            </div>
+
+                            <!-- Curriculum Category -->
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Curriculum Category</label>
+                                <select name="curriculum_category_id" class="form-select form-select-lg rounded-3" required>
+                                    <option value="">Select Curriculum Category</option>
+                                    <!-- Dynamically filled -->
+                                </select>
+                            </div>
+
+                            <!-- Description -->
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Description <span
+                                        class="text-muted">(Optional)</span></label>
+                                <textarea name="description" class="form-control rounded-3" rows="3" placeholder="Enter a short description..."></textarea>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-light rounded-3 px-4" data-bs-dismiss="modal">
+                            Cancel
+                        </button>
+
+                        <button type="submit" form="addLevelForm" class="btn btn-primary rounded-3 px-4 fw-semibold">
+                            Save Level
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div> --}}
+
 
         <!-- Delete Confirmation Modal -->
         <div class="modal fade" id="deleteConfirmModal" data-bs-keyboard="false" tabindex="-1">
@@ -388,145 +452,508 @@
         </div>
 
         <script>
-            // Sample data
-            const levels = [{
-                    id: 1,
-                    name: 'JS1',
-                    description: 'Junior Secondary 1'
-                },
-                {
-                    id: 2,
-                    name: 'JS2',
-                    description: 'Junior Secondary 2'
-                },
-                {
-                    id: 3,
-                    name: 'JS3',
-                    description: 'Junior Secondary 3'
-                },
-                {
-                    id: 4,
-                    name: 'SS1',
-                    description: 'Senior Secondary 1'
-                },
-                {
-                    id: 5,
-                    name: 'SS2',
-                    description: 'Senior Secondary 2'
-                },
-                {
-                    id: 6,
-                    name: 'SS3',
-                    description: 'Senior Secondary 3'
-                },
-                {
-                    id: 7,
-                    name: 'Grade 1',
-                    description: 'Primary Grade 1'
-                },
-                {
-                    id: 8,
-                    name: 'Grade 6',
-                    description: 'Primary Grade 6'
-                },
-                {
-                    id: 9,
-                    name: '100level',
-                    description: 'University 100 Level'
-                },
-                {
-                    id: 10,
-                    name: '500level',
-                    description: 'University 500 Level'
-                }
-            ];
+            (function() {
+                // Config
+                const API_LEVEL = "/api/level";
+                const API_CATEGORIES = "/api/curriculum-category";
+                const token = localStorage.getItem('auth_token') || '';
+                let levels = [];
+                let categories = [];
+                let currentEditId = null;
+                let currentDeleteId = null;
+                let isSaving = false;
 
-            let currentEditId = null;
-            let currentDeleteId = null;
-
-            // Render levels
-            function renderLevels() {
+                // DOM refs
                 const grid = document.getElementById('levelsGrid');
-                grid.innerHTML = levels.map(level => `
-                <div class="level-card">
-                    <div class="level-card-header">
-                        <h3 class="level-card-title">${level.name}</h3>
-                        <div class="level-card-actions">
-                            <button class="action-btn" onclick="editLevel(${level.id})" title="Edit">
-                                <i class="fa-solid fa-pen fa-xs"></i>
-                            </button>
-                            <button class="action-btn delete" onclick="deleteLevel(${level.id})" title="Delete">
-                                <i class="fa-solid fa-trash fa-xs"></i>
-                            </button>
-                        </div>
-                     </div>
-                    <p class="level-card-description">${level.description}</p>
-                </div>
-            `).join('');
-            }
+                const form = document.getElementById('levelForm');
+                const levelNameInput = document.getElementById('levelName');
+                const levelTypeSelect = document.getElementById('levelType');
+                const levelDescription = document.getElementById('levelDescription');
+                const modalEl = document.getElementById('addLevelModal');
+                const modalTitle = document.getElementById('modalTitle');
 
-            // Add/Edit level
-            document.getElementById('levelForm').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const name = document.getElementById('levelName').value;
-                const description = document.getElementById('levelType').value;
-
-                if (currentEditId) {
-                    const level = levels.find(l => l.id === currentEditId);
-                    if (level) {
-                        level.name = name;
-                        level.description = description;
+                // Ensure toast container exists
+                (function ensureToastContainer() {
+                    if (!document.getElementById('toastContainer')) {
+                        const tc = document.createElement('div');
+                        tc.id = 'toastContainer';
+                        tc.setAttribute('aria-live', 'polite');
+                        tc.setAttribute('aria-atomic', 'true');
+                        tc.style.position = 'fixed';
+                        tc.style.top = '1rem';
+                        tc.style.right = '1rem';
+                        tc.style.zIndex = '1080';
+                        tc.style.display = 'flex';
+                        tc.style.flexDirection = 'column';
+                        tc.style.gap = '0.5rem';
+                        document.body.appendChild(tc);
                     }
-                    currentEditId = null;
-                } else {
-                    levels.push({
-                        id: Math.max(...levels.map(l => l.id), 0) + 1,
-                        name,
-                        description
+                })();
+
+                // ---------- Toast helper ----------
+                function showToast(title = '', message = '', type = 'info', timeout = 3500) {
+                    const container = document.getElementById('toastContainer');
+                    const id = 'toast-' + Date.now();
+                    const toast = document.createElement('div');
+                    toast.id = id;
+                    toast.className = 'custom-toast';
+                    toast.style.minWidth = '220px';
+                    toast.style.padding = '0.6rem';
+                    toast.style.borderRadius = '6px';
+                    toast.style.boxShadow = '0 8px 20px rgba(0,0,0,0.12)';
+                    toast.style.color = '#fff';
+                    toast.style.fontSize = '0.95rem';
+                    toast.style.pointerEvents = 'auto';
+                    toast.style.opacity = '1';
+                    toast.style.transition = 'opacity .25s, transform .25s';
+                    toast.style.background = (type === 'success') ? '#198754' : (type === 'danger') ? '#dc3545' : '#0d6efd';
+
+                    toast.innerHTML =
+                        `${title ? `<strong style="display:block;margin-bottom:6px">${escapeHtml(title)}</strong>` : ''}<div style="line-height:1.2">${escapeHtml(message)}</div>`;
+                    container.appendChild(toast);
+
+                    setTimeout(() => {
+                        toast.style.opacity = '0';
+                        toast.style.transform = 'translateY(-8px)';
+                        setTimeout(() => toast.remove(), 300);
+                    }, timeout);
+                }
+
+                // ---------- Escaping ----------
+                function escapeHtml(str = '') {
+                    return String(str)
+                        .replace(/&/g, "&amp;")
+                        .replace(/</g, "&lt;")
+                        .replace(/>/g, "&gt;")
+                        .replace(/"/g, "&quot;")
+                        .replace(/'/g, "&#039;");
+                }
+
+                // ---------- Skeleton UI ----------
+                function showSkeletons(count = 3) {
+                    grid.innerHTML = '';
+                    const wrap = document.createElement('div');
+                    wrap.className = 'skeleton-grid';
+                    // basic inline styles for layout if you don't have CSS
+                    wrap.style.display = 'grid';
+                    wrap.style.gridTemplateColumns = 'repeat(3, 1fr)';
+                    wrap.style.gap = '1rem';
+
+                    for (let i = 0; i < count; i++) {
+                        const card = document.createElement('div');
+                        card.className = 'skeleton-card';
+                        card.style.padding = '1rem';
+                        card.style.borderRadius = '8px';
+                        card.style.background = '#f3f3f3';
+                        card.innerHTML = `
+                        <div style="height:14px;width:80%;background:#e9e9e9;border-radius:4px;margin-bottom:8px;"></div>
+                        <div style="height:12px;width:60%;background:#eee;border-radius:4px"></div>
+                    `;
+                        wrap.appendChild(card);
+                    }
+                    grid.appendChild(wrap);
+                }
+
+                // ---------- API helper ----------
+                async function apiFetch(url, opts = {}) {
+                    const headers = Object.assign({
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                    }, opts.headers || {});
+
+                    if (token) headers["Authorization"] = `Bearer ${token}`;
+
+                    const options = Object.assign({}, opts, {
+                        headers
+                    });
+                    const res = await fetch(url, options);
+                    const contentType = res.headers.get('content-type') || '';
+
+                    let data = null;
+                    if (contentType.includes('application/json')) {
+                        data = await res.json();
+                    } else {
+                        data = await res.text();
+                    }
+
+                    if (!res.ok) {
+                        const message = (data && data.message) ? data.message : (typeof data === 'string' ? data :
+                            'Request failed');
+                        const err = new Error(message);
+                        err.status = res.status;
+                        err.payload = data;
+                        throw err;
+                    }
+                    return data;
+                }
+
+                // ---------- Data parsing helpers ----------
+                function unwrapListResponse(raw) {
+                    // Accept forms: array, {data: [...]}, {status:..., response: [...]}, {response: {data: [...]}}
+                    if (!raw) return [];
+                    if (Array.isArray(raw)) return raw;
+                    if (raw.data && Array.isArray(raw.data)) return raw.data;
+                    if (raw.response && Array.isArray(raw.response)) return raw.response;
+                    if (raw.response && raw.response.data && Array.isArray(raw.response.data)) return raw.response.data;
+                    return [];
+                }
+
+                function unwrapItemResponse(raw) {
+                    // Return item object from common shapes
+                    if (!raw) return null;
+                    if (raw && raw.id) return raw;
+                    if (raw.response && raw.response.id) return raw.response;
+                    if (raw.data && raw.data.id) return raw.data;
+                    return raw;
+                }
+
+                // ---------- CRUD operations ----------
+                async function loadCategories() {
+                    try {
+                        const data = await apiFetch(API_CATEGORIES, {
+                            method: 'GET'
+                        });
+                        categories = unwrapListResponse(data);
+                        populateCategorySelect();
+                    } catch (err) {
+                        console.error('Failed to load categories', err);
+                        showToast('Error', 'Failed to load curriculum categories', 'danger');
+                    }
+                }
+
+                function populateCategorySelect() {
+                    if (!levelTypeSelect) return;
+                    levelTypeSelect.innerHTML = `<option value="">Select Curriculum Category</option>`;
+                    categories.forEach(cat => {
+                        const opt = document.createElement('option');
+                        opt.value = cat.id;
+                        opt.textContent = cat.title ?? cat.name ?? `#${cat.id}`;
+                        levelTypeSelect.appendChild(opt);
                     });
                 }
 
-                renderLevels();
-                document.getElementById('levelForm').reset();
-                bootstrap.Modal.getInstance(document.getElementById('addLevelModal')).hide();
-            });
-
-            // Edit level
-            function editLevel(id) {
-                const level = levels.find(l => l.id === id);
-                if (level) {
-                    currentEditId = id;
-                    document.getElementById('levelName').value = level.name;
-                    document.getElementById('levelType').value = level.description;
-                    document.getElementById('modalTitle').textContent = 'Edit Level';
-                    new bootstrap.Modal(document.getElementById('addLevelModal')).show();
+                async function loadLevels() {
+                    showSkeletons(3);
+                    try {
+                        const data = await apiFetch(API_LEVEL, {
+                            method: 'GET'
+                        });
+                        levels = unwrapListResponse(data);
+                        renderLevels();
+                    } catch (err) {
+                        console.error('Load levels error:', err);
+                        grid.innerHTML = `<div class="p-3 text-danger">Failed to load levels.</div>`;
+                        showToast('Error', 'Failed to load levels. ' + (err.message || ''), 'danger');
+                    }
                 }
-            }
 
-            // Delete level
-            function deleteLevel(id) {
-                currentDeleteId = id;
-                new bootstrap.Modal(document.getElementById('deleteConfirmModal')).show();
-            }
-
-            document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
-                const index = levels.findIndex(l => l.id === currentDeleteId);
-                if (index > -1) {
-                    levels.splice(index, 1);
-                    renderLevels();
+                async function createLevel(name, curriculum_category_id, description) {
+                    try {
+                        const payload = await apiFetch(API_LEVEL, {
+                            method: 'POST',
+                            body: JSON.stringify({
+                                name,
+                                curriculum_category_id,
+                                description
+                            })
+                        });
+                        const item = unwrapItemResponse(payload) || (payload.data || payload.response) || payload;
+                        // push to local list if id present
+                        if (item && item.id) levels.push(item);
+                        await loadLevels();
+                        showToast('Success', 'Level created successfully.', 'success');
+                    } catch (err) {
+                        console.error('Create level error:', err);
+                        showToast('Error', 'Failed to create level. ' + (err.message || ''), 'danger');
+                        throw err;
+                    }
                 }
-                bootstrap.Modal.getInstance(document.getElementById('deleteConfirmModal')).hide();
-            });
 
-            // Reset modal on close
-            document.getElementById('addLevelModal').addEventListener('hidden.bs.modal', () => {
-                currentEditId = null;
-                document.getElementById('modalTitle').textContent = 'Add Level';
-                document.getElementById('levelForm').reset();
-            });
+                async function updateLevel(id, name, curriculum_category_id, description) {
+                    try {
+                        const payload = await apiFetch(`${API_LEVEL}/${id}`, {
+                            method: 'PUT',
+                            body: JSON.stringify({
+                                name,
+                                curriculum_category_id,
+                                description
+                            })
+                        });
+                        const updated = unwrapItemResponse(payload) || (payload.data || payload.response) || payload;
+                        const idx = levels.findIndex(l => l.id === id);
+                        if (idx > -1 && updated && updated.id) levels[idx] = updated;
+                        await loadLevels();
+                        showToast('Success', 'Level updated.', 'success');
+                    } catch (err) {
+                        console.error('Update level error:', err);
+                        showToast('Error', 'Failed to update level. ' + (err.message || ''), 'danger');
+                        throw err;
+                    }
+                }
 
-            // Initial render
-            renderLevels();
+                async function deleteLevelRequest(id) {
+                    try {
+                        await apiFetch(`${API_LEVEL}/${id}`, {
+                            method: 'DELETE'
+                        });
+                        levels = levels.filter(l => l.id !== id);
+                        renderLevels();
+                        showToast('Success', 'Level deleted.', 'success');
+                    } catch (err) {
+                        console.error('Delete level error:', err);
+                        showToast('Error', 'Failed to delete level. ' + (err.message || ''), 'danger');
+                        throw err;
+                    }
+                }
+
+                // ---------- Render ----------
+                function renderLevels() {
+                    if (!Array.isArray(levels) || levels.length === 0) {
+                        grid.innerHTML =
+                            `<div class="p-3 text-muted">No levels found. Click "Add Level" to create one.</div>`;
+                        return;
+                    }
+
+                    grid.innerHTML = levels.map(level => {
+                        const cat = categories.find(c => c.id === level.curriculum_category_id) || {};
+                        const subtitle = level.description || cat.title || cat.name || '';
+                        return `
+                                <div class="level-card">
+                                    <div class="level-card-header d-flex align-items-start justify-content-between">
+                                        <h3 class="level-card-title mb-0">${escapeHtml(level.name)}</h3>
+                                        <div class="level-card-actions">
+                                            <button class="action-btn btn btn-sm btn-link" onclick="editLevel(${level.id})" title="Edit">
+                                                <i class="fa-solid fa-pen fa-xs"></i>
+                                            </button>
+                                            <button class="action-btn btn btn-sm btn-link text-danger" onclick="openDeleteModal(${level.id})" title="Delete">
+                                                <i class="fa-solid fa-trash fa-xs"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <p class="level-card-description">${escapeHtml(subtitle)}</p>
+                                </div>
+                            `;
+                    }).join('');
+                }
+
+                // ---------- Form handling ----------
+                // form.addEventListener('submit', async (e) => {
+                //     e.preventDefault();
+                //     if (isSaving) return;
+
+                //     const name = (levelNameInput.value || '').trim();
+                //     const curriculum_category_id = levelTypeSelect.value || null;
+                //     const description = (levelTypeSelect.selectedOptions[0] && levelTypeSelect.selectedOptions[
+                //             0].dataset && levelTypeSelect.selectedOptions[0].dataset.desc) ? levelTypeSelect
+                //         .selectedOptions[0].dataset.desc : '';
+
+                //     // Note: description input is taken from select option's text only in your current template.
+                //     // If you have a separate description input in modal, replace the line above to read it.
+                //     // For now, let user supply description via the select's selected option text or leave blank.
+
+                //     if (!name) {
+                //         showToast('Validation', 'Please enter a level name.', 'info');
+                //         return;
+                //     }
+                //     if (!curriculum_category_id) {
+                //         showToast('Validation', 'Please select a curriculum category.', 'info');
+                //         return;
+                //     }
+
+                //     try {
+                //         isSaving = true;
+                //         const submitBtn = form.querySelector('button[type="submit"]');
+                //         if (submitBtn) {
+                //             submitBtn.setAttribute('disabled', 'disabled');
+                //             submitBtn.dataset.prev = submitBtn.innerHTML;
+                //             submitBtn.innerHTML =
+                //                 `<span class="spinner-border spinner-border-sm"></span> Saving...`;
+                //         }
+
+                //         if (currentEditId) {
+                //             await updateLevel(currentEditId, name, Number(curriculum_category_id), description);
+                //             currentEditId = null;
+                //         } else {
+                //             await createLevel(name, Number(curriculum_category_id), description);
+                //         }
+
+                //         form.reset();
+                //         const bsModal = bootstrap.Modal.getInstance(modalEl);
+                //         if (bsModal) bsModal.hide();
+                //     } catch (err) {
+                //         // errors handled in helpers
+                //     } finally {
+                //         isSaving = false;
+                //         const submitBtn = form.querySelector('button[type="submit"]');
+                //         if (submitBtn) {
+                //             submitBtn.removeAttribute('disabled');
+                //             if (submitBtn.dataset && submitBtn.dataset.prev) submitBtn.innerHTML = submitBtn
+                //                 .dataset.prev;
+                //         }
+                //     }
+                // });
+
+                // ---------- Modal helpers (global for inline onclick) ----------
+                // window.editLevel = async function(id) {
+                //     // find locally first
+                //     const local = levels.find(x => x.id === id);
+                //     if (local) {
+                //         currentEditId = id;
+                //         levelNameInput.value = local.name || '';
+                //         // set select value
+                //         levelTypeSelect.value = local.curriculum_category_id || '';
+                //         levelDescription.value = local.description || '';
+                //         modalTitle.textContent = 'Edit Level';
+                //         new bootstrap.Modal(modalEl).show();
+                //         return;
+                //     }
+
+                //     // fallback: fetch single item
+                //     try {
+                //         const data = await apiFetch(`${API_LEVEL}/${id}`, {
+                //             method: 'GET'
+                //         });
+                //         const item = unwrapItemResponse(data) || data;
+                //         console.log(item);
+                //         if (!item) return showToast('Error', 'Level not found', 'danger');
+                //         currentEditId = item.id;
+                //         levelNameInput.value = item.name || '';
+                //         levelTypeSelect.value = item.curriculum_category_id || '';
+                //         levelDescription.value = item.description || '';
+                //         modalTitle.textContent = 'Edit Level';
+                //         new bootstrap.Modal(modalEl).show();
+                //     } catch (err) {
+                //         console.error('Failed loading level', err);
+                //         showToast('Error', 'Could not load level details', 'danger');
+                //     }
+                // };
+
+                // ---------- Form handling ----------
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    if (isSaving) return;
+
+                    const name = (levelNameInput.value || '').trim();
+                    const curriculum_category_id = levelTypeSelect.value || null;
+                    const description = (levelDescription.value || '').trim(); // <- use textarea value
+
+                    if (!name) {
+                        showToast('Validation', 'Please enter a level name.', 'info');
+                        return;
+                    }
+                    if (!curriculum_category_id) {
+                        showToast('Validation', 'Please select a curriculum category.', 'info');
+                        return;
+                    }
+
+                    try {
+                        isSaving = true;
+                        const submitBtn = form.querySelector('button[type="submit"]');
+                        if (submitBtn) {
+                            submitBtn.setAttribute('disabled', 'disabled');
+                            submitBtn.dataset.prev = submitBtn.innerHTML;
+                            submitBtn.innerHTML =
+                                `<span class="spinner-border spinner-border-sm"></span> Saving...`;
+                        }
+
+                        if (currentEditId) {
+                            await updateLevel(currentEditId, name, Number(curriculum_category_id), description);
+                            currentEditId = null;
+                        } else {
+                            await createLevel(name, Number(curriculum_category_id), description);
+                        }
+
+                        form.reset();
+                        levelDescription.value = ''; // reset textarea
+                        const bsModal = bootstrap.Modal.getInstance(modalEl);
+                        if (bsModal) bsModal.hide();
+                    } catch (err) {
+                        // errors handled in helpers
+                    } finally {
+                        isSaving = false;
+                        const submitBtn = form.querySelector('button[type="submit"]');
+                        if (submitBtn) {
+                            submitBtn.removeAttribute('disabled');
+                            if (submitBtn.dataset && submitBtn.dataset.prev) submitBtn.innerHTML = submitBtn
+                                .dataset.prev;
+                        }
+                    }
+                });
+
+                // ---------- Edit modal ----------
+                window.editLevel = async function(id) {
+                    const local = levels.find(x => x.id === id);
+                    if (local) {
+                        currentEditId = id;
+                        levelNameInput.value = local.name || '';
+                        levelTypeSelect.value = local.curriculum_category_id || '';
+                        levelDescription.value = local.description || ''; // <- populate textarea
+                        modalTitle.textContent = 'Edit Level';
+                        new bootstrap.Modal(modalEl).show();
+                        return;
+                    }
+
+                    try {
+                        const data = await apiFetch(`${API_LEVEL}/${id}`, {
+                            method: 'GET'
+                        });
+                        const item = unwrapItemResponse(data) || data;
+                        if (!item) return showToast('Error', 'Level not found', 'danger');
+
+                        currentEditId = item.id;
+                        levelNameInput.value = item.name || '';
+                        levelTypeSelect.value = item.curriculum_category_id || '';
+                        levelDescription.value = item.description || ''; // <- populate textarea
+                        modalTitle.textContent = 'Edit Level';
+                        new bootstrap.Modal(modalEl).show();
+                    } catch (err) {
+                        console.error('Failed loading level', err);
+                        showToast('Error', 'Could not load level details', 'danger');
+                    }
+                };
+
+
+                window.openDeleteModal = function(id) {
+                    currentDeleteId = id;
+                    new bootstrap.Modal(document.getElementById('deleteConfirmModal')).show();
+                };
+
+                // Confirm delete
+                document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
+                    if (!currentDeleteId) return;
+                    const bs = bootstrap.Modal.getInstance(document.getElementById('deleteConfirmModal'));
+                    const btn = document.getElementById('confirmDeleteBtn');
+                    btn.disabled = true;
+                    const prev = btn.innerHTML;
+                    btn.innerHTML = `<span class="spinner-border spinner-border-sm"></span> Deleting...`;
+
+                    try {
+                        await deleteLevelRequest(currentDeleteId);
+                        currentDeleteId = null;
+                    } catch (err) {
+                        // handled in deleteLevelRequest
+                    } finally {
+                        btn.disabled = false;
+                        btn.innerHTML = prev;
+                        if (bs) bs.hide();
+                    }
+                });
+
+                // Reset modal on close
+                modalEl.addEventListener('hidden.bs.modal', () => {
+                    currentEditId = null;
+                    modalTitle.textContent = 'Add Level';
+                    form.reset();
+                });
+
+                // Initial load (categories first, then levels)
+                (async function init() {
+                    await loadCategories();
+                    await loadLevels();
+                })();
+
+            })();
         </script>
+
     </main>
 @endsection
