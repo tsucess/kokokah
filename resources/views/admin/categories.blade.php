@@ -2,6 +2,107 @@
 
 @section('content')
     <style>
+        .modal-backdrop.show {
+                background-color: rgba(0, 74, 83, 0.5) !important;
+            }
+
+            .modal-content {
+                border: none;
+                border-radius: 15px;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            }
+
+            .modal-header {
+                border-bottom: 1px solid #e0e0e0;
+                padding: 20px;
+            }
+
+            .modal-title {
+                font-family: "Fredoka One", sans-serif;
+                color: #004A53;
+                font-size: 22px;
+                font-weight: 600;
+            }
+
+            .btn-close {
+                color: #666;
+                opacity: 1;
+            }
+
+            .btn-close:hover {
+                color: #004A53;
+            }
+
+            .modal-body {
+                padding: 30px 20px;
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            .form-label {
+                color: #004A53;
+                font-weight: 600;
+                font-size: 14px;
+                margin-bottom: 8px;
+                display: block;
+            }
+
+            .form-control {
+                border: 1.5px solid #004A53;
+                border-radius: 8px;
+                padding: 12px 16px;
+                font-size: 14px;
+                color: #333;
+                transition: all 0.3s ease;
+            }
+
+            .form-control:focus {
+                border-color: #FDAF22;
+                box-shadow: 0 0 0 0.2rem rgba(253, 175, 34, 0.25);
+                color: #333;
+            }
+
+            .form-control::placeholder {
+                color: #aaa;
+            }
+
+            .modal-footer {
+                padding: 20px;
+                border-top: 1px solid #e0e0e0;
+                gap: 10px;
+            }
+
+            .btn-primary-custom {
+                background-color: #FDAF22;
+                border: none;
+                color: white;
+                font-weight: 600;
+                padding: 12px 24px;
+                border-radius: 8px;
+                transition: all 0.3s ease;
+            }
+
+            .btn-primary-custom:hover {
+                background-color: #e59a0f;
+                color: white;
+            }
+
+            .btn-secondary-custom {
+                background-color: #6c757d;
+                border: none;
+                color: white;
+                font-weight: 600;
+                padding: 12px 24px;
+                border-radius: 8px;
+                transition: all 0.3s ease;
+            }
+
+            .btn-secondary-custom:hover {
+                background-color: #5a6268;
+                color: white;
+            }
         .action-btn {
             background-color: white;
             border: 1px solid #ddd;
@@ -27,6 +128,20 @@
             color: #dc3545;
             background-color: #ffe5e5;
         }
+        .btn-danger-custom {
+                background-color: #dc3545;
+                border: none;
+                color: white;
+                font-weight: 600;
+                padding: 12px 24px;
+                border-radius: 8px;
+                transition: all 0.3s ease;
+            }
+
+            .btn-danger-custom:hover {
+                background-color: #c82333;
+                color: white;
+            }
         #toastContainer {
                 position: fixed;
                 top: 1rem;
@@ -99,7 +214,7 @@
                         <div class="modal-body">
                             Are you sure you want to delete this category?
                         </div>
-                        <div class="d-flex gap-2 p-3">
+                        <div class="d-flex gap-2 p-3 justify-content-end">
                             <button type="button" class="btn btn-secondary-custom" data-bs-dismiss="modal">Cancel</button>
                             <button type="button" class="btn btn-danger-custom"
                                 id="confirmDeleteCategoryBtn">Delete</button>
