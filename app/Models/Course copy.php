@@ -13,8 +13,7 @@ class Course extends Model
     protected $fillable = [
         'title',
         'description',
-        'curriculum_category_id',
-        'course_category_id',
+        'category_id',
         'instructor_id',
         'term_id',
         'level_id',
@@ -28,17 +27,13 @@ class Course extends Model
         'price' => 'decimal:2',
         'published_at' => 'datetime',
         'duration_hours' => 'integer',
+        'max_students' => 'integer',
     ];
 
     // Relationships
     public function curriculumCategory()
     {
-        return $this->belongsTo(CurriculumCategory::class, 'curriculum_category_id');
-    }
-
-    public function courseCategory()
-    {
-        return $this->belongsTo(CourseCategory::class, 'course_category_id');
+        return $this->belongsTo(CurriculumCategory::class);
     }
 
     public function instructor()
@@ -151,7 +146,7 @@ class Course extends Model
         return $query->where('instructor_id', $instructorId);
     }
 
-    // Accessors
+    // Accessors & Mutators
     public function getAverageRatingAttribute()
     {
         return $this->reviews()->avg('rating');
@@ -166,8 +161,14 @@ class Course extends Model
     {
         $total = $this->enrollments()->count();
         if ($total === 0) return 0;
-
+        
         $completed = $this->enrollments()->where('status', 'completed')->count();
         return round(($completed / $total) * 100, 2);
+    }
+
+    public function getIsFullAttribute()
+    {
+        if (!$this->max_students) return false;
+        return $this->enrollments()->where('status', 'active')->count() >= $this->max_students;
     }
 }
