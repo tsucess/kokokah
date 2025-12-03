@@ -266,7 +266,7 @@
                             method: 'GET'
                         });
                         categories = Array.isArray(data) ? data : (data.data || []);
-                        console.log(categories)
+
                         rendercategories();
                     } catch (err) {
                         grid.innerHTML = `<div class="p-3 text-danger">Failed to load categories.</div>`;
@@ -305,8 +305,9 @@
                                 description
                             })
                         });
-                        const updated = payload.response
-
+                        console.log(payload)
+                        const updated = payload.response || payload.data || payload;
+console.log(updated)
                         const idx = categories.findIndex(t => t.id === id);
                         if (idx > -1) categories[idx] = updated;
                         rendercategories();
