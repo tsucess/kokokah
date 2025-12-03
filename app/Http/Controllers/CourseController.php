@@ -95,9 +95,7 @@ class CourseController extends Controller
             'level_id' => 'nullable|exists:levels,id',
             'term_id' => 'nullable|exists:terms,id',
             'price' => 'required|numeric|min:0',
-            'difficulty' => 'required|in:beginner,intermediate,advanced',
             'duration_hours' => 'nullable|integer|min:1',
-            'max_students' => 'nullable|integer|min:1',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:5048'
         ]);
 

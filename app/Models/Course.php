@@ -20,8 +20,6 @@ class Course extends Model
         'price',
         'status',
         'duration_hours',
-        'difficulty',
-        'max_students',
         'published_at'
     ];
 
@@ -136,11 +134,6 @@ class Course extends Model
     public function scopePublished($query)
     {
         return $query->where('status', 'published');
-    }
-
-    public function scopeByDifficulty($query, $difficulty)
-    {
-        return $query->where('difficulty', $difficulty);
     }
 
     public function scopeByLevel($query, $levelId)

@@ -380,15 +380,15 @@
 
                 <div class="form-row-two">
                     <div class="form-group-custom">
-                        <label for="subjectTime">Duration</label>
+                        <label for="subjectTime">Subject Time</label>
                         <input type="text" class="form-control" id="subjectTime" name="subjectTime"
                             placeholder="e.g., 2 hours" required>
                     </div>
 
                     <div class="form-group-custom">
-                        <label for="coursePrice">Price</label>
-                        <input type="number" class="form-control" id="coursePrice" name="coursePrice"
-                            placeholder="e.g., 200" min="1" required>
+                        <label for="totalLesson">Total Lessons</label>
+                        <input type="number" class="form-control" id="totalLesson" name="totalLesson"
+                            placeholder="e.g., 12" min="1" required>
                     </div>
                 </div>
 
@@ -457,6 +457,468 @@
             </div>
         </div>
 
+        <!-- Curriculum Section -->
+        {{-- <div class="container bg-white d-none content-section" id="curriculum">
+            <style>
+                .curriculum-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    margin-bottom: 2rem;
+                    flex-wrap: wrap;
+                    gap: 1rem;
+                }
+
+                .curriculum-header-text h5 {
+                    font-size: 1.25rem;
+                    color: #004A53;
+                    font-weight: 600;
+                    margin-bottom: 0.5rem;
+                }
+
+                .curriculum-header-text p {
+                    color: #666;
+                    font-size: 0.95rem;
+                    margin: 0;
+                }
+
+                .btn-add-topic {
+                    background-color: #FDAF22;
+                    border: none;
+                    color: white;
+                    font-weight: 500;
+                    padding: 0.75rem 1.5rem;
+                    border-radius: 0.375rem;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    white-space: nowrap;
+                }
+
+                .btn-add-topic:hover {
+                    background-color: #e59a0f;
+                }
+
+                .lesson-item {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 1rem;
+                    border: 1px solid #ddd;
+                    border-radius: 0.375rem;
+                    margin-bottom: 1rem;
+                    transition: all 0.3s ease;
+                }
+
+                .lesson-item:hover {
+                    border-color: #004A53;
+                    background-color: #f9f9f9;
+                }
+
+                .lesson-item-content {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.75rem;
+                    color: #333;
+                }
+
+                .lesson-item-actions {
+                    display: flex;
+                    gap: 1rem;
+                    align-items: center;
+                }
+
+                .lesson-item-actions button {
+                    background: none;
+                    border: none;
+                    cursor: pointer;
+                    color: #666;
+                    transition: color 0.3s ease;
+                    padding: 0.25rem 0.5rem;
+                }
+
+                .lesson-item-actions button:hover {
+                    color: #004A53;
+                }
+
+                .btn-add-lesson {
+                    background-color: white;
+                    border: 1px solid #004A53;
+                    color: #004A53;
+                    font-weight: 500;
+                    padding: 0.75rem 1.5rem;
+                    border-radius: 0.375rem;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    margin-bottom: 2rem;
+                }
+
+                .btn-add-lesson:hover {
+                    background-color: #f0f8f9;
+                }
+
+                .curriculum-actions {
+                    display: flex;
+                    gap: 1rem;
+                    justify-content: flex-end;
+                    margin-top: 2rem;
+                    flex-wrap: wrap;
+                }
+
+                .modal-backdrop.show {
+                    background-color: #004a53 !important;
+                }
+
+                .modal-dialog {
+                    max-width: 600px;
+                    margin: auto;
+                }
+
+                .modal-container {
+                    background-color: #fff;
+                    border-radius: 10px;
+                    padding: 20px 16px;
+                }
+
+                .modal-content {
+                    border: none;
+                }
+
+                .modal-header {
+                    padding: 20px;
+                }
+
+                .modal-title {
+                    font-family: "Fredoka", sans-serif;
+                    color: #000;
+                    font-size: 24px;
+                }
+
+                .modal-header-btn {
+                    background-color: transparent;
+                    border: none;
+                }
+
+                .modal-form-container {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+                    width: 100%;
+                }
+
+                .modal-form {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 24px;
+                }
+
+                .modal-form-input-border {
+                    border: 1.5px solid #004a53;
+                    display: flex;
+                    flex-direction: column;
+                    padding: 14px 27px 14px;
+                    border-radius: 15px;
+                    position: relative;
+                }
+
+                .modal-label {
+                    position: absolute;
+                    top: -15px;
+                    color: #004a53;
+                    font-size: 14px;
+                    background-color: white;
+                    padding: 0px 4px;
+                    align-self: start;
+                }
+
+                .modal-input {
+                    outline: none;
+                    border: none;
+                    font-size: 14px;
+                    color: #aebaca;
+                    background-color: transparent;
+                }
+
+                .modal-form-btn {
+                    color: #f2f2f2;
+                    font-size: 16px;
+                    font-weight: 600;
+                    background-color: #004a53;
+                    padding-block: 16px;
+                    border: none;
+                }
+
+                .upload-file-container {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+                }
+
+                .upload-label {
+                    color: #004a53;
+                    font-size: 14px;
+                    font-weight: 600;
+                }
+
+                .upload-btn {
+                    background-color: #004a53;
+                    color: #ffffff;
+                    font-size: 16px;
+                    border: 1.5px solid #004a53;
+                    border-top-right-radius: 15px;
+                    border-bottom-right-radius: 15px;
+                    padding-inline: 15px;
+                }
+
+                .upload-input {
+                    border: 1.5px solid #004a53;
+                    border-radius: 15px;
+                    padding: 12px 15px;
+                }
+
+                .textarea {
+                    outline: none;
+                    border: none;
+                    font-size: 14px;
+                    color: #aebaca;
+                    height: 150px;
+                }
+
+                .hide {
+                    display: none;
+                }
+
+                @media (max-width: 768px) {
+                    .curriculum-header {
+                        flex-direction: column;
+                    }
+
+                    .curriculum-actions {
+                        flex-direction: column;
+                    }
+
+                    .curriculum-actions button {
+                        width: 100%;
+                    }
+                }
+            </style>
+
+            <div class="curriculum-header">
+                <div class="curriculum-header-text">
+                    <h5>Curriculum</h5>
+                    <p>Manage course topics and lessons</p>
+                </div>
+
+                add new topic modal
+                <div class="modal fade" id="addNewTopicModal" data-bs-keyboard="false" tabindex="-1"
+                    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content border-0 modal-container">
+                            <div class="modal-header border-0 d-flex justify-content-between align-items-center">
+                                <h1 class="modal-title" id="staticBackdropLabel">Add Topic</h1>
+                                <button type="button" class="modal-header-btn" data-bs-dismiss="modal"
+                                    aria-label="Close">
+                                    <i class="fa-solid fa-circle-xmark"></i>
+                                </button>
+                            </div>
+                            <form class="modal-form-container">
+                                <div class="modal-form">
+                                    <div class="modal-form-input-border">
+                                        <label for="" class="modal-label">Title</label>
+                                        <input class="modal-input" type="text" placeholder="Enter Title" />
+                                    </div>
+                                    <div class="modal-form-input-border">
+                                        <label for="" class="modal-label">Topic Description</label>
+                                        <textarea name="" id="" class="modal-input"></textarea>
+                                    </div>
+                                </div>
+                                <button class="modal-form-btn">Save</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-add-topic" data-bs-toggle="modal"
+                    data-bs-target="#addNewTopicModal">
+                    <i class="fa-solid fa-plus me-2"></i> Add New Topic
+                </button>
+            </div>
+
+            <div class="accordion mb-4" id="curriculumAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <i class="fa-solid fa-book-open me-2"></i> Parts of Speech
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#curriculumAccordion">
+                        <div class="accordion-body">
+                            <p>This section covers the fundamental parts of speech in English language.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lesson-item">
+                <div class="lesson-item-content">
+                    <i class="fa-solid fa-circle-play"></i>
+                    <span>Nouns</span>
+                </div>
+                <div class="lesson-item-actions">
+                    <button type="button" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button type="button" title="Delete"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            </div>
+
+            <div class="lesson-item">
+                <div class="lesson-item-content">
+                    <i class="fa-solid fa-circle-play"></i>
+                    <span>Pronouns</span>
+                </div>
+                <div class="lesson-item-actions">
+                    <button type="button" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button type="button" title="Delete"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            </div>
+
+
+        <div class="modal fade" id="addLessonModal" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content border-0 modal-container">
+                        <div class="modal-header border-0 d-flex justify-content-between align-items-center">
+                            <h1 class="modal-title" id="staticBackdropLabel">New Lesson</h1>
+                            <button type="button" class="modal-header-btn" data-bs-dismiss="modal" aria-label="Close">
+                                <i class="fa-solid fa-circle-xmark"></i>
+                            </button>
+                        </div>
+                        <form class="modal-form-container">
+                            <div class="modal-form">
+                                <div class="modal-form-input-border">
+                                    <label for="" class="modal-label">Lesson Type</label>
+                                    <select name="" id="addContent" class="modal-input">
+                                        <option value="image">Image</option>
+                                        <option value="youtube">Youtube</option>
+                                        <option value="audio">Audio</option>
+                                        <option value="content">Content</option>
+                                        <option value="document">Document</option>
+                                    </select>
+                                </div>
+
+
+                                <div class="flex-column gap-3 select-children" id="image-container">
+                                    <div class="modal-form-input-border">
+                                        <label for="" class="modal-label">Title</label>
+                                        <input class="modal-input" type="text" placeholder="Art" />
+                                    </div>
+                                    <div class="upload-file-container">
+                                        <label for="" class="upload-label">Upload File (Size:2mb, Dimension:400px
+                                            by 250px)
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control upload-input p-3"
+                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
+                                                placeholder="Upload file" aria-label="Recipient’s username"
+                                                aria-describedby="basic-addon2" />
+                                            <button class="upload-btn" type="button" id="button-addon2">
+                                                Upload File
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="flex-column gap-3 hide select-children" id="youtube-container">
+                                    <div class="modal-form-input-border">
+                                        <label for="" class="modal-label">Title</label>
+                                        <input class="modal-input" type="text" placeholder="Enter title" />
+                                    </div>
+                                    <div class="modal-form-input-border">
+                                        <label for="" class="modal-label">Youtube Url</label>
+                                        <input class="modal-input" type="text" placeholder="Enter url" />
+                                    </div>
+                                </div>
+
+
+                                <div class="flex-column gap-3 hide select-children" id="content-container">
+                                    <div class="modal-form-input-border">
+                                        <label for="" class="modal-label">Title</label>
+                                        <input class="modal-input" type="text" placeholder="Enter title" />
+                                    </div>
+                                    <div class="modal-form-input-border">
+                                        <label for="" class="modal-label">Lesson Content</label>
+                                        <textarea name="" id="" class="modal-input"></textarea>
+                                    </div>
+                                </div>
+
+
+                                <div class="flex-column gap-3 hide select-children" id="audio-container">
+                                    <div class="modal-form-input-border">
+                                        <label for="" class="modal-label">Title</label>
+                                        <input class="modal-input" type="text" placeholder="Enter title" />
+                                    </div>
+                                    <div class="upload-file-container">
+                                        <label for="" class="upload-label">Upload File (Size:2mb, Dimension:400px
+                                            by 250px)
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control upload-input p-3"
+                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
+                                                placeholder="Upload file" aria-label="Recipient’s username"
+                                                aria-describedby="basic-addon2" />
+                                            <button class="upload-btn" type="button" id="button-addon2">
+                                                Upload File
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex-column gap-3 hide select-children" id="document-container">
+                                    <div class="modal-form-input-border">
+                                        <label for="" class="modal-label">Lesson Type</label>
+                                        <select name="" id="" class="modal-input">
+                                            <option value="">image</option>
+                                        </select>
+                                    </div>
+                                    <div class="modal-form-input-border">
+                                        <label for="" class="modal-label">Title</label>
+                                        <input class="modal-input" type="text" placeholder="Enter title" />
+                                    </div>
+                                    <div class="upload-file-container">
+                                        <label for="" class="upload-label">Upload File (Size:2mb, Dimension:400px
+                                            by 250px)
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control upload-input p-3"
+                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
+                                                placeholder="Upload file" aria-label="Recipient’s username"
+                                                aria-describedby="basic-addon2" />
+                                            <button class="upload-btn" type="button" id="button-addon2">
+                                                Upload File
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="modal-form-btn">Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-add-lesson" data-bs-toggle="modal" data-bs-target="#addLessonModal">
+                <i class="fa-solid fa-plus me-2"></i> Add Lesson
+            </button>
+
+            <div class="curriculum-actions">
+                <button type="button" class="btn btn-back back-btn" data-next="media">
+                    Previous
+                </button>
+                <button type="button" class="btn btn-continue continue-btn" data-next="publish">
+                    Continue
+                </button>
+            </div>
+        </div> --}}
 
         <!-- Publish Section -->
         <div class="container bg-white d-none content-section" id="publish">
@@ -814,7 +1276,39 @@
                 }
             }
 
-         
+            // addlessong modal js
+
+            // const selectContainer = document.getElementById("addContent");
+
+            // function showSelectedContainer(contentType) {
+            //     document
+            //         .querySelectorAll(".select-children")
+            //         .forEach((container) => (container.style.display = "none"));
+
+            //     if (contentType === "image") {
+            //         document.getElementById("image-container").style.display = "flex";
+            //     }
+            //     if (contentType === "youtube") {
+            //         document.getElementById("youtube-container").style.display = "flex";
+            //     }
+            //     if (contentType === "audio") {
+            //         document.getElementById("audio-container").style.display = "flex";
+            //     }
+            //     if (contentType === "content") {
+            //         document.getElementById("content-container").style.display = "flex";
+            //     }
+            //     if (contentType === "document") {
+            //         document.getElementById("document-container").style.display = "flex";
+            //     }
+            // }
+
+            // document.addEventListener("DOMContentLoaded", () => {
+            //     showSelectedContainer(selectContainer.value);
+            // });
+
+            // selectContainer.addEventListener("change", (e) => {
+            //     showSelectedContainer(e.target.value);
+            // });
 
             function populatePublishSection() {
                 // Get data from form fields
@@ -822,7 +1316,7 @@
                 const category = document.getElementById('subjectCategory').value || 'Language';
                 const level = document.getElementById('subjectLevel').value || 'JSS 1';
                 const time = document.getElementById('subjectTime').value || '0 Hours';
-                const lessons = document.getElementById('coursePrice').value || '0';
+                const lessons = document.getElementById('totalLesson').value || '0';
                 const description = document.getElementById('subjectDescription').value ||
                     'This comprehensive course covers essential concepts and skills.';
                 const fileInput = document.getElementById('fileInput');
@@ -904,7 +1398,7 @@
                         category,
                         level,
                         time: document.getElementById('subjectTime').value,
-                        lessons: document.getElementById('coursePrice').value,
+                        lessons: document.getElementById('totalLesson').value,
                         description: document.getElementById('subjectDescription').value
                     });
 
