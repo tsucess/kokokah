@@ -342,9 +342,11 @@
         <div class="modal fade" id="addLevelModal" data-bs-keyboard="false" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header d-flex justify-content-between align-items-center">
                         <h1 class="modal-title" id="modalTitle">Add Level</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="modal-header-btn" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </button>
                     </div>
                     <form class="modal-form-container" id="levelForm">
                         <div class="modal-form">
@@ -358,10 +360,10 @@
                                     <option value="">Select Curriculum Category</option>
                                 </select>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label fw-semibold">Description <span
+                            <div class="modal-form-input-border">
+                                <label class="modal-label">Description <span
                                         class="text-muted">(Optional)</span></label>
-                                <textarea id="levelDescription" name="description" class="form-control rounded-3" rows="3"
+                                <textarea id="levelDescription" name="description" class="modal-input" rows="3"
                                     placeholder="Enter a short description..."></textarea>
                             </div>
                         </div>

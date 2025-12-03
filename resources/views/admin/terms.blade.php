@@ -308,7 +308,7 @@
                     padding: 12px 16px;
                 }
             }
-    
+
             /* Skeleton card styles */
             .skeleton-grid {
                 display: grid;
@@ -391,9 +391,11 @@
         <div class="modal fade" id="addTermModal" data-bs-keyboard="false" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header border-0 d-flex justify-content-between align-items-center">
                         <h1 class="modal-title" id="modalTitle">Add Term</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="modal-header-btn" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </button>
                     </div>
 
                     <form class="modal-form-container" id="termForm">
@@ -438,35 +440,37 @@
         <div id="toastContainer" aria-live="polite" aria-atomic="true"></div>
 
         <!-- ========== End helpers ========== -->
-        <!-- ======= Script: copy-paste entire block below to replace your <script> section ======= -->
-        <script>
-            (function() {
-                // Config
-                const API_URL = "/api/term";
-                const token = localStorage.getItem('auth_token') || '';
-                let terms = [];
-                let currentEditId = null;
-                let currentDeleteId = null;
-                let isSaving = false;
+        <!-- ======= Script: copy-paste entire block below to replace your <script>
+            section === === = -- >
+                <
+                script >
+                (function() {
+                    // Config
+                    const API_URL = "/api/term";
+                    const token = localStorage.getItem('auth_token') || '';
+                    let terms = [];
+                    let currentEditId = null;
+                    let currentDeleteId = null;
+                    let isSaving = false;
 
-                // DOM refs
-                const grid = document.getElementById('termsGrid');
-                const termForm = document.getElementById('termForm');
-                const termNameInput = document.getElementById('termName');
-                const modalEl = document.getElementById('addTermModal');
-                const modalTitle = document.getElementById('modalTitle');
+                    // DOM refs
+                    const grid = document.getElementById('termsGrid');
+                    const termForm = document.getElementById('termForm');
+                    const termNameInput = document.getElementById('termName');
+                    const modalEl = document.getElementById('addTermModal');
+                    const modalTitle = document.getElementById('modalTitle');
 
-                // ---------- Toast helper ----------
-                function showToast(title = '', message = '', type = 'info', timeout = 3500) {
-                    // type: 'success' | 'danger' | 'info'
-                    const container = document.getElementById('toastContainer');
-                    const toastId = 'toast-' + Date.now();
+                    // ---------- Toast helper ----------
+                    function showToast(title = '', message = '', type = 'info', timeout = 3500) {
+                        // type: 'success' | 'danger' | 'info'
+                        const container = document.getElementById('toastContainer');
+                        const toastId = 'toast-' + Date.now();
 
-                    const bgClass = (type === 'success') ? 'bg-success text-white' : (type === 'danger') ?
-                        'bg-danger text-white' : 'bg-light';
-                    const headerClass = (type === 'info') ? '' : '';
+                        const bgClass = (type === 'success') ? 'bg-success text-white' : (type === 'danger') ?
+                            'bg-danger text-white' : 'bg-light';
+                        const headerClass = (type === 'info') ? '' : '';
 
-                    const toastHtml = `
+                        const toastHtml = `
                             <div id="${toastId}" class="toast ${bgClass}" role="alert" aria-live="assertive" aria-atomic="true">
                             <div class="d-flex">
                                 <div class="toast-body" style="padding:0.75rem;">
@@ -477,44 +481,44 @@
                             </div>
                             </div>
                         `;
-                    container.insertAdjacentHTML('beforeend', toastHtml);
-                    const toastEl = document.getElementById(toastId);
-                    const bsToast = new bootstrap.Toast(toastEl, {
-                        delay: timeout
-                    });
-                    bsToast.show();
+                        container.insertAdjacentHTML('beforeend', toastHtml);
+                        const toastEl = document.getElementById(toastId);
+                        const bsToast = new bootstrap.Toast(toastEl, {
+                            delay: timeout
+                        });
+                        bsToast.show();
 
-                    // remove from DOM after hidden
-                    toastEl.addEventListener('hidden.bs.toast', () => toastEl.remove());
-                }
+                        // remove from DOM after hidden
+                        toastEl.addEventListener('hidden.bs.toast', () => toastEl.remove());
+                    }
 
-                // ---------- Skeleton UI ----------
-                function showSkeletons(count = 3) {
-                    grid.innerHTML = '';
-                    const wrap = document.createElement('div');
-                    wrap.className = 'skeleton-grid';
-                    for (let i = 0; i < count; i++) {
-                        const card = document.createElement('div');
-                        card.className = 'skeleton-card';
-                        card.innerHTML = `
+                    // ---------- Skeleton UI ----------
+                    function showSkeletons(count = 3) {
+                        grid.innerHTML = '';
+                        const wrap = document.createElement('div');
+                        wrap.className = 'skeleton-grid';
+                        for (let i = 0; i < count; i++) {
+                            const card = document.createElement('div');
+                            card.className = 'skeleton-card';
+                            card.innerHTML = `
                     <div class="skeleton-line mid"></div>
                     <div class="skeleton-line short"></div>
                 `;
-                        wrap.appendChild(card);
+                            wrap.appendChild(card);
+                        }
+                        grid.appendChild(wrap);
                     }
-                    grid.appendChild(wrap);
-                }
 
-                // ---------- Render terms ----------
-                function renderTerms() {
-                    if (!Array.isArray(terms) || terms.length === 0) {
-                        grid.innerHTML = `
+                    // ---------- Render terms ----------
+                    function renderTerms() {
+                        if (!Array.isArray(terms) || terms.length === 0) {
+                            grid.innerHTML = `
                         <div class="p-3 text-muted">No terms found. Click "Add Term" to create one.</div>
                         `;
-                                        return;
-                                    }
+                            return;
+                        }
 
-                                    grid.innerHTML = terms.map(term => `
+                        grid.innerHTML = terms.map(term => `
                         <div class="term-card">
                         <div class="term-card-header d-flex align-items-start justify-content-between">
                             <h3 class="term-card-title mb-0">${escapeHtml(term.name)}</h3>
@@ -529,203 +533,203 @@
                         </div>
                         </div>
                     `).join('');
-                                }
-
-                // simple escaping to avoid XSS if API returns unexpected HTML
-                function escapeHtml(str = '') {
-                    return String(str)
-                        .replace(/&/g, "&amp;")
-                        .replace(/</g, "&lt;")
-                        .replace(/>/g, "&gt;")
-                        .replace(/"/g, "&quot;")
-                        .replace(/'/g, "&#039;");
-                }
-
-                // ---------- API helpers ----------
-                async function apiFetch(url, opts = {}) {
-                    const headers = Object.assign({
-                        "Accept": "application/json",
-                        "Content-Type": "application/json",
-                    }, opts.headers || {});
-
-                    if (token) headers["Authorization"] = `Bearer ${token}`;
-
-                    const options = Object.assign({}, opts, {
-                        headers
-                    });
-
-                    const res = await fetch(url, options);
-                    const contentType = res.headers.get('content-type') || '';
-
-                    let data = null;
-                    if (contentType.includes('application/json')) {
-                        data = await res.json();
-                    } else {
-                        data = await res.text();
                     }
 
-                    if (!res.ok) {
-                        const message = (data && data.message) ? data.message : (typeof data === 'string' ? data :
-                            'Request failed');
-                        const err = new Error(message);
-                        err.status = res.status;
-                        err.payload = data;
-                        throw err;
+                    // simple escaping to avoid XSS if API returns unexpected HTML
+                    function escapeHtml(str = '') {
+                        return String(str)
+                            .replace(/&/g, "&amp;")
+                            .replace(/</g, "&lt;")
+                            .replace(/>/g, "&gt;")
+                            .replace(/"/g, "&quot;")
+                            .replace(/'/g, "&#039;");
                     }
 
-                    return data;
-                }
+                    // ---------- API helpers ----------
+                    async function apiFetch(url, opts = {}) {
+                        const headers = Object.assign({
+                            "Accept": "application/json",
+                            "Content-Type": "application/json",
+                        }, opts.headers || {});
 
-                // ---------- CRUD operations ----------
-                async function loadTerms() {
-                    showSkeletons(3); // chosen: 3 skeleton cards
-                    try {
-                        const data = await apiFetch(API_URL, {
-                            method: 'GET'
+                        if (token) headers["Authorization"] = `Bearer ${token}`;
+
+                        const options = Object.assign({}, opts, {
+                            headers
                         });
-                        terms = Array.isArray(data) ? data : (data.data || []);
-                        renderTerms();
-                    } catch (err) {
-                        grid.innerHTML = `<div class="p-3 text-danger">Failed to load terms.</div>`;
-                        console.error('Load terms error:', err);
-                        showToast('Error', 'Failed to load terms. ' + (err.message || ''), 'danger');
-                    }
-                }
 
-                async function createTerm(name) {
-                    try {
-                        const payload = await apiFetch(API_URL, {
-                            method: 'POST',
-                            body: JSON.stringify({
-                                name
-                            })
-                        });
-                        // assume API returns created resource
-                        const newTerm = (payload && payload.id) ? payload : (payload.data || payload);
-                        terms.push(newTerm);
-                        renderTerms();
-                        showToast('Success', 'Term created successfully.', 'success');
-                    } catch (err) {
-                        console.error('Create term error:', err);
-                        showToast('Error', 'Failed to create term. ' + (err.message || ''), 'danger');
-                        throw err;
-                    }
-                }
+                        const res = await fetch(url, options);
+                        const contentType = res.headers.get('content-type') || '';
 
-                async function updateTerm(id, name) {
-                    try {
-                        const payload = await apiFetch(`${API_URL}/${id}`, {
-                            method: 'PUT',
-                            body: JSON.stringify({
-                                name
-                            })
-                        });
-                        const updated = (payload && payload.id) ? payload : (payload.data || payload);
-
-                        const idx = terms.findIndex(t => t.id === id);
-                        if (idx > -1) terms[idx] = updated;
-                        renderTerms();
-                        showToast('Success', 'Term updated.', 'success');
-                    } catch (err) {
-                        console.error('Update term error:', err);
-                        showToast('Error', 'Failed to update term. ' + (err.message || ''), 'danger');
-                        throw err;
-                    }
-                }
-
-                async function deleteTermRequest(id) {
-                    try {
-                        await apiFetch(`${API_URL}/${id}`, {
-                            method: 'DELETE'
-                        });
-                        terms = terms.filter(t => t.id !== id);
-                        renderTerms();
-                        showToast('Success', 'Term deleted.', 'success');
-                    } catch (err) {
-                        console.error('Delete term error:', err);
-                        showToast('Error', 'Failed to delete term. ' + (err.message || ''), 'danger');
-                        throw err;
-                    }
-                }
-
-                // ---------- Form handling ----------
-                termForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    if (isSaving) return;
-                    const name = termNameInput.value.trim();
-                    if (!name) {
-                        showToast('Validation', 'Please enter a term name.', 'info');
-                        return;
-                    }
-
-                    try {
-                        isSaving = true;
-                        // disable submit button
-                        const submitBtn = termForm.querySelector('button[type="submit"]');
-                        if (submitBtn) submitBtn.setAttribute('disabled', 'disabled');
-
-                        if (currentEditId) {
-                            await updateTerm(currentEditId, name);
-                            currentEditId = null;
+                        let data = null;
+                        if (contentType.includes('application/json')) {
+                            data = await res.json();
                         } else {
-                            await createTerm(name);
+                            data = await res.text();
                         }
 
+                        if (!res.ok) {
+                            const message = (data && data.message) ? data.message : (typeof data === 'string' ? data :
+                                'Request failed');
+                            const err = new Error(message);
+                            err.status = res.status;
+                            err.payload = data;
+                            throw err;
+                        }
+
+                        return data;
+                    }
+
+                    // ---------- CRUD operations ----------
+                    async function loadTerms() {
+                        showSkeletons(3); // chosen: 3 skeleton cards
+                        try {
+                            const data = await apiFetch(API_URL, {
+                                method: 'GET'
+                            });
+                            terms = Array.isArray(data) ? data : (data.data || []);
+                            renderTerms();
+                        } catch (err) {
+                            grid.innerHTML = `<div class="p-3 text-danger">Failed to load terms.</div>`;
+                            console.error('Load terms error:', err);
+                            showToast('Error', 'Failed to load terms. ' + (err.message || ''), 'danger');
+                        }
+                    }
+
+                    async function createTerm(name) {
+                        try {
+                            const payload = await apiFetch(API_URL, {
+                                method: 'POST',
+                                body: JSON.stringify({
+                                    name
+                                })
+                            });
+                            // assume API returns created resource
+                            const newTerm = (payload && payload.id) ? payload : (payload.data || payload);
+                            terms.push(newTerm);
+                            renderTerms();
+                            showToast('Success', 'Term created successfully.', 'success');
+                        } catch (err) {
+                            console.error('Create term error:', err);
+                            showToast('Error', 'Failed to create term. ' + (err.message || ''), 'danger');
+                            throw err;
+                        }
+                    }
+
+                    async function updateTerm(id, name) {
+                        try {
+                            const payload = await apiFetch(`${API_URL}/${id}`, {
+                                method: 'PUT',
+                                body: JSON.stringify({
+                                    name
+                                })
+                            });
+                            const updated = (payload && payload.id) ? payload : (payload.data || payload);
+
+                            const idx = terms.findIndex(t => t.id === id);
+                            if (idx > -1) terms[idx] = updated;
+                            renderTerms();
+                            showToast('Success', 'Term updated.', 'success');
+                        } catch (err) {
+                            console.error('Update term error:', err);
+                            showToast('Error', 'Failed to update term. ' + (err.message || ''), 'danger');
+                            throw err;
+                        }
+                    }
+
+                    async function deleteTermRequest(id) {
+                        try {
+                            await apiFetch(`${API_URL}/${id}`, {
+                                method: 'DELETE'
+                            });
+                            terms = terms.filter(t => t.id !== id);
+                            renderTerms();
+                            showToast('Success', 'Term deleted.', 'success');
+                        } catch (err) {
+                            console.error('Delete term error:', err);
+                            showToast('Error', 'Failed to delete term. ' + (err.message || ''), 'danger');
+                            throw err;
+                        }
+                    }
+
+                    // ---------- Form handling ----------
+                    termForm.addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        if (isSaving) return;
+                        const name = termNameInput.value.trim();
+                        if (!name) {
+                            showToast('Validation', 'Please enter a term name.', 'info');
+                            return;
+                        }
+
+                        try {
+                            isSaving = true;
+                            // disable submit button
+                            const submitBtn = termForm.querySelector('button[type="submit"]');
+                            if (submitBtn) submitBtn.setAttribute('disabled', 'disabled');
+
+                            if (currentEditId) {
+                                await updateTerm(currentEditId, name);
+                                currentEditId = null;
+                            } else {
+                                await createTerm(name);
+                            }
+
+                            termForm.reset();
+                            const bsModal = bootstrap.Modal.getInstance(modalEl);
+                            if (bsModal) bsModal.hide();
+                        } catch (err) {
+                            // errors surfaced in functions
+                        } finally {
+                            isSaving = false;
+                            const submitBtn = termForm.querySelector('button[type="submit"]');
+                            if (submitBtn) submitBtn.removeAttribute('disabled');
+                        }
+                    });
+
+                    // ---------- Modal helpers (exposed to global for inline onclick use) ----------
+                    window.editTerm = function(id) {
+                        const t = terms.find(x => x.id === id);
+                        if (!t) return showToast('Error', 'Term not found locally.', 'danger');
+                        currentEditId = id;
+                        termNameInput.value = t.name || '';
+                        modalTitle.textContent = 'Edit Term';
+                        new bootstrap.Modal(modalEl).show();
+                    };
+
+                    window.openDeleteModal = function(id) {
+                        currentDeleteId = id;
+                        new bootstrap.Modal(document.getElementById('deleteConfirmModal')).show();
+                    };
+
+                    // Confirm delete button handler
+                    document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
+                        if (!currentDeleteId) return;
+                        const bs = bootstrap.Modal.getInstance(document.getElementById('deleteConfirmModal'));
+                        try {
+                            await deleteTermRequest(currentDeleteId);
+                        } catch (err) {
+                            // handled in deleteTermRequest
+                        } finally {
+                            currentDeleteId = null;
+                            if (bs) bs.hide();
+                        }
+                    });
+
+                    // Reset add/edit modal on close
+                    modalEl.addEventListener('hidden.bs.modal', () => {
+                        currentEditId = null;
+                        modalTitle.textContent = 'Add Term';
                         termForm.reset();
-                        const bsModal = bootstrap.Modal.getInstance(modalEl);
-                        if (bsModal) bsModal.hide();
-                    } catch (err) {
-                        // errors surfaced in functions
-                    } finally {
-                        isSaving = false;
-                        const submitBtn = termForm.querySelector('button[type="submit"]');
-                        if (submitBtn) submitBtn.removeAttribute('disabled');
-                    }
-                });
+                    });
 
-                // ---------- Modal helpers (exposed to global for inline onclick use) ----------
-                window.editTerm = function(id) {
-                    const t = terms.find(x => x.id === id);
-                    if (!t) return showToast('Error', 'Term not found locally.', 'danger');
-                    currentEditId = id;
-                    termNameInput.value = t.name || '';
-                    modalTitle.textContent = 'Edit Term';
-                    new bootstrap.Modal(modalEl).show();
-                };
+                    // Initial load
+                    loadTerms();
 
-                window.openDeleteModal = function(id) {
-                    currentDeleteId = id;
-                    new bootstrap.Modal(document.getElementById('deleteConfirmModal')).show();
-                };
-
-                // Confirm delete button handler
-                document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
-                    if (!currentDeleteId) return;
-                    const bs = bootstrap.Modal.getInstance(document.getElementById('deleteConfirmModal'));
-                    try {
-                        await deleteTermRequest(currentDeleteId);
-                    } catch (err) {
-                        // handled in deleteTermRequest
-                    } finally {
-                        currentDeleteId = null;
-                        if (bs) bs.hide();
-                    }
-                });
-
-                // Reset add/edit modal on close
-                modalEl.addEventListener('hidden.bs.modal', () => {
-                    currentEditId = null;
-                    modalTitle.textContent = 'Add Term';
-                    termForm.reset();
-                });
-
-                // Initial load
-                loadTerms();
-
-            })();
+                })();
         </script>
 
 
 
-    </main>
+        </main>
 @endsection
