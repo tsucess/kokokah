@@ -297,7 +297,7 @@
                     <p>Here overview of your</p>
                 </div>
 
-                <div class="header-buttons">
+                {{-- <div class="header-buttons">
                     <button type="button" class="btn btn-draft" id="saveDraftBtn">
                         Save As Draft
                     </button>
@@ -305,7 +305,7 @@
                     <button type="button" class="btn btn-publish" id="publishBtn">
                         Publish Course
                     </button>
-                </div>
+                </div> --}}
             </div>
         </div>
 
@@ -348,32 +348,23 @@
                 @csrf
 
                 <div class="form-group-custom mb-3">
-                    <label for="subjectTitle">Subject Title</label>
+                    <label for="subjectTitle">Course Title</label>
                     <input type="text" class="form-control" id="subjectTitle" name="subjectTitle"
                         placeholder="Enter Subject Title" required>
                 </div>
 
                 <div class="form-row-two">
                     <div class="form-group-custom">
-                        <label for="subjectCategory">Subject Category</label>
+                        <label for="subjectCategory">Course Category</label>
                         <select class="form-control" id="subjectCategory" name="subjectCategory" required>
-                            <option value="">Select Category</option>
-                            <option value="science">Science</option>
-                            <option value="art">Art</option>
-                            <option value="commercial">Commercial</option>
+
                         </select>
                     </div>
 
                     <div class="form-group-custom">
-                        <label for="subjectLevel">Subject Level</label>
+                        <label for="subjectLevel">Course Level</label>
                         <select class="form-control" id="subjectLevel" name="subjectLevel" required>
-                            <option value="">Select Level</option>
-                            <option value="jss1">JSS 1</option>
-                            <option value="jss2">JSS 2</option>
-                            <option value="jss3">JSS 3</option>
-                            <option value="ss1">SS 1</option>
-                            <option value="ss2">SS 2</option>
-                            <option value="ss3">SS 3</option>
+
                         </select>
                     </div>
                 </div>
@@ -393,7 +384,7 @@
                 </div>
 
                 <div class="description-section">
-                    <p class="description-label">Subject Description</p>
+                    <p class="description-label">Course Description</p>
 
                     <div class="editor-toolbar">
                         <span title="Bold"><i class="fa-solid fa-bold"></i></span>
@@ -418,7 +409,7 @@
         <!-- Media Section -->
         <div class="container bg-white d-none content-section" id="media">
             <div class="section-header">
-                <h5>Subject Media</h5>
+                <h5>Course Media</h5>
             </div>
 
             <form id="mediaUploadForm">
@@ -429,8 +420,7 @@
                     <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
                         <input type="text" class="form-control" id="fileNameDisplay" placeholder="No file selected"
                             readonly style="flex: 1;">
-                        <button type="button" class="btn btn-publish" id="uploadButton"
-                            style="padding: 0.75rem 1.5rem;">
+                        <button type="button" class="btn btn-publish" id="uploadButton" style="padding: 0.75rem 1.5rem;">
                             Upload File
                         </button>
                     </div>
@@ -683,22 +673,22 @@
                         <h6>Subject Overview</h6>
                         <h2 id="publishSubjectTitle">English Language</h2>
                     </div>
-                    <div class="overview-actions">
+                    {{-- <div class="overview-actions">
                         <button type="button" title="Edit"><i class="fa-solid fa-check-circle"
                                 style="color: #004A53; font-size: 1.5rem;"></i></button>
                         <button type="button" title="More options"><i
                                 class="fa-solid fa-ellipsis-vertical"></i></button>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <div class="overview-meta">
-                    <div class="meta-item">
+                    {{-- <div class="meta-item">
                         <i class="fa-solid fa-book"></i>
                         <span id="publishTopics">0 Topics</span>
-                    </div>
+                    </div> --}}
                     <div class="meta-item">
                         <i class="fa-solid fa-graduation-cap"></i>
-                        <span id="publishLessons">0 Lessons</span>
+                        <span id="publishCategory">0 Category</span>
                     </div>
                     <div class="meta-item">
                         <i class="fa-solid fa-clock"></i>
@@ -707,6 +697,10 @@
                     <div class="meta-item">
                         <i class="fa-solid fa-layer-group"></i>
                         <span id="publishLevel">Level</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fa-solid fa-money-bill"></i>
+                        <span id="publishPrice">0 Price</span>
                     </div>
                 </div>
 
@@ -720,80 +714,39 @@
                     </p>
                 </div>
 
-                <div class="course-description-section">
-                    <h6>Key Areas of Study:</h6>
-                    <ul class="key-areas-list" id="publishKeyAreas">
-                        <li>Fundamental Concepts</li>
-                        <li>Practical Applications</li>
-                        <li>Advanced Techniques</li>
-                        <li>Real-world Examples</li>
-                        <li>Assessment & Evaluation</li>
-                    </ul>
-                </div>
-
-                <div class="curriculum-preview">
-                    <h6>Curriculum</h6>
-                    <div id="curriculumPreviewContainer">
-                        <div class="curriculum-item">
-                            <div class="curriculum-item-content">
-                                <div class="curriculum-item-icon">
-                                    <i class="fa-solid fa-book-open"></i>
-                                </div>
-                                <div class="curriculum-item-text">
-                                    <h6>Parts of Speech</h6>
-                                    <p>Foundation concepts</p>
-                                </div>
-                            </div>
-                            <div class="curriculum-item-meta">
-                                <span><i class="fa-solid fa-graduation-cap"></i> 5 Lessons</span>
-                                <span><i class="fa-solid fa-clock"></i> 2 Units</span>
-                            </div>
-                            <div class="curriculum-item-check">
-                                <i class="fa-solid fa-check-circle"></i>
-                            </div>
-                        </div>
-
-                        <div class="curriculum-item">
-                            <div class="curriculum-item-content">
-                                <div class="curriculum-item-icon">
-                                    <i class="fa-solid fa-book-open"></i>
-                                </div>
-                                <div class="curriculum-item-text">
-                                    <h6>Sentence Structure</h6>
-                                    <p>Building complex sentences</p>
-                                </div>
-                            </div>
-                            <div class="curriculum-item-meta">
-                                <span><i class="fa-solid fa-graduation-cap"></i> 4 Lessons</span>
-                                <span><i class="fa-solid fa-clock"></i> 2 Units</span>
-                            </div>
-                            <div class="curriculum-item-check">
-                                <i class="fa-solid fa-check-circle"></i>
-                            </div>
-                        </div>
-                    </div>
+                <div class="publish-actions">
+                    <button type="button" class="btn btn-back back-btn" data-next="media">
+                        Back
+                    </button>
+                    <button type="button" class="btn btn-publish" id="finalPublishBtn">
+                        Save Now
+                    </button>
                 </div>
             </div>
-
-            <div class="publish-actions">
-                <button type="button" class="btn btn-back back-btn" data-next="media">
-                    Back
-                </button>
-                <button type="button" class="btn btn-publish" id="finalPublishBtn">
-                    Publish Now
-                </button>
-            </div>
-        </div>
     </main>
 
 
     <script>
+        const courseData = {
+            title: "",
+            category: "",
+            level: "",
+            duration: "",
+            price: "",
+            description: "",
+            imageFile: null
+        };
+        const API_CATEGORIES = "/api/curriculum-category";
+        const API_LEVEL = "/api/level";
+
         // Navigation between sections
         document.addEventListener('DOMContentLoaded', () => {
             const navButtons = document.querySelectorAll('.coursebtn');
             const sections = document.querySelectorAll('.content-section');
             const continueButtons = document.querySelectorAll('.continue-btn');
             const backButtons = document.querySelectorAll('.back-btn');
+            const courseCategory = document.getElementById('subjectCategory')
+            const courseLevel = document.getElementById('subjectLevel')
 
             function showSection(sectionId) {
                 sections.forEach(sec => sec.classList.add('d-none'));
@@ -813,27 +766,96 @@
                     populatePublishSection();
                 }
             }
+            async function loadCategories() {
+                try {
+                    const data = await apiFetch(API_CATEGORIES, {
+                        method: 'GET'
+                    });
+                    categories = unwrapListResponse(data);
+                    populateCategorySelect();
+                } catch (err) {
+                    console.error('Failed to load categories', err);
+                }
+            }
 
-         
+            function populateCategorySelect() {
+                if (!courseCategory) return;
+                courseCategory.innerHTML = `<option value="">Select Curriculum Category</option>`;
+                categories.forEach(cat => {
+                    const opt = document.createElement('option');
+                    opt.value = cat.id;
+                    opt.textContent = cat.title ?? cat.name ?? `#${cat.id}`;
+                    courseCategory.appendChild(opt);
+                });
+            }
+
+            async function loadLevel() {
+                try {
+                    const data = await apiFetch(API_LEVEL, {
+                        method: 'GET'
+                    });
+                    levels = unwrapListResponse(data);
+                    populateLevelSelect();
+                } catch (err) {
+                    console.error('Failed to load levels', err);
+                }
+            }
+
+            function populateLevelSelect() {
+                if (!courseLevel) return;
+                courseLevel.innerHTML = `<option value="">Select Level Category</option>`;
+                levels.forEach(level => {
+                    const opt = document.createElement('option');
+                    opt.value = level.id;
+                    opt.textContent = level.title ?? level.name ?? `#${level.id}`;
+                    courseLevel.appendChild(opt);
+                });
+            }
+
+            // Get data from form fields
+            document.getElementById('subjectTitle').addEventListener('input', e => {
+                courseData.title = e.target.value;
+            });
+
+            document.getElementById('subjectCategory').addEventListener('change', e => {
+                courseData.category = e.target.value;
+            });
+
+            document.getElementById('subjectLevel').addEventListener('change', e => {
+                courseData.level = e.target.value;
+            });
+
+            document.getElementById('subjectTime').addEventListener('input', e => {
+                courseData.duration = e.target.value;
+            });
+
+            document.getElementById('coursePrice').addEventListener('input', e => {
+                courseData.price = e.target.value;
+            });
+
+            document.getElementById('subjectDescription').addEventListener('input', e => {
+                courseData.description = e.target.value;
+            });
+
+            // File upload
+            document.getElementById('fileInput').addEventListener('change', e => {
+                courseData.imageFile = e.target.files[0];
+            });
+
+
 
             function populatePublishSection() {
-                // Get data from form fields
-                const title = document.getElementById('subjectTitle').value || 'English Language';
-                const category = document.getElementById('subjectCategory').value || 'Language';
-                const level = document.getElementById('subjectLevel').value || 'JSS 1';
-                const time = document.getElementById('subjectTime').value || '0 Hours';
-                const lessons = document.getElementById('coursePrice').value || '0';
-                const description = document.getElementById('subjectDescription').value ||
-                    'This comprehensive course covers essential concepts and skills.';
-                const fileInput = document.getElementById('fileInput');
 
+
+                console.log(courseData)
                 // Update publish section
-                document.getElementById('publishSubjectTitle').textContent = title;
-                document.getElementById('publishTopics').textContent = '0 Topics';
-                document.getElementById('publishLessons').textContent = lessons + ' Lessons';
-                document.getElementById('publishTime').textContent = time;
-                document.getElementById('publishLevel').textContent = level;
-                document.getElementById('publishDescription').textContent = description;
+                document.getElementById('publishSubjectTitle').textContent = courseData.title;
+                document.getElementById('publishCategory').textContent = courseData.category + ' Category';
+                document.getElementById('publishPrice').textContent = courseData.price + ' Price';
+                document.getElementById('publishTime').textContent = courseData.duration + ' Hours';
+                document.getElementById('publishLevel').textContent = courseData.level + ' Level';
+                document.getElementById('publishDescription').textContent = courseData.description;
+
 
                 // Update course image if file is selected
                 if (fileInput && fileInput.files && fileInput.files[0]) {
@@ -877,55 +899,80 @@
                 });
             }
 
-            if (fileInput) {
-                fileInput.addEventListener('change', (e) => {
-                    if (e.target.files && e.target.files[0]) {
-                        fileNameDisplay.value = e.target.files[0].name;
-                    }
-                });
+            if (courseData.imageFile) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    document.getElementById('publishCourseImage').src = e.target.result;
+                };
+                reader.readAsDataURL(courseData.imageFile);
             }
+
+            function validateBeforePublish() {
+                const required = [
+                    courseData.title,
+                    courseData.category,
+                    courseData.level,
+                    courseData.duration,
+                    courseData.category,
+                    courseData.description,
+                    courseData.imageFile
+                ];
+
+                return required.every(v => v && v !== "");
+            }
+
 
             // Publish button handler
             const finalPublishBtn = document.getElementById('finalPublishBtn');
             if (finalPublishBtn) {
-                finalPublishBtn.addEventListener('click', () => {
-                    const title = document.getElementById('subjectTitle').value;
-                    const category = document.getElementById('subjectCategory').value;
-                    const level = document.getElementById('subjectLevel').value;
+                finalPublishBtn.addEventListener('click', async () => {
 
-                    if (!title || !category || !level) {
+                    if (!validateBeforePublish()) {
                         alert('Please fill in all required fields');
                         return;
                     }
 
-                    // Here you would submit the form to the server
-                    console.log('Publishing course:', {
-                        title,
-                        category,
-                        level,
-                        time: document.getElementById('subjectTime').value,
-                        lessons: document.getElementById('coursePrice').value,
-                        description: document.getElementById('subjectDescription').value
-                    });
 
-                    alert('Course published successfully!');
+                    const formData = new FormData();
+                    formData.append("title", courseData.title);
+                    formData.append("category", courseData.category);
+                    formData.append("level", courseData.level);
+                    formData.append("time", courseData.time);
+                    formData.append("lessons", courseData.lessons);
+                    formData.append("description", courseData.description);
+                    formData.append("image", courseData.imageFile);
+
+                    try {
+                        const res = await fetch("api/courses", {
+                            method: "POST",
+                            body: formData
+                        });
+
+                        const data = await res.json();
+                        console.log("Response:", data);
+
+                        window.location.href = "/editsubject"
+                    } catch (error) {
+                        console.error(error);
+                        alert("Failed to publish course.");
+                    }
                 });
             }
 
             // Save draft button handler
-            const saveDraftBtn = document.getElementById('saveDraftBtn');
-            if (saveDraftBtn) {
-                saveDraftBtn.addEventListener('click', () => {
-                    const title = document.getElementById('subjectTitle').value;
-                    if (!title) {
-                        alert('Please enter a subject title');
-                        return;
-                    }
+            // const saveDraftBtn = document.getElementById('saveDraftBtn');
+            // if (saveDraftBtn) {
+            //     saveDraftBtn.addEventListener('click', () => {
+            //         const title = document.getElementById('subjectTitle').value;
+            //         if (!title) {
+            //             alert('Please enter a subject title');
+            //             return;
+            //         }
 
-                    console.log('Saving draft...');
-                    alert('Course saved as draft!');
-                });
-            }
+            //         console.log('Saving draft...');
+            //         alert('Course saved as draft!');
+            //     });
+            // }
 
             showSection('details');
         });
