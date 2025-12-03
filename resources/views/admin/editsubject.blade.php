@@ -751,6 +751,12 @@
             flex-wrap: wrap;
             gap: 1rem;
         }
+
+        .btn-group {
+            position: absolute;
+            right: 10%;
+            top: 10px;
+        }
     </style>
 
     <main>
@@ -962,28 +968,52 @@
             </div>
             <div class="accordion mb-4" id="curriculumAccordion">
                 <div class="accordion-item">
-                    <h2 class="accordion-header"><button class="accordion-button" type="button"
-                            data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
-                            aria-controls="collapseOne"><i class="fa-solid fa-book-open me-2"></i>Parts of Speech
-                        </button></h2>
+                  <h2 class="accordion-header" style="position:relative;">
+    <button class="accordion-button d-flex justify-content-between align-items-center" type="button"
+        data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+        aria-controls="collapseOne">
+
+        <!-- LEFT CONTENT -->
+        <div class="d-flex align-items-start me-3">
+            <i class="fa-solid fa-book-open me-3"></i>
+            <div>
+                <p class="m-0 fw-bold">Parts of Speech</p>
+                <p class="m-0 small">This section covers the fundamental parts of speech in English language.</p>
+            </div>
+        </div>
+
+        <!-- BUTTONS (now properly positioned) -->
+        <div class="ms-auto">
+            <button class="btn btn-sm btn-light" type="button" title="Edit">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <button class="btn btn-sm btn-light" type="button" title="Delete">
+                <i class="fa-solid fa-trash"></i>
+            </button>
+        </div>
+
+    </button>
+</h2>
                     <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#curriculumAccordion">
                         <div class="accordion-body">
-                            <p>This section covers the fundamental parts of speech in English language.</p>
+                            <div class="lesson-item">
+                                <div class="lesson-item-content"><i class="fa-solid fa-circle-play"></i><span>Nouns</span>
+                                </div>
+                                <div class="lesson-item-actions"><button type="button" title="Edit"><i
+                                            class="fa-solid fa-pen-to-square"></i></button><button type="button"
+                                        title="Delete"><i class="fa-solid fa-trash"></i></button></div>
+                            </div>
+                            <div class="lesson-item">
+                                <div class="lesson-item-content"><i
+                                        class="fa-solid fa-circle-play"></i><span>Pronouns</span></div>
+                                <div class="lesson-item-actions"><button type="button" title="Edit"><i
+                                            class="fa-solid fa-pen-to-square"></i></button><button type="button"
+                                        title="Delete"><i class="fa-solid fa-trash"></i></button></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="lesson-item">
-                <div class="lesson-item-content"><i class="fa-solid fa-circle-play"></i><span>Nouns</span></div>
-                <div class="lesson-item-actions"><button type="button" title="Edit"><i
-                            class="fa-solid fa-pen-to-square"></i></button><button type="button" title="Delete"><i
-                            class="fa-solid fa-trash"></i></button></div>
-            </div>
-            <div class="lesson-item">
-                <div class="lesson-item-content"><i class="fa-solid fa-circle-play"></i><span>Pronouns</span></div>
-                <div class="lesson-item-actions"><button type="button" title="Edit"><i
-                            class="fa-solid fa-pen-to-square"></i></button><button type="button" title="Delete"><i
-                            class="fa-solid fa-trash"></i></button></div>
+
             </div>{{-- add lesson modal --}} <div class="modal fade" id="addLessonModal" data-bs-keyboard="false"
                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
@@ -1089,84 +1119,83 @@
                 data-bs-target="#addLessonModal"><i class="fa-solid fa-plus me-2"></i>Add Lesson </button>
             <div class="curriculum-actions">
                 <button type="button" class="btn btn-continue continue-btn" data-next="details">Continue </button>
-                </div>
+            </div>
         </div>
-         {{-- Publish Section --}}
-            <div class="container bg-white d-none content-section" id="publish">
-                <div class="publish-overview">
-                    <div class="overview-header">
-                        <div class="overview-title">
-                            <h6>Subject Overview</h6>
-                            <h2 id="publishSubjectTitle">English Language</h2>
-                        </div>
-                        <div class="overview-actions"><button type="button" title="Edit"><i
-                                    class="fa-solid fa-check-circle"
-                                    style="color: #004A53; font-size: 1.5rem;"></i></button><button type="button"
-                                title="More options"><i class="fa-solid fa-ellipsis-vertical"></i></button></div>
+        {{-- Publish Section --}}
+        <div class="container bg-white d-none content-section" id="publish">
+            <div class="publish-overview">
+                <div class="overview-header">
+                    <div class="overview-title">
+                        <h6>Subject Overview</h6>
+                        <h2 id="publishSubjectTitle">English Language</h2>
                     </div>
-                    <div class="overview-meta">
-                        <div class="meta-item"><i class="fa-solid fa-book"></i><span id="publishTopics">0 Topics</span>
-                        </div>
-                        <div class="meta-item"><i class="fa-solid fa-graduation-cap"></i><span id="publishLessons">0
-                                Lessons</span></div>
-                        <div class="meta-item"><i class="fa-solid fa-clock"></i><span id="publishTime">0 Hours</span>
-                        </div>
-                        <div class="meta-item"><i class="fa-solid fa-layer-group"></i><span
-                                id="publishLevel">Level</span></div>
-                    </div><img id="publishCourseImage" src="images/publish.png" alt="Course Preview"
-                        class="course-image">
-                    <div class="course-description-section">
-                        <h6>Subject Description</h6>
-                        <p id="publishDescription">This comprehensive course covers essential concepts and skills. Students
-                            will learn through interactive lessons,
-                            practice exercises,
-                            and assessments to build a strong foundation. </p>
-                    </div>
-                    <div class="course-description-section">
-                        <h6>Key Areas of Study:</h6>
-                        <ul class="key-areas-list" id="publishKeyAreas">
-                            <li>Fundamental Concepts</li>
-                            <li>Practical Applications</li>
-                            <li>Advanced Techniques</li>
-                            <li>Real-world Examples</li>
-                            <li>Assessment & Evaluation</li>
-                        </ul>
-                    </div>
-                    <div class="curriculum-preview">
-                        <h6>Curriculum</h6>
-                        <div id="curriculumPreviewContainer">
-                            <div class="curriculum-item">
-                                <div class="curriculum-item-content">
-                                    <div class="curriculum-item-icon"><i class="fa-solid fa-book-open"></i></div>
-                                    <div class="curriculum-item-text">
-                                        <h6>Parts of Speech</h6>
-                                        <p>Foundation concepts</p>
-                                    </div>
-                                </div>
-                                <div class="curriculum-item-meta"><span><i class="fa-solid fa-graduation-cap"></i>5
-                                        Lessons</span><span><i class="fa-solid fa-clock"></i>2 Units</span></div>
-                                <div class="curriculum-item-check"><i class="fa-solid fa-check-circle"></i></div>
-                            </div>
-                            <div class="curriculum-item">
-                                <div class="curriculum-item-content">
-                                    <div class="curriculum-item-icon"><i class="fa-solid fa-book-open"></i></div>
-                                    <div class="curriculum-item-text">
-                                        <h6>Sentence Structure</h6>
-                                        <p>Building complex sentences</p>
-                                    </div>
-                                </div>
-                                <div class="curriculum-item-meta"><span><i class="fa-solid fa-graduation-cap"></i>4
-                                        Lessons</span><span><i class="fa-solid fa-clock"></i>2 Units</span></div>
-                                <div class="curriculum-item-check"><i class="fa-solid fa-check-circle"></i></div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="overview-actions"><button type="button" title="Edit"><i
+                                class="fa-solid fa-check-circle"
+                                style="color: #004A53; font-size: 1.5rem;"></i></button><button type="button"
+                            title="More options"><i class="fa-solid fa-ellipsis-vertical"></i></button></div>
                 </div>
-                <div class="publish-actions">
-                    <button type="button" class="btn btn-back back-btn" data-next="media">Back </button>
-                    <button type="button" class="btn btn-publish" id="finalPublishBtn">Publish Now </button>
+                <div class="overview-meta">
+                    <div class="meta-item"><i class="fa-solid fa-book"></i><span id="publishTopics">0 Topics</span>
+                    </div>
+                    <div class="meta-item"><i class="fa-solid fa-graduation-cap"></i><span id="publishLessons">0
+                            Lessons</span></div>
+                    <div class="meta-item"><i class="fa-solid fa-clock"></i><span id="publishTime">0 Hours</span>
+                    </div>
+                    <div class="meta-item"><i class="fa-solid fa-layer-group"></i><span id="publishLevel">Level</span>
+                    </div>
+                </div><img id="publishCourseImage" src="images/publish.png" alt="Course Preview" class="course-image">
+                <div class="course-description-section">
+                    <h6>Subject Description</h6>
+                    <p id="publishDescription">This comprehensive course covers essential concepts and skills. Students
+                        will learn through interactive lessons,
+                        practice exercises,
+                        and assessments to build a strong foundation. </p>
+                </div>
+                <div class="course-description-section">
+                    <h6>Key Areas of Study:</h6>
+                    <ul class="key-areas-list" id="publishKeyAreas">
+                        <li>Fundamental Concepts</li>
+                        <li>Practical Applications</li>
+                        <li>Advanced Techniques</li>
+                        <li>Real-world Examples</li>
+                        <li>Assessment & Evaluation</li>
+                    </ul>
+                </div>
+                <div class="curriculum-preview">
+                    <h6>Curriculum</h6>
+                    <div id="curriculumPreviewContainer">
+                        <div class="curriculum-item">
+                            <div class="curriculum-item-content">
+                                <div class="curriculum-item-icon"><i class="fa-solid fa-book-open"></i></div>
+                                <div class="curriculum-item-text">
+                                    <h6>Parts of Speech</h6>
+                                    <p>Foundation concepts</p>
+                                </div>
+                            </div>
+                            <div class="curriculum-item-meta"><span><i class="fa-solid fa-graduation-cap"></i>5
+                                    Lessons</span><span><i class="fa-solid fa-clock"></i>2 Units</span></div>
+                            <div class="curriculum-item-check"><i class="fa-solid fa-check-circle"></i></div>
+                        </div>
+                        <div class="curriculum-item">
+                            <div class="curriculum-item-content">
+                                <div class="curriculum-item-icon"><i class="fa-solid fa-book-open"></i></div>
+                                <div class="curriculum-item-text">
+                                    <h6>Sentence Structure</h6>
+                                    <p>Building complex sentences</p>
+                                </div>
+                            </div>
+                            <div class="curriculum-item-meta"><span><i class="fa-solid fa-graduation-cap"></i>4
+                                    Lessons</span><span><i class="fa-solid fa-clock"></i>2 Units</span></div>
+                            <div class="curriculum-item-check"><i class="fa-solid fa-check-circle"></i></div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div class="publish-actions">
+                <button type="button" class="btn btn-back back-btn" data-next="media">Back </button>
+                <button type="button" class="btn btn-publish" id="finalPublishBtn">Publish Now </button>
+            </div>
+        </div>
     </main>
 
     <script>
