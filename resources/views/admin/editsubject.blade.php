@@ -1003,84 +1003,81 @@
                                         <option value="content">Content</option>
                                         <option value="document">Document</option>
                                     </select></div>
-                                < !-- image container -->
-                                    <div class="flex-column gap-3 select-children" id="image-container">
-                                        <div class="modal-form-input-border"><label for=""
-                                                class="modal-label">Title</label><input class="modal-input"
-                                                type="text" placeholder="Art" /></div>
-                                        <div class="upload-file-container"><label for=""
-                                                class="upload-label">Upload File (Size:2mb, Dimension:400px by 250px)
-                                            </label>
-                                            <div class="input-group"><input type="text"
-                                                    class="form-control upload-input p-3"
-                                                    style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
-                                                    placeholder="Upload file" aria-label="Recipient’s username"
-                                                    aria-describedby="basic-addon2" /><button class="upload-btn"
-                                                    type="button" id="button-addon2">Upload File </button></div>
-                                        </div>
+                                {{-- image container --}}
+                                <div class="flex-column gap-3 select-children" id="image-container">
+                                    <div class="modal-form-input-border"><label for=""
+                                            class="modal-label">Title</label><input class="modal-input" type="text"
+                                            placeholder="Art" /></div>
+                                    <div class="upload-file-container"><label for="" class="upload-label">Upload
+                                            File (Size:2mb, Dimension:400px by 250px)
+                                        </label>
+                                        <div class="input-group"><input type="text"
+                                                class="form-control upload-input p-3"
+                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
+                                                placeholder="Upload file" aria-label="Recipient’s username"
+                                                aria-describedby="basic-addon2" /><button class="upload-btn"
+                                                type="button" id="button-addon2">Upload File </button></div>
                                     </div>
-                                    < !-- youtube container -->
-                                        <div class="flex-column gap-3 hide select-children" id="youtube-container">
-                                            <div class="modal-form-input-border"><label for=""
-                                                    class="modal-label">Title</label><input class="modal-input"
-                                                    type="text" placeholder="Enter title" /></div>
-                                            <div class="modal-form-input-border"><label for=""
-                                                    class="modal-label">Youtube Url</label><input class="modal-input"
-                                                    type="text" placeholder="Enter url" /></div>
-                                        </div>
-                                        < !-- content container -->
-                                            <div class="flex-column gap-3 hide select-children" id="content-container">
-                                                <div class="modal-form-input-border"><label for=""
-                                                        class="modal-label">Title</label><input class="modal-input"
-                                                        type="text" placeholder="Enter title" /></div>
-                                                <div class="modal-form-input-border"><label for=""
-                                                        class="modal-label">Lesson Content</label>
-                                                    <textarea name="" id="" class="modal-input"></textarea>
-                                                </div>
-                                            </div>
-                                            < !-- audio-container -->
-                                                <div class="flex-column gap-3 hide select-children" id="audio-container">
-                                                    <div class="modal-form-input-border"><label for=""
-                                                            class="modal-label">Title</label><input class="modal-input"
-                                                            type="text" placeholder="Enter title" /></div>
-                                                    <div class="upload-file-container"><label for=""
-                                                            class="upload-label">Upload File (Size:2mb, Dimension:400px by
-                                                            250px) </label>
-                                                        <div class="input-group"><input type="text"
-                                                                class="form-control upload-input p-3"
-                                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
-                                                                placeholder="Upload file"
-                                                                aria-label="Recipient’s username"
-                                                                aria-describedby="basic-addon2" /><button
-                                                                class="upload-btn" type="button"
-                                                                id="button-addon2">Upload File </button></div>
-                                                    </div>
-                                                </div>
-                                                < !-- document-container -->
-                                                    <div class="flex-column gap-3 hide select-children"
-                                                        id="document-container">
-                                                        <div class="modal-form-input-border"><label for=""
-                                                                class="modal-label">Lesson Type</label><select
-                                                                name="" id="" class="modal-input">
-                                                                <option value="">image</option>
-                                                            </select></div>
-                                                        <div class="modal-form-input-border"><label for=""
-                                                                class="modal-label">Title</label><input
-                                                                class="modal-input" type="text"
-                                                                placeholder="Enter title" /></div>
-                                                        <div class="upload-file-container"><label for=""
-                                                                class="upload-label">Upload File (Size:2mb, Dimension:400px
-                                                                by 250px) </label>
-                                                            <div class="input-group"><input type="text"
-                                                                    class="form-control upload-input p-3"
-                                                                    style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
-                                                                    placeholder="Upload file"
-                                                                    aria-label="Recipient’s username"
-                                                                    aria-describedby="basic-addon2" /><button
-                                                                    class="upload-btn" type="button"
-                                                                    id="button-addon2">Upload File </button></div>
-                                                        </div>
-                                                    </div>
+                                </div>
+                                {{-- youtube container --}}
+                                <div class="flex-column gap-3 hide select-children" id="youtube-container">
+                                    <div class="modal-form-input-border"><label for=""
+                                            class="modal-label">Title</label><input class="modal-input" type="text"
+                                            placeholder="Enter title" /></div>
+                                    <div class="modal-form-input-border"><label for=""
+                                            class="modal-label">Youtube Url</label><input class="modal-input"
+                                            type="text" placeholder="Enter url" /></div>
+                                </div>
+                                {{-- content container  --}}
+                                <div class="flex-column gap-3 hide select-children" id="content-container">
+                                    <div class="modal-form-input-border"><label for=""
+                                            class="modal-label">Title</label><input class="modal-input" type="text"
+                                            placeholder="Enter title" /></div>
+                                    <div class="modal-form-input-border"><label for="" class="modal-label">Lesson
+                                            Content</label>
+                                        <textarea name="" id="" class="modal-input"></textarea>
+                                    </div>
+                                </div>
+                                {{-- audio-container --}}
+                                <div class="flex-column gap-3 hide select-children" id="audio-container">
+                                    <div class="modal-form-input-border"><label for=""
+                                            class="modal-label">Title</label><input class="modal-input" type="text"
+                                            placeholder="Enter title" /></div>
+                                    <div class="upload-file-container"><label for="" class="upload-label">Upload
+                                            File (Size:2mb, Dimension:400px by
+                                            250px) </label>
+                                        <div class="input-group"><input type="text"
+                                                class="form-control upload-input p-3"
+                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
+                                                placeholder="Upload file" aria-label="Recipient’s username"
+                                                aria-describedby="basic-addon2" /><button class="upload-btn"
+                                                type="button" id="button-addon2">Upload File </button></div>
+                                    </div>
+                                </div>
+                                {{-- document-container --}}
+                                <div class="flex-column gap-3 hide select-children" id="document-container">
+                                    <div class="modal-form-input-border"><label for="" class="modal-label">Lesson
+                                            Type</label>
+                                        <select name="" id="" class="modal-input">
+                                            <option value="png">Image</option>
+                                            <option value="pdf">PDF</option>
+                                            <option value="docx">Docx</option>
+                                        </select>
+                                    </div>
+                                    <div class="modal-form-input-border"><label for=""
+                                            class="modal-label">Title</label><input class="modal-input" type="text"
+                                            placeholder="Enter title" /></div>
+                                    <div class="upload-file-container"><label for="" class="upload-label">Upload
+                                            File (Size:2mb, Dimension:400px
+                                            by 250px) </label>
+                                        <div class="input-group"><input type="text"
+                                                class="form-control upload-input p-3"
+                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
+                                                placeholder="Upload file" aria-label="Recipient’s username"
+                                                aria-describedby="basic-addon2" /><button class="upload-btn"
+                                                type="button" id="button-addon2">Upload File </button></div>
+                                    </div>
+                                </div>
                             </div><button class="modal-form-btn">Save</button>
                         </form>
                     </div>
@@ -1089,84 +1086,83 @@
                 data-bs-target="#addLessonModal"><i class="fa-solid fa-plus me-2"></i>Add Lesson </button>
             <div class="curriculum-actions">
                 <button type="button" class="btn btn-continue continue-btn" data-next="details">Continue </button>
-                </div>
+            </div>
         </div>
-         {{-- Publish Section --}}
-            <div class="container bg-white d-none content-section" id="publish">
-                <div class="publish-overview">
-                    <div class="overview-header">
-                        <div class="overview-title">
-                            <h6>Subject Overview</h6>
-                            <h2 id="publishSubjectTitle">English Language</h2>
-                        </div>
-                        <div class="overview-actions"><button type="button" title="Edit"><i
-                                    class="fa-solid fa-check-circle"
-                                    style="color: #004A53; font-size: 1.5rem;"></i></button><button type="button"
-                                title="More options"><i class="fa-solid fa-ellipsis-vertical"></i></button></div>
+        {{-- Publish Section --}}
+        <div class="container bg-white d-none content-section" id="publish">
+            <div class="publish-overview">
+                <div class="overview-header">
+                    <div class="overview-title">
+                        <h6>Subject Overview</h6>
+                        <h2 id="publishSubjectTitle">English Language</h2>
                     </div>
-                    <div class="overview-meta">
-                        <div class="meta-item"><i class="fa-solid fa-book"></i><span id="publishTopics">0 Topics</span>
-                        </div>
-                        <div class="meta-item"><i class="fa-solid fa-graduation-cap"></i><span id="publishLessons">0
-                                Lessons</span></div>
-                        <div class="meta-item"><i class="fa-solid fa-clock"></i><span id="publishTime">0 Hours</span>
-                        </div>
-                        <div class="meta-item"><i class="fa-solid fa-layer-group"></i><span
-                                id="publishLevel">Level</span></div>
-                    </div><img id="publishCourseImage" src="images/publish.png" alt="Course Preview"
-                        class="course-image">
-                    <div class="course-description-section">
-                        <h6>Subject Description</h6>
-                        <p id="publishDescription">This comprehensive course covers essential concepts and skills. Students
-                            will learn through interactive lessons,
-                            practice exercises,
-                            and assessments to build a strong foundation. </p>
-                    </div>
-                    <div class="course-description-section">
-                        <h6>Key Areas of Study:</h6>
-                        <ul class="key-areas-list" id="publishKeyAreas">
-                            <li>Fundamental Concepts</li>
-                            <li>Practical Applications</li>
-                            <li>Advanced Techniques</li>
-                            <li>Real-world Examples</li>
-                            <li>Assessment & Evaluation</li>
-                        </ul>
-                    </div>
-                    <div class="curriculum-preview">
-                        <h6>Curriculum</h6>
-                        <div id="curriculumPreviewContainer">
-                            <div class="curriculum-item">
-                                <div class="curriculum-item-content">
-                                    <div class="curriculum-item-icon"><i class="fa-solid fa-book-open"></i></div>
-                                    <div class="curriculum-item-text">
-                                        <h6>Parts of Speech</h6>
-                                        <p>Foundation concepts</p>
-                                    </div>
-                                </div>
-                                <div class="curriculum-item-meta"><span><i class="fa-solid fa-graduation-cap"></i>5
-                                        Lessons</span><span><i class="fa-solid fa-clock"></i>2 Units</span></div>
-                                <div class="curriculum-item-check"><i class="fa-solid fa-check-circle"></i></div>
-                            </div>
-                            <div class="curriculum-item">
-                                <div class="curriculum-item-content">
-                                    <div class="curriculum-item-icon"><i class="fa-solid fa-book-open"></i></div>
-                                    <div class="curriculum-item-text">
-                                        <h6>Sentence Structure</h6>
-                                        <p>Building complex sentences</p>
-                                    </div>
-                                </div>
-                                <div class="curriculum-item-meta"><span><i class="fa-solid fa-graduation-cap"></i>4
-                                        Lessons</span><span><i class="fa-solid fa-clock"></i>2 Units</span></div>
-                                <div class="curriculum-item-check"><i class="fa-solid fa-check-circle"></i></div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="overview-actions"><button type="button" title="Edit"><i
+                                class="fa-solid fa-check-circle"
+                                style="color: #004A53; font-size: 1.5rem;"></i></button><button type="button"
+                            title="More options"><i class="fa-solid fa-ellipsis-vertical"></i></button></div>
                 </div>
-                <div class="publish-actions">
-                    <button type="button" class="btn btn-back back-btn" data-next="media">Back </button>
-                    <button type="button" class="btn btn-publish" id="finalPublishBtn">Publish Now </button>
+                <div class="overview-meta">
+                    <div class="meta-item"><i class="fa-solid fa-book"></i><span id="publishTopics">0 Topics</span>
+                    </div>
+                    <div class="meta-item"><i class="fa-solid fa-graduation-cap"></i><span id="publishLessons">0
+                            Lessons</span></div>
+                    <div class="meta-item"><i class="fa-solid fa-clock"></i><span id="publishTime">0 Hours</span>
+                    </div>
+                    <div class="meta-item"><i class="fa-solid fa-layer-group"></i><span id="publishLevel">Level</span>
+                    </div>
+                </div><img id="publishCourseImage" src="images/publish.png" alt="Course Preview" class="course-image">
+                <div class="course-description-section">
+                    <h6>Subject Description</h6>
+                    <p id="publishDescription">This comprehensive course covers essential concepts and skills. Students
+                        will learn through interactive lessons,
+                        practice exercises,
+                        and assessments to build a strong foundation. </p>
+                </div>
+                <div class="course-description-section">
+                    <h6>Key Areas of Study:</h6>
+                    <ul class="key-areas-list" id="publishKeyAreas">
+                        <li>Fundamental Concepts</li>
+                        <li>Practical Applications</li>
+                        <li>Advanced Techniques</li>
+                        <li>Real-world Examples</li>
+                        <li>Assessment & Evaluation</li>
+                    </ul>
+                </div>
+                <div class="curriculum-preview">
+                    <h6>Curriculum</h6>
+                    <div id="curriculumPreviewContainer">
+                        <div class="curriculum-item">
+                            <div class="curriculum-item-content">
+                                <div class="curriculum-item-icon"><i class="fa-solid fa-book-open"></i></div>
+                                <div class="curriculum-item-text">
+                                    <h6>Parts of Speech</h6>
+                                    <p>Foundation concepts</p>
+                                </div>
+                            </div>
+                            <div class="curriculum-item-meta"><span><i class="fa-solid fa-graduation-cap"></i>5
+                                    Lessons</span><span><i class="fa-solid fa-clock"></i>2 Units</span></div>
+                            <div class="curriculum-item-check"><i class="fa-solid fa-check-circle"></i></div>
+                        </div>
+                        <div class="curriculum-item">
+                            <div class="curriculum-item-content">
+                                <div class="curriculum-item-icon"><i class="fa-solid fa-book-open"></i></div>
+                                <div class="curriculum-item-text">
+                                    <h6>Sentence Structure</h6>
+                                    <p>Building complex sentences</p>
+                                </div>
+                            </div>
+                            <div class="curriculum-item-meta"><span><i class="fa-solid fa-graduation-cap"></i>4
+                                    Lessons</span><span><i class="fa-solid fa-clock"></i>2 Units</span></div>
+                            <div class="curriculum-item-check"><i class="fa-solid fa-check-circle"></i></div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div class="publish-actions">
+                <button type="button" class="btn btn-back back-btn" data-next="media">Back </button>
+                <button type="button" class="btn btn-publish" id="finalPublishBtn">Publish Now </button>
+            </div>
+        </div>
     </main>
 
     <script>
