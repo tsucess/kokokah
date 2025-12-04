@@ -969,7 +969,15 @@
             <div class="accordion mb-4" id="curriculumAccordion">
                 <div class="accordion-item">
                   <h2 class="accordion-header" style="position:relative;">
-    <button class="accordion-button d-flex justify-content-between align-items-center" type="button"
+<div class="ms-auto">
+            <button class="btn btn-sm btn-light" type="button" title="Edit">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <button class="btn btn-sm btn-light" type="button" title="Delete">
+                <i class="fa-solid fa-trash"></i>
+            </button>
+        </div>
+                    <button class="accordion-button d-flex justify-content-between align-items-center" type="button"
         data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
         aria-controls="collapseOne">
 
@@ -983,14 +991,7 @@
         </div>
 
         <!-- BUTTONS (now properly positioned) -->
-        <div class="ms-auto">
-            <button class="btn btn-sm btn-light" type="button" title="Edit">
-                <i class="fa-solid fa-pen-to-square"></i>
-            </button>
-            <button class="btn btn-sm btn-light" type="button" title="Delete">
-                <i class="fa-solid fa-trash"></i>
-            </button>
-        </div>
+
 
     </button>
 </h2>
