@@ -971,8 +971,8 @@
             <div class="accordion mb-4" id="curriculumAccordion">
                 <div class="accordion-item">
                     <h2 class="accordion-header" style="position:relative; padding:1rem">
-                        <div class="ms-auto mb-2">
-                            <button class="btn btn-sm btn-light" type="button" title="Edit">
+                        <div class="mb-2 d-flex gap-2 align-items-center justify-content-end">
+                            <button class="btn btn-sm btn-light " type="button" title="Edit">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </button>
                             <button class="btn btn-sm btn-light" type="button" title="Delete">
@@ -983,17 +983,15 @@
                             data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
                             aria-controls="collapseOne">
 
-                            <!-- LEFT CONTENT -->
                             <div class="d-flex align-items-start me-3">
                                 <i class="fa-solid fa-book-open me-3"></i>
-                                <div>
+
                                     <p class="m-0 fw-bold">Parts of Speech</p>
-                                    <p class="m-0 small">This section covers the fundamental parts of speech in English
-                                        language.</p>
-                                </div>
+
                             </div>
-                            <!-- BUTTONS (now properly positioned) -->
                         </button>
+                        <p class="pt-2">This section covers the fundamental parts of speech in English
+                                        language.</p>
 
                     </h2>
                     <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#curriculumAccordion">
