@@ -936,65 +936,74 @@
 
         <!-- Curriculum Section -->
         <div class="container bg-white content-section" id="curriculum">
-
+            {{-- add new topic modal --}}
+            <div class="modal fade" id="addNewTopicModal" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content border-0 modal-container">
+                        <div class="modal-header border-0 d-flex justify-content-between align-items-center">
+                            <h1 class="modal-title" id="staticBackdropLabel">Add Topic</h1><button type="button"
+                                class="modal-header-btn" data-bs-dismiss="modal" aria-label="Close"><i
+                                    class="fa-solid fa-circle-xmark"></i></button>
+                        </div>
+                        <form class="modal-form-container">
+                            <div class="modal-form">
+                                <div class="modal-form-input-border"><label for=""
+                                        class="modal-label">Title</label><input class="modal-input" type="text"
+                                        placeholder="Enter Title" /></div>
+                                <div class="modal-form-input-border"><label for="" class="modal-label">Topic
+                                        Description</label>
+                                    <textarea name="" id="" class="modal-input"></textarea>
+                                </div>
+                            </div><button class="modal-form-btn">Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <div class="curriculum-header">
                 <div class="curriculum-header-text">
                     <h5>Curriculum</h5>
                     <p>Manage course topics and lessons</p>
-                </div>{{-- add new topic modal --}} <div class="modal fade" id="addNewTopicModal" data-bs-keyboard="false"
-                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content border-0 modal-container">
-                            <div class="modal-header border-0 d-flex justify-content-between align-items-center">
-                                <h1 class="modal-title" id="staticBackdropLabel">Add Topic</h1><button type="button"
-                                    class="modal-header-btn" data-bs-dismiss="modal" aria-label="Close"><i
-                                        class="fa-solid fa-circle-xmark"></i></button>
-                            </div>
-                            <form class="modal-form-container">
-                                <div class="modal-form">
-                                    <div class="modal-form-input-border"><label for=""
-                                            class="modal-label">Title</label><input class="modal-input" type="text"
-                                            placeholder="Enter Title" /></div>
-                                    <div class="modal-form-input-border"><label for="" class="modal-label">Topic
-                                            Description</label>
-                                        <textarea name="" id="" class="modal-input"></textarea>
-                                    </div>
-                                </div><button class="modal-form-btn">Save</button>
-                            </form>
-                        </div>
-                    </div>
-                </div><button type="button" class="btn btn-add-topic" data-bs-toggle="modal"
+                </div>
+                <button type="button" class="btn btn-add-topic" data-bs-toggle="modal"
                     data-bs-target="#addNewTopicModal"><i class="fa-solid fa-plus me-2"></i>Add New Topic </button>
             </div>
             <div class="accordion mb-4" id="curriculumAccordion">
                 <div class="accordion-item">
-                  <h2 class="accordion-header" style="position:relative;">
-<div class="ms-auto">
-            <button class="btn btn-sm btn-light" type="button" title="Edit">
-                <i class="fa-solid fa-pen-to-square"></i>
-            </button>
-            <button class="btn btn-sm btn-light" type="button" title="Delete">
-                <i class="fa-solid fa-trash"></i>
-            </button>
-        </div>
-                    <button class="accordion-button d-flex justify-content-between align-items-center" type="button"
-        data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
-        aria-controls="collapseOne">
+                    <h2 class="accordion-header" style="position:relative; padding:1rem">
+                        <div class="ms-auto mb-2">
+                            <button class="btn btn-sm btn-light" type="button" title="Edit">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button class="btn btn-sm btn-light" type="button" title="Delete">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                        <button class="accordion-button d-flex justify-content-between align-items-center" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+                            aria-controls="collapseOne">
 
-        <!-- LEFT CONTENT -->
-        <div class="d-flex align-items-start me-3">
-            <i class="fa-solid fa-book-open me-3"></i>
-            <div>
-                <p class="m-0 fw-bold">Parts of Speech</p>
-                <p class="m-0 small">This section covers the fundamental parts of speech in English language.</p>
-            </div>
-        </div>
+                            <!-- LEFT CONTENT -->
+                            <div class="d-flex align-items-start me-3">
+                                <i class="fa-solid fa-book-open me-3"></i>
+                                <div>
+                                    <p class="m-0 fw-bold">Parts of Speech</p>
+                                    <p class="m-0 small">This section covers the fundamental parts of speech in English
+                                        language.</p>
+                                </div>
+                            </div>
+                            <!-- BUTTONS (now properly positioned) -->
+                        </button>
 
+<<<<<<< HEAD
         <!-- BUTTONS (now properly positioned) -->
 
 
     </button>
 </h2>
+=======
+                    </h2>
+>>>>>>> main
                     <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#curriculumAccordion">
                         <div class="accordion-body">
                             <div class="lesson-item">
@@ -1014,9 +1023,10 @@
                         </div>
                     </div>
                 </div>
-
-            </div>{{-- add lesson modal --}} <div class="modal fade" id="addLessonModal" data-bs-keyboard="false"
-                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            </div>
+            {{-- add lesson modal --}}
+            <div class="modal fade" id="addLessonModal" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content border-0 modal-container">
                         <div class="modal-header border-0 d-flex justify-content-between align-items-center">
@@ -1034,90 +1044,89 @@
                                         <option value="content">Content</option>
                                         <option value="document">Document</option>
                                     </select></div>
-                                < !-- image container -->
-                                    <div class="flex-column gap-3 select-children" id="image-container">
-                                        <div class="modal-form-input-border"><label for=""
-                                                class="modal-label">Title</label><input class="modal-input"
-                                                type="text" placeholder="Art" /></div>
-                                        <div class="upload-file-container"><label for=""
-                                                class="upload-label">Upload File (Size:2mb, Dimension:400px by 250px)
-                                            </label>
-                                            <div class="input-group"><input type="text"
-                                                    class="form-control upload-input p-3"
-                                                    style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
-                                                    placeholder="Upload file" aria-label="Recipient’s username"
-                                                    aria-describedby="basic-addon2" /><button class="upload-btn"
-                                                    type="button" id="button-addon2">Upload File </button></div>
-                                        </div>
+                                {{-- image container --}}
+                                <div class="flex-column gap-3 select-children" id="image-container">
+                                    <div class="modal-form-input-border"><label for=""
+                                            class="modal-label">Title</label><input class="modal-input" type="text"
+                                            placeholder="Art" /></div>
+                                    <div class="upload-file-container"><label for="" class="upload-label">Upload
+                                            File (Size:2mb, Dimension:400px by 250px)
+                                        </label>
+                                        <div class="input-group"><input type="text"
+                                                class="form-control upload-input p-3"
+                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
+                                                placeholder="Upload file" aria-label="Recipient’s username"
+                                                aria-describedby="basic-addon2" /><button class="upload-btn"
+                                                type="button" id="button-addon2">Upload File </button></div>
                                     </div>
-                                    < !-- youtube container -->
-                                        <div class="flex-column gap-3 hide select-children" id="youtube-container">
-                                            <div class="modal-form-input-border"><label for=""
-                                                    class="modal-label">Title</label><input class="modal-input"
-                                                    type="text" placeholder="Enter title" /></div>
-                                            <div class="modal-form-input-border"><label for=""
-                                                    class="modal-label">Youtube Url</label><input class="modal-input"
-                                                    type="text" placeholder="Enter url" /></div>
-                                        </div>
-                                        < !-- content container -->
-                                            <div class="flex-column gap-3 hide select-children" id="content-container">
-                                                <div class="modal-form-input-border"><label for=""
-                                                        class="modal-label">Title</label><input class="modal-input"
-                                                        type="text" placeholder="Enter title" /></div>
-                                                <div class="modal-form-input-border"><label for=""
-                                                        class="modal-label">Lesson Content</label>
-                                                    <textarea name="" id="" class="modal-input"></textarea>
-                                                </div>
-                                            </div>
-                                            < !-- audio-container -->
-                                                <div class="flex-column gap-3 hide select-children" id="audio-container">
-                                                    <div class="modal-form-input-border"><label for=""
-                                                            class="modal-label">Title</label><input class="modal-input"
-                                                            type="text" placeholder="Enter title" /></div>
-                                                    <div class="upload-file-container"><label for=""
-                                                            class="upload-label">Upload File (Size:2mb, Dimension:400px by
-                                                            250px) </label>
-                                                        <div class="input-group"><input type="text"
-                                                                class="form-control upload-input p-3"
-                                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
-                                                                placeholder="Upload file"
-                                                                aria-label="Recipient’s username"
-                                                                aria-describedby="basic-addon2" /><button
-                                                                class="upload-btn" type="button"
-                                                                id="button-addon2">Upload File </button></div>
-                                                    </div>
-                                                </div>
-                                                < !-- document-container -->
-                                                    <div class="flex-column gap-3 hide select-children"
-                                                        id="document-container">
-                                                        <div class="modal-form-input-border"><label for=""
-                                                                class="modal-label">Lesson Type</label><select
-                                                                name="" id="" class="modal-input">
-                                                                <option value="">image</option>
-                                                            </select></div>
-                                                        <div class="modal-form-input-border"><label for=""
-                                                                class="modal-label">Title</label><input
-                                                                class="modal-input" type="text"
-                                                                placeholder="Enter title" /></div>
-                                                        <div class="upload-file-container"><label for=""
-                                                                class="upload-label">Upload File (Size:2mb, Dimension:400px
-                                                                by 250px) </label>
-                                                            <div class="input-group"><input type="text"
-                                                                    class="form-control upload-input p-3"
-                                                                    style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
-                                                                    placeholder="Upload file"
-                                                                    aria-label="Recipient’s username"
-                                                                    aria-describedby="basic-addon2" /><button
-                                                                    class="upload-btn" type="button"
-                                                                    id="button-addon2">Upload File </button></div>
-                                                        </div>
-                                                    </div>
+                                </div>
+                                {{-- youtube container --}}
+                                <div class="flex-column gap-3 hide select-children" id="youtube-container">
+                                    <div class="modal-form-input-border"><label for=""
+                                            class="modal-label">Title</label><input class="modal-input" type="text"
+                                            placeholder="Enter title" /></div>
+                                    <div class="modal-form-input-border"><label for=""
+                                            class="modal-label">Youtube Url</label><input class="modal-input"
+                                            type="text" placeholder="Enter url" /></div>
+                                </div>
+                                {{-- content container  --}}
+                                <div class="flex-column gap-3 hide select-children" id="content-container">
+                                    <div class="modal-form-input-border"><label for=""
+                                            class="modal-label">Title</label><input class="modal-input" type="text"
+                                            placeholder="Enter title" /></div>
+                                    <div class="modal-form-input-border"><label for="" class="modal-label">Lesson
+                                            Content</label>
+                                        <textarea name="" id="" class="modal-input"></textarea>
+                                    </div>
+                                </div>
+                                {{-- audio-container --}}
+                                <div class="flex-column gap-3 hide select-children" id="audio-container">
+                                    <div class="modal-form-input-border"><label for=""
+                                            class="modal-label">Title</label><input class="modal-input" type="text"
+                                            placeholder="Enter title" /></div>
+                                    <div class="upload-file-container"><label for="" class="upload-label">Upload
+                                            File (Size:2mb, Dimension:400px by
+                                            250px) </label>
+                                        <div class="input-group"><input type="text"
+                                                class="form-control upload-input p-3"
+                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
+                                                placeholder="Upload file" aria-label="Recipient’s username"
+                                                aria-describedby="basic-addon2" /><button class="upload-btn"
+                                                type="button" id="button-addon2">Upload File </button></div>
+                                    </div>
+                                </div>
+                                {{-- document-container --}}
+                                <div class="flex-column gap-3 hide select-children" id="document-container">
+                                    <div class="modal-form-input-border"><label for="" class="modal-label">Lesson
+                                            Type</label>
+                                        <select name="" id="" class="modal-input">
+                                            <option value="png">Image</option>
+                                            <option value="pdf">PDF</option>
+                                            <option value="docx">Docx</option>
+                                        </select>
+                                    </div>
+                                    <div class="modal-form-input-border"><label for=""
+                                            class="modal-label">Title</label><input class="modal-input" type="text"
+                                            placeholder="Enter title" /></div>
+                                    <div class="upload-file-container"><label for="" class="upload-label">Upload
+                                            File (Size:2mb, Dimension:400px
+                                            by 250px) </label>
+                                        <div class="input-group"><input type="text"
+                                                class="form-control upload-input p-3"
+                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
+                                                placeholder="Upload file" aria-label="Recipient’s username"
+                                                aria-describedby="basic-addon2" /><button class="upload-btn"
+                                                type="button" id="button-addon2">Upload File </button></div>
+                                    </div>
+                                </div>
                             </div><button class="modal-form-btn">Save</button>
                         </form>
                     </div>
                 </div>
-            </div><button type="button" class="btn btn-add-lesson" data-bs-toggle="modal"
-                data-bs-target="#addLessonModal"><i class="fa-solid fa-plus me-2"></i>Add Lesson </button>
+            </div>
+            <button type="button" class="btn btn-add-lesson" data-bs-toggle="modal" data-bs-target="#addLessonModal">
+                <i class="fa-solid fa-plus me-2"></i>Add Lesson
+            </button>
             <div class="curriculum-actions">
                 <button type="button" class="btn btn-continue continue-btn" data-next="details">Continue </button>
             </div>
