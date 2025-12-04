@@ -738,6 +738,7 @@
         };
         const API_CATEGORIES = "/api/curriculum-category";
         const API_LEVEL = "/api/level";
+         const token = localStorage.getItem('auth_token') || '';
 
         // Navigation between sections
         document.addEventListener('DOMContentLoaded', () => {
@@ -766,6 +767,10 @@
                     populatePublishSection();
                 }
             }
+
+            loadCategories();
+    loadLevel();
+
             async function loadCategories() {
                 try {
                     const data = await apiFetch(API_CATEGORIES, {
@@ -811,6 +816,57 @@
                     courseLevel.appendChild(opt);
                 });
             }
+
+            async function apiFetch(url, opts = {}) {
+                    const headers = Object.assign({
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                    }, opts.headers || {});
+
+                    if (token) headers["Authorization"] = `Bearer ${token}`;
+
+                    const options = Object.assign({}, opts, {
+                        headers
+                    });
+                    const res = await fetch(url, options);
+                    const contentType = res.headers.get('content-type') || '';
+
+                    let data = null;
+                    if (contentType.includes('application/json')) {
+                        data = await res.json();
+                    } else {
+                        data = await res.text();
+                    }
+
+                    if (!res.ok) {
+                        const message = (data && data.message) ? data.message : (typeof data === 'string' ? data :
+                            'Request failed');
+                        const err = new Error(message);
+                        err.status = res.status;
+                        err.payload = data;
+                        throw err;
+                    }
+                    return data;
+                }
+
+                function unwrapListResponse(raw) {
+                    // Accept forms: array, {data: [...]}, {status:..., response: [...]}, {response: {data: [...]}}
+                    if (!raw) return [];
+                    if (Array.isArray(raw)) return raw;
+                    if (raw.data && Array.isArray(raw.data)) return raw.data;
+                    if (raw.response && Array.isArray(raw.response)) return raw.response;
+                    if (raw.response && raw.response.data && Array.isArray(raw.response.data)) return raw.response.data;
+                    return [];
+                }
+
+                function unwrapItemResponse(raw) {
+                    // Return item object from common shapes
+                    if (!raw) return null;
+                    if (raw && raw.id) return raw;
+                    if (raw.response && raw.response.id) return raw.response;
+                    if (raw.data && raw.data.id) return raw.data;
+                    return raw;
+                }
 
             // Get data from form fields
             document.getElementById('subjectTitle').addEventListener('input', e => {
