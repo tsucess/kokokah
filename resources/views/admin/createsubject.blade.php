@@ -347,10 +347,18 @@
             <form id="courseDetailsForm">
                 @csrf
 
-                <div class="form-group-custom mb-3">
+                <input type="hidden" class="form-control" id="curriculumCategoryId" name="curriculumCategoryId"  required>
+                <div class="form-row-two">
+                <div class="form-group-custom">
                     <label for="subjectTitle">Course Title</label>
                     <input type="text" class="form-control" id="subjectTitle" name="subjectTitle"
                         placeholder="Enter Subject Title" required>
+                </div>
+                <div class="form-group-custom">
+                    <label for="subjectTerm">Term</label>
+                    <select class="form-control" id="subjectTerm" name="subjectTerm" required></select>
+                </div>
+
                 </div>
 
                 <div class="form-row-two">
@@ -363,9 +371,7 @@
 
                     <div class="form-group-custom">
                         <label for="subjectLevel">Course Level</label>
-                        <select class="form-control" id="subjectLevel" name="subjectLevel" required>
-
-                        </select>
+                        <select class="form-control" id="subjectLevel" name="subjectLevel" required></select>
                     </div>
                 </div>
 
@@ -737,6 +743,7 @@
             imageFile: null
         };
         const API_CATEGORIES = "/api/course-category";
+        const API_TERMS = "/api/term";
         const API_LEVEL = "/api/level";
         const token = localStorage.getItem('auth_token') || '';
 
@@ -747,6 +754,7 @@
             const continueButtons = document.querySelectorAll('.continue-btn');
             const backButtons = document.querySelectorAll('.back-btn');
             const courseCategory = document.getElementById('subjectCategory')
+            const courseTerm = document.getElementById('subjectTerm')
             const courseLevel = document.getElementById('subjectLevel')
 
             function showSection(sectionId) {
@@ -770,6 +778,7 @@
 
             loadCategories();
             loadLevel();
+            loadTerm();
 
             async function loadCategories() {
                 try {
@@ -783,6 +792,19 @@
                 }
             }
 
+
+            async function loadTerm() {
+                try {
+                    const data = await apiFetch(API_TERMS, {
+                        method: 'GET'
+                    });
+                    terms = unwrapListResponse(data);
+                    populateTermSelect();
+                } catch (err) {
+                    console.error('Failed to load terms', err);
+                }
+            }
+
             function populateCategorySelect() {
                 if (!courseCategory) return;
                 courseCategory.innerHTML = `<option value="">Select Course Category</option>`;
@@ -791,6 +813,17 @@
                     opt.value = cat.id + '-' + cat.title ?? cat.name;
                     opt.textContent = cat.title ?? cat.name ?? `#${cat.id}`;
                     courseCategory.appendChild(opt);
+                });
+            }
+
+            function populateTermSelect() {
+                if (!courseTerm) return;
+                courseTerm.innerHTML = `<option value="">Select Term</option>`;
+                terms.forEach(term => {
+                    const opt = document.createElement('option');
+                    opt.value = term.id + '-' + term.title ?? term.name;
+                    opt.textContent = term.title ?? term.name ?? `#${term.id}`;
+                    courseTerm.appendChild(opt);
                 });
             }
 
