@@ -42,7 +42,6 @@ class TermController extends Controller
             'name' => 'nullable|string|max:255',
         ]);
 
-        //   dd($data);
 
         $term = Term::findOrFail($id);
         $term->update($data);

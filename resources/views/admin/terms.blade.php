@@ -440,10 +440,10 @@
         <div id="toastContainer" aria-live="polite" aria-atomic="true"></div>
 
         <!-- ========== End helpers ========== -->
-        <!-- ======= Script: copy-paste entire block below to replace your <script>
-            section === === = -- >
-                <
-                script >
+        <!-- ======= Script: copy-paste entire block below to replace your <script> section ======= -->
+
+
+            <script>
                 (function() {
                     // Config
                     const API_URL = "/api/term";
