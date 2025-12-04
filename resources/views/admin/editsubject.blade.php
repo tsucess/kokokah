@@ -1033,84 +1033,81 @@
                                         <option value="content">Content</option>
                                         <option value="document">Document</option>
                                     </select></div>
-                                < !-- image container -->
-                                    <div class="flex-column gap-3 select-children" id="image-container">
-                                        <div class="modal-form-input-border"><label for=""
-                                                class="modal-label">Title</label><input class="modal-input"
-                                                type="text" placeholder="Art" /></div>
-                                        <div class="upload-file-container"><label for=""
-                                                class="upload-label">Upload File (Size:2mb, Dimension:400px by 250px)
-                                            </label>
-                                            <div class="input-group"><input type="text"
-                                                    class="form-control upload-input p-3"
-                                                    style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
-                                                    placeholder="Upload file" aria-label="Recipient’s username"
-                                                    aria-describedby="basic-addon2" /><button class="upload-btn"
-                                                    type="button" id="button-addon2">Upload File </button></div>
-                                        </div>
+                                {{-- image container --}}
+                                <div class="flex-column gap-3 select-children" id="image-container">
+                                    <div class="modal-form-input-border"><label for=""
+                                            class="modal-label">Title</label><input class="modal-input" type="text"
+                                            placeholder="Art" /></div>
+                                    <div class="upload-file-container"><label for="" class="upload-label">Upload
+                                            File (Size:2mb, Dimension:400px by 250px)
+                                        </label>
+                                        <div class="input-group"><input type="text"
+                                                class="form-control upload-input p-3"
+                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
+                                                placeholder="Upload file" aria-label="Recipient’s username"
+                                                aria-describedby="basic-addon2" /><button class="upload-btn"
+                                                type="button" id="button-addon2">Upload File </button></div>
                                     </div>
-                                    < !-- youtube container -->
-                                        <div class="flex-column gap-3 hide select-children" id="youtube-container">
-                                            <div class="modal-form-input-border"><label for=""
-                                                    class="modal-label">Title</label><input class="modal-input"
-                                                    type="text" placeholder="Enter title" /></div>
-                                            <div class="modal-form-input-border"><label for=""
-                                                    class="modal-label">Youtube Url</label><input class="modal-input"
-                                                    type="text" placeholder="Enter url" /></div>
-                                        </div>
-                                        < !-- content container -->
-                                            <div class="flex-column gap-3 hide select-children" id="content-container">
-                                                <div class="modal-form-input-border"><label for=""
-                                                        class="modal-label">Title</label><input class="modal-input"
-                                                        type="text" placeholder="Enter title" /></div>
-                                                <div class="modal-form-input-border"><label for=""
-                                                        class="modal-label">Lesson Content</label>
-                                                    <textarea name="" id="" class="modal-input"></textarea>
-                                                </div>
-                                            </div>
-                                            < !-- audio-container -->
-                                                <div class="flex-column gap-3 hide select-children" id="audio-container">
-                                                    <div class="modal-form-input-border"><label for=""
-                                                            class="modal-label">Title</label><input class="modal-input"
-                                                            type="text" placeholder="Enter title" /></div>
-                                                    <div class="upload-file-container"><label for=""
-                                                            class="upload-label">Upload File (Size:2mb, Dimension:400px by
-                                                            250px) </label>
-                                                        <div class="input-group"><input type="text"
-                                                                class="form-control upload-input p-3"
-                                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
-                                                                placeholder="Upload file"
-                                                                aria-label="Recipient’s username"
-                                                                aria-describedby="basic-addon2" /><button
-                                                                class="upload-btn" type="button"
-                                                                id="button-addon2">Upload File </button></div>
-                                                    </div>
-                                                </div>
-                                                < !-- document-container -->
-                                                    <div class="flex-column gap-3 hide select-children"
-                                                        id="document-container">
-                                                        <div class="modal-form-input-border"><label for=""
-                                                                class="modal-label">Lesson Type</label><select
-                                                                name="" id="" class="modal-input">
-                                                                <option value="">image</option>
-                                                            </select></div>
-                                                        <div class="modal-form-input-border"><label for=""
-                                                                class="modal-label">Title</label><input
-                                                                class="modal-input" type="text"
-                                                                placeholder="Enter title" /></div>
-                                                        <div class="upload-file-container"><label for=""
-                                                                class="upload-label">Upload File (Size:2mb, Dimension:400px
-                                                                by 250px) </label>
-                                                            <div class="input-group"><input type="text"
-                                                                    class="form-control upload-input p-3"
-                                                                    style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
-                                                                    placeholder="Upload file"
-                                                                    aria-label="Recipient’s username"
-                                                                    aria-describedby="basic-addon2" /><button
-                                                                    class="upload-btn" type="button"
-                                                                    id="button-addon2">Upload File </button></div>
-                                                        </div>
-                                                    </div>
+                                </div>
+                                {{-- youtube container --}}
+                                <div class="flex-column gap-3 hide select-children" id="youtube-container">
+                                    <div class="modal-form-input-border"><label for=""
+                                            class="modal-label">Title</label><input class="modal-input" type="text"
+                                            placeholder="Enter title" /></div>
+                                    <div class="modal-form-input-border"><label for=""
+                                            class="modal-label">Youtube Url</label><input class="modal-input"
+                                            type="text" placeholder="Enter url" /></div>
+                                </div>
+                                {{-- content container  --}}
+                                <div class="flex-column gap-3 hide select-children" id="content-container">
+                                    <div class="modal-form-input-border"><label for=""
+                                            class="modal-label">Title</label><input class="modal-input" type="text"
+                                            placeholder="Enter title" /></div>
+                                    <div class="modal-form-input-border"><label for="" class="modal-label">Lesson
+                                            Content</label>
+                                        <textarea name="" id="" class="modal-input"></textarea>
+                                    </div>
+                                </div>
+                                {{-- audio-container --}}
+                                <div class="flex-column gap-3 hide select-children" id="audio-container">
+                                    <div class="modal-form-input-border"><label for=""
+                                            class="modal-label">Title</label><input class="modal-input" type="text"
+                                            placeholder="Enter title" /></div>
+                                    <div class="upload-file-container"><label for="" class="upload-label">Upload
+                                            File (Size:2mb, Dimension:400px by
+                                            250px) </label>
+                                        <div class="input-group"><input type="text"
+                                                class="form-control upload-input p-3"
+                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
+                                                placeholder="Upload file" aria-label="Recipient’s username"
+                                                aria-describedby="basic-addon2" /><button class="upload-btn"
+                                                type="button" id="button-addon2">Upload File </button></div>
+                                    </div>
+                                </div>
+                                {{-- document-container --}}
+                                <div class="flex-column gap-3 hide select-children" id="document-container">
+                                    <div class="modal-form-input-border"><label for="" class="modal-label">Lesson
+                                            Type</label>
+                                        <select name="" id="" class="modal-input">
+                                            <option value="png">Image</option>
+                                            <option value="pdf">PDF</option>
+                                            <option value="docx">Docx</option>
+                                        </select>
+                                    </div>
+                                    <div class="modal-form-input-border"><label for=""
+                                            class="modal-label">Title</label><input class="modal-input" type="text"
+                                            placeholder="Enter title" /></div>
+                                    <div class="upload-file-container"><label for="" class="upload-label">Upload
+                                            File (Size:2mb, Dimension:400px
+                                            by 250px) </label>
+                                        <div class="input-group"><input type="text"
+                                                class="form-control upload-input p-3"
+                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
+                                                placeholder="Upload file" aria-label="Recipient’s username"
+                                                aria-describedby="basic-addon2" /><button class="upload-btn"
+                                                type="button" id="button-addon2">Upload File </button></div>
+                                    </div>
+                                </div>
                             </div><button class="modal-form-btn">Save</button>
                         </form>
                     </div>

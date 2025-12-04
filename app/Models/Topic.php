@@ -14,10 +14,8 @@ class Topic extends Model
     protected $fillable = [
         'title',
         'course_id',
-        'order',
+        'order'
     ];
-
-    public $timestamps = false; // Your original table has no timestamps
 
     /*
     |--------------------------------------------------------------------------
@@ -35,26 +33,3 @@ class Topic extends Model
         return $this->hasMany(Lesson::class, 'topic_id')->orderBy('order');
     }
 }
-
-
-
-
-
-// class Topic extends Model
-// {
-//     use HasFactory;
-
-//     protected $table = 'topics';
-
-//     protected $fillable = [
-//         'title',
-//         'course_id',
-//         'order',
-//     ];
-
-//     // Relationship (optional)
-//     public function course()
-//     {
-//         return $this->belongsTo(Course::class, 'course_id');
-//     }
-// }
