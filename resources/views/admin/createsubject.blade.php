@@ -736,9 +736,9 @@
             description: "",
             imageFile: null
         };
-        const API_CATEGORIES = "/api/curriculum-category";
+        const API_CATEGORIES = "/api/course-category";
         const API_LEVEL = "/api/level";
-         const token = localStorage.getItem('auth_token') || '';
+        const token = localStorage.getItem('auth_token') || '';
 
         // Navigation between sections
         document.addEventListener('DOMContentLoaded', () => {
@@ -769,7 +769,7 @@
             }
 
             loadCategories();
-    loadLevel();
+            loadLevel();
 
             async function loadCategories() {
                 try {
@@ -785,10 +785,10 @@
 
             function populateCategorySelect() {
                 if (!courseCategory) return;
-                courseCategory.innerHTML = `<option value="">Select Curriculum Category</option>`;
+                courseCategory.innerHTML = `<option value="">Select Course Category</option>`;
                 categories.forEach(cat => {
                     const opt = document.createElement('option');
-                    opt.value = cat.id;
+                    opt.value = cat.id + '-' + cat.title ?? cat.name;
                     opt.textContent = cat.title ?? cat.name ?? `#${cat.id}`;
                     courseCategory.appendChild(opt);
                 });
@@ -811,62 +811,62 @@
                 courseLevel.innerHTML = `<option value="">Select Level Category</option>`;
                 levels.forEach(level => {
                     const opt = document.createElement('option');
-                    opt.value = level.id;
+                    opt.value = level.id + '-' + level.name;
                     opt.textContent = level.title ?? level.name ?? `#${level.id}`;
                     courseLevel.appendChild(opt);
                 });
             }
 
             async function apiFetch(url, opts = {}) {
-                    const headers = Object.assign({
-                        "Accept": "application/json",
-                        "Content-Type": "application/json",
-                    }, opts.headers || {});
+                const headers = Object.assign({
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                }, opts.headers || {});
 
-                    if (token) headers["Authorization"] = `Bearer ${token}`;
+                if (token) headers["Authorization"] = `Bearer ${token}`;
 
-                    const options = Object.assign({}, opts, {
-                        headers
-                    });
-                    const res = await fetch(url, options);
-                    const contentType = res.headers.get('content-type') || '';
+                const options = Object.assign({}, opts, {
+                    headers
+                });
+                const res = await fetch(url, options);
+                const contentType = res.headers.get('content-type') || '';
 
-                    let data = null;
-                    if (contentType.includes('application/json')) {
-                        data = await res.json();
-                    } else {
-                        data = await res.text();
-                    }
-
-                    if (!res.ok) {
-                        const message = (data && data.message) ? data.message : (typeof data === 'string' ? data :
-                            'Request failed');
-                        const err = new Error(message);
-                        err.status = res.status;
-                        err.payload = data;
-                        throw err;
-                    }
-                    return data;
+                let data = null;
+                if (contentType.includes('application/json')) {
+                    data = await res.json();
+                } else {
+                    data = await res.text();
                 }
 
-                function unwrapListResponse(raw) {
-                    // Accept forms: array, {data: [...]}, {status:..., response: [...]}, {response: {data: [...]}}
-                    if (!raw) return [];
-                    if (Array.isArray(raw)) return raw;
-                    if (raw.data && Array.isArray(raw.data)) return raw.data;
-                    if (raw.response && Array.isArray(raw.response)) return raw.response;
-                    if (raw.response && raw.response.data && Array.isArray(raw.response.data)) return raw.response.data;
-                    return [];
+                if (!res.ok) {
+                    const message = (data && data.message) ? data.message : (typeof data === 'string' ? data :
+                        'Request failed');
+                    const err = new Error(message);
+                    err.status = res.status;
+                    err.payload = data;
+                    throw err;
                 }
+                return data;
+            }
 
-                function unwrapItemResponse(raw) {
-                    // Return item object from common shapes
-                    if (!raw) return null;
-                    if (raw && raw.id) return raw;
-                    if (raw.response && raw.response.id) return raw.response;
-                    if (raw.data && raw.data.id) return raw.data;
-                    return raw;
-                }
+            function unwrapListResponse(raw) {
+                // Accept forms: array, {data: [...]}, {status:..., response: [...]}, {response: {data: [...]}}
+                if (!raw) return [];
+                if (Array.isArray(raw)) return raw;
+                if (raw.data && Array.isArray(raw.data)) return raw.data;
+                if (raw.response && Array.isArray(raw.response)) return raw.response;
+                if (raw.response && raw.response.data && Array.isArray(raw.response.data)) return raw.response.data;
+                return [];
+            }
+
+            function unwrapItemResponse(raw) {
+                // Return item object from common shapes
+                if (!raw) return null;
+                if (raw && raw.id) return raw;
+                if (raw.response && raw.response.id) return raw.response;
+                if (raw.data && raw.data.id) return raw.data;
+                return raw;
+            }
 
             // Get data from form fields
             document.getElementById('subjectTitle').addEventListener('input', e => {
@@ -896,20 +896,20 @@
             // File upload
             document.getElementById('fileInput').addEventListener('change', e => {
                 courseData.imageFile = e.target.files[0];
+
+                if (courseData.imageFile) {
+                    document.getElementById("fileNameDisplay").textContent = courseData.imageFile.name;
+                }
             });
 
-
-
             function populatePublishSection() {
-
-
-                console.log(courseData)
                 // Update publish section
                 document.getElementById('publishSubjectTitle').textContent = courseData.title;
-                document.getElementById('publishCategory').textContent = courseData.category + ' Category';
+                document.getElementById('publishCategory').textContent = courseData.category.split('-')[1] +
+                    ' Category';
                 document.getElementById('publishPrice').textContent = courseData.price + ' Price';
                 document.getElementById('publishTime').textContent = courseData.duration + ' Hours';
-                document.getElementById('publishLevel').textContent = courseData.level + ' Level';
+                document.getElementById('publishLevel').textContent = courseData.level.split('-')[1] + ' Level';
                 document.getElementById('publishDescription').textContent = courseData.description;
 
 
@@ -926,6 +926,12 @@
             navButtons.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const section = btn.getAttribute('data-section');
+                    if(section === 'media' && !courseData.title && !courseData.price && !courseData.duration ){
+                      return
+                    }
+                    if(section === 'publish' && !courseData.imageFile && !courseData.title && !courseData.price && !courseData.duration){
+                        return
+                    }
                     showSection(section);
                 });
             });
@@ -933,6 +939,12 @@
             continueButtons.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const next = btn.getAttribute('data-next');
+                    if(next === 'media' && !courseData.title && !courseData.price && !courseData.duration ){
+                      return
+                    }
+                    if(next === 'publish' && !courseData.imageFile && !courseData.title && !courseData.price && !courseData.duration){
+                        return
+                    }
                     showSection(next);
                 });
             });
@@ -966,10 +978,10 @@
             function validateBeforePublish() {
                 const required = [
                     courseData.title,
-                    courseData.category,
-                    courseData.level,
+                    courseData.category.split('-')[0],
+                    courseData.level.split('-')[0],
                     courseData.duration,
-                    courseData.category,
+                    courseData.price,
                     courseData.description,
                     courseData.imageFile
                 ];
@@ -991,16 +1003,19 @@
 
                     const formData = new FormData();
                     formData.append("title", courseData.title);
-                    formData.append("category", courseData.category);
-                    formData.append("level", courseData.level);
-                    formData.append("time", courseData.time);
-                    formData.append("lessons", courseData.lessons);
+                    formData.append("category", courseData.category.split('-')[0]);
+                    formData.append("level", courseData.level.split('-')[0]);
+                    formData.append("duration", courseData.duration);
+                    formData.append("price", courseData.price);
                     formData.append("description", courseData.description);
                     formData.append("image", courseData.imageFile);
 
                     try {
-                        const res = await fetch("api/courses", {
+                        const res = await fetch("/api/courses", {
                             method: "POST",
+                            headers: {
+                                "Authorization": `Bearer ${token}`
+                            },
                             body: formData
                         });
 
