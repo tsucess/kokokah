@@ -336,7 +336,7 @@
                 }
 
                 const courses = result.data;
-                
+
                 console.log("Courses Response:", courses);
                 // console.log("Courses Response:", courses.courses.data);
 
@@ -369,19 +369,15 @@
             courses.forEach((course, index) => {
                 const row = `
             <tr style="border-bottom: 1px solid #e8e8e8;">
-                <td>${index + 1}</td>
+                <td style='font-size:14px;'>${index + 1}</td>
 
-                <td>
-                    <div class="d-flex align-items-center">
-                        <img src="${course.thumbnail ?? 'https://via.placeholder.com/40'}"
-                             class="rounded-circle me-3" width="40" height="40" style="object-fit: cover;">
-                        <span>${course.title}</span>
-                    </div>
-                </td>
+                <td style='font-size:14px;'>${course.title}</td>
 
-                <td>${formatDate(course.created_at)}</td>
 
-                <td>
+
+                <td style='font-size:14px;'>${formatDate(course.created_at)}</td>
+
+                <td style='font-size:14px;'>
                     <div class="d-flex align-items-center gap-2">
                         <div class="progress" style="width: 100px; height: 6px;">
                             <div class="progress-bar"></div>
@@ -390,15 +386,15 @@
                     </div>
                 </td>
 
-                <td>
+                <td >
                     <i class="fa fa-star" style="color:#FDAF22;"></i>
-                    <span>${course.average_rating ?? 0}</span>
+                    <span style='font-size:14px;'>${course.average_rating ?? 0}</span>
                 </td>
 
                 <td>
-                    <span class="badge" 
+                    <span class="badge"
                           style="background-color:${course.status === 'published' ? '#28a745' : '#6c757d'};
-                                 color:white; padding:0.5rem 0.75rem; border-radius:0.5rem;">
+                                 color:white; padding:0.5rem 0.75rem; border-radius:0.5rem; font-size:14px;">
                         ${course.status}
                     </span>
                 </td>
@@ -453,5 +449,13 @@
                 year: "numeric"
             });
         }
+
+        // <td style='font-size:14px;'>
+                //     <div class="d-flex align-items-center">
+                //         // <img src="${course.thumbnail ?? 'https://via.placeholder.com/40'}"
+                //         //      class="rounded-circle me-3" width="40" height="40" style="object-fit: cover;">
+                //         <span></span>
+                //     </div>
+                // </td>
     </script>
 @endsection

@@ -7,7 +7,7 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 2rem;
+            margin-bottom: .4rem;
         }
 
         .subject-header h3 {
@@ -65,7 +65,7 @@
         .nav-buttons-container {
             display: flex;
             gap: 1rem;
-            margin-bottom: 2rem;
+            margin-bottom: .2rem;
             flex-wrap: wrap;
         }
 
