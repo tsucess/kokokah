@@ -312,9 +312,8 @@
     </main>
 
     <script>
-        const API_COURSES = "http://127.0.0.1:8000/api/courses";
+        const API_COURSES = "/api/courses";
         const token = localStorage.getItem('auth_token');
-        console.log(token);
 
         document.addEventListener("DOMContentLoaded", () => {
             loadCourses();
