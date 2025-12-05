@@ -286,6 +286,14 @@
                 width: 100%;
             }
         }
+
+        .small-check {
+            width: 0.8rem;
+            height: 0.8rem;
+            transform: scale(0.8);
+            margin: 0;
+            /* optional: keeps alignment clean */
+        }
     </style>
 
     <main>
@@ -347,17 +355,17 @@
             <form id="courseDetailsForm">
                 @csrf
 
-                <input type="hidden" class="form-control" id="curriculumCategoryId" name="curriculumCategoryId"  required>
+                <input type="hidden" class="form-control" id="curriculumCategoryId" name="curriculumCategoryId" required>
                 <div class="form-row-two">
-                <div class="form-group-custom">
-                    <label for="subjectTitle">Course Title</label>
-                    <input type="text" class="form-control" id="subjectTitle" name="subjectTitle"
-                        placeholder="Enter Subject Title" required>
-                </div>
-                <div class="form-group-custom">
-                    <label for="subjectTerm">Term</label>
-                    <select class="form-control" id="subjectTerm" name="subjectTerm" required></select>
-                </div>
+                    <div class="form-group-custom">
+                        <label for="subjectTitle">Course Title</label>
+                        <input type="text" class="form-control" id="subjectTitle" name="subjectTitle"
+                            placeholder="Enter Subject Title" required>
+                    </div>
+                    <div class="form-group-custom">
+                        <label for="subjectTerm">Term</label>
+                        <select class="form-control" id="subjectTerm" name="subjectTerm" required></select>
+                    </div>
 
                 </div>
 
@@ -383,7 +391,16 @@
                     </div>
 
                     <div class="form-group-custom">
-                        <label for="coursePrice">Price</label>
+                        <div class="d-flex align-items-center gap-2">
+                            <label for="coursePrice">Price</label>
+                            <div class="form-check d-flex gap-1 align-items-center ">
+                                <input class="form-check-input small-check" type="checkbox" value="" id="free-course">
+                                <label class="form-check-label" for="checkChecked">
+                                    Free Course
+                                </label>
+                            </div>
+                        </div>
+
                         <input type="number" class="form-control" id="coursePrice" name="coursePrice"
                             placeholder="e.g., 200" min="1" required>
                     </div>
@@ -426,7 +443,8 @@
                     <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
                         <input type="text" class="form-control" id="fileNameDisplay" placeholder="No file selected"
                             readonly style="flex: 1;">
-                        <button type="button" class="btn btn-publish" id="uploadButton" style="padding: 0.75rem 1.5rem;">
+                        <button type="button" class="btn btn-publish" id="uploadButton"
+                            style="padding: 0.75rem 1.5rem;">
                             Upload File
                         </button>
                     </div>
@@ -740,6 +758,7 @@
             duration: "",
             price: "",
             description: "",
+            freeCourse: ''
             imageFile: null
         };
         const API_CATEGORIES = "/api/course-category";
@@ -925,6 +944,19 @@
             document.getElementById('subjectDescription').addEventListener('input', e => {
                 courseData.description = e.target.value;
             });
+            document.getElementById('free-course').addEventListener('change', e => {
+                const checked = e.target.checked;
+
+                courseData.freeCourse = checked;
+                const priceInput = document.getElementById("coursePrice");
+
+                priceInput.disabled = checked;
+
+                if (checked) {
+                    priceInput.value = "";
+                    courseData.price = "";
+                }
+            })
 
             // File upload
             document.getElementById('fileInput').addEventListener('change', e => {
@@ -940,7 +972,8 @@
                 document.getElementById('publishSubjectTitle').textContent = courseData.title;
                 document.getElementById('publishCategory').textContent = courseData.category.split('-')[1] +
                     ' Category';
-                document.getElementById('publishPrice').textContent = courseData.price + ' Price';
+                document.getElementById('publishPrice').textContent = courseData.freeCourse ? 'Free Course' :
+                    courseData.price + ' Price';
                 document.getElementById('publishTime').textContent = courseData.duration + ' Hours';
                 document.getElementById('publishLevel').textContent = courseData.level.split('-')[1] + ' Level';
                 document.getElementById('publishDescription').textContent = courseData.description;
@@ -959,10 +992,12 @@
             navButtons.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const section = btn.getAttribute('data-section');
-                    if(section === 'media' && !courseData.title && !courseData.price && !courseData.duration ){
-                      return
+                    if (section === 'media' && !courseData.title && !courseData.price && !courseData
+                        .duration) {
+                        return
                     }
-                    if(section === 'publish' && !courseData.imageFile && !courseData.title && !courseData.price && !courseData.duration){
+                    if (section === 'publish' && !courseData.imageFile && !courseData.title && !
+                        courseData.price && !courseData.duration) {
                         return
                     }
                     showSection(section);
@@ -972,10 +1007,12 @@
             continueButtons.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const next = btn.getAttribute('data-next');
-                    if(next === 'media' && !courseData.title && !courseData.price && !courseData.duration ){
-                      return
+                    if (next === 'media' && !courseData.title && !courseData.price && !courseData
+                        .duration) {
+                        return
                     }
-                    if(next === 'publish' && !courseData.imageFile && !courseData.title && !courseData.price && !courseData.duration){
+                    if (next === 'publish' && !courseData.imageFile && !courseData.title && !
+                        courseData.price && !courseData.duration) {
                         return
                     }
                     showSection(next);
@@ -1039,7 +1076,7 @@
                     formData.append("category", courseData.category.split('-')[0]);
                     formData.append("level", courseData.level.split('-')[0]);
                     formData.append("duration", courseData.duration);
-                    formData.append("price", courseData.price);
+                    formData.append("price", courseData.freeCourse ? 'Free' : courseData.price);
                     formData.append("description", courseData.description);
                     formData.append("image", courseData.imageFile);
 
