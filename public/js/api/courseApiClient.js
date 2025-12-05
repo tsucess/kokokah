@@ -4,6 +4,8 @@
  * Extends BaseApiClient for common functionality
  */
 
+import BaseApiClient from './baseApiClient.js';
+
 class CourseApiClient extends BaseApiClient {
   /**
    * Get all courses
@@ -224,4 +226,6 @@ class CourseApiClient extends BaseApiClient {
     return this.delete(`/curriculum-category/${categoryId}`);
   }
 }
+
+export default CourseApiClient;
 

@@ -29,7 +29,7 @@ class AdminController extends Controller
     /**
      * Get admin dashboard overview
      */
-    public function dashboard()
+    public function dashboard(Request $request)
     {
         try {
             // Cache dashboard stats for 5 minutes to improve performance
@@ -99,8 +99,12 @@ class AdminController extends Controller
                 ];
             });
 
-            // Recent activity
-            $recentActivity = $this->getRecentActivity();
+            // Get pagination parameters
+            $page = $request->get('page', 1);
+            $perPage = $request->get('per_page', 10);
+
+            // Recent activity with pagination
+            $recentActivity = $this->getRecentActivityPaginated($page, $perPage);
 
             // System health
             $systemHealth = $this->getSystemHealth();
@@ -987,6 +991,70 @@ class AdminController extends Controller
         });
 
         return array_slice($activities, 0, 15);
+    }
+
+    private function getRecentActivityPaginated($page = 1, $perPage = 10)
+    {
+        $activities = [];
+
+        // Recent user registrations
+        $recentUsers = User::latest()->limit(15)->get();
+        foreach ($recentUsers as $user) {
+            $activities[] = [
+                'type' => 'user_registered',
+                'description' => "New user registered: {$user->first_name} {$user->last_name}",
+                'timestamp' => $user->created_at,
+                'user' => $user
+            ];
+        }
+
+        // Recent course creations
+        $recentCourses = Course::with('instructor')->latest()->limit(15)->get();
+        foreach ($recentCourses as $course) {
+            $activities[] = [
+                'type' => 'course_created',
+                'description' => "New course created: {$course->title}",
+                'timestamp' => $course->created_at,
+                'course' => $course
+            ];
+        }
+
+        // Recent payments
+        $recentPayments = Payment::with(['user', 'course'])->where('status', 'completed')->latest()->limit(15)->get();
+        foreach ($recentPayments as $payment) {
+            $activities[] = [
+                'type' => 'payment_completed',
+                'description' => "Payment completed: {$payment->amount} for {$payment->course->title}",
+                'timestamp' => $payment->created_at,
+                'payment' => $payment
+            ];
+        }
+
+        // Sort by timestamp
+        usort($activities, function($a, $b) {
+            return $b['timestamp'] <=> $a['timestamp'];
+        });
+
+        // Get total count
+        $total = count($activities);
+
+        // Calculate pagination
+        $lastPage = ceil($total / $perPage);
+        $offset = ($page - 1) * $perPage;
+
+        // Get paginated slice
+        $paginatedActivities = array_slice($activities, $offset, $perPage);
+
+        // Return paginated response
+        return [
+            'data' => $paginatedActivities,
+            'current_page' => $page,
+            'per_page' => $perPage,
+            'total' => $total,
+            'last_page' => $lastPage,
+            'from' => $offset + 1,
+            'to' => min($offset + $perPage, $total)
+        ];
     }
 
     private function getSystemHealth()

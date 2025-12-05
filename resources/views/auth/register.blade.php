@@ -40,7 +40,7 @@
           <h4 class="auth-heading">Sign up</h4>
           <p class="auth-subheading">Create your account to get started.</p>
 
-          <form id="registerForm" method="POST">
+          <form id="registerForm" method="POST" action="javascript:void(0);">
             @csrf
             <div class="custom-form-group">
               <label for="firstName" class="custom-label">Enter First Name</label>

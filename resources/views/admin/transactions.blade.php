@@ -115,7 +115,9 @@
             </div>
     </main>
 
-    <script>
+    <script type="module">
+        import TransactionApiClient from '{{ asset('js/api/transactionApiClient.js') }}';
+
         const token = localStorage.getItem('auth_token');
         let currentPage = 1;
         let totalPages = 1;
@@ -136,8 +138,7 @@
             });
         });
 
-        // Import API client
-        import AdminApiClient from '{{ asset('js/api/adminApiClient.js') }}';
+
 
         async function loadTransactions(page = 1) {
             try {
@@ -154,7 +155,7 @@
                     filters.status = currentFilter;
                 }
 
-                const result = await AdminApiClient.getTransactions(filters);
+                const result = await TransactionApiClient.getTransactions(filters);
 
                 if (!result.success) {
                     console.error('Failed to fetch transactions:', result.message);

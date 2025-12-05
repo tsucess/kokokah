@@ -173,13 +173,13 @@
     <!-- Chart.js (keep after body) -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 
-    <script>
+    <script type="module">
+        // Import API client
+        import AdminApiClient from '{{ asset('js/api/adminApiClient.js') }}';
+
         // Get auth token
         const token = localStorage.getItem('auth_token');
         let currentPage = 1;
-
-        // Import API client
-        import AdminApiClient from '{{ asset('js/api/adminApiClient.js') }}';
 
         // Fetch dashboard data on page load
         document.addEventListener('DOMContentLoaded', function() {
@@ -199,15 +199,17 @@
 
                 const data = result.data;
                 console.log('Dashboard API Response:', data);
+                console.log('Data type:', typeof data);
+                console.log('Has statistics:', data && data.statistics);
 
-                if (data.success && data.data && data.data.statistics) {
-                    const stats = data.data.statistics;
+                if (data && data.statistics) {
+                    const stats = data.statistics;
                     console.log('Stats:', stats);
 
                     // Update total users
-                    const totalUsers = stats.users.total;
-                    const students = stats.users.by_role.students;
-                    const instructors = stats.users.by_role.instructors;
+                    const totalUsers = stats.users?.total || 0;
+                    const students = stats.users?.by_role?.students || 0;
+                    const instructors = stats.users?.by_role?.instructors || 0;
 
                     console.log('Total Users:', totalUsers, 'Students:', students, 'Instructors:', instructors);
 
@@ -222,32 +224,32 @@
                     if (totalInstructorsEl) totalInstructorsEl.textContent = instructors;
 
                     const totalCoursesEl = document.getElementById('totalCourses');
-                    if (totalCoursesEl) totalCoursesEl.textContent = stats.courses.total;
+                    if (totalCoursesEl) totalCoursesEl.textContent = stats.courses?.total || 0;
 
                     // Update gender breakdown for users
                     const totalUsersMaleEl = document.getElementById('totalUsersMale');
-                    if (totalUsersMaleEl) totalUsersMaleEl.textContent = `(${stats.users.by_gender.male})`;
+                    if (totalUsersMaleEl) totalUsersMaleEl.textContent = `(${stats.users?.by_gender?.male || 0})`;
 
                     const totalUsersFemaleEl = document.getElementById('totalUsersFemale');
-                    if (totalUsersFemaleEl) totalUsersFemaleEl.textContent = `(${stats.users.by_gender.female})`;
+                    if (totalUsersFemaleEl) totalUsersFemaleEl.textContent = `(${stats.users?.by_gender?.female || 0})`;
 
                     // Update gender breakdown for students
                     const totalStudentsMaleEl = document.getElementById('totalStudentsMale');
                     if (totalStudentsMaleEl) totalStudentsMaleEl.textContent =
-                        `(${stats.users.students_by_gender.male})`;
+                        `(${stats.users?.students_by_gender?.male || 0})`;
 
                     const totalStudentsFemaleEl = document.getElementById('totalStudentsFemale');
                     if (totalStudentsFemaleEl) totalStudentsFemaleEl.textContent =
-                        `(${stats.users.students_by_gender.female})`;
+                        `(${stats.users?.students_by_gender?.female || 0})`;
 
                     // Update gender breakdown for instructors
                     const totalInstructorsMaleEl = document.getElementById('totalInstructorsMale');
                     if (totalInstructorsMaleEl) totalInstructorsMaleEl.textContent =
-                        `(${stats.users.instructors_by_gender.male})`;
+                        `(${stats.users?.instructors_by_gender?.male || 0})`;
 
                     const totalInstructorsFemaleEl = document.getElementById('totalInstructorsFemale');
                     if (totalInstructorsFemaleEl) totalInstructorsFemaleEl.textContent =
-                        `(${stats.users.instructors_by_gender.female})`;
+                        `(${stats.users?.instructors_by_gender?.female || 0})`;
 
                     // Update courses by category
                     const coursesByCategoryEl = document.getElementById('coursesByCategory');
@@ -294,20 +296,20 @@
                 const users = result.data.data || result.data;
                 const pagination = result.data;
 
-                    // Update table
-                    const tbody = document.getElementById('recentUsersTableBody');
-                    tbody.innerHTML = '';
+                // Update table
+                const tbody = document.getElementById('recentUsersTableBody');
+                tbody.innerHTML = '';
 
-                    if (users.length === 0) {
-                        tbody.innerHTML =
-                            '<tr><td colspan="6" class="text-center text-muted py-4">No users found</td></tr>';
-                    } else {
-                        users.forEach((user, index) => {
-                            const statusBadge = user.is_active ?
-                                '<span class="badge text-success" style="background: #DCFCE7;"><i class="fa fa-circle p-1 text-success" style="font-size:10px;"></i>Active</span>' :
-                                '<span class="badge bg-danger text-white"><i class="fa fa-circle p-1 text-white" style="font-size:10px;"></i>Inactive</span>';
+                if (users.length === 0) {
+                    tbody.innerHTML =
+                        '<tr><td colspan="6" class="text-center text-muted py-4">No users found</td></tr>';
+                } else {
+                    users.forEach((user, index) => {
+                        const statusBadge = user.is_active ?
+                            '<span class="badge text-success" style="background: #DCFCE7;"><i class="fa fa-circle p-1 text-success" style="font-size:10px;"></i>Active</span>' :
+                            '<span class="badge bg-danger text-white"><i class="fa fa-circle p-1 text-white" style="font-size:10px;"></i>Inactive</span>';
 
-                            const row = `
+                        const row = `
                 <tr>
                   <td>${user.first_name} ${user.last_name}</td>
                   <td>${user.identifier}</td>
@@ -317,18 +319,17 @@
                   <td>${user.formatted_date}</td>
                 </tr>
               `;
-                            tbody.innerHTML += row;
-                        });
-                    }
-
-                    // Update pagination info
-                    const info = `Showing ${users.length} of ${pagination.total} users`;
-                    document.getElementById('recentUsersInfo').textContent = info;
-
-                    // Update pagination buttons
-                    document.getElementById('prevBtn').disabled = !pagination.prev_page_url;
-                    document.getElementById('nextBtn').disabled = !pagination.next_page_url;
+                        tbody.innerHTML += row;
+                    });
                 }
+
+                // Update pagination info
+                const info = `Showing ${users.length} of ${pagination.total} users`;
+                document.getElementById('recentUsersInfo').textContent = info;
+
+                // Update pagination buttons
+                document.getElementById('prevBtn').disabled = !pagination.prev_page_url;
+                document.getElementById('nextBtn').disabled = !pagination.next_page_url;
             } catch (error) {
                 console.error('Error loading recent users:', error);
             }

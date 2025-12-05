@@ -95,8 +95,12 @@ class BaseApiClient {
    */
   static async post(endpoint, data = {}, config = {}) {
     try {
+      // Check if data is FormData (for file uploads)
+      const isFormData = data instanceof FormData;
+      const headers = isFormData ? this.getAuthHeadersForFormData() : this.getAuthHeaders();
+
       const response = await axios.post(`${API_BASE_URL}${endpoint}`, data, {
-        headers: this.getAuthHeaders(),
+        headers: headers,
         ...config
       });
       return this.handleSuccess(response);
@@ -142,6 +146,24 @@ class BaseApiClient {
     const headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
+    };
+
+    const token = this.getToken();
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    return headers;
+  }
+
+  /**
+   * Get authorization headers for FormData (file uploads)
+   * Don't set Content-Type - let browser set it to multipart/form-data
+   */
+  static getAuthHeadersForFormData() {
+    const headers = {
+      'Accept': 'application/json'
+      // Don't set Content-Type - axios will set it to multipart/form-data automatically
     };
 
     const token = this.getToken();
@@ -205,4 +227,6 @@ class BaseApiClient {
     }
   }
 }
+
+export default BaseApiClient;
 

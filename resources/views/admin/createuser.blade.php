@@ -909,30 +909,35 @@
 
                 // Only append optional fields if they have values
                 const dateOfBirth = document.getElementById('dateOfBirth').value;
-                if (dateOfBirth) formData.append('date_of_birth', dateOfBirth);
+                if (dateOfBirth) {
+                    // Ensure date is in yyyy-MM-dd format (not ISO 8601)
+                    const dateObj = new Date(dateOfBirth);
+                    const formattedDate = dateObj.toISOString().split('T')[0];
+                    formData.append('date_of_birth', formattedDate);
+                }
 
-                const phoneNumber = document.getElementById('phoneNumber').value;
+                const phoneNumber = document.getElementById('phoneNumber').value.trim();
                 if (phoneNumber) formData.append('phone_number', phoneNumber);
 
-                const homeAddress = document.getElementById('homeAddress').value;
+                const homeAddress = document.getElementById('homeAddress').value.trim();
                 if (homeAddress) formData.append('home_address', homeAddress);
 
-                const state = document.getElementById('state').value;
+                const state = document.getElementById('state').value.trim();
                 if (state) formData.append('state', state);
 
-                const zipcode = document.getElementById('zipcode').value;
+                const zipcode = document.getElementById('zipcode').value.trim();
                 if (zipcode) formData.append('zipcode', zipcode);
 
-                const parentFirstName = document.getElementById('parentFirstName').value;
+                const parentFirstName = document.getElementById('parentFirstName').value.trim();
                 if (parentFirstName) formData.append('parent_first_name', parentFirstName);
 
-                const parentLastName = document.getElementById('parentLastName').value;
+                const parentLastName = document.getElementById('parentLastName').value.trim();
                 if (parentLastName) formData.append('parent_last_name', parentLastName);
 
-                const parentEmail = document.getElementById('parentEmail').value;
+                const parentEmail = document.getElementById('parentEmail').value.trim();
                 if (parentEmail) formData.append('parent_email', parentEmail);
 
-                const parentPhone = document.getElementById('parentPhone').value;
+                const parentPhone = document.getElementById('parentPhone').value.trim();
                 if (parentPhone) formData.append('parent_phone', parentPhone);
 
                 // Add profile photo if selected
@@ -956,12 +961,14 @@
                         console.log('Request failed:', result);
 
                         if (result.errors) {
-                            // Show validation errors
-                            let errorMessage = 'Validation errors:\n';
+                            // Show validation errors with user-friendly messages
+                            let errorMessages = [];
                             for (const [field, messages] of Object.entries(result.errors)) {
-                                errorMessage += `${field}: ${messages.join(', ')}\n`;
+                                const userFriendlyMessage = formatValidationError(field, messages);
+                                errorMessages.push(userFriendlyMessage);
                             }
-                            console.error(errorMessage);
+                            const errorMessage = errorMessages.join('\n');
+                            console.error('Validation errors:', errorMessage);
                             showAlert(errorMessage, 'error');
                         } else {
                             showAlert(result.message || 'Failed to create user', 'error');
@@ -988,6 +995,37 @@
                 createUserForm.reset();
                 profilePreview.src = 'images/winner-round.png';
             });
+        }
+
+        // Format validation error messages to be user-friendly
+        function formatValidationError(field, messages) {
+            const fieldLabels = {
+                'first_name': 'First Name',
+                'last_name': 'Last Name',
+                'email': 'Email Address',
+                'password': 'Password',
+                'role': 'Role',
+                'gender': 'Gender',
+                'date_of_birth': 'Date of Birth',
+                'phone_number': 'Phone Number',
+                'home_address': 'Home Address',
+                'state': 'State',
+                'zipcode': 'Zip Code',
+                'parent_first_name': 'Parent First Name',
+                'parent_last_name': 'Parent Last Name',
+                'parent_email': 'Parent Email',
+                'parent_phone': 'Parent Phone',
+                'profile_photo': 'Profile Photo'
+            };
+
+            const fieldLabel = fieldLabels[field] || field;
+            const messageText = Array.isArray(messages) ? messages[0] : messages;
+
+            // Extract the actual error message (remove field name if it's at the start)
+            let cleanMessage = messageText.replace(new RegExp(`^The ${field} field `, 'i'), '');
+            cleanMessage = cleanMessage.replace(new RegExp(`^The ${fieldLabel.toLowerCase()} field `, 'i'), '');
+
+            return `${fieldLabel}: ${cleanMessage}`;
         }
 
         // Alert helper function

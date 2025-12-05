@@ -109,7 +109,7 @@
   let currentPage = 1;
   let totalPages = 1;
   let currentSearch = '';
-  let currentFilter = '';
+  let currentFilter = 'role-student'; // Default filter for students page
 
   // Load users on page load
   document.addEventListener('DOMContentLoaded', function() {

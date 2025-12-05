@@ -4,6 +4,8 @@
  * Extends BaseApiClient for common functionality
  */
 
+import BaseApiClient from './baseApiClient.js';
+
 class WalletApiClient extends BaseApiClient {
   /**
    * Get wallet balance
@@ -174,4 +176,6 @@ class WalletApiClient extends BaseApiClient {
     });
   }
 }
+
+export default WalletApiClient;
 

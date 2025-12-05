@@ -48,7 +48,7 @@
             Please set a new password for your account.
           </p>
 
-          <form id="resetForm" method="POST">
+          <form id="resetForm" method="POST" action="javascript:void(0);">
             @csrf
             <div class="custom-form-group mb-5">
               <label for="password" class="custom-label">Enter new Password</label>

@@ -111,7 +111,9 @@
             </div>
     </main>
 
-    <script>
+    <script type="module">
+        import AdminApiClient from '{{ asset('js/api/adminApiClient.js') }}';
+
         // Get auth token
         const token = localStorage.getItem('auth_token');
         let currentPage = 1;
@@ -134,9 +136,6 @@
                 loadUsers(1);
             });
         });
-
-        // Import API client
-        import AdminApiClient from '{{ asset('js/api/adminApiClient.js') }}';
 
         // Load users from API
         async function loadUsers(page = 1) {
@@ -166,25 +165,25 @@
                 currentPage = page;
                 const users = result.data.data || result.data;
                 const pagination = result.data;
-                    totalPages = pagination.last_page;
+                totalPages = pagination.last_page;
 
-                    // Update table
-                    const tbody = document.getElementById('usersTableBody');
-                    tbody.innerHTML = '';
+                // Update table
+                const tbody = document.getElementById('usersTableBody');
+                tbody.innerHTML = '';
 
-                    if (users.length === 0) {
-                        tbody.innerHTML =
-                            '<tr><td colspan="8" class="text-center text-muted py-4">No users found</td></tr>';
-                    } else {
-                        users.forEach((user, index) => {
-                            const profilePhoto = user.profile_photo ?
-                                `storage/${user.profile_photo}` :
-                                'images/winner-round.png';
+                if (users.length === 0) {
+                    tbody.innerHTML =
+                        '<tr><td colspan="8" class="text-center text-muted py-4">No users found</td></tr>';
+                } else {
+                    users.forEach((user, index) => {
+                        const profilePhoto = user.profile_photo ?
+                            `storage/${user.profile_photo}` :
+                            'images/winner-round.png';
 
-                            const roleColor = user.role === 'admin' ? '#6c757d' :
-                                user.role === 'instructor' ? '#004A53' : '#FDAF22';
+                        const roleColor = user.role === 'admin' ? '#6c757d' :
+                            user.role === 'instructor' ? '#004A53' : '#FDAF22';
 
-                            const row = `
+                        const row = `
               <tr style="border-bottom: 1px solid #e8e8e8;">
                 <td style="padding: 1rem; color: #666; font-size:14px;">${String((page - 1) * 20 + index + 1).padStart(2, '0')}</td>
                 <td style="padding: 1rem;">
@@ -212,21 +211,20 @@
                 </td>
               </tr>
             `;
-                            tbody.innerHTML += row;
-                        });
-                    }
-
-                    // Update pagination info
-                    document.getElementById('currentPageNum').textContent = currentPage;
-                    document.getElementById('totalPageNum').textContent = totalPages;
-
-                    // Update pagination buttons
-                    document.getElementById('prevBtn').disabled = !pagination.prev_page_url;
-                    document.getElementById('nextBtn').disabled = !pagination.next_page_url;
-
-                    // Generate page numbers
-                    generatePageNumbers(currentPage, totalPages);
+                        tbody.innerHTML += row;
+                    });
                 }
+
+                // Update pagination info
+                document.getElementById('currentPageNum').textContent = currentPage;
+                document.getElementById('totalPageNum').textContent = totalPages;
+
+                // Update pagination buttons
+                document.getElementById('prevBtn').disabled = !pagination.prev_page_url;
+                document.getElementById('nextBtn').disabled = !pagination.next_page_url;
+
+                // Generate page numbers
+                generatePageNumbers(currentPage, totalPages);
             } catch (error) {
                 console.error('Error loading users:', error);
             }

@@ -4,6 +4,8 @@
  * Extends BaseApiClient for common functionality
  */
 
+import BaseApiClient from './baseApiClient.js';
+
 class TransactionApiClient extends BaseApiClient {
   /**
    * Get all transactions
@@ -159,4 +161,6 @@ class TransactionApiClient extends BaseApiClient {
     return this.get(`/transactions/reference/${reference}`);
   }
 }
+
+export default TransactionApiClient;
 

@@ -109,7 +109,7 @@
                     <div class="d-flex justify-content-between align-items-center mt-5 pt-4"
                         style="border-top: 1px solid #e8e8e8;">
                         <!-- Previous Button -->
-                        <button class="btn px-4 py-2"
+                        <button id="prevBtn" class="btn px-4 py-2"
                             style="border: 1px solid #004A53; color: #004A53; font-weight: 500; border-radius: 0.5rem;">
                             <i class="fa-solid fa-chevron-left me-2"></i> Previous
                         </button>
@@ -117,25 +117,17 @@
                         <!-- Pagination Info -->
                         <div class="d-flex align-items-center gap-3">
                             <span class="text-muted fw-semibold" style="font-size: 0.9rem;">Page <strong
-                                    style="color: #004A53;">1</strong> of <strong
-                                    style="color: #004A53;">12</strong></span>
+                                    id="currentPageNum" style="color: #004A53;">1</strong> of <strong
+                                    id="totalPageNum" style="color: #004A53;">1</strong></span>
 
                             <!-- Page Numbers -->
-                            <div class="d-flex gap-2">
-                                <button class="btn btn-sm"
-                                    style="background-color: #004A53; color: white; border: none; width: 2.5rem; height: 2.5rem; border-radius: 0.5rem; font-weight: 600;">1</button>
-                                <button class="btn btn-sm"
-                                    style="border: 1px solid #ddd; color: #333; width: 2.5rem; height: 2.5rem; border-radius: 0.5rem;">2</button>
-                                <button class="btn btn-sm"
-                                    style="border: 1px solid #ddd; color: #333; width: 2.5rem; height: 2.5rem; border-radius: 0.5rem;">3</button>
-                                <span style="color: #999;">...</span>
-                                <button class="btn btn-sm"
-                                    style="border: 1px solid #ddd; color: #333; width: 2.5rem; height: 2.5rem; border-radius: 0.5rem;">12</button>
+                            <div class="d-flex gap-2" id="pageNumbersContainer">
+                                <!-- Page numbers will be generated here -->
                             </div>
                         </div>
 
                         <!-- Next Button -->
-                        <button class="btn px-4 py-2"
+                        <button id="nextBtn" class="btn px-4 py-2"
                             style="border: 1px solid #004A53; color: #004A53; font-weight: 500; border-radius: 0.5rem;">
                             Next <i class="fa-solid fa-chevron-right ms-2"></i>
                         </button>
@@ -238,90 +230,166 @@
 
     <script type="module">
         import UIHelpers from '{{ asset('js/utils/uiHelpers.js') }}';
-
+        import AdminApiClient from '{{ asset('js/api/adminApiClient.js') }}';
 
         // Get auth token
         const token = localStorage.getItem('auth_token');
         let currentPage = 1;
+        let totalPages = 1;
+        let paginationData = null;
 
         // Fetch dashboard data on page load
         document.addEventListener('DOMContentLoaded', function() {
             loadUsersActivities(1);
+            setupPaginationListeners();
         });
 
+        // Setup pagination button listeners
+        function setupPaginationListeners() {
+            document.getElementById('prevBtn').addEventListener('click', function() {
+                if (currentPage > 1) {
+                    loadUsersActivities(currentPage - 1);
+                }
+            });
+
+            document.getElementById('nextBtn').addEventListener('click', function() {
+                if (currentPage < totalPages) {
+                    loadUsersActivities(currentPage + 1);
+                }
+            });
+        }
 
         // Load users Activities
         async function loadUsersActivities(page = 1) {
             try {
-                const response = await fetch(`/api/admin/dashboard`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Accept': 'application/json'
-                    }
-                });
+                const result = await AdminApiClient.getUserActivity({ page: page, per_page: 10 });
 
-                if (!response.ok) {
-                    console.error('Failed to fetch recent users');
-                    return;
-                }
-
-                const data = await response.json();
-                if (data.success && data.data) {
+                if (result.success && result.data) {
                     currentPage = page;
-                    const activities = data.data.recent_activity;
-                    const pagination = data.data;
-                    console.log(data);
-                    console.log(activities);
+                    // Handle paginated response from admin dashboard
+                    const recentActivityData = result.data.recent_activity || {};
+                    const activities = recentActivityData.data || [];
+                    paginationData = recentActivityData;
+                    totalPages = recentActivityData.last_page || 1;
+
+                    console.log('Activities:', activities);
+                    console.log('Pagination:', paginationData);
+
                     // Update table
                     const tbody = document.getElementById('usersActivitiesTableBody');
                     tbody.innerHTML = '';
 
                     if (activities.length === 0) {
                         tbody.innerHTML =
-                            '<tr><td colspan="6" class="text-center text-muted py-4">No activities found</td></tr>';
+                            '<tr><td colspan="5" class="text-center text-muted py-4">No activities found</td></tr>';
                     } else {
                         activities.forEach((activity, index) => {
-                            const statusBadge = activity.is_active ?
-                                '<span class="badge text-success" style="background: #DCFCE7;"><i class="fa fa-circle p-1 text-success" style="font-size:10px;"></i>Active</span>' :
-                                '<span class="badge bg-danger text-white"><i class="fa fa-circle p-1 text-white" style="font-size:10px;"></i>Inactive</span>';
+                            const rowNumber = (currentPage - 1) * 10 + index + 1;
+                            const userName = activity.user ? (activity.user.first_name + ' ' + activity.user.last_name) : 'System';
+                            const userPhoto = activity.user && activity.user.profile_photo ? 'storage/' + activity.user.profile_photo : 'images/jimmy.png';
+                            const actionDescription = activity.description || 'Activity';
 
                             const row = `
-                                     <tr style="border-bottom: 1px solid #e8e8e8;">
-                                            <td style="padding: 1rem; color: #666; font-size:14px;">${++index}</td>
-                                            <td style="padding: 1rem; font-size:14px;">
-                                                <div class="d-flex align-items-center">
-                                                    <img src="${activity.user ? activity.user.profile_photo ? 'storage/'+ activity.user.profile_photo : 'images/jimmy.png'  : 'images/jimmy.png'}" class="rounded-circle me-3" alt="User"
-                                                        width="40" height="40" style="object-fit: cover;">
-                                                    <span style="color: #333; font-weight: 500;">${activity.user ? activity.user.first_name : activity.course.instructor.first_name } ${activity.user ? activity.user.last_name : activity.course.instructor.last_name }</span>
-                                                </div>
-                                            </td>
-                                            <td style="padding: 1rem; color: #666; font-size:14px;">${activity.description ? activity.description : 0}</td>
-                                            <td style="padding: 1rem; color: #666; font-size:14px;">${UIHelpers.formatDate(activity.timestamp) }</td>
-
-                                            <td style="padding: 1rem;">
-                                                <span class="badge" style="background-color: #28a745; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">Completed</span>
-                                            </td>
-                                        </tr>
-                                `;
+                                <tr style="border-bottom: 1px solid #e8e8e8;">
+                                    <td style="padding: 1rem; color: #666; font-size:14px;">${rowNumber}</td>
+                                    <td style="padding: 1rem; font-size:14px;">
+                                        <div class="d-flex align-items-center">
+                                            <img src="${userPhoto}" class="rounded-circle me-3" alt="User"
+                                                width="40" height="40" style="object-fit: cover;">
+                                            <span style="color: #333; font-weight: 500;">${userName}</span>
+                                        </div>
+                                    </td>
+                                    <td style="padding: 1rem; color: #666; font-size:14px;">${actionDescription}</td>
+                                    <td style="padding: 1rem; color: #666; font-size:14px;">${UIHelpers.formatDate(activity.timestamp)}</td>
+                                    <td style="padding: 1rem;">
+                                        <span class="badge" style="background-color: #28a745; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">Completed</span>
+                                    </td>
+                                </tr>
+                            `;
                             tbody.innerHTML += row;
                         });
                     }
 
-
                     // Update pagination info
-                    // const info = `Showing ${activities.length} of ${pagination.total} Activities`;
-                    // document.getElementById('recentUsersInfo').textContent = info;
-
-                    // // Update pagination buttons
-                    // document.getElementById('prevBtn').disabled = !pagination.prev_page_url;
-                    // document.getElementById('nextBtn').disabled = !pagination.next_page_url;
+                    updatePaginationUI();
+                } else {
+                    console.error('Failed to load activities:', result.message);
                 }
             } catch (error) {
-                console.error('Error loading recent Activities:', error);
+                console.error('Error loading activities:', error);
             }
         }
 
+        // Update pagination UI
+        function updatePaginationUI() {
+            // Update page numbers
+            document.getElementById('currentPageNum').textContent = currentPage;
+            document.getElementById('totalPageNum').textContent = totalPages;
+
+            // Update Previous/Next buttons
+            document.getElementById('prevBtn').disabled = currentPage === 1;
+            document.getElementById('nextBtn').disabled = currentPage === totalPages;
+
+            // Generate page number buttons
+            const pageNumbersContainer = document.getElementById('pageNumbersContainer');
+            pageNumbersContainer.innerHTML = '';
+
+            const maxPagesToShow = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+            let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+
+            if (endPage - startPage < maxPagesToShow - 1) {
+                startPage = Math.max(1, endPage - maxPagesToShow + 1);
+            }
+
+            // Add first page if not visible
+            if (startPage > 1) {
+                const btn = document.createElement('button');
+                btn.className = 'btn btn-sm';
+                btn.textContent = '1';
+                btn.style.cssText = 'border: 1px solid #ddd; color: #333; width: 2.5rem; height: 2.5rem; border-radius: 0.5rem;';
+                btn.addEventListener('click', () => loadUsersActivities(1));
+                pageNumbersContainer.appendChild(btn);
+
+                if (startPage > 2) {
+                    const dots = document.createElement('span');
+                    dots.textContent = '...';
+                    dots.style.color = '#999';
+                    pageNumbersContainer.appendChild(dots);
+                }
+            }
+
+            // Add page numbers
+            for (let i = startPage; i <= endPage; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'btn btn-sm';
+                btn.textContent = i;
+                if (i === currentPage) {
+                    btn.style.cssText = 'background-color: #004A53; color: white; border: none; width: 2.5rem; height: 2.5rem; border-radius: 0.5rem; font-weight: 600;';
+                } else {
+                    btn.style.cssText = 'border: 1px solid #ddd; color: #333; width: 2.5rem; height: 2.5rem; border-radius: 0.5rem;';
+                    btn.addEventListener('click', () => loadUsersActivities(i));
+                }
+                pageNumbersContainer.appendChild(btn);
+            }
+
+            // Add last page if not visible
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    const dots = document.createElement('span');
+                    dots.textContent = '...';
+                    dots.style.color = '#999';
+                    pageNumbersContainer.appendChild(dots);
+                }
+
+                const btn = document.createElement('button');
+                btn.className = 'btn btn-sm';
+                btn.textContent = totalPages;
+                btn.style.cssText = 'border: 1px solid #ddd; color: #333; width: 2.5rem; height: 2.5rem; border-radius: 0.5rem;';
+                btn.addEventListener('click', () => loadUsersActivities(totalPages));
+                pageNumbersContainer.appendChild(btn);
+            }
+        }
 
     </script>
 @endsection

@@ -4,6 +4,8 @@
  * Extends BaseApiClient for common functionality
  */
 
+import BaseApiClient from './baseApiClient.js';
+
 class AdminApiClient extends BaseApiClient {
   /**
    * Get admin dashboard statistics
@@ -94,17 +96,16 @@ class AdminApiClient extends BaseApiClient {
   }
 
   /**
-   * Get user activity
-   * @param {object} filters - Filter options (page, per_page, user_id)
+   * Get user activity (all activities from admin dashboard)
+   * @param {object} filters - Filter options (page, per_page)
    */
   static async getUserActivity(filters = {}) {
     const params = new URLSearchParams();
     if (filters.page) params.append('page', filters.page);
     if (filters.per_page) params.append('per_page', filters.per_page);
-    if (filters.user_id) params.append('user_id', filters.user_id);
 
     const queryString = params.toString();
-    const endpoint = queryString ? `/admin/activity?${queryString}` : '/admin/activity';
+    const endpoint = queryString ? `/admin/dashboard?${queryString}` : '/admin/dashboard';
     return this.get(endpoint);
   }
 
@@ -165,4 +166,6 @@ class AdminApiClient extends BaseApiClient {
     return this.get(endpoint);
   }
 }
+
+export default AdminApiClient;
 

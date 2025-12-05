@@ -48,7 +48,7 @@
                     <p class="mb-4" style = "color:#969696;font:inter;">An authentication code has been sent to your
                         email</p>
 
-                    <form id="verifyForm" method="POST">
+                    <form id="verifyForm" method="POST" action="javascript:void(0);">
                         @csrf
                         <div class="custom-form-group">
                             <label for="email" class="custom-label">Email Address</label>

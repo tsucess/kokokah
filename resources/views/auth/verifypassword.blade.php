@@ -46,19 +46,22 @@
                     <p class="mb-4" style = "color:#969696;font:inter;">An authentication code has been sent to your
                         email</p>
 
-                    <div class="custom-form-group">
+                    <form id="verifyForm" method="POST" action="javascript:void(0);">
+                        @csrf
+                        <div class="custom-form-group">
 
                         <label for="verifycode" class="custom-label">Enter code</label>
 
                         <input type="text" class="form-control-custom" id="verifycode" placeholder="80EAS33">
-                    </div>
-                    <p>
-                        Didn’t receive a code?
-                        <a href = "#" style = "color:red; text-decoration:none;">Resend</a>
-                    </p>
+                        </div>
+                        <p>
+                            Didn’t receive a code?
+                            <a href = "#" id="resendLink" style = "color:red; text-decoration:none;">Resend</a>
+                        </p>
 
 
-                    <button type="submit" class="btn primaryButton w-100">Verify</button>
+                        <button type="submit" class="btn primaryButton w-100" id="verifyBtn">Verify</button>
+                    </form>
 
                 </div>
             </div>

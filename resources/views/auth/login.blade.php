@@ -41,7 +41,7 @@
           <h4 class="auth-heading">Sign in</h4>
           <p class="auth-subheading">Please login to continue to your account.</p>
 
-          <form id="loginForm" method="POST">
+          <form id="loginForm" method="POST" action="javascript:void(0);">
                 @csrf
                 <div class = "pt-3">
                 <div class="custom-form-group">

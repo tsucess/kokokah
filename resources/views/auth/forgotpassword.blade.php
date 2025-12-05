@@ -46,7 +46,7 @@
           <h4 class = "text-dark mb-2">Forgot your Password?</h4>
           <p class="mb-5" style = "color:#969696;font:inter;">Enter your email below to recover your password.</p>
 
-          <form id="forgotForm" method="POST">
+          <form id="forgotForm" method="POST" action="javascript:void(0);">
             @csrf
             <div class="custom-form-group">
               <label for="email" class="custom-label">Enter Email Address</label>
