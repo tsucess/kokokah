@@ -286,6 +286,14 @@
                 width: 100%;
             }
         }
+
+        .small-check {
+            width: 0.8rem;
+            height: 0.8rem;
+            transform: scale(0.8);
+            margin: 0;
+            /* optional: keeps alignment clean */
+        }
     </style>
 
     <main>
@@ -383,7 +391,16 @@
                     </div>
 
                     <div class="form-group-custom">
-                        <label for="coursePrice">Price</label>
+                        <div class="d-flex align-items-center gap-2">
+                            <label for="coursePrice">Price</label>
+                            <div class="form-check d-flex gap-1 align-items-center ">
+                                <input class="form-check-input small-check" type="checkbox" value="" id="free-course">
+                                <label class="form-check-label" for="checkChecked">
+                                    Free Course
+                                </label>
+                            </div>
+                        </div>
+
                         <input type="number" class="form-control" id="coursePrice" name="coursePrice"
                             placeholder="e.g., 200" min="1" required>
                     </div>
@@ -785,6 +802,7 @@
             duration: "",
             price: "",
             description: "",
+            freeCourse: '',
             imageFile: null
         };
         const API_CATEGORIES = "/api/course-category";
@@ -989,6 +1007,19 @@
             document.getElementById('courseDescription').addEventListener('input', e => {
                 courseData.description = e.target.value;
             });
+            document.getElementById('free-course').addEventListener('change', e => {
+                const checked = e.target.checked;
+
+                courseData.freeCourse = checked;
+                const priceInput = document.getElementById("coursePrice");
+
+                priceInput.disabled = checked;
+
+                if (checked) {
+                    priceInput.value = "";
+                    courseData.price = "";
+                }
+            })
 
             // File upload
             document.getElementById('fileInput').addEventListener('change', e => {
@@ -1004,7 +1035,8 @@
                 document.getElementById('publishSubjectTitle').textContent = courseData.title;
                 document.getElementById('publishCategory').textContent = courseData.category.split('-')[1] +
                     ' Category';
-                document.getElementById('publishPrice').textContent = courseData.price + ' Price';
+                document.getElementById('publishPrice').textContent = courseData.freeCourse ? 'Free Course' :
+                    courseData.price + ' Price';
                 document.getElementById('publishTime').textContent = courseData.duration + ' Hours';
                 document.getElementById('publishLevel').textContent = courseData.level.split('-')[1] + ' Level';
                 document.getElementById('publishDescription').textContent = courseData.description;
@@ -1082,10 +1114,13 @@
                     courseData.category.split('-')[0],
                     courseData.level.split('-')[0],
                     courseData.duration,
-                    courseData.price,
                     courseData.description,
                     courseData.imageFile
                 ];
+
+                if (!courseData.freeCourse) {
+                    required.push(courseData.price);
+                }
 
                 return required.every(v => v && v !== "");
             }
