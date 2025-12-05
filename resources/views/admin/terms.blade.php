@@ -440,70 +440,71 @@
         <div id="toastContainer" aria-live="polite" aria-atomic="true"></div>
 
         <!-- ========== End helpers ========== -->
-        <!-- ======= Script: copy-paste entire block below to replace your <script> section ======= -->
+        <!-- ======= Script: copy-paste entire block below to replace your <script>
+            section === === = -->
 
 
             <script>
                 (function() {
-                    // Config
-                    const API_URL = "/api/term";
-                    const token = localStorage.getItem('auth_token') || '';
-                    let terms = [];
-                    let currentEditId = null;
-                    let currentDeleteId = null;
-                    let isSaving = false;
+                        // Config
+                        const API_URL = "/api/term";
+                        const token = localStorage.getItem('auth_token') || '';
+                        let terms = [];
+                        let currentEditId = null;
+                        let currentDeleteId = null;
+                        let isSaving = false;
 
-                    // DOM refs
-                    const grid = document.getElementById('termsGrid');
-                    const termForm = document.getElementById('termForm');
-                    const termNameInput = document.getElementById('termName');
-                    const modalEl = document.getElementById('addTermModal');
-                    const modalTitle = document.getElementById('modalTitle');
+                        // DOM refs
+                        const grid = document.getElementById('termsGrid');
+                        const termForm = document.getElementById('termForm');
+                        const termNameInput = document.getElementById('termName');
+                        const modalEl = document.getElementById('addTermModal');
+                        const modalTitle = document.getElementById('modalTitle');
 
-                    // ---------- Toast helper ----------
-                    function showToast(title = '', message = '', type = 'info', timeout = 3500) {
-                        // type: 'success' | 'danger' | 'info'
-                        const container = document.getElementById('toastContainer');
-                        const toastId = 'toast-' + Date.now();
+                        // ---------- Toast helper ----------
+                        function showToast(title = '', message = '', type = 'info', timeout = 3500) {
+                            // type: 'success' | 'danger' | 'info'
+                            const container = document.getElementById('toastContainer');
+                            const toastId = 'toast-' + Date.now();
 
-                        const bgClass = (type === 'success') ? 'bg-success text-white' : (type === 'danger') ?
-                            'bg-danger text-white' : 'bg-light';
-                        const headerClass = (type === 'info') ? '' : '';
+                            const bgClass = (type === 'success') ? 'bg-success text-white' : (type === 'danger') ?
+                                'bg-danger text-white' : 'bg-light';
+                            const headerClass = (type === 'info') ? '' : '';
 
-                        const toastHtml = `
-                            <div id="${toastId}" class="toast ${bgClass}" role="alert" aria-live="assertive" aria-atomic="true">
-                            <div class="d-flex">
-                                <div class="toast-body" style="padding:0.75rem;">
-                                <strong>${title}</strong>
-                                <div style="font-size:0.9rem; margin-top:0.35rem;">${message}</div>
+                            const toastHtml = `
+                                <div id="${toastId}" class="toast ${bgClass}" role="alert" aria-live="assertive" aria-atomic="true">
+                                <div class="d-flex">
+                                    <div class="toast-body" style="padding:0.75rem;">
+                                    <strong>${title}</strong>
+                                    <div style="font-size:0.9rem; margin-top:0.35rem;">${message}</div>
+                                    </div>
+                                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close" style="margin-left:auto;"></button>
                                 </div>
-                                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close" style="margin-left:auto;"></button>
-                            </div>
-                            </div>
-                        `;
-                        container.insertAdjacentHTML('beforeend', toastHtml);
-                        const toastEl = document.getElementById(toastId);
-                        const bsToast = new bootstrap.Toast(toastEl, {
-                            delay: timeout
-                        });
-                        bsToast.show();
+                                </div>
+                            `;
+                            container.insertAdjacentHTML('beforeend', toastHtml);
+                            const toastEl = document.getElementById(toastId);
+                            const bsToast = new bootstrap.Toast(toastEl, {
+                                delay: timeout
+                            });
+                            bsToast.show();
 
-                        // remove from DOM after hidden
-                        toastEl.addEventListener('hidden.bs.toast', () => toastEl.remove());
-                    }
+                            // remove from DOM after hidden
+                            toastEl.addEventListener('hidden.bs.toast', () => toastEl.remove());
+                        }
 
-                    // ---------- Skeleton UI ----------
-                    function showSkeletons(count = 3) {
-                        grid.innerHTML = '';
-                        const wrap = document.createElement('div');
-                        wrap.className = 'skeleton-grid';
-                        for (let i = 0; i < count; i++) {
-                            const card = document.createElement('div');
-                            card.className = 'skeleton-card';
-                            card.innerHTML = `
-                    <div class="skeleton-line mid"></div>
-                    <div class="skeleton-line short"></div>
-                `;
+                        // ---------- Skeleton UI ----------
+                        function showSkeletons(count = 3) {
+                            grid.innerHTML = '';
+                            const wrap = document.createElement('div');
+                            wrap.className = 'skeleton-grid';
+                            for (let i = 0; i < count; i++) {
+                                const card = document.createElement('div');
+                                card.className = 'skeleton-card';
+                                card.innerHTML = `
+                        <div class="skeleton-line mid"></div>
+                        <div class="skeleton-line short"></div>
+                    `;
                             wrap.appendChild(card);
                         }
                         grid.appendChild(wrap);
@@ -727,9 +728,9 @@
                     loadTerms();
 
                 })();
-        </script>
+            </script>
 
 
 
-        </main>
+                </main>
 @endsection

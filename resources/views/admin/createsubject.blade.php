@@ -347,38 +347,38 @@
             <form id="courseDetailsForm">
                 @csrf
 
-                <input type="hidden" class="form-control" id="curriculumCategoryId" name="curriculumCategoryId"  required>
+                <input type="hidden" class="form-control" id="curriculumCategoryId" name="curriculumCategoryId" required>
                 <div class="form-row-two">
-                <div class="form-group-custom">
-                    <label for="subjectTitle">Course Title</label>
-                    <input type="text" class="form-control" id="subjectTitle" name="subjectTitle"
-                        placeholder="Enter Subject Title" required>
-                </div>
-                <div class="form-group-custom">
-                    <label for="subjectTerm">Term</label>
-                    <select class="form-control" id="subjectTerm" name="subjectTerm" required></select>
-                </div>
+                    <div class="form-group-custom">
+                        <label for="courseTitle">Course Title</label>
+                        <input type="text" class="form-control" id="courseTitle" name="courseTitle"
+                            placeholder="Enter Subject Title" required>
+                    </div>
+                    <div class="form-group-custom">
+                        <label for="subjectTerm">Term</label>
+                        <select class="form-control" id="subjectTerm" name="subjectTerm" required></select>
+                    </div>
 
                 </div>
 
                 <div class="form-row-two">
                     <div class="form-group-custom">
-                        <label for="subjectCategory">Course Category</label>
-                        <select class="form-control" id="subjectCategory" name="subjectCategory" required>
+                        <label for="courseCategory">Course Category</label>
+                        <select class="form-control" id="courseCategory" name="courseCategory" required>
 
                         </select>
                     </div>
 
                     <div class="form-group-custom">
-                        <label for="subjectLevel">Course Level</label>
-                        <select class="form-control" id="subjectLevel" name="subjectLevel" required></select>
+                        <label for="courseLevel">Course Level</label>
+                        <select class="form-control" id="courseLevel" name="courseLevel" required></select>
                     </div>
                 </div>
 
                 <div class="form-row-two">
                     <div class="form-group-custom">
-                        <label for="subjectTime">Duration</label>
-                        <input type="text" class="form-control" id="subjectTime" name="subjectTime"
+                        <label for="courseTime">Duration</label>
+                        <input type="text" class="form-control" id="courseTime" name="courseTime"
                             placeholder="e.g., 2 hours" required>
                     </div>
 
@@ -400,7 +400,7 @@
                         <span title="Upload"><i class="fa-solid fa-file-arrow-up"></i></span>
                     </div>
 
-                    <textarea class="description-textarea" id="subjectDescription" name="subjectDescription"
+                    <textarea class="description-textarea" id="courseDescription" name="courseDescription"
                         placeholder="Write subject description here..." form="courseDetailsForm"></textarea>
                 </div>
             </form>
@@ -426,7 +426,8 @@
                     <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
                         <input type="text" class="form-control" id="fileNameDisplay" placeholder="No file selected"
                             readonly style="flex: 1;">
-                        <button type="button" class="btn btn-publish" id="uploadButton" style="padding: 0.75rem 1.5rem;">
+                        <button type="button" class="btn btn-publish" id="uploadButton"
+                            style="padding: 0.75rem 1.5rem;">
                             Upload File
                         </button>
                     </div>
@@ -729,10 +730,54 @@
                     </button>
                 </div>
             </div>
+        </div>
+
+        <div id="toastContainer" class="toast-container position-fixed top-0 end-0 p-3"></div>
+
     </main>
 
 
+
     <script>
+        // ===========================
+        //  TOAST NOTIFICATION SYSTEM
+        // ===========================
+        function showToast(title = '', message = '', type = 'info', timeout = 3500) {
+            const container = document.getElementById('toastContainer');
+            const toastId = 'toast-' + Date.now();
+
+            const bgClass = (type === 'success') ?
+                'bg-success text-white' :
+                (type === 'danger') ?
+                'bg-danger text-white' :
+                'bg-light';
+
+            const toastHtml = `
+                        <div id="${toastId}" class="toast ${bgClass}" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="d-flex">
+                                <div class="toast-body" style="padding:0.75rem;">
+                                    <strong>${title}</strong>
+                                    <div style="font-size:0.9rem; margin-top:0.35rem;">${message}</div>
+                                </div>
+                                <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                                        data-bs-dismiss="toast"></button>
+                            </div>
+                        </div>
+                    `;
+            container.insertAdjacentHTML('beforeend', toastHtml);
+
+            const toastEl = document.getElementById(toastId);
+            const bsToast = new bootstrap.Toast(toastEl, {
+                delay: timeout
+            });
+            bsToast.show();
+
+            toastEl.addEventListener("hidden.bs.toast", () => toastEl.remove());
+        }
+
+
+
+
         const courseData = {
             title: "",
             category: "",
@@ -753,9 +798,9 @@
             const sections = document.querySelectorAll('.content-section');
             const continueButtons = document.querySelectorAll('.continue-btn');
             const backButtons = document.querySelectorAll('.back-btn');
-            const courseCategory = document.getElementById('subjectCategory')
+            const courseCategory = document.getElementById('courseCategory')
             const courseTerm = document.getElementById('subjectTerm')
-            const courseLevel = document.getElementById('subjectLevel')
+            const courseLevel = document.getElementById('courseLevel')
 
             function showSection(sectionId) {
                 sections.forEach(sec => sec.classList.add('d-none'));
@@ -789,6 +834,7 @@
                     populateCategorySelect();
                 } catch (err) {
                     console.error('Failed to load categories', err);
+                    showToast("Error", "Failed to load categories", "danger");
                 }
             }
 
@@ -802,6 +848,7 @@
                     populateTermSelect();
                 } catch (err) {
                     console.error('Failed to load terms', err);
+                    showToast("Error", "Failed to load terms", "danger");
                 }
             }
 
@@ -810,8 +857,8 @@
                 courseCategory.innerHTML = `<option value="">Select Course Category</option>`;
                 categories.forEach(cat => {
                     const opt = document.createElement('option');
-                    opt.value = cat.id + '-' + cat.title ?? cat.name;
-                    opt.textContent = cat.title ?? cat.name ?? `#${cat.id}`;
+                    opt.value = cat.id + '-' + cat.title;
+                    opt.textContent = cat.title ?? `#${cat.id}`;
                     courseCategory.appendChild(opt);
                 });
             }
@@ -821,8 +868,8 @@
                 courseTerm.innerHTML = `<option value="">Select Term</option>`;
                 terms.forEach(term => {
                     const opt = document.createElement('option');
-                    opt.value = term.id + '-' + term.title ?? term.name;
-                    opt.textContent = term.title ?? term.name ?? `#${term.id}`;
+                    opt.value = term.id + '-' + term.name;
+                    opt.textContent = term.name ?? `#${term.id}`;
                     courseTerm.appendChild(opt);
                 });
             }
@@ -836,6 +883,7 @@
                     populateLevelSelect();
                 } catch (err) {
                     console.error('Failed to load levels', err);
+                    showToast("Error", "Failed to load levels", "danger");
                 }
             }
 
@@ -845,10 +893,26 @@
                 levels.forEach(level => {
                     const opt = document.createElement('option');
                     opt.value = level.id + '-' + level.name;
-                    opt.textContent = level.title ?? level.name ?? `#${level.id}`;
+                    opt.textContent = level.name ?? `#${level.id}`;
                     courseLevel.appendChild(opt);
                 });
             }
+
+            courseLevel.addEventListener('change', e => {
+                const selectedValue = e.target.value; // "3-SS1" format
+                const levelId = selectedValue.split('-')[0];
+
+                const selectedLevel = levels.find(l => l.id == levelId);
+
+                if (selectedLevel) {
+                    const curriculumId = selectedLevel.curriculum_category_id;
+
+                    document.getElementById('curriculumCategoryId').value = curriculumId;
+                    // console.log("Curriculum Category ID Set To:", curriculumId);
+                }
+            });
+
+
 
             async function apiFetch(url, opts = {}) {
                 const headers = Object.assign({
@@ -902,19 +966,19 @@
             }
 
             // Get data from form fields
-            document.getElementById('subjectTitle').addEventListener('input', e => {
+            document.getElementById('courseTitle').addEventListener('input', e => {
                 courseData.title = e.target.value;
             });
 
-            document.getElementById('subjectCategory').addEventListener('change', e => {
+            document.getElementById('courseCategory').addEventListener('change', e => {
                 courseData.category = e.target.value;
             });
 
-            document.getElementById('subjectLevel').addEventListener('change', e => {
+            document.getElementById('courseLevel').addEventListener('change', e => {
                 courseData.level = e.target.value;
             });
 
-            document.getElementById('subjectTime').addEventListener('input', e => {
+            document.getElementById('courseTime').addEventListener('input', e => {
                 courseData.duration = e.target.value;
             });
 
@@ -922,7 +986,7 @@
                 courseData.price = e.target.value;
             });
 
-            document.getElementById('subjectDescription').addEventListener('input', e => {
+            document.getElementById('courseDescription').addEventListener('input', e => {
                 courseData.description = e.target.value;
             });
 
@@ -959,10 +1023,12 @@
             navButtons.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const section = btn.getAttribute('data-section');
-                    if(section === 'media' && !courseData.title && !courseData.price && !courseData.duration ){
-                      return
+                    if (section === 'media' && !courseData.title && !courseData.price && !courseData
+                        .duration) {
+                        return
                     }
-                    if(section === 'publish' && !courseData.imageFile && !courseData.title && !courseData.price && !courseData.duration){
+                    if (section === 'publish' && !courseData.imageFile && !courseData.title && !
+                        courseData.price && !courseData.duration) {
                         return
                     }
                     showSection(section);
@@ -972,10 +1038,12 @@
             continueButtons.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const next = btn.getAttribute('data-next');
-                    if(next === 'media' && !courseData.title && !courseData.price && !courseData.duration ){
-                      return
+                    if (next === 'media' && !courseData.title && !courseData.price && !courseData
+                        .duration) {
+                        return
                     }
-                    if(next === 'publish' && !courseData.imageFile && !courseData.title && !courseData.price && !courseData.duration){
+                    if (next === 'publish' && !courseData.imageFile && !courseData.title && !
+                        courseData.price && !courseData.duration) {
                         return
                     }
                     showSection(next);
@@ -1036,12 +1104,21 @@
 
                     const formData = new FormData();
                     formData.append("title", courseData.title);
-                    formData.append("category", courseData.category.split('-')[0]);
-                    formData.append("level", courseData.level.split('-')[0]);
-                    formData.append("duration", courseData.duration);
-                    formData.append("price", courseData.price);
                     formData.append("description", courseData.description);
-                    formData.append("image", courseData.imageFile);
+
+                    // REQUIRED
+                    formData.append("curriculum_category_id", document.getElementById(
+                        "curriculumCategoryId").value);
+                    formData.append("course_category_id", courseData.category.split('-')[0]);
+                    formData.append("price", courseData.price);
+
+                    // OPTIONAL
+                    formData.append("level_id", courseData.level.split('-')[0]);
+                    formData.append("term_id", courseData.term ? courseData.term.split('-')[0] : "");
+                    formData.append("duration_hours", courseData.duration);
+
+                    // IMAGE FIELD MUST MATCH LARAVEL
+                    formData.append("thumbnail", courseData.imageFile);
 
                     try {
                         const res = await fetch("/api/courses", {
@@ -1054,11 +1131,20 @@
 
                         const data = await res.json();
                         console.log("Response:", data);
+                        if (res.ok) {
+                            showToast("Success", "Course created successfully!", "success");
+                            setTimeout(() => {
+                                window.location.href = "/editsubject";
+                            }, 1500);
+                        } else {
+                            showToast("Error", data.message || "Failed to create course.",
+                                "danger");
+                        }
 
-                        window.location.href = "/editsubject"
+
                     } catch (error) {
                         console.error(error);
-                        alert("Failed to publish course.");
+                        showToast("Error", "Network or server error occurred.", "danger");
                     }
                 });
             }
@@ -1067,7 +1153,7 @@
             // const saveDraftBtn = document.getElementById('saveDraftBtn');
             // if (saveDraftBtn) {
             //     saveDraftBtn.addEventListener('click', () => {
-            //         const title = document.getElementById('subjectTitle').value;
+            //         const title = document.getElementById('courseTitle').value;
             //         if (!title) {
             //             alert('Please enter a subject title');
             //             return;

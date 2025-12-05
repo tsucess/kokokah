@@ -77,7 +77,7 @@ class CourseController extends Controller
 
     public function index(Request $request)
     {
-        $query = Course::with(['category', 'instructor', 'level', 'term'])
+        $query = Course::with(['courseCategory', 'curriculumCategory', 'instructor', 'level', 'term'])
                        ->where('status', 'published');
 
         // Dynamic filtering
@@ -149,7 +149,7 @@ class CourseController extends Controller
             $course = Course::create($courseData);
 
             return $this->success(
-                $course->load(['course_category', 'curriculum_category', 'instructor', 'level', 'term']),
+                $course->load(['courseCategory', 'curriculumCategory', 'instructor', 'level', 'term']),
                 'Course created successfully',
                 201
             );
