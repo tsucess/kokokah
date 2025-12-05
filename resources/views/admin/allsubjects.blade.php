@@ -450,11 +450,11 @@
         }
 
         // <td style='font-size:14px;'>
-                //     <div class="d-flex align-items-center">
-                //         // <img src="${course.thumbnail ?? 'https://via.placeholder.com/40'}"
-                //         //      class="rounded-circle me-3" width="40" height="40" style="object-fit: cover;">
-                //         <span></span>
-                //     </div>
-                // </td>
+        //     <div class="d-flex align-items-center">
+        //         // <img src="${course.thumbnail ?? 'https://via.placeholder.com/40'}"
+        //         //      class="rounded-circle me-3" width="40" height="40" style="object-fit: cover;">
+        //         <span></span>
+        //     </div>
+        // </td>
     </script>
 @endsection

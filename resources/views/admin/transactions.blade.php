@@ -136,42 +136,34 @@
             });
         });
 
+        // Import API client
+        import AdminApiClient from '{{ asset('js/api/adminApiClient.js') }}';
+
         async function loadTransactions(page = 1) {
             try {
-                let url = `/api/admin/transactions?page=${page}&per_page=20`;
+                const filters = {
+                    page: page,
+                    per_page: 20
+                };
 
                 if (currentSearch) {
-                    url += `&search=${encodeURIComponent(currentSearch)}`;
+                    filters.search = currentSearch;
                 }
 
                 if (currentFilter) {
-                    url += `&status=${encodeURIComponent(currentFilter)}`;
+                    filters.status = currentFilter;
                 }
 
-                url += `&t=${Date.now()}`;
+                const result = await AdminApiClient.getTransactions(filters);
 
-                const response = await fetch(url, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Accept': 'application/json'
-                    },
-                    cache: 'no-store'
-                });
-
-
-                if (!response.ok) {
-                    console.error('Failed to fetch transactions:');
+                if (!result.success) {
+                    console.error('Failed to fetch transactions:', result.message);
                     return;
-
-
                 }
 
-                const data = await response.json();
-                if (data.success && data.data) {
-                    currentPage = page;
-                    const transactions = data.data.data;
-                    const pagination = data.data;
+                currentPage = page;
+                const transactions = result.data.data || result.data;
+                const pagination = result.data;
                     totalPages = pagination.last_page;
 
                     const tbody = document.getElementById('transactionsTableBody');

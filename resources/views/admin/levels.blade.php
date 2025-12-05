@@ -453,11 +453,11 @@
             </div>
         </div>
 
-        <script>
+        <script type="module">
+            import CourseApiClient from '{{ asset('js/api/courseApiClient.js') }}';
+
             (function() {
                 // Config
-                const API_LEVEL = "/api/level";
-                const API_CATEGORIES = "/api/curriculum-category";
                 const token = localStorage.getItem('auth_token') || '';
                 let levels = [];
                 let categories = [];
@@ -612,11 +612,13 @@
                 // ---------- CRUD operations ----------
                 async function loadCategories() {
                     try {
-                        const data = await apiFetch(API_CATEGORIES, {
-                            method: 'GET'
-                        });
-                        categories = unwrapListResponse(data);
-                        populateCategorySelect();
+                        const result = await CourseApiClient.getCurriculumCategories();
+                        if (result.success) {
+                            categories = Array.isArray(result.data) ? result.data : (result.data.data || []);
+                            populateCategorySelect();
+                        } else {
+                            showToast('Error', result.message || 'Failed to load curriculum categories', 'danger');
+                        }
                     } catch (err) {
                         console.error('Failed to load categories', err);
                         showToast('Error', 'Failed to load curriculum categories', 'danger');
@@ -637,11 +639,14 @@
                 async function loadLevels() {
                     showSkeletons(3);
                     try {
-                        const data = await apiFetch(API_LEVEL, {
-                            method: 'GET'
-                        });
-                        levels = unwrapListResponse(data);
-                        renderLevels();
+                        const result = await CourseApiClient.getLevels();
+                        if (result.success) {
+                            levels = Array.isArray(result.data) ? result.data : (result.data.data || []);
+                            renderLevels();
+                        } else {
+                            grid.innerHTML = `<div class="p-3 text-danger">Failed to load levels.</div>`;
+                            showToast('Error', result.message || 'Failed to load levels.', 'danger');
+                        }
                     } catch (err) {
                         console.error('Load levels error:', err);
                         grid.innerHTML = `<div class="p-3 text-danger">Failed to load levels.</div>`;
@@ -651,19 +656,18 @@
 
                 async function createLevel(name, curriculum_category_id, description) {
                     try {
-                        const payload = await apiFetch(API_LEVEL, {
-                            method: 'POST',
-                            body: JSON.stringify({
-                                name,
-                                curriculum_category_id,
-                                description
-                            })
+                        const result = await CourseApiClient.createLevel({
+                            name,
+                            curriculum_category_id,
+                            description
                         });
-                        const item = unwrapItemResponse(payload) || (payload.data || payload.response) || payload;
-                        // push to local list if id present
-                        if (item && item.id) levels.push(item);
-                        await loadLevels();
-                        showToast('Success', 'Level created successfully.', 'success');
+                        if (result.success) {
+                            await loadLevels();
+                            showToast('Success', 'Level created successfully.', 'success');
+                        } else {
+                            showToast('Error', result.message || 'Failed to create level.', 'danger');
+                            throw new Error(result.message);
+                        }
                     } catch (err) {
                         console.error('Create level error:', err);
                         showToast('Error', 'Failed to create level. ' + (err.message || ''), 'danger');
@@ -673,19 +677,18 @@
 
                 async function updateLevel(id, name, curriculum_category_id, description) {
                     try {
-                        const payload = await apiFetch(`${API_LEVEL}/${id}`, {
-                            method: 'PUT',
-                            body: JSON.stringify({
-                                name,
-                                curriculum_category_id,
-                                description
-                            })
+                        const result = await CourseApiClient.updateLevel(id, {
+                            name,
+                            curriculum_category_id,
+                            description
                         });
-                        const updated = unwrapItemResponse(payload) || (payload.data || payload.response) || payload;
-                        const idx = levels.findIndex(l => l.id === id);
-                        if (idx > -1 && updated && updated.id) levels[idx] = updated;
-                        await loadLevels();
-                        showToast('Success', 'Level updated.', 'success');
+                        if (result.success) {
+                            await loadLevels();
+                            showToast('Success', 'Level updated.', 'success');
+                        } else {
+                            showToast('Error', result.message || 'Failed to update level.', 'danger');
+                            throw new Error(result.message);
+                        }
                     } catch (err) {
                         console.error('Update level error:', err);
                         showToast('Error', 'Failed to update level. ' + (err.message || ''), 'danger');
@@ -695,12 +698,15 @@
 
                 async function deleteLevelRequest(id) {
                     try {
-                        await apiFetch(`${API_LEVEL}/${id}`, {
-                            method: 'DELETE'
-                        });
-                        levels = levels.filter(l => l.id !== id);
-                        renderLevels();
-                        showToast('Success', 'Level deleted.', 'success');
+                        const result = await CourseApiClient.deleteLevel(id);
+                        if (result.success) {
+                            levels = levels.filter(l => l.id !== id);
+                            renderLevels();
+                            showToast('Success', 'Level deleted.', 'success');
+                        } else {
+                            showToast('Error', result.message || 'Failed to delete level.', 'danger');
+                            throw new Error(result.message);
+                        }
                     } catch (err) {
                         console.error('Delete level error:', err);
                         showToast('Error', 'Failed to delete level. ' + (err.message || ''), 'danger');

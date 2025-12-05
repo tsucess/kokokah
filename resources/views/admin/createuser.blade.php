@@ -663,7 +663,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 
-    <script>
+    <script type="module">
+        import AdminApiClient from '{{ asset('js/api/adminApiClient.js') }}';
+
         // Get CSRF token
         const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ||
             document.querySelector('input[name="_token"]')?.value;
@@ -942,47 +944,27 @@
                     saveBtn.disabled = true;
                     saveBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Saving...';
 
-                    // Get the auth token from localStorage
-                    const token = localStorage.getItem('auth_token');
+                    const result = await AdminApiClient.createUser(formData);
 
-                    const headers = {
-                        'X-CSRF-TOKEN': csrfToken,
-                        'Accept': 'application/json'
-                    };
-
-                    // Add Authorization header if token exists
-                    if (token) {
-                        headers['Authorization'] = `Bearer ${token}`;
-                    }
-
-                    const response = await fetch('/api/admin/users', {
-                        method: 'POST',
-                        headers: headers,
-                        body: formData
-                    });
-
-                    const data = await response.json();
-
-                    if (response.ok) {
+                    if (result.success) {
                         showAlert('User created successfully!', 'success');
                         setTimeout(() => {
                             window.location.href = '/users';
                         }, 1500);
                     } else {
-                        // Log validation errors for debugging
-                        console.log('Response status:', response.status);
-                        console.log('Response data:', data);
+                        // Handle error response
+                        console.log('Request failed:', result);
 
-                        if (data.errors) {
+                        if (result.errors) {
                             // Show validation errors
                             let errorMessage = 'Validation errors:\n';
-                            for (const [field, messages] of Object.entries(data.errors)) {
+                            for (const [field, messages] of Object.entries(result.errors)) {
                                 errorMessage += `${field}: ${messages.join(', ')}\n`;
                             }
                             console.error(errorMessage);
                             showAlert(errorMessage, 'error');
                         } else {
-                            showAlert(data.message || 'Failed to create user', 'error');
+                            showAlert(result.message || 'Failed to create user', 'error');
                         }
                     }
                 } catch (error) {

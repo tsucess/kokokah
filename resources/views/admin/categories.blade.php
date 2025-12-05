@@ -230,10 +230,11 @@
 
 <div id="toastContainer" aria-live="polite" aria-atomic="true"></div>
 
-        <script>
+        <script type="module">
+              import CourseApiClient from '{{ asset('js/api/courseApiClient.js') }}';
+
               (function() {
                 // Config
-                const API_URL = "/api/course-category";
                 const token = localStorage.getItem('auth_token') || '';
                 let categories = [];
                 let currentEditId = null;
@@ -377,12 +378,14 @@
                 async function loadcategories() {
                     showSkeletons(3); // chosen: 3 skeleton cards
                     try {
-                        const data = await apiFetch(API_URL, {
-                            method: 'GET'
-                        });
-                        categories = Array.isArray(data) ? data : (data.data || []);
-
-                        rendercategories();
+                        const result = await CourseApiClient.getCategories();
+                        if (result.success) {
+                            categories = Array.isArray(result.data) ? result.data : (result.data.data || []);
+                            rendercategories();
+                        } else {
+                            grid.innerHTML = `<div class="p-3 text-danger">Failed to load categories.</div>`;
+                            showToast('Error', result.message || 'Failed to load categories.', 'danger');
+                        }
                     } catch (err) {
                         grid.innerHTML = `<div class="p-3 text-danger">Failed to load categories.</div>`;
                         console.error('Load categories error:', err);
@@ -392,18 +395,19 @@
 
                 async function createcategory(title, description) {
                     try {
-                        const payload = await apiFetch(API_URL, {
-                            method: 'POST',
-                            body: JSON.stringify({
-                                title,
-                                description
-                            })
+                        const result = await CourseApiClient.createCategory({
+                            title,
+                            description
                         });
-                        // assume API returns created resource
-                        const newcategory = payload.response
-                        categories.push(newcategory);
-                        rendercategories();
-                        showToast('Success', 'category created successfully.', 'success');
+                        if (result.success) {
+                            const newcategory = result.data;
+                            categories.push(newcategory);
+                            rendercategories();
+                            showToast('Success', 'category created successfully.', 'success');
+                        } else {
+                            showToast('Error', result.message || 'Failed to create category.', 'danger');
+                            throw new Error(result.message);
+                        }
                     } catch (err) {
                         console.error('Create category error:', err);
                         showToast('Error', 'Failed to create category. ' + (err.message || ''), 'danger');
@@ -413,20 +417,20 @@
 
                 async function updatecategory(id, title, description) {
                     try {
-                        const payload = await apiFetch(`${API_URL}/${id}`, {
-                            method: 'PUT',
-                            body: JSON.stringify({
-                                title,
-                                description
-                            })
+                        const result = await CourseApiClient.updateCategory(id, {
+                            title,
+                            description
                         });
-                        console.log(payload)
-                        const updated = payload.response || payload.data || payload;
-console.log(updated)
-                        const idx = categories.findIndex(t => t.id === id);
-                        if (idx > -1) categories[idx] = updated;
-                        rendercategories();
-                        showToast('Success', 'category updated.', 'success');
+                        if (result.success) {
+                            const updated = result.data;
+                            const idx = categories.findIndex(t => t.id === id);
+                            if (idx > -1) categories[idx] = updated;
+                            rendercategories();
+                            showToast('Success', 'category updated.', 'success');
+                        } else {
+                            showToast('Error', result.message || 'Failed to update category.', 'danger');
+                            throw new Error(result.message);
+                        }
                     } catch (err) {
                         console.error('Update category error:', err);
                         showToast('Error', 'Failed to update category. ' + (err.message || ''), 'danger');
@@ -436,12 +440,15 @@ console.log(updated)
 
                 async function deletecategoryRequest(id) {
                     try {
-                        await apiFetch(`${API_URL}/${id}`, {
-                            method: 'DELETE'
-                        });
-                        categories = categories.filter(t => t.id !== id);
-                        rendercategories();
-                        showToast('Success', 'category deleted.', 'success');
+                        const result = await CourseApiClient.deleteCategory(id);
+                        if (result.success) {
+                            categories = categories.filter(t => t.id !== id);
+                            rendercategories();
+                            showToast('Success', 'category deleted.', 'success');
+                        } else {
+                            showToast('Error', result.message || 'Failed to delete category.', 'danger');
+                            throw new Error(result.message);
+                        }
                     } catch (err) {
                         console.error('Delete category error:', err);
                         showToast('Error', 'Failed to delete category. ' + (err.message || ''), 'danger');

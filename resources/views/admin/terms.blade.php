@@ -444,10 +444,11 @@
             section === === = -->
 
 
-            <script>
+            <script type="module">
+                import CourseApiClient from '{{ asset('js/api/courseApiClient.js') }}';
+
                 (function() {
                         // Config
-                        const API_URL = "/api/term";
                         const token = localStorage.getItem('auth_token') || '';
                         let terms = [];
                         let currentEditId = null;
@@ -585,11 +586,14 @@
                     async function loadTerms() {
                         showSkeletons(3); // chosen: 3 skeleton cards
                         try {
-                            const data = await apiFetch(API_URL, {
-                                method: 'GET'
-                            });
-                            terms = Array.isArray(data) ? data : (data.data || []);
-                            renderTerms();
+                            const result = await CourseApiClient.getTerms();
+                            if (result.success) {
+                                terms = Array.isArray(result.data) ? result.data : (result.data.data || []);
+                                renderTerms();
+                            } else {
+                                grid.innerHTML = `<div class="p-3 text-danger">Failed to load terms.</div>`;
+                                showToast('Error', result.message || 'Failed to load terms.', 'danger');
+                            }
                         } catch (err) {
                             grid.innerHTML = `<div class="p-3 text-danger">Failed to load terms.</div>`;
                             console.error('Load terms error:', err);
@@ -599,17 +603,16 @@
 
                     async function createTerm(name) {
                         try {
-                            const payload = await apiFetch(API_URL, {
-                                method: 'POST',
-                                body: JSON.stringify({
-                                    name
-                                })
-                            });
-                            // assume API returns created resource
-                            const newTerm = (payload && payload.id) ? payload : (payload.data || payload);
-                            terms.push(newTerm);
-                            renderTerms();
-                            showToast('Success', 'Term created successfully.', 'success');
+                            const result = await CourseApiClient.createTerm({ name });
+                            if (result.success) {
+                                const newTerm = result.data;
+                                terms.push(newTerm);
+                                renderTerms();
+                                showToast('Success', 'Term created successfully.', 'success');
+                            } else {
+                                showToast('Error', result.message || 'Failed to create term.', 'danger');
+                                throw new Error(result.message);
+                            }
                         } catch (err) {
                             console.error('Create term error:', err);
                             showToast('Error', 'Failed to create term. ' + (err.message || ''), 'danger');
@@ -619,18 +622,18 @@
 
                     async function updateTerm(id, name) {
                         try {
-                            const payload = await apiFetch(`${API_URL}/${id}`, {
-                                method: 'PUT',
-                                body: JSON.stringify({
-                                    name
-                                })
-                            });
-                            const updated = (payload && payload.id) ? payload : (payload.data || payload);
+                            const result = await CourseApiClient.updateTerm(id, { name });
+                            if (result.success) {
+                                const updated = result.data;
 
-                            const idx = terms.findIndex(t => t.id === id);
-                            if (idx > -1) terms[idx] = updated;
-                            renderTerms();
-                            showToast('Success', 'Term updated.', 'success');
+                                const idx = terms.findIndex(t => t.id === id);
+                                if (idx > -1) terms[idx] = updated;
+                                renderTerms();
+                                showToast('Success', 'Term updated.', 'success');
+                            } else {
+                                showToast('Error', result.message || 'Failed to update term.', 'danger');
+                                throw new Error(result.message);
+                            }
                         } catch (err) {
                             console.error('Update term error:', err);
                             showToast('Error', 'Failed to update term. ' + (err.message || ''), 'danger');
@@ -640,12 +643,15 @@
 
                     async function deleteTermRequest(id) {
                         try {
-                            await apiFetch(`${API_URL}/${id}`, {
-                                method: 'DELETE'
-                            });
-                            terms = terms.filter(t => t.id !== id);
-                            renderTerms();
-                            showToast('Success', 'Term deleted.', 'success');
+                            const result = await CourseApiClient.deleteTerm(id);
+                            if (result.success) {
+                                terms = terms.filter(t => t.id !== id);
+                                renderTerms();
+                                showToast('Success', 'Term deleted.', 'success');
+                            } else {
+                                showToast('Error', result.message || 'Failed to delete term.', 'danger');
+                                throw new Error(result.message);
+                            }
                         } catch (err) {
                             console.error('Delete term error:', err);
                             showToast('Error', 'Failed to delete term. ' + (err.message || ''), 'danger');

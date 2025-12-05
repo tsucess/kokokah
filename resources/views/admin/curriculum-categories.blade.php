@@ -381,9 +381,10 @@
 
 
 
-        <script>
+        <script type="module">
+            import CourseApiClient from '{{ asset('js/api/courseApiClient.js') }}';
+
             (function() {
-                const API_URL = "/api/curriculum-category";
                 const token = () => localStorage.getItem('auth_token') || '';
 
                 // 1. Get the stored string from localStorage
@@ -588,44 +589,48 @@
                 async function loadCategories() {
                     showSkeletons();
                     try {
-                        const data = await apiFetch(API_URL, {
-                            method: 'GET'
-                        });
-                        renderCategories(data);
-                    } catch {
+                        const result = await CourseApiClient.getCurriculumCategories();
+                        if (result.success) {
+                            renderCategories(result.data);
+                        } else {
+                            showToast('Error', result.message || 'Failed to load categories.', 'danger');
+                        }
+                    } catch (error) {
+                        console.error('Load categories error:', error);
                         showToast('Error', 'Failed to load categories.', 'danger');
                     }
                 }
 
                 async function createCategory(title, description) {
-                    return await apiFetch(API_URL, {
-                        method: 'POST',
-                        body: JSON.stringify({
-                            title,
-                            description,
-                            user_id: currentUserId // ✅ FIXED
-                        })
+                    const result = await CourseApiClient.createCurriculumCategory({
+                        title,
+                        description,
+                        user_id: currentUserId
                     });
+                    if (!result.success) {
+                        throw new Error(result.message || 'Failed to create category');
+                    }
+                    return result.data;
                 }
 
                 async function updateCategory(id, title, description) {
-                    return await apiFetch(`${API_URL}/${id}`, {
-                        method: 'PUT',
-                        body: JSON.stringify({
-                            title,
-                            description,
-                            user_id: currentUserId // ✅ FIXED
-                        })
+                    const result = await CourseApiClient.updateCurriculumCategory(id, {
+                        title,
+                        description,
+                        user_id: currentUserId
                     });
+                    if (!result.success) {
+                        throw new Error(result.message || 'Failed to update category');
+                    }
+                    return result.data;
                 }
 
                 async function deleteCategoryRequest(id) {
-                    return await apiFetch(`${API_URL}/${id}`, {
-                        method: 'DELETE',
-                        headers: {
-                            "Authorization": `Bearer ${localStorage.getItem('auth_token')}`,
-                        }
-                    });
+                    const result = await CourseApiClient.deleteCurriculumCategory(id);
+                    if (!result.success) {
+                        throw new Error(result.message || 'Failed to delete category');
+                    }
+                    return result.data;
                 }
 
                 form.addEventListener('submit', async (e) => {

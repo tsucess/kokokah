@@ -178,6 +178,9 @@
         const token = localStorage.getItem('auth_token');
         let currentPage = 1;
 
+        // Import API client
+        import AdminApiClient from '{{ asset('js/api/adminApiClient.js') }}';
+
         // Fetch dashboard data on page load
         document.addEventListener('DOMContentLoaded', function() {
             loadDashboardStats();
@@ -187,20 +190,14 @@
         // Load dashboard statistics
         async function loadDashboardStats() {
             try {
-                const response = await fetch('/api/admin/dashboard', {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Accept': 'application/json'
-                    }
-                });
+                const result = await AdminApiClient.getDashboardStats();
 
-                if (!response.ok) {
-                    console.error('Failed to fetch dashboard stats:', response.status);
+                if (!result.success) {
+                    console.error('Failed to fetch dashboard stats:', result.message);
                     return;
                 }
 
-                const data = await response.json();
+                const data = result.data;
                 console.log('Dashboard API Response:', data);
 
                 if (data.success && data.data && data.data.statistics) {
@@ -286,24 +283,16 @@
         // Load recently registered users
         async function loadRecentUsers(page = 1) {
             try {
-                const response = await fetch(`/api/admin/users/recent?page=${page}&per_page=10`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Accept': 'application/json'
-                    }
-                });
+                const result = await AdminApiClient.getRecentUsers(page, 10);
 
-                if (!response.ok) {
-                    console.error('Failed to fetch recent users');
+                if (!result.success) {
+                    console.error('Failed to fetch recent users:', result.message);
                     return;
                 }
 
-                const data = await response.json();
-                if (data.success && data.data) {
-                    currentPage = page;
-                    const users = data.data.data;
-                    const pagination = data.data;
+                currentPage = page;
+                const users = result.data.data || result.data;
+                const pagination = result.data;
 
                     // Update table
                     const tbody = document.getElementById('recentUsersTableBody');

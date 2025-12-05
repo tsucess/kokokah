@@ -653,7 +653,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 
 
-    <script>
+    <script type="module">
+        import AdminApiClient from '{{ asset('js/api/adminApiClient.js') }}';
+
         // Get CSRF token
         const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ||
             document.querySelector('input[name="_token"]')?.value;
@@ -865,22 +867,13 @@
 
         async function loadUserData(userId) {
             try {
-                const token = localStorage.getItem('auth_token');
-                const response = await fetch(`/api/admin/users/${userId}`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Accept': 'application/json'
-                    }
-                });
-
-                if (!response.ok) {
+                const result = await AdminApiClient.getUser(userId);
+                if (!result.success) {
                     showAlert('Failed to load user data', 'error');
                     return;
                 }
 
-                const data = await response.json();
-                const user = data.data;
+                const user = result.data;
 
                 // Populate form fields
                 document.getElementById('firstName').value = user.first_name || '';
@@ -1021,40 +1014,17 @@
                     saveBtn.disabled = true;
                     saveBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Saving...';
 
-                    // Get the auth token from localStorage
-                    const token = localStorage.getItem('auth_token');
-
-                    const headers = {
-                        'X-CSRF-TOKEN': csrfToken,
-                        'Accept': 'application/json'
-                    };
-
-                    // Add Authorization header if token exists
-                    if (token) {
-                        headers['Authorization'] = `Bearer ${token}`;
+                    let result;
+                    if (isEditMode) {
+                        result = await AdminApiClient.updateUser(userId, formData);
+                    } else {
+                        result = await AdminApiClient.createUser(formData);
                     }
 
-                    // Use POST for both create and edit (with _method for edit)
-                    // This is required for FormData with file uploads
-                    const endpoint = isEditMode ? `/api/admin/users/${userId}` : '/api/admin/users';
-
-                    const response = await fetch(endpoint, {
-                        method: 'POST', // Always POST when using FormData
-                        headers: headers,
-                        body: formData,
-                        cache: 'no-store' // Prevent caching
-                    });
-
-                    const data = await response.json();
-
-                    console.log('Response status:', response.status);
-                    console.log('Response data:', data);
-                    console.log('Updated user from API:', data.data);
-
-                    if (response.ok) {
+                    if (result.success) {
                         const message = isEditMode ? 'User updated successfully!' :
-                        'User created successfully!';
-                        console.log('Success! Updated user data:', data.data);
+                            'User created successfully!';
+                        console.log('Success! Updated user data:', result.data);
                         showAlert(message, 'success');
 
                         // Add a small delay to ensure database is fully committed
@@ -1063,20 +1033,19 @@
                             window.location.href = '/users?t=' + Date.now();
                         }, 1500);
                     } else {
-                        // Log validation errors for debugging
-                        console.error('Request failed with status:', response.status);
-                        console.error('Response data:', data);
+                        // Handle error response
+                        console.error('Request failed:', result);
 
-                        if (data.errors) {
+                        if (result.errors) {
                             // Show validation errors
                             let errorMessage = 'Validation errors:\n';
-                            for (const [field, messages] of Object.entries(data.errors)) {
+                            for (const [field, messages] of Object.entries(result.errors)) {
                                 errorMessage += `${field}: ${messages.join(', ')}\n`;
                             }
                             console.error(errorMessage);
                             showAlert(errorMessage, 'error');
                         } else {
-                            showAlert(data.message || 'Failed to save user', 'error');
+                            showAlert(result.message || 'Failed to save user', 'error');
                         }
                     }
                 } catch (error) {

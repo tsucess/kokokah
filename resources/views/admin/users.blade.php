@@ -135,45 +135,37 @@
             });
         });
 
+        // Import API client
+        import AdminApiClient from '{{ asset('js/api/adminApiClient.js') }}';
+
         // Load users from API
         async function loadUsers(page = 1) {
             try {
-                let url = `/api/admin/users?page=${page}&per_page=20`;
+                const filters = {
+                    page: page,
+                    per_page: 20
+                };
 
                 // Add search parameter
                 if (currentSearch) {
-                    url += `&search=${encodeURIComponent(currentSearch)}`;
+                    filters.search = currentSearch;
                 }
 
                 // Add filter parameter
-                if (currentFilter) {
-                    if (currentFilter.startsWith('role-')) {
-                        url += `&role=${currentFilter.replace('role-', '')}`;
-                    }
+                if (currentFilter && currentFilter.startsWith('role-')) {
+                    filters.role = currentFilter.replace('role-', '');
                 }
 
-                // Add cache-busting parameter
-                url += `&t=${Date.now()}`;
+                const result = await AdminApiClient.getUsers(filters);
 
-                const response = await fetch(url, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Accept': 'application/json'
-                    },
-                    cache: 'no-store' // Prevent caching
-                });
-
-                if (!response.ok) {
-                    console.error('Failed to fetch users');
+                if (!result.success) {
+                    console.error('Failed to fetch users:', result.message);
                     return;
                 }
 
-                const data = await response.json();
-                if (data.success && data.data) {
-                    currentPage = page;
-                    const users = data.data.data;
-                    const pagination = data.data;
+                currentPage = page;
+                const users = result.data.data || result.data;
+                const pagination = result.data;
                     totalPages = pagination.last_page;
 
                     // Update table
@@ -315,17 +307,9 @@
                             btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
 
                             const token = localStorage.getItem('auth_token');
-                            const response = await fetch(`/api/admin/users/${userId}`, {
-                                method: 'DELETE',
-                                headers: {
-                                    'Authorization': `Bearer ${token}`,
-                                    'Accept': 'application/json'
-                                }
-                            });
+                            const result = await AdminApiClient.deleteUser(userId);
 
-                            const data = await response.json();
-
-                            if (response.ok) {
+                            if (result.success) {
                                 // Show success message
                                 showDeleteAlert('User deleted successfully!', 'success');
                                 // Reload users after 1 second
@@ -333,7 +317,7 @@
                                     loadUsers(currentPage);
                                 }, 1000);
                             } else {
-                                showDeleteAlert(data.message || 'Failed to delete user', 'error');
+                                showDeleteAlert(result.message || 'Failed to delete user', 'error');
                                 btn.disabled = false;
                                 btn.innerHTML = '<i class="fa fa-trash" style="color: #dc3545;"></i>';
                             }
