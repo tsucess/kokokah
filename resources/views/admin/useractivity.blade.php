@@ -249,7 +249,7 @@
             loadUsersActivities(1);
         });
 
-    
+
         // Load users Activities
         async function loadUsersActivities(page = 1) {
             try {
@@ -288,17 +288,17 @@
 
                             const row = `
                                      <tr style="border-bottom: 1px solid #e8e8e8;">
-                                            <td style="padding: 1rem; color: #666;">${++index}</td>
-                                            <td style="padding: 1rem;">
+                                            <td style="padding: 1rem; color: #666; font-size:14px;">${++index}</td>
+                                            <td style="padding: 1rem; font-size:14px;">
                                                 <div class="d-flex align-items-center">
                                                     <img src="${activity.user ? activity.user.profile_photo ? 'storage/'+ activity.user.profile_photo : 'images/jimmy.png'  : 'images/jimmy.png'}" class="rounded-circle me-3" alt="User"
                                                         width="40" height="40" style="object-fit: cover;">
                                                     <span style="color: #333; font-weight: 500;">${activity.user ? activity.user.first_name : activity.course.instructor.first_name } ${activity.user ? activity.user.last_name : activity.course.instructor.last_name }</span>
                                                 </div>
                                             </td>
-                                            <td style="padding: 1rem; color: #666;">${activity.description ? activity.description : 0}</td>
-                                            <td style="padding: 1rem; color: #666;">${UIHelpers.formatDate(activity.timestamp) }</td>
-                                           
+                                            <td style="padding: 1rem; color: #666; font-size:14px;">${activity.description ? activity.description : 0}</td>
+                                            <td style="padding: 1rem; color: #666; font-size:14px;">${UIHelpers.formatDate(activity.timestamp) }</td>
+
                                             <td style="padding: 1rem;">
                                                 <span class="badge" style="background-color: #28a745; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">Completed</span>
                                             </td>
