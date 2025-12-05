@@ -75,10 +75,61 @@ class CourseController extends Controller
     | List Courses
     ------------------------------------------*/
 
-    public function index(Request $request)
+    // public function index(Request $request)
+    // {
+    //     $query = Course::with(['courseCategory', 'curriculumCategory', 'instructor', 'level', 'term'])
+    //                    ->where('status', 'published');
+
+    //     // Dynamic filtering
+    //     $filters = [
+    //         'curriculum_category_id',
+    //         'course_category_id',
+    //         'level_id',
+    //         'difficulty'
+    //     ];
+
+    //     foreach ($filters as $filter) {
+    //         if ($request->filled($filter)) {
+    //             $query->where($filter, $request->$filter);
+    //         }
+    //     }
+
+    //     if ($request->has('price_range')) {
+    //         [$min, $max] = explode('-', $request->price_range);
+    //         $query->whereBetween('price', [(float)$min, (float)$max]);
+    //     }
+
+    //     if ($request->filled('search')) {
+    //         $s = $request->search;
+    //         $query->where(fn($q) =>
+    //             $q->where('title', 'LIKE', "%$s%")
+    //               ->orWhere('description', 'LIKE', "%$s%")
+    //         );
+    //     }
+
+    //     $query->orderBy($request->get('sort_by', 'created_at'), $request->get('sort_order', 'desc'));
+
+    //     return $this->success([
+    //         'courses' => $query->paginate($request->get('per_page', 12)),
+    //         'filters' => [
+    //             'curriculumCategories' => CurriculumCategory::all(),
+    //             'courseCategories'     => CourseCategory::all(),
+    //             'levels'               => Level::all(),
+    //             'difficulties'         => ['beginner', 'intermediate', 'advanced']
+    //         ]
+    //     ]);
+    // }
+   public function index(Request $request)
     {
-        $query = Course::with(['courseCategory', 'curriculumCategory', 'instructor', 'level', 'term'])
-                       ->where('status', 'published');
+        $user = auth('sanctum')->user(); // Get authenticated user
+        $userRole = $user->role;
+
+        $query = Course::with(['courseCategory', 'curriculumCategory', 'instructor', 'level', 'term']);
+
+        // Only show published courses if user is not admin or instructor
+        if (!$user || !in_array($userRole, ['admin', 'instructor'])) {
+            $query->where('status', 'published');
+        }
 
         // Dynamic filtering
         $filters = [
@@ -103,7 +154,7 @@ class CourseController extends Controller
             $s = $request->search;
             $query->where(fn($q) =>
                 $q->where('title', 'LIKE', "%$s%")
-                  ->orWhere('description', 'LIKE', "%$s%")
+                ->orWhere('description', 'LIKE', "%$s%")
             );
         }
 
@@ -116,9 +167,12 @@ class CourseController extends Controller
                 'courseCategories'     => CourseCategory::all(),
                 'levels'               => Level::all(),
                 'difficulties'         => ['beginner', 'intermediate', 'advanced']
-            ]
+            ],
+            'user_role' => $userRole
         ]);
     }
+
+
 
     /*------------------------------------------
     | Create Course
@@ -134,6 +188,7 @@ class CourseController extends Controller
             'level_id' => 'nullable|exists:levels,id',
             'term_id'  => 'nullable|exists:terms,id',
             'price'    => 'required|numeric|min:0',
+            'free'     => 'required|boolean',
             'duration_hours' => 'nullable|integer|min:1',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:5048'
         ]);
@@ -220,7 +275,8 @@ class CourseController extends Controller
                 'description' => 'sometimes|string',
                 'course_category_id' => 'sometimes|exists:course_categories,id',
                 'curriculum_category_id' => 'sometimes|exists:curriculum_categories,id',
-                'price' => 'sometimes|numeric|min:0',
+                'free'  => 'required|boolean',
+                'price' => 'required_unless:free,true|numeric|min:0',
                 'difficulty' => 'sometimes|in:beginner,intermediate,advanced',
                 'duration_hours' => 'nullable|integer|min:1',
                 'max_students' => 'nullable|integer|min:1',

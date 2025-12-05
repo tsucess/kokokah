@@ -114,8 +114,9 @@
                         <div class="card-body p-4">
                             <div class="d-flex justify-content-between align-items-start gap-2">
                                 <div>
-                                    <p class="text-white-50 mb-2" style="font-size: 0.9rem;">Active Subjects</p>
-                                    <h3 class="fw-bold text-white mb-0">50</h3>
+                                    <p class="text-white-50 mb-2" style="font-size: 0.9rem;">Published Courses</p>
+                                    {{-- <h3 class="fw-bold text-white mb-0">50</h3> --}}
+                                    <h3 class="fw-bold text-white mb-0" id="activeSubjects">0</h3>
                                 </div>
                                 <div style="background: rgba(255,255,255,0.2); padding: 0.75rem; border-radius: 0.75rem;">
                                     <i class="fa-solid fa-book text-white" style="font-size: 1.5rem;"></i>
@@ -133,7 +134,8 @@
                                 <div>
                                     <p class="text-white-50 mb-2" style="font-size: 0.9rem; color: rgba(0,0,0,0.3);">Pending
                                         Students</p>
-                                    <h3 class="fw-bold text-white mb-0" style="color: #333;">308</h3>
+                                    {{-- <h3 class="fw-bold text-white mb-0" style="color: #333;">308</h3> --}}
+                                    <h3 class="fw-bold text-white mb-0" style="color: #333;" id="pendingStudents">0</h3>
                                 </div>
                                 <div style="background: rgba(255,255,255,0.3); padding: 0.75rem; border-radius: 0.75rem;">
                                     <i class="fa-solid fa-users text-white" style="font-size: 1.5rem; color: #333;"></i>
@@ -150,7 +152,8 @@
                             <div class="d-flex justify-content-between align-items-start gap-2">
                                 <div>
                                     <p class="text-white-50 mb-2" style="font-size: 0.9rem;">Draft Courses</p>
-                                    <h3 class="fw-bold text-white mb-0">100</h3>
+                                    {{-- <h3 class="fw-bold text-white mb-0">100</h3> --}}
+                                    <h3 class="fw-bold text-white mb-0" id="draftCourses">0</h3>
                                 </div>
                                 <div style="background: rgba(255,255,255,0.2); padding: 0.75rem; border-radius: 0.75rem;">
                                     <i class="fa-solid fa-file-pen text-white" style="font-size: 1.5rem;"></i>
@@ -167,7 +170,8 @@
                             <div class="d-flex justify-content-between align-items-start gap-2">
                                 <div>
                                     <p class="text-white-50 mb-2" style="font-size: 0.9rem;">Free Subjects</p>
-                                    <h3 class="fw-bold text-white mb-0">50</h3>
+                                    {{-- <h3 class="fw-bold text-white mb-0">50</h3> --}}
+                                    <h3 class="fw-bold text-white mb-0" id="freeCourses">0</h3>
                                 </div>
                                 <div style="background: rgba(255,255,255,0.2); padding: 0.75rem; border-radius: 0.75rem;">
                                     <i class="fa-solid fa-gift text-white" style="font-size: 1.5rem;"></i>
@@ -219,7 +223,7 @@
                                     <th class="allSubject">Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="coursesTableBody">
                                 <!-- Row 1 -->
                                 <tr style="border-bottom: 1px solid #e8e8e8;">
                                     <td style="padding: 1rem; color: #666; font-size:14px;">01</td>
@@ -306,4 +310,148 @@
             </div>
         </div>
     </main>
+
+    <script>
+        const API_COURSES = "http://127.0.0.1:8000/api/courses";
+        const token = localStorage.getItem('auth_token');
+        console.log(token);
+
+        document.addEventListener("DOMContentLoaded", () => {
+            loadCourses();
+        });
+
+        async function loadCourses() {
+            try {
+                const response = await fetch(API_COURSES,{
+                            method: "GET",
+                            headers: {
+                                "Authorization": `Bearer ${token}`
+                            }
+            });
+                const result = await response.json();
+
+                if (!result.success) {
+                    console.error("API Error:", result.message);
+                    return;
+                }
+
+                const courses = result.data;
+                
+                console.log("Courses Response:", courses);
+                // console.log("Courses Response:", courses.courses.data);
+
+                populateTable(courses.courses.data);
+                updateStats(courses.courses.data);
+
+            } catch (error) {
+                console.error("Fetch Error:", error);
+            }
+        }
+
+
+        /* -------------------------
+           Populate Table
+        ---------------------------- */
+        function populateTable(courses) {
+            const tbody = document.getElementById("coursesTableBody");
+            tbody.innerHTML = "";
+
+            if (!courses.length) {
+                tbody.innerHTML = `
+            <tr>
+                <td colspan="7" class="text-center py-4 text-muted">
+                    No courses found.
+                </td>
+            </tr>`;
+                return;
+            }
+
+            courses.forEach((course, index) => {
+                const row = `
+            <tr style="border-bottom: 1px solid #e8e8e8;">
+                <td>${index + 1}</td>
+
+                <td>
+                    <div class="d-flex align-items-center">
+                        <img src="${course.thumbnail ?? 'https://via.placeholder.com/40'}"
+                             class="rounded-circle me-3" width="40" height="40" style="object-fit: cover;">
+                        <span>${course.title}</span>
+                    </div>
+                </td>
+
+                <td>${formatDate(course.created_at)}</td>
+
+                <td>
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="progress" style="width: 100px; height: 6px;">
+                            <div class="progress-bar"></div>
+                        </div>
+                        <span>0%</span>
+                    </div>
+                </td>
+
+                <td>
+                    <i class="fa fa-star" style="color:#FDAF22;"></i>
+                    <span>${course.average_rating ?? 0}</span>
+                </td>
+
+                <td>
+                    <span class="badge" 
+                          style="background-color:${course.status === 'published' ? '#28a745' : '#6c757d'};
+                                 color:white; padding:0.5rem 0.75rem; border-radius:0.5rem;">
+                        ${course.status}
+                    </span>
+                </td>
+
+                <td>
+                    <div class="d-flex gap-2">
+                        <a href="/editsubject?id=${course.id}"
+                           class="btn btn-sm btn-light" style="border:1px solid #ddd;">
+                            <i class="fa fa-edit" style="color:#004A53;"></i>
+                        </a>
+
+                        <button onclick="deleteCourse(${course.id})"
+                                class="btn btn-sm btn-light" style="border:1px solid #ddd;">
+                            <i class="fa fa-trash" style="color:#dc3545;"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        `;
+                tbody.insertAdjacentHTML("beforeend", row);
+            });
+        }
+
+        /* -------------------------
+           Update Dashboard Stats
+        ---------------------------- */
+        function updateStats(courses) {
+
+            document.getElementById("activeSubjects").innerText =
+                courses.filter(c => c.status === "published").length;
+
+            document.getElementById("draftCourses").innerText =
+                courses.filter(c => c.status === "draft").length;
+
+            document.getElementById("freeCourses").innerText =
+                courses.filter(c => Number(c.price) === 0).length;
+
+            // Placeholder
+            document.getElementById("pendingStudents").innerText = 0;
+        }
+
+
+        /* -------------------------
+           Helper: Format date
+        ---------------------------- */
+        function formatDate(dateString) {
+            if (!dateString) return "N/A";
+            const date = new Date(dateString);
+            return date.toLocaleDateString("en-US", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric"
+            });
+        }
+    </script>
 @endsection

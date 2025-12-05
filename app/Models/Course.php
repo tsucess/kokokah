@@ -19,6 +19,7 @@ class Course extends Model
         'term_id',
         'level_id',
         'price',
+        'free',
         'status',
         'duration_hours',
         'published_at'
@@ -28,6 +29,7 @@ class Course extends Model
         'price' => 'decimal:2',
         'published_at' => 'datetime',
         'duration_hours' => 'integer',
+        'free' => 'boolean',
     ];
 
     // Relationships
@@ -171,3 +173,6 @@ class Course extends Model
         return round(($completed / $total) * 100, 2);
     }
 }
+
+
+

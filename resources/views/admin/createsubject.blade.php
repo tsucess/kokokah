@@ -802,7 +802,7 @@
             duration: "",
             price: "",
             description: "",
-            freeCourse: '',
+            freeCourse: "",
             imageFile: null
         };
         const API_CATEGORIES = "/api/course-category";
@@ -1145,7 +1145,15 @@
                     formData.append("curriculum_category_id", document.getElementById(
                         "curriculumCategoryId").value);
                     formData.append("course_category_id", courseData.category.split('-')[0]);
-                    formData.append("price", courseData.price);
+                    if (courseData.freeCourse) {
+                        formData.append("price", 0);
+                    } else {
+                        formData.append("price", courseData.price);
+                    }
+
+                    // formData.append("price", courseData.price);
+                    formData.append("free", courseData.freeCourse ? 1 : 0);
+
 
                     // OPTIONAL
                     formData.append("level_id", courseData.level.split('-')[0]);
