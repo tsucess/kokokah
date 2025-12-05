@@ -252,12 +252,12 @@
 
           <form>
         <div class="mb-4 form-floating">
-      <input type="text" class="form-control" id="fullname" placeholder="majorsignature">
+      <input type="text" class="form-control" id="fullname" placeholder="username">
       <label for="fullname">Enter Full Name</label>
     </div>
 
     <div class="mb-4 form-floating">
-      <input type="email" class="form-control" id="email" placeholder="majorsignature@gmail.com">
+      <input type="email" class="form-control" id="email" placeholder="user@example.com">
       <label for="Email">Enter Email Address</label>
     </div>
 

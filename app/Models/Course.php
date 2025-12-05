@@ -21,6 +21,8 @@ class Course extends Model
         'price',
         'free',
         'status',
+        'course_image',
+        'url',
         'duration_hours',
         'published_at'
     ];

@@ -54,7 +54,7 @@
 
             <div class="custom-form-group">
               <label for="email" class="custom-label">Enter Email Address</label>
-              <input type="email" class="form-control-custom" id="email" name="email" placeholder="majorsignature@gmail.com" aria-label="Email Address" autocomplete="email" required>
+              <input type="email" class="form-control-custom" id="email" name="email" placeholder="user@example.com" aria-label="Email Address" autocomplete="email" required>
             </div>
 
             <div class="custom-form-group">

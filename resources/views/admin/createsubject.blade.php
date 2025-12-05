@@ -439,14 +439,13 @@
                 @csrf
 
                 <div class="form-group-custom mb-3">
-                    <label>Upload Subject Image</label>
+                    <label>Overview Video URL</label>
                     <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
-                        <input type="text" class="form-control" id="fileNameDisplay" placeholder="No file selected"
-                            readonly style="flex: 1;">
-                        <button type="button" class="btn btn-publish" id="uploadButton"
-                            style="padding: 0.75rem 1.5rem;">
-                            Upload File
-                        </button>
+                        <input type="text" class="form-control" placeholder="https://preview.youtube.com"
+                            style="flex: 1;">
+                    </div>
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                        <p>Thumbnail: <span id="fileNameDisplay"></span></p>
                     </div>
 
                     <label
@@ -455,7 +454,7 @@
                         <i class="fa-solid fa-file-circle-check"
                             style="font-size: 2rem; color: #004A53; margin-bottom: 0.5rem;"></i>
                         <h5 style="margin: 0.5rem 0; color: #333;">Upload Image</h5>
-                        <p style="margin: 0; color: #666; font-size: 0.9rem;">PNG, JPEG, GIF (max 2MB)</p>
+                        <p style="margin: 0; color: #666; font-size: 0.9rem;"> PNG, JPEG, GIF (max 2MB)</p>
                     </label>
                     <input type="file" id="fileInput" name="file" class="d-none" accept="image/*,.mp4,.webm">
                 </div>
@@ -755,7 +754,7 @@
 
 
 
-    <script>
+    {{-- <script>
         // ===========================
         //  TOAST NOTIFICATION SYSTEM
         // ===========================
@@ -1032,6 +1031,7 @@
 
             function populatePublishSection() {
                 // Update publish section
+                document.getElementById('overviewUrl').textContent = courseData.url;
                 document.getElementById('publishSubjectTitle').textContent = courseData.title;
                 document.getElementById('publishCategory').textContent = courseData.category.split('-')[1] +
                     ' Category';
@@ -1114,6 +1114,7 @@
                     courseData.category.split('-')[0],
                     courseData.level.split('-')[0],
                     courseData.duration,
+                    courseData.url,
                     courseData.description,
                     courseData.imageFile
                 ];
@@ -1159,6 +1160,7 @@
                     formData.append("level_id", courseData.level.split('-')[0]);
                     formData.append("term_id", courseData.term ? courseData.term.split('-')[0] : "");
                     formData.append("duration_hours", courseData.duration);
+                    formData.append("url", courseData.url);
 
                     // IMAGE FIELD MUST MATCH LARAVEL
                     formData.append("thumbnail", courseData.imageFile);
@@ -1206,6 +1208,436 @@
             //         alert('Course saved as draft!');
             //     });
             // }
+
+            showSection('details');
+        });
+    </script> --}}
+
+    <script>
+        // ===========================
+        //  TOAST NOTIFICATION SYSTEM
+        // ===========================
+        function showToast(title = '', message = '', type = 'info', timeout = 3500) {
+            const container = document.getElementById('toastContainer');
+            const toastId = 'toast-' + Date.now();
+
+            const bgClass = (type === 'success') ?
+                'bg-success text-white' :
+                (type === 'danger') ?
+                'bg-danger text-white' :
+                'bg-light';
+
+            const toastHtml = `
+                        <div id="${toastId}" class="toast ${bgClass}" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="d-flex">
+                                <div class="toast-body" style="padding:0.75rem;">
+                                    <strong>${title}</strong>
+                                    <div style="font-size:0.9rem; margin-top:0.35rem;">${message}</div>
+                                </div>
+                                <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                                        data-bs-dismiss="toast"></button>
+                            </div>
+                        </div>
+                    `;
+            container.insertAdjacentHTML('beforeend', toastHtml);
+
+            const toastEl = document.getElementById(toastId);
+            const bsToast = new bootstrap.Toast(toastEl, {
+                delay: timeout
+            });
+            bsToast.show();
+
+            toastEl.addEventListener("hidden.bs.toast", () => toastEl.remove());
+        }
+
+
+        const courseData = {
+            title: "",
+            category: "",
+            level: "",
+            duration: "",
+            price: "",
+            description: "",
+            url: "",
+            freeCourse: "",
+            imageFile: null
+        };
+        const API_CATEGORIES = "/api/course-category";
+        const API_TERMS = "/api/term";
+        const API_LEVEL = "/api/level";
+        const token = localStorage.getItem('auth_token') || '';
+
+        // Navigation between sections
+        document.addEventListener('DOMContentLoaded', () => {
+            const navButtons = document.querySelectorAll('.coursebtn');
+            const sections = document.querySelectorAll('.content-section');
+            const continueButtons = document.querySelectorAll('.continue-btn');
+            const backButtons = document.querySelectorAll('.back-btn');
+            const courseCategory = document.getElementById('courseCategory')
+            const courseTerm = document.getElementById('subjectTerm')
+            const courseLevel = document.getElementById('courseLevel')
+
+            function showSection(sectionId) {
+                sections.forEach(sec => sec.classList.add('d-none'));
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    section.classList.remove('d-none');
+                }
+
+                navButtons.forEach(btn => btn.classList.remove('course-btn-active'));
+                const activeBtn = document.querySelector(`[data-section="${sectionId}"]`);
+                if (activeBtn) {
+                    activeBtn.classList.add('course-btn-active');
+                }
+
+                // Populate publish section when navigating to it
+                if (sectionId === 'publish') {
+                    populatePublishSection();
+                }
+            }
+
+            loadCategories();
+            loadLevel();
+            loadTerm();
+
+            async function loadCategories() {
+                try {
+                    const data = await apiFetch(API_CATEGORIES, {
+                        method: 'GET'
+                    });
+                    categories = unwrapListResponse(data);
+                    populateCategorySelect();
+                } catch (err) {
+                    console.error('Failed to load categories', err);
+                    showToast("Error", "Failed to load categories", "danger");
+                }
+            }
+
+
+            async function loadTerm() {
+                try {
+                    const data = await apiFetch(API_TERMS, {
+                        method: 'GET'
+                    });
+                    terms = unwrapListResponse(data);
+                    populateTermSelect();
+                } catch (err) {
+                    console.error('Failed to load terms', err);
+                    showToast("Error", "Failed to load terms", "danger");
+                }
+            }
+
+            function populateCategorySelect() {
+                if (!courseCategory) return;
+                courseCategory.innerHTML = `<option value="">Select Course Category</option>`;
+                categories.forEach(cat => {
+                    const opt = document.createElement('option');
+                    opt.value = cat.id + '-' + cat.title;
+                    opt.textContent = cat.title ?? `#${cat.id}`;
+                    courseCategory.appendChild(opt);
+                });
+            }
+
+            function populateTermSelect() {
+                if (!courseTerm) return;
+                courseTerm.innerHTML = `<option value="">Select Term</option>`;
+                terms.forEach(term => {
+                    const opt = document.createElement('option');
+                    opt.value = term.id + '-' + term.name;
+                    opt.textContent = term.name ?? `#${term.id}`;
+                    courseTerm.appendChild(opt);
+                });
+            }
+
+            async function loadLevel() {
+                try {
+                    const data = await apiFetch(API_LEVEL, {
+                        method: 'GET'
+                    });
+                    levels = unwrapListResponse(data);
+                    populateLevelSelect();
+                } catch (err) {
+                    console.error('Failed to load levels', err);
+                    showToast("Error", "Failed to load levels", "danger");
+                }
+            }
+
+            function populateLevelSelect() {
+                if (!courseLevel) return;
+                courseLevel.innerHTML = `<option value="">Select Level Category</option>`;
+                levels.forEach(level => {
+                    const opt = document.createElement('option');
+                    opt.value = level.id + '-' + level.name;
+                    opt.textContent = level.name ?? `#${level.id}`;
+                    courseLevel.appendChild(opt);
+                });
+            }
+
+            courseLevel.addEventListener('change', e => {
+                const selectedValue = e.target.value; // "3-SS1" format
+                const levelId = selectedValue.split('-')[0];
+
+                const selectedLevel = levels.find(l => l.id == levelId);
+
+                if (selectedLevel) {
+                    const curriculumId = selectedLevel.curriculum_category_id;
+
+                    document.getElementById('curriculumCategoryId').value = curriculumId;
+                }
+            });
+
+
+
+            async function apiFetch(url, opts = {}) {
+                const headers = Object.assign({
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                }, opts.headers || {});
+
+                if (token) headers["Authorization"] = `Bearer ${token}`;
+
+                const options = Object.assign({}, opts, {
+                    headers
+                });
+                const res = await fetch(url, options);
+                const contentType = res.headers.get('content-type') || '';
+
+                let data = null;
+                if (contentType.includes('application/json')) {
+                    data = await res.json();
+                } else {
+                    data = await res.text();
+                }
+
+                if (!res.ok) {
+                    const message = (data && data.message) ? data.message : (typeof data === 'string' ? data :
+                        'Request failed');
+                    const err = new Error(message);
+                    err.status = res.status;
+                    err.payload = data;
+                    throw err;
+                }
+                return data;
+            }
+
+            function unwrapListResponse(raw) {
+                if (!raw) return [];
+                if (Array.isArray(raw)) return raw;
+                if (raw.data && Array.isArray(raw.data)) return raw.data;
+                if (raw.response && Array.isArray(raw.response)) return raw.response;
+                if (raw.response && raw.response.data && Array.isArray(raw.response.data)) return raw.response.data;
+                return [];
+            }
+
+            function unwrapItemResponse(raw) {
+                if (!raw) return null;
+                if (raw && raw.id) return raw;
+                if (raw.response && raw.response.id) return raw.response;
+                if (raw.data && raw.data.id) return raw.data;
+                return raw;
+            }
+
+            // Get data from form fields
+            document.getElementById('courseTitle').addEventListener('input', e => {
+                courseData.title = e.target.value;
+            });
+
+            document.getElementById('courseCategory').addEventListener('change', e => {
+                courseData.category = e.target.value;
+            });
+
+            document.getElementById('courseLevel').addEventListener('change', e => {
+                courseData.level = e.target.value;
+            });
+
+            document.getElementById('courseTime').addEventListener('input', e => {
+                courseData.duration = e.target.value;
+            });
+
+            document.getElementById('coursePrice').addEventListener('input', e => {
+                courseData.price = e.target.value;
+            });
+
+            document.getElementById('courseDescription').addEventListener('input', e => {
+                courseData.description = e.target.value;
+            });
+
+            document.getElementById('free-course').addEventListener('change', e => {
+                const checked = e.target.checked;
+
+                courseData.freeCourse = checked;
+                const priceInput = document.getElementById("coursePrice");
+
+                priceInput.disabled = checked;
+
+                if (checked) {
+                    priceInput.value = "";
+                    courseData.price = "";
+                }
+            })
+
+            // File upload
+            document.getElementById('fileInput').addEventListener('change', e => {
+                courseData.imageFile = e.target.files[0];
+
+                if (courseData.imageFile) {
+                    document.getElementById("fileNameDisplay").textContent = courseData.imageFile.name;
+                }
+            });
+
+            function populatePublishSection() {
+                // document.getElementById('overviewUrl').textContent = courseData.url;
+                document.getElementById('publishSubjectTitle').textContent = courseData.title;
+                document.getElementById('publishCategory').textContent = courseData.category.split('-')[1] +
+                    ' Category';
+                document.getElementById('publishPrice').textContent = courseData.freeCourse ? 'Free Course' :
+                    courseData.price + ' Price';
+                document.getElementById('publishTime').textContent = courseData.duration + ' Hours';
+                document.getElementById('publishLevel').textContent = courseData.level.split('-')[1] + ' Level';
+                document.getElementById('publishDescription').textContent = courseData.description;
+
+                if (fileInput && fileInput.files && fileInput.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        document.getElementById('publishCourseImage').src = e.target.result;
+                    };
+                    reader.readAsDataURL(fileInput.files[0]);
+                }
+            }
+
+            navButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const section = btn.getAttribute('data-section');
+                    if (section === 'media' && !courseData.title && !courseData.price && !courseData
+                        .duration) {
+                        return
+                    }
+                    if (section === 'publish' && !courseData.imageFile && !courseData.title && !
+                        courseData.price && !courseData.duration) {
+                        return
+                    }
+                    showSection(section);
+                });
+            });
+
+            continueButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const next = btn.getAttribute('data-next');
+                    if (next === 'media' && !courseData.title && !courseData.price && !courseData
+                        .duration) {
+                        return
+                    }
+                    if (next === 'publish' && !courseData.imageFile && !courseData.title && !
+                        courseData.price && !courseData.duration) {
+                        return
+                    }
+                    showSection(next);
+                });
+            });
+
+            backButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const back = btn.getAttribute('data-next');
+                    showSection(back);
+                });
+            });
+
+            const fileInput = document.getElementById('fileInput');
+            const fileNameDisplay = document.getElementById('fileNameDisplay');
+            const uploadButton = document.getElementById('uploadButton');
+
+            if (uploadButton) {
+                uploadButton.addEventListener('click', () => {
+                    fileInput.click();
+                });
+            }
+
+            if (courseData.imageFile) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    document.getElementById('publishCourseImage').src = e.target.result;
+                };
+                reader.readAsDataURL(courseData.imageFile);
+            }
+
+            function validateBeforePublish() {
+                const required = [
+                    courseData.title,
+                    courseData.category.split('-')[0],
+                    courseData.level.split('-')[0],
+                    courseData.duration,
+                    courseData.url,
+                    courseData.description,
+                    courseData.imageFile
+                ];
+
+                if (!courseData.freeCourse) {
+                    required.push(courseData.price);
+                }
+
+                return required.every(v => v && v !== "");
+            }
+
+            const finalPublishBtn = document.getElementById('finalPublishBtn');
+            if (finalPublishBtn) {
+                finalPublishBtn.addEventListener('click', async () => {
+
+                    if (!validateBeforePublish()) {
+                        alert('Please fill in all required fields');
+                        return;
+                    }
+
+
+                    const formData = new FormData();
+                    formData.append("title", courseData.title);
+                    formData.append("description", courseData.description);
+
+                    formData.append("curriculum_category_id", document.getElementById(
+                        "curriculumCategoryId").value);
+                    formData.append("course_category_id", courseData.category.split('-')[0]);
+                    if (courseData.freeCourse) {
+                        formData.append("price", 0);
+                    } else {
+                        formData.append("price", courseData.price);
+                    }
+
+                    formData.append("free", courseData.freeCourse ? 1 : 0);
+
+                    formData.append("level_id", courseData.level.split('-')[0]);
+                    formData.append("term_id", courseData.term ? courseData.term.split('-')[0] : "");
+                    formData.append("duration_hours", courseData.duration);
+                    formData.append("url", courseData.url);
+
+                    formData.append("thumbnail", courseData.imageFile);
+
+                    try {
+                        const res = await fetch("/api/courses", {
+                            method: "POST",
+                            headers: {
+                                "Authorization": `Bearer ${token}`
+                            },
+                            body: formData
+                        });
+
+                        const data = await res.json();
+                        console.log("Response:", data);
+                        if (res.ok) {
+                            showToast("Success", "Course created successfully!", "success");
+                            setTimeout(() => {
+                                window.location.href = "/editsubject";
+                            }, 1500);
+                        } else {
+                            showToast("Error", data.message || "Failed to create course.",
+                                "danger");
+                        }
+
+
+                    } catch (error) {
+                        console.error(error);
+                        showToast("Error", "Network or server error occurred.", "danger");
+                    }
+                });
+            }
 
             showSection('details');
         });
