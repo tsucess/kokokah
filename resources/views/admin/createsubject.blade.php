@@ -758,7 +758,7 @@
             duration: "",
             price: "",
             description: "",
-            freeCourse: ''
+            freeCourse: '',
             imageFile: null
         };
         const API_CATEGORIES = "/api/course-category";
@@ -775,6 +775,41 @@
             const courseCategory = document.getElementById('subjectCategory')
             const courseTerm = document.getElementById('subjectTerm')
             const courseLevel = document.getElementById('subjectLevel')
+            reset()
+
+            function reset() {
+
+                // 🔥 RESET ALL INPUTS ON REFRESH
+                document.getElementById('subjectTitle').value = "";
+                document.getElementById('subjectCategory').value = "";
+                document.getElementById('subjectLevel').value = "";
+                document.getElementById('subjectTime').value = "";
+                document.getElementById('coursePrice').value = "";
+                document.getElementById('subjectDescription').value = "";
+                document.getElementById('fileInput').value = "";
+                document.getElementById('fileNameDisplay').textContent = "No file chosen";
+
+                // Reset checkbox
+                const freeCourseBox = document.getElementById('free-course');
+                freeCourseBox.checked = false;
+                document.getElementById('coursePrice').disabled = false;
+
+                const fileInput = document.getElementById('fileInput');
+                if (fileInput) fileInput.value = "";
+
+                // Reset JS data object
+                Object.assign(courseData, {
+                    title: "",
+                    category: "",
+                    level: "",
+                    duration: "",
+                    price: "",
+                    description: "",
+                    freeCourse: "",
+                    imageFile: null
+                });
+
+            }
 
             function showSection(sectionId) {
                 sections.forEach(sec => sec.classList.add('d-none'));
@@ -1051,10 +1086,13 @@
                     courseData.category.split('-')[0],
                     courseData.level.split('-')[0],
                     courseData.duration,
-                    courseData.price,
                     courseData.description,
                     courseData.imageFile
                 ];
+
+                if (!courseData.freeCourse) {
+                    required.push(courseData.price);
+                }
 
                 return required.every(v => v && v !== "");
             }
@@ -1091,6 +1129,7 @@
 
                         const data = await res.json();
                         console.log("Response:", data);
+                        reset()
 
                         window.location.href = "/editsubject"
                     } catch (error) {
