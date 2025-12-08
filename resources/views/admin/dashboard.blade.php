@@ -130,12 +130,12 @@
                     <table class="table align-middle">
                         <thead class="table-light">
                             <tr>
-                                <th>Name</th>
-                                <th>ID</th>
-                                <th>Role</th>
-                                <th>Gender</th>
-                                <th>Email</th>
-                                <th>Registered</th>
+                                <th style='font-size:14px; padding:1rem;'>Name</th>
+                                <th style='font-size:14px; padding:1rem;'>ID</th>
+                                <th style='font-size:14px; padding:1rem;'>Role</th>
+                                <th style='font-size:14px; padding:1rem;'>Gender</th>
+                                <th style='font-size:14px; padding:1rem;'>Email</th>
+                                <th style='font-size:14px; padding:1rem;'>Registered</th>
                             </tr>
                         </thead>
                         <tbody id="recentUsersTableBody">
@@ -311,12 +311,12 @@
 
                         const row = `
                 <tr>
-                  <td>${user.first_name} ${user.last_name}</td>
-                  <td>${user.identifier}</td>
-                  <td><span class="badge" style="background-color: #004A53; color: white;">${user.role}</span></td>
-                  <td>${user.gender || 'N/A'}</td>
-                  <td>${user.email}</td>
-                  <td>${user.formatted_date}</td>
+                  <td style='font-size:14px; padding:1rem;'>${user.first_name} ${user.last_name}</td>
+                  <td style='font-size:14px; padding:1rem;'>${user.identifier}</td>
+                  <td style='font-size:14px; padding:1rem;'><span class="badge" style="background-color: #004A53; color: white; padding:.5rem;">${user.role}</span></td>
+                  <td style='font-size:14px; padding:1rem;'>${user.gender || 'N/A'}</td>
+                  <td style='font-size:14px; padding:1rem;'>${user.email}</td>
+                  <td style='font-size:14px; padding:1rem;'>${user.formatted_date}</td>
                 </tr>
               `;
                         tbody.innerHTML += row;
