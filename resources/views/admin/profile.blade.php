@@ -1,289 +1,577 @@
 @extends('layouts.dashboardtemp')
-<style>
- body {
-      background-color: #f9fafb;
-    }
+@section('content')
 
-    .profile-card {
-      border: 1px solid #eee;
-      border-radius: 15px;
-      padding: 25px;
-      background: white;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    }
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 
-    .upload-box {
-      border: 2px dashed #d2d6dc;
-      border-radius: 10px;
-      text-align: center;
-      padding: 35px 10px;
-      cursor: pointer;
-      transition: border-color 0.3s ease;
-      position: relative;
-    }
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
 
-    .upload-box:hover {
-      border-color: #0d6efd;
-      background-color: #f9fafc;
-    }
+        .add-user-main {
+            background-color: #ffffff;
+        }
 
-    .upload-box input {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      opacity: 0;
-      cursor: pointer;
-    }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .line-divider{
+            background-color: #BFBFBF;
+            width: 100%;
+            height: 1px;
+            margin-bottom: 24px;
+        }
+        .modal-label{
+            background-color: #f9f9f9;
+        }
 
-    .upload-icon {
-      font-size: 30px;
-      color: #6c757d;
-    }
+        /* Cropper button hover effects */
+        #rotateLeftBtn:hover,
+        #rotateRightBtn:hover,
+        #resetCropBtn:hover {
+            background-color: #004A53 !important;
+            color: white !important;
+        }
 
-    .preview-image {
-      width: 100%;
-      max-width: 240px;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-      object-fit: cover;
-    }
+        /* Cropper Modal Styles */
+        .modal-dialog {
+            margin: auto !important;
+        }
 
-    .save-btn {
-      background-color: #ffb100;
-      border: none;
-      padding: 12px 30px;
-      border-radius: 8px;
-      color: white;
-      font-weight: 600;
-      font-size: 1.1rem;
-      transition: background-color 0.3s;
-    }
+        .modal-header {
+            background-color: #f9f9f9;
+        }
 
-    .save-btn:hover {
-      background-color: #e6a000;
-    }
+        .modal-header .modal-title {
+            color: #004A53;
+            font-weight: 600;
+        }
 
-    .form-floating > label {
-      padding-left: 0.75rem;
-    }
+        .modal-body {
+            height: 360px;
+            overflow-y: auto;
+            padding: 0.75rem;
+        }
 
-    .fw-bold.text-primary {
-      color: #0d6efd !important;
-    }
-</style>
+        .image-div {
+            max-width: 100%;
+            height: 250px;
+        }
 
-<main>
-<div class="container my-5">
-  <h4 class="fw-bold" style = "font-size:36px;">My Profile</h4>
+        #cropperImage {
+            max-width: 100%;
+            max-height: 500px;
+        }
 
-  <!-- Tabs -->
-  <ul class="nav nav-tabs mt-3" id="profileTabs" role="tablist">
-    <li class="nav-item" role="presentation">
-      <button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details" type="button" role="tab">My details</button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" id="safety-tab" data-bs-toggle="tab" data-bs-target="#safety" type="button" role="tab">Safety</button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" id="wallet-tab" data-bs-toggle="tab" data-bs-target="#wallet" type="button" role="tab">Wallet</button>
-    </li>
-  </ul>
+        .zoom-container {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
 
-  <!-- Tab content -->
-  <div class="tab-content mt-4" id="profileTabsContent">
+        .zoom-label {
+            font-size: 0.9rem;
+            color: #666;
+            min-width: 50px;
+            margin-bottom: 0;
+        }
 
-    <!-- My Details Tab -->
-    <div class="tab-pane fade show active" id="details" role="tabpanel">
-      <div class="row g-4">
-        <div class="col-lg-8">
-          <!-- Basic Info -->
-          <div class="profile-card mb-4">
-            <h5 class="fw-bold mb-3">Basic Information</h5>
-            <form id="profileForm">
-              <div class="row g-3">
-                {{-- <div class="col-md-6 form-floating">
-                  <input type="text" class="form-control" id="firstName" placeholder="Enter First Name" required>
-                  <label for="firstName">Enter First Name</label>
-                </div> --}}
-                <div class="w-50 custom-form-group">
+        #zoomRange {
+            flex: 1;
+        }
 
-                    <label for="fname" class="custom-label">Enter First Name</label>
-                    <input type="text" class="form-control-custom" id="fname" name="fname" placeholder="Winner" aria-label="Email Address"  required>
+        .controls-container {
+            display: flex;
+            justify-content: center;
+            gap: 0.25rem;
+        }
 
+        #rotateLeftBtn,
+        #rotateRightBtn,
+        #resetCropBtn {
+            background-color: white;
+            border: 1px solid #004A53;
+            color: #004A53;
+            font-size: 0.8rem;
+            padding: 0.15rem 0.8rem;
+            line-height: 1;
+        }
+
+        .modal-footer {
+            background-color: #f9f9f9;
+        }
+
+        #cropperSave {
+            background-color: #FDAF22;
+            border: none;
+            color: white;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        .form-label-custom {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #000000;
+            display: block;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.3px;
+            margin-bottom: 0;
+        }
+
+        .form-input-custom {
+            padding: 0.875rem 1.25rem;
+            font-size: 0.95rem;
+            border: 2px solid #004A53;
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+            background-color: white;
+            color: #333;
+        }
+
+        .form-input-custom::placeholder {
+            color: #999;
+        }
+
+        .form-input-custom:focus {
+            border-color: #004A53;
+            box-shadow: 0 0 0 0.2rem rgba(0, 74, 83, 0.15);
+            background-color: white;
+            color: #333;
+        }
+
+        .form-input-custom:hover {
+            border-color: #004A53;
+        }
+
+        .form-check-input {
+            border: 2px solid #004A53;
+            cursor: pointer;
+        }
+
+        .form-check-input:checked {
+            background-color: #004A53;
+            border-color: #004A53;
+        }
+
+        .form-check-input:focus {
+            border-color: #004A53;
+            box-shadow: 0 0 0 0.2rem rgba(0, 74, 83, 0.25);
+        }
+
+        .password-input-wrapper {
+            position: relative;
+        }
+
+        .password-input-wrapper .btn-link {
+            border: none;
+            padding: 0.5rem 1rem;
+            background: none;
+        }
+
+        .password-input-wrapper .btn-link:hover {
+            background: none;
+        }
+
+        #uploadArea {
+            transition: all 0.3s ease;
+        }
+
+        #uploadArea:hover {
+            background-color: #f0f8f9 !important;
+            border-color: #004A53 !important;
+        }
+
+        .card {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+        }
+
+        .rounded-4 {
+            border-radius: 1rem !important;
+        }
+        .modal-form-input-border {
+                    padding: 0px 15px 15px;
+                }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .container-fluid {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+
+            h1 {
+                font-size: 1.75rem !important;
+            }
+
+            .d-flex.justify-content-between {
+                flex-direction: column !important;
+                gap: 1rem !important;
+            }
+
+            .d-flex.gap-3 {
+                flex-wrap: wrap !important;
+                gap: 0.5rem !important;
+            }
+
+            .btn {
+                font-size: 0.85rem !important;
+                padding: 0.5rem 1rem !important;
+            }
+
+            .row.g-4 {
+                gap: 1.5rem !important;
+            }
+
+            .col-lg-8,
+            .col-lg-4 {
+                flex: 0 0 100% !important;
+                max-width: 100% !important;
+            }
+
+            .card-body {
+                padding: 1.5rem !important;
+            }
+
+            .form-label-custom {
+                font-size: 0.85rem !important;
+            }
+
+            .form-input-custom {
+                padding: 0.7rem 1rem !important;
+                font-size: 0.9rem !important;
+            }
+
+            .modal-body {
+                height: 320px !important;
+                padding: 0.75rem !important;
+            }
+
+            .modal-body>.image-div {
+                height: 200px !important;
+            }
+
+            #cropperImage {
+                max-height: 400px !important;
+            }
+
+            .d-flex.flex-wrap.gap-2 {
+                flex-direction: row !important;
+                gap: 0.3rem !important;
+                justify-content: center !important;
+            }
+
+            .d-flex.flex-wrap.gap-2>div {
+                width: 100% !important;
+                margin-bottom: 0.5rem !important;
+            }
+
+            .d-flex.flex-wrap.gap-2>button {
+                flex: 1 1 auto !important;
+                min-width: 40px !important;
+                padding: 0.3rem 0.4rem !important;
+            }
+
+            .modal-footer {
+                flex-wrap: wrap !important;
+                gap: 0.5rem !important;
+            }
+
+            .modal-footer button {
+                /* flex: 1 1 calc(50% - 0.25rem) !important; */
+                font-size: 0.75rem !important;
+                padding: 0.4rem 0.5rem !important;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container-fluid {
+                padding-left: 0.75rem !important;
+                padding-right: 0.75rem !important;
+            }
+
+            h1 {
+                font-size: 1.5rem !important;
+            }
+
+            .btn {
+                font-size: 0.75rem !important;
+                padding: 0.4rem 0.75rem !important;
+            }
+
+            .card-body {
+                padding: 1rem !important;
+            }
+
+            .form-label-custom {
+                font-size: 0.8rem !important;
+            }
+
+            .form-input-custom {
+                padding: 0.6rem 0.9rem !important;
+                font-size: 0.85rem !important;
+            }
+
+            .modal-body {
+                height: 300px !important;
+                padding: 0.5rem !important;
+            }
+
+            .modal-body>.image-div {
+                height: 200px !important;
+            }
+
+            #cropperImage {
+                max-height: 350px !important;
+            }
+
+            .modal-footer button {
+                /* flex: 1 1 50% !important; */
+                font-size: 0.7rem !important;
+                padding: 0.35rem 0.4rem !important;
+            }
+
+            .d-flex.gap-5 {
+                gap: 1rem !important;
+            }
+        }
+    </style>
+    <main class="add-user-main">
+        <div class="container-fluid px-5 py-4">
+            <!-- Header Section -->
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                    <h1 class="fw-bold mb-2"
+                        style=" color: #004A53; font-family: 'Fredoka One', sans-serif;">My Profile</h1>
+                    <p class="text-muted" style="font-size: 0.95rem;">Here overview of your</p>
                 </div>
-
-                <div class="w-50 custom-form-group">
-
-                    <label for="lname" class="custom-label">Enter Last Name</label>
-                    <input type="text" class="form-control-custom" id="lname" name="lname" placeholder="Effiong" aria-label="Email Address"  required>
-
+                <div class="d-flex gap-3">
+                    <button type="button" class="btn btn-light px-4 py-2" id="cancelBtn"
+                        style="border: 1px solid #ddd; color: #333; font-weight: 500;">cancel</button>
+                    <button type="button" class="btn px-4 py-2 fw-semibold" id="saveBtn"
+                        style="background-color: #FDAF22; border: none; color: white;">Update</button>
                 </div>
-                {{-- <div class="col-md-6 form-floating">
-                  <input type="text" class="form-control" id="lastName" placeholder="Enter Last Name" required>
-                  <label for="lastName">Enter Last Name</label>
-                </div> --}}
-
-                <div class="col-md-12 d-flex align-items-center mt-2">
-                  <label class="me-3 fw-semibold">Gender:</label>
-                  <div class="form-check me-3">
-                    <input class="form-check-input" type="radio" name="gender" id="male" value="Male" checked>
-                    <label class="form-check-label" for="male">Male</label>
-                  </div>
-
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gender" id="female" value="Female">
-                    <label class="form-check-label" for="female">Female</label>
-                  </div>
-                </div>
-
-                {{-- <div class="col-md-6 form-floating">
-                  <input type="date" class="form-control" id="dob" placeholder="Enter Date of Birth">
-                  <label for="dob">Enter Date of Birth</label>
-                </div> --}}
-
-                <div class="w-50 custom-form-group">
-
-                    <label for="date" class="custom-label">Enter Date of Birth</label>
-                    <input type="date" class="form-control-custom" id="date" name="date" placeholder="Effiong" aria-label="Email Address"  required>
-                </div>
-
-                <div class="col-md-6">
-                  <div class="upload-box" id="uploadBox">
-                    <i class="bi bi-upload upload-icon"></i>
-                    <p class="mt-2 mb-1 fw-semibold">Drop your files to upload</p>
-                    <input type="file" id="fileInput" accept="image/*">
-                    <small id="fileName" class="text-muted"></small>
-                  </div>
-                </div>
-
-              </div>
-            </form>
-          </div>
-
-          <!-- Parent Details -->
-          <div class="profile-card">
-            <h5 class="fw-bold mb-3">Parent Details</h5>
-            <div class="row g-3">
-              {{-- <div class="col-md-6 form-floating">
-                <input type="text" class="form-control" id="parentFirst" placeholder="Enter First Name">
-                <label for="parentFirst">Enter First Name</label>
-              </div>
-              <div class="col-md-6 form-floating">
-                <input type="text" class="form-control" id="parentLast" placeholder="Enter Last Name">
-                <label for="parentLast">Enter Last Name</label>
-              </div> --}}
-
-
-              <div class="w-50 custom-form-group">
-
-                    <label for="fname" class="custom-label">Enter First Name</label>
-                    <input type="text" class="form-control-custom" id="fname" name="fname" placeholder="Winner" aria-label="Email Address"  required>
-
-                </div>
-
-                <div class="w-50 custom-form-group">
-
-                    <label for="lname" class="custom-label">Enter Last Name</label>
-                    <input type="text" class="form-control-custom" id="lname" name="lname" placeholder="Effiong" aria-label="Email Address"  required>
-
-                </div>
-
-              {{-- <div class="col-md-6 form-floating">
-                <input type="email" class="form-control" id="parentEmail" placeholder="Enter Parent Email Address">
-                <label for="parentEmail">Enter Parent Email Address</label>
-              </div>
-              <div class="col-md-6 form-floating">
-                <input type="tel" class="form-control" id="parentPhone" placeholder="Enter Parent Phone Number">
-                <label for="parentPhone">Enter Parent Phone Number</label>
-              </div> --}}
-
-
-              <div class="w-50 custom-form-group">
-
-                    <label for="email" class="custom-label">Enter Parent Email Address</label>
-                    <input type="email" class="form-control-custom" id="email" name="email" placeholder="Winner" aria-label="Email Address"  required>
-
-                </div>
-
-                <div class="w-50 custom-form-group">
-
-                    <label for="phone" class="custom-label">Enter Parent Phone Number</label>
-                    <input type="tel" class="form-control-custom" id="phone" name="phone" placeholder="Effiong" aria-label="Email Address"  required>
-
-                </div>
-
-
             </div>
-          </div>
+
+            <!-- Alert Container -->
+            <div id="alertContainer" style="position: fixed; top: 20px; right: 20px; z-index: 9999; max-width: 400px;">
+            </div>
+
+            <div class="row g-4">
+                <!-- Left Column - Form Sections -->
+                <div class="col-lg-8">
+                    <!-- Basic Information Section -->
+                    <div class="card border-0 shadow-sm rounded-4 mb-5"
+                        style="background: #f9f9f9; border: 1px solid #e8e8e8;">
+                        <div class="card-body p-4 d-flex flex-column gap-4">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <h5 class="fw-bold mb-0" style="font-size: 1.1rem; color: #1a1a1a;">Basic Information</h5>
+                                <span class="text-danger ms-2" style="font-size: 1.2rem;">*</span>
+                            </div>
+
+                            <form id="createUserForm" class="d-flex flex-column gap-3">
+                                @csrf
+                                <div class="line-divider"></div>
+
+                                <!-- First Name and Last Name Row -->
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="modal-form-input-border">
+                                            <label class="modal-label">Enter First Name</label>
+                                            <input type="text" class="modal-input" id="firstName"
+                                                name="first_name" placeholder="Winner" required>
+                                                </div>
+                                            <small class="text-danger d-none" id="firstNameError"></small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="modal-form-input-border">
+                                            <label class="modal-label">Enter Last Name</label>
+                                            <input type="text" class="modal-input" id="lastName"
+                                                name="last_name" placeholder="Winner" required>
+                                                </div>
+                                            <small class="text-danger d-none" id="lastNameError"></small>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                                <!-- Date of Birth Row -->
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <!-- Gender Row -->
+                                        <div class="mb-5 d-flex flex-column gap-2">
+                                            <label class="form-label form-label-custom">Gender</label>
+                                            <div class="d-flex gap-5">
+                                                <div class="form-check d-flex align-items-center gap-3">
+                                                    <input class="form-check-input" type="radio" name="gender"
+                                                        id="genderMale" value="male" checked
+                                                        style="width: 1rem; height: 1rem; cursor: pointer;">
+                                                    <label class="form-check-label" for="genderMale"
+                                                        style="cursor: pointer;  color: #000000; font-weight: 500; font-size:1rem;">Male</label>
+                                                </div>
+                                                <div class="form-check d-flex align-items-center gap-3">
+                                                    <input class="form-check-input" type="radio" name="gender"
+                                                        id="genderFemale" value="female"
+                                                        style="width: 1rem; height: 1rem; cursor: pointer;">
+                                                    <label class="form-check-label" for="genderFemale"
+                                                        style="cursor: pointer;  color: #000000; font-weight: 500; font-size:1rem;">Female</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="modal-form-input-border">
+                                            <label class="modal-label">Enter Date of Birth</label>
+                                            <input type="date" class="modal-input" id="dateOfBirth"
+                                                name="date_of_birth" placeholder="DD/MM/YYYY">
+                                                </div>
+                                            <small class="text-danger d-none" id="dobError"></small>
+                                        </div>
+                                    </div>
+                                    <!-- Profile Photo Upload Area -->
+                                    <div class="col-md-6 ">
+                                        <div class="border-2  rounded-4 px-5 py-4 text-center"
+                                            style="border-color: #8E8E8E; border-style:dashed; cursor: pointer; background: white; transition: all 0.3s ease;"
+                                            id="uploadArea">
+                                            <div class="mb-3">
+                                                <i class="fa-solid fa-file-lines fa-lg" style="color: #004A53;"></i>
+                                            </div>
+                                            <p class="fw-semibold mb-2" style="color: #000000; font-size: 14px;">Drop your
+                                                files to upload</p>
+                                            <small style="color: #000000; font-size:12px; padding:3px 20px; border: 1px solid #C4C4C4; border-radius:34px; ">Edit</small>
+                                            <input type="file" id="profilePhoto" name="profile_photo" class="d-none"
+                                                accept="image/*">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Parent Details Section -->
+                    <div class="card border-0 shadow-sm rounded-4 mb-4"
+                        style="background: #f9f9f9; border: 1px solid #e8e8e8;">
+                        <div class="card-body p-4 d-flex flex-column gap-4">
+                            <h5 class="fw-bold " style="font-size: 1.1rem; color: #1a1a1a;">Parent Details</h5>
+                            <div class="line-divider"></div>
+
+                            <form id="parentForm" class=" d-flex flex-column gap-3">
+                                <!-- Parent First Name and Last Name Row -->
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="modal-form-input-border">
+                                            <label class="modal-label">Enter First Name</label>
+                                            <input type="text" class="modal-input"
+                                                id="parentFirstName" name="parent_first_name" placeholder="Winner">
+                                                </div>
+                                            <small class="text-danger d-none" id="parentFirstNameError"></small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="modal-form-input-border">
+                                            <label class="modal-label">Enter Last Name</label>
+                                            <input type="text" class="modal-input"
+                                                id="parentLastName" name="parent_last_name" placeholder="Winner">
+                                            </div>
+                                            <small class="text-danger d-none" id="parentLastNameError"></small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Parent Email and Phone Row -->
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="modal-form-input-border">
+                                            <label class="modal-label">Enter Parent Email Address</label>
+                                            <input type="email" class="modal-input" id="parentEmail"
+                                                name="parent_email" placeholder="Winner">
+                                            </div>
+                                            <small class="text-danger d-none" id="parentEmailError"></small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="modal-form-input-border">
+                                            <label class="modal-label">Enter Parent Phone Number</label>
+                                            <input type="tel" class="modal-input" id="parentPhone"
+                                                name="parent_phone" placeholder="Winner">
+                                            </div>
+                                            <small class="text-danger d-none" id="parentPhoneError"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column - Profile Photo and Login Details -->
+                <div class="col-lg-4">
+                    <!-- Profile Photo Section -->
+                    <div class="card border-0 shadow-sm rounded-4 mb-4"
+                        style="background: #f9f9f9; border: 1px solid #e8e8e8;">
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <div class="mb-4">
+                                    <img id="profilePreview" src="images/winner-round.png" alt="Profile"
+                                        class=""
+                                        style="width: 100%; max-width: 280px; height: auto; object-fit: cover; border-radius:50%;">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
+    </main>
 
-        <!-- Right Column -->
-        <div class="col-lg-4 d-flex flex-column align-items-center justify-content-start">
-          <img src="https://via.placeholder.com/200x200.png?text=Profile+Preview" id="previewImage" class="preview-image mb-4" alt="Profile Preview">
-          <button id="saveBtn" class="save-btn w-75">Save</button>
+    <!-- Image Cropper Modal - Bootstrap -->
+    <div class="modal fade" id="cropperModal" tabindex="-1" aria-labelledby="cropperModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header border-bottom">
+                    <h5 class="modal-title" id="cropperModalLabel">Crop Profile Photo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-2 image-div">
+                        <img id="cropperImage" src="" alt="Crop Image">
+                    </div>
+                    <div class="zoom-container mb-2">
+                        <label for="zoomRange" class="form-label zoom-label">Zoom:</label>
+                        <input type="range" id="zoomRange" class="form-range" min="0.1" max="3"
+                            step="0.1" value="1">
+                    </div>
+                    <div class="controls-container">
+                        <button type="button" class="btn" id="rotateLeftBtn">
+                            <i class="fa-solid fa-rotate-left"></i> <span class="d-none d-md-inline">Rotate Left</span>
+                        </button>
+                        <button type="button" class="btn" id="rotateRightBtn">
+                            <i class="fa-solid fa-rotate-right"></i> <span class="d-none d-md-inline">Rotate Right</span>
+                        </button>
+                        <button type="button" class="btn" id="resetCropBtn">
+                            <i class="fa-solid fa-arrows-rotate"></i> <span class="d-none d-md-inline">Reset</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer border-top">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-sm" id="cropperSave">Crop & Save</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-
-    <!-- Safety Tab -->
-    <div class="tab-pane fade" id="safety" role="tabpanel">
-      <div class="profile-card">
-        <h5 class="fw-bold">Safety Settings</h5>
-        <p>Content for Safety tab goes here...</p>
-      </div>
-    </div>
-
-    <!-- Wallet Tab -->
-    <div class="tab-pane fade" id="wallet" role="tabpanel">
-      <div class="profile-card">
-        <h5 class="fw-bold">Wallet Information</h5>
-        <p>Content for Wallet tab goes here...</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-  const fileInput = document.getElementById('fileInput');
-  const uploadBox = document.getElementById('uploadBox');
-  const fileName = document.getElementById('fileName');
-  const previewImage = document.getElementById('previewImage');
-  const saveBtn = document.getElementById('saveBtn');
-
-  // Make the upload box clickable
-  uploadBox.addEventListener('click', () => fileInput.click());
-
-  // Show filename and preview
-  fileInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      fileName.textContent = file.name;
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        previewImage.src = event.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
-  });
-
-  // Simulated save action
-  saveBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    const formData = {
-      firstName: document.getElementById('firstName').value,
-      lastName: document.getElementById('lastName').value,
-      gender: document.querySelector('input[name="gender"]:checked').value,
-      dob: document.getElementById('dob').value,
-      parentFirst: document.getElementById('parentFirst').value,
-      parentLast: document.getElementById('parentLast').value,
-      parentEmail: document.getElementById('parentEmail').value,
-      parentPhone: document.getElementById('parentPhone').value
-    };
-    alert('✅ Information saved successfully!\n\n' + JSON.stringify(formData, null, 2));
-  });
-</script>
-</main>
+@endsection
