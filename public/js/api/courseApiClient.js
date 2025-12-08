@@ -202,6 +202,14 @@ class CourseApiClient extends BaseApiClient {
   }
 
   /**
+   * Get curriculum category by ID
+   * @param {number} categoryId - Category ID
+   */
+  static async getCurriculumCategory(categoryId) {
+    return this.get(`/curriculum-category/${categoryId}`);
+  }
+
+  /**
    * Create curriculum category
    * @param {object} data - Category data
    */

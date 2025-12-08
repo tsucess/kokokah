@@ -40,7 +40,7 @@ class CourseCategoryController extends Controller implements HasMiddleware
 
         $courseCategory = $request->user()->courseCategories()->create($data);
 
-        return ['status' => 200, 'message' => 'Course Category created successfully', 'response' => $courseCategory];
+        return ['status' => 200, 'message' => 'Course Category created successfully', 'data' => $courseCategory];
     }
 
     /**
@@ -48,8 +48,8 @@ class CourseCategoryController extends Controller implements HasMiddleware
      */
     public function show($id)
     {
-          $data = CourseCategory::findOrFail($id);
-        return ['status' => 200, 'response' => $courseCategory];
+        $courseCategory = CourseCategory::findOrFail($id);
+        return ['status' => 200, 'data' => $courseCategory];
     }
 
     /**
@@ -65,7 +65,7 @@ class CourseCategoryController extends Controller implements HasMiddleware
         $courseCategory = CourseCategory::findOrFail($id);
         $courseCategory->update($data);
 
-        return ['status' => 200, 'message' => 'Course Category Updated successfully', 'response' => $courseCategory];
+        return ['status' => 200, 'message' => 'Course Category Updated successfully', 'data' => $courseCategory];
     }
 
     /**

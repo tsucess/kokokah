@@ -241,13 +241,17 @@
                 let currentDeleteId = null;
                 let isSaving = false;
 
-                // DOM refs
-                const grid = document.getElementById('categoriesGrid');
-                const categoryForm = document.getElementById('categoryForm');
-                const categoryNameInput = document.getElementById('categoryName');
-                const categoryDescInput = document.getElementById('categoryDesc');
-                const modalEl = document.getElementById('addCategoryModal');
-                const modalTitle = document.getElementById('modalTitle');
+                // DOM refs - will be initialized when DOM is ready
+                let grid, categoryForm, categoryNameInput, categoryDescInput, modalEl, modalTitle;
+
+                function initializeDOMRefs() {
+                    grid = document.getElementById('categoriesGrid');
+                    categoryForm = document.getElementById('categoryForm');
+                    categoryNameInput = document.getElementById('categoryName');
+                    categoryDescInput = document.getElementById('categoryDesc');
+                    modalEl = document.getElementById('addCategoryModal');
+                    modalTitle = document.getElementById('modalTitle');
+                }
 
                 // ---------- Toast helper ----------
                 function showToast(title = '', message = '', type = 'info', timeout = 3500) {
@@ -313,7 +317,7 @@
                                      <div class="card-body p-4 d-flex justify-content-between align-items-start">
                                          <div>
                                              <h5 class="fw-bold mb-2">${escapeHtml(category.title)}</h5>
-                                             <p class="text-muted mb-0">${category.description}</p>
+                                             <p class="text-muted mb-0">${escapeHtml(category.description)}</p>
                                          </div>
                                          <div class="d-flex gap-2">
                                              <button class="action-btn" onclick="editcategory(${category.id})">
@@ -456,41 +460,7 @@
                     }
                 }
 
-                // ---------- Form handling ----------
-                categoryForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    if (isSaving) return;
-                    const name = categoryNameInput.value.trim();
-                    const description = categoryDescInput.value.trim();
-                    if (!name || !description) {
-                        showToast('Validation', 'Please enter a category name.', 'info');
-                        return;
-                    }
 
-                    try {
-                        isSaving = true;
-                        // disable submit button
-                        const submitBtn = categoryForm.querySelector('button[type="submit"]');
-                        if (submitBtn) submitBtn.setAttribute('disabled', 'disabled');
-
-                        if (currentEditId) {
-                            await updatecategory(currentEditId, name, description);
-                            currentEditId = null;
-                        } else {
-                            await createcategory(name, description);
-                        }
-
-                        categoryForm.reset();
-                        const bsModal = bootstrap.Modal.getInstance(modalEl);
-                        if (bsModal) bsModal.hide();
-                    } catch (err) {
-                        // errors surfaced in functions
-                    } finally {
-                        isSaving = false;
-                        const submitBtn = categoryForm.querySelector('button[type="submit"]');
-                        if (submitBtn) submitBtn.removeAttribute('disabled');
-                    }
-                });
 
                 // ---------- Modal helpers (exposed to global for inline onclick use) ----------
                 window.editcategory = function(id) {
@@ -508,29 +478,77 @@
                     new bootstrap.Modal(document.getElementById('deleteCategoryModal')).show();
                 };
 
-                // Confirm delete button handler
-                document.getElementById('confirmDeleteCategoryBtn').addEventListener('click', async () => {
-                    if (!currentDeleteId) return;
-                    const bs = bootstrap.Modal.getInstance(document.getElementById('deleteCategoryModal'));
-                    try {
-                        await deletecategoryRequest(currentDeleteId);
-                    } catch (err) {
-                        // handled in deletecategoryRequest
-                    } finally {
-                        currentDeleteId = null;
-                        if (bs) bs.hide();
-                    }
-                });
+                function setupEventListeners() {
+                    // Form handling
+                    categoryForm.addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        if (isSaving) return;
+                        const name = categoryNameInput.value.trim();
+                        const description = categoryDescInput.value.trim();
+                        if (!name || !description) {
+                            showToast('Validation', 'Please enter a category name.', 'info');
+                            return;
+                        }
 
-                // Reset add/edit modal on close
-                modalEl.addEventListener('hidden.bs.modal', () => {
-                    currentEditId = null;
-                    modalTitle.textContent = 'Add category';
-                    categoryForm.reset();
-                });
+                        try {
+                            isSaving = true;
+                            // disable submit button
+                            const submitBtn = categoryForm.querySelector('button[type="submit"]');
+                            if (submitBtn) submitBtn.setAttribute('disabled', 'disabled');
 
-                // Initial load
-                loadcategories();
+                            if (currentEditId) {
+                                await updatecategory(currentEditId, name, description);
+                                currentEditId = null;
+                            } else {
+                                await createcategory(name, description);
+                            }
+
+                            categoryForm.reset();
+                            const bsModal = bootstrap.Modal.getInstance(modalEl);
+                            if (bsModal) bsModal.hide();
+                        } catch (err) {
+                            // errors surfaced in functions
+                        } finally {
+                            isSaving = false;
+                            const submitBtn = categoryForm.querySelector('button[type="submit"]');
+                            if (submitBtn) submitBtn.removeAttribute('disabled');
+                        }
+                    });
+
+                    // Confirm delete button handler
+                    document.getElementById('confirmDeleteCategoryBtn').addEventListener('click', async () => {
+                        if (!currentDeleteId) return;
+                        const bs = bootstrap.Modal.getInstance(document.getElementById('deleteCategoryModal'));
+                        try {
+                            await deletecategoryRequest(currentDeleteId);
+                        } catch (err) {
+                            // handled in deletecategoryRequest
+                        } finally {
+                            currentDeleteId = null;
+                            if (bs) bs.hide();
+                        }
+                    });
+
+                    // Reset add/edit modal on close
+                    modalEl.addEventListener('hidden.bs.modal', () => {
+                        currentEditId = null;
+                        modalTitle.textContent = 'Add category';
+                        categoryForm.reset();
+                    });
+                }
+
+                // Initialize DOM references when DOM is ready
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', () => {
+                        initializeDOMRefs();
+                        setupEventListeners();
+                        loadcategories();
+                    });
+                } else {
+                    initializeDOMRefs();
+                    setupEventListeners();
+                    loadcategories();
+                }
 
             })();
             // Sample data

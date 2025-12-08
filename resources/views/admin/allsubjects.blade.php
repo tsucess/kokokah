@@ -314,14 +314,39 @@
     <script>
         const API_COURSES = "/api/courses";
         const token = localStorage.getItem('auth_token');
+        let currentPage = 1;
+        let totalPages = 1;
+        let paginationData = {};
 
         document.addEventListener("DOMContentLoaded", () => {
-            loadCourses();
+            loadCourses(1);
+            setupPaginationListeners();
         });
 
-        async function loadCourses() {
+        function setupPaginationListeners() {
+            const prevBtn = document.querySelector('button:has(i.fa-chevron-left)');
+            const nextBtn = document.querySelector('button:has(i.fa-chevron-right)');
+
+            if (prevBtn) {
+                prevBtn.addEventListener('click', () => {
+                    if (currentPage > 1) {
+                        loadCourses(currentPage - 1);
+                    }
+                });
+            }
+
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    if (currentPage < totalPages) {
+                        loadCourses(currentPage + 1);
+                    }
+                });
+            }
+        }
+
+        async function loadCourses(page = 1) {
             try {
-                const response = await fetch(API_COURSES,{
+                const response = await fetch(`${API_COURSES}?page=${page}&per_page=12`,{
                             method: "GET",
                             headers: {
                                 "Authorization": `Bearer ${token}`
@@ -334,13 +359,17 @@
                     return;
                 }
 
-                const courses = result.data;
+                const coursesData = result.data;
 
-                console.log("Courses Response:", courses);
-                // console.log("Courses Response:", courses.courses.data);
+                console.log("Courses Response:", coursesData);
 
-                populateTable(courses.courses.data);
-                updateStats(courses.courses.data);
+                currentPage = page;
+                paginationData = coursesData.courses;
+                totalPages = coursesData.courses.last_page || 1;
+
+                populateTable(coursesData.courses.data);
+                updateStats(coursesData.courses.data);
+                updatePaginationUI();
 
             } catch (error) {
                 console.error("Fetch Error:", error);
@@ -366,28 +395,48 @@
             }
 
             courses.forEach((course, index) => {
+                const rowNumber = (currentPage - 1) * 12 + index + 1;
+                const progress = course.progress || 0;
+                const rating = course.average_rating || 0;
+                const ratingDisplay = rating > 0 ? rating.toFixed(1) : '0.0';
+
+                // Generate star rating display
+                const fullStars = Math.floor(rating);
+                const hasHalfStar = rating % 1 >= 0.5;
+                let starsHtml = '';
+
+                for (let i = 0; i < 5; i++) {
+                    if (i < fullStars) {
+                        starsHtml += '<i class="fa fa-star" style="color:#FDAF22;"></i>';
+                    } else if (i === fullStars && hasHalfStar) {
+                        starsHtml += '<i class="fa fa-star-half-alt" style="color:#FDAF22;"></i>';
+                    } else {
+                        starsHtml += '<i class="fa fa-star" style="color:#ddd;"></i>';
+                    }
+                }
+
                 const row = `
             <tr style="border-bottom: 1px solid #e8e8e8;">
-                <td style='font-size:14px;'>${index + 1}</td>
+                <td style='font-size:14px;'>${rowNumber}</td>
 
                 <td style='font-size:14px;'>${course.title}</td>
-
-
 
                 <td style='font-size:14px;'>${formatDate(course.created_at)}</td>
 
                 <td style='font-size:14px;'>
                     <div class="d-flex align-items-center gap-2">
-                        <div class="progress" style="width: 100px; height: 6px;">
-                            <div class="progress-bar"></div>
+                        <div class="progress" style="width: 100px; height: 6px; background-color: #e9ecef;">
+                            <div class="progress-bar" style="width: ${progress}%; background-color: #004A53;"></div>
                         </div>
-                        <span>0%</span>
+                        <span>${progress.toFixed(1)}%</span>
                     </div>
                 </td>
 
-                <td >
-                    <i class="fa fa-star" style="color:#FDAF22;"></i>
-                    <span style='font-size:14px;'>${course.average_rating ?? 0}</span>
+                <td>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        ${starsHtml}
+                        <span style='font-size:14px;'>${ratingDisplay}</span>
+                    </div>
                 </td>
 
                 <td>
@@ -437,6 +486,34 @@
 
 
         /* -------------------------
+           Update Pagination UI
+        ---------------------------- */
+        function updatePaginationUI() {
+            // Update page info
+            const currentPageSpan = document.querySelector('span.text-muted strong');
+            const totalPageSpan = document.querySelectorAll('span.text-muted strong')[1];
+
+            if (currentPageSpan) currentPageSpan.textContent = currentPage;
+            if (totalPageSpan) totalPageSpan.textContent = totalPages;
+
+            // Update Previous button
+            const prevBtn = document.querySelector('button:has(i.fa-chevron-left)');
+            if (prevBtn) {
+                prevBtn.disabled = currentPage === 1;
+                prevBtn.style.opacity = currentPage === 1 ? '0.5' : '1';
+                prevBtn.style.cursor = currentPage === 1 ? 'not-allowed' : 'pointer';
+            }
+
+            // Update Next button
+            const nextBtn = document.querySelector('button:has(i.fa-chevron-right)');
+            if (nextBtn) {
+                nextBtn.disabled = currentPage >= totalPages;
+                nextBtn.style.opacity = currentPage >= totalPages ? '0.5' : '1';
+                nextBtn.style.cursor = currentPage >= totalPages ? 'not-allowed' : 'pointer';
+            }
+        }
+
+        /* -------------------------
            Helper: Format date
         ---------------------------- */
         function formatDate(dateString) {
@@ -448,13 +525,5 @@
                 year: "numeric"
             });
         }
-
-        // <td style='font-size:14px;'>
-        //     <div class="d-flex align-items-center">
-        //         // <img src="${course.thumbnail ?? 'https://via.placeholder.com/40'}"
-        //         //      class="rounded-circle me-3" width="40" height="40" style="object-fit: cover;">
-        //         <span></span>
-        //     </div>
-        // </td>
     </script>
 @endsection

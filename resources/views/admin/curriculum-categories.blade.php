@@ -403,13 +403,17 @@
                 let currentDeleteId = null;
                 let isSaving = false;
 
-                // DOM refs
-                const grid = document.getElementById('curriculumGrid');
-                const form = document.getElementById('curriculumForm');
-                const nameInput = document.getElementById('category_title');
-                const descInput = document.getElementById('category_description');
-                const modalEl = document.getElementById('addCurriculumModal');
-                const modalTitle = document.getElementById('modalTitle');
+                // DOM refs - will be initialized when DOM is ready
+                let grid, form, nameInput, descInput, modalEl, modalTitle;
+
+                function initializeDOMRefs() {
+                    grid = document.getElementById('curriculumGrid');
+                    form = document.getElementById('curriculumForm');
+                    nameInput = document.getElementById('category_title');
+                    descInput = document.getElementById('category_description');
+                    modalEl = document.getElementById('addCurriculumModal');
+                    modalTitle = document.getElementById('modalTitle');
+                }
 
                 // inject helpers (skeletons + toast)
                 (function injectHelpers() {
@@ -633,66 +637,23 @@
                     return result.data;
                 }
 
-                form.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    if (isSaving) return;
-
-                    const title = nameInput.value.trim();
-                    const description = descInput.value.trim();
-
-                    if (!title) {
-                        showToast("Validation", "Title is required", "info");
-                        return;
-                    }
-
-                    isSaving = true;
-
-                    const btn = form.querySelector('button[type="submit"]');
-                    const prev = btn.innerHTML;
-                    btn.disabled = true;
-                    btn.innerHTML = `<span class="spinner-border spinner-border-sm"></span> Saving...`;
-
-                    try {
-                        if (currentEditId) {
-                            await updateCategory(currentEditId, title, description);
-                            showToast("Success", "Updated successfully", "success");
-                        } else {
-                            await createCategory(title, description);
-                            showToast("Success", "Created successfully", "success");
-                        }
-
-                        bootstrap.Modal.getInstance(modalEl)?.hide();
-                        form.reset();
-                        currentEditId = null;
-                        loadCategories();
-
-                    } catch (err) {
-                        showToast("Error", err.message || "Save failed", "danger");
-                    }
-
-                    btn.disabled = false;
-                    btn.innerHTML = prev;
-                    isSaving = false;
-                });
-
                 window.editCategory = async (id) => {
                     try {
-                        const data = await apiFetch(`${API_URL}/${id}`, {
-                            method: 'GET'
-                        });
-                        if (data.status === 200 ) {
-                            const item = data.response;
+                        const result = await CourseApiClient.getCurriculumCategory(id);
+                        if (result.success && result.data) {
+                            // Handle the response structure: { status: 200, response: {...} }
+                            const item = result.data.response || result.data;
                             currentEditId = item.id;
-                            nameInput.value = item.title;
-                            descInput.value = item.description;
+                            nameInput.value = item.title || '';
+                            descInput.value = item.description || '';
                             modalTitle.textContent = "Edit Curriculum Category";
 
                             new bootstrap.Modal(modalEl).show();
-
+                        } else {
+                            showToast("Error", result.message || "Could not load category", "danger");
                         }
-
-
-                    } catch {
+                    } catch (error) {
+                        console.error('Error loading category:', error);
                         showToast("Error", "Could not load category", "danger");
                     }
                 };
@@ -722,13 +683,68 @@
                     bootstrap.Modal.getInstance(document.getElementById('deleteConfirmModal')).hide();
                 };
 
-                modalEl.addEventListener('hidden.bs.modal', () => {
-                    currentEditId = null;
-                    modalTitle.textContent = "Add Curriculum Category";
-                    form.reset();
-                });
+                // Initialize DOM references when DOM is ready
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', () => {
+                        initializeDOMRefs();
+                        setupEventListeners();
+                        loadCategories();
+                    });
+                } else {
+                    initializeDOMRefs();
+                    setupEventListeners();
+                    loadCategories();
+                }
 
-                loadCategories();
+                function setupEventListeners() {
+                    form.addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        if (isSaving) return;
+
+                        const title = nameInput.value.trim();
+                        const description = descInput.value.trim();
+
+                        if (!title) {
+                            showToast("Validation", "Title is required", "info");
+                            return;
+                        }
+
+                        isSaving = true;
+
+                        const btn = form.querySelector('button[type="submit"]');
+                        const prev = btn.innerHTML;
+                        btn.disabled = true;
+                        btn.innerHTML = `<span class="spinner-border spinner-border-sm"></span> Saving...`;
+
+                        try {
+                            if (currentEditId) {
+                                await updateCategory(currentEditId, title, description);
+                                showToast("Success", "Updated successfully", "success");
+                            } else {
+                                await createCategory(title, description);
+                                showToast("Success", "Created successfully", "success");
+                            }
+
+                            bootstrap.Modal.getInstance(modalEl)?.hide();
+                            form.reset();
+                            currentEditId = null;
+                            loadCategories();
+
+                        } catch (err) {
+                            showToast("Error", err.message || "Save failed", "danger");
+                        }
+
+                        btn.disabled = false;
+                        btn.innerHTML = prev;
+                        isSaving = false;
+                    });
+
+                    modalEl.addEventListener('hidden.bs.modal', () => {
+                        currentEditId = null;
+                        modalTitle.textContent = "Add Curriculum Category";
+                        form.reset();
+                    });
+                }
 
             })();
         </script>

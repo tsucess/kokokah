@@ -7,6 +7,7 @@ use App\Models\CurriculumCategory;
 use App\Models\CourseCategory;
 use App\Models\Level;
 use App\Models\Enrollment;
+use App\Models\User;
 use App\Services\WalletService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -160,15 +161,39 @@ class CourseController extends Controller
 
         $query->orderBy($request->get('sort_by', 'created_at'), $request->get('sort_order', 'desc'));
 
+        // Get paginated courses
+        $courses = $query->paginate($request->get('per_page', 12));
+
+        // Get total students in system for progress calculation
+        $totalStudentsInSystem = User::where('role', 'student')->count();
+
+        // Transform courses to include enrollment count and average rating
+        $courses->getCollection()->transform(function ($course) use ($totalStudentsInSystem) {
+            $courseData = $course->toArray();
+            $enrollmentCount = $course->enrollments()->count();
+
+            // Calculate progress as (enrollments / total_students) * 100
+            $progress = $totalStudentsInSystem > 0
+                ? round(($enrollmentCount / $totalStudentsInSystem) * 100, 2)
+                : 0;
+
+            $courseData['enrollment_count'] = $enrollmentCount;
+            $courseData['progress'] = $progress;
+            $courseData['average_rating'] = round($course->reviews()->avg('rating') ?? 0, 1);
+
+            return $courseData;
+        });
+
         return $this->success([
-            'courses' => $query->paginate($request->get('per_page', 12)),
+            'courses' => $courses,
             'filters' => [
                 'curriculumCategories' => CurriculumCategory::all(),
                 'courseCategories'     => CourseCategory::all(),
                 'levels'               => Level::all(),
                 'difficulties'         => ['beginner', 'intermediate', 'advanced']
             ],
-            'user_role' => $userRole
+            'user_role' => $userRole,
+            'total_students_in_system' => $totalStudentsInSystem
         ]);
     }
 

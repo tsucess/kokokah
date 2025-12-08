@@ -813,7 +813,7 @@
         </div>
 
         <!-- Course Details Section -->
-        <div class="container bg-white content-section d-none" id="details">
+        <div class="container bg-white content-section" id="details">
             <div class="section-header">
                 <h5>Course Details</h5>
             </div>
@@ -821,53 +821,59 @@
             <form id="courseDetailsForm">
                 @csrf
 
-                <div class="form-group-custom mb-3">
-                    <label for="subjectTitle">Subject Title</label>
-                    <input type="text" class="form-control" id="subjectTitle" name="subjectTitle"
-                        placeholder="Enter Subject Title" required>
+                <input type="hidden" class="form-control" id="curriculumCategoryId" name="curriculumCategoryId" required>
+                <div class="form-row-two">
+                    <div class="form-group-custom">
+                        <label for="courseTitle">Course Title</label>
+                        <input type="text" class="form-control" id="courseTitle" name="courseTitle"
+                            placeholder="Enter Subject Title" required>
+                    </div>
+                    <div class="form-group-custom">
+                        <label for="subjectTerm">Term</label>
+                        <select class="form-control" id="subjectTerm" name="subjectTerm" required></select>
+                    </div>
+
                 </div>
 
                 <div class="form-row-two">
                     <div class="form-group-custom">
-                        <label for="subjectCategory">Subject Category</label>
-                        <select class="form-control" id="subjectCategory" name="subjectCategory" required>
-                            <option value="">Select Category</option>
-                            <option value="science">Science</option>
-                            <option value="art">Art</option>
-                            <option value="commercial">Commercial</option>
+                        <label for="courseCategory">Course Category</label>
+                        <select class="form-control" id="courseCategory" name="courseCategory" required>
+
                         </select>
                     </div>
 
                     <div class="form-group-custom">
-                        <label for="subjectLevel">Subject Level</label>
-                        <select class="form-control" id="subjectLevel" name="subjectLevel" required>
-                            <option value="">Select Level</option>
-                            <option value="jss1">JSS 1</option>
-                            <option value="jss2">JSS 2</option>
-                            <option value="jss3">JSS 3</option>
-                            <option value="ss1">SS 1</option>
-                            <option value="ss2">SS 2</option>
-                            <option value="ss3">SS 3</option>
-                        </select>
+                        <label for="courseLevel">Course Level</label>
+                        <select class="form-control" id="courseLevel" name="courseLevel" required></select>
                     </div>
                 </div>
 
                 <div class="form-row-two">
                     <div class="form-group-custom">
-                        <label for="subjectTime">Subject Time</label>
-                        <input type="text" class="form-control" id="subjectTime" name="subjectTime"
+                        <label for="courseTime">Duration</label>
+                        <input type="text" class="form-control" id="courseTime" name="courseTime"
                             placeholder="e.g., 2 hours" required>
                     </div>
 
                     <div class="form-group-custom">
-                        <label for="totalLesson">Total Lessons</label>
-                        <input type="number" class="form-control" id="totalLesson" name="totalLesson"
-                            placeholder="e.g., 12" min="1" required>
+                        <div class="d-flex align-items-center gap-2">
+                            <label for="coursePrice">Price</label>
+                            <div class="form-check d-flex gap-1 align-items-center ">
+                                <input class="form-check-input small-check" type="checkbox" value="" id="free-course">
+                                <label class="form-check-label" for="checkChecked">
+                                    Free Course
+                                </label>
+                            </div>
+                        </div>
+
+                        <input type="number" class="form-control" id="coursePrice" name="coursePrice"
+                            placeholder="e.g., 200" min="1" required>
                     </div>
                 </div>
 
                 <div class="description-section">
-                    <p class="description-label">Subject Description</p>
+                    <p class="description-label">Course Description</p>
 
                     <div class="editor-toolbar">
                         <span title="Bold"><i class="fa-solid fa-bold"></i></span>
@@ -877,15 +883,12 @@
                         <span title="Upload"><i class="fa-solid fa-file-arrow-up"></i></span>
                     </div>
 
-                    <textarea class="description-textarea" id="subjectDescription" name="subjectDescription"
+                    <textarea class="description-textarea" id="courseDescription" name="courseDescription"
                         placeholder="Write subject description here..." form="courseDetailsForm"></textarea>
                 </div>
             </form>
 
             <div class="button-group">
-                <button type="button" class="btn btn-back back-btn" data-next="curriculum">
-                    Previous
-                </button>
                 <button type="button" class="btn btn-continue continue-btn" data-next="media">
                     Continue
                 </button>
@@ -986,12 +989,12 @@
                             <div class="d-flex align-items-start me-3">
                                 <i class="fa-solid fa-book-open me-3"></i>
 
-                                    <p class="m-0 fw-bold">Parts of Speech</p>
+                                <p class="m-0 fw-bold">Parts of Speech</p>
 
                             </div>
                         </button>
                         <p class="pt-2">This section covers the fundamental parts of speech in English
-                                        language.</p>
+                            language.</p>
 
                     </h2>
                     <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#curriculumAccordion">
@@ -1199,12 +1202,85 @@
     </main>
 
     <script>
+        // Load dropdown data
+        async function loadDropdownData() {
+            try {
+                const token = localStorage.getItem('auth_token');
+
+                // Load Terms
+                const termsResponse = await fetch('/api/term', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const termsResult = await termsResponse.json();
+                if (termsResponse.ok && termsResult) {
+                    const termSelect = document.getElementById('subjectTerm');
+                    const terms = Array.isArray(termsResult) ? termsResult : [];
+                    termSelect.innerHTML = `<option value="">Select Term</option>`;
+
+                    terms.forEach(term => {
+                        const option = document.createElement('option');
+                        option.value = term.id;
+                        option.textContent = term.name;
+                        termSelect.appendChild(option);
+                    });
+                }
+
+                // Load Course Categories
+                const categoriesResponse = await fetch('/api/course-category', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const categoriesResult = await categoriesResponse.json();
+                if (categoriesResponse.ok && categoriesResult) {
+                    const categorySelect = document.getElementById('courseCategory');
+                    const categories = Array.isArray(categoriesResult) ? categoriesResult : [];
+                    categorySelect.innerHTML = `<option value="">Select Course Category</option>`;
+                    categories.forEach(category => {
+                        const option = document.createElement('option');
+                        option.value = category.id;
+                        option.textContent = category.title;
+                        categorySelect.appendChild(option);
+                    });
+                }
+
+                // Load Course Levels
+                const levelsResponse = await fetch('/api/level', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const levelsResult = await levelsResponse.json();
+                if (levelsResponse.ok && levelsResult) {
+                    const levelSelect = document.getElementById('courseLevel');
+                    const levels = Array.isArray(levelsResult) ? levelsResult : [];
+                    levelSelect.innerHTML = `<option value="">Select Course Level</option>`;
+                    levels.forEach(level => {
+                        const option = document.createElement('option');
+                        option.value = level.id;
+                        option.textContent = level.name;
+                        levelSelect.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading dropdown data:', error);
+            }
+        }
+
         // Navigation between sections
         document.addEventListener('DOMContentLoaded', () => {
             const navButtons = document.querySelectorAll('.coursebtn');
             const sections = document.querySelectorAll('.content-section');
             const continueButtons = document.querySelectorAll('.continue-btn');
             const backButtons = document.querySelectorAll('.back-btn');
+
+            // Load dropdown data
+            loadDropdownData();
 
             function showSection(sectionId) {
                 sections.forEach(sec => sec.classList.add('d-none'));

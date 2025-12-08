@@ -590,16 +590,6 @@
                 }
 
                 // ---------- Data parsing helpers ----------
-                function unwrapListResponse(raw) {
-                    // Accept forms: array, {data: [...]}, {status:..., response: [...]}, {response: {data: [...]}}
-                    if (!raw) return [];
-                    if (Array.isArray(raw)) return raw;
-                    if (raw.data && Array.isArray(raw.data)) return raw.data;
-                    if (raw.response && Array.isArray(raw.response)) return raw.response;
-                    if (raw.response && raw.response.data && Array.isArray(raw.response.data)) return raw.response.data;
-                    return [];
-                }
-
                 function unwrapItemResponse(raw) {
                     // Return item object from common shapes
                     if (!raw) return null;
