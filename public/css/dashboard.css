@@ -2005,6 +2005,7 @@ select {
     color: #004A53;
     padding: 0;
     font-weight: 500;
+    background-color: transparent;
 }
 
 .modal-form-btn {
@@ -2040,4 +2041,10 @@ input.search-input-custom-input {
     color: #777777;
     font-size: 12px;
     padding: 6px 10px;
+}
+
+.profile-details-container{
+    box-shadow: 6px 6px 54px 0 #00000026;
+    border-radius: 15px;
+    background-color: #fff;
 }

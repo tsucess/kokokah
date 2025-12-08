@@ -49,6 +49,7 @@ class UIHelpers {
 
     // Use textContent to prevent XSS attacks
     alertDiv.textContent = message;
+    alertDiv.style.fontSize = '14px';
 
     // Create close button
     const closeBtn = document.createElement('button');
