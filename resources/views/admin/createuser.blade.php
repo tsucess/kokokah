@@ -554,8 +554,8 @@
                             <div class="text-center">
                                 <div class="mb-4">
                                     <img id="profilePreview" src="images/winner-round.png" alt="Profile"
-                                        class="rounded-4"
-                                        style="width: 100%; max-width: 280px; height: auto; object-fit: cover;">
+                                        
+                                        style="width: 100%; max-width: 280px; height: auto; object-fit: cover; border-radius:50%;">
                                 </div>
 
                             </div>
