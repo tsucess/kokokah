@@ -12,6 +12,7 @@ class Course extends Model
 
     protected $fillable = [
         'title',
+        'slug',
         'description',
         'curriculum_category_id',
         'course_category_id',
@@ -21,7 +22,7 @@ class Course extends Model
         'price',
         'free',
         'status',
-        'course_image',
+        'thumbnail',
         'url',
         'duration_hours',
         'published_at'
@@ -173,6 +174,24 @@ class Course extends Model
 
         $completed = $this->enrollments()->where('status', 'completed')->count();
         return round(($completed / $total) * 100, 2);
+    }
+
+    /**
+     * Generate a unique slug from the course title
+     */
+    public static function generateSlug($title)
+    {
+        $slug = \Illuminate\Support\Str::slug($title);
+
+        // Check if slug already exists
+        $count = self::where('slug', $slug)->count();
+
+        // If slug exists, append a number to make it unique
+        if ($count > 0) {
+            $slug = $slug . '-' . ($count + 1);
+        }
+
+        return $slug;
     }
 }
 

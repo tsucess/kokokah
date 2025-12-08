@@ -305,7 +305,7 @@
                     <p>Here overview of your</p>
                 </div>
 
-                <div class="header-buttons">
+                {{-- <div class="header-buttons">
                     <button type="button" class="btn btn-draft" id="saveDraftBtn">
                         Save As Draft
                     </button>
@@ -313,7 +313,7 @@
                     <button type="button" class="btn btn-publish" id="finalPublishBtn">
                         Publish Course
                     </button>
-                </div>
+                </div> --}}
             </div>
         </div>
 
@@ -741,7 +741,7 @@
                     <button type="button" class="btn btn-back back-btn" data-next="media">
                         Back
                     </button>
-                    <button type="button" class="btn btn-publish" id="finalPublishBtn">
+                    <button type="button" class="btn btn-publish" id="saveNowBtn">
                         Save Now
                     </button>
                 </div>
@@ -983,6 +983,16 @@
                 });
             }
 
+            // Helper function to generate slug from title
+            function generateSlug(title) {
+                return title
+                    .toLowerCase()
+                    .trim()
+                    .replace(/[^\w\s-]/g, '')
+                    .replace(/\s+/g, '-')
+                    .replace(/-+/g, '-');
+            }
+
             // Publish button handler
             const finalPublishBtn = document.getElementById('finalPublishBtn');
             if (finalPublishBtn) {
@@ -990,40 +1000,52 @@
                     const title = document.getElementById('courseTitle').value;
                     const category = document.getElementById('courseCategory').value;
                     const level = document.getElementById('courseLevel').value;
+                    const description = document.getElementById('courseDescription').value;
+                    const term = document.getElementById('subjectTerm').value;
 
-                    if (!title || !category || !level) {
+                    if (!title || !category || !level || !description) {
                         alert('Please fill in all required fields');
                         return;
-                    }
-
-                    // Prepare course data
-                    const courseData = {
-                        title,
-                        category_id: category,
-                        level_id: level,
-                        duration: document.getElementById('courseTime').value,
-                        description: document.getElementById('courseDescription').value,
-                        status: 'published'
-                    };
-
-                    // Add image if selected
-                    const fileInput = document.getElementById('fileInput');
-                    if (fileInput && fileInput.files && fileInput.files[0]) {
-                        courseData.imageFile = fileInput.files[0];
                     }
 
                     try {
                         // Create FormData for file upload
                         const formData = new FormData();
-                        Object.keys(courseData).forEach(key => {
-                            formData.append(key, courseData[key]);
-                        });
+
+                        // Add required fields
+                        formData.append('title', title);
+                        formData.append('slug', generateSlug(title));
+                        formData.append('description', description);
+                        formData.append('course_category_id', category);
+                        formData.append('curriculum_category_id', category); // Using same category for both
+                        formData.append('level_id', level);
+                        formData.append('price', courseData.price || 0);
+                        formData.append('free', courseData.freeCourse ? 1 : 0);
+                        formData.append('url', generateSlug(title));
+
+                        // Add optional fields
+                        if (term) {
+                            formData.append('term_id', term);
+                        }
+
+                        const duration = document.getElementById('courseTime').value;
+                        if (duration) {
+                            formData.append('duration_hours', duration);
+                        }
+
+                        // Add image if selected
+                        const fileInput = document.getElementById('fileInput');
+                        if (fileInput && fileInput.files && fileInput.files[0]) {
+                            formData.append('thumbnail', fileInput.files[0]);
+                        }
 
                         const result = await CourseApiClient.createCourse(formData);
                         if (result.success) {
                             alert('Course published successfully!');
+                            // Get the course ID from the response
+                            const courseId = result.data?.id || result.id;
                             setTimeout(() => {
-                                window.location.href = '/admin/allsubjects';
+                                window.location.href = `/editsubject/${courseId}`;
                             }, 1500);
                         } else {
                             alert('Error: ' + (result.message || 'Failed to publish course'));
@@ -1035,44 +1057,126 @@
                 });
             }
 
-            // Save draft button handler
-            const saveDraftBtn = document.getElementById('saveDraftBtn');
-            if (saveDraftBtn) {
-                saveDraftBtn.addEventListener('click', async () => {
+            // Save Now button handler (from publish section)
+            const saveNowBtn = document.getElementById('saveNowBtn');
+            if (saveNowBtn) {
+                saveNowBtn.addEventListener('click', async () => {
                     const title = document.getElementById('courseTitle').value;
-                    if (!title) {
-                        alert('Please enter a subject title');
+                    const category = document.getElementById('courseCategory').value;
+                    const level = document.getElementById('courseLevel').value;
+                    const description = document.getElementById('courseDescription').value;
+                    const term = document.getElementById('subjectTerm').value;
+
+                    if (!title || !category || !level || !description) {
+                        alert('Please fill in all required fields');
                         return;
-                    }
-
-                    // Prepare course data
-                    const courseData = {
-                        title,
-                        category_id: document.getElementById('courseCategory').value,
-                        level_id: document.getElementById('courseLevel').value,
-                        duration: document.getElementById('courseTime').value,
-                        description: document.getElementById('courseDescription').value,
-                        status: 'draft'
-                    };
-
-                    // Add image if selected
-                    const fileInput = document.getElementById('fileInput');
-                    if (fileInput && fileInput.files && fileInput.files[0]) {
-                        courseData.imageFile = fileInput.files[0];
                     }
 
                     try {
                         // Create FormData for file upload
                         const formData = new FormData();
-                        Object.keys(courseData).forEach(key => {
-                            formData.append(key, courseData[key]);
-                        });
+
+                        // Add required fields
+                        formData.append('title', title);
+                        formData.append('slug', generateSlug(title));
+                        formData.append('description', description);
+                        formData.append('course_category_id', category);
+                        formData.append('curriculum_category_id', category); // Using same category for both
+                        formData.append('level_id', level);
+                        formData.append('price', courseData.price || 0);
+                        formData.append('free', courseData.freeCourse ? 1 : 0);
+                        formData.append('url', generateSlug(title));
+
+                        // Add optional fields
+                        if (term) {
+                            formData.append('term_id', term);
+                        }
+
+                        const duration = document.getElementById('courseTime').value;
+                        if (duration) {
+                            formData.append('duration_hours', duration);
+                        }
+
+                        // Add image if selected
+                        const fileInput = document.getElementById('fileInput');
+                        if (fileInput && fileInput.files && fileInput.files[0]) {
+                            formData.append('thumbnail', fileInput.files[0]);
+                        }
+
+                        const result = await CourseApiClient.createCourse(formData);
+                        if (result.success) {
+                            alert('Course saved successfully!');
+                            // Get the course ID from the response
+                            const courseId = result.data?.id || result.id;
+                            setTimeout(() => {
+                                window.location.href = `/editsubject/${courseId}`;
+                            }, 1500);
+                        } else {
+                            alert('Error: ' + (result.message || 'Failed to save course'));
+                        }
+                    } catch (error) {
+                        console.error('Save error:', error);
+                        alert('Error saving course: ' + error.message);
+                    }
+                });
+            }
+
+            // Save draft button handler
+            const saveDraftBtn = document.getElementById('saveDraftBtn');
+            if (saveDraftBtn) {
+                saveDraftBtn.addEventListener('click', async () => {
+                    const title = document.getElementById('courseTitle').value;
+                    const category = document.getElementById('courseCategory').value;
+                    const description = document.getElementById('courseDescription').value;
+                    const term = document.getElementById('subjectTerm').value;
+
+                    if (!title || !category || !description) {
+                        alert('Please fill in all required fields');
+                        return;
+                    }
+
+                    try {
+                        // Create FormData for file upload
+                        const formData = new FormData();
+
+                        // Add required fields
+                        formData.append('title', title);
+                        formData.append('slug', generateSlug(title));
+                        formData.append('description', description);
+                        formData.append('course_category_id', category);
+                        formData.append('curriculum_category_id', category); // Using same category for both
+                        formData.append('price', courseData.price || 0);
+                        formData.append('free', courseData.freeCourse ? 1 : 0);
+                        formData.append('url', generateSlug(title));
+
+                        // Add optional fields
+                        const level = document.getElementById('courseLevel').value;
+                        if (level) {
+                            formData.append('level_id', level);
+                        }
+
+                        if (term) {
+                            formData.append('term_id', term);
+                        }
+
+                        const duration = document.getElementById('courseTime').value;
+                        if (duration) {
+                            formData.append('duration_hours', duration);
+                        }
+
+                        // Add image if selected
+                        const fileInput = document.getElementById('fileInput');
+                        if (fileInput && fileInput.files && fileInput.files[0]) {
+                            formData.append('thumbnail', fileInput.files[0]);
+                        }
 
                         const result = await CourseApiClient.createCourse(formData);
                         if (result.success) {
                             alert('Course saved as draft!');
+                            // Get the course ID from the response
+                            const courseId = result.data?.id || result.id;
                             setTimeout(() => {
-                                window.location.href = '/admin/allsubjects';
+                                window.location.href = `/editsubject/${courseId}`;
                             }, 1500);
                         } else {
                             alert('Error: ' + (result.message || 'Failed to save draft'));

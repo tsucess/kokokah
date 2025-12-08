@@ -227,8 +227,10 @@ Route::get('/createsubject', function () {
     return view('admin.createsubject');
 });
 
-Route::get('/editsubject', function () {
-    return view('admin.editsubject');
+Route::get('/editsubject/{id?}', function ($id = null) {
+    // Get ID from URL parameter or query string
+    $courseId = $id ?? request()->query('id');
+    return view('admin.editsubject', ['courseId' => $courseId]);
 });
 
 Route::get('/publish', function () {

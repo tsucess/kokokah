@@ -905,14 +905,13 @@
                 @csrf
 
                 <div class="form-group-custom mb-3">
-                    <label>Upload Subject Image</label>
+                    <label>Overview Video URL</label>
                     <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
-                        <input type="text" class="form-control" id="fileNameDisplay" placeholder="No file selected"
-                            readonly style="flex: 1;">
-                        <button type="button" class="btn btn-publish" id="uploadButton"
-                            style="padding: 0.75rem 1.5rem;">
-                            Upload File
-                        </button>
+                        <input type="text" class="form-control" placeholder="https://preview.youtube.com"
+                            style="flex: 1;">
+                    </div>
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                        <p>Thumbnail: <span id="fileNameDisplay"></span></p>
                     </div>
 
                     <label
@@ -1201,7 +1200,52 @@
         </div>
     </main>
 
-    <script>
+    <script type="module">
+        import CourseApiClient from '{{ asset('js/api/courseApiClient.js') }}';
+
+        // Get course ID from URL
+        const courseId = '{{ $courseId }}';
+
+        // Load course data if course ID is provided
+        async function loadCourseData() {
+            if (!courseId) {
+                console.log('No course ID provided');
+                return;
+            }
+
+            try {
+                console.log('Loading course with ID:', courseId);
+
+                // Use CourseApiClient to fetch course data
+                const result = await CourseApiClient.getCourse(courseId);
+
+                console.log('Course API result:', result);
+
+                if (!result.success) {
+                    console.error('Failed to load course data:', result.message);
+                    return;
+                }
+
+                const course = result.data || result;
+
+                console.log('Course data received:', course);
+
+                // Populate form fields with course data
+                if (course.title) document.getElementById('courseTitle').value = course.title;
+                if (course.description) document.getElementById('courseDescription').value = course.description;
+                if (course.course_category_id) document.getElementById('courseCategory').value = course.course_category_id;
+                if (course.level_id) document.getElementById('courseLevel').value = course.level_id;
+                if (course.term_id) document.getElementById('subjectTerm').value = course.term_id;
+                if (course.duration_hours) document.getElementById('courseTime').value = course.duration_hours;
+                if (course.price) document.getElementById('coursePrice').value = course.price;
+                if (course.free) document.getElementById('free-course').checked = course.free;
+
+                console.log('Course data loaded successfully:', course);
+            } catch (error) {
+                console.error('Error loading course data:', error);
+            }
+        }
+
         // Load dropdown data
         async function loadDropdownData() {
             try {
@@ -1282,6 +1326,11 @@
             // Load dropdown data
             loadDropdownData();
 
+            // Load course data if course ID is provided
+            if (courseId) {
+                loadCourseData();
+            }
+
             function showSection(sectionId) {
                 sections.forEach(sec => sec.classList.add('d-none'));
                 const section = document.getElementById(sectionId);
@@ -1336,29 +1385,41 @@
             });
 
             function populatePublishSection() {
-                // Get data from form fields
-                const title = document.getElementById('subjectTitle').value || 'English Language';
-                const category = document.getElementById('subjectCategory').value || 'Language';
-                const level = document.getElementById('subjectLevel').value || 'JSS 1';
-                const time = document.getElementById('subjectTime').value || '0 Hours';
-                const lessons = document.getElementById('totalLesson').value || '0';
-                const description = document.getElementById('subjectDescription').value ||
-                    'This comprehensive course covers essential concepts and skills.';
+                // Get data from form fields with correct IDs
+                const titleElement = document.getElementById('courseTitle');
+                const categoryElement = document.getElementById('courseCategory');
+                const levelElement = document.getElementById('courseLevel');
+                const timeElement = document.getElementById('courseTime');
+                const descriptionElement = document.getElementById('courseDescription');
                 const fileInput = document.getElementById('fileInput');
 
+                const title = titleElement ? titleElement.value : 'English Language';
+                const category = categoryElement ? categoryElement.value : 'Language';
+                const level = levelElement ? levelElement.value : 'JSS 1';
+                const time = timeElement ? timeElement.value : '0 Hours';
+                const description = descriptionElement ? descriptionElement.value : 'This comprehensive course covers essential concepts and skills.';
+
                 // Update publish section
-                document.getElementById('publishSubjectTitle').textContent = title;
-                document.getElementById('publishTopics').textContent = '0 Topics';
-                document.getElementById('publishLessons').textContent = lessons + ' Lessons';
-                document.getElementById('publishTime').textContent = time;
-                document.getElementById('publishLevel').textContent = level;
-                document.getElementById('publishDescription').textContent = description;
+                const publishTitleEl = document.getElementById('publishSubjectTitle');
+                const publishTopicsEl = document.getElementById('publishTopics');
+                const publishLessonsEl = document.getElementById('publishLessons');
+                const publishTimeEl = document.getElementById('publishTime');
+                const publishLevelEl = document.getElementById('publishLevel');
+                const publishDescriptionEl = document.getElementById('publishDescription');
+                const publishImageEl = document.getElementById('publishCourseImage');
+
+                if (publishTitleEl) publishTitleEl.textContent = title;
+                if (publishTopicsEl) publishTopicsEl.textContent = '0 Topics';
+                if (publishLessonsEl) publishLessonsEl.textContent = '0 Lessons';
+                if (publishTimeEl) publishTimeEl.textContent = time;
+                if (publishLevelEl) publishLevelEl.textContent = level;
+                if (publishDescriptionEl) publishDescriptionEl.textContent = description;
 
                 // Update course image if file is selected
-                if (fileInput && fileInput.files && fileInput.files[0]) {
+                if (fileInput && fileInput.files && fileInput.files[0] && publishImageEl) {
                     const reader = new FileReader();
                     reader.onload = (e) => {
-                        document.getElementById('publishCourseImage').src = e.target.result;
+                        publishImageEl.src = e.target.result;
                     };
                     reader.readAsDataURL(fileInput.files[0]);
                 }
