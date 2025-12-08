@@ -1238,7 +1238,17 @@
                 if (course.term_id) document.getElementById('subjectTerm').value = course.term_id;
                 if (course.duration_hours) document.getElementById('courseTime').value = course.duration_hours;
                 if (course.price) document.getElementById('coursePrice').value = course.price;
-                if (course.free) document.getElementById('free-course').checked = course.free;
+
+                // Set free course checkbox and disable price if free
+                const freeCourseCheckbox = document.getElementById('free-course');
+                const priceInput = document.getElementById('coursePrice');
+                if (course.free) {
+                    freeCourseCheckbox.checked = course.free;
+                    if (priceInput) priceInput.disabled = true;
+                }
+
+                // Store course data for later use in populatePublishSection
+                window.courseData = course;
 
                 console.log('Course data loaded successfully:', course);
             } catch (error) {
