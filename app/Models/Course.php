@@ -35,6 +35,10 @@ class Course extends Model
         'free' => 'boolean',
     ];
 
+    protected $appends = [
+        'thumbnail_url',
+    ];
+
     // Relationships
     public function curriculumCategory()
     {
@@ -64,6 +68,11 @@ class Course extends Model
     public function lessons()
     {
         return $this->hasMany(Lesson::class)->orderBy('order');
+    }
+
+    public function topics()
+    {
+        return $this->hasMany(Topic::class)->orderBy('order');
     }
 
     public function enrollments()
@@ -174,6 +183,18 @@ class Course extends Model
 
         $completed = $this->enrollments()->where('status', 'completed')->count();
         return round(($completed / $total) * 100, 2);
+    }
+
+    /**
+     * Get the full URL for the thumbnail image
+     */
+    public function getThumbnailUrlAttribute()
+    {
+        if (!$this->thumbnail) {
+            return null;
+        }
+        // Return relative path for better compatibility with different hosts
+        return '/storage/' . $this->thumbnail;
     }
 
     /**

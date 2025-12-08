@@ -302,14 +302,24 @@ class CourseController extends Controller
                 return $this->error('Unauthorized to update this course', 403);
             }
 
+            // Log incoming request data
+            \Log::info('Course update request:', [
+                'id' => $id,
+                'all_data' => $request->all(),
+                'free' => $request->input('free'),
+                'free_type' => gettype($request->input('free')),
+                'price' => $request->input('price'),
+                'price_type' => gettype($request->input('price'))
+            ]);
+
             $validation = $this->validateRequest($request, [
                 'title' => 'sometimes|string|max:255',
                 'slug' => 'sometimes|string|max:255',
                 'description' => 'sometimes|string',
                 'course_category_id' => 'sometimes|exists:course_categories,id',
                 'curriculum_category_id' => 'sometimes|exists:curriculum_categories,id',
-                'free'  => 'required|boolean',
-                'price' => 'required_unless:free,true|numeric|min:0',
+                'free'  => 'sometimes|in:0,1',
+                'price' => 'sometimes|required_unless:free,1|numeric|min:0',
                 'difficulty' => 'sometimes|in:beginner,intermediate,advanced',
                 'duration_hours' => 'nullable|integer|min:1',
                 'max_students' => 'nullable|integer|min:1',
@@ -329,7 +339,7 @@ class CourseController extends Controller
             $course->update($data);
 
             return $this->success(
-                $course->load(['category', 'instructor', 'level', 'term']),
+                $course->load(['courseCategory', 'instructor', 'level', 'term']),
                 'Course updated successfully'
             );
 

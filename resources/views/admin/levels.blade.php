@@ -455,6 +455,7 @@
 
         <script type="module">
             import CourseApiClient from '{{ asset('js/api/courseApiClient.js') }}';
+            import ToastNotification from '{{ asset('js/utils/toastNotification.js') }}';
 
             (function() {
                 // Config
@@ -494,31 +495,8 @@
 
                 // ---------- Toast helper ----------
                 function showToast(title = '', message = '', type = 'info', timeout = 3500) {
-                    const container = document.getElementById('toastContainer');
-                    const id = 'toast-' + Date.now();
-                    const toast = document.createElement('div');
-                    toast.id = id;
-                    toast.className = 'custom-toast';
-                    toast.style.minWidth = '220px';
-                    toast.style.padding = '0.6rem';
-                    toast.style.borderRadius = '6px';
-                    toast.style.boxShadow = '0 8px 20px rgba(0,0,0,0.12)';
-                    toast.style.color = '#fff';
-                    toast.style.fontSize = '0.95rem';
-                    toast.style.pointerEvents = 'auto';
-                    toast.style.opacity = '1';
-                    toast.style.transition = 'opacity .25s, transform .25s';
-                    toast.style.background = (type === 'success') ? '#198754' : (type === 'danger') ? '#dc3545' : '#0d6efd';
-
-                    toast.innerHTML =
-                        `${title ? `<strong style="display:block;margin-bottom:6px">${escapeHtml(title)}</strong>` : ''}<div style="line-height:1.2">${escapeHtml(message)}</div>`;
-                    container.appendChild(toast);
-
-                    setTimeout(() => {
-                        toast.style.opacity = '0';
-                        toast.style.transform = 'translateY(-8px)';
-                        setTimeout(() => toast.remove(), 300);
-                    }, timeout);
+                    const toastType = (type === 'danger') ? 'error' : type;
+                    ToastNotification.show(title, message, toastType, timeout);
                 }
 
                 // ---------- Escaping ----------

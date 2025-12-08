@@ -26,8 +26,8 @@ GET|HEAD        / ..............................................................
   POST            api/admin/users/{userId}/ban ........................ AdminController@banUser  
   POST            api/admin/users/{userId}/unban .................... AdminController@unbanUser  
   GET|HEAD        api/analytics/advanced/at-risk/course/{courseId} ............................... AdvancedAnalyticsController@getAtRiskStudents  
-  GET|HEAD        api/analytics/advanced/cohorts ...... AdvancedAnalyticsController@listCohorts  
-  POST            api/analytics/advanced/cohorts ..... AdvancedAnalyticsController@createCohort  
+  GET|HEAD        api/analytics/advanced/cohorts ......... AdvancedAnalyticsController@listCohorts  
+  POST            api/analytics/advanced/cohorts ........ AdvancedAnalyticsController@createCohort  
   POST            api/analytics/advanced/cohorts/{cohortId1}/compare/{cohortId2} .................... AdvancedAnalyticsController@compareCohorts  
   GET|HEAD        api/analytics/advanced/cohorts/{cohortId} ...................................... AdvancedAnalyticsController@getCohortAnalysis  
   GET|HEAD        api/analytics/advanced/dashboard ... AdvancedAnalyticsController@getDashboard  
