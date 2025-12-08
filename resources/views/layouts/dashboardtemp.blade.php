@@ -23,7 +23,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
      <link rel="stylesheet" href="{{ asset('css/style_theme.css') }}">
      <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">

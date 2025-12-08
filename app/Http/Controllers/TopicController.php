@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Topic;
+use App\Models\Course;
 use Illuminate\Http\Request;
 
 class TopicController extends Controller
@@ -11,6 +12,28 @@ class TopicController extends Controller
     public function index()
     {
         return response()->json(Topic::orderBy('order')->get());
+    }
+
+    // GET topics for a specific course
+    public function getByCourse($courseId)
+    {
+        try {
+            $course = Course::findOrFail($courseId);
+            $topics = Topic::where('course_id', $courseId)
+                          ->with('lessons')
+                          ->orderBy('order')
+                          ->get();
+
+            return response()->json([
+                'success' => true,
+                'data' => $topics
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Course not found'
+            ], 404);
+        }
     }
 
     // GET single topic

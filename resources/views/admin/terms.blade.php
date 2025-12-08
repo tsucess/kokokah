@@ -446,6 +446,7 @@
 
             <script type="module">
                 import CourseApiClient from '{{ asset('js/api/courseApiClient.js') }}';
+                import ToastNotification from '{{ asset('js/utils/toastNotification.js') }}';
 
                 (function() {
                         // Config
@@ -464,34 +465,8 @@
 
                         // ---------- Toast helper ----------
                         function showToast(title = '', message = '', type = 'info', timeout = 3500) {
-                            // type: 'success' | 'danger' | 'info'
-                            const container = document.getElementById('toastContainer');
-                            const toastId = 'toast-' + Date.now();
-
-                            const bgClass = (type === 'success') ? 'bg-success text-white' : (type === 'danger') ?
-                                'bg-danger text-white' : 'bg-light';
-                            const headerClass = (type === 'info') ? '' : '';
-
-                            const toastHtml = `
-                                <div id="${toastId}" class="toast ${bgClass}" role="alert" aria-live="assertive" aria-atomic="true">
-                                <div class="d-flex">
-                                    <div class="toast-body" style="padding:0.75rem;">
-                                    <strong>${title}</strong>
-                                    <div style="font-size:0.9rem; margin-top:0.35rem;">${message}</div>
-                                    </div>
-                                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close" style="margin-left:auto;"></button>
-                                </div>
-                                </div>
-                            `;
-                            container.insertAdjacentHTML('beforeend', toastHtml);
-                            const toastEl = document.getElementById(toastId);
-                            const bsToast = new bootstrap.Toast(toastEl, {
-                                delay: timeout
-                            });
-                            bsToast.show();
-
-                            // remove from DOM after hidden
-                            toastEl.addEventListener('hidden.bs.toast', () => toastEl.remove());
+                            const toastType = (type === 'danger') ? 'error' : type;
+                            ToastNotification.show(title, message, toastType, timeout);
                         }
 
                         // ---------- Skeleton UI ----------

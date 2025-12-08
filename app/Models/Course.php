@@ -12,6 +12,7 @@ class Course extends Model
 
     protected $fillable = [
         'title',
+        'slug',
         'description',
         'curriculum_category_id',
         'course_category_id',
@@ -21,7 +22,7 @@ class Course extends Model
         'price',
         'free',
         'status',
-        'course_image',
+        'thumbnail',
         'url',
         'duration_hours',
         'published_at'
@@ -32,6 +33,10 @@ class Course extends Model
         'published_at' => 'datetime',
         'duration_hours' => 'integer',
         'free' => 'boolean',
+    ];
+
+    protected $appends = [
+        'thumbnail_url',
     ];
 
     // Relationships
@@ -63,6 +68,11 @@ class Course extends Model
     public function lessons()
     {
         return $this->hasMany(Lesson::class)->orderBy('order');
+    }
+
+    public function topics()
+    {
+        return $this->hasMany(Topic::class)->orderBy('order');
     }
 
     public function enrollments()
@@ -173,6 +183,36 @@ class Course extends Model
 
         $completed = $this->enrollments()->where('status', 'completed')->count();
         return round(($completed / $total) * 100, 2);
+    }
+
+    /**
+     * Get the full URL for the thumbnail image
+     */
+    public function getThumbnailUrlAttribute()
+    {
+        if (!$this->thumbnail) {
+            return null;
+        }
+        // Return relative path for better compatibility with different hosts
+        return '/storage/' . $this->thumbnail;
+    }
+
+    /**
+     * Generate a unique slug from the course title
+     */
+    public static function generateSlug($title)
+    {
+        $slug = \Illuminate\Support\Str::slug($title);
+
+        // Check if slug already exists
+        $count = self::where('slug', $slug)->count();
+
+        // If slug exists, append a number to make it unique
+        if ($count > 0) {
+            $slug = $slug . '-' . ($count + 1);
+        }
+
+        return $slug;
     }
 }
 

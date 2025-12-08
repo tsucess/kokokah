@@ -247,6 +247,68 @@
             display: none;
         }
 
+        /* ===== Drag and Drop Styles ===== */
+        .draggable-topic {
+            cursor: grab;
+            transition: all 0.2s ease;
+        }
+
+        .draggable-topic:active {
+            cursor: grabbing;
+        }
+
+        .draggable-topic.drag-over {
+            background-color: #f0f8f9;
+            border-left: 4px solid #004A53;
+        }
+
+        .draggable-topic.dragging {
+            opacity: 0.5;
+            background-color: #e8f4f6;
+        }
+
+        .drag-handle {
+            cursor: grab;
+            color: #004A53;
+            margin-right: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .drag-handle:hover {
+            color: #FDAF22;
+        }
+
+        .draggable-lesson {
+            cursor: grab;
+            transition: all 0.2s ease;
+        }
+
+        .draggable-lesson:active {
+            cursor: grabbing;
+        }
+
+        .draggable-lesson.drag-over {
+            background-color: #f0f8f9;
+            border-left: 3px solid #FDAF22;
+            padding-left: 0.5rem;
+        }
+
+        .draggable-lesson.dragging {
+            opacity: 0.5;
+            background-color: #e8f4f6;
+        }
+
+        .lesson-drag-handle {
+            cursor: grab;
+            color: #FDAF22;
+            margin-right: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .lesson-drag-handle:hover {
+            color: #004A53;
+        }
+
         /* ===== Mobile Responsiveness ===== */
         @media (max-width: 768px) {
             .subject-header {
@@ -769,13 +831,12 @@
                 </div>
 
                 <div class="header-buttons">
-                    <button type="button" class="btn btn-draft" id="saveDraftBtn">
+                    <button type="button" class="btn btn-draft" id="saveDraftBtn" style="display: none;">
                         Save As Draft
                     </button>
-                    <button type="button" class="btn btn-draft" id="publishBtn">
+                    <button type="button" class="btn btn-draft" id="publishBtn" style="display: none;">
                         Publish Course
                     </button>
-
                     <button type="button" class="btn btn-publish" id="updateBtn">
                         Update Course
                     </button>
@@ -905,14 +966,13 @@
                 @csrf
 
                 <div class="form-group-custom mb-3">
-                    <label>Upload Subject Image</label>
+                    <label>Overview Video URL</label>
                     <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
-                        <input type="text" class="form-control" id="fileNameDisplay" placeholder="No file selected"
-                            readonly style="flex: 1;">
-                        <button type="button" class="btn btn-publish" id="uploadButton"
-                            style="padding: 0.75rem 1.5rem;">
-                            Upload File
-                        </button>
+                        <input type="text" class="form-control" id="overviewVideoUrl" placeholder="https://preview.youtube.com"
+                            style="flex: 1;">
+                    </div>
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                        <p>Thumbnail: <span id="fileNameDisplay"></span></p>
                     </div>
 
                     <label
@@ -972,73 +1032,37 @@
                     data-bs-target="#addNewTopicModal"><i class="fa-solid fa-plus me-2"></i>Add New Topic </button>
             </div>
             <div class="accordion mb-4" id="curriculumAccordion">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" style="position:relative; padding:1rem">
-                        <div class="mb-2 d-flex gap-2 align-items-center justify-content-end">
-                            <button class="btn btn-sm btn-light " type="button" title="Edit">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button class="btn btn-sm btn-light" type="button" title="Delete">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </div>
-                        <button class="accordion-button d-flex justify-content-between align-items-center" type="button"
-                            data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
-                            aria-controls="collapseOne">
-
-                            <div class="d-flex align-items-start me-3">
-                                <i class="fa-solid fa-book-open me-3"></i>
-
-                                <p class="m-0 fw-bold">Parts of Speech</p>
-
-                            </div>
-                        </button>
-                        <p class="pt-2">This section covers the fundamental parts of speech in English
-                            language.</p>
-
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#curriculumAccordion">
-                        <div class="accordion-body">
-                            <div class="lesson-item">
-                                <div class="lesson-item-content"><i class="fa-solid fa-circle-play"></i><span>Nouns</span>
-                                </div>
-                                <div class="lesson-item-actions"><button type="button" title="Edit"><i
-                                            class="fa-solid fa-pen-to-square"></i></button><button type="button"
-                                        title="Delete"><i class="fa-solid fa-trash"></i></button></div>
-                            </div>
-                            <div class="lesson-item">
-                                <div class="lesson-item-content"><i
-                                        class="fa-solid fa-circle-play"></i><span>Pronouns</span></div>
-                                <div class="lesson-item-actions"><button type="button" title="Edit"><i
-                                            class="fa-solid fa-pen-to-square"></i></button><button type="button"
-                                        title="Delete"><i class="fa-solid fa-trash"></i></button></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- Topics will be dynamically loaded here -->
             </div>
             {{-- add lesson modal --}}
             <div class="modal fade" id="addLessonModal" data-bs-keyboard="false" tabindex="-1"
-                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                aria-labelledby="lessonModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content border-0 modal-container">
                         <div class="modal-header border-0 d-flex justify-content-between align-items-center">
-                            <h1 class="modal-title" id="staticBackdropLabel">New Lesson</h1><button type="button"
+                            <h1 class="modal-title" id="lessonModalLabel">New Lesson</h1><button type="button"
                                 class="modal-header-btn" data-bs-dismiss="modal" aria-label="Close"><i
                                     class="fa-solid fa-circle-xmark"></i></button>
                         </div>
                         <form class="modal-form-container">
                             <div class="modal-form">
-                                <div class="modal-form-input-border"><label for="" class="modal-label">Lesson
-                                        Type</label><select name="" id="addContent" class="modal-input">
-                                        <option value="image">Image</option>
-                                        <option value="youtube">Youtube</option>
-                                        <option value="audio">Audio</option>
-                                        <option value="content">Content</option>
-                                        <option value="document">Document</option>
-                                    </select></div>
-                                {{-- image container --}}
-                                <div class="flex-column gap-3 select-children" id="image-container">
+                                <div class="modal-form-input-border">
+                                    <label for="" class="modal-label">Lesson Title</label>
+                                    <input class="modal-input" type="text" placeholder="Enter title" />
+                                </div>
+                                <div class="modal-form-input-border">
+                                    <label for="" class="modal-label">Lesson Content</label>
+                                    <textarea class="modal-input" placeholder="Enter lesson content"></textarea>
+                                </div>
+                            </div>
+                            <button type="button" class="modal-form-btn" onclick="saveLessonHandler()">Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {{-- OLD CONTENT REMOVED --}}
+            {{-- image container --}}
+            <div class="flex-column gap-3 select-children" id="image-container" style="display:none;">
                                     <div class="modal-form-input-border"><label for=""
                                             class="modal-label">Title</label><input class="modal-input" type="text"
                                             placeholder="Art" /></div>
@@ -1112,14 +1136,9 @@
                                                 type="button" id="button-addon2">Upload File </button></div>
                                     </div>
                                 </div>
-                            </div><button class="modal-form-btn">Save</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <button type="button" class="btn btn-add-lesson" data-bs-toggle="modal" data-bs-target="#addLessonModal">
+            {{-- <button type="button" class="btn btn-add-lesson" data-bs-toggle="modal" data-bs-target="#addLessonModal">
                 <i class="fa-solid fa-plus me-2"></i>Add Lesson
-            </button>
+            </button> --}}
             <div class="curriculum-actions">
                 <button type="button" class="btn btn-continue continue-btn" data-next="details">Continue </button>
             </div>
@@ -1201,86 +1220,386 @@
         </div>
     </main>
 
-    <script>
-        // Load dropdown data
-        async function loadDropdownData() {
+    <script type="module">
+        import CourseApiClient from '{{ asset('js/api/courseApiClient.js') }}';
+        import TopicApiClient from '{{ asset('js/api/topicApiClient.js') }}';
+        import LessonApiClient from '{{ asset('js/api/lessonApiClient.js') }}';
+        import ToastNotification from '{{ asset('js/utils/toastNotification.js') }}';
+
+        // Get course ID from URL
+        const courseId = '{{ $courseId }}';
+
+        // Load course data if course ID is provided
+        async function loadCourseData() {
+            if (!courseId) {
+                console.log('No course ID provided');
+                return;
+            }
+
             try {
-                const token = localStorage.getItem('auth_token');
 
-                // Load Terms
-                const termsResponse = await fetch('/api/term', {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                const termsResult = await termsResponse.json();
-                if (termsResponse.ok && termsResult) {
-                    const termSelect = document.getElementById('subjectTerm');
-                    const terms = Array.isArray(termsResult) ? termsResult : [];
-                    termSelect.innerHTML = `<option value="">Select Term</option>`;
+                // Use CourseApiClient to fetch course data
+                const result = await CourseApiClient.getCourse(courseId);
 
-                    terms.forEach(term => {
-                        const option = document.createElement('option');
-                        option.value = term.id;
-                        option.textContent = term.name;
-                        termSelect.appendChild(option);
-                    });
+                if (!result.success) {
+                    console.error('Failed to load course data:', result.message);
+                    return;
                 }
 
-                // Load Course Categories
-                const categoriesResponse = await fetch('/api/course-category', {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                const categoriesResult = await categoriesResponse.json();
-                if (categoriesResponse.ok && categoriesResult) {
-                    const categorySelect = document.getElementById('courseCategory');
-                    const categories = Array.isArray(categoriesResult) ? categoriesResult : [];
-                    categorySelect.innerHTML = `<option value="">Select Course Category</option>`;
-                    categories.forEach(category => {
-                        const option = document.createElement('option');
-                        option.value = category.id;
-                        option.textContent = category.title;
-                        categorySelect.appendChild(option);
-                    });
+                const course = result.data || result;
+                console.log('Course updated successfully:', result.data);
+                
+                // Populate form fields with course data
+                if (course.title) document.getElementById('courseTitle').value = course.title;
+                if (course.description) document.getElementById('courseDescription').value = course.description;
+                if (course.course_category_id) document.getElementById('courseCategory').value = course.course_category_id;
+                if (course.level_id) document.getElementById('courseLevel').value = course.level_id;
+                if (course.term_id) document.getElementById('subjectTerm').value = course.term_id;
+                if (course.duration_hours) document.getElementById('courseTime').value = course.duration_hours;
+                if (course.price) document.getElementById('coursePrice').value = course.price;
+                if (course.url) document.getElementById('overviewVideoUrl').value = course.url;
+
+                // Set free course checkbox and disable price if free
+                const freeCourseCheckbox = document.getElementById('free-course');
+                const priceInput = document.getElementById('coursePrice');
+                if (course.free) {
+                    freeCourseCheckbox.checked = course.free;
+                    if (priceInput) priceInput.disabled = true;
                 }
 
-                // Load Course Levels
-                const levelsResponse = await fetch('/api/level', {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                const levelsResult = await levelsResponse.json();
-                if (levelsResponse.ok && levelsResult) {
-                    const levelSelect = document.getElementById('courseLevel');
-                    const levels = Array.isArray(levelsResult) ? levelsResult : [];
-                    levelSelect.innerHTML = `<option value="">Select Course Level</option>`;
-                    levels.forEach(level => {
-                        const option = document.createElement('option');
-                        option.value = level.id;
-                        option.textContent = level.name;
-                        levelSelect.appendChild(option);
-                    });
-                }
+                // Store course data for later use in populatePublishSection
+                window.courseData = course;
+
+                // Update button visibility based on course status
+                updateButtonVisibility(course.status);
             } catch (error) {
-                console.error('Error loading dropdown data:', error);
+                console.error('Error loading course data:', error);
             }
         }
 
+        // Update button visibility based on course status
+        function updateButtonVisibility(status) {
+            const saveDraftBtn = document.getElementById('saveDraftBtn');
+            const publishBtn = document.getElementById('publishBtn');
+
+            // Hide both buttons first
+            if (saveDraftBtn) saveDraftBtn.style.display = 'none';
+            if (publishBtn) publishBtn.style.display = 'none';
+
+            // Show appropriate buttons based on status
+            if (status === 'draft') {
+                // For draft courses: show "Publish Course" and "Save As Draft" buttons
+                if (publishBtn) publishBtn.style.display = 'inline-block';
+                // if (saveDraftBtn) saveDraftBtn.style.display = 'inline-block';
+            } else if (status === 'published') {
+                // For published courses: show "Save As Draft" button only
+                if (saveDraftBtn) saveDraftBtn.style.display = 'inline-block';
+            }
+        }
+
+        // Load topics for the course
+        async function loadTopics() {
+            if (!courseId) {
+                console.log('No course ID provided');
+                return;
+            }
+
+            try {
+                const result = await TopicApiClient.getTopicsByCourse(courseId);
+
+                if (!result.success) {
+                    console.error('Failed to load topics:', result.message);
+                    return;
+                }
+
+                const topics = result.data || [];
+                console.log('Topics loaded:', topics);
+
+                // Store topics for later use
+                window.courseTopics = topics;
+
+                // Display topics in the curriculum accordion
+                displayTopics(topics);
+            } catch (error) {
+                console.error('Error loading topics:', error);
+            }
+        }
+
+        // Display topics in the curriculum accordion
+        function displayTopics(topics) {
+            const accordion = document.getElementById('curriculumAccordion');
+            if (!accordion) return;
+
+            // Clear all existing accordion items
+            accordion.innerHTML = '';
+
+            // If no topics, show a message
+            if (topics.length === 0) {
+                accordion.innerHTML = '<p class="text-muted">No topics yet. Click "Add New Topic" to create one.</p>';
+                return;
+            }
+
+            // Add each topic to the accordion
+            topics.forEach((topic, index) => {
+                const topicHtml = createTopicAccordionItem(topic, index);
+                accordion.insertAdjacentHTML('beforeend', topicHtml);
+            });
+
+            // Attach event listeners to the new items
+            attachTopicEventListeners();
+        }
+
+        // Create HTML for a topic accordion item
+        function createTopicAccordionItem(topic, index) {
+            const collapseId = `collapse-topic-${topic.id}`;
+            const lessonsHtml = topic.lessons && topic.lessons.length > 0
+                ? topic.lessons.map((lesson, lessonIndex) => `
+                    <div class="lesson-item draggable-lesson" draggable="true" data-lesson-id="${lesson.id}" data-topic-id="${topic.id}" data-lesson-index="${lessonIndex}">
+                        <div class="lesson-item-content">
+                            <i class="fa-solid fa-grip-vertical lesson-drag-handle" title="Drag to reorder"></i>
+                            <i class="fa-solid fa-circle-play"></i>
+                            <span>${lesson.title}</span>
+                        </div>
+                        <div class="lesson-item-actions">
+                            <button type="button" title="Edit" class="edit-lesson-btn" data-lesson-id="${lesson.id}"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button type="button" title="Delete" class="delete-lesson-btn" data-lesson-id="${lesson.id}"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                `).join('')
+                : '<p class="text-muted">No lessons yet. Click "Add Lesson" to create one.</p>';
+
+            return `
+                <div class="accordion-item draggable-topic" draggable="true" data-topic-id="${topic.id}" data-topic-index="${index}">
+                    <h2 class="accordion-header" style="position:relative; padding:1rem">
+                        <div class="mb-2 d-flex gap-2 align-items-center justify-content-end">
+                            <button class="btn btn-sm btn-light edit-topic-btn" type="button" title="Edit" data-topic-id="${topic.id}">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button class="btn btn-sm btn-light delete-topic-btn" type="button" title="Delete" data-topic-id="${topic.id}">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                        <button class="accordion-button d-flex justify-content-between align-items-center" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#${collapseId}" aria-expanded="false"
+                            aria-controls="${collapseId}">
+                            <div class="d-flex align-items-start me-3">
+                                <i class="fa-solid fa-grip-vertical drag-handle" title="Drag to reorder"></i>
+                                <i class="fa-solid fa-book-open me-3"></i>
+                                <p class="m-0 fw-bold">${topic.title}</p>
+                            </div>
+                        </button>
+                        ${topic.description ? `<p class="pt-2">${topic.description}</p>` : ''}
+                    </h2>
+                    <div id="${collapseId}" class="accordion-collapse collapse" data-bs-parent="#curriculumAccordion">
+                        <div class="accordion-body">
+                            ${lessonsHtml}
+                            <button type="button" class="btn btn-add-lesson mt-3 add-lesson-btn" data-topic-id="${topic.id}">
+                                <i class="fa-solid fa-plus me-2"></i>Add Lesson
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Attach event listeners to topic and lesson buttons
+        function attachTopicEventListeners() {
+            // Edit topic buttons
+            document.querySelectorAll('.edit-topic-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const topicId = btn.getAttribute('data-topic-id');
+                    editTopic(topicId);
+                });
+            });
+
+            // Delete topic buttons
+            document.querySelectorAll('.delete-topic-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const topicId = btn.getAttribute('data-topic-id');
+                    deleteTopic(topicId);
+                });
+            });
+
+            // Add lesson buttons
+            document.querySelectorAll('.add-lesson-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const topicId = btn.getAttribute('data-topic-id');
+                    addLesson(topicId);
+                });
+            });
+
+            // Edit lesson buttons
+            document.querySelectorAll('.edit-lesson-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const lessonId = btn.getAttribute('data-lesson-id');
+                    editLesson(lessonId);
+                });
+            });
+
+            // Delete lesson buttons
+            document.querySelectorAll('.delete-lesson-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const lessonId = btn.getAttribute('data-lesson-id');
+                    deleteLesson(lessonId);
+                });
+            });
+
+            // Drag and drop for topics
+            document.querySelectorAll('.draggable-topic').forEach(topic => {
+                topic.addEventListener('dragstart', handleTopicDragStart);
+                topic.addEventListener('dragend', handleTopicDragEnd);
+                topic.addEventListener('dragover', handleTopicDragOver);
+                topic.addEventListener('drop', handleTopicDrop);
+                topic.addEventListener('dragleave', handleTopicDragLeave);
+            });
+
+            // Drag and drop for lessons
+            document.querySelectorAll('.draggable-lesson').forEach(lesson => {
+                lesson.addEventListener('dragstart', handleLessonDragStart);
+                lesson.addEventListener('dragend', handleLessonDragEnd);
+                lesson.addEventListener('dragover', handleLessonDragOver);
+                lesson.addEventListener('drop', handleLessonDrop);
+                lesson.addEventListener('dragleave', handleLessonDragLeave);
+            });
+
+            // Prevent accordion from closing during drag by preventing clicks on drag handles
+            document.querySelectorAll('.drag-handle').forEach(handle => {
+                handle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                });
+                handle.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                });
+            });
+
+            document.querySelectorAll('.lesson-drag-handle').forEach(handle => {
+                handle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                });
+                handle.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                });
+            });
+
+            // Prevent accordion button from closing during drag
+            document.querySelectorAll('.accordion-button').forEach(btn => {
+                btn.addEventListener('mousedown', (e) => {
+                    if (isDragging) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                });
+                btn.addEventListener('click', (e) => {
+                    if (isDragging) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                });
+            });
+        }
+
+        // Load dropdown data
+        async function loadDropdownData() {
+            return new Promise(async (resolve) => {
+                try {
+                    const token = localStorage.getItem('auth_token');
+
+                    // Load Terms
+                    const termsResponse = await fetch('/api/term', {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    const termsResult = await termsResponse.json();
+                    if (termsResponse.ok && termsResult) {
+                        const termSelect = document.getElementById('subjectTerm');
+                        const terms = Array.isArray(termsResult) ? termsResult : [];
+                        termSelect.innerHTML = `<option value="">Select Term</option>`;
+
+                        terms.forEach(term => {
+                            const option = document.createElement('option');
+                            option.value = term.id;
+                            option.textContent = term.name;
+                            termSelect.appendChild(option);
+                        });
+                    }
+
+                    // Load Course Categories
+                    const categoriesResponse = await fetch('/api/course-category', {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    const categoriesResult = await categoriesResponse.json();
+                    if (categoriesResponse.ok && categoriesResult) {
+                        const categorySelect = document.getElementById('courseCategory');
+                        const categories = Array.isArray(categoriesResult) ? categoriesResult : [];
+                        categorySelect.innerHTML = `<option value="">Select Course Category</option>`;
+                        categories.forEach(category => {
+                            const option = document.createElement('option');
+                            option.value = category.id;
+                            option.textContent = category.title;
+                            categorySelect.appendChild(option);
+                        });
+                    }
+
+                    // Load Course Levels
+                    const levelsResponse = await fetch('/api/level', {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    const levelsResult = await levelsResponse.json();
+                    if (levelsResponse.ok && levelsResult) {
+                        const levelSelect = document.getElementById('courseLevel');
+                        const levels = Array.isArray(levelsResult) ? levelsResult : [];
+                        levelSelect.innerHTML = `<option value="">Select Course Level</option>`;
+                        levels.forEach(level => {
+                            const option = document.createElement('option');
+                            option.value = level.id;
+                            option.textContent = level.name;
+                            levelSelect.appendChild(option);
+                        });
+                    }
+
+                    resolve();
+                } catch (error) {
+                    console.error('Error loading dropdown data:', error);
+                    resolve();
+                }
+            });
+        }
+
         // Navigation between sections
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             const navButtons = document.querySelectorAll('.coursebtn');
             const sections = document.querySelectorAll('.content-section');
             const continueButtons = document.querySelectorAll('.continue-btn');
             const backButtons = document.querySelectorAll('.back-btn');
 
-            // Load dropdown data
-            loadDropdownData();
+            // Load dropdown data first
+            await loadDropdownData();
+
+            // Load course data if course ID is provided (after dropdowns are loaded)
+            if (courseId) {
+                await loadCourseData();
+                // Load topics for the course
+                await loadTopics();
+                // Populate the publish section with course data
+                populatePublishSection();
+            }
 
             function showSection(sectionId) {
                 sections.forEach(sec => sec.classList.add('d-none'));
@@ -1301,8 +1620,7 @@
                 }
             }
 
-            // addlessong modal js
-
+            // addlessong modal js - Note: selectContainer is no longer used with simplified lesson modal
             const selectContainer = document.getElementById("addContent");
 
             function showSelectedContainer(contentType) {
@@ -1327,40 +1645,73 @@
                 }
             }
 
-            document.addEventListener("DOMContentLoaded", () => {
-                showSelectedContainer(selectContainer.value);
-            });
-
-            selectContainer.addEventListener("change", (e) => {
-                showSelectedContainer(e.target.value);
-            });
+            // Only attach event listeners if selectContainer exists
+            if (selectContainer) {
+                selectContainer.addEventListener("change", (e) => {
+                    showSelectedContainer(e.target.value);
+                });
+            }
 
             function populatePublishSection() {
-                // Get data from form fields
-                const title = document.getElementById('subjectTitle').value || 'English Language';
-                const category = document.getElementById('subjectCategory').value || 'Language';
-                const level = document.getElementById('subjectLevel').value || 'JSS 1';
-                const time = document.getElementById('subjectTime').value || '0 Hours';
-                const lessons = document.getElementById('totalLesson').value || '0';
-                const description = document.getElementById('subjectDescription').value ||
-                    'This comprehensive course covers essential concepts and skills.';
+                // Get data from form fields with correct IDs
+                const titleElement = document.getElementById('courseTitle');
+                const categoryElement = document.getElementById('courseCategory');
+                const levelElement = document.getElementById('courseLevel');
+                const timeElement = document.getElementById('courseTime');
+                const descriptionElement = document.getElementById('courseDescription');
                 const fileInput = document.getElementById('fileInput');
 
-                // Update publish section
-                document.getElementById('publishSubjectTitle').textContent = title;
-                document.getElementById('publishTopics').textContent = '0 Topics';
-                document.getElementById('publishLessons').textContent = lessons + ' Lessons';
-                document.getElementById('publishTime').textContent = time;
-                document.getElementById('publishLevel').textContent = level;
-                document.getElementById('publishDescription').textContent = description;
+                const title = titleElement ? titleElement.value : 'English Language';
 
-                // Update course image if file is selected
-                if (fileInput && fileInput.files && fileInput.files[0]) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        document.getElementById('publishCourseImage').src = e.target.result;
-                    };
-                    reader.readAsDataURL(fileInput.files[0]);
+                // Get category name from selected option
+                let category = 'Language';
+                if (categoryElement && categoryElement.selectedOptions && categoryElement.selectedOptions[0]) {
+                    category = categoryElement.selectedOptions[0].text;
+                } else if (window.courseData && window.courseData.course_category && window.courseData.course_category.title) {
+                    category = window.courseData.course_category.title;
+                }
+
+                // Get level name from selected option
+                let level = 'JSS 1';
+                if (levelElement && levelElement.selectedOptions && levelElement.selectedOptions[0]) {
+                    level = levelElement.selectedOptions[0].text;
+                } else if (window.courseData && window.courseData.level && window.courseData.level.name) {
+                    level = window.courseData.level.name;
+                }
+
+                const time = timeElement ? timeElement.value : '0 Hours';
+                const description = descriptionElement ? descriptionElement.value : 'This comprehensive course covers essential concepts and skills.';
+
+                // Update publish section
+                const publishTitleEl = document.getElementById('publishSubjectTitle');
+                const publishTopicsEl = document.getElementById('publishTopics');
+                const publishLessonsEl = document.getElementById('publishLessons');
+                const publishTimeEl = document.getElementById('publishTime');
+                const publishLevelEl = document.getElementById('publishLevel');
+                const publishDescriptionEl = document.getElementById('publishDescription');
+                const publishImageEl = document.getElementById('publishCourseImage');
+
+                if (publishTitleEl) publishTitleEl.textContent = title;
+                if (publishTopicsEl) publishTopicsEl.textContent = '0 Topics';
+                if (publishLessonsEl) publishLessonsEl.textContent = '0 Lessons';
+                if (publishTimeEl) publishTimeEl.textContent = time;
+                if (publishLevelEl) publishLevelEl.textContent = level;
+                if (publishDescriptionEl) publishDescriptionEl.textContent = description;
+
+                // Update course image
+                if (publishImageEl) {
+                    // If a new file is selected, use the file preview
+                    if (fileInput && fileInput.files && fileInput.files[0]) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            publishImageEl.src = e.target.result;
+                        };
+                        reader.readAsDataURL(fileInput.files[0]);
+                    }
+                    // Otherwise, use the initial thumbnail from the database
+                    else if (window.courseData && window.courseData.thumbnail_url) {
+                        publishImageEl.src = window.courseData.thumbnail_url;
+                    }
                 }
             }
 
@@ -1404,49 +1755,554 @@
                 });
             }
 
-            // Publish button handler
-            const finalPublishBtn = document.getElementById('finalPublishBtn');
-            if (finalPublishBtn) {
-                finalPublishBtn.addEventListener('click', () => {
-                    const title = document.getElementById('subjectTitle').value;
-                    const category = document.getElementById('subjectCategory').value;
-                    const level = document.getElementById('subjectLevel').value;
-
-                    if (!title || !category || !level) {
-                        alert('Please fill in all required fields');
-                        return;
+            // Free course checkbox handler
+            const freeCourseCheckbox = document.getElementById('free-course');
+            const priceInput = document.getElementById('coursePrice');
+            if (freeCourseCheckbox) {
+                freeCourseCheckbox.addEventListener('change', (e) => {
+                    if (priceInput) {
+                        priceInput.disabled = e.target.checked;
+                        if (e.target.checked) {
+                            priceInput.value = '0';
+                        }
                     }
-
-                    // Here you would submit the form to the server
-                    console.log('Publishing course:', {
-                        title,
-                        category,
-                        level,
-                        time: document.getElementById('subjectTime').value,
-                        lessons: document.getElementById('totalLesson').value,
-                        description: document.getElementById('subjectDescription').value
-                    });
-
-                    alert('Course published successfully!');
                 });
             }
 
-            // Save draft button handler
-            const saveDraftBtn = document.getElementById('saveDraftBtn');
-            if (saveDraftBtn) {
-                saveDraftBtn.addEventListener('click', () => {
-                    const title = document.getElementById('subjectTitle').value;
-                    if (!title) {
-                        alert('Please enter a subject title');
+            // Update course function
+            async function updateCourse(newStatus = null) {
+                try {
+                    // Get form data
+                    const title = document.getElementById('courseTitle').value;
+                    const description = document.getElementById('courseDescription').value;
+                    const courseCategory = document.getElementById('courseCategory').value;
+                    const courseLevel = document.getElementById('courseLevel').value;
+                    const term = document.getElementById('subjectTerm').value;
+                    const duration = document.getElementById('courseTime').value;
+                    const price = document.getElementById('coursePrice').value;
+                    const freeCourse = document.getElementById('free-course').checked;
+                    const overviewUrl = document.getElementById('overviewVideoUrl').value;
+
+                    // Validate required fields
+                    if (!title || !description || !courseCategory || !courseLevel) {
+                        ToastNotification.warning('Validation Error', 'Please fill in all required fields');
                         return;
                     }
 
-                    console.log('Saving draft...');
-                    alert('Course saved as draft!');
+                    // Create FormData for file upload support
+                    const formData = new FormData();
+                    formData.append('_method', 'PUT');
+                    formData.append('title', title);
+                    formData.append('description', description);
+                    formData.append('course_category_id', courseCategory);
+                    formData.append('level_id', courseLevel);
+                    formData.append('term_id', term || null);
+                    formData.append('duration_hours', duration || 0);
+                    formData.append('price', freeCourse ? 0 : price);
+                    formData.append('free', freeCourse ? 1 : 0);
+                    formData.append('url', overviewUrl);
+
+                    // Only set status if newStatus is provided (for Save As Draft or Publish)
+                    if (newStatus) {
+                        formData.append('status', newStatus);
+                    }
+
+                    // Add thumbnail if a new file is selected
+                    const fileInput = document.getElementById('fileInput');
+                    if (fileInput && fileInput.files && fileInput.files[0]) {
+                        formData.append('thumbnail', fileInput.files[0]);
+                    }
+
+                    // Debug: Log FormData contents
+                    console.log('FormData contents:');
+                    for (let [key, value] of formData.entries()) {
+                        console.log(`${key}: ${value}`);
+                    }
+
+                    // Use fetch to update course (FormData works better with fetch)
+                    const token = localStorage.getItem('auth_token');
+                    const response = await fetch(`/api/courses/${courseId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: formData
+                    });
+
+                    const result = await response.json();
+
+                    if (!response.ok) {
+                        console.error('Update error:', result);
+                        console.error('Validation errors:', result.errors);
+
+                        // Show validation errors if available
+                        if (result.errors && Object.keys(result.errors).length > 0) {
+                            const errorMessages = Object.values(result.errors)
+                                .flat()
+                                .join(', ');
+                            ToastNotification.error('Validation Error', errorMessages);
+                        } else {
+                            ToastNotification.error('Update Failed', result.message || 'Failed to update course');
+                        }
+                        return;
+                    }
+
+                    console.log('Course updated successfully:', result);
+
+                    // Show success message based on action
+                    if (newStatus === 'published') {
+                        ToastNotification.success('Success', 'Course published successfully!');
+                    } else if (newStatus === 'draft') {
+                        ToastNotification.success('Success', 'Course saved as draft!');
+                    } else {
+                        ToastNotification.success('Success', 'Course updated successfully!');
+                    }
+
+                    // Reload course data to reflect changes
+                    await loadCourseData();
+                } catch (error) {
+                    console.error('Error updating course:', error);
+                    ToastNotification.error('Error', 'An error occurred while updating the course');
+                }
+            }
+
+            // Header button handlers
+            const headerUpdateBtn = document.getElementById('updateBtn');
+            if (headerUpdateBtn) {
+                headerUpdateBtn.addEventListener('click', () => {
+                    // Update course without changing status
+                    updateCourse(null);
                 });
+            }
+
+            const headerSaveDraftBtn = document.getElementById('saveDraftBtn');
+            if (headerSaveDraftBtn) {
+                headerSaveDraftBtn.addEventListener('click', () => {
+                    // Save as draft (change status to draft)
+                    updateCourse('draft');
+                });
+            }
+
+            const headerPublishBtn = document.getElementById('publishBtn');
+            if (headerPublishBtn) {
+                headerPublishBtn.addEventListener('click', () => {
+                    // Publish course (change status to published)
+                    updateCourse('published');
+                });
+            }
+
+            // Publish button handler (from publish section)
+            const finalPublishBtn = document.getElementById('finalPublishBtn');
+            if (finalPublishBtn) {
+                finalPublishBtn.addEventListener('click', () => {
+                    updateCourse('published');
+                });
+            }
+
+            // Add new topic button handler
+            const addTopicBtn = document.querySelector('[data-bs-target="#addNewTopicModal"]');
+            if (addTopicBtn) {
+                addTopicBtn.addEventListener('click', () => {
+                    // Reset form
+                    const form = document.querySelector('#addNewTopicModal form');
+                    if (form) form.reset();
+                    // Store that we're adding a new topic (not editing)
+                    window.editingTopicId = null;
+                });
+            }
+
+            // Save topic button handler - use a more specific selector
+            const topicModal = document.getElementById('addNewTopicModal');
+            if (topicModal) {
+                const saveTopicBtn = topicModal.querySelector('.modal-form-btn');
+                if (saveTopicBtn) {
+                    saveTopicBtn.addEventListener('click', async (e) => {
+                        e.preventDefault();
+                        await saveTopicHandler();
+                    });
+                }
             }
 
             showSection('curriculum');
         });
+
+        // ===== Drag and Drop Handlers for Topics =====
+        let draggedTopic = null;
+        let isDragging = false;
+        let dragStartTime = 0;
+
+        function handleTopicDragStart(e) {
+            isDragging = true;
+            dragStartTime = Date.now();
+            draggedTopic = this;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', this.innerHTML);
+            e.stopPropagation();
+        }
+
+        function handleTopicDragEnd(e) {
+            // Keep isDragging true for a brief moment to prevent accordion click
+            setTimeout(() => {
+                isDragging = false;
+            }, 100);
+            this.classList.remove('dragging');
+            document.querySelectorAll('.draggable-topic').forEach(topic => {
+                topic.classList.remove('drag-over');
+            });
+        }
+
+        function handleTopicDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+
+            if (this !== draggedTopic) {
+                this.classList.add('drag-over');
+            }
+            return false;
+        }
+
+        function handleTopicDragLeave(e) {
+            this.classList.remove('drag-over');
+        }
+
+        async function handleTopicDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+
+            if (draggedTopic !== this) {
+                const draggedTopicId = draggedTopic.getAttribute('data-topic-id');
+                const targetTopicId = this.getAttribute('data-topic-id');
+
+                try {
+                    // Swap the topics in the array
+                    const draggedIndex = window.courseTopics.findIndex(t => t.id == draggedTopicId);
+                    const targetIndex = window.courseTopics.findIndex(t => t.id == targetTopicId);
+
+                    if (draggedIndex !== -1 && targetIndex !== -1) {
+                        // Swap order values
+                        const temp = window.courseTopics[draggedIndex].order;
+                        window.courseTopics[draggedIndex].order = window.courseTopics[targetIndex].order;
+                        window.courseTopics[targetIndex].order = temp;
+
+                        // Update both topics on the server
+                        await TopicApiClient.updateTopic(draggedTopicId, {
+                            order: window.courseTopics[draggedIndex].order
+                        });
+                        await TopicApiClient.updateTopic(targetTopicId, {
+                            order: window.courseTopics[targetIndex].order
+                        });
+
+                        // Reload topics to refresh the display
+                        await loadTopics();
+                        ToastNotification.success('Success', 'Topic order updated');
+                    }
+                } catch (error) {
+                    console.error('Error updating topic order:', error);
+                    ToastNotification.error('Error', 'Failed to update topic order');
+                }
+            }
+
+            this.classList.remove('drag-over');
+            return false;
+        }
+
+        // ===== Drag and Drop Handlers for Lessons =====
+        let draggedLesson = null;
+
+        function handleLessonDragStart(e) {
+            isDragging = true;
+            dragStartTime = Date.now();
+            draggedLesson = this;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', this.innerHTML);
+            e.stopPropagation();
+        }
+
+        function handleLessonDragEnd(e) {
+            // Keep isDragging true for a brief moment to prevent accordion click
+            setTimeout(() => {
+                isDragging = false;
+            }, 100);
+            this.classList.remove('dragging');
+            document.querySelectorAll('.draggable-lesson').forEach(lesson => {
+                lesson.classList.remove('drag-over');
+            });
+        }
+
+        function handleLessonDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+
+            if (this !== draggedLesson) {
+                this.classList.add('drag-over');
+            }
+            return false;
+        }
+
+        function handleLessonDragLeave(e) {
+            this.classList.remove('drag-over');
+        }
+
+        async function handleLessonDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+
+            if (draggedLesson !== this) {
+                const draggedLessonId = draggedLesson.getAttribute('data-lesson-id');
+                const draggedTopicId = draggedLesson.getAttribute('data-topic-id');
+                const targetLessonId = this.getAttribute('data-lesson-id');
+                const targetTopicId = this.getAttribute('data-topic-id');
+
+                try {
+                    // Only allow reordering within the same topic
+                    if (draggedTopicId === targetTopicId) {
+                        const topic = window.courseTopics.find(t => t.id == draggedTopicId);
+                        if (topic && topic.lessons) {
+                            const draggedIndex = topic.lessons.findIndex(l => l.id == draggedLessonId);
+                            const targetIndex = topic.lessons.findIndex(l => l.id == targetLessonId);
+
+                            if (draggedIndex !== -1 && targetIndex !== -1) {
+                                // Swap order values
+                                const temp = topic.lessons[draggedIndex].order;
+                                topic.lessons[draggedIndex].order = topic.lessons[targetIndex].order;
+                                topic.lessons[targetIndex].order = temp;
+
+                                // Update both lessons on the server
+                                await LessonApiClient.updateLesson(draggedLessonId, {
+                                    order: topic.lessons[draggedIndex].order
+                                });
+                                await LessonApiClient.updateLesson(targetLessonId, {
+                                    order: topic.lessons[targetIndex].order
+                                });
+
+                                // Reload topics to refresh the display
+                                await loadTopics();
+                                ToastNotification.success('Success', 'Lesson order updated');
+                            }
+                        }
+                    } else {
+                        ToastNotification.warning('Info', 'Lessons can only be reordered within the same topic');
+                    }
+                } catch (error) {
+                    console.error('Error updating lesson order:', error);
+                    ToastNotification.error('Error', 'Failed to update lesson order');
+                }
+            }
+
+            this.classList.remove('drag-over');
+            return false;
+        }
+
+        // Topic management functions
+        async function editTopic(topicId) {
+            try {
+                const topic = window.courseTopics.find(t => t.id == topicId);
+                if (!topic) {
+                    ToastNotification.error('Error', 'Topic not found');
+                    return;
+                }
+
+                // Populate modal with topic data
+                const modal = document.getElementById('addNewTopicModal');
+                const titleInput = modal.querySelector('input[placeholder="Enter Title"]');
+                const descInput = modal.querySelector('textarea');
+
+                if (titleInput) titleInput.value = topic.title;
+                if (descInput) descInput.value = topic.description || '';
+
+                // Store the topic ID being edited
+                window.editingTopicId = topicId;
+
+                // Show modal
+                const modalInstance = new bootstrap.Modal(modal);
+                modalInstance.show();
+            } catch (error) {
+                console.error('Error editing topic:', error);
+                ToastNotification.error('Error', 'Failed to load topic');
+            }
+        }
+
+        async function deleteTopic(topicId) {
+            if (!confirm('Are you sure you want to delete this topic? All lessons in this topic will also be deleted.')) {
+                return;
+            }
+
+            try {
+                const result = await TopicApiClient.deleteTopic(topicId);
+                ToastNotification.success('Success', 'Topic deleted successfully');
+                await loadTopics();
+            } catch (error) {
+                console.error('Error deleting topic:', error);
+                ToastNotification.error('Error', 'Failed to delete topic');
+            }
+        }
+
+        async function saveTopicHandler() {
+            try {
+                const modal = document.getElementById('addNewTopicModal');
+                const titleInput = modal.querySelector('input[placeholder="Enter Title"]');
+                const descInput = modal.querySelector('textarea');
+
+                const title = titleInput ? titleInput.value.trim() : '';
+                const description = descInput ? descInput.value.trim() : '';
+
+                if (!title) {
+                    ToastNotification.warning('Validation', 'Please enter a topic title');
+                    return;
+                }
+
+                const topicData = {
+                    title: title,
+                    description: description,
+                    course_id: courseId,
+                    order: window.courseTopics ? window.courseTopics.length + 1 : 1
+                };
+
+                let result;
+                if (window.editingTopicId) {
+                    // Update existing topic
+                    result = await TopicApiClient.updateTopic(window.editingTopicId, topicData);
+                    ToastNotification.success('Success', 'Topic updated successfully');
+                } else {
+                    // Create new topic
+                    result = await TopicApiClient.createTopic(topicData);
+                    ToastNotification.success('Success', 'Topic created successfully');
+                }
+
+                // Close modal
+                const modalInstance = bootstrap.Modal.getInstance(modal);
+                if (modalInstance) modalInstance.hide();
+
+                // Reload topics
+                await loadTopics();
+            } catch (error) {
+                console.error('Error saving topic:', error);
+                ToastNotification.error('Error', 'Failed to save topic');
+            }
+        }
+
+        window.addLesson = function(topicId) {
+            // Store the topic ID for the lesson
+            window.currentTopicId = topicId;
+            // Clear the form
+            const modal = document.getElementById('addLessonModal');
+            if (!modal) {
+                ToastNotification.error('Error', 'Lesson modal not found');
+                return;
+            }
+            const titleInput = modal.querySelector('input[placeholder="Enter title"]');
+            const contentInput = modal.querySelector('textarea');
+            if (titleInput) titleInput.value = '';
+            if (contentInput) contentInput.value = '';
+            window.editingLessonId = null;
+            // Show the add lesson modal
+            const modalInstance = new bootstrap.Modal(modal);
+            modalInstance.show();
+        };
+
+        window.saveLessonHandler = async function() {
+            try {
+                const modal = document.getElementById('addLessonModal');
+                if (!modal) {
+                    ToastNotification.error('Error', 'Lesson modal not found');
+                    return;
+                }
+                const titleInput = modal.querySelector('input[placeholder="Enter title"]');
+                const contentInput = modal.querySelector('textarea');
+
+                const title = titleInput ? titleInput.value.trim() : '';
+                const content = contentInput ? contentInput.value.trim() : '';
+
+                if (!title) {
+                    ToastNotification.warning('Validation', 'Please enter a lesson title');
+                    return;
+                }
+
+                if (!content) {
+                    ToastNotification.warning('Validation', 'Please enter lesson content');
+                    return;
+                }
+
+                const lessonData = {
+                    title: title,
+                    content: content,
+                    topic_id: window.currentTopicId,
+                    course_id: courseId
+                };
+
+                let result;
+                if (window.editingLessonId) {
+                    // Update existing lesson
+                    result = await LessonApiClient.updateLesson(window.editingLessonId, lessonData);
+                    ToastNotification.success('Success', 'Lesson updated successfully');
+                } else {
+                    // Create new lesson
+                    result = await LessonApiClient.createLesson(courseId, lessonData);
+                    ToastNotification.success('Success', 'Lesson created successfully');
+                }
+
+                // Close modal
+                const modalInstance = bootstrap.Modal.getInstance(modal);
+                if (modalInstance) modalInstance.hide();
+
+                // Reload topics to refresh lessons
+                await loadTopics();
+            } catch (error) {
+                console.error('Error saving lesson:', error);
+                ToastNotification.error('Error', 'Failed to save lesson');
+            }
+        };
+
+        window.editLesson = async function(lessonId) {
+            try {
+                const topic = window.courseTopics.find(t =>
+                    t.lessons && t.lessons.some(l => l.id == lessonId)
+                );
+
+                if (!topic) {
+                    ToastNotification.error('Error', 'Lesson not found');
+                    return;
+                }
+
+                const lesson = topic.lessons.find(l => l.id == lessonId);
+                const modal = document.getElementById('addLessonModal');
+                const titleInput = modal.querySelector('input[placeholder="Enter title"]');
+                const contentInput = modal.querySelector('textarea');
+
+                if (titleInput) titleInput.value = lesson.title;
+                if (contentInput) contentInput.value = lesson.content || '';
+
+                window.editingLessonId = lessonId;
+                window.currentTopicId = topic.id;
+                const modalInstance = new bootstrap.Modal(modal);
+                modalInstance.show();
+            } catch (error) {
+                console.error('Error editing lesson:', error);
+                ToastNotification.error('Error', 'Failed to load lesson');
+            }
+        };
+
+        window.deleteLesson = async function(lessonId) {
+            if (!confirm('Are you sure you want to delete this lesson?')) {
+                return;
+            }
+
+            try {
+                await LessonApiClient.deleteLesson(lessonId);
+                ToastNotification.success('Success', 'Lesson deleted successfully');
+                await loadTopics();
+            } catch (error) {
+                console.error('Error deleting lesson:', error);
+                ToastNotification.error('Error', 'Failed to delete lesson');
+            }
+        };
     </script>
 @endsection

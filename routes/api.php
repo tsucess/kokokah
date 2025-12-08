@@ -95,7 +95,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 
-Route::get('/', function() {
+Route::get('/', function () {
     return 'API';
 });
 
@@ -122,17 +122,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/courses/my-courses', [CourseController::class, 'myCourses']);
 });
 
-Route::get('/courses/{id}', [CourseController::class, 'show']);
 
 
 
 
 
-
-Route::post('/register', [AuthController::class,'register']);
-Route::post('/login', [AuthController::class,'login']);
-Route::post('/forgot-password', [PasswordResetController::class,'sendResetLinkEmail']);
-Route::post('/reset-password', [PasswordResetController::class,'reset']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLinkEmail']);
+Route::post('/reset-password', [PasswordResetController::class, 'reset']);
 
 // Email verification with code routes (public)
 Route::post('/email/send-verification-code', [AuthController::class, 'sendVerificationCode']);
@@ -150,8 +148,8 @@ Route::prefix('payments')->group(function () {
 
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', [AuthController::class,'user']);
-    Route::post('/logout', [AuthController::class,'logout']);
+    Route::get('/user', [AuthController::class, 'user']);
+    Route::post('/logout', [AuthController::class, 'logout']);
 
     // Wallet routes
     Route::prefix('wallet')->group(function () {
@@ -178,6 +176,7 @@ Route::middleware('auth:sanctum')->group(function () {
         // Instructor/Admin only routes
         Route::middleware('role:instructor,admin')->group(function () {
             Route::post('/', [CourseController::class, 'store']);
+            Route::get('/{id}', [CourseController::class, 'show']);
             Route::put('/{id}', [CourseController::class, 'update']);
             Route::delete('/{id}', [CourseController::class, 'destroy']);
             Route::get('/{id}/students', [CourseController::class, 'students']);
@@ -197,11 +196,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/', [LessonController::class, 'store']);
     });
 
-// Topic management route 
+    // Topic management route
     Route::apiResource('topic', TopicController::class);
+    Route::get('/courses/{courseId}/topics', [TopicController::class, 'getByCourse']);
 
 
-// Term management route 
+    // Term management route 
     Route::apiResource('term', TermController::class);
 
     Route::prefix('lessons')->group(function () {

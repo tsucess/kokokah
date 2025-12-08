@@ -2,17 +2,13 @@
  * Base API Client
  * Provides common functionality for all API clients
  * Handles authentication, error handling, and request/response processing
+ * Uses native Fetch API for all HTTP requests
  */
 
 const API_BASE_URL = '/api';
 const TOKEN_KEY = 'auth_token';
 const USER_KEY = 'auth_user';
 const REQUEST_TIMEOUT = 30000; // 30 seconds
-
-// Configure axios with timeout
-if (typeof axios !== 'undefined') {
-  axios.defaults.timeout = REQUEST_TIMEOUT;
-}
 
 class BaseApiClient {
   /**
@@ -80,10 +76,14 @@ class BaseApiClient {
    */
   static async get(endpoint, config = {}) {
     try {
-      const response = await axios.get(`${API_BASE_URL}${endpoint}`, {
+      const response = await this.fetchWithTimeout(`${API_BASE_URL}${endpoint}`, {
+        method: 'GET',
         headers: this.getAuthHeaders(),
         ...config
       });
+      if (!response.ok) {
+        return this.handleErrorResponse(response);
+      }
       return this.handleSuccess(response);
     } catch (error) {
       return this.handleError(error);
@@ -99,10 +99,15 @@ class BaseApiClient {
       const isFormData = data instanceof FormData;
       const headers = isFormData ? this.getAuthHeadersForFormData() : this.getAuthHeaders();
 
-      const response = await axios.post(`${API_BASE_URL}${endpoint}`, data, {
+      const response = await this.fetchWithTimeout(`${API_BASE_URL}${endpoint}`, {
+        method: 'POST',
         headers: headers,
+        body: isFormData ? data : JSON.stringify(data),
         ...config
       });
+      if (!response.ok) {
+        return this.handleErrorResponse(response);
+      }
       return this.handleSuccess(response);
     } catch (error) {
       return this.handleError(error);
@@ -114,10 +119,23 @@ class BaseApiClient {
    */
   static async put(endpoint, data = {}, config = {}) {
     try {
-      const response = await axios.put(`${API_BASE_URL}${endpoint}`, data, {
-        headers: this.getAuthHeaders(),
+      // Check if data is FormData (for file uploads)
+      const isFormData = data instanceof FormData;
+      const headers = isFormData ? this.getAuthHeadersForFormData() : this.getAuthHeaders();
+
+      // If FormData, use POST with _method: PUT for Laravel method spoofing
+      const method = isFormData ? 'POST' : 'PUT';
+      const body = isFormData ? data : JSON.stringify(data);
+
+      const response = await this.fetchWithTimeout(`${API_BASE_URL}${endpoint}`, {
+        method: method,
+        headers: headers,
+        body: body,
         ...config
       });
+      if (!response.ok) {
+        return this.handleErrorResponse(response);
+      }
       return this.handleSuccess(response);
     } catch (error) {
       return this.handleError(error);
@@ -129,10 +147,14 @@ class BaseApiClient {
    */
   static async delete(endpoint, config = {}) {
     try {
-      const response = await axios.delete(`${API_BASE_URL}${endpoint}`, {
+      const response = await this.fetchWithTimeout(`${API_BASE_URL}${endpoint}`, {
+        method: 'DELETE',
         headers: this.getAuthHeaders(),
         ...config
       });
+      if (!response.ok) {
+        return this.handleErrorResponse(response);
+      }
       return this.handleSuccess(response);
     } catch (error) {
       return this.handleError(error);
@@ -175,6 +197,64 @@ class BaseApiClient {
   }
 
   /**
+   * Fetch with timeout
+   */
+  static async fetchWithTimeout(url, options = {}) {
+    const timeout = options.timeout || REQUEST_TIMEOUT;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+    try {
+      const response = await fetch(url, {
+        ...options,
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+
+      // Parse response
+      const contentType = response.headers.get('content-type');
+      let data = null;
+
+      if (contentType && contentType.includes('application/json')) {
+        data = await response.json();
+      } else {
+        data = await response.text();
+      }
+
+      // Create response object compatible with handleSuccess
+      return {
+        status: response.status,
+        ok: response.ok,
+        data: data
+      };
+    } catch (error) {
+      clearTimeout(timeoutId);
+      throw error;
+    }
+  }
+
+  /**
+   * Handle error response from server
+   */
+  static handleErrorResponse(response) {
+    const status = response.status;
+    const data = response.data;
+
+    if (status === 401) {
+      this.clearToken();
+      this.clearUser();
+      window.location.href = '/login';
+    }
+
+    return {
+      success: false,
+      message: data.message || 'Request failed',
+      status: status,
+      errors: data.errors || {}
+    };
+  }
+
+  /**
    * Handle successful response
    */
   static handleSuccess(response) {
@@ -193,8 +273,26 @@ class BaseApiClient {
   static handleError(error) {
     console.error('API Error:', error);
 
+    // Handle abort/timeout errors
+    if (error.name === 'AbortError') {
+      return {
+        success: false,
+        message: 'Request timeout',
+        status: 0
+      };
+    }
+
+    // Handle network errors
+    if (error instanceof TypeError) {
+      return {
+        success: false,
+        message: 'Network error - unable to reach server',
+        status: 0
+      };
+    }
+
+    // Handle response errors (from fetchWithTimeout)
     if (error.response) {
-      // Server responded with error status
       const status = error.response.status;
       const data = error.response.data;
 
@@ -210,21 +308,14 @@ class BaseApiClient {
         status: status,
         errors: data.errors || {}
       };
-    } else if (error.request) {
-      // Request made but no response
-      return {
-        success: false,
-        message: 'No response from server',
-        status: 0
-      };
-    } else {
-      // Error in request setup
-      return {
-        success: false,
-        message: error.message || 'An error occurred',
-        status: 0
-      };
     }
+
+    // Generic error
+    return {
+      success: false,
+      message: error.message || 'An error occurred',
+      status: 0
+    };
   }
 }
 

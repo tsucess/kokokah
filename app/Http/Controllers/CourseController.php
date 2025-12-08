@@ -214,6 +214,7 @@ class CourseController extends Controller
             'term_id'  => 'nullable|exists:terms,id',
             'price'    => 'required|numeric|min:0',
             'free'     => 'required|boolean',
+            'url'      => 'nullable|string|max:255',
             'duration_hours' => 'nullable|integer|min:1',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:5048'
         ]);
@@ -225,6 +226,11 @@ class CourseController extends Controller
             $courseData['status'] = 'draft';
             $courseData['instructor_id'] = Auth::id();
             $courseData['thumbnail'] = $this->uploadThumbnail($request);
+
+            // Generate slug from title if not provided
+            if (!isset($courseData['slug']) || empty($courseData['slug'])) {
+                $courseData['slug'] = Course::generateSlug($courseData['title']);
+            }
 
             $course = Course::create($courseData);
 
@@ -246,8 +252,8 @@ class CourseController extends Controller
     {
         try {
             $course = Course::with([
-                'curriculum_category',
-                'course_category',
+                'curriculumCategory',
+                'courseCategory',
                 'instructor',
                 'level',
                 'term',
@@ -277,7 +283,8 @@ class CourseController extends Controller
             $data['total_students'] = $course->enrollments()->count();
 
             return $this->success($data);
-        } catch (\Exception) {
+        } catch (\Exception $e) {
+            \Log::error('Course show error: ' . $e->getMessage());
             return $this->error('Course not found', 404);
         }
     }
@@ -295,13 +302,24 @@ class CourseController extends Controller
                 return $this->error('Unauthorized to update this course', 403);
             }
 
+            // Log incoming request data
+            \Log::info('Course update request:', [
+                'id' => $id,
+                'all_data' => $request->all(),
+                'free' => $request->input('free'),
+                'free_type' => gettype($request->input('free')),
+                'price' => $request->input('price'),
+                'price_type' => gettype($request->input('price'))
+            ]);
+
             $validation = $this->validateRequest($request, [
                 'title' => 'sometimes|string|max:255',
+                'slug' => 'sometimes|string|max:255',
                 'description' => 'sometimes|string',
                 'course_category_id' => 'sometimes|exists:course_categories,id',
                 'curriculum_category_id' => 'sometimes|exists:curriculum_categories,id',
-                'free'  => 'required|boolean',
-                'price' => 'required_unless:free,true|numeric|min:0',
+                'free'  => 'sometimes|in:0,1',
+                'price' => 'sometimes|required_unless:free,1|numeric|min:0',
                 'difficulty' => 'sometimes|in:beginner,intermediate,advanced',
                 'duration_hours' => 'nullable|integer|min:1',
                 'max_students' => 'nullable|integer|min:1',
@@ -313,10 +331,15 @@ class CourseController extends Controller
             $data = $request->except('thumbnail');
             $data['thumbnail'] = $this->uploadThumbnail($request, $course->thumbnail);
 
+            // Generate slug from title if title is being updated and slug is not provided
+            if ($request->has('title') && !$request->has('slug')) {
+                $data['slug'] = Course::generateSlug($request->input('title'));
+            }
+
             $course->update($data);
 
             return $this->success(
-                $course->load(['category', 'instructor', 'level', 'term']),
+                $course->load(['courseCategory', 'instructor', 'level', 'term']),
                 'Course updated successfully'
             );
 
