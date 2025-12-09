@@ -148,7 +148,7 @@ Route::get('/usersubject', function () {
     return view('users.usersubject');
 });
 
-Route::get('/enroll', function () {
+Route::get('/userenroll', function () {
     return view('users.enroll');
 });
 
