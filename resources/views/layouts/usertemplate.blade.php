@@ -51,7 +51,7 @@
 
     <a class="nav-item-link" href="/userkudikah"><i class="fa-solid fa-user me-2  pe-2"></i>Kudikah</a>
 
-    <a class="nav-item-link" href="/results"><i class="fa-solid fa-user me-2  pe-2"></i> Notification</a>
+
 
           <!-- Communication -->
   <a class="nav-item-link d-flex justify-content-between align-items-center"
@@ -63,7 +63,7 @@
 
   <!-- communication dropdowns -->
   <div class="collapse ps-4" id="communication">
-    <a class="nav-item-link d-block" href="#">Announcement</a>
+    <a class="nav-item-link d-block" href="/userannouncement">Announcement</a>
     <a class="nav-item-link d-block" href="#">Email / Messaging Center</a>
     <a class="nav-item-link d-block" href="/userfeedback">Feedback / Surveys</a>
   </div>

@@ -1,8 +1,7 @@
-{{-- @extends('admin.usertemplate') --}}
-{{-- @extends('users.usertemplate') --}}
-@extends('layouts.dashboardtemp')
+@extends('layouts.usertemplate')
 
-@section('content') 
+
+@section('content')
 <main class="subjects-main">
 
         <section class="d-flex gap-5 flex-column py-4 container px-5">
@@ -20,19 +19,19 @@
 
                 <div class="d-flex flex-column " style="gap: 75px;">
                     <div class="row rounded-pill p-2 tab">
-                        <div class=" rounded-pill d-flex justify-content-center gap-1 py-2 align-items-center col tab-text bg-light">
+                        <div class=" rounded-pill d-flex justify-content-center gap-1  align-items-center col tab-text bg-light">
                             <i class="fa-solid fa-bell"></i> All (20)
                         </div>
-                        <div class=" rounded-pill d-flex justify-content-center gap-1  py-2 align-items-center col tab-text">
+                        <div class=" rounded-pill d-flex justify-content-center gap-1 align-items-center col tab-text">
                             <i class="fa-solid fa-bell"></i> Exams (10)
                         </div>
-                        <div class=" rounded-pill d-flex justify-content-center gap-1  py-2 align-items-center col tab-text">
+                        <div class=" rounded-pill d-flex justify-content-center gap-1 align-items-center col tab-text">
                             <i class="fa-solid fa-bell"></i> Events (5)
                         </div>
-                        <div class=" rounded-pill d-flex justify-content-center gap-1  py-2 align-items-center col tab-text">
+                        <div class=" rounded-pill d-flex justify-content-center gap-1 align-items-center col tab-text">
                             <i class="fa-solid fa-bell"></i> Alert (4)
                         </div>
-                        <div class=" rounded-pill d-flex justify-content-center gap-1  py-2 align-items-center col tab-text">
+                        <div class=" rounded-pill d-flex justify-content-center gap-1 align-items-center col tab-text">
                             <i class="fa-solid fa-bell"></i> General Info (20)
                         </div>
                     </div>
@@ -83,3 +82,4 @@
         </section>
     </main>
 @endsection
+
