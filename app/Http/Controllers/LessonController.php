@@ -82,13 +82,33 @@ class LessonController extends Controller
                 ], 403);
             }
 
-            $validator = Validator::make($request->all(), [
+            // Get lesson type from request
+            $lessonType = $request->input('lesson_type', 'content');
+
+            // Build validation rules based on lesson type
+            $rules = [
                 'title' => 'required|string|max:255',
-                'content' => 'required|string',
-                'video_url' => 'nullable|url',
+                'topic_id' => 'required|integer|exists:topics,id',
+                'lesson_type' => 'required|in:content,youtube,document,image,audio',
                 'duration_minutes' => 'nullable|integer|min:1',
-                'attachment' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,zip|max:10240'
-            ]);
+            ];
+
+            // Add type-specific validation rules
+            switch ($lessonType) {
+                case 'youtube':
+                    $rules['video_url'] = 'required|url';
+                    break;
+                case 'content':
+                    $rules['content'] = 'required|string';
+                    break;
+                case 'document':
+                case 'image':
+                case 'audio':
+                    $rules['attachment'] = 'required|file|mimes:pdf,doc,docx,ppt,pptx,xls,xlsx,zip,jpg,jpeg,png,gif,webp,mp3,wav,m4a|max:10240';
+                    break;
+            }
+
+            $validator = Validator::make($request->all(), $rules);
 
             if ($validator->fails()) {
                 return response()->json([
@@ -105,10 +125,14 @@ class LessonController extends Controller
             $lessonData['course_id'] = $course->id;
             $lessonData['order'] = $nextOrder;
 
-            // Handle file attachment
+            // Handle file attachment based on lesson type
             if ($request->hasFile('attachment')) {
-                $attachmentPath = $request->file('attachment')->store('lesson-attachments', 'public');
+                $file = $request->file('attachment');
+                $attachmentPath = $file->store('lesson-attachments', 'public');
                 $lessonData['attachment'] = $attachmentPath;
+
+                // Set attachment type to the actual file extension
+                $lessonData['attachment_type'] = $file->getClientOriginalExtension();
             }
 
             $lesson = Lesson::create($lessonData);
@@ -204,9 +228,10 @@ class LessonController extends Controller
                 'title' => 'sometimes|string|max:255',
                 'content' => 'sometimes|string',
                 'video_url' => 'nullable|url',
+                'lesson_type' => 'sometimes|in:content,youtube,document,image,audio',
                 'duration_minutes' => 'nullable|integer|min:1',
                 'order' => 'sometimes|integer|min:1',
-                'attachment' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,zip|max:10240'
+                'attachment' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,xls,xlsx,zip,jpg,jpeg,png,gif,webp,mp3,wav,m4a|max:10240'
             ]);
 
             if ($validator->fails()) {
@@ -225,8 +250,12 @@ class LessonController extends Controller
                 if ($lesson->attachment) {
                     Storage::disk('public')->delete($lesson->attachment);
                 }
-                $attachmentPath = $request->file('attachment')->store('lesson-attachments', 'public');
+                $file = $request->file('attachment');
+                $attachmentPath = $file->store('lesson-attachments', 'public');
                 $updateData['attachment'] = $attachmentPath;
+
+                // Set attachment type to the actual file extension
+                $updateData['attachment_type'] = $file->getClientOriginalExtension();
             }
 
             $lesson->update($updateData);

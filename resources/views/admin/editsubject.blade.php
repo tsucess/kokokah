@@ -98,7 +98,103 @@
             border-color: #004A53;
         }
 
+        /* ===== Loader Styles ===== */
+        .kokokah-loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .kokokah-loader-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .kokokah-loader-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .kokokah-spinner {
+            width: 60px;
+            height: 60px;
+            position: relative;
+        }
+
+        .kokokah-spinner::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 4px solid #f0f0f0;
+            border-top: 4px solid #004A53;
+            border-right: 4px solid #FDAF22;
+            border-radius: 50%;
+            animation: kokokah-spin 1s linear infinite;
+        }
+
+        @keyframes kokokah-spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .kokokah-loader-text {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.1rem;
+            color: #004A53;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .kokokah-loader-dots {
+            display: inline-block;
+            width: 20px;
+            text-align: left;
+        }
+
+        .kokokah-loader-dots::after {
+            content: '';
+            animation: kokokah-dots 1.5s steps(4, end) infinite;
+        }
+
+        @keyframes kokokah-dots {
+            0%, 20% {
+                content: '';
+            }
+            40% {
+                content: '.';
+            }
+            60% {
+                content: '..';
+            }
+            80%, 100% {
+                content: '...';
+            }
+        }
+
         /* ===== Section Styles ===== */
+        .content-section {
+            display: block;
+        }
+
+        .content-section.d-none {
+            display: none !important;
+        }
+
         .section-header {
             margin-bottom: 1.5rem;
             padding-bottom: 1rem;
@@ -822,6 +918,16 @@
     </style>
 
     <main>
+        <!-- Kokokah Loader -->
+        <div class="kokokah-loader-overlay" id="kokokahLoader">
+            <div class="kokokah-loader-container">
+                <div class="kokokah-spinner"></div>
+                <div class="kokokah-loader-text">
+                    Loading<span class="kokokah-loader-dots"></span>
+                </div>
+            </div>
+        </div>
+
         <!-- Header Section -->
         <div class="container bg-white">
             <div class="subject-header">
@@ -874,7 +980,7 @@
         </div>
 
         <!-- Course Details Section -->
-        <div class="container bg-white content-section" id="details">
+        <div class="container bg-white content-section d-none" id="details">
             <div class="section-header">
                 <h5>Course Details</h5>
             </div>
@@ -1080,9 +1186,12 @@
                                 </div>
                                 {{-- youtube container --}}
                                 <div class="flex-column gap-3 hide select-children" id="youtube-container">
-                                    <div class="modal-form-input-border"><label for=""
-                                            class="modal-label">Youtube Url</label><input class="modal-input"
-                                            type="text" placeholder="Enter url" /></div>
+                                    <div class="modal-form-input-border"><label for="" class="modal-label">Youtube Url</label>
+                                            <input class="modal-input" type="text" placeholder="Enter url" />
+                                    </div>
+                                    <div class="modal-form-input-border"><label for="" class="modal-label">Duration</label>
+                                            <input class="modal-input" type="text" placeholder="Video duration" />
+                                    </div>
                                 </div>
                                 {{-- content container  --}}
                                 <div class="flex-column gap-3 hide select-children" id="content-container">
@@ -1603,6 +1712,11 @@
                 populatePublishSection();
             }
 
+            // Restore the last viewed section from localStorage
+            const savedSection = localStorage.getItem(`editCourse_${courseId}_section`);
+            const initialSection = savedSection || 'curriculum';
+            showSection(initialSection);
+
             function showSection(sectionId) {
                 sections.forEach(sec => sec.classList.add('d-none'));
                 const section = document.getElementById(sectionId);
@@ -1615,6 +1729,9 @@
                 if (activeBtn) {
                     activeBtn.classList.add('course-btn-active');
                 }
+
+                // Save the current section to localStorage
+                localStorage.setItem(`editCourse_${courseId}_section`, sectionId);
 
                 // Populate publish section when navigating to it
                 if (sectionId === 'publish') {
@@ -1928,7 +2045,13 @@
                 }
             }
 
-            showSection('curriculum');
+            // Hide the loader after everything is loaded
+            setTimeout(() => {
+                const loader = document.getElementById('kokokahLoader');
+                if (loader) {
+                    loader.classList.add('hidden');
+                }
+            }, 500);
         });
 
         // ===== Drag and Drop Handlers for Topics =====
@@ -2274,6 +2397,13 @@
             });
         });
 
+        // Store uploaded files in a map to avoid dataset serialization issues
+        const uploadedFiles = {
+            image: null,
+            audio: null,
+            document: null
+        };
+
         // Handle file input changes
         const imageFileInput = document.getElementById('imageFileInput');
         if (imageFileInput) {
@@ -2319,8 +2449,8 @@
 
             if (inputField) {
                 inputField.value = file.name;
-                // Store the file object for later upload
-                inputField.dataset.file = file;
+                // Store the actual file object in the uploadedFiles map
+                uploadedFiles[uploadType] = file;
             }
 
             // Show success message
@@ -2376,8 +2506,7 @@
                         break;
 
                     case 'document':
-                        const documentInput = modal.querySelector('#document-container input[type="text"]');
-                        const documentFile = documentInput ? documentInput.dataset.file : null;
+                        const documentFile = uploadedFiles.document;
                         if (!documentFile) {
                             ToastNotification.warning('Validation', 'Please upload a document');
                             return;
@@ -2386,8 +2515,7 @@
                         break;
 
                     case 'image':
-                        const imageInput = modal.querySelector('#image-container input[type="text"]');
-                        const imageFile = imageInput ? imageInput.dataset.file : null;
+                        const imageFile = uploadedFiles.image;
                         if (!imageFile) {
                             ToastNotification.warning('Validation', 'Please upload an image');
                             return;
@@ -2407,6 +2535,11 @@
                     result = await LessonApiClient.createLesson(courseId, formData);
                     ToastNotification.success('Success', 'Lesson created successfully');
                 }
+
+                // Clear uploaded files
+                uploadedFiles.image = null;
+                uploadedFiles.audio = null;
+                uploadedFiles.document = null;
 
                 // Close modal
                 const modalInstance = bootstrap.Modal.getInstance(modal);
