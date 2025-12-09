@@ -1,4 +1,5 @@
-@extends('users.usertemplate')
+@extends('layouts.usertemplate')
+@section('content')
  <style>
     .stats-card {
       border: none;
@@ -28,7 +29,7 @@
       }
     }
   </style>
-@section('content')
+
 <main>
     {{-- <div class="container m-2">
 <div class="row">

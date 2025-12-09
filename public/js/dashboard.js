@@ -62,7 +62,7 @@ class DashboardModule {
 
     // Make profile section clickable
     const navigateToProfile = () => {
-      window.location.href = '/profile';
+      window.location.href = '/profiles';
     };
 
     if (profileSection) {

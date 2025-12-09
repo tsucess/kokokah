@@ -1,7 +1,36 @@
 @extends('layouts.dashboardtemp')
 @section('content')
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+<style>
+ body {
+      background-color: #f9fafb;
+    }
+.card {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+            background: #f9f9f9; border: 1px solid #e8e8e8;
+            padding: 20px;
+        }
+         .line-divider{
+            background-color: #BFBFBF;
+            width: 100%;
+            height: 1px;
+            margin-bottom: 24px;
+        }
+    .profile-card {
+      border: 1px solid #eee;
+      border-radius: 15px;
+      padding: 25px;
+      background: white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    .line-divider{
+            background-color: #BFBFBF;
+            width: 100%;
+            height: 1px;
+            margin-bottom: 24px;
+        }
+        .modal-label{
+            background-color: #f9f9f9;
+        }
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
@@ -38,9 +67,19 @@
             margin: auto !important;
         }
 
-        .modal-header {
-            background-color: #f9f9f9;
-        }
+    .save-btn {
+      background-color: #ffb100;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 4px;
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
+      width: 100%;
+      color: #000F11;
+      transition: background-color 0.3s;
+      margin-top: 300px;
+    }
 
         .modal-header .modal-title {
             color: #004A53;
@@ -53,23 +92,44 @@
             padding: 0.75rem;
         }
 
-        .image-div {
-            max-width: 100%;
-            height: 250px;
-        }
+    .fw-bold.text-primary {
+      color: #0d6efd !important;
+    }
+    .account-deletion-title{
+        color: #000000;
+        font-size: 24px;
+        font-weight: 600;
+    }
+    .account-deletion-text{
+        color: #666666;
+        font-size: 16px;
+    }
+    .account-deletion-btn{
+        border: 1px solid #F56824;
+        padding: 16px 20px ;
+        background-color: transparent;
+        color: #F56824;
+        font-size: 16px;
+        font-weight: 600;
+    }
+</style>
 
-        #cropperImage {
-            max-width: 100%;
-            max-height: 500px;
-        }
+<main>
+<div class="container my-5">
+  <h1>My Profile</h1>
 
-        .zoom-container {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
+  <!-- Tabs -->
+  <ul class="nav nav-tabs mt-3" id="profileTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details" type="button" role="tab">My details</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab">Login</button>
+    </li>
+    {{-- <li class="nav-item" role="presentation">
+      <button class="nav-link" id="wallet-tab" data-bs-toggle="tab" data-bs-target="#wallet" type="button" role="tab">Wallet</button>
+    </li> --}}
+  </ul>
 
         .zoom-label {
             font-size: 0.9rem;
@@ -78,288 +138,9 @@
             margin-bottom: 0;
         }
 
-        #zoomRange {
-            flex: 1;
-        }
-
-        .controls-container {
-            display: flex;
-            justify-content: center;
-            gap: 0.25rem;
-        }
-
-        #rotateLeftBtn,
-        #rotateRightBtn,
-        #resetCropBtn {
-            background-color: white;
-            border: 1px solid #004A53;
-            color: #004A53;
-            font-size: 0.8rem;
-            padding: 0.15rem 0.8rem;
-            line-height: 1;
-        }
-
-        .modal-footer {
-            background-color: #f9f9f9;
-        }
-
-        #cropperSave {
-            background-color: #FDAF22;
-            border: none;
-            color: white;
-            font-weight: 500;
-            font-size: 0.85rem;
-        }
-
-        .form-label-custom {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #000000;
-            display: block;
-            font-family: 'Inter', sans-serif;
-            letter-spacing: 0.3px;
-            margin-bottom: 0;
-        }
-
-        .form-input-custom {
-            padding: 0.875rem 1.25rem;
-            font-size: 0.95rem;
-            border: 2px solid #004A53;
-            border-radius: 0.75rem;
-            transition: all 0.3s ease;
-            background-color: white;
-            color: #333;
-        }
-
-        .form-input-custom::placeholder {
-            color: #999;
-        }
-
-        .form-input-custom:focus {
-            border-color: #004A53;
-            box-shadow: 0 0 0 0.2rem rgba(0, 74, 83, 0.15);
-            background-color: white;
-            color: #333;
-        }
-
-        .form-input-custom:hover {
-            border-color: #004A53;
-        }
-
-        .form-check-input {
-            border: 2px solid #004A53;
-            cursor: pointer;
-        }
-
-        .form-check-input:checked {
-            background-color: #004A53;
-            border-color: #004A53;
-        }
-
-        .form-check-input:focus {
-            border-color: #004A53;
-            box-shadow: 0 0 0 0.2rem rgba(0, 74, 83, 0.25);
-        }
-
-        .password-input-wrapper {
-            position: relative;
-        }
-
-        .password-input-wrapper .btn-link {
-            border: none;
-            padding: 0.5rem 1rem;
-            background: none;
-        }
-
-        .password-input-wrapper .btn-link:hover {
-            background: none;
-        }
-
-        #uploadArea {
-            transition: all 0.3s ease;
-        }
-
-        #uploadArea:hover {
-            background-color: #f0f8f9 !important;
-            border-color: #004A53 !important;
-        }
-
-        .card {
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
-        }
-
-        .rounded-4 {
-            border-radius: 1rem !important;
-        }
-        .modal-form-input-border {
-                    padding: 0px 15px 15px;
-                }
-
-        /* Mobile Responsive Styles */
-        @media (max-width: 768px) {
-            .container-fluid {
-                padding-left: 1rem !important;
-                padding-right: 1rem !important;
-            }
-
-            h1 {
-                font-size: 1.75rem !important;
-            }
-
-            .d-flex.justify-content-between {
-                flex-direction: column !important;
-                gap: 1rem !important;
-            }
-
-            .d-flex.gap-3 {
-                flex-wrap: wrap !important;
-                gap: 0.5rem !important;
-            }
-
-            .btn {
-                font-size: 0.85rem !important;
-                padding: 0.5rem 1rem !important;
-            }
-
-            .row.g-4 {
-                gap: 1.5rem !important;
-            }
-
-            .col-lg-8,
-            .col-lg-4 {
-                flex: 0 0 100% !important;
-                max-width: 100% !important;
-            }
-
-            .card-body {
-                padding: 1.5rem !important;
-            }
-
-            .form-label-custom {
-                font-size: 0.85rem !important;
-            }
-
-            .form-input-custom {
-                padding: 0.7rem 1rem !important;
-                font-size: 0.9rem !important;
-            }
-
-            .modal-body {
-                height: 320px !important;
-                padding: 0.75rem !important;
-            }
-
-            .modal-body>.image-div {
-                height: 200px !important;
-            }
-
-            #cropperImage {
-                max-height: 400px !important;
-            }
-
-            .d-flex.flex-wrap.gap-2 {
-                flex-direction: row !important;
-                gap: 0.3rem !important;
-                justify-content: center !important;
-            }
-
-            .d-flex.flex-wrap.gap-2>div {
-                width: 100% !important;
-                margin-bottom: 0.5rem !important;
-            }
-
-            .d-flex.flex-wrap.gap-2>button {
-                flex: 1 1 auto !important;
-                min-width: 40px !important;
-                padding: 0.3rem 0.4rem !important;
-            }
-
-            .modal-footer {
-                flex-wrap: wrap !important;
-                gap: 0.5rem !important;
-            }
-
-            .modal-footer button {
-                /* flex: 1 1 calc(50% - 0.25rem) !important; */
-                font-size: 0.75rem !important;
-                padding: 0.4rem 0.5rem !important;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .container-fluid {
-                padding-left: 0.75rem !important;
-                padding-right: 0.75rem !important;
-            }
-
-            h1 {
-                font-size: 1.5rem !important;
-            }
-
-            .btn {
-                font-size: 0.75rem !important;
-                padding: 0.4rem 0.75rem !important;
-            }
-
-            .card-body {
-                padding: 1rem !important;
-            }
-
-            .form-label-custom {
-                font-size: 0.8rem !important;
-            }
-
-            .form-input-custom {
-                padding: 0.6rem 0.9rem !important;
-                font-size: 0.85rem !important;
-            }
-
-            .modal-body {
-                height: 300px !important;
-                padding: 0.5rem !important;
-            }
-
-            .modal-body>.image-div {
-                height: 200px !important;
-            }
-
-            #cropperImage {
-                max-height: 350px !important;
-            }
-
-            .modal-footer button {
-                /* flex: 1 1 50% !important; */
-                font-size: 0.7rem !important;
-                padding: 0.35rem 0.4rem !important;
-            }
-
-            .d-flex.gap-5 {
-                gap: 1rem !important;
-            }
-        }
-    </style>
-    <main class="add-user-main">
-        <div class="container-fluid px-5 py-4">
-            <!-- Header Section -->
-            <div class="d-flex justify-content-between align-items-start mb-2">
-                <div>
-                    <h1 class="fw-bold mb-2"
-                        style=" color: #004A53; font-family: 'Fredoka One', sans-serif;">My Profile</h1>
-                    <p class="text-muted" style="font-size: 0.95rem;">Here overview of your</p>
-                </div>
-                <div class="d-flex gap-3">
-                    <button type="button" class="btn btn-light px-4 py-2" id="cancelBtn"
-                        style="border: 1px solid #ddd; color: #333; font-weight: 500;">cancel</button>
-                    <button type="button" class="btn px-4 py-2 fw-semibold" id="saveBtn"
-                        style="background-color: #FDAF22; border: none; color: white;">Update</button>
-                </div>
-            </div>
-
-            <!-- Alert Container -->
-            <div id="alertContainer" style="position: fixed; top: 20px; right: 20px; z-index: 9999; max-width: 400px;">
-            </div>
-
-            <div class="row g-4">
+    <!-- My Details Tab -->
+    <div class="tab-pane fade show active" id="details" role="tabpanel">
+       <div class="row g-4">
                 <!-- Left Column - Form Sections -->
                 <div class="col-lg-8">
                     <!-- Basic Information Section -->
@@ -533,45 +314,169 @@
                         </div>
                     </div>
 
+                    <button class="save-btn">Save</button>
+
                 </div>
+            </div>
+    </div>
+
+    <!-- login Tab -->
+    <div class="tab-pane fade" id="login" role="tabpanel">
+      <div class="row g-4">
+        <div class="col-8">
+            <div class="card d-flex flex-column gap-4">
+                <div class="d-flex align-items-center justify-content-between">
+                                <h5 class="fw-bold mb-0" style="font-size: 1.1rem; color: #000;">Login/Account Details</h5>
+                                <span class="text-danger ms-2" style="font-size: 1.2rem;">*</span>
+                            </div>
+                            <div class="line-divider"></div>
+                            <form class='d-flex flex-column gap-4'>
+                                <div class="form-group">
+                                        <div class="modal-form-input-border">
+                                        <label class="modal-label">Enter Email Address</label>
+                                        <input type="email" class="modal-input" id="email"
+                                            name="email" placeholder="@gmail.com">
+                                        </div>
+                                        <small class="text-danger d-none" id="emailError"></small>
+                                    </div>
+                                     <div class="form-group">
+                                        <div class="modal-form-input-border">
+                                        <label class="modal-label">Password</label>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <input type="password" class="modal-input" id="password"
+                                                name="password" placeholder="••••••••" required>
+                                            <button type="button"
+                                                class="btn btn-link position-absolute end-0 top-50 translate-middle-y"
+                                                id="togglePassword" style="border: none; padding: 0.5rem 1rem;">
+                                                <i class="fa-solid fa-eye" style="color: #999;"></i>
+                                            </button>
+                                        </div>
+                                        </div>
+                                        <small class="text-danger d-none" id="passwordError"></small>
+                                    </div>
+                                     <div class="form-group">
+                                        <div class="modal-form-input-border">
+                                        <label class="modal-label">Enter New Password</label>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <input type="password" class="modal-input" id="password"
+                                                name="password" placeholder="••••••••" required>
+                                            <button type="button"
+                                                class="btn btn-link position-absolute end-0 top-50 translate-middle-y"
+                                                id="togglePassword" style="border: none; padding: 0.5rem 1rem;">
+                                                <i class="fa-solid fa-eye" style="color: #999;"></i>
+                                            </button>
+                                        </div>
+                                        </div>
+                                        <small class="text-danger d-none" id="passwordError"></small>
+                                    </div>
+                                     <div class="form-group">
+                                        <div class="modal-form-input-border">
+                                        <label class="modal-label">Confirm Password</label>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <input type="password" class="modal-input" id="password"
+                                                name="password" placeholder="••••••••" required>
+                                            <button type="button"
+                                                class="btn btn-link position-absolute end-0 top-50 translate-middle-y"
+                                                id="togglePassword" style="border: none; padding: 0.5rem 1rem;">
+                                                <i class="fa-solid fa-eye" style="color: #999;"></i>
+                                            </button>
+                                        </div>
+                                        </div>
+                                        <small class="text-danger d-none" id="passwordError"></small>
+                                    </div>
+                                     <div class="form-group">
+                                        <div class="modal-form-input-border">
+                                        <label class="modal-label">Select Role</label>
+                                        <select class="modal-input" id="role" name="role"
+                                            required>
+                                            <option value="">Select Role</option>
+                                            <option value="student">Student</option>
+                                            <option value="instructor">Instructor</option>
+                                            <option value="admin">Admin</option>
+                                        </select>
+                                        </div>
+                                        <small class="text-danger d-none" id="roleError"></small>
+                                    </div>
+                                    <button class="save-btn mt-0">Change Password</button>
+                            </form>
+            </div>
+
+        </div>
+        <div class="col-4">
+            <div class="card d-flex flex-column gap-4" style="background-color: #CCDBDD;">
+                <h3 class="account-deletion-title">Account Deleting</h3>
+                <p class="account-deletion-text">Once your account is deleted, you will lose access to it and all your data. Information from your account is not duplicated and after deleting, your account will be lost forever without the possibility of recovery.</p>
+                <button class="account-deletion-btn">Account Delect</button>
+
             </div>
         </div>
     </main>
 
-    <!-- Image Cropper Modal - Bootstrap -->
-    <div class="modal fade" id="cropperModal" tabindex="-1" aria-labelledby="cropperModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-md">
-            <div class="modal-content">
-                <div class="modal-header border-bottom">
-                    <h5 class="modal-title" id="cropperModalLabel">Crop Profile Photo</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="text-center mb-2 image-div">
-                        <img id="cropperImage" src="" alt="Crop Image">
-                    </div>
-                    <div class="zoom-container mb-2">
-                        <label for="zoomRange" class="form-label zoom-label">Zoom:</label>
-                        <input type="range" id="zoomRange" class="form-range" min="0.1" max="3"
-                            step="0.1" value="1">
-                    </div>
-                    <div class="controls-container">
-                        <button type="button" class="btn" id="rotateLeftBtn">
-                            <i class="fa-solid fa-rotate-left"></i> <span class="d-none d-md-inline">Rotate Left</span>
-                        </button>
-                        <button type="button" class="btn" id="rotateRightBtn">
-                            <i class="fa-solid fa-rotate-right"></i> <span class="d-none d-md-inline">Rotate Right</span>
-                        </button>
-                        <button type="button" class="btn" id="resetCropBtn">
-                            <i class="fa-solid fa-arrows-rotate"></i> <span class="d-none d-md-inline">Reset</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="modal-footer border-top">
-                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-sm" id="cropperSave">Crop & Save</button>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  const fileInput = document.getElementById('fileInput');
+  const uploadBox = document.getElementById('uploadBox');
+  const fileName = document.getElementById('fileName');
+  const previewImage = document.getElementById('previewImage');
+  const saveBtn = document.getElementById('saveBtn');
+
+  // Password toggle
+        const toggles = document.querySelectorAll('#togglePassword');
+const inputs = document.querySelectorAll('#password');
+
+toggles.forEach((toggle, index) => {
+    toggle.addEventListener('click', () => {
+        const input = inputs[index];
+
+        const type = input.type === 'password' ? 'text' : 'password';
+        input.type = type;
+
+        toggle.innerHTML = type === 'password'
+            ? '<i class="fa-solid fa-eye text-muted"></i>'
+            : '<i class="fa-solid fa-eye-slash text-muted"></i>';
+    });
+});
+
+
+  // Make the upload box clickable
+  uploadBox.addEventListener('click', () => fileInput.click());
+
+  // Show filename and preview
+  fileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      fileName.textContent = file.name;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        previewImage.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  // Simulated save action
+  saveBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const formData = {
+      firstName: document.getElementById('firstName').value,
+      lastName: document.getElementById('lastName').value,
+      gender: document.querySelector('input[name="gender"]:checked').value,
+      dob: document.getElementById('dob').value,
+      parentFirst: document.getElementById('parentFirst').value,
+      parentLast: document.getElementById('parentLast').value,
+      parentEmail: document.getElementById('parentEmail').value,
+      parentPhone: document.getElementById('parentPhone').value
+    };
+    alert('✅ Information saved successfully!\n\n' + JSON.stringify(formData, null, 2));
+  });
+</script>
+</main>
 @endsection
