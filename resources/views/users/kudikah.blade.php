@@ -1,4 +1,4 @@
-@extends('admin.usertemplate')
+@extends('layouts.usertemplate')
 
 @section('content')
 <main>

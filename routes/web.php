@@ -148,12 +148,24 @@ Route::get('/usersubject', function () {
     return view('users.usersubject');
 });
 
+Route::get('/userresult', function () {
+    return view('users.result');
+});
+
 Route::get('/userenroll', function () {
     return view('users.enroll');
 });
 
 Route::get('/termsubject', function () {
     return view('users.termsubject');
+});
+
+Route::get('/userkudikah', function () {
+    return view('users.kudikah');
+});
+
+Route::get('/userfeedback', function () {
+    return view('users.userfeedback');
 });
 
 Route::get('/subjectselect', function () {

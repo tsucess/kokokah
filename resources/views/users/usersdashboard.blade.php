@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!btn) return; // click was not on a .view-btn button
 
         console.log('clicked'); // logs every click
-        window.location.href = '/termsubject';
+        window.location.href = '/usersubject';
     });
 });
 </script>

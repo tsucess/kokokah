@@ -45,11 +45,11 @@
 
     <a class="nav-item-link" href="/userclass"><i class="fa-solid fa-book-open me-2  pe-1"></i> Class</a>
 
-    <a class="nav-item-link" href="/results"><i class="fa-solid fa-user me-2  pe-2"></i> Subject</a>
+    <a class="nav-item-link" href="/usersubject"><i class="fa-solid fa-user me-2  pe-2"></i> Subject</a>
 
-    <a class="nav-item-link" href="/results"><i class="fa-solid fa-user me-2  pe-2"></i> Results & Scoring</a>
+    <a class="nav-item-link" href="/userresult"><i class="fa-solid fa-user me-2  pe-2"></i> Results & Scoring</a>
 
-    <a class="nav-item-link" href="/results"><i class="fa-solid fa-user me-2  pe-2"></i> Wallet</a>
+    <a class="nav-item-link" href="/userkudikah"><i class="fa-solid fa-user me-2  pe-2"></i>Kudikah</a>
 
     <a class="nav-item-link" href="/results"><i class="fa-solid fa-user me-2  pe-2"></i> Notification</a>
 
@@ -65,7 +65,7 @@
   <div class="collapse ps-4" id="communication">
     <a class="nav-item-link d-block" href="#">Announcement</a>
     <a class="nav-item-link d-block" href="#">Email / Messaging Center</a>
-    <a class="nav-item-link d-block" href="#">Feedback / Surveys</a>
+    <a class="nav-item-link d-block" href="/userfeedback">Feedback / Surveys</a>
   </div>
 
 
