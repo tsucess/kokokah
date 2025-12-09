@@ -21,7 +21,6 @@ class LessonResource extends JsonResource
             'video_url' => $this->video_url,
             'duration' => $this->duration,
             'order' => $this->order,
-            'is_free' => $this->is_free,
             'is_published' => $this->is_published,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
@@ -44,8 +43,7 @@ class LessonResource extends JsonResource
                     'is_completed' => (bool) $completion,
                     'completed_at' => $completion?->completed_at?->format('Y-m-d H:i:s'),
                     'time_spent' => $completion?->time_spent ?? 0,
-                    'can_access' => $this->is_free ||
-                                   $this->course->enrollments()->where('user_id', $user->id)->exists()
+                    'can_access' => $this->course->enrollments()->where('user_id', $user->id)->exists()
                 ];
             })
         ];

@@ -29,7 +29,6 @@ class StoreLessonRequest extends FormRequest
             'duration_for_mobile_application' => 'nullable|string|max:255',
             'order' => 'nullable|integer',
             'duration_minutes' => 'nullable|integer',
-            'is_free' => 'nullable|boolean',
         ];
     }
 }
