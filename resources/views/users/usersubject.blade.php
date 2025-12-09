@@ -7,6 +7,8 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1rem;
+            position: relative;
+            z-index: 10;
         }
 
         .card-item-class {

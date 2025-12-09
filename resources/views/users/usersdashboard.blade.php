@@ -23,6 +23,8 @@
         display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1rem;
+  position: relative;
+  z-index: 10;
     }
     .card-item-class{
 background-color: #FDAF22;
@@ -97,9 +99,9 @@ font-size: 12px;
           <h3>Hello Winner 👋</h3>
           <p>Let’s learn something new today!</p>
         </div>
-        <div class="col-12 col-md-6 text-md-end text-center">
+        <div class="col-12 col-md-6 text-md-end text-center position-relative">
           <img src="images/mydashboard.png" alt="Robot"  class="header-image img-fluid position-absolute end-0 bottom-0 translate-middle-y"
-             style="max-height: 300px; z-index: 5;  top: 60%;">
+             style="max-height: 300px; z-index: 1;  top: 60%;">
         </div>
       </div>
     </div>
@@ -183,7 +185,7 @@ font-size: 12px;
                 <div class="progress " style = "height:6px; background-color:#D9D9D9;">
                 <div class="progress-bar" style="width:70%; background:#F56824; height:100%;"></div>
                 </div>
-                <a class="view-btn" href='/termsubject'>View Subjects</a>
+                <button class="view-btn" type="button">View Subjects</button>
 
         </div>
 
@@ -229,20 +231,18 @@ font-size: 12px;
 
 </main>
 <script>
-//    document.addEventListener('DOMContentLoaded', () => {
-//     const viewBtns = document.querySelectorAll('button.view-btn');
+   document.addEventListener('DOMContentLoaded', () => {
+    const viewBtns = document.querySelectorAll('button.view-btn');
 
 
-//     viewBtns.forEach(btn => {
+    viewBtns.forEach(btn => {
 
-//         btn.addEventListener('click', (e) => {
-//             console.log('clicked');
-//             e.preventDefault()
-//             e.stopPropagation()
-//             window.location.href = '/termsubject';
-//         });
-//     });
-// });
+        btn.addEventListener('click', (e) => {
+            console.log('clicked');
+            window.location.href = '/termsubject';
+        });
+    });
+});
 </script>
 {{-- <script>
 document.addEventListener('DOMContentLoaded', () => {
