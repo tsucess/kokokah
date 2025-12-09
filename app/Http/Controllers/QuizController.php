@@ -30,7 +30,7 @@ class QuizController extends Controller
             $isInstructor = $lesson->course->instructor_id === $user->id;
             $isAdmin = $user->hasRole('admin');
 
-            if (!$isEnrolled && !$isInstructor && !$isAdmin && !$lesson->is_free) {
+            if (!$isEnrolled && !$isInstructor && !$isAdmin) {
                 return response()->json([
                     'success' => false,
                     'message' => 'You must be enrolled in this course to view quizzes'
@@ -176,7 +176,7 @@ class QuizController extends Controller
             $isInstructor = $quiz->lesson->course->instructor_id === $user->id;
             $isAdmin = $user->hasRole('admin');
 
-            if (!$isEnrolled && !$isInstructor && !$isAdmin && !$quiz->lesson->is_free) {
+            if (!$isEnrolled && !$isInstructor && !$isAdmin) {
                 return response()->json([
                     'success' => false,
                     'message' => 'You must be enrolled to view this quiz'
@@ -327,7 +327,7 @@ class QuizController extends Controller
 
             // Check access
             $isEnrolled = $quiz->lesson->course->enrollments()->where('user_id', $user->id)->exists();
-            if (!$isEnrolled && !$quiz->lesson->is_free) {
+            if (!$isEnrolled) {
                 return response()->json([
                     'success' => false,
                     'message' => 'You must be enrolled to take this quiz'
@@ -492,7 +492,7 @@ class QuizController extends Controller
             $isInstructor = $quiz->lesson->course->instructor_id === $user->id;
             $isAdmin = $user->hasRole('admin');
 
-            if (!$isEnrolled && !$isInstructor && !$isAdmin && !$quiz->lesson->is_free) {
+            if (!$isEnrolled && !$isInstructor && !$isAdmin) {
                 return response()->json([
                     'success' => false,
                     'message' => 'You must be enrolled to view quiz results'

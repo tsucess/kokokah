@@ -34,14 +34,12 @@ class Lesson extends Model
         'duration_for_mobile_application',
 
         'order',
-        'duration_minutes',
-        'is_free'
+        'duration_minutes'
     ];
 
     protected $casts = [
         'order' => 'integer',
         'duration_minutes' => 'integer',
-        'is_free' => 'boolean',
     ];
 
     /*
@@ -87,11 +85,6 @@ class Lesson extends Model
     public function scopeOrdered($query)
     {
         return $query->orderBy('order');
-    }
-
-    public function scopeFree($query)
-    {
-        return $query->where('is_free', true);
     }
 
     public function scopeByCourse($query, $courseId)

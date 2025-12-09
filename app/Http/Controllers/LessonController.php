@@ -87,7 +87,6 @@ class LessonController extends Controller
                 'content' => 'required|string',
                 'video_url' => 'nullable|url',
                 'duration_minutes' => 'nullable|integer|min:1',
-                'is_free' => 'boolean',
                 'attachment' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,zip|max:10240'
             ]);
 
@@ -105,7 +104,6 @@ class LessonController extends Controller
             $lessonData = $request->except(['attachment']);
             $lessonData['course_id'] = $course->id;
             $lessonData['order'] = $nextOrder;
-            $lessonData['is_free'] = $request->boolean('is_free', false);
 
             // Handle file attachment
             if ($request->hasFile('attachment')) {
@@ -141,9 +139,8 @@ class LessonController extends Controller
             $isEnrolled = $lesson->course->enrollments()->where('user_id', $user->id)->exists();
             $isInstructor = $lesson->course->instructor_id === $user->id;
             $isAdmin = $user->hasRole('admin');
-            $isFreeLesson = $lesson->is_free;
 
-            if (!$isEnrolled && !$isInstructor && !$isAdmin && !$isFreeLesson) {
+            if (!$isEnrolled && !$isInstructor && !$isAdmin) {
                 return response()->json([
                     'success' => false,
                     'message' => 'You must be enrolled in this course to view this lesson'
@@ -208,7 +205,6 @@ class LessonController extends Controller
                 'content' => 'sometimes|string',
                 'video_url' => 'nullable|url',
                 'duration_minutes' => 'nullable|integer|min:1',
-                'is_free' => 'boolean',
                 'order' => 'sometimes|integer|min:1',
                 'attachment' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,zip|max:10240'
             ]);
@@ -294,7 +290,7 @@ class LessonController extends Controller
 
             // Check if user is enrolled in the course
             $isEnrolled = $lesson->course->enrollments()->where('user_id', $user->id)->exists();
-            if (!$isEnrolled && !$lesson->is_free) {
+            if (!$isEnrolled) {
                 return response()->json([
                     'success' => false,
                     'message' => 'You must be enrolled in this course to complete lessons'
@@ -394,7 +390,7 @@ class LessonController extends Controller
 
             // Check if user is enrolled
             $isEnrolled = $lesson->course->enrollments()->where('user_id', $user->id)->exists();
-            if (!$isEnrolled && !$lesson->is_free) {
+            if (!$isEnrolled) {
                 return response()->json([
                     'success' => false,
                     'message' => 'You must be enrolled in this course'
@@ -440,7 +436,7 @@ class LessonController extends Controller
             $isInstructor = $lesson->course->instructor_id === $user->id;
             $isAdmin = $user->hasRole('admin');
 
-            if (!$isEnrolled && !$isInstructor && !$isAdmin && !$lesson->is_free) {
+            if (!$isEnrolled && !$isInstructor && !$isAdmin) {
                 return response()->json([
                     'success' => false,
                     'message' => 'You must be enrolled to access attachments'

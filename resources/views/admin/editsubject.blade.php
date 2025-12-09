@@ -968,8 +968,8 @@
                 <div class="form-group-custom mb-3">
                     <label>Overview Video URL</label>
                     <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
-                        <input type="text" class="form-control" id="overviewVideoUrl" placeholder="https://preview.youtube.com"
-                            style="flex: 1;">
+                        <input type="text" class="form-control" id="overviewVideoUrl"
+                            placeholder="https://preview.youtube.com" style="flex: 1;">
                     </div>
                     <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
                         <p>Thumbnail: <span id="fileNameDisplay"></span></p>
@@ -1012,12 +1012,14 @@
                         <form class="modal-form-container">
                             <div class="modal-form">
                                 <div class="modal-form-input-border"><label for=""
-                                        class="modal-label">Title</label><input class="modal-input" type="text"
-                                        placeholder="Enter Title" /></div>
-                                <div class="modal-form-input-border"><label for="" class="modal-label">Topic
+                                        class="modal-label">Title</label>
+                                    <input class="modal-input" type="text" placeholder="Enter Title" />
+                                </div>
+                                {{-- <div class="modal-form-input-border">
+                                    <label for="" class="modal-label">Topic
                                         Description</label>
                                     <textarea name="" id="" class="modal-input"></textarea>
-                                </div>
+                                </div> --}}
                             </div><button class="modal-form-btn">Save</button>
                         </form>
                     </div>
@@ -1050,9 +1052,82 @@
                                     <label for="" class="modal-label">Lesson Title</label>
                                     <input class="modal-input" type="text" placeholder="Enter title" />
                                 </div>
-                                <div class="modal-form-input-border">
+                                <div class="modal-form-input-border"><label for="" class="modal-label">Lesson
+                                        Type</label><select name="" id="addContent" class="modal-input">
+                                        {{-- <option value="image">Image</option> --}}
+                                        <option value="youtube">Youtube Url</option>
+                                        {{-- <option value="audio">Audio</option> --}}
+                                        <option value="content">Content</option>
+                                        <option value="document">Document</option>
+                                    </select>
+                                </div>
+                                
+                                {{-- image container --}}
+                                <div class="flex-column gap-3 select-children" id="image-container" style="display: none">
+                                    <div class="modal-form-input-border">
+                                        <label for="" class="modal-label">Title</label>
+                                        <input class="modal-input" type="text" placeholder="Art" />
+                                    </div>
+                                    <div class="upload-file-container">
+                                        <label for="" class="upload-label">Upload File (Size:2mb, Dimension:400px by 250px) </label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control upload-input p-3" style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
+                                                placeholder="Upload file" aria-label="Recipient’s username" aria-describedby="basic-addon2" />
+                                            <button class="upload-btn" type="button" data-upload-type="image">Upload File </button>
+                                        </div>
+                                    </div>
+                                    <input type="file" id="imageFileInput" style="display: none;" accept="image/*" />
+                                </div>
+                                {{-- youtube container --}}
+                                <div class="flex-column gap-3 hide select-children" id="youtube-container">
+                                    <div class="modal-form-input-border"><label for=""
+                                            class="modal-label">Youtube Url</label><input class="modal-input"
+                                            type="text" placeholder="Enter url" /></div>
+                                </div>
+                                {{-- content container  --}}
+                                <div class="flex-column gap-3 hide select-children" id="content-container">
+                                    <div class="modal-form-input-border"><label for="" class="modal-label">Lesson Content</label>
+                                        <textarea name="" id="" class="modal-input"  placeholder="Enter lesson content"></textarea>
+                                    </div>
+                                </div>
+                                {{-- <div class="modal-form-input-border" id="content-container">
                                     <label for="" class="modal-label">Lesson Content</label>
                                     <textarea class="modal-input" placeholder="Enter lesson content"></textarea>
+                                </div> --}}
+                                {{-- audio-container --}}
+                                <div class="flex-column gap-3 hide select-children" id="audio-container">
+                                    <div class="upload-file-container"><label for="" class="upload-label">Upload File (Size:2mb, Dimension:400px by 250px) </label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control upload-input p-3" style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
+                                                placeholder="Upload file" aria-label="Recipient’s username" aria-describedby="basic-addon2" />
+                                                <button class="upload-btn" type="button" data-upload-type="audio">Upload File </button></div>
+                                    </div>
+                                    <input type="file" id="audioFileInput" style="display: none;" accept="audio/*" />
+                                </div>
+                                {{-- document-container --}}
+                                <div class="flex-column gap-3 hide select-children" id="document-container">
+                                    <div class="modal-form-input-border">
+                                        <label for="" class="modal-label">File Type</label>
+                                        <select name="" id="" class="modal-input">
+                                            <option value="image">Image</option>
+                                            <option value="audio">Audio</option>
+                                            <option value="video">Video</option>
+                                            <option value="pdf">PDF</option>
+                                            <option value="docx">Docx</option>
+                                        </select>
+                                    </div>
+                                    <div class="upload-file-container"><label for="" class="upload-label">Upload
+                                            File (Size:2mb, Dimension:400px by 250px) </label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control upload-input p-3"
+                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
+                                                placeholder="Upload file" aria-label="Recipient’s username"
+                                                aria-describedby="basic-addon2" />
+                                            <button class="upload-btn" type="button" data-upload-type="document">Upload File
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <input type="file" id="documentFileInput" style="display: none;" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" />
                                 </div>
                             </div>
                             <button type="button" class="modal-form-btn" onclick="saveLessonHandler()">Save</button>
@@ -1061,81 +1136,7 @@
                 </div>
             </div>
             {{-- OLD CONTENT REMOVED --}}
-            {{-- image container --}}
-            <div class="flex-column gap-3 select-children" id="image-container" style="display:none;">
-                                    <div class="modal-form-input-border"><label for=""
-                                            class="modal-label">Title</label><input class="modal-input" type="text"
-                                            placeholder="Art" /></div>
-                                    <div class="upload-file-container"><label for="" class="upload-label">Upload
-                                            File (Size:2mb, Dimension:400px by 250px)
-                                        </label>
-                                        <div class="input-group"><input type="text"
-                                                class="form-control upload-input p-3"
-                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
-                                                placeholder="Upload file" aria-label="Recipient’s username"
-                                                aria-describedby="basic-addon2" /><button class="upload-btn"
-                                                type="button" id="button-addon2">Upload File </button></div>
-                                    </div>
-                                </div>
-                                {{-- youtube container --}}
-                                <div class="flex-column gap-3 hide select-children" id="youtube-container">
-                                    <div class="modal-form-input-border"><label for=""
-                                            class="modal-label">Title</label><input class="modal-input" type="text"
-                                            placeholder="Enter title" /></div>
-                                    <div class="modal-form-input-border"><label for=""
-                                            class="modal-label">Youtube Url</label><input class="modal-input"
-                                            type="text" placeholder="Enter url" /></div>
-                                </div>
-                                {{-- content container  --}}
-                                <div class="flex-column gap-3 hide select-children" id="content-container">
-                                    <div class="modal-form-input-border"><label for=""
-                                            class="modal-label">Title</label><input class="modal-input" type="text"
-                                            placeholder="Enter title" /></div>
-                                    <div class="modal-form-input-border"><label for="" class="modal-label">Lesson
-                                            Content</label>
-                                        <textarea name="" id="" class="modal-input"></textarea>
-                                    </div>
-                                </div>
-                                {{-- audio-container --}}
-                                <div class="flex-column gap-3 hide select-children" id="audio-container">
-                                    <div class="modal-form-input-border"><label for=""
-                                            class="modal-label">Title</label><input class="modal-input" type="text"
-                                            placeholder="Enter title" /></div>
-                                    <div class="upload-file-container"><label for="" class="upload-label">Upload
-                                            File (Size:2mb, Dimension:400px by
-                                            250px) </label>
-                                        <div class="input-group"><input type="text"
-                                                class="form-control upload-input p-3"
-                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
-                                                placeholder="Upload file" aria-label="Recipient’s username"
-                                                aria-describedby="basic-addon2" /><button class="upload-btn"
-                                                type="button" id="button-addon2">Upload File </button></div>
-                                    </div>
-                                </div>
-                                {{-- document-container --}}
-                                <div class="flex-column gap-3 hide select-children" id="document-container">
-                                    <div class="modal-form-input-border"><label for="" class="modal-label">Lesson
-                                            Type</label>
-                                        <select name="" id="" class="modal-input">
-                                            <option value="png">Image</option>
-                                            <option value="pdf">PDF</option>
-                                            <option value="docx">Docx</option>
-                                        </select>
-                                    </div>
-                                    <div class="modal-form-input-border"><label for=""
-                                            class="modal-label">Title</label><input class="modal-input" type="text"
-                                            placeholder="Enter title" /></div>
-                                    <div class="upload-file-container"><label for="" class="upload-label">Upload
-                                            File (Size:2mb, Dimension:400px
-                                            by 250px) </label>
-                                        <div class="input-group"><input type="text"
-                                                class="form-control upload-input p-3"
-                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
-                                                placeholder="Upload file" aria-label="Recipient’s username"
-                                                aria-describedby="basic-addon2" /><button class="upload-btn"
-                                                type="button" id="button-addon2">Upload File </button></div>
-                                    </div>
-                                </div>
+
             {{-- <button type="button" class="btn btn-add-lesson" data-bs-toggle="modal" data-bs-target="#addLessonModal">
                 <i class="fa-solid fa-plus me-2"></i>Add Lesson
             </button> --}}
@@ -1248,11 +1249,12 @@
 
                 const course = result.data || result;
                 console.log('Course updated successfully:', result.data);
-                
+
                 // Populate form fields with course data
                 if (course.title) document.getElementById('courseTitle').value = course.title;
                 if (course.description) document.getElementById('courseDescription').value = course.description;
-                if (course.course_category_id) document.getElementById('courseCategory').value = course.course_category_id;
+                if (course.course_category_id) document.getElementById('courseCategory').value = course
+                    .course_category_id;
                 if (course.level_id) document.getElementById('courseLevel').value = course.level_id;
                 if (course.term_id) document.getElementById('subjectTerm').value = course.term_id;
                 if (course.duration_hours) document.getElementById('courseTime').value = course.duration_hours;
@@ -1352,8 +1354,8 @@
         // Create HTML for a topic accordion item
         function createTopicAccordionItem(topic, index) {
             const collapseId = `collapse-topic-${topic.id}`;
-            const lessonsHtml = topic.lessons && topic.lessons.length > 0
-                ? topic.lessons.map((lesson, lessonIndex) => `
+            const lessonsHtml = topic.lessons && topic.lessons.length > 0 ?
+                topic.lessons.map((lesson, lessonIndex) => `
                     <div class="lesson-item draggable-lesson" draggable="true" data-lesson-id="${lesson.id}" data-topic-id="${topic.id}" data-lesson-index="${lessonIndex}">
                         <div class="lesson-item-content">
                             <i class="fa-solid fa-grip-vertical lesson-drag-handle" title="Drag to reorder"></i>
@@ -1365,8 +1367,8 @@
                             <button type="button" title="Delete" class="delete-lesson-btn" data-lesson-id="${lesson.id}"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     </div>
-                `).join('')
-                : '<p class="text-muted">No lessons yet. Click "Add Lesson" to create one.</p>';
+                `).join('') :
+                '<p class="text-muted">No lessons yet. Click "Add Lesson" to create one.</p>';
 
             return `
                 <div class="accordion-item draggable-topic" draggable="true" data-topic-id="${topic.id}" data-topic-index="${index}">
@@ -1667,7 +1669,8 @@
                 let category = 'Language';
                 if (categoryElement && categoryElement.selectedOptions && categoryElement.selectedOptions[0]) {
                     category = categoryElement.selectedOptions[0].text;
-                } else if (window.courseData && window.courseData.course_category && window.courseData.course_category.title) {
+                } else if (window.courseData && window.courseData.course_category && window.courseData
+                    .course_category.title) {
                     category = window.courseData.course_category.title;
                 }
 
@@ -1680,7 +1683,8 @@
                 }
 
                 const time = timeElement ? timeElement.value : '0 Hours';
-                const description = descriptionElement ? descriptionElement.value : 'This comprehensive course covers essential concepts and skills.';
+                const description = descriptionElement ? descriptionElement.value :
+                    'This comprehensive course covers essential concepts and skills.';
 
                 // Update publish section
                 const publishTitleEl = document.getElementById('publishSubjectTitle');
@@ -1842,7 +1846,8 @@
                                 .join(', ');
                             ToastNotification.error('Validation Error', errorMessages);
                         } else {
-                            ToastNotification.error('Update Failed', result.message || 'Failed to update course');
+                            ToastNotification.error('Update Failed', result.message ||
+                                'Failed to update course');
                         }
                         return;
                     }
@@ -2131,7 +2136,8 @@
         }
 
         async function deleteTopic(topicId) {
-            if (!confirm('Are you sure you want to delete this topic? All lessons in this topic will also be deleted.')) {
+            if (!confirm(
+                    'Are you sure you want to delete this topic? All lessons in this topic will also be deleted.')) {
                 return;
             }
 
@@ -2199,14 +2205,127 @@
                 return;
             }
             const titleInput = modal.querySelector('input[placeholder="Enter title"]');
-            const contentInput = modal.querySelector('textarea');
+            const lessonTypeSelect = document.getElementById('addContent');
+
             if (titleInput) titleInput.value = '';
-            if (contentInput) contentInput.value = '';
+
+            // Reset lesson type to default (youtube)
+            if (lessonTypeSelect) {
+                lessonTypeSelect.value = 'youtube';
+                // Trigger change event to show the correct container
+                lessonTypeSelect.dispatchEvent(new Event('change'));
+            }
+
+            // Clear all input fields
+            const allInputs = modal.querySelectorAll('input[type="text"], textarea');
+            allInputs.forEach(input => input.value = '');
+
             window.editingLessonId = null;
             // Show the add lesson modal
             const modalInstance = new bootstrap.Modal(modal);
             modalInstance.show();
         };
+
+        // Handle lesson type selection
+        const lessonTypeSelect = document.getElementById('addContent');
+        if (lessonTypeSelect) {
+            lessonTypeSelect.addEventListener('change', function() {
+                const selectedType = this.value;
+
+                // Hide all containers first
+                document.getElementById('image-container').style.display = 'none';
+                document.getElementById('youtube-container').classList.add('hide');
+                document.getElementById('content-container').classList.add('hide');
+                document.getElementById('audio-container').classList.add('hide');
+                document.getElementById('document-container').classList.add('hide');
+
+                // Show the selected container
+                switch(selectedType) {
+                    case 'youtube':
+                        document.getElementById('youtube-container').classList.remove('hide');
+                        break;
+                    case 'content':
+                        document.getElementById('content-container').classList.remove('hide');
+                        break;
+                    case 'document':
+                        document.getElementById('document-container').classList.remove('hide');
+                        break;
+                    case 'image':
+                        document.getElementById('image-container').style.display = 'flex';
+                        break;
+                    default:
+                        break;
+                }
+            });
+        }
+
+        // Handle file upload buttons
+        const uploadButtons = document.querySelectorAll('.upload-btn');
+        uploadButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const uploadType = this.getAttribute('data-upload-type');
+                const fileInputId = uploadType + 'FileInput';
+                const fileInput = document.getElementById(fileInputId);
+
+                if (fileInput) {
+                    fileInput.click();
+                }
+            });
+        });
+
+        // Handle file input changes
+        const imageFileInput = document.getElementById('imageFileInput');
+        if (imageFileInput) {
+            imageFileInput.addEventListener('change', function(e) {
+                handleFileUpload(e, 'image');
+            });
+        }
+
+        const audioFileInput = document.getElementById('audioFileInput');
+        if (audioFileInput) {
+            audioFileInput.addEventListener('change', function(e) {
+                handleFileUpload(e, 'audio');
+            });
+        }
+
+        const documentFileInput = document.getElementById('documentFileInput');
+        if (documentFileInput) {
+            documentFileInput.addEventListener('change', function(e) {
+                handleFileUpload(e, 'document');
+            });
+        }
+
+        // Function to handle file uploads
+        function handleFileUpload(event, uploadType) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // Get the corresponding input field to display the file name
+            const modal = document.getElementById('addLessonModal');
+            let inputField;
+
+            switch(uploadType) {
+                case 'image':
+                    inputField = modal.querySelector('#image-container input[type="text"]');
+                    break;
+                case 'audio':
+                    inputField = modal.querySelector('#audio-container input[type="text"]');
+                    break;
+                case 'document':
+                    inputField = modal.querySelector('#document-container input[type="text"]');
+                    break;
+            }
+
+            if (inputField) {
+                inputField.value = file.name;
+                // Store the file object for later upload
+                inputField.dataset.file = file;
+            }
+
+            // Show success message
+            ToastNotification.success('Success', `File "${file.name}" selected successfully`);
+        }
 
         window.saveLessonHandler = async function() {
             try {
@@ -2215,37 +2334,77 @@
                     ToastNotification.error('Error', 'Lesson modal not found');
                     return;
                 }
+
                 const titleInput = modal.querySelector('input[placeholder="Enter title"]');
-                const contentInput = modal.querySelector('textarea');
+                const lessonTypeSelect = document.getElementById('addContent');
+                const lessonType = lessonTypeSelect ? lessonTypeSelect.value : 'content';
 
                 const title = titleInput ? titleInput.value.trim() : '';
-                const content = contentInput ? contentInput.value.trim() : '';
 
                 if (!title) {
                     ToastNotification.warning('Validation', 'Please enter a lesson title');
                     return;
                 }
 
-                if (!content) {
-                    ToastNotification.warning('Validation', 'Please enter lesson content');
-                    return;
-                }
+                // Use FormData to support file uploads
+                const formData = new FormData();
+                formData.append('title', title);
+                formData.append('topic_id', window.currentTopicId);
+                formData.append('course_id', courseId);
+                formData.append('lesson_type', lessonType);
 
-                const lessonData = {
-                    title: title,
-                    content: content,
-                    topic_id: window.currentTopicId,
-                    course_id: courseId
-                };
+                // Collect data based on lesson type
+                switch(lessonType) {
+                    case 'youtube':
+                        const youtubeInput = modal.querySelector('#youtube-container input[type="text"]');
+                        const youtubeUrl = youtubeInput ? youtubeInput.value.trim() : '';
+                        if (!youtubeUrl) {
+                            ToastNotification.warning('Validation', 'Please enter a YouTube URL');
+                            return;
+                        }
+                        formData.append('video_url', youtubeUrl);
+                        break;
+
+                    case 'content':
+                        const contentInput = modal.querySelector('#content-container textarea');
+                        const content = contentInput ? contentInput.value.trim() : '';
+                        if (!content) {
+                            ToastNotification.warning('Validation', 'Please enter lesson content');
+                            return;
+                        }
+                        formData.append('content', content);
+                        break;
+
+                    case 'document':
+                        const documentInput = modal.querySelector('#document-container input[type="text"]');
+                        const documentFile = documentInput ? documentInput.dataset.file : null;
+                        if (!documentFile) {
+                            ToastNotification.warning('Validation', 'Please upload a document');
+                            return;
+                        }
+                        formData.append('attachment', documentFile);
+                        break;
+
+                    case 'image':
+                        const imageInput = modal.querySelector('#image-container input[type="text"]');
+                        const imageFile = imageInput ? imageInput.dataset.file : null;
+                        if (!imageFile) {
+                            ToastNotification.warning('Validation', 'Please upload an image');
+                            return;
+                        }
+                        formData.append('attachment', imageFile);
+                        break;
+                }
 
                 let result;
                 if (window.editingLessonId) {
                     // Update existing lesson
-                    result = await LessonApiClient.updateLesson(window.editingLessonId, lessonData);
+                    formData.append('_method', 'PUT');
+                    result = await LessonApiClient.updateLesson(window.editingLessonId, formData);
                     ToastNotification.success('Success', 'Lesson updated successfully');
                 } else {
                     // Create new lesson
-                    result = await LessonApiClient.createLesson(courseId, lessonData);
+                    result = await LessonApiClient.createLesson(courseId, formData);
                     ToastNotification.success('Success', 'Lesson created successfully');
                 }
 
@@ -2275,10 +2434,34 @@
                 const lesson = topic.lessons.find(l => l.id == lessonId);
                 const modal = document.getElementById('addLessonModal');
                 const titleInput = modal.querySelector('input[placeholder="Enter title"]');
-                const contentInput = modal.querySelector('textarea');
+                const lessonTypeSelect = document.getElementById('addContent');
 
                 if (titleInput) titleInput.value = lesson.title;
-                if (contentInput) contentInput.value = lesson.content || '';
+
+                // Set lesson type based on lesson data
+                let lessonType = lesson.lesson_type || 'content';
+                if (lessonTypeSelect) {
+                    lessonTypeSelect.value = lessonType;
+                    // Trigger change event to show the correct container
+                    lessonTypeSelect.dispatchEvent(new Event('change'));
+                }
+
+                // Populate the appropriate field based on lesson type
+                switch(lessonType) {
+                    case 'youtube':
+                        const youtubeInput = modal.querySelector('#youtube-container input[type="text"]');
+                        if (youtubeInput) youtubeInput.value = lesson.video_url || '';
+                        break;
+                    case 'content':
+                        const contentInput = modal.querySelector('#content-container textarea');
+                        if (contentInput) contentInput.value = lesson.content || '';
+                        break;
+                    case 'document':
+                    case 'image':
+                        const attachmentInput = modal.querySelector(`#${lessonType}-container input[type="text"]`);
+                        if (attachmentInput) attachmentInput.value = lesson.attachment || '';
+                        break;
+                }
 
                 window.editingLessonId = lessonId;
                 window.currentTopicId = topic.id;
