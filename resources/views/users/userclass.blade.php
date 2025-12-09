@@ -7,6 +7,8 @@
         display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1rem;
+  position: relative;
+  z-index: 10;
     }
     .card-item-class{
 background-color: #FDAF22;
@@ -40,7 +42,7 @@ font-size: 12px;
     </div>
   </div>
 
-    <div class  = "container position-relative " style="margin-top: -70px; z-index:5;">
+    <div class  = "container position-relative " style="margin-top: -70px;">
         <div class = "card-container">
 
             <div class = " p-3 rounded-4 bg-white mysubject d-flex flex-column gap-3 w-100">
