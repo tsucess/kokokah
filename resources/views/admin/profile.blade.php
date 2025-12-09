@@ -112,6 +112,13 @@
         font-size: 16px;
         font-weight: 600;
     }
+     .zoom-label {
+            font-size: 0.9rem;
+            color: #666;
+            min-width: 50px;
+            margin-bottom: 0;
+        }
+
 </style>
 
 <main>
@@ -131,12 +138,6 @@
     </li> --}}
   </ul>
 
-        .zoom-label {
-            font-size: 0.9rem;
-            color: #666;
-            min-width: 50px;
-            margin-bottom: 0;
-        }
 
     <!-- My Details Tab -->
     <div class="tab-pane fade show active" id="details" role="tabpanel">
