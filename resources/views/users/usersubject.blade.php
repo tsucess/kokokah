@@ -1,113 +1,137 @@
 {{-- @extends('admin.usertemplate') --}}
-@extends('users.usertemplate')
+@extends('layouts.usertemplate')
 
 @section('content')
-<main>
-    <div class="container m-2">
-<div class="row">
-        <div>
-          <h4>Hello Samuel
-            <i class="fa-solid fa-hands-clapping text-warning"></i>
-          </h4>
-          <p>Let`s learn something new today</p>
+    <style>
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .card-item-class {
+            background-color: #FDAF22;
+            padding: 4px 28px;
+            border-radius: 5px;
+            color: #000F11;
+            font-size: 12px;
+        }
+
+        .view-btn {
+            border: 1px solid #004A53;
+            border-radius: 4px;
+            padding: 16px 20px;
+            color: #004A53;
+            font-size: 16px;
+            font-weight: 600;
+            z-index: 9999;
+        }
+    </style>
+    <main>
+        <div class="container m-2">
+            <div class="row">
+                <div>
+                    <h4>Hello Samuel
+                        <i class="fa-solid fa-hands-clapping text-warning"></i>
+                    </h4>
+                    <p>Let`s learn something new today</p>
+                </div>
+
+            </div>
+
         </div>
 
-      </div>
+        <div class  = "container ">
+            <div class = "card-container">
+                <div class = " p-3 bg-white mysubject d-flex flex-column gap-3 w-100">
+                    <div class = "border border-dark p-3" style="border-radius: 10px;">
+                        <img src = "images/Kokokah_Logo.png" class = "img-fluid" />
+                    </div>
+                    <div class = "card-item-class align-self-start">JSS 1</div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class = "subjects">Computer Science</h5>
+                        <h5 class = "subjects">60%</h5>
+                    </div>
 
-    </div>
+                    <div class="progress " style = "height:6px; backgtound-color:#D9D9D9;">
+                        <div class="progress-bar" style="width:70%; background:#004A53; height:100%;"></div>
+                    </div>
+                    <button class="view-btn" type="button">View Subjects</button>
 
-    <div class  = "container m-2">
-        <div class = "row justify-content-between">
-
-            <div class = "col-12 col-md-4 col-lg-4 mb-5 p-3 bg-white" mysubject>
-
-                <div class = "border border-dark p-3 " style="border-radius: 10px;">
-                    <img src = "images/Kokokah_Logo.png" class = "img-fluid" />
                 </div>
-                <button class = "btn primaryButton mt-2 mb-2" type = "button">JSS 1</button>
-                <h5 class = "subjects">English Language</h5>
-                <div class="progress mb-3" style = "height:10px;">
-                <div class="progress-bar bg-success" style="width:70%"></div>
+                <div class = " p-3 bg-white mysubject d-flex flex-column gap-3 w-100">
+                    <div class = "border border-dark p-3" style="border-radius: 10px;">
+                        <img src = "images/Kokokah_Logo.png" class = "img-fluid" />
+                    </div>
+                    <div class = "card-item-class align-self-start">JSS 1</div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class = "subjects">Computer Science</h5>
+                        <h5 class = "subjects">60%</h5>
+                    </div>
+
+                    <div class="progress " style = "height:6px; backgtound-color:#D9D9D9;">
+                        <div class="progress-bar" style="width:70%; background:#004A53; height:100%;"></div>
+                    </div>
+                    <button class="view-btn" type="button">View Subjects</button>
+
                 </div>
-                <button class="btn w-100 secondaryButton" type="button">View Subjects</button>
-            </div>
+                <div class = " p-3 bg-white mysubject d-flex flex-column gap-3 w-100">
+                    <div class = "border border-dark p-3" style="border-radius: 10px;">
+                        <img src = "images/Kokokah_Logo.png" class = "img-fluid" />
+                    </div>
+                    <div class = "card-item-class align-self-start">JSS 1</div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class = "subjects">Computer Science</h5>
+                        <h5 class = "subjects">60%</h5>
+                    </div>
+
+                    <div class="progress " style = "height:6px; backgtound-color:#D9D9D9;">
+                        <div class="progress-bar" style="width:70%; background:#004A53; height:100%;"></div>
+                    </div>
+                    <button class="view-btn" type="button">View Subjects</button>
+
+                </div>
+                <div class = " p-3 bg-white mysubject d-flex flex-column gap-3 w-100">
+                    <div class = "border border-dark p-3" style="border-radius: 10px;">
+                        <img src = "images/Kokokah_Logo.png" class = "img-fluid" />
+                    </div>
+                    <div class = "card-item-class align-self-start">JSS 1</div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class = "subjects">Computer Science</h5>
+                        <h5 class = "subjects">60%</h5>
+                    </div>
+
+                    <div class="progress " style = "height:6px; backgtound-color:#D9D9D9;">
+                        <div class="progress-bar" style="width:70%; background:#004A53; height:100%;"></div>
+                    </div>
+                    <button class="view-btn" type="button">View Subjects</button>
+
+                </div>
 
 
-            <div class = "col-12 col-md-4 col-lg-4 mb-5 p-3 bg-white mysubject">
-            <div class = "border border-dark p-3" style="border-radius: 10px;">
-                    <img src = "images/Kokokah_Logo.png" class = "img-fluid" />
             </div>
-                <button class = "btn primaryButton mt-2 mb-2" type = "button">JSS 2</button>
-                <h5 class = "subjects">Mathematics</h5>
-                <div class="progress mb-3" style = "height:10px;">
-                <div class="progress-bar bg-success" style="width:70%"></div>
-                </div>
-                <button class="btn w-100 secondaryButton" type="button">View Subjects</button>
-            </div>
-
-            <div class = "col-12 col-md-4 col-lg-4 mb-5 p-3 bg-white mysubject">
-            <div class = "border border-dark p-3" style="border-radius: 10px;">
-                    <img src = "images/Kokokah_Logo.png" class = "img-fluid" />
-            </div>
-                <button class = "btn primaryButton mt-2 mb-2" type = "button">JSS 3</button>
-                <h5 class = "subjects">Computer Science</h5>
-                <div class="progress mb-3" style = "height:10px;">
-                <div class="progress-bar bg-success" style="width:70%"></div>
-                </div>
-                <button class="btn w-100 secondaryButton" type="button">View Subjects</button>
 
         </div>
-    </div>
 
-
-
-    <div class = "row justify-content-between">
-
-            <div class = "col-12 col-md-4 col-lg-4 mb-5 p-3 bg-white" mysubject>
-
-                <div class = "border border-dark p-3 " style="border-radius: 10px;">
-                    <img src = "images/Kokokah_Logo.png" class = "img-fluid" />
-                </div>
-                <button class = "btn primaryButton mt-2 mb-2" type = "button">SS 1</button>
-                <h5 class = "subjects">Business Studies</h5>
-                <div class="progress mb-3" style = "height:10px;">
-                <div class="progress-bar bg-success" style="width:70%"></div>
-                </div>
-                <button class="btn w-100 secondaryButton" type="button">View Subjects</button>
-            </div>
-
-
-            <div class = "col-12 col-md-4 col-lg-4 mb-5 p-3 bg-white mysubject">
-            <div class = "border border-dark p-3" style="border-radius: 10px;">
-                    <img src = "images/Kokokah_Logo.png" class = "img-fluid" />
-            </div>
-                <button class = "btn primaryButton mt-2 mb-2" type = "button">SS 2</button>
-                <h5 class = "subjects">Home Economics</h5>
-                <div class="progress mb-3" style = "height:10px;">
-                <div class="progress-bar bg-success" style="width:70%"></div>
-                </div>
-                <button class="btn w-100 secondaryButton" type="button">View Subjects</button>
-            </div>
-
-            <div class = "col-12 col-md-4 col-lg-4 mb-5 p-3 bg-white mysubject">
-            <div class = "border border-dark p-3" style="border-radius: 10px;">
-                    <img src = "images/Kokokah_Logo.png" class = "img-fluid" />
-            </div>
-                <button class = "btn primaryButton mt-2 mb-2" type = "button">SS 3</button>
-                <h5 class = "subjects">Social Studies</h5>
-                <div class="progress mb-3" style = "height:10px;">
-                <div class="progress-bar bg-success" style="width:70%"></div>
-                </div>
-                <button class="btn w-100 secondaryButton" type="button">View Subjects</button>
-
+        <div class="chat-btn-circle">
+            <i class="fa-solid fa-comment"></i>
         </div>
-    </div>
 
-    </div>
+    </main>
+    <script>
+   document.addEventListener('DOMContentLoaded', () => {
+    const viewBtns = document.querySelectorAll('button.view-btn');
+    console.log(viewBtns); // check if buttons exist
 
-    <div class="chat-btn-circle">
-        <i class="fa-solid fa-comment"></i>
-    </div>
-
-</main>
+    viewBtns.forEach(btn => {
+        console.log(btn)
+        btn.addEventListener('click', (e) => {
+            console.log('clicked');
+            e.preventDefault()
+            e.stopPropagation()
+            window.location.href = '/termsubject';
+        });
+    });
+});
+</script>
 @endsection

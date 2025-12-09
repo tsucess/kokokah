@@ -13,7 +13,7 @@
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
- 
+
   <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,15 +41,15 @@
     </div>
 
     <nav class="nav-group" id="sidebarNav">
-      <a class="nav-item-link" href="/dashboard"><i class="fa-solid fa-gauge pe-3"></i> Dashboard</a>
+      <a class="nav-item-link" href="/usersdashboard"><i class="fa-solid fa-gauge pe-3"></i> Dashboard</a>
 
-    <a class="nav-item-link" href="/subjects"><i class="fa-solid fa-book-open me-2  pe-1"></i> Subjects</a>
+    <a class="nav-item-link" href="/userclass"><i class="fa-solid fa-book-open me-2  pe-1"></i> Class</a>
 
-    <a class="nav-item-link" href="/results"><i class="fa-solid fa-user me-2  pe-2"></i> Results & Scoring</a>
+    <a class="nav-item-link" href="/usersubject"><i class="fa-solid fa-user me-2  pe-2"></i> Subject</a>
 
-    <a class="nav-item-link" href="/results"><i class="fa-solid fa-user me-2  pe-2"></i> Results & Scoring</a>
+    <a class="nav-item-link" href="/userresult"><i class="fa-solid fa-user me-2  pe-2"></i> Results & Scoring</a>
 
-    <a class="nav-item-link" href="/results"><i class="fa-solid fa-user me-2  pe-2"></i> Wallet</a>
+    <a class="nav-item-link" href="/userkudikah"><i class="fa-solid fa-user me-2  pe-2"></i>Kudikah</a>
 
     <a class="nav-item-link" href="/results"><i class="fa-solid fa-user me-2  pe-2"></i> Notification</a>
 
@@ -65,7 +65,7 @@
   <div class="collapse ps-4" id="communication">
     <a class="nav-item-link d-block" href="#">Announcement</a>
     <a class="nav-item-link d-block" href="#">Email / Messaging Center</a>
-    <a class="nav-item-link d-block" href="#">Feedback / Surveys</a>
+    <a class="nav-item-link d-block" href="/userfeedback">Feedback / Surveys</a>
   </div>
 
 
