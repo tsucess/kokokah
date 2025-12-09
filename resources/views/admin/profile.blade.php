@@ -138,7 +138,7 @@
     </li> --}}
   </ul>
 
-
+<div class="tab-content mt-4" id='profileTabsContent'>
     <!-- My Details Tab -->
     <div class="tab-pane fade show active" id="details" role="tabpanel">
        <div class="row g-4">
@@ -411,14 +411,9 @@
 
             </div>
         </div>
-    </main>
-
-      </div>
+         </div>
     </div>
-
-
-  </div>
-</div>
+    </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
