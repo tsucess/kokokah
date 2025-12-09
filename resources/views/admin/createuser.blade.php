@@ -186,9 +186,6 @@
             font-weight: 500;
             font-size: 0.85rem;
         }
-        .modal-label{
-            background-color: #f9f9f9;
-        }
 
         /* Mobile Responsive Styles */
         @media (max-width: 768px) {
@@ -322,7 +319,6 @@
                 max-height: 350px !important;
             }
 
-
             .modal-footer button {
                 /* flex: 1 1 50% !important; */
                 font-size: 0.7rem !important;
@@ -364,7 +360,7 @@
                     <div class="card border-0 shadow-sm rounded-4 mb-4"
                         style="background: #f9f9f9; border: 1px solid #e8e8e8;">
                         <div class="card-body p-4">
-                            <div class="d-flex align-items-center justify-content-between mb-5">
+                            <div class="d-flex align-items-center mb-5">
                                 <h5 class="fw-bold mb-0" style="font-size: 1.1rem; color: #1a1a1a;">Basic Information</h5>
                                 <span class="text-danger ms-2" style="font-size: 1.2rem;">*</span>
                             </div>
@@ -376,21 +372,17 @@
                                 <div class="row mb-4">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <div class="modal-form-input-border">
-                                            <label class="modal-label">Enter First Name</label>
-                                            <input type="text" class="modal-input" id="firstName"
+                                            <label class="form-label form-label-custom">Enter First Name</label>
+                                            <input type="text" class="form-control form-input-custom" id="firstName"
                                                 name="first_name" placeholder="Winner" required>
-                                            </div>
                                             <small class="text-danger d-none" id="firstNameError"></small>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <div class="modal-form-input-border">
-                                            <label class="modal-label">Enter Last Name</label>
-                                            <input type="text" class="modal-input" id="lastName"
+                                            <label class="form-label form-label-custom">Enter Last Name</label>
+                                            <input type="text" class="form-control form-input-custom" id="lastName"
                                                 name="last_name" placeholder="Winner" required>
-                                            </div>
                                             <small class="text-danger d-none" id="lastNameError"></small>
                                         </div>
                                     </div>
@@ -403,46 +395,44 @@
                                 <div class="row mb-4">
                                     <div class="col-md-6">
                                         <!-- Gender Row -->
-                                        <div class="mb-5 d-flex flex-column gap-2">
+                                        <div class="mb-4">
                                             <label class="form-label form-label-custom">Gender</label>
                                             <div class="d-flex gap-5">
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="gender"
                                                         id="genderMale" value="male" checked
-                                                        style="width: 1rem; height: 1rem; cursor: pointer;">
+                                                        style="width: 1.2rem; height: 1.2rem; cursor: pointer;">
                                                     <label class="form-check-label" for="genderMale"
-                                                        style="cursor: pointer; margin-left: 0.5rem; color: #333; font-weight: 500; font-size:.9rem;">Male</label>
+                                                        style="cursor: pointer; margin-left: 0.5rem; color: #333; font-weight: 500;">Male</label>
                                                 </div>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="gender"
                                                         id="genderFemale" value="female"
-                                                        style="width: 1rem; height: 1rem; cursor: pointer;">
+                                                        style="width: 1.2rem; height: 1.2rem; cursor: pointer;">
                                                     <label class="form-check-label" for="genderFemale"
-                                                        style="cursor: pointer; margin-left: 0.5rem; color: #333; font-weight: 500; font-size:.9rem;">Female</label>
+                                                        style="cursor: pointer; margin-left: 0.5rem; color: #333; font-weight: 500;">Female</label>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <div class="modal-form-input-border">
-                                            <label class="modal-label">Enter Date of Birth</label>
-                                            <input type="date" class="modal-input" id="dateOfBirth"
+                                            <label class="form-label form-label-custom">Enter Date of Birth</label>
+                                            <input type="date" class="form-control form-input-custom" id="dateOfBirth"
                                                 name="date_of_birth" placeholder="DD/MM/YYYY">
-                                            </div>
                                             <small class="text-danger d-none" id="dobError"></small>
                                         </div>
                                     </div>
                                     <!-- Profile Photo Upload Area -->
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 mb-4">
                                         <label class="form-label form-label-custom mb-1">Profile Photo (Optional)</label>
-                                        <div class="border-2 rounded-4 px-5 py-4 text-center"
-                                            style="border-color: #004A53; border-style:dashed; cursor: pointer; background: white; transition: all 0.3s ease;"
+                                        <div class="border-2 border-dashed rounded-4 p-5 text-center"
+                                            style="border-color: #004A53; cursor: pointer; background: white; transition: all 0.3s ease;"
                                             id="uploadArea">
                                             <div class="mb-3">
                                                 <i class="fa-solid fa-file-lines fa-2x" style="color: #004A53;"></i>
                                             </div>
                                             <p class="fw-semibold mb-2" style="color: #333; font-size: 0.95rem;">Drop your
                                                 files to upload</p>
-                                            <small style="color: #000000; font-size:12px; padding:3px 20px; border: 1px solid #C4C4C4; border-radius:34px; ">Select files</small>
+                                            <small style="color: #666;">Select files</small>
                                             <input type="file" id="profilePhoto" name="profile_photo" class="d-none"
                                                 accept="image/*">
                                         </div>
@@ -464,11 +454,9 @@
                                 <!-- Phone Number -->
                                 <div class="mb-4">
                                     <div class="form-group">
-                                        <div class="modal-form-input-border">
-                                        <label class="modal-label">Enter Phone Number</label>
-                                        <input type="tel" class="modal-input" id="phoneNumber"
+                                        <label class="form-label form-label-custom">Enter Phone Number</label>
+                                        <input type="tel" class="form-control form-input-custom" id="phoneNumber"
                                             name="phone_number" placeholder="Winner">
-                                        </div>
                                         <small class="text-danger d-none" id="phoneError"></small>
                                     </div>
                                 </div>
@@ -476,11 +464,9 @@
                                 <!-- Home Address -->
                                 <div class="mb-4">
                                     <div class="form-group">
-                                        <div class="modal-form-input-border">
-                                        <label class="modal-label">Enter Home Address</label>
-                                        <input type="text" class="modal-input" id="homeAddress"
+                                        <label class="form-label form-label-custom">Enter Home Address</label>
+                                        <input type="text" class="form-control form-input-custom" id="homeAddress"
                                             name="home_address" placeholder="Address">
-                                        </div>
                                         <small class="text-danger d-none" id="addressError"></small>
                                     </div>
                                 </div>
@@ -488,11 +474,9 @@
                                 <!-- State -->
                                 <div class="mb-4">
                                     <div class="form-group">
-                                        <div class="modal-form-input-border">
-                                        <label class="modal-label">State</label>
-                                        <input type="text" class="modal-input" id="state"
+                                        <label class="form-label form-label-custom">State</label>
+                                        <input type="text" class="form-control form-input-custom" id="state"
                                             name="state" placeholder="Address">
-                                        </div>
                                         <small class="text-danger d-none" id="stateError"></small>
                                     </div>
                                 </div>
@@ -500,11 +484,9 @@
                                 <!-- Zipcode -->
                                 <div class="mb-4">
                                     <div class="form-group">
-                                        <div class="modal-form-input-border">
-                                        <label class="modal-label">Zipcode</label>
-                                        <input type="text" class="modal-input" id="zipcode"
+                                        <label class="form-label form-label-custom">Zipcode</label>
+                                        <input type="text" class="form-control form-input-custom" id="zipcode"
                                             name="zipcode" placeholder="Address">
-                                        </div>
                                         <small class="text-danger d-none" id="zipcodeError"></small>
                                     </div>
                                 </div>
@@ -523,21 +505,17 @@
                                 <div class="row mb-4">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <div class="modal-form-input-border">
-                                            <label class="modal-label">Enter First Name</label>
-                                            <input type="text" class="modal-input"
+                                            <label class="form-label form-label-custom">Enter First Name</label>
+                                            <input type="text" class="form-control form-input-custom"
                                                 id="parentFirstName" name="parent_first_name" placeholder="Winner">
-                                            </div>
                                             <small class="text-danger d-none" id="parentFirstNameError"></small>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <div class="modal-form-input-border">
-                                            <label class="modal-label">Enter Last Name</label>
-                                            <input type="text" class="modal-input"
+                                            <label class="form-label form-label-custom">Enter Last Name</label>
+                                            <input type="text" class="form-control form-input-custom"
                                                 id="parentLastName" name="parent_last_name" placeholder="Winner">
-                                            </div>
                                             <small class="text-danger d-none" id="parentLastNameError"></small>
                                         </div>
                                     </div>
@@ -547,21 +525,17 @@
                                 <div class="row mb-4">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <div class="modal-form-input-border">
-                                            <label class="modal-label">Enter Parent Email Address</label>
-                                            <input type="email" class="modal-input" id="parentEmail"
+                                            <label class="form-label form-label-custom">Enter Parent Email Address</label>
+                                            <input type="email" class="form-control form-input-custom" id="parentEmail"
                                                 name="parent_email" placeholder="Winner">
-                                            </div>
                                             <small class="text-danger d-none" id="parentEmailError"></small>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <div class="modal-form-input-border">
-                                            <label class="modal-label">Enter Parent Phone No.</label>
-                                            <input type="tel" class="modal-input" id="parentPhone"
+                                            <label class="form-label form-label-custom">Enter Parent Phone Number</label>
+                                            <input type="tel" class="form-control form-input-custom" id="parentPhone"
                                                 name="parent_phone" placeholder="Winner">
-                                            </div>
                                             <small class="text-danger d-none" id="parentPhoneError"></small>
                                         </div>
                                     </div>
@@ -580,7 +554,8 @@
                             <div class="text-center">
                                 <div class="mb-4">
                                     <img id="profilePreview" src="images/winner-round.png" alt="Profile"
-                                        style="width: 100%; max-width: 280px; height: auto; object-fit: cover; border-radius:50%;">
+                                        class="rounded-4"
+                                        style="width: 100%; max-width: 280px; height: auto; object-fit: cover;">
                                 </div>
 
                             </div>
@@ -591,7 +566,7 @@
                     <div class="card border-0 shadow-sm rounded-4"
                         style="background: #f9f9f9; border: 1px solid #e8e8e8;">
                         <div class="card-body p-4">
-                            <div class="d-flex align-items-center justify-content-between mb-5">
+                            <div class="d-flex align-items-center mb-5">
                                 <h5 class="fw-bold mb-0" style="font-size: 1.1rem; color: #1a1a1a;">Login/Account Details
                                 </h5>
                                 <span class="text-danger ms-2" style="font-size: 1.2rem;">*</span>
@@ -601,11 +576,9 @@
                                 <!-- Email Address -->
                                 <div class="mb-4">
                                     <div class="form-group">
-                                        <div class="modal-form-input-border">
-                                        <label class="modal-label">Enter Email Address</label>
-                                        <input type="email" class="modal-input" id="email"
+                                        <label class="form-label form-label-custom">Enter Email Address</label>
+                                        <input type="email" class="form-control form-input-custom" id="email"
                                             name="email" placeholder="@gmail.com">
-                                        </div>
                                         <small class="text-danger d-none" id="emailError"></small>
                                     </div>
                                 </div>
@@ -613,17 +586,15 @@
                                 <!-- Password -->
                                 <div class="mb-4">
                                     <div class="form-group">
-                                        <div class="modal-form-input-border">
-                                        <label class="modal-label">Enter Password</label>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <input type="password" class="modal-input" id="password"
+                                        <label class="form-label form-label-custom">Enter Password</label>
+                                        <div class="password-input-wrapper position-relative">
+                                            <input type="password" class="form-control form-input-custom" id="password"
                                                 name="password" placeholder="••••••••" required>
                                             <button type="button"
                                                 class="btn btn-link position-absolute end-0 top-50 translate-middle-y"
                                                 id="togglePassword" style="border: none; padding: 0.5rem 1rem;">
                                                 <i class="fa-solid fa-eye" style="color: #999;"></i>
                                             </button>
-                                        </div>
                                         </div>
                                         <small class="text-danger d-none" id="passwordError"></small>
                                     </div>
@@ -632,16 +603,14 @@
                                 <!-- Role Selection -->
                                 <div class="mb-4">
                                     <div class="form-group">
-                                        <div class="modal-form-input-border">
-                                        <label class="modal-label">Select Role</label>
-                                        <select class="modal-input" id="role" name="role"
+                                        <label class="form-label form-label-custom">Select Role</label>
+                                        <select class="form-select form-input-custom" id="role" name="role"
                                             required>
                                             <option value="">Select Role</option>
                                             <option value="student">Student</option>
                                             <option value="instructor">Instructor</option>
                                             <option value="admin">Admin</option>
                                         </select>
-                                        </div>
                                         <small class="text-danger d-none" id="roleError"></small>
                                     </div>
                                 </div>
