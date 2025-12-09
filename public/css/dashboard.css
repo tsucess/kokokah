@@ -1708,6 +1708,8 @@ p {
     border-radius: 8px;
     background-color: #004a53;
     font-family: "Lato", sans-serif;
+    text-decoration: none;
+    color: #fff;
 }
 
 .tab {

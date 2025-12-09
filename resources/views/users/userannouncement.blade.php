@@ -13,8 +13,7 @@
                         <h1>Notifications & Announcements</h1>
                         <p class="text">Stay updated with the latest news and updates from your school/instructor.</p>
                     </div>
-                    <a href="/createannouncement" class="d-flex gap-1 align-items-center py-2 px-3 fs-6 announcement-btn ms-auto"><i class="fa-solid fa-plus"></i> Create New Announcement</a>
-
+                    
                 </div>
 
                 <div class="d-flex flex-column " style="gap: 75px;">
