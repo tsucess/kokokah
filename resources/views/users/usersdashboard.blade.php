@@ -1,5 +1,6 @@
 @extends('layouts.usertemplate')
 @section('content')
+<main>
  <style>
     .stats-card {
       border: none;
@@ -38,6 +39,7 @@ font-size: 12px;
         font-size: 16px;
         font-weight: 600;
         z-index: 9999;
+        position: relative;
     }
 
     @media (max-width: 768px) {
@@ -51,7 +53,7 @@ font-size: 12px;
     }
   </style>
 
-<main>
+
     {{-- <div class="container m-2">
 <div class="row">
         <div>
@@ -178,10 +180,10 @@ font-size: 12px;
                 <h5 class = "subjects">60%</h5>
                 </div>
 
-                <div class="progress " style = "height:6px; backgtound-color:#D9D9D9;">
+                <div class="progress " style = "height:6px; background-color:#D9D9D9;">
                 <div class="progress-bar" style="width:70%; background:#F56824; height:100%;"></div>
                 </div>
-                <button class="view-btn" type="button">View Subjects</button>
+                <a class="view-btn" href='/termsubject'>View Subjects</a>
 
         </div>
 
@@ -195,7 +197,7 @@ font-size: 12px;
                 <h5 class = "subjects">60%</h5>
                 </div>
 
-                <div class="progress " style = "height:6px; backgtound-color:#D9D9D9;">
+                <div class="progress " style = "height:6px; background-color:#D9D9D9;">
                 <div class="progress-bar" style="width:70%; background:#F56824; height:100%;"></div>
                 </div>
                 <button class="view-btn" type="button">View Subjects</button>
@@ -211,7 +213,7 @@ font-size: 12px;
                 <h5 class = "subjects">60%</h5>
                 </div>
 
-                <div class="progress " style = "height:6px; backgtound-color:#D9D9D9;">
+                <div class="progress " style = "height:6px; background-color:#D9D9D9;">
                 <div class="progress-bar" style="width:70%; background:#F56824; height:100%;"></div>
                 </div>
                 <button class="view-btn" type="button">View Subjects</button>
@@ -226,23 +228,23 @@ font-size: 12px;
     </div>
 
 </main>
-{{-- <script>
-   document.addEventListener('DOMContentLoaded', () => {
-    const viewBtns = document.querySelectorAll('button.view-btn');
-    console.log(viewBtns); // check if buttons exist
-
-    viewBtns.forEach(btn => {
-        console.log(btn)
-        btn.addEventListener('click', (e) => {
-            console.log('clicked');
-            e.preventDefault()
-            e.stopPropagation()
-            window.location.href = '/termsubject';
-        });
-    });
-});
-</script> --}}
 <script>
+//    document.addEventListener('DOMContentLoaded', () => {
+//     const viewBtns = document.querySelectorAll('button.view-btn');
+
+
+//     viewBtns.forEach(btn => {
+
+//         btn.addEventListener('click', (e) => {
+//             console.log('clicked');
+//             e.preventDefault()
+//             e.stopPropagation()
+//             window.location.href = '/termsubject';
+//         });
+//     });
+// });
+</script>
+{{-- <script>
 document.addEventListener('DOMContentLoaded', () => {
     // Use event delegation to capture clicks on any current or future buttons with class 'view-btn'
     document.body.addEventListener('click', function(e) {
@@ -253,6 +255,6 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = '/usersubject';
     });
 });
-</script>
+</script> --}}
 
 @endsection
