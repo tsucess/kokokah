@@ -819,6 +819,10 @@
             right: 10%;
             top: 10px;
         }
+
+        .select-quiz-children {
+            display: none;
+        }
     </style>
 
     <main>
@@ -1171,26 +1175,59 @@
                                 </div>
                                 <div class="modal-form-input-border">
                                     <label for="" class="modal-label">Question Type * </label>
-                                    <select name="" id="" class="modal-input">
-                                        <option value="Multiple Choice">Multiple Choice</option>
+                                    <select name="" id="quiz-choice" class="modal-input">
+                                        <option value="multiple-choice">Multiple Choice</option>
+                                        <option value="alternative-choice">Alternative Choice</option>
                                     </select>
                                 </div>
-                                <div class="d-flex flex-column gap-3">
-                                    <div class="d-flex flex-column gap-2">
-                                        <div class="d-flex gap-2 align-items-center">
-                                            <i class="fa-regular fa-circle"></i>
-                                            <p class="form-option-text mb-0">Option 1</p>
+                                <div class="flex-column gap-3 select-quiz-children" id="multiple-choice-container">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="modal-form-input-border flex-md-fill">
+                                            <label for="" class="modal-label">Option One</label>
+                                            <input class="modal-input" type="text" placeholder="10" />
                                         </div>
+                                        <div class="modal-form-input-border flex-md-fill">
+                                            <label for="" class="modal-label">Option Two</label>
+                                            <input class="modal-input" type="text" placeholder="10" />
+                                        </div>
+
                                     </div>
-                                    <button class="form-option-btn">Add Option</button>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="modal-form-input-border flex-md-fill">
+                                            <label for="" class="modal-label">Option Three</label>
+                                            <input class="modal-input" type="text" placeholder="10" />
+                                        </div>
+                                        <div class="modal-form-input-border flex-md-fill">
+                                            <label for="" class="modal-label">Option Four</label>
+                                            <input class="modal-input" type="text" placeholder="10" />
+                                        </div>
+
+                                    </div>
+
                                 </div>
+
+                                <div class="w-100 select-quiz-children" id='alternative-choice-container'>
+                                    <div class="d-flex align-items-center gap-2 flex-md-fill"
+                                        >
+                                        <div class="modal-form-input-border flex-md-fill">
+                                            <label for="" class="modal-label">Option One</label>
+                                            <input class="modal-input" type="text" placeholder="10" />
+                                        </div>
+                                        <div class="modal-form-input-border flex-md-fill">
+                                            <label for="" class="modal-label">Option Two</label>
+                                            <input class="modal-input" type="text" placeholder="10" />
+                                        </div>
+
+                                    </div>
+                                </div>
+
                                 <div class="d-flex flex-column gap-2 flex-md-row">
                                     <div class="modal-form-input-border flex-md-fill">
                                         <label for="" class="modal-label">Correct Answer</label>
                                         <input class="modal-input" type="text" placeholder="10" />
                                     </div>
                                     <div class="modal-form-input-border flex-md-fill">
-                                        <label for="" class="modal-label">Correct Answer</label>
+                                        <label for="" class="modal-label">Assigned Mark</label>
                                         <input class="modal-input" type="text" placeholder="10" />
                                     </div>
                                 </div>
@@ -1465,7 +1502,7 @@
                             </button>
                              <button
       type="button"
-      class="btn btn-primary"
+      class="btn btn-add-lesson mt-3"
       data-bs-toggle="modal"
       data-bs-target="#quiz-modal"
     >
@@ -1724,6 +1761,31 @@
             if (selectContainer) {
                 selectContainer.addEventListener("change", (e) => {
                     showSelectedContainer(e.target.value);
+                });
+            }
+
+            //select quiz logic
+            const selectQuizContainer = document.getElementById("quiz-choice");
+
+            function showSelectedQuizContainer(quizType) {
+                // Hide all quiz containers
+                document.querySelectorAll(".select-quiz-children").forEach((container) => {
+                    container.style.display = "none";
+                });
+
+                // Show only the selected container
+                if (quizType === "multiple-choice") {
+                    document.getElementById("multiple-choice-container").style.display = "flex";
+                } else if (quizType === "alternative-choice") {
+                    document.getElementById("alternative-choice-container").style.display = "flex";
+                }
+            }
+            showSelectedQuizContainer(selectQuizContainer.value);
+
+            // Only attach event listeners if selectContainer exists
+            if (selectQuizContainer) {
+                selectQuizContainer.addEventListener("change", (e) => {
+                    showSelectedQuizContainer(e.target.value);
                 });
             }
 
