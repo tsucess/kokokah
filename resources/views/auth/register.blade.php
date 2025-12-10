@@ -17,8 +17,8 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 
   <!-- Custom CSS -->
-  <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-  <link href="{{ asset('css/access.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/style.css') }}?v={{ time() }}" rel="stylesheet">
+  <link href="{{ asset('css/access.css') }}?v={{ time() }}" rel="stylesheet">
 </head>
 <body>
 
@@ -40,7 +40,7 @@
           <h4 class="auth-heading">Sign up</h4>
           <p class="auth-subheading">Create your account to get started.</p>
 
-          <form id="registerForm" method="POST" action="javascript:void(0);">
+          <form id="registerForm" method="POST" action="javascript:void(0);" data-ajax>
             @csrf
             <div class="custom-form-group">
               <label for="firstName" class="custom-label">Enter First Name</label>
