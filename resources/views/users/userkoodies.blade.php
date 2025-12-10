@@ -1,14 +1,6 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>AI / Messaging Center</title>
+@extends('layouts.usertemplate')
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
+@section('content')
     <style>
         /* CSS from the base layout template */
         :root {
@@ -211,68 +203,6 @@
             margin-left: 0.5rem;
         }
     </style>
-</head>
-<body>
-
-    <div class="overlay" id="sidebarOverlay"></div>
-
-    <aside class="sidebar" id="sidebar">
-        <div class="brand p-3">
-            <h4 class="fw-bold" style="color: var(--bs-dark-teal);">Koodies AI</h4>
-        </div>
-
-        <nav class="nav-group" id="sidebarNav">
-            <a class="nav-item-link" href="/dashboard"><i class="fa-solid fa-gauge pe-3"></i> Dashboard</a>
-            <a class="nav-item-link" href="/subjects"><i class="fa-solid fa-book-open me-2 pe-1"></i> Subjects</a>
-            <a class="nav-item-link" href="/results"><i class="fa-solid fa-chart-line me-2 pe-2"></i> Results & Scoring</a>
-            <a class="nav-item-link active" href="/koodies"><i class="fa-solid fa-graduation-cap me-2 pe-2"></i> Koodies AI</a> <a class="nav-item-link" href="/wallet"><i class="fa-solid fa-wallet me-2 pe-2"></i> Wallet</a>
-            <a class="nav-item-link" href="/notification"><i class="fa-solid fa-bell me-2 pe-2"></i> Notification</a>
-
-            <a class="nav-item-link d-flex justify-content-between align-items-center"
-               data-bs-toggle="collapse" href="#communication" role="button"
-               aria-expanded="true" aria-controls="communication">
-                <span><i class="fa-solid fa-comments me-2 pe-2"></i> Communication</span>
-                <i class="fa-solid fa-chevron-down small"></i>
-            </a>
-
-            <div class="collapse show ps-4" id="communication">
-                <a class="nav-item-link d-block" href="#">Announcement</a>
-                <a class="nav-item-link d-block" href="#">Email / Messaging Center</a>
-                <a class="nav-item-link d-block" href="#">Feedback / Surveys</a>
-            </div>
-        </nav>
-
-        <div class="sidebar-footer">
-            <a class="nav-item-link" href="#"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
-            <div class="profile mt-3 d-flex align-items-center">
-                <img class="avatar rounded-circle me-3" src="https://dummyimage.com/72x72/114243/ffffff.png&text=C" alt="user" style="width: 40px; height: 40px;">
-                <div>
-                    <div class="fw-bold small">Culacino_</div>
-                    <div class="text-muted small">UI Designer</div>
-                </div>
-            </div>
-        </div>
-    </aside>
-
-    <header class="topbar">
-        <div class="d-flex align-items-center gap-2">
-            <button class="btn btn-light d-lg-none" id="hamburger"><i class="fa-solid fa-bars"></i></button>
-            <span class="d-lg-none fw-bold" style="color: var(--bs-dark-teal);">Koodies AI</span>
-        </div>
-
-        <div class="search-wrap mx-3 flex-grow-1 d-none d-md-flex justify-content-center">
-            <div class="input-group" style="max-width: 400px;">
-                <span class="input-group-text bg-white border-end-0 border-0"><i class="fa-solid fa-magnifying-glass text-muted"></i></span>
-                <input class="form-control border-start-0 border-0 shadow-none" type="text" placeholder="Search">
-            </div>
-        </div>
-
-        <div class="top-icons d-flex align-items-center gap-3">
-            <button class="icon-btn btn rounded-circle p-2" title="bell" style = "background: #ECEBF1; color: var(--bs-dark-teal);"><i class="fa-regular fa-bell"></i></button>
-            <button class="icon-btn btn rounded-circle p-2" title="message" style = "background: #ECEBF1; color: var(--bs-dark-teal);"><i class="fa-regular fa-envelope"></i></button>
-            <button class="icon-btn btn rounded-circle p-2 d-none d-md-inline-block" title="question" style = "background: #ECEBF1; color: var(--bs-dark-teal);"><i class="fa-solid fa-question"></i></button>
-        </div>
-    </header>
 
     <main>
 
@@ -342,16 +272,7 @@
     </div>
 
 
-    <div class="d-flex page-footer justify-content-between">
-        <div class="small text-muted">© Copyright Kokokah 2025. All rights reserved.</div>
 
-        <div class="small text-muted d-none d-md-block">
-            <a href="#" class="text-decoration-none text-muted">License</a>&nbsp;
-            <a href="#" class="text-decoration-none text-muted">More Themes</a>&nbsp;
-            <a href="#" class="text-decoration-none text-muted">Documentation</a>&nbsp;
-            <a href="#" class="text-decoration-none text-muted">Support</a>
-        </div>
-    </div>
 
     <script>
         const sidebar = document.getElementById('sidebar');
@@ -389,6 +310,4 @@
         });
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+@endsection

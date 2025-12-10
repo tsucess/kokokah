@@ -51,7 +51,8 @@
 
     <a class="nav-item-link" href="/userkudikah"><i class="fa-solid fa-user me-2  pe-2"></i>Kudikah</a>
 
-
+<a class="nav-item-link" href="/userleaderboard"><i class="fa-solid fa-user me-2  pe-2"></i>Leaderboard</a>
+<a class="nav-item-link" href="/userkoodies"><i class="fa-solid fa-user me-2  pe-2"></i>Ai</a>
 
           <!-- Communication -->
   <a class="nav-item-link d-flex justify-content-between align-items-center"

@@ -172,6 +172,14 @@ Route::get('/userfeedback', function () {
     return view('users.userfeedback');
 });
 
+Route::get('/userkoodies', function () {
+    return view('users.userkoodies');
+});
+
+Route::get('/userleaderboard', function () {
+    return view('users.leaderboard');
+});
+
 Route::get('/subjectselect', function () {
     return view('admin.subjectselected');
 });
