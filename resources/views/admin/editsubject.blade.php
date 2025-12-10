@@ -915,6 +915,10 @@
             right: 10%;
             top: 10px;
         }
+
+        .select-quiz-children {
+            display: none;
+        }
     </style>
 
     <main>
@@ -1167,19 +1171,24 @@
                                         <option value="document">Document</option>
                                     </select>
                                 </div>
-                                
+
                                 {{-- image container --}}
-                                <div class="flex-column gap-3 select-children" id="image-container" style="display: none">
+                                <div class="flex-column gap-3 select-children" id="image-container"
+                                    style="display: none">
                                     <div class="modal-form-input-border">
                                         <label for="" class="modal-label">Title</label>
                                         <input class="modal-input" type="text" placeholder="Art" />
                                     </div>
                                     <div class="upload-file-container">
-                                        <label for="" class="upload-label">Upload File (Size:2mb, Dimension:400px by 250px) </label>
+                                        <label for="" class="upload-label">Upload File (Size:2mb, Dimension:400px
+                                            by 250px) </label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control upload-input p-3" style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
-                                                placeholder="Upload file" aria-label="Recipient’s username" aria-describedby="basic-addon2" />
-                                            <button class="upload-btn" type="button" data-upload-type="image">Upload File </button>
+                                            <input type="text" class="form-control upload-input p-3"
+                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
+                                                placeholder="Upload file" aria-label="Recipient’s username"
+                                                aria-describedby="basic-addon2" />
+                                            <button class="upload-btn" type="button" data-upload-type="image">Upload
+                                                File </button>
                                         </div>
                                     </div>
                                     <input type="file" id="imageFileInput" style="display: none;" accept="image/*" />
@@ -1196,8 +1205,9 @@
                                 </div>
                                 {{-- content container  --}}
                                 <div class="flex-column gap-3 hide select-children" id="content-container">
-                                    <div class="modal-form-input-border"><label for="" class="modal-label">Lesson Content</label>
-                                        <textarea name="" id="" class="modal-input"  placeholder="Enter lesson content"></textarea>
+                                    <div class="modal-form-input-border"><label for="" class="modal-label">Lesson
+                                            Content</label>
+                                        <textarea name="" id="" class="modal-input" placeholder="Enter lesson content"></textarea>
                                     </div>
                                 </div>
                                 {{-- <div class="modal-form-input-border" id="content-container">
@@ -1206,11 +1216,16 @@
                                 </div> --}}
                                 {{-- audio-container --}}
                                 <div class="flex-column gap-3 hide select-children" id="audio-container">
-                                    <div class="upload-file-container"><label for="" class="upload-label">Upload File (Size:2mb, Dimension:400px by 250px) </label>
+                                    <div class="upload-file-container"><label for="" class="upload-label">Upload
+                                            File (Size:2mb, Dimension:400px by 250px) </label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control upload-input p-3" style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
-                                                placeholder="Upload file" aria-label="Recipient’s username" aria-describedby="basic-addon2" />
-                                                <button class="upload-btn" type="button" data-upload-type="audio">Upload File </button></div>
+                                            <input type="text" class="form-control upload-input p-3"
+                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
+                                                placeholder="Upload file" aria-label="Recipient’s username"
+                                                aria-describedby="basic-addon2" />
+                                            <button class="upload-btn" type="button" data-upload-type="audio">Upload
+                                                File </button>
+                                        </div>
                                     </div>
                                     <input type="file" id="audioFileInput" style="display: none;" accept="audio/*" />
                                 </div>
@@ -1233,14 +1248,101 @@
                                                 style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
                                                 placeholder="Upload file" aria-label="Recipient’s username"
                                                 aria-describedby="basic-addon2" />
-                                            <button class="upload-btn" type="button" data-upload-type="document">Upload File
+                                            <button class="upload-btn" type="button" data-upload-type="document">Upload
+                                                File
                                             </button>
                                         </div>
                                     </div>
-                                    <input type="file" id="documentFileInput" style="display: none;" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" />
+                                    <input type="file" id="documentFileInput" style="display: none;"
+                                        accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" />
                                 </div>
                             </div>
                             <button type="button" class="modal-form-btn" onclick="saveLessonHandler()">Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            {{-- interactive-quiz-modal --}}
+            <div class="modal fade" id="quiz-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content border-0 modal-container">
+                        <div class="modal-header border-0 d-flex justify-content-between align-items-center">
+                            <h1 class="modal-title d-flex gap-1 align-items-center" id="staticBackdropLabel">
+                                <i class="fa-solid fa-chevron-left fa-2xs" style="color: #333333"></i>Interactive Quiz
+                            </h1>
+                            <button type="button" class="modal-header-btn" data-bs-dismiss="modal" aria-label="Close">
+                                <i class="fa-solid fa-circle-xmark"></i>
+                            </button>
+                        </div>
+                        <form class="modal-form-container">
+                            <div class="modal-form">
+                                <div class="modal-form-input-border">
+                                    <label for="" class="modal-label">Question</label>
+                                    <input class="modal-input" type="text"
+                                        placeholder="Identify the type of noun in this sentence: The herd of cows is grazing." />
+                                </div>
+                                <div class="modal-form-input-border">
+                                    <label for="" class="modal-label">Question Type * </label>
+                                    <select name="" id="quiz-choice" class="modal-input">
+                                        <option value="multiple-choice">Multiple Choice</option>
+                                        <option value="alternative-choice">Alternative Choice</option>
+                                    </select>
+                                </div>
+                                <div class="flex-column gap-3 select-quiz-children" id="multiple-choice-container">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="modal-form-input-border flex-md-fill">
+                                            <label for="" class="modal-label">Option One</label>
+                                            <input class="modal-input" type="text" placeholder="10" />
+                                        </div>
+                                        <div class="modal-form-input-border flex-md-fill">
+                                            <label for="" class="modal-label">Option Two</label>
+                                            <input class="modal-input" type="text" placeholder="10" />
+                                        </div>
+
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="modal-form-input-border flex-md-fill">
+                                            <label for="" class="modal-label">Option Three</label>
+                                            <input class="modal-input" type="text" placeholder="10" />
+                                        </div>
+                                        <div class="modal-form-input-border flex-md-fill">
+                                            <label for="" class="modal-label">Option Four</label>
+                                            <input class="modal-input" type="text" placeholder="10" />
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="w-100 select-quiz-children" id='alternative-choice-container'>
+                                    <div class="d-flex align-items-center gap-2 flex-md-fill"
+                                        >
+                                        <div class="modal-form-input-border flex-md-fill">
+                                            <label for="" class="modal-label">Option One</label>
+                                            <input class="modal-input" type="text" placeholder="10" />
+                                        </div>
+                                        <div class="modal-form-input-border flex-md-fill">
+                                            <label for="" class="modal-label">Option Two</label>
+                                            <input class="modal-input" type="text" placeholder="10" />
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="d-flex flex-column gap-2 flex-md-row">
+                                    <div class="modal-form-input-border flex-md-fill">
+                                        <label for="" class="modal-label">Correct Answer</label>
+                                        <input class="modal-input" type="text" placeholder="10" />
+                                    </div>
+                                    <div class="modal-form-input-border flex-md-fill">
+                                        <label for="" class="modal-label">Assigned Mark</label>
+                                        <input class="modal-input" type="text" placeholder="10" />
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="modal-form-btn">Add Category</button>
                         </form>
                     </div>
                 </div>
@@ -1508,6 +1610,14 @@
                             <button type="button" class="btn btn-add-lesson mt-3 add-lesson-btn" data-topic-id="${topic.id}">
                                 <i class="fa-solid fa-plus me-2"></i>Add Lesson
                             </button>
+                             <button
+      type="button"
+      class="btn btn-add-lesson mt-3"
+      data-bs-toggle="modal"
+      data-bs-target="#quiz-modal"
+    >
+      <i class="fa-solid fa-plus me-2"></i>Add Quiz
+    </button>
                         </div>
                     </div>
                 </div>
@@ -1769,6 +1879,31 @@
             if (selectContainer) {
                 selectContainer.addEventListener("change", (e) => {
                     showSelectedContainer(e.target.value);
+                });
+            }
+
+            //select quiz logic
+            const selectQuizContainer = document.getElementById("quiz-choice");
+
+            function showSelectedQuizContainer(quizType) {
+                // Hide all quiz containers
+                document.querySelectorAll(".select-quiz-children").forEach((container) => {
+                    container.style.display = "none";
+                });
+
+                // Show only the selected container
+                if (quizType === "multiple-choice") {
+                    document.getElementById("multiple-choice-container").style.display = "flex";
+                } else if (quizType === "alternative-choice") {
+                    document.getElementById("alternative-choice-container").style.display = "flex";
+                }
+            }
+            showSelectedQuizContainer(selectQuizContainer.value);
+
+            // Only attach event listeners if selectContainer exists
+            if (selectQuizContainer) {
+                selectQuizContainer.addEventListener("change", (e) => {
+                    showSelectedQuizContainer(e.target.value);
                 });
             }
 
@@ -2364,7 +2499,7 @@
                 document.getElementById('document-container').classList.add('hide');
 
                 // Show the selected container
-                switch(selectedType) {
+                switch (selectedType) {
                     case 'youtube':
                         document.getElementById('youtube-container').classList.remove('hide');
                         break;
@@ -2436,7 +2571,7 @@
             const modal = document.getElementById('addLessonModal');
             let inputField;
 
-            switch(uploadType) {
+            switch (uploadType) {
                 case 'image':
                     inputField = modal.querySelector('#image-container input[type="text"]');
                     break;
@@ -2669,7 +2804,7 @@
                 formData.append('lesson_type', lessonType);
 
                 // Collect data based on lesson type
-                switch(lessonType) {
+                switch (lessonType) {
                     case 'youtube':
                         const youtubeInput = modal.querySelector('#youtube-container input[type="text"]');
                         const youtubeUrl = youtubeInput ? youtubeInput.value.trim() : '';
@@ -2774,7 +2909,7 @@
                 }
 
                 // Populate the appropriate field based on lesson type
-                switch(lessonType) {
+                switch (lessonType) {
                     case 'youtube':
                         const youtubeInput = modal.querySelector('#youtube-container input[type="text"]');
                         if (youtubeInput) youtubeInput.value = lesson.video_url || '';

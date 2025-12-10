@@ -45,6 +45,9 @@ font-size: 12px;
     }
 
     @media (max-width: 768px) {
+        .view-btn{
+            padding-block: 10px;
+        }
       .header-section {
         text-align: center;
       }
@@ -92,20 +95,20 @@ font-size: 12px;
     </div> --}}
 
  <!-- Header -->
-  <div class="header-section container-fluid">
+  <div class="header-section position-relative container-fluid">
     <div class="container">
-      <div class="row align-items-center">
-        <div class="col-12 col-md-6 mt-5">
+
+        <div class="d-flex flex-column gap-2 align-items-center pt-4 pt-md-5 align-items-md-start">
           <h3>Hello Winner 👋</h3>
           <p>Let’s learn something new today!</p>
         </div>
-        <div class="col-12 col-md-6 text-md-end text-center position-relative">
-          <img src="images/mydashboard.png" alt="Robot"  class="header-image img-fluid position-absolute end-0 bottom-0 translate-middle-y"
-             style="max-height: 300px; z-index: 1;  top: 60%;">
-        </div>
+
+          <img src="images/mydashboard.png" alt="Robot"  class="header-image w-100 position-absolute "
+             style="max-height: 300px;">
+
       </div>
     </div>
-  </div>
+
 
   <!-- Stats Cards -->
   <div class="container" style="margin-top: -40px;">
@@ -114,13 +117,13 @@ font-size: 12px;
       <div class="col-12 col-md-6">
         <div class="d-flex align-items-center justify-content-between p-4 stats-card h-100">
 
-          <div class="d-flex align-items-center">
-            <div class="icon-circle me-3">
+          <div class="d-flex align-items-center gap-1">
+            <div class="icon-circle">
               <img src="images/celebration.png" class="img-fluid" alt="Completed">
             </div>
-            <div>
+            <div class="d-flex flex-column gap-1">
               <strong class="fs-2 lh-1 d-block text-dark">24</strong>
-              <small class="text-muted text-nowrap">Completed Subject</small>
+              <small class="text-nowrap header-card-text" >Completed Subject</small>
             </div>
           </div>
 
@@ -140,7 +143,7 @@ font-size: 12px;
             </div>
             <div>
               <strong class="fs-2 lh-1 d-block text-dark">07</strong>
-              <small class="text-muted text-nowrap">Pending Subject</small>
+              <small class="header-card-text text-nowrap">Pending Subject</small>
             </div>
           </div>
 
@@ -154,7 +157,7 @@ font-size: 12px;
     </div>
   </div>
 
-    <div class  = "container ">
+    <div class  = "container d-flex flex-column gap-3">
         <div class ="d-flex justify-content-between">
             <div>
             <p class = "usersparagraph">
@@ -172,9 +175,9 @@ font-size: 12px;
 
         <div class = "card-container">
 
-            <div class = " p-3 bg-white mysubject d-flex flex-column gap-3 w-100">
-            <div class = "border border-dark p-3" style="border-radius: 10px;">
-                    <img src = "images/Kokokah_Logo.png" class = "img-fluid" />
+            <div class = " p-3 bg-white mysubject d-flex flex-column gap-3 w-100 rounded-4">
+            <div class = "border border-dark p-2 text-center" style="border-radius: 10px;">
+                    <img src = "images/Kokokah_Logo.png" class = "img-fluid userdasboard-card-img" />
             </div>
                 <div class = "card-item-class align-self-start" >JSS 1</div>
                 <div class="d-flex justify-content-between align-items-center">
@@ -189,9 +192,9 @@ font-size: 12px;
 
         </div>
 
-<div class = " p-3 bg-white mysubject d-flex flex-column gap-3 w-100">
-            <div class = "border border-dark p-3" style="border-radius: 10px;">
-                    <img src = "images/Kokokah_Logo.png" class = "img-fluid" />
+<div class = " p-3 bg-white mysubject d-flex flex-column gap-3 w-100 rounded-4">
+            <div class = "border border-dark p-2 text-center" style="border-radius: 10px;">
+                    <img src = "images/Kokokah_Logo.png" class = "img-fluid userdasboard-card-img" />
             </div>
                 <div class = "card-item-class align-self-start" >JSS 1</div>
                 <div class="d-flex justify-content-between align-items-center">
@@ -205,9 +208,9 @@ font-size: 12px;
                 <button class="view-btn" type="button">View Subjects</button>
 
         </div>
-        <div class = " p-3 bg-white mysubject d-flex flex-column gap-3 w-100">
-            <div class = "border border-dark p-3" style="border-radius: 10px;">
-                    <img src = "images/Kokokah_Logo.png" class = "img-fluid" />
+        <div class = " p-3 bg-white mysubject d-flex flex-column gap-3 w-100 rounded-4">
+            <div class = "border border-dark p-2 text-center" style="border-radius: 10px;">
+                    <img src = "images/Kokokah_Logo.png" class = "img-fluid userdasboard-card-img" />
             </div>
                 <div class = "card-item-class align-self-start" >JSS 1</div>
                 <div class="d-flex justify-content-between align-items-center">

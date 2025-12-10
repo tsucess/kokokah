@@ -170,6 +170,10 @@ Route::get('/userenroll', function () {
     return view('users.enroll');
 });
 
+Route::get('/userannouncement', function () {
+    return view('users.userannouncement');
+});
+
 Route::get('/termsubject', function () {
     return view('users.termsubject');
 });
@@ -180,6 +184,14 @@ Route::get('/userkudikah', function () {
 
 Route::get('/userfeedback', function () {
     return view('users.userfeedback');
+});
+
+Route::get('/userkoodies', function () {
+    return view('users.userkoodies');
+});
+
+Route::get('/userleaderboard', function () {
+    return view('users.leaderboard');
 });
 
 Route::get('/subjectselect', function () {

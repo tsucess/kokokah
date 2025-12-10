@@ -2,11 +2,11 @@
 {{-- @extends('users.usertemplate') --}}
 @extends('layouts.dashboardtemp')
 
-@section('content')
+@section('content') 
 <main class="subjects-main">
-        
+
         <section class="d-flex gap-5 flex-column py-4 container px-5">
-            
+
 
             <section class=" d-flex flex-column" style="gap: 30px;">
                 <div class="d-flex align-items-center justify-content-between">
