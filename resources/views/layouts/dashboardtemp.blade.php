@@ -377,6 +377,9 @@
     <!-- Kokokah Logo Loader -->
     <script src="{{ asset('js/utils/kokokahLoader.js') }}"></script>
 
+    <!-- Confirmation Modal -->
+    <script src="{{ asset('js/utils/confirmationModal.js') }}"></script>
+
 </body>
 
 </html>

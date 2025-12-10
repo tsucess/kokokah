@@ -1613,7 +1613,8 @@ class AdminController extends Controller
 
             // Prevent deleting the last admin
             if ($user->role === 'admin') {
-                $adminCount = User::where('role', 'admin')->count();
+                // Count only non-deleted admins
+                $adminCount = User::where('role', 'admin')->whereNull('deleted_at')->count();
                 if ($adminCount <= 1) {
                     return response()->json([
                         'success' => false,

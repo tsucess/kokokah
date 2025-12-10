@@ -297,9 +297,9 @@
                     const userId = btn.getAttribute('data-user-id');
 
                     // Show confirmation modal
-                    if (confirm(
-                            'Are you sure you want to delete this user? This action cannot be undone.'
-                        )) {
+                    const confirmed = await window.confirmationModal.showDeleteConfirmation('this user');
+
+                    if (confirmed) {
                         try {
                             btn.disabled = true;
                             btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';

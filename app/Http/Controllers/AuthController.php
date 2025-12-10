@@ -48,11 +48,17 @@ class AuthController extends Controller
     // Login
     public function login(Request $request)
     {
-        $request->validate(['email' => 'required|email|exists:users', 'password' => 'required']);
+        // Validate required fields only (not existence)
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
 
+        // Attempt authentication
         if (!Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
-                'message' => 'Invalid credentials'
+                'success' => false,
+                'message' => 'Invalid email or password'
             ], 401);
         }
 
@@ -61,6 +67,7 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => 'success',
+            'success' => true,
             'message' => 'Login successful',
             'user' => $user,
             'token' => $token

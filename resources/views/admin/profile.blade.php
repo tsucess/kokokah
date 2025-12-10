@@ -517,6 +517,7 @@
 
     await loadProfileData();
     setupEventListeners();
+    restoreActiveTab();
   });
 
   // Load profile data from API
@@ -892,6 +893,16 @@
         await deleteAccountHandler();
       });
     }
+
+    // Save active tab to localStorage when tab changes
+    const profileTabs = document.querySelectorAll('#profileTabs button');
+    profileTabs.forEach(tab => {
+      tab.addEventListener('shown.bs.tab', (e) => {
+        const activeTabId = e.target.getAttribute('data-bs-target');
+        localStorage.setItem('activeProfileTab', activeTabId);
+        console.log('Active tab saved:', activeTabId);
+      });
+    });
   }
 
   // Change password handler
@@ -937,10 +948,8 @@
   // Delete account handler
   async function deleteAccountHandler() {
     try {
-      // Show confirmation dialog
-      const confirmed = confirm(
-        'Are you sure you want to delete your account? This action cannot be undone. All your data will be permanently deleted.'
-      );
+      // Show confirmation modal
+      const confirmed = await window.confirmationModal.showAccountDeletionConfirmation();
 
       if (!confirmed) {
         return;
@@ -1070,6 +1079,23 @@
       }
     } catch (error) {
       ToastNotification.error('An error occurred while saving profile. Please try again.');
+    }
+  }
+
+  // Restore active tab from localStorage
+  function restoreActiveTab() {
+    const activeTabId = localStorage.getItem('activeProfileTab');
+
+    if (activeTabId) {
+      // Find the tab button that corresponds to this tab ID
+      const tabButton = document.querySelector(`button[data-bs-target="${activeTabId}"]`);
+
+      if (tabButton) {
+        // Use Bootstrap's tab method to show the tab
+        const tab = new bootstrap.Tab(tabButton);
+        tab.show();
+        console.log('Active tab restored:', activeTabId);
+      }
     }
   }
 

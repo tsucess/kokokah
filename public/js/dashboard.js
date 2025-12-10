@@ -27,8 +27,9 @@ class DashboardModule {
     logoutBtn.addEventListener('click', async (e) => {
       e.preventDefault();
 
-      // Show confirmation dialog
-      if (!confirm('Are you sure you want to logout?')) {
+      // Show confirmation modal
+      const confirmed = await window.confirmationModal.showLogoutConfirmation();
+      if (!confirmed) {
         return;
       }
 
