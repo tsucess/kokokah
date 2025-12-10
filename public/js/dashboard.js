@@ -149,11 +149,19 @@ class DashboardModule {
     const profileImage = document.getElementById('profileImage');
     if (profileImage) {
       if (user.profile_photo) {
-        // Use storage URL for profile photos
-        profileImage.src = `/storage/${user.profile_photo}`;
+        // Check if profile_photo is already a full URL (starts with /)
+        if (user.profile_photo.startsWith('/')) {
+          profileImage.src = user.profile_photo;
+          console.log('Profile photo is a full URL:', user.profile_photo);
+        } else {
+          // Otherwise, add /storage/ prefix
+          profileImage.src = `/storage/${user.profile_photo}`;
+          console.log('Profile photo is a relative path, added /storage/ prefix:', profileImage.src);
+        }
       } else {
         // Use default avatar if no profile photo
         profileImage.src = 'images/winner-round.png';
+        console.log('No profile photo, using default avatar');
       }
     }
   }

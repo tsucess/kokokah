@@ -1,5 +1,12 @@
 @extends('layouts.dashboardtemp')
 @section('content')
+
+<!-- Import UserApiClient -->
+<script type="module">
+    import UserApiClient from '{{ asset('js/api/userApiClient.js') }}';
+    window.UserApiClient = UserApiClient;
+</script>
+
 <style>
  body {
       background-color: #f9fafb;
@@ -119,6 +126,50 @@
             margin-bottom: 0;
         }
 
+        .image-div {
+            max-width: 100%;
+            height: 250px;
+        }
+
+        #cropperImage {
+            max-width: 100%;
+            max-height: 500px;
+        }
+
+        .zoom-container {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .controls-container {
+            display: flex;
+            justify-content: center;
+            gap: 0.25rem;
+        }
+
+        #rotateLeftBtn,
+        #rotateRightBtn,
+        #resetCropBtn {
+            background-color: white;
+            border: 1px solid #004A53;
+            color: #004A53;
+            font-size: 0.8rem;
+            padding: 0.15rem 0.8rem;
+            line-height: 1;
+            height: 2.5rem;
+        }
+
+        #cropperSave {
+            background-color: #FDAF22;
+            border: none;
+            color: white;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
 </style>
 
 <main>
@@ -158,7 +209,7 @@
                                 <div class="line-divider"></div>
 
                                 <!-- First Name and Last Name Row -->
-                                <div class="row mb-4">
+                                <div class="row mb-3">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <div class="modal-form-input-border">
@@ -188,17 +239,17 @@
                                 <div class="row mb-4">
                                     <div class="col-md-6">
                                         <!-- Gender Row -->
-                                        <div class="mb-5 d-flex flex-column gap-2">
+                                        <div class="mb-4 d-flex flex-column gap-2">
                                             <label class="form-label form-label-custom">Gender</label>
-                                            <div class="d-flex gap-5">
-                                                <div class="form-check d-flex align-items-center gap-3">
+                                            <div class="d-flex gap-4 mb-1">
+                                                <div class="form-check d-flex align-items-center gap-2">
                                                     <input class="form-check-input" type="radio" name="gender"
                                                         id="genderMale" value="male" checked
                                                         style="width: 1rem; height: 1rem; cursor: pointer;">
                                                     <label class="form-check-label" for="genderMale"
                                                         style="cursor: pointer;  color: #000000; font-weight: 500; font-size:1rem;">Male</label>
                                                 </div>
-                                                <div class="form-check d-flex align-items-center gap-3">
+                                                <div class="form-check d-flex align-items-center gap-2">
                                                     <input class="form-check-input" type="radio" name="gender"
                                                         id="genderFemale" value="female"
                                                         style="width: 1rem; height: 1rem; cursor: pointer;">
@@ -209,10 +260,9 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="modal-form-input-border">
-                                            <label class="modal-label">Enter Date of Birth</label>
-                                            <input type="date" class="modal-input" id="dateOfBirth"
-                                                name="date_of_birth" placeholder="DD/MM/YYYY">
-                                                </div>
+                                                <label class="modal-label">Enter Date of Birth</label>
+                                                <input type="date" class="modal-input" id="dateOfBirth" name="date_of_birth" placeholder="DD/MM/YYYY">
+                                            </div>
                                             <small class="text-danger d-none" id="dobError"></small>
                                         </div>
                                     </div>
@@ -306,7 +356,7 @@
                         <div class="card-body p-4">
                             <div class="text-center">
                                 <div class="mb-4">
-                                    <img id="profilePreview" src="images/winner-round.png" alt="Profile"
+                                    <img id="profilePreview" src="{{ asset('images/winner-round.png') }}" alt="Profile"
                                         class=""
                                         style="width: 100%; max-width: 280px; height: auto; object-fit: cover; border-radius:50%;">
                                 </div>
@@ -344,11 +394,11 @@
                                         <div class="modal-form-input-border">
                                         <label class="modal-label">Password</label>
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <input type="password" class="modal-input" id="password"
+                                            <input type="password" class="modal-input" id="currentPassword"
                                                 name="password" placeholder="••••••••" required>
                                             <button type="button"
                                                 class="btn btn-link position-absolute end-0 top-50 translate-middle-y"
-                                                id="togglePassword" style="border: none; padding: 0.5rem 1rem;">
+                                                id="toggleCurrentPassword" style="border: none; padding: 0.5rem 1rem;">
                                                 <i class="fa-solid fa-eye" style="color: #999;"></i>
                                             </button>
                                         </div>
@@ -359,11 +409,11 @@
                                         <div class="modal-form-input-border">
                                         <label class="modal-label">Enter New Password</label>
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <input type="password" class="modal-input" id="password"
+                                            <input type="password" class="modal-input" id="newPassword"
                                                 name="password" placeholder="••••••••" required>
                                             <button type="button"
                                                 class="btn btn-link position-absolute end-0 top-50 translate-middle-y"
-                                                id="togglePassword" style="border: none; padding: 0.5rem 1rem;">
+                                                id="toggleNewPassword" style="border: none; padding: 0.5rem 1rem;">
                                                 <i class="fa-solid fa-eye" style="color: #999;"></i>
                                             </button>
                                         </div>
@@ -374,11 +424,11 @@
                                         <div class="modal-form-input-border">
                                         <label class="modal-label">Confirm Password</label>
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <input type="password" class="modal-input" id="password"
+                                            <input type="password" class="modal-input" id="confirmPassword"
                                                 name="password" placeholder="••••••••" required>
                                             <button type="button"
                                                 class="btn btn-link position-absolute end-0 top-50 translate-middle-y"
-                                                id="togglePassword" style="border: none; padding: 0.5rem 1rem;">
+                                                id="toggleConfirmPassword" style="border: none; padding: 0.5rem 1rem;">
                                                 <i class="fa-solid fa-eye" style="color: #999;"></i>
                                             </button>
                                         </div>
@@ -413,66 +463,538 @@
         </div>
          </div>
     </div>
-    </main>
+
+    <!-- Image Cropper Modal - Bootstrap -->
+    <div class="modal fade" id="cropperModal" tabindex="-1" aria-labelledby="cropperModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header border-bottom">
+                    <h5 class="modal-title" id="cropperModalLabel">Crop Profile Photo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-2 image-div">
+                        <img id="cropperImage" src="" alt="Crop Image">
+                    </div>
+                    <div class="zoom-container mb-2">
+                        <label for="zoomRange" class="form-label zoom-label">Zoom:</label>
+                        <input type="range" id="zoomRange" class="form-range" min="0.1" max="3" step="0.1" value="1">
+                    </div>
+                    <div class="controls-container">
+                        <button type="button" class="btn" id="rotateLeftBtn">
+                            <i class="fa-solid fa-rotate-left"></i> <span class="d-none d-md-inline">Rotate Left</span>
+                        </button>
+                        <button type="button" class="btn" id="rotateRightBtn">
+                            <i class="fa-solid fa-rotate-right"></i> <span class="d-none d-md-inline">Rotate Right</span>
+                        </button>
+                        <button type="button" class="btn" id="resetCropBtn">
+                            <i class="fa-solid fa-arrows-rotate"></i> <span class="d-none d-md-inline">Reset</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer border-top">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-sm" id="cropperSave">Crop & Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 
-<script>
-  const fileInput = document.getElementById('fileInput');
-  const uploadBox = document.getElementById('uploadBox');
-  const fileName = document.getElementById('fileName');
-  const previewImage = document.getElementById('previewImage');
-  const saveBtn = document.getElementById('saveBtn');
+<script type="module">
+  import UserApiClient from '{{ asset('js/api/userApiClient.js') }}';
+  import ToastNotification from '{{ asset('js/utils/toastNotification.js') }}';
 
-  // Password toggle
-        const toggles = document.querySelectorAll('#togglePassword');
-const inputs = document.querySelectorAll('#password');
+  // Load profile data on page load
+  document.addEventListener('DOMContentLoaded', async () => {
+    console.log('Profile page loaded, fetching user data...');
 
-toggles.forEach((toggle, index) => {
-    toggle.addEventListener('click', () => {
-        const input = inputs[index];
+    // Check if user is authenticated
+    const token = localStorage.getItem('auth_token');
+    console.log('Auth token exists:', !!token);
 
-        const type = input.type === 'password' ? 'text' : 'password';
-        input.type = type;
+    if (!token) {
+      console.error('No authentication token found. User may not be logged in.');
+      ToastNotification.error('Please log in to view your profile');
+      setTimeout(() => {
+        window.location.href = '/login';
+      }, 2000);
+      return;
+    }
 
-        toggle.innerHTML = type === 'password'
-            ? '<i class="fa-solid fa-eye text-muted"></i>'
-            : '<i class="fa-solid fa-eye-slash text-muted"></i>';
-    });
-});
+    await loadProfileData();
+    setupEventListeners();
+  });
 
+  // Load profile data from API
+  async function loadProfileData() {
+    try {
+      console.log('Fetching profile data from API...');
+      console.log('Token:', localStorage.getItem('auth_token') ? 'Present' : 'Missing');
 
-  // Make the upload box clickable
-  uploadBox.addEventListener('click', () => fileInput.click());
+      const response = await UserApiClient.getProfile();
 
-  // Show filename and preview
-  fileInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
+      if (response.success && response.data) {
+        const user = response.data;
+
+        // Populate basic information
+        const firstNameField = document.getElementById('firstName');
+        const lastNameField = document.getElementById('lastName');
+        const dobField = document.getElementById('dateOfBirth');
+
+        if (firstNameField) {
+          firstNameField.value = user.first_name || '';
+        }
+        if (lastNameField) {
+          lastNameField.value = user.last_name || '';
+        }
+        if (dobField && user.date_of_birth) {
+          // Format date for date input (convert ISO 8601 to yyyy-MM-dd)
+          const dateObj = new Date(user.date_of_birth);
+          const formattedDate = dateObj.toISOString().split('T')[0];
+          dobField.value = formattedDate;
+        }
+
+        // Set gender
+        if (user.gender) {
+          const genderInput = document.querySelector(`input[name="gender"][value="${user.gender}"]`);
+          if (genderInput) {
+            genderInput.checked = true;
+          }
+        }
+
+        // Populate parent details
+        const parentFirstField = document.getElementById('parentFirstName');
+        const parentLastField = document.getElementById('parentLastName');
+        const parentEmailField = document.getElementById('parentEmail');
+        const parentPhoneField = document.getElementById('parentPhone');
+
+        if (parentFirstField) {
+          parentFirstField.value = user.parent_first_name || '';
+        }
+        if (parentLastField) {
+          parentLastField.value = user.parent_last_name || '';
+        }
+        if (parentEmailField) {
+          parentEmailField.value = user.parent_email || '';
+        }
+        if (parentPhoneField) {
+          parentPhoneField.value = user.parent_phone || '';
+        }
+
+        // Set profile photo
+        if (user.profile_photo) {
+          const photoPreview = document.getElementById('profilePreview');
+          if (photoPreview) {
+            photoPreview.src = user.profile_photo;
+          }
+        }
+
+        // Populate login details
+        const emailField = document.getElementById('email');
+        if (emailField) {
+          emailField.value = user.email || '';
+        }
+      } else {
+        console.error('❌ Failed to fetch profile:', response);
+        const errorMsg = response.message || response.error || 'Failed to load profile data';
+        ToastNotification.error(errorMsg);
+      }
+    } catch (error) {
+      console.error('❌ Error loading profile:', error);
+      ToastNotification.error('Failed to load profile data. Please try again.');
+    }
+  }
+
+  // Cropper variables
+  let cropper = null;
+  let originalImageData = null;
+  let currentRotation = 0;
+  let cropperModalInstance = null;
+
+  // Initialize cropper modal
+  const cropperModalElement = document.getElementById('cropperModal');
+  if (cropperModalElement) {
+    cropperModalInstance = new bootstrap.Modal(cropperModalElement);
+  }
+
+  // Cropper helper functions
+  function handleFileSelect() {
+    const profilePhoto = document.getElementById('profilePhoto');
+    const file = profilePhoto.files[0];
     if (file) {
-      fileName.textContent = file.name;
       const reader = new FileReader();
-      reader.onload = (event) => {
-        previewImage.src = event.target.result;
+      reader.onload = (e) => {
+        originalImageData = e.target.result;
+        openCropperModal(e.target.result);
       };
       reader.readAsDataURL(file);
     }
-  });
+  }
 
-  // Simulated save action
-  saveBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    const formData = {
-      firstName: document.getElementById('firstName').value,
-      lastName: document.getElementById('lastName').value,
-      gender: document.querySelector('input[name="gender"]:checked').value,
-      dob: document.getElementById('dob').value,
-      parentFirst: document.getElementById('parentFirst').value,
-      parentLast: document.getElementById('parentLast').value,
-      parentEmail: document.getElementById('parentEmail').value,
-      parentPhone: document.getElementById('parentPhone').value
+  function openCropperModal(imageSrc) {
+    const cropperImage = document.getElementById('cropperImage');
+    const zoomRange = document.getElementById('zoomRange');
+
+    currentRotation = 0;
+    zoomRange.value = 1;
+
+    // Show Bootstrap modal first
+    if (cropperModalInstance) {
+      cropperModalInstance.show();
+    }
+
+    // Destroy existing cropper
+    if (cropper) {
+      cropper.destroy();
+    }
+
+    // Set image source and wait for it to load
+    cropperImage.onload = function() {
+      // Wait for modal to fully render before initializing cropper
+      setTimeout(() => {
+        // Initialize cropper after image loads and modal is rendered
+        cropper = new Cropper(cropperImage, {
+          aspectRatio: 1, // Square aspect ratio for profile photo
+          viewMode: 0, // 0 = image can extend beyond container
+          autoCropArea: 0.8,
+          responsive: true,
+          restore: true,
+          guides: true,
+          center: true,
+          highlight: true,
+          cropBoxMovable: true,
+          cropBoxResizable: true,
+          toggleDragModeOnDblclick: true,
+        });
+      }, 300);
     };
-    alert('✅ Information saved successfully!\n\n' + JSON.stringify(formData, null, 2));
-  });
+
+    // Set the image source (this will trigger onload)
+    cropperImage.src = imageSrc;
+  }
+
+  function closeCropperModal() {
+    if (cropperModalInstance) {
+      cropperModalInstance.hide();
+    }
+    if (cropper) {
+      cropper.destroy();
+      cropper = null;
+    }
+  }
+
+  // Setup event listeners
+  function setupEventListeners() {
+    console.log('Setting up event listeners...');
+
+    // Password toggle for current password
+    const toggleCurrentPassword = document.getElementById('toggleCurrentPassword');
+    const currentPasswordInput = document.getElementById('currentPassword');
+    if (toggleCurrentPassword && currentPasswordInput) {
+      toggleCurrentPassword.addEventListener('click', () => {
+        const type = currentPasswordInput.type === 'password' ? 'text' : 'password';
+        currentPasswordInput.type = type;
+        toggleCurrentPassword.innerHTML = type === 'password'
+          ? '<i class="fa-solid fa-eye text-muted"></i>'
+          : '<i class="fa-solid fa-eye-slash text-muted"></i>';
+      });
+    }
+
+    // Password toggle for new password
+    const toggleNewPassword = document.getElementById('toggleNewPassword');
+    const newPasswordInput = document.getElementById('newPassword');
+    if (toggleNewPassword && newPasswordInput) {
+      toggleNewPassword.addEventListener('click', () => {
+        const type = newPasswordInput.type === 'password' ? 'text' : 'password';
+        newPasswordInput.type = type;
+        toggleNewPassword.innerHTML = type === 'password'
+          ? '<i class="fa-solid fa-eye text-muted"></i>'
+          : '<i class="fa-solid fa-eye-slash text-muted"></i>';
+      });
+    }
+
+    // Password toggle for confirm password
+    const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    if (toggleConfirmPassword && confirmPasswordInput) {
+      toggleConfirmPassword.addEventListener('click', () => {
+        const type = confirmPasswordInput.type === 'password' ? 'text' : 'password';
+        confirmPasswordInput.type = type;
+        toggleConfirmPassword.innerHTML = type === 'password'
+          ? '<i class="fa-solid fa-eye text-muted"></i>'
+          : '<i class="fa-solid fa-eye-slash text-muted"></i>';
+      });
+    }
+
+    // Profile photo upload
+    const uploadArea = document.getElementById('uploadArea');
+    const profilePhoto = document.getElementById('profilePhoto');
+
+    if (uploadArea && profilePhoto) {
+      uploadArea.addEventListener('click', () => profilePhoto.click());
+
+      // Drag and drop support
+      uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.style.backgroundColor = '#f0f8f9';
+      });
+
+      uploadArea.addEventListener('dragleave', () => {
+        uploadArea.style.backgroundColor = 'transparent';
+      });
+
+      uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.style.backgroundColor = 'transparent';
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+          profilePhoto.files = files;
+          handleFileSelectWithValidation();
+        }
+      });
+
+      profilePhoto.addEventListener('change', handleFileSelectWithValidation);
+    }
+
+    // Helper function to validate and handle file selection
+    function handleFileSelectWithValidation() {
+      const profilePhoto = document.getElementById('profilePhoto');
+      const file = profilePhoto.files[0];
+      if (file) {
+        // Validate file type
+        if (!file.type.startsWith('image/')) {
+          ToastNotification.error('Please select a valid image file');
+          profilePhoto.value = '';
+          return;
+        }
+
+        // Validate file size (5MB max)
+        if (file.size > 5 * 1024 * 1024) {
+          ToastNotification.error('File size must be less than 5MB');
+          profilePhoto.value = '';
+          return;
+        }
+
+        // Open cropper modal
+        handleFileSelect();
+      }
+    }
+
+    // Cropper button event listeners
+    const cropperImage = document.getElementById('cropperImage');
+    const cropperSave = document.getElementById('cropperSave');
+    const zoomRange = document.getElementById('zoomRange');
+    const rotateLeftBtn = document.getElementById('rotateLeftBtn');
+    const rotateRightBtn = document.getElementById('rotateRightBtn');
+    const resetCropBtn = document.getElementById('resetCropBtn');
+
+    if (cropperSave) {
+      cropperSave.addEventListener('click', () => {
+        if (cropper) {
+          const canvas = cropper.getCroppedCanvas({
+            maxWidth: 4096,
+            maxHeight: 4096,
+            fillColor: '#fff',
+            imageSmoothingEnabled: true,
+            imageSmoothingQuality: 'high',
+          });
+
+          // Convert canvas to blob and update file input
+          canvas.toBlob((blob) => {
+            const file = new File([blob], 'profile-photo-cropped.png', {
+              type: 'image/png'
+            });
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            profilePhoto.files = dataTransfer.files;
+
+            // Update preview
+            const photoPreview = document.getElementById('profilePreview');
+            if (photoPreview) {
+              photoPreview.src = canvas.toDataURL();
+            }
+            closeCropperModal();
+            ToastNotification.success('Image cropped successfully');
+          });
+        }
+      });
+    }
+
+    // Zoom control
+    if (zoomRange) {
+      zoomRange.addEventListener('input', (e) => {
+        if (cropper) {
+          cropper.zoomTo(parseFloat(e.target.value));
+        }
+      });
+    }
+
+    // Rotate controls
+    if (rotateLeftBtn) {
+      rotateLeftBtn.addEventListener('click', () => {
+        if (cropper) {
+          currentRotation -= 45;
+          cropper.rotate(-45);
+        }
+      });
+    }
+
+    if (rotateRightBtn) {
+      rotateRightBtn.addEventListener('click', () => {
+        if (cropper) {
+          currentRotation += 45;
+          cropper.rotate(45);
+        }
+      });
+    }
+
+    // Reset button
+    if (resetCropBtn) {
+      resetCropBtn.addEventListener('click', () => {
+        if (cropper) {
+          cropper.reset();
+          currentRotation = 0;
+          zoomRange.value = 1;
+        }
+      });
+    }
+
+    // Close modal when clicking outside
+    if (cropperModalElement) {
+      cropperModalElement.addEventListener('click', (e) => {
+        if (e.target === cropperModalElement) {
+          closeCropperModal();
+        }
+      });
+    }
+
+    // Save button
+    const saveBtn = document.querySelector('.save-btn');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        await saveProfileData();
+      });
+    }
+  }
+
+  // Save profile data
+  async function saveProfileData() {
+    try {
+      console.log('Saving profile data...');
+
+      // Validate required fields
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName = document.getElementById('lastName').value.trim();
+      const email = document.getElementById('email').value.trim();
+
+      if (!firstName || !lastName || !email) {
+        ToastNotification.error('Please fill in all required fields (First Name, Last Name, Email)');
+        return;
+      }
+
+      const formData = new FormData();
+
+      // Add basic information
+      formData.append('first_name', firstName);
+      formData.append('last_name', lastName);
+
+      const dobField = document.getElementById('dateOfBirth');
+      if (dobField && dobField.value) {
+        // Ensure date is in yyyy-MM-dd format
+        const dateObj = new Date(dobField.value);
+        const formattedDate = dateObj.toISOString().split('T')[0];
+        formData.append('date_of_birth', formattedDate);
+      }
+
+      const genderInput = document.querySelector('input[name="gender"]:checked');
+      if (genderInput) {
+        formData.append('gender', genderInput.value);
+      }
+
+      // Add parent details
+      const parentFirstField = document.getElementById('parentFirstName');
+      const parentLastField = document.getElementById('parentLastName');
+      const parentEmailField = document.getElementById('parentEmail');
+      const parentPhoneField = document.getElementById('parentPhone');
+
+      if (parentFirstField && parentFirstField.value) {
+        formData.append('parent_first_name', parentFirstField.value);
+      }
+      if (parentLastField && parentLastField.value) {
+        formData.append('parent_last_name', parentLastField.value);
+      }
+      if (parentEmailField && parentEmailField.value) {
+        formData.append('parent_email', parentEmailField.value);
+      }
+      if (parentPhoneField && parentPhoneField.value) {
+        formData.append('parent_phone', parentPhoneField.value);
+      }
+
+      // Add email
+      formData.append('email', email);
+
+      // Add profile photo if selected
+      const profilePhoto = document.getElementById('profilePhoto');
+      if (profilePhoto && profilePhoto.files.length > 0) {
+        formData.append('avatar', profilePhoto.files[0]);
+      }
+
+      const response = await UserApiClient.updateProfile(formData);
+
+      if (response.success) {
+        ToastNotification.success('Profile updated successfully!');
+
+        // Update localStorage with new user data
+        if (response.data) {
+          const updatedUser = response.data;
+          localStorage.setItem('auth_user', JSON.stringify(updatedUser));
+
+          // Update sidebar profile image if it exists
+          const sidebarProfileImage = document.getElementById('profileImage');
+          if (sidebarProfileImage && updatedUser.profile_photo) {
+            // Handle both full URLs and relative paths
+            if (updatedUser.profile_photo.startsWith('/')) {
+              sidebarProfileImage.src = updatedUser.profile_photo;
+            } else {
+              sidebarProfileImage.src = `/storage/${updatedUser.profile_photo}`;
+            }
+          }
+
+          // Update sidebar user name and role
+          const userName = document.getElementById('userName');
+          if (userName && updatedUser.first_name) {
+            userName.textContent = updatedUser.first_name + (updatedUser.last_name ? ' ' + updatedUser.last_name : '');
+          }
+
+          const userRole = document.getElementById('userRole');
+          if (userRole && updatedUser.role) {
+            const roleText = updatedUser.role.charAt(0).toUpperCase() + updatedUser.role.slice(1);
+            userRole.textContent = roleText;
+          }
+        }
+
+        // Clear file input
+        if (profilePhoto) profilePhoto.value = '';
+        // Reload profile data
+        await loadProfileData();
+      } else {
+        ToastNotification.error(response.message || 'Failed to update profile');
+      }
+    } catch (error) {
+      ToastNotification.error('An error occurred while saving profile. Please try again.');
+    }
+  }
+
+  // Expose functions to window for debugging
+  window.loadProfileData = loadProfileData;
+  window.saveProfileData = saveProfileData;
 </script>
 </main>
 @endsection

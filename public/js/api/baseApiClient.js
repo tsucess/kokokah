@@ -76,16 +76,20 @@ class BaseApiClient {
    */
   static async get(endpoint, config = {}) {
     try {
+      this.showLoader();
       const response = await this.fetchWithTimeout(`${API_BASE_URL}${endpoint}`, {
         method: 'GET',
         headers: this.getAuthHeaders(),
         ...config
       });
       if (!response.ok) {
+        this.hideLoader();
         return this.handleErrorResponse(response);
       }
+      this.hideLoader();
       return this.handleSuccess(response);
     } catch (error) {
+      this.hideLoader();
       return this.handleError(error);
     }
   }
@@ -95,6 +99,7 @@ class BaseApiClient {
    */
   static async post(endpoint, data = {}, config = {}) {
     try {
+      this.showLoader();
       // Check if data is FormData (for file uploads)
       const isFormData = data instanceof FormData;
       const headers = isFormData ? this.getAuthHeadersForFormData() : this.getAuthHeaders();
@@ -106,10 +111,13 @@ class BaseApiClient {
         ...config
       });
       if (!response.ok) {
+        this.hideLoader();
         return this.handleErrorResponse(response);
       }
+      this.hideLoader();
       return this.handleSuccess(response);
     } catch (error) {
+      this.hideLoader();
       return this.handleError(error);
     }
   }
@@ -119,13 +127,19 @@ class BaseApiClient {
    */
   static async put(endpoint, data = {}, config = {}) {
     try {
+      this.showLoader();
       // Check if data is FormData (for file uploads)
       const isFormData = data instanceof FormData;
       const headers = isFormData ? this.getAuthHeadersForFormData() : this.getAuthHeaders();
 
       // If FormData, use POST with _method: PUT for Laravel method spoofing
+      let body = isFormData ? data : JSON.stringify(data);
       const method = isFormData ? 'POST' : 'PUT';
-      const body = isFormData ? data : JSON.stringify(data);
+
+      // Add _method field for Laravel method spoofing when using FormData
+      if (isFormData) {
+        body.append('_method', 'PUT');
+      }
 
       const response = await this.fetchWithTimeout(`${API_BASE_URL}${endpoint}`, {
         method: method,
@@ -134,10 +148,13 @@ class BaseApiClient {
         ...config
       });
       if (!response.ok) {
+        this.hideLoader();
         return this.handleErrorResponse(response);
       }
+      this.hideLoader();
       return this.handleSuccess(response);
     } catch (error) {
+      this.hideLoader();
       return this.handleError(error);
     }
   }
@@ -147,16 +164,20 @@ class BaseApiClient {
    */
   static async delete(endpoint, config = {}) {
     try {
+      this.showLoader();
       const response = await this.fetchWithTimeout(`${API_BASE_URL}${endpoint}`, {
         method: 'DELETE',
         headers: this.getAuthHeaders(),
         ...config
       });
       if (!response.ok) {
+        this.hideLoader();
         return this.handleErrorResponse(response);
       }
+      this.hideLoader();
       return this.handleSuccess(response);
     } catch (error) {
+      this.hideLoader();
       return this.handleError(error);
     }
   }
@@ -316,6 +337,24 @@ class BaseApiClient {
       message: error.message || 'An error occurred',
       status: 0
     };
+  }
+
+  /**
+   * Show the Kokokah loader
+   */
+  static showLoader() {
+    if (window.kokokahLoader) {
+      window.kokokahLoader.show();
+    }
+  }
+
+  /**
+   * Hide the Kokokah loader
+   */
+  static hideLoader() {
+    if (window.kokokahLoader) {
+      window.kokokahLoader.hide();
+    }
   }
 }
 

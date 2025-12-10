@@ -20,9 +20,14 @@ class UserController extends Controller
     public function profile()
     {
         $user = Auth::user();
-        
+
         $profileData = $user->toArray();
-        
+
+        // Convert profile_photo to full URL
+        if ($profileData['profile_photo']) {
+            $profileData['profile_photo'] = '/storage/' . $profileData['profile_photo'];
+        }
+
         // Add additional profile information
         $profileData['stats'] = [
             'total_enrollments' => $user->enrollments()->count(),
@@ -83,22 +88,28 @@ class UserController extends Controller
         try {
             $updateData = $request->except(['avatar']);
 
-            // Handle avatar upload
+            // Handle avatar upload - save to profile_photo column
             if ($request->hasFile('avatar')) {
-                // Delete old avatar
-                if ($user->avatar) {
-                    Storage::disk('public')->delete($user->avatar);
+                // Delete old profile photo
+                if ($user->profile_photo) {
+                    Storage::disk('public')->delete($user->profile_photo);
                 }
-                $avatarPath = $request->file('avatar')->store('avatars', 'public');
-                $updateData['avatar'] = $avatarPath;
+                $profilePhotoPath = $request->file('avatar')->store('profile_photos', 'public');
+                $updateData['profile_photo'] = $profilePhotoPath;
             }
 
             $user->update($updateData);
 
+            // Return user with full profile photo URL
+            $userData = $user->fresh()->toArray();
+            if ($userData['profile_photo']) {
+                $userData['profile_photo'] = '/storage/' . $userData['profile_photo'];
+            }
+
             return response()->json([
                 'success' => true,
                 'message' => 'Profile updated successfully',
-                'data' => $user->fresh()
+                'data' => $userData
             ]);
         } catch (\Exception $e) {
             return response()->json([

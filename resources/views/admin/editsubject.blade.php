@@ -1187,10 +1187,11 @@
                                 {{-- youtube container --}}
                                 <div class="flex-column gap-3 hide select-children" id="youtube-container">
                                     <div class="modal-form-input-border"><label for="" class="modal-label">Youtube Url</label>
-                                            <input class="modal-input" type="text" placeholder="Enter url" />
+                                            <input class="modal-input" type="text" id="youtubeUrlInput" placeholder="Enter url" />
                                     </div>
-                                    <div class="modal-form-input-border"><label for="" class="modal-label">Duration</label>
-                                            <input class="modal-input" type="text" placeholder="Video duration" />
+                                    <div class="modal-form-input-border"><label for="" class="modal-label">Duration (minutes)</label>
+                                            <input class="modal-input" type="number" id="videoDurationInput" placeholder="Auto-generated from URL" />
+                                            {{-- <small class="text-muted d-block mt-2">Duration will be automatically extracted from the video URL</small> --}}
                                     </div>
                                 </div>
                                 {{-- content container  --}}
@@ -2457,6 +2458,190 @@
             ToastNotification.success('Success', `File "${file.name}" selected successfully`);
         }
 
+        // Helper function to extract YouTube duration from video page
+        async function getYouTubeDurationFromPage(videoId) {
+            try {
+                // Use noembed.com service which provides duration for YouTube videos
+                const response = await fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${videoId}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('YouTube noembed data:', data);
+
+                    // Try to extract duration from the response
+                    if (data.duration) {
+                        const minutes = Math.round(data.duration / 60);
+                        return minutes;
+                    }
+
+                    // Alternative: try to parse from HTML if available
+                    if (data.html) {
+                        // Look for duration in the HTML
+                        const durationMatch = data.html.match(/duration["\']?\s*:\s*(\d+)/i);
+                        if (durationMatch) {
+                            const seconds = parseInt(durationMatch[1]);
+                            const minutes = Math.round(seconds / 60);
+                            return minutes;
+                        }
+                    }
+                }
+            } catch (error) {
+                console.warn('Could not fetch YouTube duration from noembed:', error);
+            }
+
+            // If all else fails, try using a CORS proxy to fetch the page
+            try {
+                const response = await fetch(`https://www.youtube.com/watch?v=${videoId}`, {
+                    headers: {
+                        'User-Agent': 'Mozilla/5.0'
+                    }
+                });
+
+                if (response.ok) {
+                    const html = await response.text();
+
+                    // Look for duration in various formats
+                    // Format 1: "duration":"123456"
+                    let match = html.match(/"duration":"(\d+)"/);
+                    if (match) {
+                        const seconds = parseInt(match[1]);
+                        const minutes = Math.round(seconds / 60);
+                        return minutes;
+                    }
+
+                    // Format 2: "lengthSeconds":"123456"
+                    match = html.match(/"lengthSeconds":"(\d+)"/);
+                    if (match) {
+                        const seconds = parseInt(match[1]);
+                        const minutes = Math.round(seconds / 60);
+                        return minutes;
+                    }
+                }
+            } catch (error) {
+                console.warn('Could not fetch YouTube page directly:', error);
+            }
+
+            return null;
+        }
+
+        // Function to extract video duration from YouTube/Vimeo URL
+        async function extractVideoDuration(url) {
+            try {
+                // YouTube URL patterns
+                const youtubePatterns = [
+                    /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/,
+                    /youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/
+                ];
+
+                // Vimeo URL patterns
+                const vimeoPatterns = [
+                    /vimeo\.com\/(\d+)/,
+                    /player\.vimeo\.com\/video\/(\d+)/
+                ];
+
+                let videoId = null;
+                let isYoutube = false;
+                let isVimeo = false;
+
+                // Check if it's a YouTube URL
+                for (let pattern of youtubePatterns) {
+                    const match = url.match(pattern);
+                    if (match) {
+                        videoId = match[1];
+                        isYoutube = true;
+                        break;
+                    }
+                }
+
+                // Check if it's a Vimeo URL
+                if (!videoId) {
+                    for (let pattern of vimeoPatterns) {
+                        const match = url.match(pattern);
+                        if (match) {
+                            videoId = match[1];
+                            isVimeo = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!videoId) {
+                    console.warn('Could not extract video ID from URL');
+                    return null;
+                }
+
+                // For YouTube, use oEmbed API (no authentication required)
+                if (isYoutube) {
+                    try {
+                        const youtubeUrl = `https://www.youtube.com/watch?v=${videoId}`;
+                        const response = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(youtubeUrl)}&format=json`);
+                        if (response.ok) {
+                            const data = await response.json();
+                            console.log('YouTube oEmbed data:', data);
+                            // YouTube oEmbed doesn't return duration, so we'll need to use a different approach
+                            // Try to fetch the video page and extract duration from the HTML
+                            return await getYouTubeDurationFromPage(videoId);
+                        }
+                    } catch (error) {
+                        console.warn('Could not fetch YouTube duration via oEmbed:', error);
+                        // Fallback to trying to get duration from page
+                        return await getYouTubeDurationFromPage(videoId);
+                    }
+                }
+
+                // For Vimeo, we can try to fetch duration from Vimeo's oEmbed API
+                if (isVimeo) {
+                    try {
+                        const response = await fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${videoId}`);
+                        if (response.ok) {
+                            const data = await response.json();
+                            // Vimeo oEmbed returns duration in seconds
+                            if (data.duration) {
+                                const minutes = Math.round(data.duration / 60);
+                                return minutes;
+                            }
+                        }
+                    } catch (error) {
+                        console.warn('Could not fetch Vimeo duration:', error);
+                    }
+                }
+
+                return null;
+            } catch (error) {
+                console.error('Error extracting video duration:', error);
+                return null;
+            }
+        }
+
+        // Add event listener for YouTube URL input
+        document.addEventListener('DOMContentLoaded', function() {
+            const youtubeUrlInput = document.getElementById('youtubeUrlInput');
+            const videoDurationInput = document.getElementById('videoDurationInput');
+
+            if (youtubeUrlInput && videoDurationInput) {
+                youtubeUrlInput.addEventListener('blur', async function() {
+                    const url = this.value.trim();
+                    if (url) {
+                        // Show loading state
+                        videoDurationInput.placeholder = 'Extracting duration...';
+                        videoDurationInput.disabled = true;
+
+                        const duration = await extractVideoDuration(url);
+
+                        if (duration) {
+                            videoDurationInput.value = duration;
+                            ToastNotification.success('Success', `Duration extracted: ${duration} minutes`);
+                        } else {
+                            videoDurationInput.placeholder = 'Enter duration manually (in minutes)';
+                            videoDurationInput.value = '';
+                            ToastNotification.info('Info', 'Please enter the video duration manually');
+                        }
+
+                        videoDurationInput.disabled = false;
+                    }
+                });
+            }
+        });
+
         window.saveLessonHandler = async function() {
             try {
                 const modal = document.getElementById('addLessonModal');
@@ -2493,6 +2678,15 @@
                             return;
                         }
                         formData.append('video_url', youtubeUrl);
+
+                        // Get duration if available
+                        const durationInput = document.getElementById('videoDurationInput');
+                        if (durationInput && durationInput.value) {
+                            const duration = parseInt(durationInput.value);
+                            if (!isNaN(duration) && duration > 0) {
+                                formData.append('duration_minutes', duration);
+                            }
+                        }
                         break;
 
                     case 'content':
@@ -2584,6 +2778,12 @@
                     case 'youtube':
                         const youtubeInput = modal.querySelector('#youtube-container input[type="text"]');
                         if (youtubeInput) youtubeInput.value = lesson.video_url || '';
+
+                        // Populate duration if available
+                        const durationInput = document.getElementById('videoDurationInput');
+                        if (durationInput && lesson.duration_minutes) {
+                            durationInput.value = lesson.duration_minutes;
+                        }
                         break;
                     case 'content':
                         const contentInput = modal.querySelector('#content-container textarea');

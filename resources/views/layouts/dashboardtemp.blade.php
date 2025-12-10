@@ -28,6 +28,7 @@
      <link rel="stylesheet" href="{{ asset('css/style_theme.css') }}">
      <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
     <link rel="stylesheet" href="{{ asset('css/access.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
     {{-- @vite(['resources/css/dashboard.css','resources/css/access.css']) --}}
 
 
@@ -372,6 +373,9 @@
             });
         });
     </script>
+
+    <!-- Kokokah Logo Loader -->
+    <script src="{{ asset('js/utils/kokokahLoader.js') }}"></script>
 
 </body>
 
