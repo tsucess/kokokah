@@ -34,8 +34,8 @@ class UserApiClient extends BaseApiClient {
     static async changePassword(currentPassword, newPassword, confirmPassword) {
         return this.post('/users/change-password', {
             current_password: currentPassword,
-            password: newPassword,
-            password_confirmation: confirmPassword
+            new_password: newPassword,
+            new_password_confirmation: confirmPassword
         });
     }
 
@@ -96,6 +96,14 @@ class UserApiClient extends BaseApiClient {
         return this.post('/users/notifications/read', {
             notification_ids: notificationIds
         });
+    }
+
+    /**
+     * Delete user account
+     * @returns {Promise<Object>} Response with status
+     */
+    static async deleteAccount() {
+        return this.delete('/users/account');
     }
 }
 

@@ -1,12 +1,6 @@
 @extends('layouts.dashboardtemp')
 @section('content')
 
-<!-- Import UserApiClient -->
-<script type="module">
-    import UserApiClient from '{{ asset('js/api/userApiClient.js') }}';
-    window.UserApiClient = UserApiClient;
-</script>
-
 <style>
  body {
       background-color: #f9fafb;
@@ -213,7 +207,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <div class="modal-form-input-border">
-                                            <label class="modal-label">Enter First Name</label>
+                                            <label class="modal-label">First Name</label>
                                             <input type="text" class="modal-input" id="firstName"
                                                 name="first_name" placeholder="Winner" required>
                                                 </div>
@@ -223,7 +217,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <div class="modal-form-input-border">
-                                            <label class="modal-label">Enter Last Name</label>
+                                            <label class="modal-label">Last Name</label>
                                             <input type="text" class="modal-input" id="lastName"
                                                 name="last_name" placeholder="Winner" required>
                                                 </div>
@@ -260,7 +254,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="modal-form-input-border">
-                                                <label class="modal-label">Enter Date of Birth</label>
+                                                <label class="modal-label">Date of Birth</label>
                                                 <input type="date" class="modal-input" id="dateOfBirth" name="date_of_birth" placeholder="DD/MM/YYYY">
                                             </div>
                                             <small class="text-danger d-none" id="dobError"></small>
@@ -301,9 +295,9 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <div class="modal-form-input-border">
-                                            <label class="modal-label">Enter First Name</label>
+                                            <label class="modal-label">First Name</label>
                                             <input type="text" class="modal-input"
-                                                id="parentFirstName" name="parent_first_name" placeholder="Winner">
+                                                id="parentFirstName" name="parent_first_name" placeholder="Enter First Name">
                                                 </div>
                                             <small class="text-danger d-none" id="parentFirstNameError"></small>
                                         </div>
@@ -311,9 +305,9 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <div class="modal-form-input-border">
-                                            <label class="modal-label">Enter Last Name</label>
+                                            <label class="modal-label">Last Name</label>
                                             <input type="text" class="modal-input"
-                                                id="parentLastName" name="parent_last_name" placeholder="Winner">
+                                                id="parentLastName" name="parent_last_name" placeholder="Enter Last Name">
                                             </div>
                                             <small class="text-danger d-none" id="parentLastNameError"></small>
                                         </div>
@@ -325,9 +319,9 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <div class="modal-form-input-border">
-                                            <label class="modal-label">Enter Parent Email Address</label>
+                                            <label class="modal-label">Parent Email Address</label>
                                             <input type="email" class="modal-input" id="parentEmail"
-                                                name="parent_email" placeholder="Winner">
+                                                name="parent_email" placeholder="Enter Parent Email Address">
                                             </div>
                                             <small class="text-danger d-none" id="parentEmailError"></small>
                                         </div>
@@ -335,9 +329,9 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <div class="modal-form-input-border">
-                                            <label class="modal-label">Enter Parent Phone Number</label>
+                                            <label class="modal-label">Parent Phone Number</label>
                                             <input type="tel" class="modal-input" id="parentPhone"
-                                                name="parent_phone" placeholder="Winner">
+                                                name="parent_phone" placeholder="Enter Parent Phone Number">
                                             </div>
                                             <small class="text-danger d-none" id="parentPhoneError"></small>
                                         </div>
@@ -356,7 +350,7 @@
                         <div class="card-body p-4">
                             <div class="text-center">
                                 <div class="mb-4">
-                                    <img id="profilePreview" src="{{ asset('images/winner-round.png') }}" alt="Profile"
+                                    <img id="profilePreview" src="" alt="Profile"
                                         class=""
                                         style="width: 100%; max-width: 280px; height: auto; object-fit: cover; border-radius:50%;">
                                 </div>
@@ -384,15 +378,15 @@
                             <form class='d-flex flex-column gap-4'>
                                 <div class="form-group">
                                         <div class="modal-form-input-border">
-                                        <label class="modal-label">Enter Email Address</label>
+                                        <label class="modal-label">Email Address</label>
                                         <input type="email" class="modal-input" id="email"
-                                            name="email" placeholder="@gmail.com">
+                                            name="email" placeholder="@gmail.com" readonly>
                                         </div>
                                         <small class="text-danger d-none" id="emailError"></small>
                                     </div>
                                      <div class="form-group">
                                         <div class="modal-form-input-border">
-                                        <label class="modal-label">Password</label>
+                                        <label class="modal-label">Current Password</label>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <input type="password" class="modal-input" id="currentPassword"
                                                 name="password" placeholder="••••••••" required>
@@ -407,7 +401,7 @@
                                     </div>
                                      <div class="form-group">
                                         <div class="modal-form-input-border">
-                                        <label class="modal-label">Enter New Password</label>
+                                        <label class="modal-label">New Password</label>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <input type="password" class="modal-input" id="newPassword"
                                                 name="password" placeholder="••••••••" required>
@@ -437,14 +431,8 @@
                                     </div>
                                      <div class="form-group">
                                         <div class="modal-form-input-border">
-                                        <label class="modal-label">Select Role</label>
-                                        <select class="modal-input" id="role" name="role"
-                                            required>
-                                            <option value="">Select Role</option>
-                                            <option value="student">Student</option>
-                                            <option value="instructor">Instructor</option>
-                                            <option value="admin">Admin</option>
-                                        </select>
+                                        <label class="modal-label">Role</label>
+                                        <input type="text" class="modal-input" id="role" name="role" readonly>
                                         </div>
                                         <small class="text-danger d-none" id="roleError"></small>
                                     </div>
@@ -457,7 +445,7 @@
             <div class="card d-flex flex-column gap-4" style="background-color: #CCDBDD;">
                 <h3 class="account-deletion-title">Account Deleting</h3>
                 <p class="account-deletion-text">Once your account is deleted, you will lose access to it and all your data. Information from your account is not duplicated and after deleting, your account will be lost forever without the possibility of recovery.</p>
-                <button class="account-deletion-btn">Account Delect</button>
+                <button class="account-deletion-btn">Delete Account</button>
 
             </div>
         </div>
@@ -599,6 +587,13 @@
         const emailField = document.getElementById('email');
         if (emailField) {
           emailField.value = user.email || '';
+        }
+
+        // Populate role (readonly)
+        const roleField = document.getElementById('role');
+        if (roleField && user.role) {
+          const roleText = user.role.charAt(0).toUpperCase() + user.role.slice(1);
+          roleField.value = roleText;
         }
       } else {
         console.error('❌ Failed to fetch profile:', response);
@@ -874,13 +869,99 @@
       });
     }
 
-    // Save button
-    const saveBtn = document.querySelector('.save-btn');
-    if (saveBtn) {
-      saveBtn.addEventListener('click', async (e) => {
+    // Save button (for basic info)
+    const saveBtns = document.querySelectorAll('.save-btn');
+    saveBtns.forEach(btn => {
+      btn.addEventListener('click', async (e) => {
         e.preventDefault();
-        await saveProfileData();
+        const btnText = btn.textContent.trim();
+
+        if (btnText === 'Save') {
+          await saveProfileData();
+        } else if (btnText === 'Change Password') {
+          await changePasswordHandler();
+        }
       });
+    });
+
+    // Delete account button
+    const deleteAccountBtn = document.querySelector('.account-deletion-btn');
+    if (deleteAccountBtn) {
+      deleteAccountBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        await deleteAccountHandler();
+      });
+    }
+  }
+
+  // Change password handler
+  async function changePasswordHandler() {
+    try {
+      const currentPassword = document.getElementById('currentPassword').value.trim();
+      const newPassword = document.getElementById('newPassword').value.trim();
+      const confirmPassword = document.getElementById('confirmPassword').value.trim();
+
+      // Validation
+      if (!currentPassword || !newPassword || !confirmPassword) {
+        ToastNotification.error('Please fill in all password fields');
+        return;
+      }
+
+      if (newPassword !== confirmPassword) {
+        ToastNotification.error('New password and confirm password do not match');
+        return;
+      }
+
+      if (newPassword.length < 8) {
+        ToastNotification.error('New password must be at least 8 characters long');
+        return;
+      }
+
+      const response = await UserApiClient.changePassword(currentPassword, newPassword, confirmPassword);
+
+      if (response.success) {
+        ToastNotification.success('Password changed successfully!');
+        // Clear password fields
+        document.getElementById('currentPassword').value = '';
+        document.getElementById('newPassword').value = '';
+        document.getElementById('confirmPassword').value = '';
+      } else {
+        ToastNotification.error(response.message || 'Failed to change password');
+      }
+    } catch (error) {
+      console.error('Error changing password:', error);
+      ToastNotification.error('An error occurred while changing password. Please try again.');
+    }
+  }
+
+  // Delete account handler
+  async function deleteAccountHandler() {
+    try {
+      // Show confirmation dialog
+      const confirmed = confirm(
+        'Are you sure you want to delete your account? This action cannot be undone. All your data will be permanently deleted.'
+      );
+
+      if (!confirmed) {
+        return;
+      }
+
+      const response = await UserApiClient.deleteAccount();
+
+      if (response.success) {
+        ToastNotification.success('Account deleted successfully. Redirecting...');
+        // Redirect to login after 2 seconds
+        setTimeout(() => {
+          localStorage.removeItem('auth_token');
+          localStorage.removeItem('auth_user');
+          window.location.href = '/login';
+        }, 2000);
+      } else {
+        ToastNotification.error(response.message || 'Failed to delete account');
+      }
+    } catch (error) {
+      console.error('Error deleting account:', error);
+      ToastNotification.error('An error occurred while deleting account. Please try again.');
     }
   }
 

@@ -155,5 +155,3 @@ if (document.readyState === 'loading') {
   window.kokokahLoader = new KokokahLoader();
 }
 
-export default KokokahLoader;
-

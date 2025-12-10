@@ -239,6 +239,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/notifications', [UserController::class, 'notifications']);
         Route::post('/notifications/read', [UserController::class, 'markNotificationsRead']);
         Route::post('/change-password', [UserController::class, 'changePassword']);
+        Route::delete('/account', [UserController::class, 'deleteAccount']);
     });
 
     // Quiz management routes (authenticated)

@@ -358,6 +358,37 @@ class UserController extends Controller
     }
 
     /**
+     * Delete user account
+     */
+    public function deleteAccount(Request $request)
+    {
+        $user = Auth::user();
+
+        try {
+            // Delete profile photo if exists
+            if ($user->profile_photo) {
+                Storage::disk('public')->delete($user->profile_photo);
+            }
+
+            // Delete all user tokens (logout from all devices)
+            $user->tokens()->delete();
+
+            // Delete the user
+            $user->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Account deleted successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete account: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
      * Helper method to calculate login streak
      */
     private function calculateLoginStreak($user)
