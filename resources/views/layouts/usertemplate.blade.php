@@ -51,7 +51,7 @@
 
     <a class="nav-item-link" href="/userkudikah"><i class="fa-solid fa-user me-2  pe-2"></i>Kudikah</a>
 
-    <a class="nav-item-link" href="/results"><i class="fa-solid fa-user me-2  pe-2"></i> Notification</a>
+
 
           <!-- Communication -->
   <a class="nav-item-link d-flex justify-content-between align-items-center"
@@ -63,7 +63,7 @@
 
   <!-- communication dropdowns -->
   <div class="collapse ps-4" id="communication">
-    <a class="nav-item-link d-block" href="#">Announcement</a>
+    <a class="nav-item-link d-block" href="/userannouncement">Announcement</a>
     <a class="nav-item-link d-block" href="#">Email / Messaging Center</a>
     <a class="nav-item-link d-block" href="/userfeedback">Feedback / Surveys</a>
   </div>
@@ -108,14 +108,14 @@
     @yield('content')
 
   <!-- Footer -->
-      <div class="d-flex page-footer justify-content-between">
-        <div class="small text-muted">© Copyright Kokokah 2025. All rights reserved.</div>
+      <div class="d-flex flex-column align-items-center gap-1 px-3 py-md-4 flex-md-row page-footer justify-content-between justify-content-md-start gap-4">
+        <div class="text-center page-footer-link">© Copyright Kokokah 2025. All rights reserved.</div>
 
-        <div class = "small text-muted">
-          <a href="#" class = "text-decoration-none text-muted">License</a>&nbsp;
-          <a href="#" class = "text-decoration-none text-muted">More Themes</a>&nbsp;
-          <a href="#" class = "text-decoration-none text-muted">Documentation</a>&nbsp;
-          <a href="#" class = "text-decoration-none text-muted">Support</a>
+        <div class = "d-flex flex-column align-items-center align-items-md-start flex-md-row gap-md-3">
+          <a href="#" class = "text-decoration-none page-footer-link">License</a>
+          <a href="#" class = "text-decoration-none page-footer-link">More Themes</a>
+          <a href="#" class = "text-decoration-none page-footer-link">Documentation</a>
+          <a href="#" class = "text-decoration-none page-footer-link">Support</a>
         </div>
 
 

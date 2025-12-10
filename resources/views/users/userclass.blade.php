@@ -25,21 +25,22 @@ font-size: 12px;
         font-size: 16px;
         font-weight: 600;
     }
+    @media screen and (max-width:500px){
+        .enroll-btn{
+            padding-block: 10px;
+        }
+    }
 </style>
 <main>
 
 
     <!-- Header -->
-  <div class="header-section container-fluid">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-12 col-md-6 mt-2">
+  <div class="header-section container-fluid align-items-center d-flex justify-content-center justify-content-lg-start" style="height:200px;">
+        <div class="d-flex flex-column gap-2 align-items-center align-items-lg-start">
           <h3>Class</h3>
           <p>Let’s learn something new today!</p>
         </div>
 
-      </div>
-    </div>
   </div>
 
     <div class  = "container position-relative " style="margin-top: -70px;">
@@ -47,8 +48,8 @@ font-size: 12px;
 
             <div class = " p-3 rounded-4 bg-white mysubject d-flex flex-column gap-3 w-100">
 
-                <div class = "border border-dark p-3" style="border-radius: 10px;">
-                    <img src = "images/Kokokah_Logo.png" class = "img-fluid" />
+                <div class = "border border-dark p-2 text-center" style="border-radius: 10px;">
+                    <img src = "images/Kokokah_Logo.png" class = "img-fluid userdasboard-card-img" />
                 </div>
                 <div class = "card-item-class align-self-start" >JSS 1</div>
                 <h5 class = "subjects">Junior Secondary School 1</h5>
@@ -58,8 +59,8 @@ font-size: 12px;
 
             <div class = " p-3 rounded-4 bg-white mysubject d-flex flex-column gap-3 w-100">
 
-                <div class = "border border-dark p-3" style="border-radius: 10px;">
-                    <img src = "images/Kokokah_Logo.png" class = "img-fluid" />
+                <div class = "border border-dark p-2 text-center" style="border-radius: 10px;">
+                    <img src = "images/Kokokah_Logo.png" class = "img-fluid userdasboard-card-img" />
                 </div>
                 <div class = "card-item-class align-self-start" >JSS 1</div>
                 <h5 class = "subjects">Junior Secondary School 1</h5>
@@ -68,8 +69,8 @@ font-size: 12px;
 
              <div class = " p-3 rounded-4 bg-white mysubject d-flex flex-column gap-3 w-100">
 
-                <div class = "border border-dark p-3" style="border-radius: 10px;">
-                    <img src = "images/Kokokah_Logo.png" class = "img-fluid" />
+                <div class = "border border-dark p-2 text-center" style="border-radius: 10px;">
+                    <img src = "images/Kokokah_Logo.png" class = "img-fluid userdasboard-card-img" />
                 </div>
                 <div class = "card-item-class align-self-start" >JSS 1</div>
                 <h5 class = "subjects">Junior Secondary School 1</h5>
@@ -78,8 +79,8 @@ font-size: 12px;
 
              <div class = " p-3 rounded-4 bg-white mysubject d-flex flex-column gap-3 w-100">
 
-                <div class = "border border-dark p-3" style="border-radius: 10px;">
-                    <img src = "images/Kokokah_Logo.png" class = "img-fluid" />
+                <div class = "border border-dark p-2 text-center" style="border-radius: 10px;">
+                    <img src = "images/Kokokah_Logo.png" class = "img-fluid userdasboard-card-img" />
                 </div>
                 <div class = "card-item-class align-self-start" >JSS 1</div>
                 <h5 class = "subjects">Junior Secondary School 1</h5>

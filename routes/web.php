@@ -156,6 +156,10 @@ Route::get('/userenroll', function () {
     return view('users.enroll');
 });
 
+Route::get('/userannouncement', function () {
+    return view('users.userannouncement');
+});
+
 Route::get('/termsubject', function () {
     return view('users.termsubject');
 });

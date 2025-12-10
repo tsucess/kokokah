@@ -19,6 +19,9 @@
 body {
     background: #f5f5f5;
 }
+h1,h2,h3,h4,h5,h6,p{
+    margin-bottom: 0px;
+}
 
 /* Typography styles moved to Tailwind - see resources/css/app.css */
 h1 {
@@ -500,6 +503,10 @@ main .container {
     border-radius: 50%;
     display: inline-block;
 }
+.page-footer-link{
+        font-size: 16px;
+        color: var(--muted);
+    }
 
 @media screen and(max-width:320px) {
     .information1 h6,
@@ -535,10 +542,13 @@ main .container {
 
 @media screen and (max-width: 320px) {
     .page-footer {
-        margin-top: 22px;
-        text-align: center;
         color: var(--muted);
         padding: 20px 0;
+        font-size: 16px;
+    }
+    .page-footer-link{
+        font-size: 14px;
+        color: var(--muted);
     }
 }
 
@@ -956,9 +966,9 @@ main .container {
 
 .balance-header {
     /* Simulating the green gradient and shape */
-    background: linear-gradient(135deg, #4caf50, #7ee180);
+    background: linear-gradient(135deg,#2EAF4A, #8DD234);
     color: white;
-    padding: 2rem 1.5rem;
+    padding: 2rem 2.5rem;
     border-radius: 0.5rem;
     margin-bottom: 1.5rem;
     position: relative;
@@ -977,6 +987,17 @@ main .container {
     background-position: right top;
     opacity: 0.1;
     pointer-events: none;
+}
+
+.balance-header-title{
+    color: #FFFFFF;
+    font-size: 14px;
+}
+
+
+.balance-header-cardNo{
+    color: #FFEF60;
+    font-size: 14px;
 }
 
 .transaction-item {
@@ -1023,6 +1044,8 @@ main .container {
     font-size: 2rem;
     /* Default size */
     font-weight: bold;
+    font-family: 'fredoka';
+    color: #fff;
 }
 
 @media (min-width: 768px) {
@@ -1356,7 +1379,12 @@ main .container {
     color: #fff;
     position: relative;
     overflow: hidden;
+    height: 300px;
+}
+@media (min-width: 767.98px) {
+.header-section {
     height: 200px;
+}
 }
 
 .header-section h3 {
@@ -1371,6 +1399,16 @@ main .container {
 
 .header-image {
     max-width: 350px;
+    bottom: -10px;
+    right: -60px;
+    z-index: 2;
+}
+.header-card-text{
+    color: #666666;
+    font-size: 14px;
+}
+.userdasboard-card-img{
+   max-height: 50px;
 }
 
 /* Primary Navigation Button (Explore Kokokah) */
@@ -1708,6 +1746,8 @@ p {
     border-radius: 8px;
     background-color: #004a53;
     font-family: "Lato", sans-serif;
+    text-decoration: none;
+    color: #fff;
 }
 
 .tab {
@@ -1763,7 +1803,7 @@ p {
 }
 
 .tab-text {
-    font-size: 18px;
+    font-size: 14px;
     color: #1c1d1d;
 }
 
