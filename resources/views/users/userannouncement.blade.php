@@ -13,24 +13,24 @@
                         <h1>Notifications & Announcements</h1>
                         <p class="text">Stay updated with the latest news and updates from your school/instructor.</p>
                     </div>
-                    
+
                 </div>
 
                 <div class="d-flex flex-column " style="gap: 75px;">
                     <div class="row rounded-pill p-2 tab">
-                        <div class=" rounded-pill d-flex justify-content-center gap-1  align-items-center col tab-text bg-light">
+                        <div class=" rounded-pill d-flex justify-content-center gap-1 py-lg-2  align-items-center col tab-text bg-light">
                             <i class="fa-solid fa-bell"></i> All (20)
                         </div>
-                        <div class=" rounded-pill d-flex justify-content-center gap-1 align-items-center col tab-text">
+                        <div class=" rounded-pill d-flex justify-content-center gap-1 py-lg-2  align-items-center col tab-text">
                             <i class="fa-solid fa-bell"></i> Exams (10)
                         </div>
-                        <div class=" rounded-pill d-flex justify-content-center gap-1 align-items-center col tab-text">
+                        <div class=" rounded-pill d-flex justify-content-center gap-1 py-lg-2  align-items-center col tab-text">
                             <i class="fa-solid fa-bell"></i> Events (5)
                         </div>
-                        <div class=" rounded-pill d-flex justify-content-center gap-1 align-items-center col tab-text">
+                        <div class=" rounded-pill d-flex justify-content-center gap-1 py-lg-2  align-items-center col tab-text">
                             <i class="fa-solid fa-bell"></i> Alert (4)
                         </div>
-                        <div class=" rounded-pill d-flex justify-content-center gap-1 align-items-center col tab-text">
+                        <div class=" rounded-pill d-flex justify-content-center gap-1 py-lg-2  align-items-center col tab-text">
                             <i class="fa-solid fa-bell"></i> General Info (20)
                         </div>
                     </div>
