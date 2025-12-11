@@ -525,6 +525,63 @@
             color: #004A53;
         }
 
+        /* ===== Quiz Display Styles ===== */
+        .quiz-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .quiz-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 0.375rem;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-item:hover {
+            border-color: #004A53;
+            background-color: #f0f8f9;
+        }
+
+        .quiz-label {
+            font-weight: 600;
+            color: #004A53;
+            min-width: 35px;
+        }
+
+        .quiz-title {
+            color: #333;
+            font-size: 0.95rem;
+            flex: 1;
+        }
+
+        .quiz-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .quiz-actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            padding: 0.25rem 0.5rem;
+            transition: color 0.2s ease;
+        }
+
+        .quiz-actions button:hover {
+            color: #004A53;
+        }
+
         .btn-add-lesson {
             background-color: white;
             border: 1px solid #004A53;
@@ -1294,22 +1351,22 @@
                                     <div class="d-flex align-items-center gap-2">
                                         <div class="modal-form-input-border flex-md-fill">
                                             <label for="" class="modal-label">Option One</label>
-                                            <input class="modal-input" type="text" placeholder="10" />
+                                            <input class="modal-input" type="text" placeholder="Option One" />
                                         </div>
                                         <div class="modal-form-input-border flex-md-fill">
                                             <label for="" class="modal-label">Option Two</label>
-                                            <input class="modal-input" type="text" placeholder="10" />
+                                            <input class="modal-input" type="text" placeholder="Option Two" />
                                         </div>
 
                                     </div>
                                     <div class="d-flex align-items-center gap-2">
                                         <div class="modal-form-input-border flex-md-fill">
                                             <label for="" class="modal-label">Option Three</label>
-                                            <input class="modal-input" type="text" placeholder="10" />
+                                            <input class="modal-input" type="text" placeholder="Option Three" />
                                         </div>
                                         <div class="modal-form-input-border flex-md-fill">
                                             <label for="" class="modal-label">Option Four</label>
-                                            <input class="modal-input" type="text" placeholder="10" />
+                                            <input class="modal-input" type="text" placeholder="Option Four" />
                                         </div>
 
                                     </div>
@@ -1321,11 +1378,11 @@
                                         >
                                         <div class="modal-form-input-border flex-md-fill">
                                             <label for="" class="modal-label">Option One</label>
-                                            <input class="modal-input" type="text" placeholder="10" />
+                                            <input class="modal-input" type="text" placeholder="Option One" />
                                         </div>
                                         <div class="modal-form-input-border flex-md-fill">
                                             <label for="" class="modal-label">Option Two</label>
-                                            <input class="modal-input" type="text" placeholder="10" />
+                                            <input class="modal-input" type="text" placeholder="Option Two" />
                                         </div>
 
                                     </div>
@@ -1334,15 +1391,15 @@
                                 <div class="d-flex flex-column gap-2 flex-md-row">
                                     <div class="modal-form-input-border flex-md-fill">
                                         <label for="" class="modal-label">Correct Answer</label>
-                                        <input class="modal-input" type="text" placeholder="10" />
+                                        <input class="modal-input" type="text" placeholder="Correct Answer" />
                                     </div>
                                     <div class="modal-form-input-border flex-md-fill">
                                         <label for="" class="modal-label">Assigned Mark</label>
-                                        <input class="modal-input" type="text" placeholder="10" />
+                                        <input class="modal-input" type="text" placeholder="Assign Mark" />
                                     </div>
                                 </div>
                             </div>
-                            <button class="modal-form-btn">Add Category</button>
+                            <button class="modal-form-btn">Save Quiz</button>
                         </form>
                     </div>
                 </div>
@@ -1437,6 +1494,7 @@
         import CourseApiClient from '{{ asset('js/api/courseApiClient.js') }}';
         import TopicApiClient from '{{ asset('js/api/topicApiClient.js') }}';
         import LessonApiClient from '{{ asset('js/api/lessonApiClient.js') }}';
+        import QuizApiClient from '{{ asset('js/api/quizApiClient.js') }}';
         import ToastNotification from '{{ asset('js/utils/toastNotification.js') }}';
 
         // Get course ID from URL
@@ -1561,6 +1619,76 @@
 
             // Attach event listeners to the new items
             attachTopicEventListeners();
+
+            // Load quizzes for each topic
+            topics.forEach(topic => {
+                loadTopicQuizzes(topic.id);
+            });
+        }
+
+        // Load and display quizzes for a topic
+        async function loadTopicQuizzes(topicId) {
+            try {
+                const result = await QuizApiClient.getQuizzesByTopic(topicId);
+                if (result.success && result.data) {
+                    displayTopicQuizzes(topicId, result.data);
+                }
+            } catch (error) {
+                console.error(`Error loading quizzes for topic ${topicId}:`, error);
+            }
+        }
+
+        // Display quizzes for a topic as Q1, Q2, Q3, etc.
+        function displayTopicQuizzes(topicId, quizzes) {
+            const quizRow = document.getElementById(`quiz-row-${topicId}`);
+            if (!quizRow) return;
+
+            if (!quizzes || quizzes.length === 0) {
+                quizRow.innerHTML = '';
+                return;
+            }
+
+            // Create quiz items with labels Q1, Q2, Q3, etc.
+            const quizItemsHtml = quizzes.map((quiz, index) => `
+                <div class="quiz-item" data-quiz-id="${quiz.id}">
+                    <span class="quiz-label">Q${index + 1}</span>
+                    <span class="quiz-title" title="${quiz.title}">${quiz.title}</span>
+                    <div class="quiz-actions">
+                        <button type="button" title="Edit Quiz" class="edit-quiz-btn" data-quiz-id="${quiz.id}">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button type="button" title="Delete Quiz" class="delete-quiz-btn" data-quiz-id="${quiz.id}">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            quizRow.innerHTML = quizItemsHtml;
+
+            // Attach event listeners to quiz buttons
+            attachQuizEventListeners();
+        }
+
+        // Attach event listeners to quiz edit and delete buttons
+        function attachQuizEventListeners() {
+            // Edit quiz buttons
+            document.querySelectorAll('.edit-quiz-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const quizId = btn.getAttribute('data-quiz-id');
+                    editQuiz(quizId);
+                });
+            });
+
+            // Delete quiz buttons
+            document.querySelectorAll('.delete-quiz-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const quizId = btn.getAttribute('data-quiz-id');
+                    deleteQuiz(quizId);
+                });
+            });
         }
 
         // Create HTML for a topic accordion item
@@ -1576,11 +1704,15 @@
                         </div>
                         <div class="lesson-item-actions">
                             <button type="button" title="Edit" class="edit-lesson-btn" data-lesson-id="${lesson.id}"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button type="button" title="Add Quiz" class="add-quiz-btn" data-lesson-id="${lesson.id}" onclick="openQuizModal(${lesson.id})"><i class="fa-solid fa-question-circle"></i></button>
                             <button type="button" title="Delete" class="delete-lesson-btn" data-lesson-id="${lesson.id}"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     </div>
                 `).join('') :
                 '<p class="text-muted">No lessons yet. Click "Add Lesson" to create one.</p>';
+
+            // Create quizzes HTML (will be populated after loading)
+            const quizzesHtml = `<div class="quiz-row" id="quiz-row-${topic.id}"></div>`;
 
             return `
                 <div class="accordion-item draggable-topic" draggable="true" data-topic-id="${topic.id}" data-topic-index="${index}">
@@ -1610,14 +1742,7 @@
                             <button type="button" class="btn btn-add-lesson mt-3 add-lesson-btn" data-topic-id="${topic.id}">
                                 <i class="fa-solid fa-plus me-2"></i>Add Lesson
                             </button>
-                             <button
-      type="button"
-      class="btn btn-add-lesson mt-3"
-      data-bs-toggle="modal"
-      data-bs-target="#quiz-modal"
-    >
-      <i class="fa-solid fa-plus me-2"></i>Add Quiz
-    </button>
+                            ${quizzesHtml}
                         </div>
                     </div>
                 </div>
@@ -2953,6 +3078,314 @@
             } catch (error) {
                 console.error('Error deleting lesson:', error);
                 ToastNotification.error('Error', 'Failed to delete lesson');
+            }
+        };
+
+        // ===== INTERACTIVE QUIZ MODAL FUNCTIONALITY =====
+
+        // Store current lesson/topic ID for quiz creation
+        window.currentLessonIdForQuiz = null;
+        window.currentTopicIdForQuiz = null;
+        window.currentQuizType = 'lesson'; // 'lesson' or 'topic'
+        window.editingQuizId = null; // Track if we're editing a quiz
+
+        // Handle quiz type selection
+        const quizChoiceSelect = document.getElementById('quiz-choice');
+        if (quizChoiceSelect) {
+            quizChoiceSelect.addEventListener('change', (e) => {
+                const selectedType = e.target.value;
+                const multipleChoiceContainer = document.getElementById('multiple-choice-container');
+                const alternativeChoiceContainer = document.getElementById('alternative-choice-container');
+
+                if (multipleChoiceContainer) {
+                    multipleChoiceContainer.style.display = selectedType === 'multiple-choice' ? 'flex' : 'none';
+                }
+                if (alternativeChoiceContainer) {
+                    alternativeChoiceContainer.style.display = selectedType === 'alternative-choice' ? 'block' : 'none';
+                }
+            });
+        }
+
+        // Handle quiz modal form submission
+        const quizModalForm = document.querySelector('#quiz-modal .modal-form-container');
+        if (quizModalForm) {
+            quizModalForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                await saveQuiz();
+            });
+        }
+
+        // Handle "Add Category" button (submit quiz)
+        const addCategoryBtn = document.querySelector('#quiz-modal .modal-form-btn');
+        if (addCategoryBtn) {
+            addCategoryBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                await saveQuiz();
+            });
+        }
+
+        // Save quiz function
+        async function saveQuiz() {
+            try {
+                const isLessonQuiz = window.currentQuizType === 'lesson';
+                const resourceId = isLessonQuiz ? window.currentLessonIdForQuiz : window.currentTopicIdForQuiz;
+
+                if (!resourceId) {
+                    ToastNotification.error('Error', `No ${isLessonQuiz ? 'lesson' : 'topic'} selected`);
+                    return;
+                }
+
+                // Get form data
+                const questionInput = document.querySelector('#quiz-modal input[placeholder*="Identify"]');
+                const quizTypeSelect = document.getElementById('quiz-choice');
+                const correctAnswerInput = document.querySelector('#quiz-modal input[placeholder="Correct Answer"]');
+                const marksInput = document.querySelector('#quiz-modal input[placeholder="Assign Mark"]');
+
+                const questionText = questionInput?.value?.trim();
+                const quizType = quizTypeSelect?.value || 'multiple-choice';
+                const correctAnswer = correctAnswerInput?.value?.trim();
+                const points = parseInt(marksInput?.value) || 1;
+
+                // Validate required fields
+                if (!questionText) {
+                    ToastNotification.error('Error', 'Question text is required');
+                    return;
+                }
+                if (!correctAnswer) {
+                    ToastNotification.error('Error', 'Correct answer is required');
+                    return;
+                }
+
+                // Get options based on quiz type
+                let options = [];
+                if (quizType === 'multiple-choice') {
+                    const optionInputs = document.querySelectorAll('#multiple-choice-container input[placeholder*="Option"]');
+                    options = Array.from(optionInputs)
+                        .map(input => input.value?.trim())
+                        .filter(val => val);
+                } else if (quizType === 'alternative-choice') {
+                    const optionInputs = document.querySelectorAll('#alternative-choice-container input[placeholder*="Option"]');
+                    options = Array.from(optionInputs)
+                        .map(input => input.value?.trim())
+                        .filter(val => val);
+                }
+
+                if (options.length === 0) {
+                    ToastNotification.error('Error', 'At least one option is required');
+                    return;
+                }
+
+                // Prepare quiz data
+                // Map question types: multiple-choice -> 'mcq', alternative-choice -> 'alternate'
+                const quizType_mapped = quizType === 'multiple-choice' ? 'mcq' : 'alternate';
+                const quizData = {
+                    title: questionText,
+                    type: quizType_mapped,
+                    questions: [{
+                        question_text: questionText,
+                        type: quizType_mapped,
+                        options: options,
+                        correct_answer: correctAnswer,
+                        points: points
+                    }],
+                    passing_score: 50,
+                    shuffle_questions: false
+                };
+
+                // Create or update quiz via API based on type
+                let result;
+                if (window.editingQuizId) {
+                    // Update existing quiz
+                    result = await QuizApiClient.updateQuiz(window.editingQuizId, quizData);
+                } else if (isLessonQuiz) {
+                    // Create new lesson quiz
+                    result = await QuizApiClient.createQuizForLesson(resourceId, quizData);
+                } else {
+                    // Create new topic quiz
+                    result = await QuizApiClient.createQuizForTopic(resourceId, quizData);
+                }
+
+                if (result.success) {
+                    const message = window.editingQuizId ? 'Quiz updated successfully' : 'Quiz created successfully';
+                    ToastNotification.success('Success', message);
+
+                    // Reset form
+                    quizModalForm.reset();
+                    window.editingQuizId = null;
+
+                    // Close modal
+                    const quizModal = bootstrap.Modal.getInstance(document.getElementById('quiz-modal'));
+                    if (quizModal) quizModal.hide();
+
+                    // Reload topics to show new/updated quiz
+                    await loadTopics();
+                } else {
+                    ToastNotification.error('Error', result.message || 'Failed to save quiz');
+                }
+            } catch (error) {
+                console.error('Error saving quiz:', error);
+                ToastNotification.error('Error', 'Failed to save quiz: ' + error.message);
+            }
+        }
+
+        // Handle "Add Quiz" button click for lessons
+        window.openQuizModal = function(lessonId) {
+            window.currentLessonIdForQuiz = lessonId;
+            window.currentTopicIdForQuiz = null;
+            window.currentQuizType = 'lesson';
+            window.editingQuizId = null;
+
+            // Reset modal
+            const modal = document.getElementById('quiz-modal');
+            const form = modal.querySelector('.modal-form-container');
+            if (form) form.reset();
+
+            // Reset modal title and button
+            const modalTitle = modal.querySelector('.modal-title');
+            if (modalTitle) {
+                modalTitle.innerHTML = '<i class="fa-solid fa-chevron-left fa-2xs" style="color: #333333"></i>Interactive Quiz';
+            }
+            const saveBtn = modal.querySelector('.modal-form-btn');
+            if (saveBtn) {
+                saveBtn.textContent = 'Save Quiz';
+            }
+
+            const quizModal = new bootstrap.Modal(modal);
+            quizModal.show();
+        };
+
+        // Handle "Add Quiz" button click for topics
+        window.openTopicQuizModal = function(topicId) {
+            window.currentTopicIdForQuiz = topicId;
+            window.currentLessonIdForQuiz = null;
+            window.currentQuizType = 'topic';
+            window.editingQuizId = null;
+
+            // Reset modal
+            const modal = document.getElementById('quiz-modal');
+            const form = modal.querySelector('.modal-form-container');
+            if (form) form.reset();
+
+            // Reset modal title and button
+            const modalTitle = modal.querySelector('.modal-title');
+            if (modalTitle) {
+                modalTitle.innerHTML = '<i class="fa-solid fa-chevron-left fa-2xs" style="color: #333333"></i>Interactive Quiz';
+            }
+            const saveBtn = modal.querySelector('.modal-form-btn');
+            if (saveBtn) {
+                saveBtn.textContent = 'Save Quiz';
+            }
+
+            const quizModal = new bootstrap.Modal(modal);
+            quizModal.show();
+        };
+
+        // Edit quiz function
+        window.editQuiz = async function(quizId) {
+            try {
+                const result = await QuizApiClient.getQuiz(quizId);
+                if (result.success) {
+                    const quiz = result.data;
+
+                    // Store the quiz ID being edited
+                    window.editingQuizId = quizId;
+
+                    // Get the modal
+                    const modal = document.getElementById('quiz-modal');
+                    const questionInput = modal.querySelector('input[placeholder*="Identify"]');
+                    const quizTypeSelect = document.getElementById('quiz-choice');
+                    const correctAnswerInput = modal.querySelector('input[placeholder="Correct Answer"]');
+                    const marksInput = modal.querySelector('input[placeholder="Assign Mark"]');
+
+                    // Populate question
+                    if (questionInput && quiz.title) {
+                        questionInput.value = quiz.title;
+                    }
+
+                    // Determine quiz type (mcq -> multiple-choice, alternate -> alternative-choice)
+                    const quizTypeValue = quiz.type === 'mcq' ? 'multiple-choice' : 'alternative-choice';
+                    if (quizTypeSelect) {
+                        quizTypeSelect.value = quizTypeValue;
+                        // Trigger change event to show the correct container
+                        quizTypeSelect.dispatchEvent(new Event('change'));
+                    }
+
+                    // Populate options and other fields from the first question
+                    if (quiz.questions && quiz.questions.length > 0) {
+                        const question = quiz.questions[0];
+
+                        // Populate options
+                        if (quizTypeValue === 'multiple-choice') {
+                            const optionInputs = modal.querySelectorAll('#multiple-choice-container input[placeholder*="Option"]');
+                            if (question.options && Array.isArray(question.options)) {
+                                question.options.forEach((option, index) => {
+                                    if (optionInputs[index]) {
+                                        optionInputs[index].value = option;
+                                    }
+                                });
+                            }
+                        } else if (quizTypeValue === 'alternative-choice') {
+                            const optionInputs = modal.querySelectorAll('#alternative-choice-container input[placeholder*="Option"]');
+                            if (question.options && Array.isArray(question.options)) {
+                                question.options.forEach((option, index) => {
+                                    if (optionInputs[index]) {
+                                        optionInputs[index].value = option;
+                                    }
+                                });
+                            }
+                        }
+
+                        // Populate correct answer and marks
+                        if (correctAnswerInput && question.correct_answer) {
+                            correctAnswerInput.value = question.correct_answer;
+                        }
+                        if (marksInput && question.points) {
+                            marksInput.value = question.points;
+                        }
+                    }
+
+                    // Update modal title to indicate editing
+                    const modalTitle = modal.querySelector('.modal-title');
+                    if (modalTitle) {
+                        modalTitle.innerHTML = '<i class="fa-solid fa-chevron-left fa-2xs" style="color: #333333"></i>Edit Quiz';
+                    }
+
+                    // Update button text
+                    const saveBtn = modal.querySelector('.modal-form-btn');
+                    if (saveBtn) {
+                        saveBtn.textContent = 'Update Quiz';
+                    }
+
+                    // Show modal
+                    const quizModal = new bootstrap.Modal(modal);
+                    quizModal.show();
+                } else {
+                    ToastNotification.error('Error', 'Failed to load quiz');
+                }
+            } catch (error) {
+                console.error('Error loading quiz:', error);
+                ToastNotification.error('Error', 'Failed to load quiz');
+            }
+        };
+
+        // Delete quiz function
+        window.deleteQuiz = async function(quizId) {
+            if (!confirm('Are you sure you want to delete this quiz?')) {
+                return;
+            }
+
+            try {
+                const result = await QuizApiClient.deleteQuiz(quizId);
+                if (result.success) {
+                    ToastNotification.success('Success', 'Quiz deleted successfully');
+                    // Reload topics to refresh quizzes
+                    await loadTopics();
+                } else {
+                    ToastNotification.error('Error', result.message || 'Failed to delete quiz');
+                }
+            } catch (error) {
+                console.error('Error deleting quiz:', error);
+                ToastNotification.error('Error', 'Failed to delete quiz');
             }
         };
     </script>
