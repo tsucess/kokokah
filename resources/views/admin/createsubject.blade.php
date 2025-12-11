@@ -409,7 +409,7 @@
                 <div class="description-section">
                     <p class="description-label">Course Description</p>
 
-                    <div class="editor-toolbar">
+                    {{-- <div class="editor-toolbar">
                         <span title="Bold"><i class="fa-solid fa-bold"></i></span>
                         <span title="Italic"><i class="fa-solid fa-italic"></i></span>
                         <span title="Underline"><i class="fa-solid fa-underline"></i></span>
@@ -418,7 +418,8 @@
                     </div>
 
                     <textarea class="description-textarea" id="courseDescription" name="courseDescription"
-                        placeholder="Write subject description here..." form="courseDetailsForm"></textarea>
+                        placeholder="Write subject description here..." form="courseDetailsForm"></textarea> --}}
+                    <div id="courseDescription"></div>
                 </div>
             </form>
 
@@ -752,9 +753,14 @@
 
     </main>
 
-
+    <!-- Include the Quill library -->
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
     <script type="module">
         import CourseApiClient from '{{ asset('js/api/courseApiClient.js') }}';
+
+        const quill = new Quill('#courseDescription', {
+            theme: 'snow'
+        });
 
         // Load dropdown data
         async function loadDropdownData() {
@@ -897,9 +903,9 @@
                 courseData.price = e.target.value;
             });
 
-            document.getElementById('courseDescription').addEventListener('input', e => {
-                courseData.description = e.target.value;
-            });
+            quill.on('text-change', function () {
+    courseData.description = quill.getText();
+});
 
             document.getElementById('free-course').addEventListener('change', e => {
                 const checked = e.target.checked;
@@ -1000,9 +1006,10 @@
                     const title = document.getElementById('courseTitle').value;
                     const category = document.getElementById('courseCategory').value;
                     const level = document.getElementById('courseLevel').value;
-                    const description = document.getElementById('courseDescription').value;
+                    const description = quill.getText();
                     const term = document.getElementById('subjectTerm').value;
 
+                    console.log(description)
                     if (!title || !category || !level || !description) {
                         alert('Please fill in all required fields');
                         return;
@@ -1017,7 +1024,8 @@
                         formData.append('slug', generateSlug(title));
                         formData.append('description', description);
                         formData.append('course_category_id', category);
-                        formData.append('curriculum_category_id', category); // Using same category for both
+                        formData.append('curriculum_category_id',
+                        category); // Using same category for both
                         formData.append('level_id', level);
                         formData.append('price', courseData.price || 0);
                         formData.append('free', courseData.freeCourse ? 1 : 0);
@@ -1081,7 +1089,8 @@
                         formData.append('slug', generateSlug(title));
                         formData.append('description', description);
                         formData.append('course_category_id', category);
-                        formData.append('curriculum_category_id', category); // Using same category for both
+                        formData.append('curriculum_category_id',
+                        category); // Using same category for both
                         formData.append('level_id', level);
                         formData.append('price', courseData.price || 0);
                         formData.append('free', courseData.freeCourse ? 1 : 0);
@@ -1144,7 +1153,8 @@
                         formData.append('slug', generateSlug(title));
                         formData.append('description', description);
                         formData.append('course_category_id', category);
-                        formData.append('curriculum_category_id', category); // Using same category for both
+                        formData.append('curriculum_category_id',
+                        category); // Using same category for both
                         formData.append('price', courseData.price || 0);
                         formData.append('free', courseData.freeCourse ? 1 : 0);
                         formData.append('url', generateSlug(title));

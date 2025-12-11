@@ -31,6 +31,9 @@
     <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
     {{-- @vite(['resources/css/dashboard.css','resources/css/access.css']) --}}
 
+    <!-- Include stylesheet quilljs -->
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+
 
 </head>
 
@@ -138,7 +141,7 @@
 
         <div class="sidebar-footer mt-auto p-3">
             <a class="nav-item-link" href="#"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
-            
+
             <div class="profile mt-3" id="profileSection">
                 <img class="avatar" id="profileImage" src="images/winner-round.png" alt="user"
                     style="cursor: pointer; width: 40px; height: 40px; object-fit: cover; border-radius: 50%; border: 2px solid #ff00;"
