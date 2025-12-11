@@ -39,60 +39,10 @@
     <!-- Overlay for mobile sidebar -->
     <div class="overlay" id="sidebarOverlay"></div>
 
-<<<<<<< HEAD
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
         <div class="brand">
             <img src="images/Kokokah_Logo.png" alt="Kokokah Logo" class="img-fluid dashboard-logo">
-=======
-  <!-- Sidebar -->
-  <aside class="sidebar" id="sidebar">
-    <div class="brand">
-      <img src="images/Kokokah_Logo.png" alt="Kokokah Logo" class="img-fluid dashboard-logo">
-    </div>
-
-    <nav class="nav-group" id="sidebarNav">
-      <a class="nav-item-link" href="/usersdashboard"><i class="fa-solid fa-gauge pe-3"></i> Dashboard</a>
-
-    <a class="nav-item-link" href="/userclass"><i class="fa-solid fa-book-open me-2  pe-1"></i> Class</a>
-
-    <a class="nav-item-link" href="/usersubject"><i class="fa-solid fa-user me-2  pe-2"></i> Subject</a>
-
-    <a class="nav-item-link" href="/userresult"><i class="fa-solid fa-user me-2  pe-2"></i> Results & Scoring</a>
-
-    <a class="nav-item-link" href="/userkudikah"><i class="fa-solid fa-user me-2  pe-2"></i>Kudikah</a>
-
-<a class="nav-item-link" href="/userleaderboard"><i class="fa-solid fa-user me-2  pe-2"></i>Leaderboard</a>
-<a class="nav-item-link" href="/userkoodies"><i class="fa-solid fa-user me-2  pe-2"></i>Ai</a>
-
-          <!-- Communication -->
-  <a class="nav-item-link d-flex justify-content-between align-items-center"
-     data-bs-toggle="collapse" href="#communication" role="button"
-     aria-expanded="false" aria-controls="communication">
-    <span><i class="fa-solid fa-comments me-2 pe-2"></i> Communication</span>
-    <i class="fa-solid fa-chevron-down small"></i>
-  </a>
-
-  <!-- communication dropdowns -->
-  <div class="collapse ps-4" id="communication">
-    <a class="nav-item-link d-block" href="/userannouncement">Announcement</a>
-    <a class="nav-item-link d-block" href="#">Email / Messaging Center</a>
-    <a class="nav-item-link d-block" href="/userfeedback">Feedback / Surveys</a>
-  </div>
-
-
-    </nav>
-
-
-
-    <div class="sidebar-footer">
-      <a class="nav-item-link" href="#"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
-      <div class="profile mt-3">
-        <img class="avatar" src="https://dummyimage.com/72x72/0ea5e9/ffffff.png&text=U" alt="user">
-        <div>
-          <div class="fw-bold">Culacino_</div>
-          <div class="text-muted small">UI Designer</div>
->>>>>>> f1973081bb3fe18ae58d770aed0defecf798490f
         </div>
 
         <nav class="nav-group" id="sidebarNav">
@@ -180,7 +130,6 @@
 
     @yield('content')
 
-<<<<<<< HEAD
     <!-- Footer -->
     <div class="d-flex page-footer justify-content-between">
         <div class="small text-muted">© Copyright Kokokah 2025. All rights reserved.</div>
@@ -190,17 +139,6 @@
             <a href="#" class = "text-decoration-none text-muted">More Themes</a>&nbsp;
             <a href="#" class = "text-decoration-none text-muted">Documentation</a>&nbsp;
             <a href="#" class = "text-decoration-none text-muted">Support</a>
-=======
-  <!-- Footer -->
-      <div class="d-flex flex-column align-items-center gap-1 px-3 py-md-4 flex-md-row page-footer justify-content-between justify-content-md-start gap-4">
-        <div class="text-center page-footer-link">© Copyright Kokokah 2025. All rights reserved.</div>
-
-        <div class = "d-flex flex-column align-items-center align-items-md-start flex-md-row gap-md-3">
-          <a href="#" class = "text-decoration-none page-footer-link">License</a>
-          <a href="#" class = "text-decoration-none page-footer-link">More Themes</a>
-          <a href="#" class = "text-decoration-none page-footer-link">Documentation</a>
-          <a href="#" class = "text-decoration-none page-footer-link">Support</a>
->>>>>>> f1973081bb3fe18ae58d770aed0defecf798490f
         </div>
 
 
