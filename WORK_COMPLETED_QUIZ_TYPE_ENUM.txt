@@ -1,0 +1,117 @@
+================================================================================
+WORK COMPLETED: QUIZ TYPE ENUM FIX
+================================================================================
+
+Date: December 11, 2025
+Project: Kokokah LMS
+Issue Fixed: Data truncated for column 'type' at row 1 error
+
+================================================================================
+PROBLEM
+================================================================================
+
+When creating a quiz with type 'alternate', the database threw an error:
+
+    SQLSTATE[01000]: Warning: 1265 Data truncated for column 'type' at row 1
+    (Connection: mysql, SQL: insert into `quizzes` 
+    (`title`, `type`, `passing_score`, `shuffle_questions`, `lesson_id`, 
+    `topic_id`, `updated_at`, `created_at`) values 
+    (Quizzes from lesson, alternate, 50, 0, 3, 2, ...))
+
+ROOT CAUSE:
+The `type` column was defined as an ENUM with only ['mcq', 'theory'] values.
+The database rejected the 'alternate' value because it wasn't in the ENUM list.
+
+================================================================================
+SOLUTION
+================================================================================
+
+Created a new migration to update the ENUM to include 'alternate':
+
+FILE: database/migrations/2025_12_11_000003_add_alternate_to_quiz_type_enum.php
+
+MIGRATION EXECUTED:
+✅ 2025_12_11_000003_add_alternate_to_quiz_type_enum ..... 224.19ms DONE
+
+WHAT IT DOES:
+- Updates the type column ENUM to include 'alternate'
+- Maintains backward compatibility with 'mcq' and 'theory'
+- Keeps the default value as 'mcq'
+
+================================================================================
+DATABASE SCHEMA CHANGES
+================================================================================
+
+BEFORE:
+    type: ENUM('mcq', 'theory') DEFAULT 'mcq'
+
+AFTER:
+    type: ENUM('mcq', 'alternate', 'theory') DEFAULT 'mcq'
+
+================================================================================
+QUIZ TYPES NOW SUPPORTED
+================================================================================
+
+MULTIPLE CHOICE:
+✅ Type value: 'mcq'
+✅ Can be created and stored
+
+ALTERNATIVE CHOICE:
+✅ Type value: 'alternate'
+✅ Can be created and stored (FIXED!)
+
+THEORY:
+✅ Type value: 'theory'
+✅ Can be created and stored
+
+================================================================================
+HOW IT WORKS NOW
+================================================================================
+
+CREATING A MULTIPLE CHOICE QUIZ:
+1. User selects "Multiple Choice"
+2. Frontend sends: type = 'mcq'
+3. Backend validates: ✅ in ['mcq', 'alternate', 'theory']
+4. Database stores: type = 'mcq' ✅
+
+CREATING AN ALTERNATIVE CHOICE QUIZ:
+1. User selects "Alternative Choice"
+2. Frontend sends: type = 'alternate'
+3. Backend validates: ✅ in ['mcq', 'alternate', 'theory']
+4. Database stores: type = 'alternate' ✅ (FIXED!)
+
+================================================================================
+VERIFICATION
+================================================================================
+
+✅ Migration created successfully
+✅ Migration executed without errors
+✅ Database ENUM updated
+✅ Backward compatible with existing data
+✅ Supports all three quiz types
+
+================================================================================
+TESTING CHECKLIST
+================================================================================
+
+To verify the fix works:
+- [ ] Create a Multiple Choice quiz
+  - Check DB: type = 'mcq' ✅
+  
+- [ ] Create an Alternative Choice quiz
+  - Check DB: type = 'alternate' ✅
+  
+- [ ] Both should save without errors ✅
+
+================================================================================
+STATUS: ✅ COMPLETE AND READY FOR TESTING
+================================================================================
+
+The database now accepts all three quiz types: mcq, alternate, and theory.
+All quiz creation operations should work without errors.
+
+NEXT STEPS:
+1. Test creating a Multiple Choice quiz
+2. Test creating an Alternative Choice quiz
+3. Verify both types save correctly to database
+

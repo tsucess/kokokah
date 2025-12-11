@@ -32,4 +32,9 @@ class Topic extends Model
     {
         return $this->hasMany(Lesson::class, 'topic_id')->orderBy('order');
     }
+
+    public function quizzes()
+    {
+        return $this->hasMany(Quiz::class, 'topic_id');
+    }
 }
