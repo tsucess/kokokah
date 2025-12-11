@@ -3,17 +3,17 @@
 @section('content')
     <style>
         /* CSS from the base layout template */
-        :root {
+        /* :root {
             --bs-dark-teal: #114243;
             --bs-light-gray: #e9ecef;
             --bs-main-green: #20c997; /* Used for subtle accents */
-            --sidebar-width: 250px;
+            /* --sidebar-width: 250px;
             --right-panel-width: 300px; /* Width of the History panel */
-            --topbar-height: 60px;
-        }
+            /* --topbar-height: 60px; */ */
+        } */
 
         /* Base Layout CSS */
-        body {
+        /* body {
             background-color: #f8f9fa;
             min-height: 100vh;
         }
@@ -28,8 +28,8 @@
             overflow-y: auto;
             transition: transform 0.3s ease;
             transform: translateX(0);
-        }
-        .topbar {
+        } */
+        /* .topbar {
             position: sticky;
             top: 0;
             height: var(--topbar-height);
@@ -41,18 +41,18 @@
             align-items: center;
             justify-content: space-between;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-        }
+        } */
         /* MAIN content area - pushed by left sidebar and constrained by right panel */
-        main {
+        /* main {
             margin-left: var(--sidebar-width);
-            margin-right: var(--right-panel-width); /* Push content away from history panel */
+            margin-right: var(--right-panel-width);
             padding: 1.5rem;
             padding-bottom: 50px;
             min-height: calc(100vh - var(--topbar-height));
             display: flex;
             flex-direction: column;
             transition: margin-right 0.3s ease, margin-left 0.3s ease;
-        }
+        } */
 
         /* Right History Panel */
         .history-panel {
@@ -62,12 +62,12 @@
             top: var(--topbar-height);
             bottom: 30px; /* Above the fixed footer */
             right: 0;
-            z-index: 1020;
+            z-index: 700;
             border-left: 1px solid var(--bs-light-gray);
             overflow-y: auto;
             padding: 1.5rem;
         }
-        .page-footer {
+        /* .page-footer {
             position: fixed;
             bottom: 0;
             left: var(--sidebar-width);
@@ -80,7 +80,7 @@
             padding: 0 1rem;
             display: flex;
             align-items: center;
-        }
+        } */
         /* Base Nav/Sidebar styles */
         .nav-item-link {
             display: flex;
@@ -100,14 +100,14 @@
             background-color: var(--bs-dark-teal);
             color: white;
         }
-        .sidebar-footer {
+        /* .sidebar-footer {
             padding: 1rem;
             border-top: 1px solid var(--bs-light-gray);
             position: sticky;
             bottom: 0;
             width: 100%;
             background-color: #fff;
-        }
+        } */
         .overlay {
             position: fixed;
             top: 0;
@@ -145,9 +145,9 @@
             .history-panel {
                 display: none;
             }
-            .page-footer {
+            /* .page-footer {
                 left: 0;
-            }
+            } */
         }
 
         /* CONTENT SPECIFIC STYLING (AI/Messaging Center) */
@@ -253,7 +253,6 @@
             </div>
         </div>
 
-    </main>
 
     <div class="history-panel d-none d-lg-block">
         <h6 class="fw-bold" style="color: var(--bs-dark-teal);">History</h6>
@@ -270,6 +269,8 @@
             <span class="text-muted">2 hours ago</span>
         </div>
     </div>
+    </main>
+
 
 
 

@@ -184,6 +184,10 @@ Route::get('/userlessondetails', function () {
     return view('users.subjectdetails');
 });
 
+Route::get('/userchatroom', function () {
+    return view('users.userchatroom');
+});
+
 Route::get('/subjectselect', function () {
     return view('admin.subjectselected');
 });
