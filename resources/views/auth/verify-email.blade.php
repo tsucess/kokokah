@@ -18,8 +18,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/access.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}?v={{ time() }}" rel="stylesheet">
+    <link href="{{ asset('css/access.css') }}?v={{ time() }}" rel="stylesheet">
 
 </head>
 
@@ -48,7 +48,7 @@
                     <p class="mb-4" style = "color:#969696;font:inter;">An authentication code has been sent to your
                         email</p>
 
-                    <form id="verifyForm" method="POST" action="javascript:void(0);">
+                    <form id="verifyForm" method="POST" action="javascript:void(0);" data-ajax>
                         @csrf
                         <div class="custom-form-group">
                             <label for="email" class="custom-label">Email Address</label>
@@ -131,7 +131,18 @@
 
             if (result.success) {
                 UIHelpers.showSuccess('Email verified successfully! Redirecting to dashboard...');
-                UIHelpers.redirect('/dashboard', 1500);
+
+                // Determine redirect URL based on user role
+                let redirectUrl = '/dashboard'; // Default for admin/instructor
+
+                // Get user from result.data.user or result.user
+                const user = result.data?.user || result.user;
+
+                if (user && user.role === 'student') {
+                  redirectUrl = '/usersdashboard';
+                }
+
+                UIHelpers.redirect(redirectUrl, 1500);
             } else {
                 UIHelpers.showError(result.message || 'Verification failed');
                 UIHelpers.setButtonLoading('verifyBtn', false);

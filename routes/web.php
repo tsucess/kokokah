@@ -75,8 +75,22 @@ Route::get('/market', function () {
     return view('market');
 });
 
-Route::get('/profiles', function () {
+Route::get('/test-auth', function () {
+    return response()->json([
+        'authenticated' => auth()->check(),
+        'user' => auth()->user(),
+        'guard' => auth()->getDefaultDriver()
+    ]);
+});
+
+
+// Profile routes - simple views that load profile data via API
+Route::get('/adminprofile', function () {
     return view('admin.profile');
+});
+
+Route::get('/userprofile', function () {
+    return view('users.profile');
 });
 
 Route::get('/profile', function () {

@@ -20,8 +20,8 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 
   <!-- Custom CSS -->
-  <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-  <link href="{{ asset('css/access.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/style.css') }}?v={{ time() }}" rel="stylesheet">
+  <link href="{{ asset('css/access.css') }}?v={{ time() }}" rel="stylesheet">
 
 </head>
 <body>
@@ -48,7 +48,7 @@
             Please set a new password for your account.
           </p>
 
-          <form id="resetForm" method="POST" action="javascript:void(0);">
+          <form id="resetForm" method="POST" action="javascript:void(0);" data-ajax>
             @csrf
             <div class="custom-form-group mb-5">
               <label for="password" class="custom-label">Enter new Password</label>

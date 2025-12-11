@@ -1,4 +1,4 @@
-@extends('layouts.dashboardtemp')
+@extends('layouts.usertemplate')
 @section('content')
     <style>
         body {
@@ -836,17 +836,18 @@
                             cropperSave.addEventListener('click', () => {
                                 if (cropper) {
                                     const canvas = cropper.getCroppedCanvas({
-                                        maxWidth: 4096,
-                                        maxHeight: 4096,
+                                        maxWidth: 800,
+                                        maxHeight: 800,
                                         fillColor: '#fff',
                                         imageSmoothingEnabled: true,
                                         imageSmoothingQuality: 'high',
                                     });
 
                                     // Convert canvas to blob and update file input
+                                    // Use JPEG format with quality 0.8 for better compression
                                     canvas.toBlob((blob) => {
-                                        const file = new File([blob], 'profile-photo-cropped.png', {
-                                            type: 'image/png'
+                                        const file = new File([blob], 'profile-photo-cropped.jpg', {
+                                            type: 'image/jpeg'
                                         });
                                         const dataTransfer = new DataTransfer();
                                         dataTransfer.items.add(file);
@@ -859,7 +860,7 @@
                                         }
                                         closeCropperModal();
                                         ToastNotification.success('Image cropped successfully');
-                                    });
+                                    }, 'image/jpeg', 0.8);
                                 }
                             });
                         }
@@ -1118,9 +1119,18 @@
                                 // Reload profile data
                                 await loadProfileData();
                             } else {
-                                ToastNotification.error(response.message || 'Failed to update profile');
+                                // Log validation errors for debugging
+                                console.error('Profile update failed:', response);
+                                if (response.errors) {
+                                    console.error('Validation errors:', response.errors);
+                                    const errorMessages = Object.values(response.errors).flat().join(', ');
+                                    ToastNotification.error('Validation error: ' + errorMessages);
+                                } else {
+                                    ToastNotification.error(response.message || 'Failed to update profile');
+                                }
                             }
                         } catch (error) {
+                            console.error('Error saving profile:', error);
                             ToastNotification.error('An error occurred while saving profile. Please try again.');
                         }
                     }

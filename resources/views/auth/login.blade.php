@@ -17,8 +17,8 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 
   <!-- Custom CSS -->
-  <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-  <link href="{{ asset('css/access.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/style.css') }}?v={{ time() }}" rel="stylesheet">
+  <link href="{{ asset('css/access.css') }}?v={{ time() }}" rel="stylesheet">
 
 </head>
 <body>
@@ -41,7 +41,7 @@
           <h4 class="auth-heading">Sign in</h4>
           <p class="auth-subheading">Please login to continue to your account.</p>
 
-          <form id="loginForm" method="POST" action="javascript:void(0);">
+          <form id="loginForm" method="POST" action="javascript:void(0);" data-ajax>
                 @csrf
                 <div class = "pt-3">
                 <div class="custom-form-group">
@@ -151,8 +151,19 @@
 
       if (result.success) {
         UIHelpers.showSuccess('Login successful! Redirecting...');
-        // Redirect to dashboard after 1.5 seconds
-        UIHelpers.redirect('/dashboard', 1500);
+
+        // Determine redirect URL based on user role
+        let redirectUrl = '/dashboard'; // Default for admin/instructor
+
+        // Get user from result.data.user or result.user
+        const user = result.data?.user || result.user;
+
+        if (user && user.role === 'student') {
+          redirectUrl = '/usersdashboard';
+        }
+
+        // Redirect after 1.5 seconds
+        UIHelpers.redirect(redirectUrl, 1500);
       } else {
         UIHelpers.showError(result.message || 'Login failed');
         UIHelpers.setButtonLoading('loginBtn', false);

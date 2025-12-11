@@ -39,7 +39,7 @@ class ConfirmationModal {
     }
 
     const modalHTML = `
-      <div class="modal fade" id="confirmationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+      <div class="modal fade" id="confirmationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="z-index: 9999;">
         <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
           <div class="modal-content" style="border-radius: 8px; max-height: 300px; display: flex; flex-direction: column;">
             <div class="modal-header" style="border-bottom: 1px solid #e8e8e8; padding: 1rem;">

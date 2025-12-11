@@ -54,17 +54,18 @@ class KokokahLoader {
       const link = e.target.closest('a');
       if (link && !link.hasAttribute('data-no-loader')) {
         const href = link.getAttribute('href');
-        // Only show loader for internal navigation
-        if (href && !href.startsWith('http') && !href.startsWith('mailto:') && !href.startsWith('tel:')) {
+        // Only show loader for internal navigation (exclude hash links, external links, and special protocols)
+        if (href && !href.startsWith('http') && !href.startsWith('mailto:') && !href.startsWith('tel:') && !href.startsWith('#') && href !== 'javascript:void(0)') {
           this.show();
         }
       }
     });
 
-    // Show loader on form submissions
+    // Show loader on form submissions ONLY for traditional forms (not AJAX)
     document.addEventListener('submit', (e) => {
       const form = e.target;
-      if (!form.hasAttribute('data-no-loader')) {
+      // Skip if form has data-no-loader or data-ajax attribute
+      if (!form.hasAttribute('data-no-loader') && !form.hasAttribute('data-ajax')) {
         this.show();
       }
     });

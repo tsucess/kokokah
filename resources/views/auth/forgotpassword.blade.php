@@ -20,8 +20,8 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 
   <!-- Custom CSS -->
-  <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-  <link href="{{ asset('css/access.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/style.css') }}?v={{ time() }}" rel="stylesheet">
+  <link href="{{ asset('css/access.css') }}?v={{ time() }}" rel="stylesheet">
 
 </head>
 <body>
@@ -46,7 +46,7 @@
           <h4 class = "text-dark mb-2">Forgot your Password?</h4>
           <p class="mb-5" style = "color:#969696;font:inter;">Enter your email below to recover your password.</p>
 
-          <form id="forgotForm" method="POST" action="javascript:void(0);">
+          <form id="forgotForm" method="POST" action="javascript:void(0);" data-ajax>
             @csrf
             <div class="custom-form-group">
               <label for="email" class="custom-label">Enter Email Address</label>

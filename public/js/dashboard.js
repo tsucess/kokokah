@@ -61,10 +61,36 @@ class DashboardModule {
 
     if (!profileSection) return;
 
-    // Make profile section clickable
+
+
+
+
+
     const navigateToProfile = () => {
-      window.location.href = '/profiles';
+      // Check if user is authenticated
+      const token = localStorage.getItem('auth_token');
+      const user = localStorage.getItem('auth_user');
+
+      if (!token || !user) {
+        // No token, redirect to login
+        console.log('No authentication token found, redirecting to login...');
+        window.location.href = '/login';
+      } else {
+        // Token exists, make API call to get user data with token
+        const userData = JSON.parse(user);
+        if (userData.role === 'student') {
+          window.location.href = '/userprofile';
+        } else {
+          window.location.href = '/adminprofile';
+        }
+
+      }
     };
+    // const navigateToProfile = () => {
+    //   window.location.href = '/profiles';
+    // };
+
+
 
     if (profileSection) {
       profileSection.addEventListener('click', (e) => {

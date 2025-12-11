@@ -74,10 +74,18 @@ class UserController extends Controller
             'city' => 'nullable|string|max:100',
             'timezone' => 'nullable|string|max:50',
             'language' => 'nullable|string|max:10',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:5048'
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'parent_first_name' => 'nullable|string|max:255',
+            'parent_last_name' => 'nullable|string|max:255',
+            'parent_email' => 'nullable|email',
+            'parent_phone' => 'nullable|string|max:20'
         ]);
 
         if ($validator->fails()) {
+            \Log::error('Profile update validation failed', [
+                'errors' => $validator->errors()->toArray(),
+                'request_data' => $request->except(['avatar', 'password'])
+            ]);
             return response()->json([
                 'success' => false,
                 'message' => 'Validation failed',
