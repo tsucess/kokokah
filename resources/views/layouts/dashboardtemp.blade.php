@@ -96,7 +96,6 @@
                 <a class="nav-item-link d-block nav-child" href="/levels">Levels & Classes</a>
                 <a class="nav-item-link d-block nav-child" href="/terms">Academic Terms</a>
                 <a class="nav-item-link d-block nav-child" href="/rating">Course Reviews & Rating</a>
-                <a class="nav-item-link d-block nav-child" href="#">Course Approval</a>
             </div>
 
             <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
