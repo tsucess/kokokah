@@ -310,11 +310,11 @@
 
                 </tbody>
             </table>
-            <footer class="d-flex gap-3 align-items-center justify-content-between">
+            <div class="d-flex gap-3 align-items-center justify-content-between">
                 <button class="footer-btn">Previous</button>
                 <p class="footer-pagecount">Page1of 12</p>
                 <button class="footer-btn">Next</button>
-            </footer>
+            </div>
 
         </section>
 
