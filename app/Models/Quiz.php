@@ -11,10 +11,7 @@ class Quiz extends Model
 
     protected $fillable = [
         'lesson_id',
-        'topic_id',
         'title',
-        'slug',
-        'description',
         'type',
         'time_limit_minutes',
         'max_attempts',
@@ -33,11 +30,6 @@ class Quiz extends Model
     public function lesson()
     {
         return $this->belongsTo(Lesson::class);
-    }
-
-    public function topic()
-    {
-        return $this->belongsTo(Topic::class);
     }
 
     public function questions()

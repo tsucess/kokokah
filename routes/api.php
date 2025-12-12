@@ -243,19 +243,11 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     // Quiz management routes (authenticated)
-    // Lesson-level quizzes
     Route::prefix('lessons/{lessonId}/quizzes')->group(function () {
-        Route::get('/', [QuizController::class, 'indexByLesson']);
-        Route::post('/', [QuizController::class, 'storeForLesson']);
+        Route::get('/', [QuizController::class, 'index']);
+        Route::post('/', [QuizController::class, 'store']);
     });
 
-    // Topic-level quizzes
-    Route::prefix('topics/{topicId}/quizzes')->group(function () {
-        Route::get('/', [QuizController::class, 'indexByTopic']);
-        Route::post('/', [QuizController::class, 'storeForTopic']);
-    });
-
-    // General quiz routes
     Route::prefix('quizzes')->group(function () {
         Route::get('/{id}', [QuizController::class, 'show']);
         Route::put('/{id}', [QuizController::class, 'update']);

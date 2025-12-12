@@ -6,12 +6,10 @@ use App\Models\Quiz;
 use App\Models\Question;
 use App\Models\Answer;
 use App\Models\Lesson;
-use App\Models\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class QuizController extends Controller
 {
@@ -21,7 +19,7 @@ class QuizController extends Controller
     /**
      * Get lesson quizzes
      */
-    public function indexByLesson($lessonId)
+    public function index($lessonId)
     {
         try {
             $lesson = Lesson::findOrFail($lessonId);
@@ -84,9 +82,9 @@ class QuizController extends Controller
     }
 
     /**
-     * Create a new quiz for a lesson
+     * Create a new quiz
      */
-    public function storeForLesson(Request $request, $lessonId)
+    public function store(Request $request, $lessonId)
     {
         try {
             $lesson = Lesson::findOrFail($lessonId);
@@ -101,14 +99,14 @@ class QuizController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'title' => 'required|string|max:255',
-                'type' => 'required|in:mcq,alternate,theory',
+                'type' => 'required|in:mcq,theory',
                 'time_limit_minutes' => 'nullable|integer|min:1',
                 'max_attempts' => 'nullable|integer|min:1',
                 'passing_score' => 'nullable|integer|min:0|max:100',
                 'shuffle_questions' => 'boolean',
                 'questions' => 'required|array|min:1',
                 'questions.*.question_text' => 'required|string',
-                'questions.*.type' => 'required|in:mcq,alternate,theory',
+                'questions.*.type' => 'required|in:mcq,theory',
                 'questions.*.points' => 'required|integer|min:1',
                 'questions.*.options' => 'nullable|array',
                 'questions.*.correct_answer' => 'required|string'
@@ -128,155 +126,6 @@ class QuizController extends Controller
                 // Create quiz
                 $quizData = $request->except(['questions']);
                 $quizData['lesson_id'] = $lesson->id;
-                $quizData['topic_id'] = $lesson->topic_id;
-                $quizData['slug'] = Str::slug($request->title) . '-' . uniqid();
-                $quizData['shuffle_questions'] = $request->boolean('shuffle_questions', false);
-
-                $quiz = Quiz::create($quizData);
-
-                // Create questions
-                foreach ($request->questions as $questionData) {
-                    $question = Question::create([
-                        'quiz_id' => $quiz->id,
-                        'question_text' => $questionData['question_text'],
-                        'type' => $questionData['type'],
-                        'points' => $questionData['points'],
-                        'options' => $questionData['options'] ?? null,
-                        'correct_answer' => $questionData['correct_answer'],
-                        'explanation' => $questionData['explanation'] ?? null
-                    ]);
-                }
-
-                DB::commit();
-
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Quiz created successfully',
-                    'data' => $quiz->load('questions')
-                ], 201);
-            } catch (\Exception $e) {
-                DB::rollBack();
-                throw $e;
-            }
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to create quiz: ' . $e->getMessage()
-            ], 500);
-        }
-    }
-
-    /**
-     * Get topic quizzes
-     */
-    public function indexByTopic($topicId)
-    {
-        try {
-            $topic = Topic::findOrFail($topicId);
-            $user = Auth::user();
-
-            // Check if user has access to this topic's course
-            $isEnrolled = $topic->course->enrollments()->where('user_id', $user->id)->exists();
-            $isInstructor = $topic->course->instructor_id === $user->id;
-            $isAdmin = $user->hasRole('admin');
-
-            if (!$isEnrolled && !$isInstructor && !$isAdmin) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'You must be enrolled in this course to view quizzes'
-                ], 403);
-            }
-
-            $quizzes = $topic->quizzes()
-                            ->with(['questions' => function($query) use ($user, $isInstructor, $isAdmin) {
-                                if (!$isInstructor && !$isAdmin) {
-                                    $query->select('id', 'quiz_id', 'question_text', 'type', 'points');
-                                }
-                            }])
-                            ->get()
-                            ->map(function ($quiz) use ($user) {
-                                $quizData = $quiz->toArray();
-
-                                // Add user's quiz attempts
-                                $attempts = Answer::where('student_id', $user->id)
-                                                ->whereIn('question_id', $quiz->questions->pluck('id'))
-                                                ->get()
-                                                ->groupBy('attempt_number');
-
-                                $quizData['attempts'] = $attempts->count();
-                                $quizData['max_attempts'] = $quiz->max_attempts;
-                                $quizData['can_attempt'] = $quiz->max_attempts === null || $attempts->count() < $quiz->max_attempts;
-
-                                // Add best score
-                                if ($attempts->count() > 0) {
-                                    $scores = $attempts->map(function ($attemptAnswers) {
-                                        return $attemptAnswers->sum('points_earned');
-                                    });
-                                    $quizData['best_score'] = $scores->max();
-                                    $quizData['latest_score'] = $scores->last();
-                                }
-
-                                return $quizData;
-                            });
-
-            return response()->json([
-                'success' => true,
-                'data' => $quizzes
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to fetch quizzes: ' . $e->getMessage()
-            ], 500);
-        }
-    }
-
-    /**
-     * Create a new quiz for a topic
-     */
-    public function storeForTopic(Request $request, $topicId)
-    {
-        try {
-            $topic = Topic::findOrFail($topicId);
-
-            // Check if user is instructor or admin
-            if ($topic->course->instructor_id !== Auth::id() && !Auth::user()->hasRole('admin')) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Unauthorized to create quizzes for this topic'
-                ], 403);
-            }
-
-            $validator = Validator::make($request->all(), [
-                'title' => 'required|string|max:255',
-                'type' => 'required|in:mcq,alternate,theory',
-                'time_limit_minutes' => 'nullable|integer|min:1',
-                'max_attempts' => 'nullable|integer|min:1',
-                'passing_score' => 'nullable|integer|min:0|max:100',
-                'shuffle_questions' => 'boolean',
-                'questions' => 'required|array|min:1',
-                'questions.*.question_text' => 'required|string',
-                'questions.*.type' => 'required|in:mcq,alternate,theory',
-                'questions.*.points' => 'required|integer|min:1',
-                'questions.*.options' => 'nullable|array',
-                'questions.*.correct_answer' => 'required|string'
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Validation failed',
-                    'errors' => $validator->errors()
-                ], 422);
-            }
-
-            DB::beginTransaction();
-
-            try {
-                // Create quiz
-                $quizData = $request->except(['questions']);
-                $quizData['topic_id'] = $topic->id;
-                $quizData['slug'] = Str::slug($request->title) . '-' . uniqid();
                 $quizData['shuffle_questions'] = $request->boolean('shuffle_questions', false);
 
                 $quiz = Quiz::create($quizData);
