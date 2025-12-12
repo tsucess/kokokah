@@ -1435,7 +1435,7 @@
                     </div>
                     <div class="meta-item"><i class="fa-solid fa-layer-group"></i><span id="publishLevel">Level</span>
                     </div>
-                </div><img id="publishCourseImage" src="{{ asset('images/publish.png') }}" alt="Course Preview" class="course-image">
+                </div><img id="publishCourseImage" src="images/publish.png" alt="Course Preview" class="course-image">
                 <div class="course-description-section">
                     <h6>Subject Description</h6>
                     <p id="publishDescription">This comprehensive course covers essential concepts and skills. Students
