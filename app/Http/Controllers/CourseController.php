@@ -123,7 +123,7 @@ class CourseController extends Controller
    public function index(Request $request)
     {
         $user = auth('sanctum')->user(); // Get authenticated user
-        $userRole = $user->role;
+        $userRole = $user ? $user->role : null;
 
         $query = Course::with(['courseCategory', 'curriculumCategory', 'instructor', 'level', 'term']);
 
