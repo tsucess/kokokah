@@ -5,7 +5,7 @@
  <section class="d-flex flex-column gap-3 p-4">
         <div class="d-flex align-items-center gap-3">
             <button><i class="fa-solid fa-arrow-left" style="color: #000000;"></i></button>
-            <p class="back-arrow">Back to Notifications & Announcements</p>
+            <a href="/announcement" class="back-arrow">Back to Notifications & Announcements</a>
         </div>
         <header class="d-flex justify-content-between">
             <div class="d-flex flex-column gap-2">

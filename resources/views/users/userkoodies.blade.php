@@ -2,59 +2,7 @@
 
 @section('content')
     <style>
-        /* CSS from the base layout template */
-        :root {
-            --bs-dark-teal: #114243;
-            --bs-light-gray: #e9ecef;
-            --bs-main-green: #20c997; /* Used for subtle accents */
-            --sidebar-width: 250px;
-            --right-panel-width: 300px; /* Width of the History panel */
-            --topbar-height: 60px;
-        }
 
-        /* Base Layout CSS */
-        body {
-            background-color: #f8f9fa;
-            min-height: 100vh;
-        }
-        .sidebar {
-            width: var(--sidebar-width);
-            background-color: #fff;
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            z-index: 1050;
-            overflow-y: auto;
-            transition: transform 0.3s ease;
-            transform: translateX(0);
-        }
-        .topbar {
-            position: sticky;
-            top: 0;
-            height: var(--topbar-height);
-            background-color: #fff;
-            z-index: 1040;
-            margin-left: var(--sidebar-width);
-            padding: 0 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-        }
-        /* MAIN content area - pushed by left sidebar and constrained by right panel */
-        main {
-            margin-left: var(--sidebar-width);
-            margin-right: var(--right-panel-width); /* Push content away from history panel */
-            padding: 1.5rem;
-            padding-bottom: 50px;
-            min-height: calc(100vh - var(--topbar-height));
-            display: flex;
-            flex-direction: column;
-            transition: margin-right 0.3s ease, margin-left 0.3s ease;
-        }
-
-        /* Right History Panel */
         .history-panel {
             width: var(--right-panel-width);
             background-color: #fff;
@@ -62,26 +10,12 @@
             top: var(--topbar-height);
             bottom: 30px; /* Above the fixed footer */
             right: 0;
-            z-index: 1020;
+            z-index: 700;
             border-left: 1px solid var(--bs-light-gray);
             overflow-y: auto;
             padding: 1.5rem;
         }
-        .page-footer {
-            position: fixed;
-            bottom: 0;
-            left: var(--sidebar-width);
-            right: 0;
-            height: 30px;
-            background-color: #fff;
-            border-top: 1px solid var(--bs-light-gray);
-            z-index: 1000;
-            font-size: 0.75rem;
-            padding: 0 1rem;
-            display: flex;
-            align-items: center;
-        }
-        /* Base Nav/Sidebar styles */
+
         .nav-item-link {
             display: flex;
             align-items: center;
@@ -100,55 +34,7 @@
             background-color: var(--bs-dark-teal);
             color: white;
         }
-        .sidebar-footer {
-            padding: 1rem;
-            border-top: 1px solid var(--bs-light-gray);
-            position: sticky;
-            bottom: 0;
-            width: 100%;
-            background-color: #fff;
-        }
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1040;
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity 0.3s, visibility 0.3s;
-        }
-        .overlay.show {
-            visibility: visible;
-            opacity: 1;
-        }
 
-        /* Mobile adjustments (<= 991.98px) */
-        @media (max-width: 991.98px) {
-            .sidebar {
-                transform: translateX(-100%);
-                box-shadow: none;
-            }
-            .sidebar.show {
-                transform: translateX(0);
-            }
-            /* Main content takes full width on mobile/tablet */
-            .topbar, main, .page-footer {
-                margin-left: 0;
-            }
-            /* Hide the right panel and reset main content margin */
-            main {
-                margin-right: 0;
-            }
-            .history-panel {
-                display: none;
-            }
-            .page-footer {
-                left: 0;
-            }
-        }
 
         /* CONTENT SPECIFIC STYLING (AI/Messaging Center) */
         .ai-center-container {
@@ -253,7 +139,6 @@
             </div>
         </div>
 
-    </main>
 
     <div class="history-panel d-none d-lg-block">
         <h6 class="fw-bold" style="color: var(--bs-dark-teal);">History</h6>
@@ -270,44 +155,6 @@
             <span class="text-muted">2 hours ago</span>
         </div>
     </div>
-
-
-
-
-    <script>
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('sidebarOverlay');
-        const hamburger = document.getElementById('hamburger');
-
-        function openSidebar() {
-            sidebar.classList.add('show');
-            overlay.classList.add('show');
-            document.body.style.overflow = 'hidden';
-        }
-        function closeSidebar() {
-            sidebar.classList.remove('show');
-            overlay.classList.remove('show');
-            document.body.style.overflow = '';
-        }
-
-        hamburger.addEventListener('click', (e) => {
-            openSidebar();
-        });
-        overlay.addEventListener('click', () => closeSidebar());
-
-        document.querySelectorAll('.nav-item-link').forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth < 992) closeSidebar();
-            });
-        });
-
-        window.addEventListener('resize', () => {
-            if (window.innerWidth >= 992) {
-                overlay.classList.remove('show');
-                sidebar.classList.remove('show');
-                document.body.style.overflow = '';
-            }
-        });
-    </script>
+    </main>
 
 @endsection

@@ -123,12 +123,9 @@
     <script>
    document.addEventListener('DOMContentLoaded', () => {
     const viewBtns = document.querySelectorAll('button.view-btn');
-    console.log(viewBtns); // check if buttons exist
 
     viewBtns.forEach(btn => {
-        console.log(btn)
         btn.addEventListener('click', (e) => {
-            console.log('clicked');
             e.preventDefault()
             e.stopPropagation()
             window.location.href = '/termsubject';
