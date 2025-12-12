@@ -1828,6 +1828,7 @@ p {
 .back-arrow {
     font-size: 18px;
     color: #1c1d1d;
+    text-decoration: none;
 }
 
 .announcement-title {
