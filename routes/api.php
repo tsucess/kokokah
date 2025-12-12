@@ -111,7 +111,8 @@ Route::apiResource('level', LevelController::class);
 
 
 // Public course routes
-Route::get('/courses', [CourseController::class, 'index']);
+Route::middleware('auth:sanctum')->get('/courses', [CourseController::class, 'index']);
+// Route::get('/courses', [CourseController::class, 'index']);
 Route::get('/courses/search', [CourseController::class, 'search']);
 Route::get('/courses/featured', [CourseController::class, 'featured']);
 Route::get('/courses/popular', [CourseController::class, 'popular']);

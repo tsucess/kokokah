@@ -1,6 +1,4 @@
 @extends('layouts.usertemplate')
-
-@section('content')
 <style>
     /* Global font & background */
     body {
@@ -144,65 +142,6 @@
         margin-left: 8px;
     }
 
-    /* Payment Gateway Selection */
-    .payment-gateway-section {
-        padding: 20px 22px;
-        border-top: 1px solid #eee;
-        background: #f9f9f9;
-    }
-
-    .payment-gateway-title {
-        font-size: 14px;
-        font-weight: 600;
-        color: #333;
-        margin-bottom: 16px;
-    }
-
-    .payment-gateways {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-        gap: 12px;
-    }
-
-    .gateway-option {
-        position: relative;
-    }
-
-    .gateway-option input[type="radio"] {
-        display: none;
-    }
-
-    .gateway-label {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 16px 12px;
-        border: 2px solid #e0e0e0;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        background: #fff;
-        min-height: 100px;
-    }
-
-    .gateway-option input[type="radio"]:checked + .gateway-label {
-        border-color: #004A53;
-        background-color: #f0f8f9;
-    }
-
-    .gateway-icon {
-        font-size: 32px;
-        margin-bottom: 8px;
-    }
-
-    .gateway-name {
-        font-size: 13px;
-        font-weight: 600;
-        color: #333;
-        text-align: center;
-    }
-
     /* Small screens — stack price under label */
     @media (max-width: 576px) {
         .txn-row {
@@ -227,192 +166,13 @@
             padding: 16px 14px;
         }
     }
-
-    /* Back button styling */
-    .back-btn {
-        background: none;
-        border: none;
-        padding: 8px 12px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #004A53;
-        font-size: 24px;
-        transition: opacity 0.2s ease;
-        margin-right: 12px;
-    }
-
-    .back-btn:hover {
-        opacity: 0.7;
-    }
-
-    .back-btn:active {
-        opacity: 0.5;
-    }
-
-    .header-with-back {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    /* Payment Modal Styles */
-    .payment-modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000;
-    }
-
-    .payment-modal {
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-        max-width: 600px;
-        width: 90%;
-        max-height: 90vh;
-        overflow-y: auto;
-        animation: slideUp 0.3s ease-out;
-    }
-
-    @keyframes slideUp {
-        from {
-            transform: translateY(30px);
-            opacity: 0;
-        }
-        to {
-            transform: translateY(0);
-            opacity: 1;
-        }
-    }
-
-    .payment-modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 24px;
-        border-bottom: 1px solid #e0e0e0;
-    }
-
-    .payment-modal-header h2 {
-        margin: 0;
-        font-size: 20px;
-        font-weight: 600;
-        color: #333;
-    }
-
-    .payment-modal-close {
-        background: none;
-        border: none;
-        font-size: 24px;
-        color: #666;
-        cursor: pointer;
-        padding: 0;
-        width: 32px;
-        height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: color 0.2s ease;
-    }
-
-    .payment-modal-close:hover {
-        color: #333;
-    }
-
-    .payment-modal-body {
-        padding: 24px;
-    }
-
-    .payment-modal-footer {
-        display: flex;
-        gap: 12px;
-        padding: 24px;
-        border-top: 1px solid #e0e0e0;
-        justify-content: flex-end;
-    }
-
-    .payment-modal-cancel {
-        padding: 12px 24px;
-        border: 1px solid #e0e0e0;
-        background: white;
-        color: #333;
-        border-radius: 6px;
-        font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
-
-    .payment-modal-cancel:hover {
-        background: #f5f5f5;
-        border-color: #ccc;
-    }
-
-    .payment-modal-confirm {
-        padding: 12px 24px;
-        border: none;
-        background: #004A53;
-        color: white;
-        border-radius: 6px;
-        font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
-
-    .payment-modal-confirm:hover {
-        background: #003a41;
-    }
-
-    .payment-modal-confirm:active {
-        transform: scale(0.98);
-    }
-
-    /* Responsive modal */
-    @media (max-width: 576px) {
-        .payment-modal {
-            width: 95%;
-            max-height: 85vh;
-        }
-
-        .payment-modal-header {
-            padding: 16px;
-        }
-
-        .payment-modal-body {
-            padding: 16px;
-        }
-
-        .payment-modal-footer {
-            padding: 16px;
-            flex-direction: column;
-        }
-
-        .payment-modal-cancel,
-        .payment-modal-confirm {
-            width: 100%;
-        }
-    }
 </style>
 @section('content')
     <main>
         <section class="container-fluid p-4 d-flex flex-column gap-4">
             <div class ="d-flex  justify-content-between align-items-center">
-                <div class="header-with-back">
-                    <button class="back-btn" type="button" id="backBtn" title="Go back">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <h1 id="levelTitle">Loading...</h1>
-                </div>
-                <button class = "enroll-btn" type = "button" id="enrollAllBtn">Enroll in All Subjects - ₦0.00</button>
+                <h1>Junior Secondary School (JSSS 1)</h1>
+                <button class = "enroll-btn" type = "button">Enroll in All 12 Subjects - ₦‎9,000</button>
             </div>
             <div class="txn-card w-100">
 
@@ -437,94 +197,136 @@
                 </div>
 
                 <!-- List -->
-                <div class="txn-list" id="coursesList">
-                    <!-- Courses will be loaded here dynamically -->
+                <div class="txn-list">
+
+                    <!-- Example rows (duplicate as needed) -->
                     <div class="txn-row">
                         <div class="txn-left">
-                            <p class="text-muted">Loading courses...</p>
+                                <input class="form-check-input check-subject" type="checkbox" data-price="9000"
+                                    id="cb1">
+
+                             <label for="cb1" class="subject">Mathematics</label>
                         </div>
+                        <div class="txn-price">₦9,000.00</div>
                     </div>
+
+                    <div class="txn-row">
+                        <div class="txn-left">
+                                <input class="form-check-input check-subject" type="checkbox" data-price="9000"
+                                    id="cb2">
+
+                            <label for="cb2" class="subject">English</label>
+                        </div>
+                        <div class="txn-price">₦9,000.00</div>
+                    </div>
+
+                    <div class="txn-row">
+                        <div class="txn-left">
+                                <input class="form-check-input check-subject" type="checkbox" data-price="9000"
+                                    id="cb3">
+                            <label for="cb3" class="subject">Basic Science</label>
+                        </div>
+                        <div class="txn-price">₦9,000.00</div>
+                    </div>
+
+                    <div class="txn-row">
+                        <div class="txn-left">
+                                <input class="form-check-input check-subject" type="checkbox" data-price="9000"
+                                    id="cb4">
+                            <div class="subject">Basic Technology</div>
+                            <label for="cb4" class="subject">Basic Technology</label>
+                        </div>
+                        <div class="txn-price">₦9,000.00</div>
+                    </div>
+
+                    <div class="txn-row">
+                        <div class="txn-left">
+                                <input class="form-check-input check-subject" type="checkbox" data-price="9000"
+                                    id="cb5">
+                            <label for="cb5" class="subject">Social Studies</label>
+                        </div>
+                        <div class="txn-price">₦9,000.00</div>
+                    </div>
+
+                    <div class="txn-row">
+                        <div class="txn-left">
+                                <input class="form-check-input check-subject" type="checkbox" data-price="9000"
+                                    id="cb6">
+                            <label for="cb6" class="subject">Civic Education</label>
+                        </div>
+                        <div class="txn-price">₦9,000.00</div>
+                    </div>
+
+                    <div class="txn-row">
+                        <div class="txn-left">
+                                <input class="form-check-input check-subject" type="checkbox" data-price="9000"
+                                    id="cb7">
+                            <label for="cb7" class="subject">Agricultural Science</label>
+                        </div>
+                        <div class="txn-price">₦9,000.00</div>
+                    </div>
+
+                    <div class="txn-row">
+                        <div class="txn-left">
+                                <input class="form-check-input check-subject" type="checkbox" data-price="9000"
+                                    id="cb8">
+                            <label for="cb8" class="subject">Computer Studies</label>
+                        </div>
+                        <div class="txn-price">₦9,000.00</div>
+                    </div>
+
+                    <div class="txn-row">
+                        <div class="txn-left">
+                                <input class="form-check-input check-subject" type="checkbox" data-price="9000"
+                                    id="cb9">
+                            <label for="cb9" class="subject">Business Studies</label>
+                        </div>
+                        <div class="txn-price">₦9,000.00</div>
+                    </div>
+
+                    <div class="txn-row">
+                        <div class="txn-left">
+                                <input class="form-check-input check-subject" type="checkbox" data-price="9000"
+                                    id="cb10">
+                            <label for="cb10" class="subject">Physical &amp; Health Education</label>
+                        </div>
+                        <div class="txn-price">₦9,000.00</div>
+                    </div>
+
+                    <div class="txn-row">
+                        <div class="txn-left">
+                                <input class="form-check-input check-subject" type="checkbox" data-price="9000"
+                                    id="cb11">
+                            <label for="cb11" class="subject">CRS / IRS</label>
+                        </div>
+                        <div class="txn-price">₦9,000.00</div>
+                    </div>
+
+                    <div class="txn-row">
+                        <div class="txn-left">
+                                <input class="form-check-input check-subject" type="checkbox" data-price="9000"
+                                    id="cb12">
+                            <label for="cb12" class="subject">French / Yoruba / Igbo</label>
+                        </div>
+                        <div class="txn-price">₦9,000.00</div>
+                    </div>
+
                 </div>
 
-            </div>
 
+
+
+            </div>
             <!-- Footer with proceed button -->
-            <div style="padding: 20px 22px; display: flex; justify-content: center;">
-                <button id="proceedBtn" class="proceed-payment-btn">
-                    Proceed to Payment - Subtotal: <span id="subtotal" class="subtotal">₦0.00</span>
-                </button>
-            </div>
 
-            <!-- Payment Gateway Modal -->
-            <div id="paymentGatewayModal" class="payment-modal-overlay" style="display: none;">
-                <div class="payment-modal">
-                    <div class="payment-modal-header">
-                        <h2>Select Payment Method</h2>
-                        <button type="button" class="payment-modal-close" id="closePaymentModal">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-
-                    <div class="payment-modal-body">
-                        <div class="payment-gateways">
-                            <!-- Kudikah Wallet -->
-                            <div class="gateway-option">
-                                <input type="radio" id="gateway-kudikah" name="payment_gateway" value="kudikah" checked>
-                                <label for="gateway-kudikah" class="gateway-label">
-                                    <div class="gateway-icon">💳</div>
-                                    <div class="gateway-name">Kudikah Wallet</div>
-                                </label>
-                            </div>
-
-                            <!-- Paystack -->
-                            <div class="gateway-option">
-                                <input type="radio" id="gateway-paystack" name="payment_gateway" value="paystack">
-                                <label for="gateway-paystack" class="gateway-label">
-                                    <div class="gateway-icon">🏦</div>
-                                    <div class="gateway-name">Paystack</div>
-                                </label>
-                            </div>
-
-                            <!-- Flutterwave -->
-                            <div class="gateway-option">
-                                <input type="radio" id="gateway-flutterwave" name="payment_gateway" value="flutterwave">
-                                <label for="gateway-flutterwave" class="gateway-label">
-                                    <div class="gateway-icon">🌊</div>
-                                    <div class="gateway-name">Flutterwave</div>
-                                </label>
-                            </div>
-
-                            <!-- Stripe -->
-                            <div class="gateway-option">
-                                <input type="radio" id="gateway-stripe" name="payment_gateway" value="stripe">
-                                <label for="gateway-stripe" class="gateway-label">
-                                    <div class="gateway-icon">💰</div>
-                                    <div class="gateway-name">Stripe</div>
-                                </label>
-                            </div>
-
-                            <!-- PayPal -->
-                            <div class="gateway-option">
-                                <input type="radio" id="gateway-paypal" name="payment_gateway" value="paypal">
-                                <label for="gateway-paypal" class="gateway-label">
-                                    <div class="gateway-icon">🅿️</div>
-                                    <div class="gateway-name">PayPal</div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="payment-modal-footer">
-                        <button type="button" class="payment-modal-cancel" id="cancelPaymentModal">Cancel</button>
-                        <button type="button" class="payment-modal-confirm" id="confirmPaymentModal">Proceed with Payment</button>
-                    </div>
-                </div>
-            </div>
+                    <button id="proceedBtn" class="proceed-payment-btn align-self-center">
+                        Proceed to Payment - Subtotal: <span id="subtotal" class="subtotal">₦0.00</span>
+                    </button>
 
         </section>
     </main>
 
-    <!-- JS: bootstrap + API integration -->
+    <!-- JS: bootstrap + small script to update subtotal -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module">
         import CourseApiClient from '{{ asset("js/api/courseApiClient.js") }}';
@@ -553,6 +355,7 @@
          * Format numbers as NGN currency
          */
         function formatNGN(n) {
+            // ensure number
             n = Number(n) || 0;
             return '₦' + n.toLocaleString('en-NG', {
                 minimumFractionDigits: 2,
@@ -560,141 +363,23 @@
             });
         }
 
-        /**
-         * Get level ID from URL query parameter
-         */
-        function getLevelIdFromURL() {
-            const params = new URLSearchParams(window.location.search);
-            const levelId = params.get('level_id');
-            console.log('URL:', window.location.href);
-            console.log('Search params:', window.location.search);
-            console.log('Extracted level_id:', levelId);
-            return levelId;
-        }
-
-        /**
-         * Load courses by level ID from API
-         */
-        async function loadCourses() {
-            try {
-                const levelId = getLevelIdFromURL();
-                if (!levelId) {
-                    showError('No level selected. Please go back and select a class.');
-                    return;
-                }
-
-                console.log('Loading courses for level_id:', levelId);
-                console.log('API call parameters:', { level_id: levelId, per_page: 50 });
-
-                // Fetch courses for this level
-                const result = await CourseApiClient.getCourses({ level_id: levelId, per_page: 50 });
-
-                console.log('API Response:', result);
-                console.log('API Response data.courses.data:', result.data?.courses?.data);
-
-                // Handle API response structure - courses are in result.data.courses.data
-                let courses = [];
-                if (result.success && result.data) {
-                    if (result.data.courses && result.data.courses.data) {
-                        // API returns paginated response
-                        courses = result.data.courses.data;
-                    } else if (Array.isArray(result.data)) {
-                        // API returns direct array
-                        courses = result.data;
-                    }
-                }
-
-                if (courses && courses.length > 0) {
-                    allCourses = courses;
-                    displayCourses(allCourses);
-                    updateLevelTitle(levelId);
-                    updateEnrollAllButton();
-                } else {
-                    console.log('No courses found. Response data:', result.data);
-                    showError('No courses available for this class.');
-                }
-            } catch (error) {
-                console.error('Error loading courses:', error);
-                showError('Failed to load courses. Please try again later.');
-            }
-        }
-
-        /**
-         * Update the level title in the header
-         */
-        async function updateLevelTitle(levelId) {
-            try {
-                const result = await CourseApiClient.getLevels();
-                if (result.success && result.data) {
-                    const level = result.data.find(l => l.id == levelId);
-                    if (level) {
-                        document.getElementById('levelTitle').textContent = level.name;
-                    }
-                }
-            } catch (error) {
-                console.error('Error loading level:', error);
-            }
-        }
-
-        /**
-         * Display courses as checkboxes
-         */
-        function displayCourses(courses) {
-            const coursesList = document.getElementById('coursesList');
-
-            const coursesHtml = courses.map((course, index) => {
-                // Check if course is free
-                const isFree = course.free === true || course.free === 1 || course.price === 0 || course.price === '0';
-                const priceDisplay = isFree ? 'Free Course' : formatNGN(course.price || 0);
-
-                return `
-                    <div class="txn-row">
-                        <div class="txn-left">
-                            <input class="form-check-input check-subject" type="checkbox"
-                                   data-price="${course.price || 0}"
-                                   data-course-id="${course.id}"
-                                   id="cb${index}">
-                            <label for="cb${index}" class="subject">${course.title}</label>
-                        </div>
-                        <div class="txn-price">${priceDisplay}</div>
-                    </div>
-                `;
-            }).join('');
-
-            coursesList.innerHTML = coursesHtml;
-            attachCheckboxListeners();
-        }
-
-        /**
-         * Attach listeners to checkboxes
-         */
-        function attachCheckboxListeners() {
-            const checkboxes = document.querySelectorAll('.check-subject');
-            checkboxes.forEach(cb => {
-                cb.addEventListener('change', updateSubtotal);
-            });
-        }
-
-        /**
-         * Calculate and update subtotal
-         */
+        // Calculate subtotal when any checkbox toggled
         function updateSubtotal() {
-            const checks = document.querySelectorAll('.check-subject:checked');
+            const checks = document.querySelectorAll('.check-subject');
             let total = 0;
             checks.forEach(cb => {
-                const p = Number(cb.dataset.price) || 0;
-                total += p;
+                if (cb.checked) {
+                    const p = Number(cb.dataset.price) || 0;
+                    total += p;
+                }
             });
             document.getElementById('subtotal').textContent = formatNGN(total);
-            updateEnrollAllButton();
         }
 
-        /**
-         * Update "Enroll in All" button text with 10% discount
-         */
-        function updateEnrollAllButton() {
-            // Calculate total price of all courses
-            const totalPrice = allCourses.reduce((sum, course) => sum + (Number(course.price) || 0), 0);
+        // Attach listeners
+        document.querySelectorAll('.check-subject').forEach(cb => {
+            cb.addEventListener('change', updateSubtotal);
+        });
 
             // Apply 10% discount
             const discountAmount = totalPrice * 0.10;
