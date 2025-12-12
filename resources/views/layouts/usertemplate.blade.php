@@ -56,7 +56,7 @@
 
             <a class="nav-item-link" href="/userleaderboard"><i class="fa-solid fa-trophy me-2 pe-2"></i></i>Leaderboard</a>
             <a class="nav-item-link" href="/userkoodies"><i class="fa-solid fa-robot me-2 pe-2"></i>Ai</a>
-            <a class="nav-item-link" href="/userchatroom"><i class="fa-solid fa-comment me-2 pe-2"></i>Chatroom</a>
+            <a class="nav-item-link" href="/chatroom"><i class="fa-solid fa-comment me-2 pe-2"></i>Chatroom</a>
 
             <!-- Communication -->
             <a class="nav-item-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
