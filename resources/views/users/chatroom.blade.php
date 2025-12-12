@@ -1,5 +1,5 @@
 {{-- @extends('admin.usertemplate') --}}
-@extends('users.usertemplate')
+@extends('layouts.usertemplate')
 
 @section('content')
 <main>
@@ -17,8 +17,8 @@
 
             <a href="#" class="sidebar-item active">
                 <div class="d-flex align-items-center">
-                    <span class="badge bg-white me-2" style = "color: var(--bs-dark-teal); border-radius:20px; width: 25px;">
-                    <i class="bi bi-hash me-2"></i>
+                    <span class="badge bg-white me-2 d-flex justify-content-center align-items-center" style = "color: var(--bs-dark-teal); border-radius:20px; width: 25px;">
+                    <i class="bi bi-hash "></i>
                     </span>
                     General
                 </div>
@@ -26,8 +26,8 @@
 
             <a href="#" class="sidebar-item">
                 <div class="d-flex align-items-center">
-                    <span class="badge me-2" style = "background: #114243; border-radius:20px; width: 25px;">
-                    <i class="bi bi-hash me-2 text-white"></i>
+                    <span class="badge me-2 d-flex justify-content-center align-items-center" style = "background: #114243; border-radius:20px; width: 25px;">
+                    <i class="bi bi-hash  text-white"></i>
                     </span>
                     Mathematics Help Corner
                 </div>
@@ -36,8 +36,8 @@
 
             <a href="#" class="sidebar-item">
                 <div class="d-flex align-items-center">
-                    <span class="badge me-2" style = "background: #114243; border-radius:20px; width: 25px;">
-                    <i class="bi bi-hash me-2 text-white"></i>
+                    <span class="badge me-2 d-flex justify-content-center align-items-center" style = "background: #114243; border-radius:20px; width: 25px;">
+                    <i class="bi bi-hash  text-white"></i>
                     </span>
                     Science Discussions
                 </div>
@@ -46,8 +46,8 @@
 
             <a href="#" class="sidebar-item">
                 <div class="d-flex align-items-center">
-                    <span class="badge me-2" style = "background: #114243; border-radius:20px; width: 25px;">
-                    <i class="bi bi-hash me-2 text-white"></i>
+                    <span class="badge me-2 d-flex justify-content-center align-items-center" style = "background: #114243; border-radius:20px; width: 25px;">
+                    <i class="bi bi-hash  text-white"></i>
                     </span>
                     English Literature & Writing
                 </div>
@@ -55,8 +55,8 @@
 
             <a href="#" class="sidebar-item">
                 <div class="d-flex align-items-center">
-                    <span class="badge me-2" style = "background: #114243; border-radius:20px; width: 25px;">
-                    <i class="bi bi-hash me-2 text-white"></i>
+                    <span class="badge me-2 d-flex justify-content-center align-items-center" style = "background: #114243; border-radius:20px; width: 25px;">
+                    <i class="bi bi-hash text-white"></i>
                     </span>
                      History & Social Studies
                 </div>
@@ -65,8 +65,8 @@
 
             <a href="#" class="sidebar-item">
                 <div class="d-flex align-items-center">
-                    <span class="badge me-2" style = "background: #114243; border-radius:20px; width: 25px;">
-                    <i class="bi bi-hash me-2 text-white"></i>
+                    <span class="badge me-2 d-flex justify-content-center align-items-center" style = "background: #114243; border-radius:20px; width: 25px;">
+                    <i class="bi bi-hash  text-white"></i>
                     </span>
                     ICT & Programming Chat
                 </div>
@@ -74,8 +74,8 @@
 
             <a href="#" class="sidebar-item">
                 <div class="d-flex align-items-center">
-                    <span class="badge me-2" style = "background: #114243; border-radius:20px; width: 25px;">
-                    <i class="bi bi-hash me-2 text-white"></i>
+                    <span class="badge me-2 d-flex justify-content-center align-items-center" style = "background: #114243; border-radius:20px; width: 25px;">
+                    <i class="bi bi-hash text-white"></i>
                     </span>
                     Foreign Language Practice
                 </div>

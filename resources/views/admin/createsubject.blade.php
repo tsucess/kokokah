@@ -1006,10 +1006,10 @@
                     const title = document.getElementById('courseTitle').value;
                     const category = document.getElementById('courseCategory').value;
                     const level = document.getElementById('courseLevel').value;
-                    const description = quill.getText();
+                    const description = quill.getText().trim();
                     const term = document.getElementById('subjectTerm').value;
 
-                    console.log(description)
+
                     if (!title || !category || !level || !description) {
                         alert('Please fill in all required fields');
                         return;
@@ -1072,7 +1072,7 @@
                     const title = document.getElementById('courseTitle').value;
                     const category = document.getElementById('courseCategory').value;
                     const level = document.getElementById('courseLevel').value;
-                    const description = document.getElementById('courseDescription').value;
+                    const description = quill.getText().trim();
                     const term = document.getElementById('subjectTerm').value;
 
                     if (!title || !category || !level || !description) {
@@ -1083,7 +1083,7 @@
                     try {
                         // Create FormData for file upload
                         const formData = new FormData();
-
+                        console.log(category)
                         // Add required fields
                         formData.append('title', title);
                         formData.append('slug', generateSlug(title));
@@ -1139,6 +1139,7 @@
                     const description = document.getElementById('courseDescription').value;
                     const term = document.getElementById('subjectTerm').value;
 
+                    console.log(title, category, description)
                     if (!title || !category || !description) {
                         alert('Please fill in all required fields');
                         return;
