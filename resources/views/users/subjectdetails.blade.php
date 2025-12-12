@@ -102,8 +102,89 @@
             font-size: 14px;
             font-weight: 700;
         }
+        .star-rating {
+  display: flex;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.star-rating i {
+  font-size: 30px;
+  color: #d3d3d3; /* default gray */
+  transition: color 0.2s;
+}
+
+.star-rating i.active {
+  color: #f5b50a; /* gold */
+}
+.modal-title{
+    color: #1C1D1D;
+    font-size: 24px;
+}
+.modal-course{
+    color: #1C1D1D;
+    font-size: 16px;
+}
+.modal-review-btn{
+    background-color: #FDAF22;
+    padding: 16px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    border: none;
+    color: #000F11;
+}
+.modal-cancel-btn{
+    background-color: transparent;
+    padding: 16px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    border: 1px solid #004A53;
+    color: #004A53;
+}
+
     </style>
     <main class="py-4 px-3">
+        <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Leave Review and Rating
+</button>
+
+<!-- Review Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content d-flex flex-column gap-4">
+
+      <div class="modal-body d-flex flex-column gap-3 px-0">
+        <div class="d-flex flex-column gap-5">
+            <div class="d-flex flex-column gap-2 align-items-center">
+                <h2 class="modal-title">Rate this Subject</h2>
+                <h3 class="modal-course">English Language</h3>
+
+            </div>
+            <div class="d-flex align-items-center gap-3 justify-content-center">
+                <div class="star-rating">
+  <i class="fa-solid fa-star" data-value="1"></i>
+  <i class="fa-solid fa-star" data-value="2"></i>
+  <i class="fa-solid fa-star" data-value="3"></i>
+  <i class="fa-solid fa-star" data-value="4"></i>
+  <i class="fa-solid fa-star" data-value="5"></i>
+</div>
+<p id="ratingOutput"></p>
+            </div>
+        </div>
+
+        <div class="modal-form-input-border">
+  <label for="exampleFormControlInput1" class="modal-label">Write your review</label>
+  <textarea name="" id="exampleFormControlInput1" class="modal-input" placeholder="your message..."></textarea>
+</div>
+      </div>
+      <div class="d-flex align-items-center gap-5">
+        <button type="button" class="modal-cancel-btn flex-fill w-100" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="modal-review-btn flex-fill w-100">Subject Review</button>
+      </div>
+    </div>
+  </div>
+</div>
 
         <section class="container-fluid d-flex flex-column gap-4">
             <h1>Lesson 13: Part of Speech</h1>
@@ -161,7 +242,7 @@
                                 <div class="emoji d-flex justify-content-center align-items-center"><i class="fa-solid fa-face-smile"></i></div>
                             <button class="send-message-btn">Send</button>
                             </div>
-                        
+
                         </div>
 
                     </div>
@@ -171,4 +252,34 @@
         </section>
 
     </main>
+    <script>
+        const stars = document.querySelectorAll('.star-rating i');
+const output = document.getElementById('ratingOutput');
+
+let currentRating = 0;
+
+stars.forEach(star => {
+  star.addEventListener('mouseover', () => {
+    const value = star.dataset.value;
+    highlightStars(value);
+  });
+
+  star.addEventListener('mouseout', () => {
+    highlightStars(currentRating);
+  });
+
+  star.addEventListener('click', () => {
+    currentRating = star.dataset.value;
+    highlightStars(currentRating);
+    output.textContent = `Rating: ${currentRating} / 5`;
+  });
+});
+
+function highlightStars(limit) {
+  stars.forEach(star => {
+    star.classList.toggle('active', star.dataset.value <= limit);
+  });
+}
+
+    </script>
 @endsection

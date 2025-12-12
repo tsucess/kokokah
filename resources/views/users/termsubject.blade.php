@@ -224,6 +224,14 @@
             document.getElementById('back-btn').addEventListener('click', () => {
                 window.history.back()
             })
+
+            const lessonBtns = document.querySelectorAll('.btn-lesson')
+            lessonBtns.forEach(btn => {
+                btn.addEventListener('click', ()=>{
+                    window.location.href = '/lessondetails'
+                })
+
+            });
         })
     </script>
 @endsection
