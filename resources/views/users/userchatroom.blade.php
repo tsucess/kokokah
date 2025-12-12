@@ -2,8 +2,12 @@
 
 @section('content')
     <style>
-        .menu, .chat-container {
+        .menu {
             border: 1px solid #004A53;
+            border-radius: 15px;
+        }
+        .chatroom-container{
+            border-left: 1px solid #004A53;
         }
 
         .search-container {
@@ -122,10 +126,10 @@
 
     </style>
     <main>
-        <section class="container-fluid p-3">
-            <div class="row">
-                <div class="col-12 col-lg-4">
-                    <aside class="menu " >
+        <section class="container-fluid py-3 px-5 ">
+            <div class="row d-flex align-items-stretch menu">
+                <div class="col-12 col-lg-4  px-0">
+                    <aside class="">
                         <div class="search-container d-flex align-items-center mx-4 " style="height:90px;">
                             <i class="fa-solid fa-magnifying-glass" style="color: #8E8D93;"></i>
                             <input type="search" name="" id="" class="search-input"
@@ -160,8 +164,8 @@
 
                     </aside>
                 </div>
-                <div class="col-12 col-lg-8">
-                    <div class="chat-container">
+                <div class="col-12 col-lg-8 px-0">
+                    <div class="chatroom-container">
                         <div class="px-5 py-4" style="height:90px;"><h2>#General</h2></div>
                     <div class="divider"></div>
                     <div>
