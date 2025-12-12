@@ -21,7 +21,7 @@ class LevelController extends Controller implements HasMiddleware
     {
         return Level::with(['courses' => function($q) {
             $q->with('level');
-        }])
+        }, 'curriculumCategory'])
         ->orderBy('curriculum_category_id', 'asc') // order by category ID
         ->get();
     }
