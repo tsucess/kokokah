@@ -20,14 +20,14 @@
 
         .feature-item-container {
             background-color: #F5F6F8;
-            height: 220px;
+            height: 200px;
             border-radius: 20px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
         .feature-title {
             color: #1C1D1D;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 600;
             text-align: center;
         }
@@ -35,7 +35,7 @@
         .feature-text {
             padding: 10px;
             color: #1C1D1D;
-            font-size: 18px;
+            font-size: 16px;
             text-align: center;
         }
 
@@ -69,6 +69,7 @@
             border-radius: 10px;
             height: 62px;
             padding: 0px 24px 27px;
+            margin-top: 12px;
         }
 
         .label {
@@ -76,7 +77,7 @@
             font-size: 14px;
             position: relative;
             top: -12px;
-            background-color: #fff;
+            background-color: #F5F6F8;
             align-self: flex-start;
             font-weight: 500;
             padding-inline: 2px;
@@ -87,6 +88,7 @@
             outline: none;
             color: #8E8E93;
             font-size: 14px;
+            background-color: transparent;
         }
 
         select {
@@ -121,7 +123,7 @@
             <div class="row gx-5 gy-4">
                 <div class="col col-12 col-lg-6  ">
                     <div class="feature-item-container d-flex flex-column gap-4 align-items-center justify-content-center">
-                        <div><i class="fa-solid fa-bug fa-2xl" style="color: #000000;"></i></div>
+                        <div><i class="fa-solid fa-bug fa-xl" style="color: #000000;"></i></div>
                         <div class="d-flex flex-column gap-1">
                             <h4 class="feature-title">Report Bugs</h4>
                             <p class="feature-text">Found something broken? Let us know so we can fix it quickly.</p>
@@ -130,7 +132,7 @@
                 </div>
                 <div class="col col-12 col-lg-6 ">
                     <div class="feature-item-container d-flex flex-column gap-4 align-items-center justify-content-center">
-                        <div><i class="fa-regular fa-lightbulb fa-2xl" style="color: #000000;"></i></div>
+                        <div><i class="fa-regular fa-lightbulb fa-xl" style="color: #000000;"></i></div>
                         <div class="d-flex flex-column gap-1">
                             <h4 class="feature-title">Request Features</h4>
                             <p class="feature-text">Have an idea for improvement? Share your suggestions with us.</p>
@@ -139,7 +141,7 @@
                 </div>
                 <div class="col col-12 col-lg-6 ">
                     <div class="feature-item-container d-flex flex-column gap-4 align-items-center justify-content-center">
-                        <div><i class="fa-regular fa-comment fa-2xl" style="color: #000000;"></i></div>
+                        <div><i class="fa-regular fa-comment fa-xl" style="color: #000000;"></i></div>
                         <div class="d-flex flex-column gap-1">
                             <h4 class="feature-title">General Feedback</h4>
                             <p class="feature-text">Share your thoughts on how we can make things better for you.</p>
@@ -148,7 +150,7 @@
                 </div>
                 <div class="col col-12 col-lg-6 ">
                     <div class="feature-item-container d-flex flex-column gap-4 align-items-center justify-content-center">
-                        <div><i class="fa-regular fa-heart fa-2xl" style="color: #000000;"></i></div>
+                        <div><i class="fa-regular fa-heart fa-xl" style="color: #000000;"></i></div>
                         <div class="d-flex flex-column gap-1">
                             <h4 class="feature-title">We Listen</h4>
                             <p class="feature-text">Every piece of feedback help us create a better product and experience for you.</p>

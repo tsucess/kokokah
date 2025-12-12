@@ -45,18 +45,18 @@
         <nav class="nav-group" id="sidebarNav">
             <a class="nav-item-link" href="/usersdashboard"><i class="fa-solid fa-gauge pe-3"></i> Dashboard</a>
 
-            <a class="nav-item-link" href="/userclass"><i class="fa-solid fa-book-open me-2  pe-1"></i> Class</a>
+            <a class="nav-item-link" href="/userclass"><i class="fa-solid fa-landmark me-2 pe-2"></i></i> Class</a>
 
-            <a class="nav-item-link" href="/usersubject"><i class="fa-solid fa-user me-2  pe-2"></i> Subject</a>
+            <a class="nav-item-link" href="/usersubject"><i class="fa-solid fa-book-open me-2 pe-2"></i> Subject</a>
 
-            <a class="nav-item-link" href="/userresult"><i class="fa-solid fa-user me-2  pe-2"></i> Results &
+            <a class="nav-item-link" href="/userresult"><i class="fa-solid fa-clipboard-list me-2 pe-2"></i> Results &
                 Scoring</a>
 
-            <a class="nav-item-link" href="/userkudikah"><i class="fa-solid fa-user me-2  pe-2"></i>Kudikah</a>
+            <a class="nav-item-link" href="/userkudikah"><i class="fa-solid fa-wallet me-2 pe-2"></i>Kudikah</a>
 
-            <a class="nav-item-link" href="/userleaderboard"><i class="fa-solid fa-user me-2  pe-2"></i>Leaderboard</a>
-            <a class="nav-item-link" href="/userkoodies"><i class="fa-solid fa-user me-2  pe-2"></i>Ai</a>
-            <a class="nav-item-link" href="/userchatroom"><i class="fa-solid fa-user me-2  pe-2"></i>Chatroom</a>
+            <a class="nav-item-link" href="/userleaderboard"><i class="fa-solid fa-trophy me-2 pe-2"></i></i>Leaderboard</a>
+            <a class="nav-item-link" href="/userkoodies"><i class="fa-solid fa-robot me-2 pe-2"></i>Ai</a>
+            <a class="nav-item-link" href="/userchatroom"><i class="fa-solid fa-comment me-2 pe-2"></i>Chatroom</a>
 
             <!-- Communication -->
             <a class="nav-item-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
@@ -68,7 +68,7 @@
             <!-- communication dropdowns -->
             <div class="collapse ps-4" id="communication">
                 <a class="nav-item-link d-block" href="/userannouncement">Announcement</a>
-                <a class="nav-item-link d-block" href="#">Email / Messaging Center</a>
+                {{-- <a class="nav-item-link d-block" href="#">Email / Messaging Center</a> --}}
                 <a class="nav-item-link d-block" href="/userfeedback">Feedback / Surveys</a>
             </div>
 
