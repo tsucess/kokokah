@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             TagSeeder::class,
             BadgeSeeder::class,
             SettingSeeder::class,
+            CurriculumCategorySeeder::class,
+            CourseCategorySeeder::class,
         ]);
 
         // Seed users with proper roles and data
@@ -43,6 +45,3 @@ class DatabaseSeeder extends Seeder
         echo "   📈 Total: " . User::count() . "\n\n";
     }
 }
-
-$this->call(TransactionsSeeder::class);
-

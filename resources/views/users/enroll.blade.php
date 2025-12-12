@@ -528,6 +528,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module">
         import CourseApiClient from '{{ asset("js/api/courseApiClient.js") }}';
+        import ToastNotification from '{{ asset("js/utils/toastNotification.js") }}';
 
         let allCourses = [];
 
@@ -710,6 +711,7 @@
         function showError(message) {
             const coursesList = document.getElementById('coursesList');
             coursesList.innerHTML = `<div class="txn-row"><div class="txn-left"><p class="text-danger">${message}</p></div></div>`;
+            ToastNotification.error('Error', message);
         }
 
         /**
@@ -725,7 +727,7 @@
             const checked = document.querySelectorAll('.check-subject:checked');
 
             if (checked.length === 0) {
-                alert('Please select at least one subject to proceed.');
+                ToastNotification.warning('No Selection', 'Please select at least one subject to proceed.');
                 return;
             }
 
@@ -808,14 +810,14 @@
             e.preventDefault();
 
             if (!pendingPaymentData) {
-                alert('Payment data not found. Please try again.');
+                ToastNotification.error('Error', 'Payment data not found. Please try again.');
                 return;
             }
 
             // Get selected payment gateway from modal
             const selectedGateway = document.querySelector('input[name="payment_gateway"]:checked');
             if (!selectedGateway) {
-                alert('Please select a payment method.');
+                ToastNotification.warning('No Selection', 'Please select a payment method.');
                 return;
             }
 
@@ -873,7 +875,7 @@
                     processPayPalPayment(paymentData);
                     break;
                 default:
-                    alert('Invalid payment gateway selected.');
+                    ToastNotification.error('Error', 'Invalid payment gateway selected.');
             }
         }
 
@@ -882,8 +884,9 @@
          */
         function processKudikahPayment(paymentData) {
             console.log('Processing Kudikah Wallet Payment:', paymentData);
+            const amount = formatNGN(extractPrice(document.getElementById('subtotal').textContent));
             // TODO: Implement Kudikah wallet payment integration
-            alert(`Processing payment via Kudikah Wallet\nAmount: ${formatNGN(extractPrice(document.getElementById('subtotal').textContent))}`);
+            ToastNotification.info('Processing Payment', `Processing payment via Kudikah Wallet\nAmount: ${amount}`);
         }
 
         /**
@@ -891,8 +894,9 @@
          */
         function processPaystackPayment(paymentData) {
             console.log('Processing Paystack Payment:', paymentData);
+            const amount = formatNGN(extractPrice(document.getElementById('subtotal').textContent));
             // TODO: Implement Paystack payment integration
-            alert(`Processing payment via Paystack\nAmount: ${formatNGN(extractPrice(document.getElementById('subtotal').textContent))}`);
+            ToastNotification.info('Processing Payment', `Processing payment via Paystack\nAmount: ${amount}`);
         }
 
         /**
@@ -900,8 +904,9 @@
          */
         function processFlutterwavePayment(paymentData) {
             console.log('Processing Flutterwave Payment:', paymentData);
+            const amount = formatNGN(extractPrice(document.getElementById('subtotal').textContent));
             // TODO: Implement Flutterwave payment integration
-            alert(`Processing payment via Flutterwave\nAmount: ${formatNGN(extractPrice(document.getElementById('subtotal').textContent))}`);
+            ToastNotification.info('Processing Payment', `Processing payment via Flutterwave\nAmount: ${amount}`);
         }
 
         /**
@@ -909,8 +914,9 @@
          */
         function processStripePayment(paymentData) {
             console.log('Processing Stripe Payment:', paymentData);
+            const amount = formatNGN(extractPrice(document.getElementById('subtotal').textContent));
             // TODO: Implement Stripe payment integration
-            alert(`Processing payment via Stripe\nAmount: ${formatNGN(extractPrice(document.getElementById('subtotal').textContent))}`);
+            ToastNotification.info('Processing Payment', `Processing payment via Stripe\nAmount: ${amount}`);
         }
 
         /**
@@ -918,8 +924,9 @@
          */
         function processPayPalPayment(paymentData) {
             console.log('Processing PayPal Payment:', paymentData);
+            const amount = formatNGN(extractPrice(document.getElementById('subtotal').textContent));
             // TODO: Implement PayPal payment integration
-            alert(`Processing payment via PayPal\nAmount: ${formatNGN(extractPrice(document.getElementById('subtotal').textContent))}`);
+            ToastNotification.info('Processing Payment', `Processing payment via PayPal\nAmount: ${amount}`);
         }
 
     </script>

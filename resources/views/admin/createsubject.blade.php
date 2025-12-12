@@ -1009,7 +1009,6 @@
                     const description = quill.getText().trim();
                     const term = document.getElementById('subjectTerm').value;
 
-
                     if (!title || !category || !level || !description) {
                         alert('Please fill in all required fields');
                         return;
@@ -1024,12 +1023,17 @@
                         formData.append('slug', generateSlug(title));
                         formData.append('description', description);
                         formData.append('course_category_id', category);
-                        formData.append('curriculum_category_id',
-                        category); // Using same category for both
+                        formData.append('curriculum_category_id', category); // Using same category for both
                         formData.append('level_id', level);
-                        formData.append('price', courseData.price || 0);
+                        formData.append('price', getPrice()); // Ensure price is always a number
                         formData.append('free', courseData.freeCourse ? 1 : 0);
                         formData.append('url', generateSlug(title));
+
+                        // Debug: Log form data
+                        console.log('Form data being sent (finalPublish):');
+                        for (let [key, value] of formData.entries()) {
+                            console.log(`  ${key}: ${value}`);
+                        }
 
                         // Add optional fields
                         if (term) {
@@ -1038,7 +1042,10 @@
 
                         const duration = document.getElementById('courseTime').value;
                         if (duration) {
-                            formData.append('duration_hours', duration);
+                            const parsedDuration = parseDuration(duration);
+                            if (parsedDuration) {
+                                formData.append('duration_hours', parsedDuration);
+                            }
                         }
 
                         // Add image if selected
@@ -1065,6 +1072,22 @@
                 });
             }
 
+            // Helper function to parse duration (extract numeric value)
+            function parseDuration(durationStr) {
+                if (!durationStr) return null;
+                const match = durationStr.match(/\d+/);
+                return match ? parseInt(match[0]) : null;
+            }
+
+            // Helper function to ensure price is a valid number
+            function getPrice() {
+                if (courseData.freeCourse) {
+                    return 0;
+                }
+                const price = parseFloat(courseData.price) || 0;
+                return Math.max(0, price);
+            }
+
             // Save Now button handler (from publish section)
             const saveNowBtn = document.getElementById('saveNowBtn');
             if (saveNowBtn) {
@@ -1083,18 +1106,23 @@
                     try {
                         // Create FormData for file upload
                         const formData = new FormData();
-                        console.log(category)
+
                         // Add required fields
                         formData.append('title', title);
                         formData.append('slug', generateSlug(title));
                         formData.append('description', description);
                         formData.append('course_category_id', category);
-                        formData.append('curriculum_category_id',
-                        category); // Using same category for both
+                        formData.append('curriculum_category_id', category); // Using same category for both
                         formData.append('level_id', level);
-                        formData.append('price', courseData.price || 0);
+                        formData.append('price', getPrice()); // Ensure price is always a number
                         formData.append('free', courseData.freeCourse ? 1 : 0);
                         formData.append('url', generateSlug(title));
+
+                        // Debug: Log form data
+                        console.log('Form data being sent:');
+                        for (let [key, value] of formData.entries()) {
+                            console.log(`  ${key}: ${value}`);
+                        }
 
                         // Add optional fields
                         if (term) {
@@ -1103,7 +1131,10 @@
 
                         const duration = document.getElementById('courseTime').value;
                         if (duration) {
-                            formData.append('duration_hours', duration);
+                            const parsedDuration = parseDuration(duration);
+                            if (parsedDuration) {
+                                formData.append('duration_hours', parsedDuration);
+                            }
                         }
 
                         // Add image if selected
@@ -1121,7 +1152,16 @@
                                 window.location.href = `/editsubject/${courseId}`;
                             }, 1500);
                         } else {
-                            alert('Error: ' + (result.message || 'Failed to save course'));
+                            // Show detailed validation errors
+                            let errorMessage = result.message || 'Failed to save course';
+                            if (result.errors && Object.keys(result.errors).length > 0) {
+                                console.error('Validation errors:', result.errors);
+                                const errorList = Object.entries(result.errors)
+                                    .map(([field, messages]) => `${field}: ${Array.isArray(messages) ? messages.join(', ') : messages}`)
+                                    .join('\n');
+                                errorMessage = 'Validation failed:\n' + errorList;
+                            }
+                            alert(errorMessage);
                         }
                     } catch (error) {
                         console.error('Save error:', error);
@@ -1136,10 +1176,9 @@
                 saveDraftBtn.addEventListener('click', async () => {
                     const title = document.getElementById('courseTitle').value;
                     const category = document.getElementById('courseCategory').value;
-                    const description = document.getElementById('courseDescription').value;
+                    const description = quill.getText().trim(); // Use quill editor instead
                     const term = document.getElementById('subjectTerm').value;
 
-                    console.log(title, category, description)
                     if (!title || !category || !description) {
                         alert('Please fill in all required fields');
                         return;
@@ -1154,11 +1193,16 @@
                         formData.append('slug', generateSlug(title));
                         formData.append('description', description);
                         formData.append('course_category_id', category);
-                        formData.append('curriculum_category_id',
-                        category); // Using same category for both
-                        formData.append('price', courseData.price || 0);
+                        formData.append('curriculum_category_id', category); // Using same category for both
+                        formData.append('price', getPrice()); // Ensure price is always a number
                         formData.append('free', courseData.freeCourse ? 1 : 0);
                         formData.append('url', generateSlug(title));
+
+                        // Debug: Log form data
+                        console.log('Form data being sent (saveDraft):');
+                        for (let [key, value] of formData.entries()) {
+                            console.log(`  ${key}: ${value}`);
+                        }
 
                         // Add optional fields
                         const level = document.getElementById('courseLevel').value;
@@ -1172,7 +1216,10 @@
 
                         const duration = document.getElementById('courseTime').value;
                         if (duration) {
-                            formData.append('duration_hours', duration);
+                            const parsedDuration = parseDuration(duration);
+                            if (parsedDuration) {
+                                formData.append('duration_hours', parsedDuration);
+                            }
                         }
 
                         // Add image if selected
