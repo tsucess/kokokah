@@ -79,16 +79,23 @@
 
         <div class="sidebar-footer">
             <a class="nav-item-link" href="/userprofile"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
+
             <div class="profile mt-3" id="profileSection">
                 <img class="avatar" id="profileImage" src="{{ asset('images/winner-round.png') }}" alt="user"
                     style="cursor: pointer; width: 40px; height: 40px; object-fit: cover; border-radius: 50%; border: 2px solid #ff00;"
                     data-bs-toggle="tooltip" data-bs-placement="top" title="Profile">
-                <div>
-                    <div class="fw-bold" id="userName">Loading...</div>
-                    <div class="text-muted small" id="userRole">Student</div>
+                <div class="d-flex justify-content-between mt-4 p-2 w-100 align-items-center">
+                    <div id="profileInfo" style="cursor: pointer;" data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="Profile" class="w-50">
+                        <h6 class="fw-semibold text-truncate" id="userName">Loading...</h6>
+                        <p class="small text-muted" id="userRole">Student</p>
+                    </div>
+                    <div class="logout">
+                        <a href="#" id="logoutBtn" title="Logout"><span><i
+                                    class="fa-solid fa-arrow-right-from-bracket"></i></span></a>
+                    </div>
                 </div>
             </div>
-            <a class="nav-item-link text-danger" href="#" id="logoutBtn"><i class="fa-solid fa-sign-out-alt pe-3"></i> Logout</a>
         </div>
     </aside>
 
