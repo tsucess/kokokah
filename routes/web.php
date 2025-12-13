@@ -93,9 +93,7 @@ Route::get('/userprofile', function () {
     return view('users.profile');
 });
 
-Route::get('/profile', function () {
-    return view('profile');
-});
+
 
 Route::get('/application', function () {
     return view('application');

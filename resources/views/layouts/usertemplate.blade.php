@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Dashboard</title>
 
-    <link rel="icon" type="image/x-icon" href="images/Kokokah_Logo.png" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/Kokokah_Logo.png') }}" />
 
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -39,7 +39,7 @@
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
         <div class="brand">
-            <img src="images/Kokokah_Logo.png" alt="Kokokah Logo" class="img-fluid dashboard-logo">
+            <img src="{{ asset('images/Kokokah_Logo.png') }}" alt="Kokokah Logo" class="img-fluid dashboard-logo">
         </div>
 
         <nav class="nav-group" id="sidebarNav">
@@ -78,14 +78,17 @@
 
 
         <div class="sidebar-footer">
-            <a class="nav-item-link" href="#"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
-            <div class="profile mt-3">
-                <img class="avatar" src="https://dummyimage.com/72x72/0ea5e9/ffffff.png&text=U" alt="user">
+            <a class="nav-item-link" href="/userprofile"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
+            <div class="profile mt-3" id="profileSection">
+                <img class="avatar" id="profileImage" src="{{ asset('images/winner-round.png') }}" alt="user"
+                    style="cursor: pointer; width: 40px; height: 40px; object-fit: cover; border-radius: 50%; border: 2px solid #ff00;"
+                    data-bs-toggle="tooltip" data-bs-placement="top" title="Profile">
                 <div>
-                    <div class="fw-bold">Culacino_</div>
-                    <div class="text-muted small">UI Designer</div>
+                    <div class="fw-bold" id="userName">Loading...</div>
+                    <div class="text-muted small" id="userRole">Student</div>
                 </div>
             </div>
+            <a class="nav-item-link text-danger" href="#" id="logoutBtn"><i class="fa-solid fa-sign-out-alt pe-3"></i> Logout</a>
         </div>
     </aside>
 
@@ -133,7 +136,10 @@
     <!-- Chart.js (keep after body) -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 
-    <script>
+    <script type="module">
+        import UserApiClient from '{{ asset("js/api/userApiClient.js") }}';
+        import ToastNotification from '{{ asset("js/utils/toastNotification.js") }}';
+
         // Mobile sidebar toggle behavior
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('sidebarOverlay');
@@ -172,6 +178,60 @@
                 document.body.style.overflow = '';
             }
         });
+
+        // Load user profile data
+        async function loadUserProfile() {
+            try {
+                const userApiClient = new UserApiClient();
+                const user = await userApiClient.getProfile();
+
+                // Update profile image
+                const profileImage = document.getElementById('profileImage');
+                if (profileImage && user.profile_photo) {
+                    if (user.profile_photo.startsWith('/')) {
+                        profileImage.src = user.profile_photo;
+                    } else {
+                        profileImage.src = `/storage/${user.profile_photo}`;
+                    }
+                }
+
+                // Update user name
+                const userName = document.getElementById('userName');
+                if (userName) {
+                    userName.textContent = user.first_name ? `${user.first_name} ${user.last_name || ''}` : 'User';
+                }
+
+                // Update user role
+                const userRole = document.getElementById('userRole');
+                if (userRole) {
+                    userRole.textContent = user.role || 'Student';
+                }
+            } catch (error) {
+                console.error('Error loading user profile:', error);
+            }
+        }
+
+        // Handle logout
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                try {
+                    const userApiClient = new UserApiClient();
+                    await userApiClient.logout();
+                    ToastNotification.success('Logged Out', 'You have been successfully logged out.');
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 1500);
+                } catch (error) {
+                    console.error('Logout error:', error);
+                    ToastNotification.error('Logout Failed', 'An error occurred while logging out.');
+                }
+            });
+        }
+
+        // Load user profile on page load
+        document.addEventListener('DOMContentLoaded', loadUserProfile);
     </script>
 </body>
 

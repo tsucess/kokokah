@@ -139,7 +139,7 @@
         </nav>
 
         <div class="sidebar-footer mt-auto p-3">
-            <a class="nav-item-link" href="#"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
+            <a class="nav-item-link" href="/adminprofile"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
 
             <div class="profile mt-3" id="profileSection">
                 <img class="avatar" id="profileImage" src="images/winner-round.png" alt="user"
