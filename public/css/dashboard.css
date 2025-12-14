@@ -2030,6 +2030,7 @@ select {
     padding: 0px 27px 14px;
     border-radius: 15px;
     position: relative;
+    margin-top: 15px;
 }
 
 .modal-label {
