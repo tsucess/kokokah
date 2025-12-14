@@ -1,4 +1,6 @@
 @extends('layouts.usertemplate')
+
+@section('content')
 <style>
     /* Global font & background */
     body {
@@ -166,13 +168,47 @@
             padding: 16px 14px;
         }
     }
+
+    /* Back button styling */
+    .back-btn {
+        background: none;
+        border: none;
+        padding: 8px 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #004A53;
+        font-size: 24px;
+        transition: opacity 0.2s ease;
+        margin-right: 12px;
+    }
+
+    .back-btn:hover {
+        opacity: 0.7;
+    }
+
+    .back-btn:active {
+        opacity: 0.5;
+    }
+
+    .header-with-back {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
 </style>
 @section('content')
     <main>
         <section class="container-fluid p-4 d-flex flex-column gap-4">
             <div class ="d-flex  justify-content-between align-items-center">
-                <h1>Junior Secondary School (JSSS 1)</h1>
-                <button class = "enroll-btn" type = "button">Enroll in All 12 Subjects - ₦‎9,000</button>
+                <div class="header-with-back">
+                    <button class="back-btn" type="button" id="backBtn" title="Go back">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h1 id="levelTitle">Loading...</h1>
+                </div>
+                <button class = "enroll-btn" type = "button" id="enrollAllBtn">Enroll in All Subjects - ₦0.00</button>
             </div>
             <div class="txn-card w-100">
 
@@ -197,120 +233,13 @@
                 </div>
 
                 <!-- List -->
-                <div class="txn-list">
-
-                    <!-- Example rows (duplicate as needed) -->
+                <div class="txn-list" id="coursesList">
+                    <!-- Courses will be loaded here dynamically -->
                     <div class="txn-row">
                         <div class="txn-left">
-                                <input class="form-check-input check-subject" type="checkbox" data-price="9000"
-                                    id="cb1">
-
-                             <label for="cb1" class="subject">Mathematics</label>
+                            <p class="text-muted">Loading courses...</p>
                         </div>
-                        <div class="txn-price">₦9,000.00</div>
                     </div>
-
-                    <div class="txn-row">
-                        <div class="txn-left">
-                                <input class="form-check-input check-subject" type="checkbox" data-price="9000"
-                                    id="cb2">
-
-                            <label for="cb2" class="subject">English</label>
-                        </div>
-                        <div class="txn-price">₦9,000.00</div>
-                    </div>
-
-                    <div class="txn-row">
-                        <div class="txn-left">
-                                <input class="form-check-input check-subject" type="checkbox" data-price="9000"
-                                    id="cb3">
-                            <label for="cb3" class="subject">Basic Science</label>
-                        </div>
-                        <div class="txn-price">₦9,000.00</div>
-                    </div>
-
-                    <div class="txn-row">
-                        <div class="txn-left">
-                                <input class="form-check-input check-subject" type="checkbox" data-price="9000"
-                                    id="cb4">
-                            <div class="subject">Basic Technology</div>
-                            <label for="cb4" class="subject">Basic Technology</label>
-                        </div>
-                        <div class="txn-price">₦9,000.00</div>
-                    </div>
-
-                    <div class="txn-row">
-                        <div class="txn-left">
-                                <input class="form-check-input check-subject" type="checkbox" data-price="9000"
-                                    id="cb5">
-                            <label for="cb5" class="subject">Social Studies</label>
-                        </div>
-                        <div class="txn-price">₦9,000.00</div>
-                    </div>
-
-                    <div class="txn-row">
-                        <div class="txn-left">
-                                <input class="form-check-input check-subject" type="checkbox" data-price="9000"
-                                    id="cb6">
-                            <label for="cb6" class="subject">Civic Education</label>
-                        </div>
-                        <div class="txn-price">₦9,000.00</div>
-                    </div>
-
-                    <div class="txn-row">
-                        <div class="txn-left">
-                                <input class="form-check-input check-subject" type="checkbox" data-price="9000"
-                                    id="cb7">
-                            <label for="cb7" class="subject">Agricultural Science</label>
-                        </div>
-                        <div class="txn-price">₦9,000.00</div>
-                    </div>
-
-                    <div class="txn-row">
-                        <div class="txn-left">
-                                <input class="form-check-input check-subject" type="checkbox" data-price="9000"
-                                    id="cb8">
-                            <label for="cb8" class="subject">Computer Studies</label>
-                        </div>
-                        <div class="txn-price">₦9,000.00</div>
-                    </div>
-
-                    <div class="txn-row">
-                        <div class="txn-left">
-                                <input class="form-check-input check-subject" type="checkbox" data-price="9000"
-                                    id="cb9">
-                            <label for="cb9" class="subject">Business Studies</label>
-                        </div>
-                        <div class="txn-price">₦9,000.00</div>
-                    </div>
-
-                    <div class="txn-row">
-                        <div class="txn-left">
-                                <input class="form-check-input check-subject" type="checkbox" data-price="9000"
-                                    id="cb10">
-                            <label for="cb10" class="subject">Physical &amp; Health Education</label>
-                        </div>
-                        <div class="txn-price">₦9,000.00</div>
-                    </div>
-
-                    <div class="txn-row">
-                        <div class="txn-left">
-                                <input class="form-check-input check-subject" type="checkbox" data-price="9000"
-                                    id="cb11">
-                            <label for="cb11" class="subject">CRS / IRS</label>
-                        </div>
-                        <div class="txn-price">₦9,000.00</div>
-                    </div>
-
-                    <div class="txn-row">
-                        <div class="txn-left">
-                                <input class="form-check-input check-subject" type="checkbox" data-price="9000"
-                                    id="cb12">
-                            <label for="cb12" class="subject">French / Yoruba / Igbo</label>
-                        </div>
-                        <div class="txn-price">₦9,000.00</div>
-                    </div>
-
                 </div>
 
 
@@ -326,12 +255,34 @@
         </section>
     </main>
 
-    <!-- JS: bootstrap + small script to update subtotal -->
+    <!-- JS: bootstrap + API integration -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Format numbers as NGN currency with thousands separator and two decimals
+    <script type="module">
+        import CourseApiClient from '{{ asset("js/api/courseApiClient.js") }}';
+
+        let allCourses = [];
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            await loadCourses();
+            setupBackButton();
+        });
+
+        /**
+         * Setup back button functionality
+         */
+        function setupBackButton() {
+            const backBtn = document.getElementById('backBtn');
+            if (backBtn) {
+                backBtn.addEventListener('click', () => {
+                    window.history.back();
+                });
+            }
+        }
+
+        /**
+         * Format numbers as NGN currency
+         */
         function formatNGN(n) {
-            // ensure number
             n = Number(n) || 0;
             return '₦' + n.toLocaleString('en-NG', {
                 minimumFractionDigits: 2,
@@ -339,34 +290,185 @@
             });
         }
 
-        // Calculate subtotal when any checkbox toggled
-        function updateSubtotal() {
-            const checks = document.querySelectorAll('.check-subject');
-            let total = 0;
-            checks.forEach(cb => {
-                if (cb.checked) {
-                    const p = Number(cb.dataset.price) || 0;
-                    total += p;
-                }
-            });
-            document.getElementById('subtotal').textContent = formatNGN(total);
+        /**
+         * Get level ID from URL query parameter
+         */
+        function getLevelIdFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            const levelId = params.get('level_id');
+            console.log('URL:', window.location.href);
+            console.log('Search params:', window.location.search);
+            console.log('Extracted level_id:', levelId);
+            return levelId;
         }
 
-        // Attach listeners
-        document.querySelectorAll('.check-subject').forEach(cb => {
-            cb.addEventListener('change', updateSubtotal);
-        });
+        /**
+         * Load courses by level ID from API
+         */
+        async function loadCourses() {
+            try {
+                const levelId = getLevelIdFromURL();
+                if (!levelId) {
+                    showError('No level selected. Please go back and select a class.');
+                    return;
+                }
 
-        // optional: clicking button can show selected count (demo)
+                console.log('Loading courses for level_id:', levelId);
+                console.log('API call parameters:', { level_id: levelId, per_page: 50 });
+
+                // Fetch courses for this level
+                const result = await CourseApiClient.getCourses({ level_id: levelId, per_page: 50 });
+
+                console.log('API Response:', result);
+                console.log('API Response data.courses.data:', result.data?.courses?.data);
+
+                // Handle API response structure - courses are in result.data.courses.data
+                let courses = [];
+                if (result.success && result.data) {
+                    if (result.data.courses && result.data.courses.data) {
+                        // API returns paginated response
+                        courses = result.data.courses.data;
+                    } else if (Array.isArray(result.data)) {
+                        // API returns direct array
+                        courses = result.data;
+                    }
+                }
+
+                if (courses && courses.length > 0) {
+                    allCourses = courses;
+                    displayCourses(allCourses);
+                    updateLevelTitle(levelId);
+                    updateEnrollAllButton();
+                } else {
+                    console.log('No courses found. Response data:', result.data);
+                    showError('No courses available for this class.');
+                }
+            } catch (error) {
+                console.error('Error loading courses:', error);
+                showError('Failed to load courses. Please try again later.');
+            }
+        }
+
+        /**
+         * Update the level title in the header
+         */
+        async function updateLevelTitle(levelId) {
+            try {
+                const result = await CourseApiClient.getLevels();
+                if (result.success && result.data) {
+                    const level = result.data.find(l => l.id == levelId);
+                    if (level) {
+                        document.getElementById('levelTitle').textContent = level.name;
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading level:', error);
+            }
+        }
+
+        /**
+         * Display courses as checkboxes
+         */
+        function displayCourses(courses) {
+            const coursesList = document.getElementById('coursesList');
+
+            const coursesHtml = courses.map((course, index) => {
+                // Check if course is free
+                const isFree = course.free === true || course.free === 1 || course.price === 0 || course.price === '0';
+                const priceDisplay = isFree ? 'Free Course' : formatNGN(course.price || 0);
+
+                return `
+                    <div class="txn-row">
+                        <div class="txn-left">
+                            <input class="form-check-input check-subject" type="checkbox"
+                                   data-price="${course.price || 0}"
+                                   data-course-id="${course.id}"
+                                   id="cb${index}">
+                            <label for="cb${index}" class="subject">${course.title}</label>
+                        </div>
+                        <div class="txn-price">${priceDisplay}</div>
+                    </div>
+                `;
+            }).join('');
+
+            coursesList.innerHTML = coursesHtml;
+            attachCheckboxListeners();
+        }
+
+        /**
+         * Attach listeners to checkboxes
+         */
+        function attachCheckboxListeners() {
+            const checkboxes = document.querySelectorAll('.check-subject');
+            checkboxes.forEach(cb => {
+                cb.addEventListener('change', updateSubtotal);
+            });
+        }
+
+        /**
+         * Calculate and update subtotal
+         */
+        function updateSubtotal() {
+            const checks = document.querySelectorAll('.check-subject:checked');
+            let total = 0;
+            checks.forEach(cb => {
+                const p = Number(cb.dataset.price) || 0;
+                total += p;
+            });
+            document.getElementById('subtotal').textContent = formatNGN(total);
+            updateEnrollAllButton();
+        }
+
+        /**
+         * Update "Enroll in All" button text with 10% discount
+         */
+        function updateEnrollAllButton() {
+            // Calculate total price of all courses
+            const totalPrice = allCourses.reduce((sum, course) => sum + (Number(course.price) || 0), 0);
+
+            // Apply 10% discount
+            const discountAmount = totalPrice * 0.10;
+            const discountedPrice = totalPrice - discountAmount;
+
+            const courseCount = allCourses.length;
+            document.getElementById('enrollAllBtn').textContent =
+                `Enroll in All ${courseCount} Subjects - ${formatNGN(discountedPrice)}`;
+        }
+
+        /**
+         * Show error message
+         */
+        function showError(message) {
+            const coursesList = document.getElementById('coursesList');
+            coursesList.innerHTML = `<div class="txn-row"><div class="txn-left"><p class="text-danger">${message}</p></div></div>`;
+        }
+
+        /**
+         * Handle proceed to payment button
+         */
         document.getElementById('proceedBtn').addEventListener('click', function(e) {
             e.preventDefault();
-            const checked = document.querySelectorAll('.check-subject:checked').length;
-            if (checked === 0) {
+            const checked = document.querySelectorAll('.check-subject:checked');
+            if (checked.length === 0) {
                 alert('Please select at least one subject to proceed.');
             } else {
-                alert('Proceeding with ' + checked + ' subject(s). Subtotal: ' + document.getElementById('subtotal')
-                    .textContent);
+                const selectedCourses = Array.from(checked).map(cb => cb.dataset.courseId);
+                const subtotal = document.getElementById('subtotal').textContent;
+                alert(`Proceeding with ${checked.length} subject(s). Subtotal: ${subtotal}`);
+                // TODO: Redirect to payment page with selected courses
             }
+        });
+
+        /**
+         * Handle "Enroll in All" button
+         */
+        document.getElementById('enrollAllBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            // Select all checkboxes
+            document.querySelectorAll('.check-subject').forEach(cb => {
+                cb.checked = true;
+            });
+            updateSubtotal();
         });
     </script>
 @endsection
