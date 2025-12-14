@@ -145,6 +145,7 @@
 
     <script type="module">
         import UserApiClient from '{{ asset("js/api/userApiClient.js") }}';
+        import AuthApiClient from '{{ asset("js/api/authClient.js") }}';
         import ToastNotification from '{{ asset("js/utils/toastNotification.js") }}';
 
         // Mobile sidebar toggle behavior
@@ -186,35 +187,46 @@
             }
         });
 
-        // Load user profile data
-        async function loadUserProfile() {
-            try {
-                const userApiClient = new UserApiClient();
-                const user = await userApiClient.getProfile();
+        // Load user profile data from localStorage
+        function loadUserProfile() {
+            const user = AuthApiClient.getUser();
 
-                // Update profile image
-                const profileImage = document.getElementById('profileImage');
-                if (profileImage && user.profile_photo) {
+            if (!user) {
+                console.log('No user data found in localStorage');
+                return;
+            }
+
+            // Update user name
+            const userName = document.getElementById('userName');
+            if (userName && user.first_name && user.last_name) {
+                userName.textContent = `${user.first_name} ${user.last_name}`;
+            }
+
+            // Update user role
+            const userRole = document.getElementById('userRole');
+            if (userRole && user.role) {
+                const roleText = user.role.charAt(0).toUpperCase() + user.role.slice(1);
+                userRole.textContent = roleText;
+            }
+
+            // Update profile image if available
+            const profileImage = document.getElementById('profileImage');
+            if (profileImage) {
+                if (user.profile_photo) {
+                    // Check if profile_photo is already a full URL (starts with /)
                     if (user.profile_photo.startsWith('/')) {
                         profileImage.src = user.profile_photo;
+                        console.log('Profile photo is a full URL:', user.profile_photo);
                     } else {
+                        // Otherwise, add /storage/ prefix
                         profileImage.src = `/storage/${user.profile_photo}`;
+                        console.log('Profile photo is a relative path, added /storage/ prefix:', profileImage.src);
                     }
+                } else {
+                    // Use default avatar if no profile photo
+                    profileImage.src = '{{ asset("images/winner-round.png") }}';
+                    console.log('No profile photo, using default avatar');
                 }
-
-                // Update user name
-                const userName = document.getElementById('userName');
-                if (userName) {
-                    userName.textContent = user.first_name ? `${user.first_name} ${user.last_name || ''}` : 'User';
-                }
-
-                // Update user role
-                const userRole = document.getElementById('userRole');
-                if (userRole) {
-                    userRole.textContent = user.role || 'Student';
-                }
-            } catch (error) {
-                console.error('Error loading user profile:', error);
             }
         }
 
@@ -224,8 +236,7 @@
             logoutBtn.addEventListener('click', async (e) => {
                 e.preventDefault();
                 try {
-                    const userApiClient = new UserApiClient();
-                    await userApiClient.logout();
+                    const result = await AuthApiClient.logout();
                     ToastNotification.success('Logged Out', 'You have been successfully logged out.');
                     setTimeout(() => {
                         window.location.href = '/';

@@ -20,11 +20,39 @@
       height: 48px;
     }
     .card-container{
-        display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1rem;
-  position: relative;
-  z-index: 10;
+        display: flex;
+        gap: 1rem;
+        position: relative;
+        z-index: 10;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-behavior: smooth;
+        padding-bottom: 10px;
+        /* Hide scrollbar but keep functionality */
+        scrollbar-width: none;
+    }
+
+    .card-container::-webkit-scrollbar {
+        display: none;
+    }
+
+    .card-container > * {
+        flex: 0 0 calc(33.333% - 0.67rem);
+        min-width: 280px;
+    }
+
+    @media (max-width: 1024px) {
+        .card-container > * {
+            flex: 0 0 calc(50% - 0.5rem);
+            min-width: 250px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .card-container > * {
+            flex: 0 0 calc(100% - 0rem);
+            min-width: 100%;
+        }
     }
     .card-item-class{
 background-color: #FDAF22;
@@ -44,9 +72,52 @@ font-size: 12px;
         position: relative;
     }
 
+    .slider-controls {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .slider-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        border-radius: 50%;
+    }
+
+    .slider-btn:hover {
+        background-color: #f0f0f0;
+        transform: scale(1.1);
+    }
+
+    .slider-btn:active {
+        transform: scale(0.95);
+    }
+
+    .slider-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .slider-btn:disabled:hover {
+        background-color: transparent;
+        transform: scale(1);
+    }
+
     @media (max-width: 768px) {
         .view-btn{
             padding-block: 10px;
+        }
+        .slider-btn {
+            padding: 3px;
+        }
+        .slider-btn i {
+            font-size: 18px !important;
         }
       .header-section {
         text-align: center;
@@ -99,11 +170,11 @@ font-size: 12px;
     <div class="container">
 
         <div class="d-flex flex-column gap-2 align-items-center pt-4 pt-md-5 align-items-md-start">
-          <h3>Hello Winner 👋</h3>
+          <h3 id="userGreeting">Hello 👋</h3>
           <p>Let’s learn something new today!</p>
         </div>
 
-          <img src="images/mydashboard.png" alt="Robot"  class="header-image w-100 position-absolute "
+          <img src="{{ asset('images/mydashboard.png') }}" alt="Robot"  class="header-image w-100 position-absolute "
              style="max-height: 300px;">
 
       </div>
@@ -119,17 +190,17 @@ font-size: 12px;
 
           <div class="d-flex align-items-center gap-1">
             <div class="icon-circle">
-              <img src="images/celebration.png" class="img-fluid" alt="Completed">
+              <img src="{{ asset('images/celebration.png') }}" class="img-fluid" alt="Completed">
             </div>
             <div class="d-flex flex-column gap-1">
-              <strong class="fs-2 lh-1 d-block text-dark">24</strong>
+              <strong class="fs-2 lh-1 d-block text-dark" id="completedCount">0</strong>
               <small class="text-nowrap header-card-text" >Completed Subject</small>
             </div>
           </div>
 
           <div class="text-success d-flex flex-column align-items-center ms-auto">
             <i class="fa-solid fa-arrow-trend-up text-success"></i>
-            <small class="fw-bold">1.3%</small>
+            <small class="fw-bold" id="completedTrend">0%</small>
           </div>
         </div>
       </div>
@@ -139,17 +210,17 @@ font-size: 12px;
 
           <div class="d-flex align-items-center">
             <div class="icon-circle me-3">
-              <img src="images/note.png" class="img-fluid" alt="Pending">
+              <img src="{{ asset('images/note.png') }}" class="img-fluid" alt="Pending">
             </div>
             <div>
-              <strong class="fs-2 lh-1 d-block text-dark">07</strong>
-              <small class="header-card-text text-nowrap">Pending Subject</small>
+              <strong class="fs-2 lh-1 d-block text-dark" id="ongoingCount">0</strong>
+              <small class="header-card-text text-nowrap">Ongoing Subject</small>
             </div>
           </div>
 
           <div class="text-danger d-flex flex-column align-items-center ms-auto">
             <i class="fa-solid fa-arrow-trend-up text-danger"></i>
-            <small class="fw-bold">1.3%</small>
+            <small class="fw-bold" id="ongoingTrend">0%</small>
           </div>
         </div>
       </div>
@@ -158,72 +229,46 @@ font-size: 12px;
   </div>
 
     <div class  = "container d-flex flex-column gap-3">
-        <div class ="d-flex justify-content-between">
+        <div class ="d-flex justify-content-between align-items-center">
             <div>
             <p class = "usersparagraph">
                 Continue reading
             </p>
             </div>
 
-        <div>
-            <i class="fa-solid fa-circle-chevron-left" style="color: #9E9E9E;"></i>
-            <i class="fa-solid fa-circle-chevron-right" style="color: #9E9E9E;"></i>
-
+        <div class="slider-controls">
+            <button id="sliderPrevBtn" class="slider-btn" type="button" title="Previous">
+                <i class="fa-solid fa-circle-chevron-left" style="color: #9E9E9E; font-size: 24px;"></i>
+            </button>
+            <button id="sliderNextBtn" class="slider-btn" type="button" title="Next">
+                <i class="fa-solid fa-circle-chevron-right" style="color: #9E9E9E; font-size: 24px;"></i>
+            </button>
         </div>
 
         </div>
 
-        <div class = "card-container">
+        <div class = "card-container" id="coursesContainer">
+            <!-- Courses will be loaded here dynamically -->
+        </div>
 
-            <div class = " p-3 bg-white mysubject d-flex flex-column gap-3 w-100 rounded-4">
-            <div class = "border border-dark p-2 text-center" style="border-radius: 10px;">
-                    <img src = "images/Kokokah_Logo.png" class = "img-fluid userdasboard-card-img" />
-            </div>
-                <div class = "card-item-class align-self-start" >JSS 1</div>
+        <!-- Course Card Template (hidden) -->
+        <template id="courseCardTemplate">
+            <div class = "p-3 bg-white mysubject d-flex flex-column gap-3 w-100 rounded-4">
+                <div class = "border border-dark p-2 text-center" style="border-radius: 10px;">
+                    <img src="{{ asset('images/Kokokah_Logo.png') }}" class = "img-fluid userdasboard-card-img" alt="Course" />
+                </div>
+                <div class = "card-item-class align-self-start course-level">JSS 1</div>
                 <div class="d-flex justify-content-between align-items-center">
-                    <h5 class = "subjects">Computer Science</h5>
-                <h5 class = "subjects">60%</h5>
+                    <h5 class = "subjects course-name">Computer Science</h5>
+                    <h5 class = "subjects course-progress">0%</h5>
                 </div>
 
                 <div class="progress " style = "height:6px; background-color:#D9D9D9;">
-                <div class="progress-bar" style="width:70%; background:#F56824; height:100%;"></div>
+                    <div class="progress-bar course-progress-bar" style="width:0%; background:#F56824; height:100%;"></div>
                 </div>
-                <button class="view-btn" type="button">View Subjects</button>
-
-        </div>
-
-<div class = " p-3 bg-white mysubject d-flex flex-column gap-3 w-100 rounded-4">
-            <div class = "border border-dark p-2 text-center" style="border-radius: 10px;">
-                    <img src = "images/Kokokah_Logo.png" class = "img-fluid userdasboard-card-img" />
+                <button class="view-btn view-course-btn" type="button" data-course-id="">View Subjects</button>
             </div>
-                <div class = "card-item-class align-self-start" >JSS 1</div>
-                <div class="d-flex justify-content-between align-items-center">
-                    <h5 class = "subjects">Computer Science</h5>
-                <h5 class = "subjects">60%</h5>
-                </div>
-
-                <div class="progress " style = "height:6px; background-color:#D9D9D9;">
-                <div class="progress-bar" style="width:70%; background:#F56824; height:100%;"></div>
-                </div>
-                <button class="view-btn" type="button">View Subjects</button>
-
-        </div>
-        <div class = " p-3 bg-white mysubject d-flex flex-column gap-3 w-100 rounded-4">
-            <div class = "border border-dark p-2 text-center" style="border-radius: 10px;">
-                    <img src = "images/Kokokah_Logo.png" class = "img-fluid userdasboard-card-img" />
-            </div>
-                <div class = "card-item-class align-self-start" >JSS 1</div>
-                <div class="d-flex justify-content-between align-items-center">
-                    <h5 class = "subjects">Computer Science</h5>
-                <h5 class = "subjects">60%</h5>
-                </div>
-
-                <div class="progress " style = "height:6px; background-color:#D9D9D9;">
-                <div class="progress-bar" style="width:70%; background:#F56824; height:100%;"></div>
-                </div>
-                <button class="view-btn" type="button">View Subjects</button>
-
-        </div>
+        </template>
     </div>
 
     </div>
@@ -233,31 +278,162 @@ font-size: 12px;
     </div>
 
 </main>
-<script>
-   document.addEventListener('DOMContentLoaded', () => {
-    const viewBtns = document.querySelectorAll('button.view-btn');
+<script type="module">
+import CourseApiClient from '{{ asset("js/api/courseApiClient.js") }}';
+import EnrollmentApiClient from '{{ asset("js/api/enrollmentApiClient.js") }}';
+import AuthApiClient from '{{ asset("js/api/authClient.js") }}';
+import ToastNotification from '{{ asset("js/utils/toastNotification.js") }}';
 
+document.addEventListener('DOMContentLoaded', async () => {
+    // Load user data
+    const user = AuthApiClient.getUser();
+    if (user) {
+        document.getElementById('userGreeting').textContent = `Hello ${user.first_name} 👋`;
+    }
 
-    viewBtns.forEach(btn => {
+    // Load user's enrolled courses
+    await loadUserCourses();
 
-        btn.addEventListener('click', (e) => {
-            console.log('clicked');
-            window.location.href = '/termsubject';
+    // Setup slider controls
+    setupSliderControls();
+
+    // Handle view course button clicks
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('button.view-course-btn');
+        if (!btn) return;
+
+        const courseId = btn.getAttribute('data-course-id');
+        if (courseId) {
+            window.location.href = `/termsubject?course_id=${courseId}`;
+        }
+    });
+});
+
+async function loadUserCourses() {
+    try {
+        const response = await CourseApiClient.getMyCourses({ per_page: 12 });
+
+        if (!response.success) {
+            console.error('Failed to load courses:', response.message);
+            ToastNotification.error('Error', 'Failed to load your courses');
+            return;
+        }
+
+        const courses = response.courses || [];
+        const container = document.getElementById('coursesContainer');
+        const template = document.getElementById('courseCardTemplate');
+
+        // Clear container
+        container.innerHTML = '';
+
+        if (courses.length === 0) {
+            container.innerHTML = '<p class="text-center text-muted">No courses enrolled yet</p>';
+            updateStats(0, 0);
+            return;
+        }
+
+        // Calculate stats
+        let completedCount = 0;
+        let ongoingCount = 0;
+
+        // Render each course
+        courses.forEach(enrollment => {
+            const course = enrollment.course;
+            if (!course) return;
+
+            // Clone template
+            const card = template.content.cloneNode(true);
+
+            // Update course data
+            card.querySelector('.course-name').textContent = course.name || 'Untitled Course';
+            card.querySelector('.course-level').textContent = course.level?.name || 'Level';
+
+            // Calculate progress
+            const progress = enrollment.progress || 0;
+            card.querySelector('.course-progress').textContent = `${Math.round(progress)}%`;
+            card.querySelector('.course-progress-bar').style.width = `${progress}%`;
+
+            // Set course ID for navigation
+            card.querySelector('.view-course-btn').setAttribute('data-course-id', course.id);
+
+            // Update stats
+            if (enrollment.status === 'completed') {
+                completedCount++;
+            } else if (enrollment.status === 'in_progress') {
+                ongoingCount++;
+            }
+
+            container.appendChild(card);
         });
-    });
-});
-</script>
-{{-- <script>
-document.addEventListener('DOMContentLoaded', () => {
-    // Use event delegation to capture clicks on any current or future buttons with class 'view-btn'
-    document.body.addEventListener('click', function(e) {
-        const btn = e.target.closest('button.view-btn');
-        if (!btn) return; // click was not on a .view-btn button
 
-        console.log('clicked'); // logs every click
-        window.location.href = '/usersubject';
+        updateStats(completedCount, ongoingCount);
+
+    } catch (error) {
+        console.error('Error loading courses:', error);
+        ToastNotification.error('Error', 'An error occurred while loading courses');
+    }
+}
+
+function updateStats(completed, ongoing) {
+    document.getElementById('completedCount').textContent = completed;
+    document.getElementById('ongoingCount').textContent = ongoing;
+
+    // Calculate trends (you can enhance this with actual data)
+    const completedTrend = completed > 0 ? '↑ 1.3%' : '0%';
+    const ongoingTrend = ongoing > 0 ? '↑ 1.3%' : '0%';
+
+    document.getElementById('completedTrend').textContent = completedTrend;
+    document.getElementById('ongoingTrend').textContent = ongoingTrend;
+}
+
+function setupSliderControls() {
+    const container = document.getElementById('coursesContainer');
+    const prevBtn = document.getElementById('sliderPrevBtn');
+    const nextBtn = document.getElementById('sliderNextBtn');
+
+    if (!container || !prevBtn || !nextBtn) return;
+
+    // Scroll amount per click (in pixels)
+    const scrollAmount = 320; // Approximate card width + gap
+
+    prevBtn.addEventListener('click', () => {
+        container.scrollBy({
+            left: -scrollAmount,
+            behavior: 'smooth'
+        });
+        updateSliderButtonStates();
     });
-});
-</script> --}}
+
+    nextBtn.addEventListener('click', () => {
+        container.scrollBy({
+            left: scrollAmount,
+            behavior: 'smooth'
+        });
+        updateSliderButtonStates();
+    });
+
+    // Update button states on scroll
+    container.addEventListener('scroll', updateSliderButtonStates);
+
+    // Initial button state
+    updateSliderButtonStates();
+}
+
+function updateSliderButtonStates() {
+    const container = document.getElementById('coursesContainer');
+    const prevBtn = document.getElementById('sliderPrevBtn');
+    const nextBtn = document.getElementById('sliderNextBtn');
+
+    if (!container || !prevBtn || !nextBtn) return;
+
+    // Check if at start
+    const isAtStart = container.scrollLeft <= 0;
+    prevBtn.disabled = isAtStart;
+
+    // Check if at end
+    const isAtEnd = container.scrollLeft >= (container.scrollWidth - container.clientWidth - 10);
+    nextBtn.disabled = isAtEnd;
+}
+</script>
 
 @endsection
