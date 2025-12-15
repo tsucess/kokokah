@@ -165,22 +165,22 @@
                 currentPage = page;
                 const transactions = result.data.data || result.data;
                 const pagination = result.data;
-                    totalPages = pagination.last_page;
+                totalPages = pagination.last_page;
 
-                    const tbody = document.getElementById('transactionsTableBody');
-                    tbody.innerHTML = '';
+                const tbody = document.getElementById('transactionsTableBody');
+                tbody.innerHTML = '';
 
-                    if (transactions.length === 0) {
-                        tbody.innerHTML =
-                            '<tr><td colspan="7" class="text-center text-muted py-4">No transactions found</td></tr>';
-                    } else {
-                        transactions.forEach((transaction, index) => {
-                            const statusColor = transaction.status === 'success' ? '#28a745' :
-                                transaction.status === 'pending' ? '#ffc107' : '#dc3545';
-                            const statusText = transaction.status.charAt(0).toUpperCase() + transaction.status
-                                .slice(1);
+                if (transactions.length === 0) {
+                    tbody.innerHTML =
+                        '<tr><td colspan="7" class="text-center text-muted py-4">No transactions found</td></tr>';
+                } else {
+                    transactions.forEach((transaction, index) => {
+                        const statusColor = transaction.status === 'success' ? '#28a745' :
+                            transaction.status === 'pending' ? '#ffc107' : '#dc3545';
+                        const statusText = transaction.status.charAt(0).toUpperCase() + transaction.status
+                            .slice(1);
 
-                            const row = `
+                        const row = `
               <tr style="border-bottom: 1px solid #e8e8e8;">
                 <td style="padding: 1rem; color: #666; font-size:14px;">0${index + 1}</td>
                 <td style="padding: 1rem; font-size:14px;">
@@ -198,17 +198,16 @@
                 </td>
               </tr>
             `;
-                            tbody.innerHTML += row;
-                        });
-                    }
-
-                    document.getElementById('currentPageNum').textContent = currentPage;
-                    document.getElementById('totalPageNum').textContent = totalPages;
-                    document.getElementById('prevBtn').disabled = !pagination.prev_page_url;
-                    document.getElementById('nextBtn').disabled = !pagination.next_page_url;
-
-                    generatePageNumbers(currentPage, totalPages);
+                        tbody.innerHTML += row;
+                    });
                 }
+
+                document.getElementById('currentPageNum').textContent = currentPage;
+                document.getElementById('totalPageNum').textContent = totalPages;
+                document.getElementById('prevBtn').disabled = !pagination.prev_page_url;
+                document.getElementById('nextBtn').disabled = !pagination.next_page_url;
+
+                generatePageNumbers(currentPage, totalPages);
             } catch (error) {
                 console.error('Error loading transactions:', error);
             }

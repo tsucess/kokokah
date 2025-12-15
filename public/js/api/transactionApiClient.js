@@ -8,8 +8,8 @@ import BaseApiClient from './baseApiClient.js';
 
 class TransactionApiClient extends BaseApiClient {
   /**
-   * Get all transactions
-   * @param {object} filters - Filter options (page, per_page, status, type)
+   * Get all transactions (admin endpoint)
+   * @param {object} filters - Filter options (page, per_page, status, type, search)
    */
   static async getTransactions(filters = {}) {
     const params = new URLSearchParams();
@@ -17,11 +17,12 @@ class TransactionApiClient extends BaseApiClient {
     if (filters.per_page) params.append('per_page', filters.per_page);
     if (filters.status) params.append('status', filters.status);
     if (filters.type) params.append('type', filters.type);
+    if (filters.search) params.append('search', filters.search);
     if (filters.start_date) params.append('start_date', filters.start_date);
     if (filters.end_date) params.append('end_date', filters.end_date);
 
     const queryString = params.toString();
-    const endpoint = queryString ? `/transactions?${queryString}` : '/transactions';
+    const endpoint = queryString ? `/admin/transactions?${queryString}` : '/admin/transactions';
     return this.get(endpoint);
   }
 

@@ -17,13 +17,14 @@ class WalletService
     public function deposit(User $user, float $amount, string $paymentMethod = null, array $metadata = [])
     {
         $wallet = $user->getOrCreateWallet();
-        
+
         return DB::transaction(function () use ($wallet, $amount, $paymentMethod, $metadata) {
             return $wallet->deposit(
                 $amount,
                 null,
                 "Wallet deposit via {$paymentMethod}",
-                array_merge($metadata, ['payment_method' => $paymentMethod])
+                array_merge($metadata, ['payment_method' => $paymentMethod]),
+                $paymentMethod
             );
         });
     }

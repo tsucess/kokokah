@@ -139,7 +139,8 @@ class PaymentGatewayService
                 $payment->amount,
                 $payment->gateway_reference,
                 "Wallet deposit via {$payment->gateway}",
-                ['payment_id' => $payment->id]
+                ['payment_id' => $payment->id],
+                $payment->gateway
             );
 
             return [
@@ -149,7 +150,7 @@ class PaymentGatewayService
                 'transaction' => $transaction,
                 'new_balance' => $wallet->balance
             ];
-        } 
+        }
         
         if ($payment->type === 'course_purchase') {
             // Enroll user in course
@@ -168,6 +169,7 @@ class PaymentGatewayService
                 'status' => 'success',
                 'description' => "Course purchase: {$payment->course->title}",
                 'course_id' => $payment->course_id,
+                'payment_method' => $payment->gateway,
                 'metadata' => ['payment_id' => $payment->id]
             ]);
 

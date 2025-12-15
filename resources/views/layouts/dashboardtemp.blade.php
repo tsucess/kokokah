@@ -100,19 +100,14 @@
                 <a class="nav-item-link d-block nav-child" href="#">Course Approval</a>
             </div>
 
-            <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
-                data-bs-toggle="collapse" href="#paymentsMenu" role="button" aria-expanded="false"
-                aria-controls="paymentsMenu">
-                <span><i class="fa-solid fa-credit-card pe-3"></i> Payments & Transactions</span>
+            <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent" href="/transactions" role="button" aria-expanded="false">
+                <span><i class="fa-solid fa-credit-card pe-3"></i>Transactions</span></a>
 
-                <i class="fa-solid fa-chevron-down small chevron-icon"></i>
-            </a>
-
-            <div class="collapse ps-4" id="paymentsMenu">
+            {{-- <div class="collapse ps-4" id="paymentsMenu">
                 <a class="nav-item-link d-block nav-child" href="/transactions">Transactions</a>
                 <a class="nav-item-link d-block nav-child" href="#">Payment History</a>
                 <a class="nav-item-link d-block nav-child" href="#">Invoices</a>
-            </div>
+            </div> --}}
 
             <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
                 data-bs-toggle="collapse" href="#analyticsMenu" role="button" aria-expanded="false"
