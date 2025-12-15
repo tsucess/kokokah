@@ -390,6 +390,21 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+
+                layout: {
+                    padding: {
+                        top: 5
+                    }
+                },
+                 scales: {
+            y: {
+                beginAtZero: true,
+                  grace: '20%',
+                ticks: {
+                    stepSize: 20
+                }
+            }
+        },
                 plugins: {
                     legend: {
                         position: 'bottom'
