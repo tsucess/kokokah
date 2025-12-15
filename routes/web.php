@@ -75,8 +75,22 @@ Route::get('/market', function () {
     return view('market');
 });
 
-Route::get('/profiles', function () {
+Route::get('/test-auth', function () {
+    return response()->json([
+        'authenticated' => auth()->check(),
+        'user' => auth()->user(),
+        'guard' => auth()->getDefaultDriver()
+    ]);
+});
+
+
+// Profile routes - simple views that load profile data via API
+Route::get('/adminprofile', function () {
     return view('admin.profile');
+});
+
+Route::get('/userprofile', function () {
+    return view('users.profile');
 });
 
 Route::get('/profile', function () {
@@ -113,10 +127,6 @@ Route::get('/terms', function () {
 
 Route::get('/rating', function () {
     return view('admin.rating');
-});
-
-Route::get('/ratingdetails', function () {
-    return view('admin.ratingdetails');
 });
 
 Route::get('/instructor', function () {
@@ -184,21 +194,13 @@ Route::get('/userkoodies', function () {
     return view('users.userkoodies');
 });
 
-Route::get('/userpaymenthistory', function () {
-    return view('users.paymenthistory');
-});
-
 Route::get('/userleaderboard', function () {
     return view('users.leaderboard');
 });
 
-Route::get('/lessondetails', function () {
+Route::get('/userlessondetails', function () {
     return view('users.subjectdetails');
 });
-
-// Route::get('/userchatroom', function () {
-//     return view('users.userchatroom');
-// });
 
 Route::get('/subjectselect', function () {
     return view('admin.subjectselected');
@@ -213,7 +215,7 @@ Route::get('/wallet', function () {
 });
 
 Route::get('/chatroom', function () {
-    return view('users.chatroom');
+    return view('admin.chatroom');
 });
 
 Route::get('/announcement', function () {
