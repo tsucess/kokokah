@@ -2,20 +2,6 @@
 
 @section('content')
     <style>
-
-        .history-panel {
-            width: var(--right-panel-width);
-            background-color: #fff;
-            position: fixed;
-            top: var(--topbar-height);
-            bottom: 30px; /* Above the fixed footer */
-            right: 0;
-            z-index: 700;
-            border-left: 1px solid var(--bs-light-gray);
-            overflow-y: auto;
-            padding: 1.5rem;
-        }
-
         .nav-item-link {
             display: flex;
             align-items: center;
@@ -25,10 +11,13 @@
             font-weight: 500;
             transition: background-color 0.2s;
         }
-        .nav-item-link:hover, .nav-item-link.active {
+
+        .nav-item-link:hover,
+        .nav-item-link.active {
             background-color: var(--bs-light-gray);
             color: var(--bs-dark-teal);
         }
+
         .nav-item-link.active {
             font-weight: bold;
             background-color: var(--bs-dark-teal);
@@ -38,7 +27,7 @@
 
         /* CONTENT SPECIFIC STYLING (AI/Messaging Center) */
         .ai-center-container {
-            flex-grow: 1;
+
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -46,6 +35,7 @@
             padding-bottom: 2rem;
             text-align: center;
         }
+
         .suggestion-card {
             border: 1px solid var(--bs-light-gray);
             border-radius: 0.75rem;
@@ -56,9 +46,11 @@
             transition: box-shadow 0.2s;
             background-color: #fff;
         }
+
         .suggestion-card:hover {
             box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
         }
+
         .suggestion-icon-container {
             width: 30px;
             height: 30px;
@@ -70,17 +62,21 @@
             color: var(--bs-dark-teal);
             margin-bottom: 0.75rem;
         }
+
         .chat-input-wrapper {
-            background-color: #f8f9fa; /* Match body background */
+            background-color: #f8f9fa;
+            /* Match body background */
             padding: 1.5rem;
             width: 100%;
         }
+
         .chat-input-box {
             background-color: #fff;
             border: 1px solid var(--bs-light-gray);
             border-radius: 0.75rem;
             padding: 0.5rem 1rem;
         }
+
         .btn-send {
             background-color: var(--bs-dark-teal);
             color: white;
@@ -91,70 +87,77 @@
     </style>
 
     <main>
+        <div class="container-fluid p-4">
 
-        <div class="ai-center-container container-fluid">
+            <div class="row g-4 ">
+                <div class="ai-center-container col-12 col-lg-8">
 
-            <h1 class="fw-bold mb-3" style="color: var(--bs-dark-teal);">What can I help with?</h1>
-            <p class="text-muted mb-5">
-                Here to help with your overall academic questions, ranging from English, Mathematic and Physic<br>
-                What's on your mind today?
-            </p>
+                    <h1 class="fw-bold mb-3" style="color: var(--bs-dark-teal);">What can I help with?</h1>
+                    <p class="text-muted mb-5">
+                        Here to help with your overall academic questions, ranging from English, Mathematic and Physic<br>
+                        What's on your mind today?
+                    </p>
 
-            <div class="row g-4 justify-content-center mb-5" style="max-width: 900px;">
+                    <div class="row g-4 justify-content-center mb-5" style="max-width: 900px;">
 
-                <div class="col-12 col-md-4">
-                    <div class="suggestion-card">
-                        <div class="suggestion-icon-container"><i class="fa-solid fa-file-lines"></i></div>
-                        <p class="small fw-bold mb-0" style="color: var(--bs-dark-teal);">Give me a concise summary of this meeting transcript</p>
+                        <div class="col-12 col-md-4">
+                            <div class="suggestion-card">
+                                <div class="suggestion-icon-container"><i class="fa-solid fa-file-lines"></i></div>
+                                <p class="small fw-bold mb-0" style="color: var(--bs-dark-teal);">Give me a concise summary
+                                    of this meeting transcript</p>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-4">
+                            <div class="suggestion-card">
+                                <div class="suggestion-icon-container"><i class="fa-solid fa-pen-to-square"></i></div>
+                                <p class="small fw-bold mb-0" style="color: var(--bs-dark-teal);">Write a product
+                                    description for a miniature smartwatch</p>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-4">
+                            <div class="suggestion-card">
+                                <div class="suggestion-icon-container"
+                                    style="background-color: var(--bs-main-green); color: white;"><i
+                                        class="fa-solid fa-star"></i></div>
+                                <p class="small fw-bold mb-0" style="color: var(--bs-dark-teal);">Provide a polite response
+                                    to a customer asking for a refund</p>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="chat-input-wrapper">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <div class="chat-input-box flex-grow-1 d-flex align-items-center">
+                            <input type="text" class="form-control border-0 shadow-none"
+                                placeholder="Message to koodie...">
+                            <i class="fa-solid fa-microphone me-3 text-muted"></i>
+                            <i class="fa-regular fa-face-smile me-3 text-muted"></i>
+                        </div>
+                        <button class="btn btn-send d-flex align-items-center">
+                            Send <i class="fa-solid fa-chevron-right ms-2 small"></i>
+                        </button>
                     </div>
                 </div>
 
-                <div class="col-12 col-md-4">
-                    <div class="suggestion-card">
-                        <div class="suggestion-icon-container"><i class="fa-solid fa-pen-to-square"></i></div>
-                        <p class="small fw-bold mb-0" style="color: var(--bs-dark-teal);">Write a product description for a miniature smartwatch</p>
-                    </div>
                 </div>
 
-                <div class="col-12 col-md-4">
-                    <div class="suggestion-card">
-                        <div class="suggestion-icon-container" style="background-color: var(--bs-main-green); color: white;"><i class="fa-solid fa-star"></i></div>
-                        <p class="small fw-bold mb-0" style="color: var(--bs-dark-teal);">Provide a polite response to a customer asking for a refund</p>
+                <div class="history-panel col-12 col-lg-4 ">
+                    <h6 class="fw-bold" style="color: var(--bs-dark-teal);">History</h6>
+                    <div class="py-2 small border-bottom">
+                        <p class="mb-0 fw-bold">Summarized meeting transcript</p>
+                        <span class="text-muted">5 minutes ago</span>
+                    </div>
+                    <div class="py-2 small border-bottom">
+                        <p class="mb-0 fw-bold">Drafted product description</p>
+                        <span class="text-muted">1 hour ago</span>
+                    </div>
+                    <div class="py-2 small border-bottom">
+                        <p class="mb-0 fw-bold">Wrote refund response</p>
+                        <span class="text-muted">2 hours ago</span>
                     </div>
                 </div>
             </div>
-
         </div>
-
-        <div class="chat-input-wrapper">
-            <div class="d-flex align-items-center justify-content-center">
-                <div class="chat-input-box flex-grow-1 d-flex align-items-center" style="max-width: 800px;">
-                    <input type="text" class="form-control border-0 shadow-none" placeholder="Message to koodie...">
-                    <i class="fa-solid fa-microphone me-3 text-muted"></i>
-                    <i class="fa-regular fa-face-smile me-3 text-muted"></i>
-                </div>
-                <button class="btn btn-send d-flex align-items-center">
-                    Send <i class="fa-solid fa-chevron-right ms-2 small"></i>
-                </button>
-            </div>
-        </div>
-
-
-    <div class="history-panel d-none d-lg-block">
-        <h6 class="fw-bold" style="color: var(--bs-dark-teal);">History</h6>
-        <div class="py-2 small border-bottom">
-            <p class="mb-0 fw-bold">Summarized meeting transcript</p>
-            <span class="text-muted">5 minutes ago</span>
-        </div>
-        <div class="py-2 small border-bottom">
-            <p class="mb-0 fw-bold">Drafted product description</p>
-            <span class="text-muted">1 hour ago</span>
-        </div>
-        <div class="py-2 small border-bottom">
-            <p class="mb-0 fw-bold">Wrote refund response</p>
-            <span class="text-muted">2 hours ago</span>
-        </div>
-    </div>
     </main>
-
 @endsection
