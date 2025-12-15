@@ -25,14 +25,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-     <link rel="stylesheet" href="{{ asset('css/style_theme.css') }}">
-     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style_theme.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
     <link rel="stylesheet" href="{{ asset('css/access.css') }}">
     <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
     {{-- @vite(['resources/css/dashboard.css','resources/css/access.css']) --}}
 
     <!-- Include stylesheet quilljs -->
-<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 
 
 </head>
@@ -112,18 +112,20 @@
                 <a class="nav-item-link d-block nav-child" href="#">Payment History</a>
                 <a class="nav-item-link d-block nav-child" href="#">Invoices</a>
             </div>
-
-            <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
+            <a class="nav-item-link" href="/report">
+                <i class="fa-solid fa-chart-line pe-3"></i> Reports & Analytics
+            </a>
+            {{-- <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
                 data-bs-toggle="collapse" href="#analyticsMenu" role="button" aria-expanded="false"
                 aria-controls="analyticsMenu">
                 <span><i class="fa-solid fa-chart-line pe-3"></i> Reports & Analytics</span>
                 <i class="fa-solid fa-chevron-down small chevron-icon"></i>
-            </a>
+            </a> --}}
 
-            <div class="collapse ps-4" id="analyticsMenu">
+            {{-- <div class="collapse ps-4" id="analyticsMenu">
                 <a class="nav-item-link d-block nav-child" href="#">Reports</a>
                 <a class="nav-item-link d-block nav-child" href="#">Analytics</a>
-            </div>
+            </div> --}}
 
             <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
                 data-bs-toggle="collapse" href="#communicationMenu" role="button" aria-expanded="false"
@@ -268,45 +270,45 @@
 
         // Active navigation state detection
         function setActiveNavigation() {
-    const currentPath = window.location.pathname;
+            const currentPath = window.location.pathname;
 
-    // Clear previous active states
-    document.querySelectorAll('.nav-item-link, .nav-child').forEach(link => {
-        link.classList.remove('active');
-    });
+            // Clear previous active states
+            document.querySelectorAll('.nav-item-link, .nav-child').forEach(link => {
+                link.classList.remove('active');
+            });
 
-    // Loop each nav link
-    document.querySelectorAll('.nav-item-link, .nav-child').forEach(link => {
-        const href = link.getAttribute('href');
+            // Loop each nav link
+            document.querySelectorAll('.nav-item-link, .nav-child').forEach(link => {
+                const href = link.getAttribute('href');
 
-        // Skip non-URL links (e.g., parent toggles with href="#subjectsMenu")
-        if (!href || href.startsWith('#')) return;
+                // Skip non-URL links (e.g., parent toggles with href="#subjectsMenu")
+                if (!href || href.startsWith('#')) return;
 
-        // Exact match only
-        if (href === currentPath) {
-            link.classList.add('active');
+                // Exact match only
+                if (href === currentPath) {
+                    link.classList.add('active');
 
-            // If it's a child link, open parent dropdown & activate parent
-            if (link.classList.contains('nav-child')) {
-                const parentMenu = link.closest('.collapse');
-                if (parentMenu) {
-                    const parentToggle = document.querySelector(`[href="#${parentMenu.id}"]`);
+                    // If it's a child link, open parent dropdown & activate parent
+                    if (link.classList.contains('nav-child')) {
+                        const parentMenu = link.closest('.collapse');
+                        if (parentMenu) {
+                            const parentToggle = document.querySelector(`[href="#${parentMenu.id}"]`);
 
 
-                    const bsCollapse = new bootstrap.Collapse(parentMenu, {
-                        toggle: false
-                    });
-                    bsCollapse.show();
+                            const bsCollapse = new bootstrap.Collapse(parentMenu, {
+                                toggle: false
+                            });
+                            bsCollapse.show();
+                        }
+                    }
                 }
+            });
+
+            // Dashboard special case
+            if (currentPath === '/dashboard' || currentPath === '/') {
+                document.getElementById('dashboardLink')?.classList.add('active');
             }
         }
-    });
-
-    // Dashboard special case
-    if (currentPath === '/dashboard' || currentPath === '/') {
-        document.getElementById('dashboardLink')?.classList.add('active');
-    }
-}
 
         // Call on page load
         document.addEventListener('DOMContentLoaded', setActiveNavigation);
@@ -356,7 +358,8 @@
 
                     // Close all other collapse menus
                     document.querySelectorAll('.collapse').forEach(collapse => {
-                        if (collapse.id !== targetId && collapse.classList.contains('show')) {
+                        if (collapse.id !== targetId && collapse.classList.contains(
+                            'show')) {
                             const bsCollapse = bootstrap.Collapse.getInstance(collapse);
                             if (bsCollapse) {
                                 bsCollapse.hide();
@@ -365,7 +368,10 @@
                     });
 
                     // Toggle current dropdown
-                    const bsCollapse = bootstrap.Collapse.getInstance(target) || new bootstrap.Collapse(target, { toggle: false });
+                    const bsCollapse = bootstrap.Collapse.getInstance(target) || new bootstrap
+                        .Collapse(target, {
+                            toggle: false
+                        });
                     if (isCurrentOpen) {
                         bsCollapse.hide();
                     } else {
