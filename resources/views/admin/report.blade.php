@@ -390,6 +390,12 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+
+                layout: {
+                    padding: {
+                        top: 25
+                    }
+                },
                 plugins: {
                     legend: {
                         position: 'bottom'
