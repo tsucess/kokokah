@@ -376,6 +376,64 @@
         transform: scale(0.98);
     }
 
+    /* Payment Gateway Options */
+    .payment-gateways {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 12px;
+    }
+
+    .gateway-option {
+        position: relative;
+    }
+
+    .gateway-option input[type="radio"] {
+        display: none;
+    }
+
+    .gateway-label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 16px 12px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: #fff;
+        min-height: 120px;
+    }
+
+    .gateway-option input[type="radio"]:checked + .gateway-label {
+        border-color: #004A53;
+        background-color: #f0f8f9;
+    }
+
+    .gateway-icon {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 8px;
+        background: #f5f5f5;
+        border-radius: 6px;
+    }
+
+    .gateway-icon img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+    .gateway-name {
+        font-size: 13px;
+        font-weight: 600;
+        color: #333;
+        text-align: center;
+    }
+
     /* Responsive modal */
     @media (max-width: 576px) {
         .payment-modal {
@@ -399,6 +457,24 @@
         .payment-modal-cancel,
         .payment-modal-confirm {
             width: 100%;
+        }
+
+        .payment-gateways {
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        }
+
+        .gateway-label {
+            min-height: 100px;
+            padding: 12px 8px;
+        }
+
+        .gateway-icon {
+            width: 50px;
+            height: 50px;
+        }
+
+        .gateway-name {
+            font-size: 12px;
         }
     }
 </style>
@@ -471,7 +547,7 @@
                             <div class="gateway-option">
                                 <input type="radio" id="gateway-kudikah" name="payment_gateway" value="kudikah" checked>
                                 <label for="gateway-kudikah" class="gateway-label">
-                                    <div class="gateway-icon">💳</div>
+                                    <div class="gateway-icon" style="font-size: 40px;">💳</div>
                                     <div class="gateway-name">Kudikah Wallet</div>
                                 </label>
                             </div>
@@ -480,7 +556,9 @@
                             <div class="gateway-option">
                                 <input type="radio" id="gateway-paystack" name="payment_gateway" value="paystack">
                                 <label for="gateway-paystack" class="gateway-label">
-                                    <div class="gateway-icon">🏦</div>
+                                    <div class="gateway-icon">
+                                        <img src="{{ asset('images/paystack.png') }}" alt="Paystack">
+                                    </div>
                                     <div class="gateway-name">Paystack</div>
                                 </label>
                             </div>
@@ -489,7 +567,9 @@
                             <div class="gateway-option">
                                 <input type="radio" id="gateway-flutterwave" name="payment_gateway" value="flutterwave">
                                 <label for="gateway-flutterwave" class="gateway-label">
-                                    <div class="gateway-icon">🌊</div>
+                                    <div class="gateway-icon">
+                                        <img src="{{ asset('images/Flutterwave.png') }}" alt="Flutterwave">
+                                    </div>
                                     <div class="gateway-name">Flutterwave</div>
                                 </label>
                             </div>
@@ -498,7 +578,9 @@
                             <div class="gateway-option">
                                 <input type="radio" id="gateway-stripe" name="payment_gateway" value="stripe">
                                 <label for="gateway-stripe" class="gateway-label">
-                                    <div class="gateway-icon">💰</div>
+                                    <div class="gateway-icon">
+                                        <img src="{{ asset('images/stripe.webp') }}" alt="Stripe">
+                                    </div>
                                     <div class="gateway-name">Stripe</div>
                                 </label>
                             </div>
@@ -507,7 +589,9 @@
                             <div class="gateway-option">
                                 <input type="radio" id="gateway-paypal" name="payment_gateway" value="paypal">
                                 <label for="gateway-paypal" class="gateway-label">
-                                    <div class="gateway-icon">🅿️</div>
+                                    <div class="gateway-icon">
+                                        <img src="{{ asset('images/paypal.png') }}" alt="PayPal">
+                                    </div>
                                     <div class="gateway-name">PayPal</div>
                                 </label>
                             </div>
@@ -528,6 +612,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module">
         import CourseApiClient from '{{ asset("js/api/courseApiClient.js") }}';
+        import PaymentApiClient from '{{ asset("js/api/paymentApiClient.js") }}';
+        import WalletApiClient from '{{ asset("js/api/walletApiClient.js") }}';
+        import ToastNotification from '{{ asset("js/utils/toastNotification.js") }}';
 
         let allCourses = [];
 
@@ -880,46 +967,206 @@
         /**
          * Process Kudikah Wallet Payment
          */
-        function processKudikahPayment(paymentData) {
-            console.log('Processing Kudikah Wallet Payment:', paymentData);
-            // TODO: Implement Kudikah wallet payment integration
-            alert(`Processing payment via Kudikah Wallet\nAmount: ${formatNGN(extractPrice(document.getElementById('subtotal').textContent))}`);
+        async function processKudikahPayment(paymentData) {
+            try {
+                showLoadingState('Processing Kudikah Wallet payment...');
+
+                let successCount = 0;
+                let failureCount = 0;
+                const courseIds = paymentData.courses;
+
+                // Process each course individually using WalletApiClient
+                for (const courseId of courseIds) {
+                    const result = await WalletApiClient.purchaseCourse(courseId);
+
+                    if (result.success) {
+                        successCount++;
+                    } else {
+                        failureCount++;
+                        console.error(`Failed to purchase course ${courseId}:`, result.message);
+                        // Show toast notification for each failed course
+                        ToastNotification.error('Purchase Failed', result.message || 'Failed to purchase course');
+                    }
+                }
+
+                if (successCount > 0) {
+                    showSuccessMessage(`Successfully purchased ${successCount} course(s) via Kudikah Wallet!`);
+                    // Redirect to success page or dashboard
+                    setTimeout(() => {
+                        window.location.href = '/userclass';
+                    }, 2000);
+                } else {
+                    showErrorMessage(`Failed to purchase courses. Please try again.`);
+                }
+            } catch (error) {
+                console.error('Kudikah payment error:', error);
+                showErrorMessage('Error processing Kudikah Wallet payment: ' + error.message);
+            }
         }
 
         /**
          * Process Paystack Payment
          */
-        function processPaystackPayment(paymentData) {
-            console.log('Processing Paystack Payment:', paymentData);
-            // TODO: Implement Paystack payment integration
-            alert(`Processing payment via Paystack\nAmount: ${formatNGN(extractPrice(document.getElementById('subtotal').textContent))}`);
+        async function processPaystackPayment(paymentData) {
+            try {
+                showLoadingState('Initializing Paystack payment...');
+
+                // For multiple courses, process the first one and redirect
+                // User can purchase additional courses after
+                const courseId = paymentData.courses[0];
+
+                const paymentRequest = {
+                    course_id: courseId,
+                    gateway: 'paystack'
+                };
+
+                const result = await PaymentApiClient.initializeCoursePayment(paymentRequest);
+
+                if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
+                    // Redirect to Paystack payment page
+                    window.location.href = result.data.gateway_data.authorization_url;
+                } else {
+                    showErrorMessage(result.message || 'Failed to initialize Paystack payment.');
+                }
+            } catch (error) {
+                console.error('Paystack payment error:', error);
+                showErrorMessage('Error initializing Paystack payment: ' + error.message);
+            }
         }
 
         /**
          * Process Flutterwave Payment
          */
-        function processFlutterwavePayment(paymentData) {
-            console.log('Processing Flutterwave Payment:', paymentData);
-            // TODO: Implement Flutterwave payment integration
-            alert(`Processing payment via Flutterwave\nAmount: ${formatNGN(extractPrice(document.getElementById('subtotal').textContent))}`);
+        async function processFlutterwavePayment(paymentData) {
+            try {
+                showLoadingState('Initializing Flutterwave payment...');
+
+                // For multiple courses, process the first one and redirect
+                // User can purchase additional courses after
+                const courseId = paymentData.courses[0];
+
+                const paymentRequest = {
+                    course_id: courseId,
+                    gateway: 'flutterwave'
+                };
+
+                const result = await PaymentApiClient.initializeCoursePayment(paymentRequest);
+
+                if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
+                    // Redirect to Flutterwave payment page
+                    window.location.href = result.data.gateway_data.authorization_url;
+                } else {
+                    showErrorMessage(result.message || 'Failed to initialize Flutterwave payment.');
+                }
+            } catch (error) {
+                console.error('Flutterwave payment error:', error);
+                showErrorMessage('Error initializing Flutterwave payment: ' + error.message);
+            }
         }
 
         /**
          * Process Stripe Payment
          */
-        function processStripePayment(paymentData) {
-            console.log('Processing Stripe Payment:', paymentData);
-            // TODO: Implement Stripe payment integration
-            alert(`Processing payment via Stripe\nAmount: ${formatNGN(extractPrice(document.getElementById('subtotal').textContent))}`);
+        async function processStripePayment(paymentData) {
+            try {
+                showLoadingState('Initializing Stripe payment...');
+
+                // For multiple courses, process the first one and redirect
+                // User can purchase additional courses after
+                const courseId = paymentData.courses[0];
+
+                const paymentRequest = {
+                    course_id: courseId,
+                    gateway: 'stripe'
+                };
+
+                const result = await PaymentApiClient.initializeCoursePayment(paymentRequest);
+
+                if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
+                    // Redirect to Stripe payment page
+                    window.location.href = result.data.gateway_data.authorization_url;
+                } else {
+                    showErrorMessage(result.message || 'Failed to initialize Stripe payment.');
+                }
+            } catch (error) {
+                console.error('Stripe payment error:', error);
+                showErrorMessage('Error initializing Stripe payment: ' + error.message);
+            }
         }
 
         /**
          * Process PayPal Payment
          */
-        function processPayPalPayment(paymentData) {
-            console.log('Processing PayPal Payment:', paymentData);
-            // TODO: Implement PayPal payment integration
-            alert(`Processing payment via PayPal\nAmount: ${formatNGN(extractPrice(document.getElementById('subtotal').textContent))}`);
+        async function processPayPalPayment(paymentData) {
+            try {
+                showLoadingState('Initializing PayPal payment...');
+
+                // For multiple courses, process the first one and redirect
+                // User can purchase additional courses after
+                const courseId = paymentData.courses[0];
+
+                const paymentRequest = {
+                    course_id: courseId,
+                    gateway: 'paypal'
+                };
+
+                const result = await PaymentApiClient.initializeCoursePayment(paymentRequest);
+
+                if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
+                    // Redirect to PayPal payment page
+                    window.location.href = result.data.gateway_data.authorization_url;
+                } else {
+                    showErrorMessage(result.message || 'Failed to initialize PayPal payment.');
+                }
+            } catch (error) {
+                console.error('PayPal payment error:', error);
+                showErrorMessage('Error initializing PayPal payment: ' + error.message);
+            }
+        }
+
+        /**
+         * Show loading state
+         */
+        function showLoadingState(message) {
+            const modal = document.getElementById('paymentGatewayModal');
+            const body = modal.querySelector('.payment-modal-body');
+            body.innerHTML = `
+                <div style="text-align: center; padding: 40px;">
+                    <div class="spinner-border text-primary mb-3" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p>${message}</p>
+                </div>
+            `;
+        }
+
+        /**
+         * Show success message
+         */
+        function showSuccessMessage(message) {
+            const modal = document.getElementById('paymentGatewayModal');
+            const body = modal.querySelector('.payment-modal-body');
+            body.innerHTML = `
+                <div style="text-align: center; padding: 40px;">
+                    <div style="font-size: 48px; margin-bottom: 16px;">✅</div>
+                    <p style="color: #28a745; font-weight: 600;">${message}</p>
+                </div>
+            `;
+        }
+
+        /**
+         * Show error message
+         */
+        function showErrorMessage(message) {
+            const modal = document.getElementById('paymentGatewayModal');
+            const body = modal.querySelector('.payment-modal-body');
+            body.innerHTML = `
+                <div style="text-align: center; padding: 40px;">
+                    <div style="font-size: 48px; margin-bottom: 16px;">❌</div>
+                    <p style="color: #dc3545; font-weight: 600;">${message}</p>
+                    <button type="button" class="btn btn-primary mt-3" onclick="location.reload()">Try Again</button>
+                </div>
+            `;
         }
 
     </script>

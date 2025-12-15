@@ -241,9 +241,3 @@ I VERIFIED all profile functionality including data loading, saving, image uploa
 
 I'm currently ready to implement the remaining user views (announcements, koodies, leaderboard) and add comprehensive unit tests for profile functionality.
 
-
-
-
-<!-- <button class="btn btn-sm btn-light add-topic-quiz-btn" type="button" title="Add Topic Quiz" data-topic-id="${topic.id}" onclick="openTopicQuizModal(${topic.id})">
-                                <i class="fa-solid fa-question-circle"></i>
-                            </button> -->

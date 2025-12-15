@@ -129,10 +129,6 @@ Route::get('/rating', function () {
     return view('admin.rating');
 });
 
-Route::get('/ratingdetails', function () {
-    return view('admin.ratingdetails');
-});
-
 Route::get('/instructor', function () {
     return view('admin.instructor');
 });
@@ -202,13 +198,9 @@ Route::get('/userleaderboard', function () {
     return view('users.leaderboard');
 });
 
-Route::get('/lessondetails', function () {
+Route::get('/userlessondetails', function () {
     return view('users.subjectdetails');
 });
-
-// Route::get('/userchatroom', function () {
-//     return view('users.userchatroom');
-// });
 
 Route::get('/subjectselect', function () {
     return view('admin.subjectselected');
@@ -223,7 +215,7 @@ Route::get('/wallet', function () {
 });
 
 Route::get('/chatroom', function () {
-    return view('users.chatroom');
+    return view('admin.chatroom');
 });
 
 Route::get('/announcement', function () {

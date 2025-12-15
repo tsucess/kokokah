@@ -233,6 +233,68 @@ class CourseApiClient extends BaseApiClient {
   static async deleteCurriculumCategory(categoryId) {
     return this.delete(`/curriculum-category/${categoryId}`);
   }
+
+  /**
+   * Get user's enrolled courses
+   * @param {object} filters - Filter options (page, per_page, sort_by, sort_order)
+   */
+  static async getMyCourses(filters = {}) {
+    const params = new URLSearchParams();
+    if (filters.page) params.append('page', filters.page);
+    if (filters.per_page) params.append('per_page', filters.per_page);
+    if (filters.sort_by) params.append('sort_by', filters.sort_by);
+    if (filters.sort_order) params.append('sort_order', filters.sort_order);
+
+    const queryString = params.toString();
+    const endpoint = queryString ? `/courses/my-courses?${queryString}` : '/courses/my-courses';
+    return this.get(endpoint);
+  }
+
+  /**
+   * Enroll in a course
+   * @param {number} courseId - Course ID
+   */
+  static async enrollCourse(courseId) {
+    return this.post(`/courses/${courseId}/enroll`);
+  }
+
+  /**
+   * Unenroll from a course
+   * @param {number} courseId - Course ID
+   */
+  static async unenrollCourse(courseId) {
+    return this.delete(`/courses/${courseId}/unenroll`);
+  }
+
+  /**
+   * Get course lessons
+   * @param {number} courseId - Course ID
+   */
+  static async getCourseLessons(courseId) {
+    return this.get(`/courses/${courseId}/lessons`);
+  }
+
+  /**
+   * Get featured courses
+   */
+  static async getFeaturedCourses() {
+    return this.get('/courses/featured');
+  }
+
+  /**
+   * Get popular courses
+   */
+  static async getPopularCourses() {
+    return this.get('/courses/popular');
+  }
+
+  /**
+   * Search courses
+   * @param {string} query - Search query
+   */
+  static async searchCourses(query) {
+    return this.get(`/courses/search?search=${encodeURIComponent(query)}`);
+  }
 }
 
 export default CourseApiClient;
