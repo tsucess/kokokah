@@ -53,7 +53,7 @@
                 Scoring</a>
 
             <a class="nav-item-link" href="/userkudikah"><i class="fa-solid fa-wallet me-2 pe-2"></i>Kudikah</a>
-
+<a class="nav-item-link" href="/userpaymenthistory"><i class="fa-solid fa-money-bill-transfer me-2 pe-2"></i></i>Payment History</a>
             <a class="nav-item-link" href="/userleaderboard"><i class="fa-solid fa-trophy me-2 pe-2"></i></i>Leaderboard</a>
             <a class="nav-item-link" href="/userkoodies"><i class="fa-solid fa-robot me-2 pe-2"></i>Ai</a>
             <a class="nav-item-link" href="/chatroom"><i class="fa-solid fa-comment me-2 pe-2"></i>Chatroom</a>
