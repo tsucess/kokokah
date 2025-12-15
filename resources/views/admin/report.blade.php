@@ -393,9 +393,18 @@
 
                 layout: {
                     padding: {
-                        top: 25
+                        top: 5
                     }
                 },
+                 scales: {
+            y: {
+                beginAtZero: true,
+                  grace: '20%',
+                ticks: {
+                    stepSize: 20
+                }
+            }
+        },
                 plugins: {
                     legend: {
                         position: 'bottom'
