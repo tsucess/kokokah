@@ -91,6 +91,10 @@ Route::get('/categories', function () {
     return view('admin.categories');
 });
 
+Route::get('/report', function () {
+    return view('admin.report');
+});
+
 Route::get('/curriculum-categories', function () {
     return view('admin.curriculum-categories');
 });
