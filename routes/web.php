@@ -194,7 +194,7 @@ Route::get('/userleaderboard', function () {
     return view('users.leaderboard');
 });
 
-Route::get('/lessondetails', function () {
+Route::get('/userlessondetails', function () {
     return view('users.subjectdetails');
 });
 

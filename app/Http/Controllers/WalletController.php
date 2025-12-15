@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Course;
+use App\Models\PaymentMethod;
 use App\Services\WalletService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Crypt;
 
 class WalletController extends Controller
 {
@@ -265,5 +267,190 @@ class WalletController extends Controller
             'success' => true,
             'data' => $affordability
         ]);
+    }
+
+    /**
+     * Get user's saved payment methods
+     */
+    public function getPaymentMethods()
+    {
+        $user = Auth::user();
+        $paymentMethods = $user->paymentMethods()
+            ->where('is_saved', true)
+            ->orderBy('is_default', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function ($method) {
+                return [
+                    'id' => $method->id,
+                    'card_holder_name' => $method->card_holder_name,
+                    'card_last_four' => $method->card_last_four,
+                    'expiry_date' => $method->expiry_date,
+                    'card_type' => $method->card_type,
+                    'is_default' => $method->is_default,
+                    'masked_card' => $method->getMaskedCardNumber(),
+                    'last_used_at' => $method->last_used_at
+                ];
+            });
+
+        return response()->json([
+            'success' => true,
+            'data' => $paymentMethods
+        ]);
+    }
+
+    /**
+     * Add a new payment method
+     */
+    public function addPaymentMethod(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'card_holder_name' => 'required|string|max:255',
+            'card_number' => 'required|string|regex:/^\d{13,19}$/',
+            'expiry_date' => 'required|string|regex:/^\d{2}\/\d{2}$/',
+            'cvv' => 'required|string|regex:/^\d{3,4}$/',
+            'is_default' => 'sometimes|boolean'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        try {
+            $user = Auth::user();
+
+            // Extract last 4 digits
+            $cardNumber = $request->card_number;
+            $lastFour = substr($cardNumber, -4);
+
+            // Detect card type
+            $cardType = $this->detectCardType($cardNumber);
+
+            // If this is set as default, unset other defaults
+            if ($request->is_default) {
+                $user->paymentMethods()->update(['is_default' => false]);
+            }
+
+            // Create payment method with encrypted data
+            $paymentMethod = $user->paymentMethods()->create([
+                'card_holder_name' => $request->card_holder_name,
+                'card_number' => Crypt::encryptString($cardNumber),
+                'card_last_four' => $lastFour,
+                'expiry_date' => $request->expiry_date,
+                'cvv' => Crypt::encryptString($request->cvv),
+                'card_type' => $cardType,
+                'is_default' => $request->is_default ?? false,
+                'is_saved' => true
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Payment method saved successfully',
+                'data' => [
+                    'id' => $paymentMethod->id,
+                    'card_holder_name' => $paymentMethod->card_holder_name,
+                    'card_last_four' => $paymentMethod->card_last_four,
+                    'expiry_date' => $paymentMethod->expiry_date,
+                    'card_type' => $paymentMethod->card_type,
+                    'is_default' => $paymentMethod->is_default,
+                    'masked_card' => $paymentMethod->getMaskedCardNumber()
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to save payment method: ' . $e->getMessage()
+            ], 400);
+        }
+    }
+
+    /**
+     * Delete a payment method
+     */
+    public function deletePaymentMethod($methodId)
+    {
+        try {
+            $user = Auth::user();
+            $paymentMethod = $user->paymentMethods()->findOrFail($methodId);
+
+            // If this was the default, set another as default
+            if ($paymentMethod->is_default) {
+                $nextDefault = $user->paymentMethods()
+                    ->where('id', '!=', $methodId)
+                    ->first();
+
+                if ($nextDefault) {
+                    $nextDefault->update(['is_default' => true]);
+                }
+            }
+
+            $paymentMethod->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Payment method deleted successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete payment method: ' . $e->getMessage()
+            ], 400);
+        }
+    }
+
+    /**
+     * Set a payment method as default
+     */
+    public function setDefaultPaymentMethod($methodId)
+    {
+        try {
+            $user = Auth::user();
+            $paymentMethod = $user->paymentMethods()->findOrFail($methodId);
+
+            // Unset all other defaults
+            $user->paymentMethods()->update(['is_default' => false]);
+
+            // Set this as default
+            $paymentMethod->update(['is_default' => true]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Default payment method updated successfully',
+                'data' => [
+                    'id' => $paymentMethod->id,
+                    'is_default' => $paymentMethod->is_default
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to set default payment method: ' . $e->getMessage()
+            ], 400);
+        }
+    }
+
+    /**
+     * Detect card type from card number
+     */
+    private function detectCardType($cardNumber)
+    {
+        $patterns = [
+            'visa' => '/^4[0-9]{12}(?:[0-9]{3})?$/',
+            'mastercard' => '/^5[1-5][0-9]{14}$/',
+            'amex' => '/^3[47][0-9]{13}$/',
+            'discover' => '/^6(?:011|5[0-9]{2})[0-9]{12}$/'
+        ];
+
+        foreach ($patterns as $type => $pattern) {
+            if (preg_match($pattern, $cardNumber)) {
+                return $type;
+            }
+        }
+
+        return 'unknown';
     }
 }

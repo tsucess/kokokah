@@ -159,6 +159,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/rewards', [WalletController::class, 'rewards']);
         Route::post('/claim-login-reward', [WalletController::class, 'claimLoginReward']);
         Route::post('/check-affordability', [WalletController::class, 'checkAffordability']);
+
+        // Payment method routes
+        Route::get('/payment-methods', [WalletController::class, 'getPaymentMethods']);
+        Route::post('/payment-methods', [WalletController::class, 'addPaymentMethod']);
+        Route::delete('/payment-methods/{methodId}', [WalletController::class, 'deletePaymentMethod']);
+        Route::post('/payment-methods/{methodId}/set-default', [WalletController::class, 'setDefaultPaymentMethod']);
     });
 
     // Payment routes (handles all gateway payments)

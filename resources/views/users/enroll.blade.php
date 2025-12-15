@@ -144,6 +144,65 @@
         margin-left: 8px;
     }
 
+    /* Payment Gateway Selection */
+    .payment-gateway-section {
+        padding: 20px 22px;
+        border-top: 1px solid #eee;
+        background: #f9f9f9;
+    }
+
+    .payment-gateway-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 16px;
+    }
+
+    .payment-gateways {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 12px;
+    }
+
+    .gateway-option {
+        position: relative;
+    }
+
+    .gateway-option input[type="radio"] {
+        display: none;
+    }
+
+    .gateway-label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 16px 12px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: #fff;
+        min-height: 100px;
+    }
+
+    .gateway-option input[type="radio"]:checked + .gateway-label {
+        border-color: #004A53;
+        background-color: #f0f8f9;
+    }
+
+    .gateway-icon {
+        font-size: 32px;
+        margin-bottom: 8px;
+    }
+
+    .gateway-name {
+        font-size: 13px;
+        font-weight: 600;
+        color: #333;
+        text-align: center;
+    }
+
     /* Small screens — stack price under label */
     @media (max-width: 576px) {
         .txn-row {
@@ -197,6 +256,227 @@
         align-items: center;
         gap: 8px;
     }
+
+    /* Payment Modal Styles */
+    .payment-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    .payment-modal {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        max-width: 600px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+        animation: slideUp 0.3s ease-out;
+    }
+
+    @keyframes slideUp {
+        from {
+            transform: translateY(30px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .payment-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 24px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .payment-modal-header h2 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .payment-modal-close {
+        background: none;
+        border: none;
+        font-size: 24px;
+        color: #666;
+        cursor: pointer;
+        padding: 0;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: color 0.2s ease;
+    }
+
+    .payment-modal-close:hover {
+        color: #333;
+    }
+
+    .payment-modal-body {
+        padding: 24px;
+    }
+
+    .payment-modal-footer {
+        display: flex;
+        gap: 12px;
+        padding: 24px;
+        border-top: 1px solid #e0e0e0;
+        justify-content: flex-end;
+    }
+
+    .payment-modal-cancel {
+        padding: 12px 24px;
+        border: 1px solid #e0e0e0;
+        background: white;
+        color: #333;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .payment-modal-cancel:hover {
+        background: #f5f5f5;
+        border-color: #ccc;
+    }
+
+    .payment-modal-confirm {
+        padding: 12px 24px;
+        border: none;
+        background: #004A53;
+        color: white;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .payment-modal-confirm:hover {
+        background: #003a41;
+    }
+
+    .payment-modal-confirm:active {
+        transform: scale(0.98);
+    }
+
+    /* Payment Gateway Options */
+    .payment-gateways {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 12px;
+    }
+
+    .gateway-option {
+        position: relative;
+    }
+
+    .gateway-option input[type="radio"] {
+        display: none;
+    }
+
+    .gateway-label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 16px 12px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: #fff;
+        min-height: 120px;
+    }
+
+    .gateway-option input[type="radio"]:checked + .gateway-label {
+        border-color: #004A53;
+        background-color: #f0f8f9;
+    }
+
+    .gateway-icon {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 8px;
+        background: #f5f5f5;
+        border-radius: 6px;
+    }
+
+    .gateway-icon img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+    .gateway-name {
+        font-size: 13px;
+        font-weight: 600;
+        color: #333;
+        text-align: center;
+    }
+
+    /* Responsive modal */
+    @media (max-width: 576px) {
+        .payment-modal {
+            width: 95%;
+            max-height: 85vh;
+        }
+
+        .payment-modal-header {
+            padding: 16px;
+        }
+
+        .payment-modal-body {
+            padding: 16px;
+        }
+
+        .payment-modal-footer {
+            padding: 16px;
+            flex-direction: column;
+        }
+
+        .payment-modal-cancel,
+        .payment-modal-confirm {
+            width: 100%;
+        }
+
+        .payment-gateways {
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        }
+
+        .gateway-label {
+            min-height: 100px;
+            padding: 12px 8px;
+        }
+
+        .gateway-icon {
+            width: 50px;
+            height: 50px;
+        }
+
+        .gateway-name {
+            font-size: 12px;
+        }
+    }
 </style>
 @section('content')
     <main>
@@ -242,15 +522,88 @@
                     </div>
                 </div>
 
-
-
-
             </div>
-            <!-- Footer with proceed button -->
 
-                    <button id="proceedBtn" class="proceed-payment-btn align-self-center">
-                        Proceed to Payment - Subtotal: <span id="subtotal" class="subtotal">₦0.00</span>
-                    </button>
+            <!-- Footer with proceed button -->
+            <div style="padding: 20px 22px; display: flex; justify-content: center;">
+                <button id="proceedBtn" class="proceed-payment-btn">
+                    Proceed to Payment - Subtotal: <span id="subtotal" class="subtotal">₦0.00</span>
+                </button>
+            </div>
+
+            <!-- Payment Gateway Modal -->
+            <div id="paymentGatewayModal" class="payment-modal-overlay" style="display: none;">
+                <div class="payment-modal">
+                    <div class="payment-modal-header">
+                        <h2>Select Payment Method</h2>
+                        <button type="button" class="payment-modal-close" id="closePaymentModal">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+
+                    <div class="payment-modal-body">
+                        <div class="payment-gateways">
+                            <!-- Kudikah Wallet -->
+                            <div class="gateway-option">
+                                <input type="radio" id="gateway-kudikah" name="payment_gateway" value="kudikah" checked>
+                                <label for="gateway-kudikah" class="gateway-label">
+                                    <div class="gateway-icon" style="font-size: 40px;">💳</div>
+                                    <div class="gateway-name">Kudikah Wallet</div>
+                                </label>
+                            </div>
+
+                            <!-- Paystack -->
+                            <div class="gateway-option">
+                                <input type="radio" id="gateway-paystack" name="payment_gateway" value="paystack">
+                                <label for="gateway-paystack" class="gateway-label">
+                                    <div class="gateway-icon">
+                                        <img src="{{ asset('images/paystack.png') }}" alt="Paystack">
+                                    </div>
+                                    <div class="gateway-name">Paystack</div>
+                                </label>
+                            </div>
+
+                            <!-- Flutterwave -->
+                            <div class="gateway-option">
+                                <input type="radio" id="gateway-flutterwave" name="payment_gateway" value="flutterwave">
+                                <label for="gateway-flutterwave" class="gateway-label">
+                                    <div class="gateway-icon">
+                                        <img src="{{ asset('images/Flutterwave.png') }}" alt="Flutterwave">
+                                    </div>
+                                    <div class="gateway-name">Flutterwave</div>
+                                </label>
+                            </div>
+
+                            <!-- Stripe -->
+                            <div class="gateway-option">
+                                <input type="radio" id="gateway-stripe" name="payment_gateway" value="stripe">
+                                <label for="gateway-stripe" class="gateway-label">
+                                    <div class="gateway-icon">
+                                        <img src="{{ asset('images/stripe.webp') }}" alt="Stripe">
+                                    </div>
+                                    <div class="gateway-name">Stripe</div>
+                                </label>
+                            </div>
+
+                            <!-- PayPal -->
+                            <div class="gateway-option">
+                                <input type="radio" id="gateway-paypal" name="payment_gateway" value="paypal">
+                                <label for="gateway-paypal" class="gateway-label">
+                                    <div class="gateway-icon">
+                                        <img src="{{ asset('images/paypal.png') }}" alt="PayPal">
+                                    </div>
+                                    <div class="gateway-name">PayPal</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="payment-modal-footer">
+                        <button type="button" class="payment-modal-cancel" id="cancelPaymentModal">Cancel</button>
+                        <button type="button" class="payment-modal-confirm" id="confirmPaymentModal">Proceed with Payment</button>
+                    </div>
+                </div>
+            </div>
 
         </section>
     </main>
@@ -259,6 +612,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module">
         import CourseApiClient from '{{ asset("js/api/courseApiClient.js") }}';
+        import PaymentApiClient from '{{ asset("js/api/paymentApiClient.js") }}';
+        import WalletApiClient from '{{ asset("js/api/walletApiClient.js") }}';
+        import ToastNotification from '{{ asset("js/utils/toastNotification.js") }}';
 
         let allCourses = [];
 
@@ -444,19 +800,36 @@
         }
 
         /**
+         * Store payment data for modal confirmation
+         */
+        let pendingPaymentData = null;
+
+        /**
          * Handle proceed to payment button
          */
         document.getElementById('proceedBtn').addEventListener('click', function(e) {
             e.preventDefault();
             const checked = document.querySelectorAll('.check-subject:checked');
+
             if (checked.length === 0) {
                 alert('Please select at least one subject to proceed.');
-            } else {
-                const selectedCourses = Array.from(checked).map(cb => cb.dataset.courseId);
-                const subtotal = document.getElementById('subtotal').textContent;
-                alert(`Proceeding with ${checked.length} subject(s). Subtotal: ${subtotal}`);
-                // TODO: Redirect to payment page with selected courses
+                return;
             }
+
+            // Store payment data and open modal
+            const selectedCourses = Array.from(checked).map(cb => cb.dataset.courseId);
+            const subtotal = document.getElementById('subtotal').textContent;
+            const enrollAllBtn = document.getElementById('enrollAllBtn');
+            const enrollAllPrice = extractPrice(enrollAllBtn.textContent);
+
+            pendingPaymentData = {
+                courses: selectedCourses,
+                subtotal: subtotal,
+                enrollAllPrice: enrollAllPrice,
+                courseCount: checked.length
+            };
+
+            openPaymentModal();
         });
 
         /**
@@ -469,6 +842,332 @@
                 cb.checked = true;
             });
             updateSubtotal();
+
+            // Open payment modal
+            const allCourses = document.querySelectorAll('.check-subject');
+            const selectedCourses = Array.from(allCourses).map(cb => cb.dataset.courseId);
+            const enrollAllBtn = document.getElementById('enrollAllBtn');
+            const enrollAllPrice = extractPrice(enrollAllBtn.textContent);
+
+            pendingPaymentData = {
+                courses: selectedCourses,
+                subtotal: formatNGN(enrollAllPrice),
+                enrollAllPrice: enrollAllPrice,
+                courseCount: selectedCourses.length
+            };
+
+            openPaymentModal();
         });
+
+        /**
+         * Open payment gateway modal
+         */
+        function openPaymentModal() {
+            const modal = document.getElementById('paymentGatewayModal');
+            modal.style.display = 'flex';
+            // Reset gateway selection to Kudikah
+            document.getElementById('gateway-kudikah').checked = true;
+        }
+
+        /**
+         * Close payment gateway modal
+         */
+        function closePaymentModal() {
+            const modal = document.getElementById('paymentGatewayModal');
+            modal.style.display = 'none';
+            pendingPaymentData = null;
+        }
+
+        /**
+         * Handle modal close button
+         */
+        document.getElementById('closePaymentModal').addEventListener('click', closePaymentModal);
+
+        /**
+         * Handle modal cancel button
+         */
+        document.getElementById('cancelPaymentModal').addEventListener('click', closePaymentModal);
+
+        /**
+         * Handle modal confirm button
+         */
+        document.getElementById('confirmPaymentModal').addEventListener('click', function(e) {
+            e.preventDefault();
+
+            if (!pendingPaymentData) {
+                alert('Payment data not found. Please try again.');
+                return;
+            }
+
+            // Get selected payment gateway from modal
+            const selectedGateway = document.querySelector('input[name="payment_gateway"]:checked');
+            if (!selectedGateway) {
+                alert('Please select a payment method.');
+                return;
+            }
+
+            const gateway = selectedGateway.value;
+            const paymentData = {
+                ...pendingPaymentData,
+                gateway: gateway
+            };
+
+            console.log('Payment Data:', paymentData);
+
+            // Close modal and route to payment gateway
+            closePaymentModal();
+            routeToPaymentGateway(gateway, paymentData);
+        });
+
+        /**
+         * Close modal when clicking outside of it
+         */
+        document.getElementById('paymentGatewayModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePaymentModal();
+            }
+        });
+
+        /**
+         * Extract price from text (e.g., "₦14,850.00" -> 14850)
+         */
+        function extractPrice(text) {
+            const match = text.match(/₦([\d,]+\.?\d*)/);
+            if (match) {
+                return parseFloat(match[1].replace(/,/g, ''));
+            }
+            return 0;
+        }
+
+        /**
+         * Route to appropriate payment gateway
+         */
+        function routeToPaymentGateway(gateway, paymentData) {
+            switch(gateway) {
+                case 'kudikah':
+                    processKudikahPayment(paymentData);
+                    break;
+                case 'paystack':
+                    processPaystackPayment(paymentData);
+                    break;
+                case 'flutterwave':
+                    processFlutterwavePayment(paymentData);
+                    break;
+                case 'stripe':
+                    processStripePayment(paymentData);
+                    break;
+                case 'paypal':
+                    processPayPalPayment(paymentData);
+                    break;
+                default:
+                    alert('Invalid payment gateway selected.');
+            }
+        }
+
+        /**
+         * Process Kudikah Wallet Payment
+         */
+        async function processKudikahPayment(paymentData) {
+            try {
+                showLoadingState('Processing Kudikah Wallet payment...');
+
+                let successCount = 0;
+                let failureCount = 0;
+                const courseIds = paymentData.courses;
+
+                // Process each course individually using WalletApiClient
+                for (const courseId of courseIds) {
+                    const result = await WalletApiClient.purchaseCourse(courseId);
+
+                    if (result.success) {
+                        successCount++;
+                    } else {
+                        failureCount++;
+                        console.error(`Failed to purchase course ${courseId}:`, result.message);
+                        // Show toast notification for each failed course
+                        ToastNotification.error('Purchase Failed', result.message || 'Failed to purchase course');
+                    }
+                }
+
+                if (successCount > 0) {
+                    showSuccessMessage(`Successfully purchased ${successCount} course(s) via Kudikah Wallet!`);
+                    // Redirect to success page or dashboard
+                    setTimeout(() => {
+                        window.location.href = '/userclass';
+                    }, 2000);
+                } else {
+                    showErrorMessage(`Failed to purchase courses. Please try again.`);
+                }
+            } catch (error) {
+                console.error('Kudikah payment error:', error);
+                showErrorMessage('Error processing Kudikah Wallet payment: ' + error.message);
+            }
+        }
+
+        /**
+         * Process Paystack Payment
+         */
+        async function processPaystackPayment(paymentData) {
+            try {
+                showLoadingState('Initializing Paystack payment...');
+
+                // For multiple courses, process the first one and redirect
+                // User can purchase additional courses after
+                const courseId = paymentData.courses[0];
+
+                const paymentRequest = {
+                    course_id: courseId,
+                    gateway: 'paystack'
+                };
+
+                const result = await PaymentApiClient.initializeCoursePayment(paymentRequest);
+
+                if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
+                    // Redirect to Paystack payment page
+                    window.location.href = result.data.gateway_data.authorization_url;
+                } else {
+                    showErrorMessage(result.message || 'Failed to initialize Paystack payment.');
+                }
+            } catch (error) {
+                console.error('Paystack payment error:', error);
+                showErrorMessage('Error initializing Paystack payment: ' + error.message);
+            }
+        }
+
+        /**
+         * Process Flutterwave Payment
+         */
+        async function processFlutterwavePayment(paymentData) {
+            try {
+                showLoadingState('Initializing Flutterwave payment...');
+
+                // For multiple courses, process the first one and redirect
+                // User can purchase additional courses after
+                const courseId = paymentData.courses[0];
+
+                const paymentRequest = {
+                    course_id: courseId,
+                    gateway: 'flutterwave'
+                };
+
+                const result = await PaymentApiClient.initializeCoursePayment(paymentRequest);
+
+                if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
+                    // Redirect to Flutterwave payment page
+                    window.location.href = result.data.gateway_data.authorization_url;
+                } else {
+                    showErrorMessage(result.message || 'Failed to initialize Flutterwave payment.');
+                }
+            } catch (error) {
+                console.error('Flutterwave payment error:', error);
+                showErrorMessage('Error initializing Flutterwave payment: ' + error.message);
+            }
+        }
+
+        /**
+         * Process Stripe Payment
+         */
+        async function processStripePayment(paymentData) {
+            try {
+                showLoadingState('Initializing Stripe payment...');
+
+                // For multiple courses, process the first one and redirect
+                // User can purchase additional courses after
+                const courseId = paymentData.courses[0];
+
+                const paymentRequest = {
+                    course_id: courseId,
+                    gateway: 'stripe'
+                };
+
+                const result = await PaymentApiClient.initializeCoursePayment(paymentRequest);
+
+                if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
+                    // Redirect to Stripe payment page
+                    window.location.href = result.data.gateway_data.authorization_url;
+                } else {
+                    showErrorMessage(result.message || 'Failed to initialize Stripe payment.');
+                }
+            } catch (error) {
+                console.error('Stripe payment error:', error);
+                showErrorMessage('Error initializing Stripe payment: ' + error.message);
+            }
+        }
+
+        /**
+         * Process PayPal Payment
+         */
+        async function processPayPalPayment(paymentData) {
+            try {
+                showLoadingState('Initializing PayPal payment...');
+
+                // For multiple courses, process the first one and redirect
+                // User can purchase additional courses after
+                const courseId = paymentData.courses[0];
+
+                const paymentRequest = {
+                    course_id: courseId,
+                    gateway: 'paypal'
+                };
+
+                const result = await PaymentApiClient.initializeCoursePayment(paymentRequest);
+
+                if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
+                    // Redirect to PayPal payment page
+                    window.location.href = result.data.gateway_data.authorization_url;
+                } else {
+                    showErrorMessage(result.message || 'Failed to initialize PayPal payment.');
+                }
+            } catch (error) {
+                console.error('PayPal payment error:', error);
+                showErrorMessage('Error initializing PayPal payment: ' + error.message);
+            }
+        }
+
+        /**
+         * Show loading state
+         */
+        function showLoadingState(message) {
+            const modal = document.getElementById('paymentGatewayModal');
+            const body = modal.querySelector('.payment-modal-body');
+            body.innerHTML = `
+                <div style="text-align: center; padding: 40px;">
+                    <div class="spinner-border text-primary mb-3" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p>${message}</p>
+                </div>
+            `;
+        }
+
+        /**
+         * Show success message
+         */
+        function showSuccessMessage(message) {
+            const modal = document.getElementById('paymentGatewayModal');
+            const body = modal.querySelector('.payment-modal-body');
+            body.innerHTML = `
+                <div style="text-align: center; padding: 40px;">
+                    <div style="font-size: 48px; margin-bottom: 16px;">✅</div>
+                    <p style="color: #28a745; font-weight: 600;">${message}</p>
+                </div>
+            `;
+        }
+
+        /**
+         * Show error message
+         */
+        function showErrorMessage(message) {
+            const modal = document.getElementById('paymentGatewayModal');
+            const body = modal.querySelector('.payment-modal-body');
+            body.innerHTML = `
+                <div style="text-align: center; padding: 40px;">
+                    <div style="font-size: 48px; margin-bottom: 16px;">❌</div>
+                    <p style="color: #dc3545; font-weight: 600;">${message}</p>
+                    <button type="button" class="btn btn-primary mt-3" onclick="location.reload()">Try Again</button>
+                </div>
+            `;
+        }
+
     </script>
 @endsection

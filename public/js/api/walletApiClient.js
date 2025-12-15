@@ -175,6 +175,47 @@ class WalletApiClient extends BaseApiClient {
       code: code
     });
   }
+
+  /**
+   * Purchase course using wallet balance
+   * @param {number} courseId - Course ID to purchase
+   * @param {string} couponCode - Optional coupon code
+   */
+  static async purchaseCourse(courseId, couponCode = null) {
+    const payload = {
+      course_id: courseId
+    };
+
+    if (couponCode) {
+      payload.coupon_code = couponCode;
+    }
+
+    return this.post('/wallet/purchase-course', payload);
+  }
+
+  /**
+   * Get wallet rewards
+   */
+  static async getRewards() {
+    return this.get('/wallet/rewards');
+  }
+
+  /**
+   * Claim daily login reward
+   */
+  static async claimLoginReward() {
+    return this.post('/wallet/claim-login-reward');
+  }
+
+  /**
+   * Check if user can afford a course
+   * @param {number} courseId - Course ID to check
+   */
+  static async checkAffordability(courseId) {
+    return this.post('/wallet/check-affordability', {
+      course_id: courseId
+    });
+  }
 }
 
 export default WalletApiClient;
