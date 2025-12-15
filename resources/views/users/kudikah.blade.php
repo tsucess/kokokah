@@ -238,11 +238,11 @@
                                 <div class="d-flex flex-column gap-1">
                                     <p style="font-size: 24px; color:#fff;" id="cardNumberDisplay">**** **** **** ****</p>
                                     <div class="d-flex flex-column">
-                                        <p style="font-size: 14px; color:#fff;">Valid Thru</p>
+                                        <p style="font-size: 14px; color:#fff;">Valid Till</p>
                                         <p style="font-size: 14px; color:#fff;" id="cardExpiry">MM/YY</p>
                                     </div>
                                 </div>
-                                <p style="font-size: 24px; color:#fff;" id="cardHolderName">User Name</p>
+                                <p style="font-size: 24px; color:#fff;" id="cardHolderName">Card Holder Name</p>
                             </div>
                         </div>
                         <button class="addmoney-btn" id="editCardBtn">Edit</button>
@@ -257,30 +257,30 @@
                             <div class="d-flex flex-column gap-4">
                                 <div class="form-divider"></div>
                                 <div class="input-border">
-                                    <label for="cardHolderName" class="form-label">Enter Card holder Name</label>
-                                    <input type="text" class="form-input" id="cardHolderName"
+                                    <label for="formCardHolderName" class="form-label">Enter Card holder Name</label>
+                                    <input type="text" class="form-input" id="formCardHolderName"
                                         placeholder="John Doe" required>
                                     <small class="text-danger d-none" id="cardHolderNameError"></small>
                                 </div>
                                 <div class="input-border">
-                                    <label for="cardNumber" class="form-label">Card Number</label>
-                                    <input type="text" class="form-input" id="cardNumber"
+                                    <label for="formCardNumber" class="form-label">Card Number</label>
+                                    <input type="text" class="form-input" id="formCardNumber"
                                         placeholder="1234 5678 9012 3456" inputmode="numeric" required>
                                     <small class="text-danger d-none" id="cardNumberError"></small>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-5">
                                         <div class="input-border">
-                                            <label for="expiryDate" class="form-label">Expiry Date</label>
-                                            <input type="text" class="form-input" id="expiryDate"
+                                            <label for="formExpiryDate" class="form-label">Expiry Date</label>
+                                            <input type="text" class="form-input" id="formExpiryDate"
                                                 placeholder="MM/YY" inputmode="numeric" required>
                                             <small class="text-danger d-none" id="expiryDateError"></small>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-7">
                                         <div class="input-border">
-                                            <label for="cvv" class="form-label">CVV</label>
-                                            <input type="password" class="form-input" id="cvv"
+                                            <label for="formCvv" class="form-label">CVV</label>
+                                            <input type="password" class="form-input" id="formCvv"
                                                 placeholder="123" inputmode="numeric" maxlength="4" required>
                                             <small class="text-danger d-none" id="cvvError"></small>
                                         </div>
@@ -310,6 +310,7 @@
 
         let currentTypeFilter = 'all';
         let currentStatusFilter = 'all';
+        let currentCard = null; // Store current displayed card for editing
 
         // Initialize page on load
         document.addEventListener('DOMContentLoaded', async () => {
@@ -331,26 +332,76 @@
                     // Update balance
                     const balance = data.balance || 0;
                     document.getElementById('walletBalance').textContent = formatNGN(balance);
-
-                    // Update card number (masked)
-                    const cardNumber = data.card_number || '444 221 224 ****';
-                    document.getElementById('cardNumber').textContent = cardNumber;
-                    document.getElementById('cardNumberDisplay').textContent = cardNumber;
-
-                    // Update card holder name
-                    const cardHolderName = data.card_holder_name || 'User Name';
-                    document.getElementById('cardHolderName').textContent = cardHolderName;
-
-                    // Update card expiry
-                    const cardExpiry = data.card_expiry || 'MM/YY';
-                    document.getElementById('cardExpiry').textContent = cardExpiry;
                 } else {
                     showToast('Failed to load wallet data', 'error');
                 }
+
+                // Load saved payment methods and display default card
+                await loadAndDisplayPaymentMethods();
+
             } catch (error) {
                 console.error('Error loading wallet data:', error);
                 showToast('Error loading wallet data: ' + error.message, 'error');
             }
+        }
+
+        /**
+         * Load payment methods and display the default one on the card
+         */
+        async function loadAndDisplayPaymentMethods() {
+            try {
+                const result = await WalletApiClient.getPaymentMethods();
+
+                if (result.success && result.data && result.data.length > 0) {
+                    // Find the default payment method
+                    const defaultMethod = result.data.find(method => method.is_default);
+
+                    if (defaultMethod) {
+                        // Display the default card
+                        displayCardDetails(defaultMethod);
+                    } else {
+                        // If no default, display the first card
+                        displayCardDetails(result.data[0]);
+                    }
+                } else {
+                    // No saved cards, show placeholder
+                    displayCardPlaceholder();
+                }
+            } catch (error) {
+                console.error('Error loading payment methods:', error);
+                displayCardPlaceholder();
+            }
+        }
+
+        /**
+         * Display card details on the card display
+         */
+        function displayCardDetails(card) {
+            // Store current card for editing
+            currentCard = card;
+
+            // Display masked card number
+            const maskedCard = card.masked_card || `**** **** **** ${card.card_last_four}`;
+            document.getElementById('cardNumberDisplay').textContent = maskedCard;
+            document.getElementById('cardNumber').textContent = maskedCard;
+
+            // Display card holder name
+            const cardHolderName = card.card_holder_name || 'User Name';
+            document.getElementById('cardHolderName').textContent = cardHolderName;
+
+            // Display card expiry
+            const cardExpiry = card.expiry_date || 'MM/YY';
+            document.getElementById('cardExpiry').textContent = cardExpiry;
+        }
+
+        /**
+         * Display placeholder when no cards are saved
+         */
+        function displayCardPlaceholder() {
+            document.getElementById('cardNumberDisplay').textContent = '**** **** **** ****';
+            document.getElementById('cardNumber').textContent = '**** **** **** ****';
+            document.getElementById('cardHolderName').textContent = 'User Name';
+            document.getElementById('cardExpiry').textContent = 'MM/YY';
         }
 
         /**
@@ -487,7 +538,13 @@
 
             // Edit Card button
             document.getElementById('editCardBtn').addEventListener('click', () => {
-                showToast('Card editing feature coming soon', 'warning');
+                if (currentCard) {
+                    populateCardForm(currentCard);
+                    // Scroll to form
+                    document.getElementById('cardDetailsForm').scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    showToast('No card to edit. Please save a card first.', 'warning');
+                }
             });
 
             // Toggle balance visibility
@@ -507,13 +564,13 @@
             }
 
             // Format card number input
-            const cardNumberInput = document.getElementById('cardNumber');
+            const cardNumberInput = document.getElementById('formCardNumber');
             if (cardNumberInput) {
                 cardNumberInput.addEventListener('input', formatCardNumber);
             }
 
             // Format expiry date input
-            const expiryInput = document.getElementById('expiryDate');
+            const expiryInput = document.getElementById('formExpiryDate');
             if (expiryInput) {
                 expiryInput.addEventListener('input', formatExpiryDate);
             }
@@ -550,44 +607,95 @@
         }
 
         /**
-         * Handle save card form submission
+         * Populate card form with current card details for editing
+         */
+        function populateCardForm(card) {
+            // Populate form fields with card data
+            document.getElementById('formCardHolderName').value = card.card_holder_name || '';
+
+            // For card number, we can't show the full number (it's encrypted)
+            // So we'll show a message that they need to enter the full card number
+            document.getElementById('formCardNumber').value = '';
+            document.getElementById('formCardNumber').placeholder = 'Enter full card number to update';
+
+            // Populate expiry date
+            document.getElementById('formExpiryDate').value = card.expiry_date || '';
+
+            // CVV field should be empty for security
+            document.getElementById('formCvv').value = '';
+            document.getElementById('formCvv').placeholder = 'Enter CVV to update';
+
+            // Set default checkbox
+            document.getElementById('isDefault').checked = card.is_default || false;
+
+            // Update form header and button text
+            document.querySelector('.form-header-text').textContent = 'Update Payment Method';
+            document.getElementById('saveCardBtn').textContent = 'Update Card';
+            document.getElementById('saveCardBtn').dataset.cardId = card.id;
+        }
+
+        /**
+         * Handle save card form submission (both add and update)
          */
         async function handleSaveCard(e) {
             e.preventDefault();
 
             // Get form values
-            const cardHolderName = document.getElementById('cardHolderName').value.trim();
-            const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
-            const expiryDate = document.getElementById('expiryDate').value.trim();
-            const cvv = document.getElementById('cvv').value.trim();
+            const cardHolderName = document.getElementById('formCardHolderName').value.trim();
+            const cardNumber = document.getElementById('formCardNumber').value.replace(/\s/g, '');
+            const expiryDate = document.getElementById('formExpiryDate').value.trim();
+            const cvv = document.getElementById('formCvv').value.trim();
             const isDefault = document.getElementById('isDefault').checked;
+            const saveBtn = document.getElementById('saveCardBtn');
+            const cardId = saveBtn.dataset.cardId;
 
-            // Validate inputs
-            if (!validateCardForm(cardHolderName, cardNumber, expiryDate, cvv)) {
-                return;
+            // Check if this is an update or add
+            const isUpdate = cardId && cardId !== '';
+
+            // For updates, card number and CVV are optional (user can keep existing)
+            if (!isUpdate) {
+                // For new cards, validate all fields
+                if (!validateCardForm(cardHolderName, cardNumber, expiryDate, cvv)) {
+                    return;
+                }
+            } else {
+                // For updates, at least card holder name is required
+                if (!cardHolderName) {
+                    showToast('Card holder name is required', 'error');
+                    return;
+                }
             }
 
             try {
                 // Show loading state
-                const saveBtn = document.getElementById('saveCardBtn');
                 const originalText = saveBtn.textContent;
                 saveBtn.disabled = true;
-                saveBtn.textContent = 'Saving...';
+                saveBtn.textContent = isUpdate ? 'Updating...' : 'Saving...';
 
-                // Call API to save card
-                const result = await WalletApiClient.addPaymentMethod({
+                // Prepare payload
+                const payload = {
                     card_holder_name: cardHolderName,
-                    card_number: cardNumber,
                     expiry_date: expiryDate,
-                    cvv: cvv,
                     is_default: isDefault
-                });
+                };
+
+                // Only include card number and CVV if provided
+                if (cardNumber) {
+                    payload.card_number = cardNumber;
+                }
+                if (cvv) {
+                    payload.cvv = cvv;
+                }
+
+                // Call API to save or update card
+                const result = await WalletApiClient.addPaymentMethod(payload);
 
                 if (result.success) {
-                    showToast('Card saved successfully!', 'success');
+                    const message = isUpdate ? 'Card updated successfully!' : 'Card saved successfully!';
+                    showToast(message, 'success');
 
-                    // Reset form
-                    document.getElementById('cardDetailsForm').reset();
+                    // Reset form and clear edit mode
+                    resetCardForm();
 
                     // Reload wallet data to show updated card info
                     await loadWalletData();
@@ -606,6 +714,27 @@
                 saveBtn.disabled = false;
                 saveBtn.textContent = 'Save Card';
             }
+        }
+
+        /**
+         * Reset card form to initial state
+         */
+        function resetCardForm() {
+            // Reset form fields
+            document.getElementById('cardDetailsForm').reset();
+
+            // Reset form header and button text
+            document.querySelector('.form-header-text').textContent = 'Add a new payment method';
+            const saveBtn = document.getElementById('saveCardBtn');
+            saveBtn.textContent = 'Save Card';
+            delete saveBtn.dataset.cardId;
+
+            // Reset placeholders
+            document.getElementById('formCardNumber').placeholder = '1234 5678 9012 3456';
+            document.getElementById('formCvv').placeholder = '123';
+
+            // Clear current card
+            currentCard = null;
         }
 
         /**
