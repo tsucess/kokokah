@@ -256,32 +256,101 @@
 
         const ctxEngagement = document.getElementById('engagementChart').getContext('2d');
 
+        const gradient = ctxEngagement.createLinearGradient(0, 0, 0, 300);
+        gradient.addColorStop(0, '#8979FF4D');
+        gradient.addColorStop(1, '#8979FF0D');
+
+
         const engagementChart = new Chart(ctxEngagement, {
             type: 'line',
             data: {
                 labels: engagementData.day.labels,
                 datasets: [{
-                    label: 'Website Engagement',
-                    data: engagementData.day.data
+                    label: 'Engagement',
+                    data: engagementData.day.data,
+                    fill: true,
+                    backgroundColor: gradient,
+                    borderColor: '#6366F1',
+                    borderWidth: 2,
+                    tension: 0.45,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    pointBackgroundColor: '#6366F1',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2
                 }]
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
+
+                layout: {
+                    padding: {
+                        top: 25
+                    }
+                },
+
                 scales: {
+                    x: {
+                        grid: {
+                            color: '#E5E7EB',
+                            borderDash: [4, 4],
+                            drawBorder: false
+                        },
+                        ticks: {
+                            color: '#6B7280'
+                        }
+                    },
                     y: {
                         beginAtZero: true,
                         ticks: {
-                            stepSize: 20
+                            stepSize: 20,
+                            color: '#6B7280',
+                            padding: 10,
+                        },
+                        grid: {
+                            color: '#E5E7EB',
+                            borderDash: [4, 4],
+                            drawBorder: false
                         }
                     }
                 },
+
                 plugins: {
                     legend: {
-                        position: 'bottom'
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: '#111827',
+                        padding: 10,
+                        titleColor: '#fff',
+                        bodyColor: '#fff'
                     }
                 }
-            }
+            },
+
+            /* Value labels on points */
+            plugins: [{
+                id: 'valueLabels',
+                afterDatasetsDraw(chart) {
+                    const {
+                        ctx
+                    } = chart;
+                    ctx.save();
+                    ctx.font = '12px Inter, sans-serif';
+                    ctx.fillStyle = '#6366F1';
+                    ctx.textAlign = 'center';
+
+                    chart.data.datasets[0].data.forEach((value, index) => {
+                        const point = chart.getDatasetMeta(0).data[index];
+                        ctx.fillText(value, point.x, point.y - 10);
+                    });
+
+                    ctx.restore();
+                }
+            }]
         });
+
 
         document.querySelectorAll('.chart-menu button').forEach(button => {
             button.addEventListener('click', () => {
@@ -319,6 +388,8 @@
             },
 
             options: {
+                responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
                         position: 'bottom'
