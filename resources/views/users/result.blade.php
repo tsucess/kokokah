@@ -102,7 +102,7 @@
 
         @media screen and (min-width:1220px) {
             .result-items-container {
-                grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
             }
         }
     </style>
@@ -124,7 +124,7 @@
                     </div>
                 </div>
                 <div class="result-items-container">
-                    <div class="d-flex flex-column gap-2  px-2">
+                    <div class="d-flex flex-column gap-2 px-2">
                         <div class="d-flex align-items-center justify-content-between">
                             <h3 class="result-items-text">Math</h3>
                             <p class="result-items-text">8/10</p>
