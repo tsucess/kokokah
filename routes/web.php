@@ -198,6 +198,10 @@ Route::get('/userleaderboard', function () {
     return view('users.leaderboard');
 });
 
+Route::get('/chatroom', function () {
+    return view('users.chatroom');
+});
+
 Route::get('/userlessondetails', function () {
     return view('users.subjectdetails');
 });
@@ -212,10 +216,6 @@ Route::get('/subjectchart', function () {
 
 Route::get('/wallet', function () {
     return view('admin.wallet');
-});
-
-Route::get('/chatroom', function () {
-    return view('admin.chatroom');
 });
 
 Route::get('/announcement', function () {
