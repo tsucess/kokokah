@@ -11,7 +11,11 @@ class TermController extends Controller
     public function index()
     {
         $data = Term::orderBy('id')->get();
-        return response()->json($data);
+        return response()->json([
+            'success' => true,
+            'data' => $data,
+            'message' => 'Terms retrieved successfully'
+        ]);
     }
 
     // GET single term

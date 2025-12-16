@@ -14,6 +14,7 @@ class Topic extends Model
     protected $fillable = [
         'title',
         'course_id',
+        'term_id',
         'order'
     ];
 
@@ -26,6 +27,11 @@ class Topic extends Model
     public function course()
     {
         return $this->belongsTo(Course::class);
+    }
+
+    public function term()
+    {
+        return $this->belongsTo(Term::class);
     }
 
     public function lessons()

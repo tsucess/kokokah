@@ -1182,6 +1182,12 @@
                                         class="modal-label">Title</label>
                                     <input class="modal-input" type="text" placeholder="Enter Title" />
                                 </div>
+                                <div class="modal-form-input-border">
+                                    <label for="topicTermSelect" class="modal-label">Term</label>
+                                    <select class="modal-input" id="topicTermSelect">
+                                        <option value="">Select Term</option>
+                                    </select>
+                                </div>
                                 {{-- <div class="modal-form-input-border">
                                     <label for="" class="modal-label">Topic
                                         Description</label>
@@ -2540,9 +2546,11 @@
                 const modal = document.getElementById('addNewTopicModal');
                 const titleInput = modal.querySelector('input[placeholder="Enter Title"]');
                 const descInput = modal.querySelector('textarea');
+                const termSelect = document.getElementById('topicTermSelect');
 
                 const title = titleInput ? titleInput.value.trim() : '';
                 const description = descInput ? descInput.value.trim() : '';
+                const termId = termSelect ? termSelect.value : null;
 
                 if (!title) {
                     ToastNotification.warning('Validation', 'Please enter a topic title');
@@ -2553,6 +2561,7 @@
                     title: title,
                     description: description,
                     course_id: courseId,
+                    term_id: termId ? parseInt(termId) : null,
                     order: window.courseTopics ? window.courseTopics.length + 1 : 1
                 };
 

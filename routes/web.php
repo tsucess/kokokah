@@ -222,6 +222,10 @@ Route::get('/wallet', function () {
     return view('admin.wallet');
 });
 
+Route::get('/chatroom', function () {
+    return view('users.chatroom');
+});
+
 Route::get('/announcement', function () {
     return view('admin.announcement');
 });

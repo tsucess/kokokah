@@ -398,7 +398,7 @@ class CourseController extends Controller
 
         if ($validation) return $validation;
 
-        $query = Course::with(['category', 'instructor', 'level'])
+        $query = Course::with(['courseCategory', 'instructor', 'level'])
                        ->where('status', 'published');
 
         $search = $request->q;
@@ -437,7 +437,7 @@ class CourseController extends Controller
     public function featured()
     {
         return $this->success(
-            Course::with(['category', 'instructor', 'level'])
+            Course::with(['courseCategory', 'instructor', 'level'])
                 ->where('status', 'published')
                 ->where('is_featured', true)
                 ->latest()
@@ -449,7 +449,7 @@ class CourseController extends Controller
     public function popular()
     {
         return $this->success(
-            Course::with(['category', 'instructor', 'level'])
+            Course::with(['courseCategory', 'instructor', 'level'])
                 ->where('status', 'published')
                 ->withCount('enrollments')
                 ->orderBy('enrollments_count', 'desc')
@@ -476,7 +476,7 @@ class CourseController extends Controller
             $results = [];
 
             foreach ($enrollments as $e) {
-                $course = Course::with(['category', 'instructor', 'level'])->find($e->course_id);
+                $course = Course::with(['courseCategory', 'instructor', 'level'])->find($e->course_id);
                 if ($course) {
                     $item = $e->toArray();
                     $item['course'] = $course;

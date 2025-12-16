@@ -172,7 +172,7 @@ class PaymentController extends Controller
     {
         try {
             $reference = $this->extractCallbackReference($gateway, $request);
-            
+
             if (!$reference) {
                 return redirect()->to(config('app.frontend_url') . '/payment/failed?error=missing_reference');
             }
@@ -180,7 +180,8 @@ class PaymentController extends Controller
             $result = $this->paymentService->verifyPayment($gateway, $reference);
 
             if ($result['success']) {
-                $redirectUrl = config('app.frontend_url') . '/payment/success?reference=' . $reference;
+                // Redirect to user subject page to show newly enrolled course
+                $redirectUrl = config('app.frontend_url') . '/usersubject?payment_success=true&reference=' . $reference;
                 return redirect()->to($redirectUrl);
             }
 

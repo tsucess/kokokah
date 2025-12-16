@@ -15,6 +15,7 @@ class DashboardModule {
     this.initProfileNavigation();
     this.initTooltips();
     this.loadUserProfile();
+    this.highlightActivePage();
   }
 
   /**
@@ -191,6 +192,30 @@ class DashboardModule {
         console.log('No profile photo, using default avatar');
       }
     }
+  }
+
+  /**
+   * Highlight the active page in the sidebar
+   */
+  static highlightActivePage() {
+    // Get current page path
+    const currentPath = window.location.pathname;
+
+    // Get all sidebar navigation links
+    const navLinks = document.querySelectorAll('.nav-item-link');
+
+    // Remove active class from all links
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+    });
+
+    // Add active class to the matching link
+    navLinks.forEach(link => {
+      const href = link.getAttribute('href');
+      if (href && currentPath === href) {
+        link.classList.add('active');
+      }
+    });
   }
 }
 
