@@ -48,6 +48,7 @@ class TopicController extends Controller
         $data = $request->validate([
             'title' => 'nullable|string|max:255',
             'course_id' => 'nullable|integer',
+            'term_id' => 'nullable|integer',
             'order' => 'integer'
         ]);
 
@@ -62,6 +63,7 @@ class TopicController extends Controller
         $data = $request->validate([
             'title' => 'nullable|string|max:255',
             'course_id' => 'nullable|integer',
+            'term_id' => 'nullable|integer',
             'order' => 'integer'
         ]);
 

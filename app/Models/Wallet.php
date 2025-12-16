@@ -134,7 +134,8 @@ class Wallet extends Model
         $this->user->enrollments()->create([
             'course_id' => $course->id,
             'status' => 'active',
-            'enrolled_at' => now()
+            'enrolled_at' => now(),
+            'amount_paid' => $amount
         ]);
 
         return $transaction;

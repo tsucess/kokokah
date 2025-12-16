@@ -39,9 +39,7 @@
                                     </span>
                                 </div>
                                 <div class="progress" style="height: 6px;">
-                                    <div class="progress-bar" id="groupRatingBar" role="progressbar"
-                                        style="width: 0%; background-color: #114243;" aria-valuenow="0"
-                                        aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar" id="groupRatingBar" role="progressbar" style="width: 0%; background-color: #114243;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
 
@@ -97,12 +95,15 @@
         import LessonApiClient from '{{ asset("js/api/lessonApiClient.js") }}';
         import TopicApiClient from '{{ asset("js/api/topicApiClient.js") }}';
         import UserApiClient from '{{ asset("js/api/userApiClient.js") }}';
-        import { ToastNotification } from '{{ asset("js/uiHelpers.js") }}';
+        import ToastNotification from '{{ asset("js/utils/toastNotification.js") }}';
 
         let currentCourseId = null;
         let currentTermId = null;
+        let currentTopicId = null;
         let allLessons = [];
         let allTerms = [];
+        let allTopics = [];
+        let topicsByTerm = {};
 
         // Initialize page
         document.addEventListener('DOMContentLoaded', async () => {
@@ -123,6 +124,8 @@
             // Load course data and lessons
             await loadCourseData();
             await loadTerms();
+            await loadTopics();
+            await loadAllLessons();
             await loadLessons();
             await loadUserStats();
         });
@@ -162,6 +165,28 @@
             }
         }
 
+        // Load topics for the course
+        async function loadTopics() {
+            try {
+                const response = await TopicApiClient.getTopicsByCourse(currentCourseId);
+                if (response.success && response.data) {
+                    allTopics = response.data;
+
+                    // Group topics by term
+                    topicsByTerm = {};
+                    allTopics.forEach(topic => {
+                        const termId = topic.term_id || 'no-term';
+                        if (!topicsByTerm[termId]) {
+                            topicsByTerm[termId] = [];
+                        }
+                        topicsByTerm[termId].push(topic);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading topics:', error);
+            }
+        }
+
         // Render term buttons
         function renderTermButtons() {
             const container = document.getElementById('termButtonsContainer');
@@ -175,25 +200,88 @@
                     document.querySelectorAll('.term-btn').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                     currentTermId = term.id;
+                    // renderTopicButtons();
                     loadLessons();
                 });
                 container.appendChild(btn);
             });
+
+            // Render topics for first term
+            // renderTopicButtons();
         }
 
-        // Load lessons for current course and term
+        // Render topic buttons for selected term
+        function renderTopicButtons() {
+            const container = document.getElementById('lessonsProgressContainer');
+            container.innerHTML = '';
+
+            const topicsForTerm = topicsByTerm[currentTermId] || [];
+
+            if (topicsForTerm.length === 0) {
+                container.innerHTML = '<p class="text-muted">No topics available for this term.</p>';
+                return;
+            }
+
+            topicsForTerm.forEach((topic, index) => {
+                const btn = document.createElement('button');
+                btn.className = `btn btn-sm ${index === 0 ? 'btn-primary' : 'btn-outline-primary'} me-2`;
+                btn.textContent = topic.title;
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('#lessonsProgressContainer button').forEach(b => {
+                        b.classList.remove('btn-primary');
+                        b.classList.add('btn-outline-primary');
+                    });
+                    btn.classList.remove('btn-outline-primary');
+                    btn.classList.add('btn-primary');
+                    currentTopicId = topic.id;
+                    loadLessons();
+                });
+                container.appendChild(btn);
+            });
+
+            // Set first topic as default
+            if (topicsForTerm.length > 0) {
+                currentTopicId = topicsForTerm[0].id;
+            }
+        }
+
+        // Load all lessons for the course
+        async function loadAllLessons() {
+            try {
+                const response = await LessonApiClient.getLessonsByCourse(currentCourseId);
+                if (response.success && response.data) {
+                    allLessons = response.data;
+                }
+            } catch (error) {
+                console.error('Error loading lessons:', error);
+            }
+        }
+
+        // Load topics for selected term
         async function loadLessons() {
+            try {
+                // Get topics for the selected term
+                const topicsForTerm = topicsByTerm[currentTermId] || [];
+                renderLessons(topicsForTerm);
+            } catch (error) {
+                console.error('Error loading topics:', error);
+                ToastNotification.error('Failed to load topics');
+            }
+        }
+
+        // Load lessons for selected topic
+        async function loadLessonsForTopic() {
             try {
                 const response = await LessonApiClient.getLessonsByCourse(currentCourseId);
                 if (response.success && response.data) {
                     allLessons = response.data;
 
-                    // Filter by term if needed
-                    const filteredLessons = currentTermId
-                        ? allLessons.filter(lesson => lesson.term_id === currentTermId)
+                    // Filter by topic
+                    const filteredLessons = currentTopicId
+                        ? allLessons.filter(lesson => lesson.topic_id === currentTopicId)
                         : allLessons;
 
-                    renderLessons(filteredLessons);
+                    renderTopicLessons(filteredLessons);
                     renderLessonProgress(filteredLessons);
                 }
             } catch (error) {
@@ -202,13 +290,64 @@
             }
         }
 
-        // Render lessons
-        function renderLessons(lessons) {
+        // Render topics for selected term
+        function renderLessons(topics) {
+            const container = document.getElementById('lessonsContainer');
+            container.innerHTML = '';
+
+            if (topics.length === 0) {
+                container.innerHTML = '<p class="text-muted">No topics available for this term.</p>';
+                return;
+            }
+
+            topics.forEach((topic, index) => {
+                const topicEl = document.createElement('div');
+                topicEl.className = 'lesson-item' + (index > 0 ? ' bg-white' : '');
+
+                // Count lessons for this topic
+                const lessonsCount = allLessons.filter(lesson => lesson.topic_id === topic.id).length;
+                const lessonText = lessonsCount === 1 ? 'lesson' : 'lessons';
+
+                topicEl.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                            <h5 class="${index > 0 ? 'text-dark' : ''}">Topic ${index + 1}. ${topic.title}
+                            </h5>
+                            <p class="${index > 0 ? 'text-dark' : ''}">
+                                ${lessonsCount} ${lessonText} available
+                            </p>
+                            <hr style="border: 1px solid black">
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div></div>
+                        <button class="btn-lesson topic-btn" data-topic-id="${topic.id}"
+                            style="${index > 0 ? 'background: #A3D8DF; color:#fff;' : ''}">
+                            Go to Lessons
+                        </button>
+                    </div>
+                `;
+
+                container.appendChild(topicEl);
+            });
+
+            // Add event listeners to topic buttons
+            document.querySelectorAll('.topic-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const topicId = e.target.dataset.topicId;
+                    // Navigate to subjectdetails page for this topic
+                    window.location.href = `/userlessondetails?topic_id=${topicId}`;
+                });
+            });
+        }
+
+        // Render lessons for selected topic
+        function renderTopicLessons(lessons) {
             const container = document.getElementById('lessonsContainer');
             container.innerHTML = '';
 
             if (lessons.length === 0) {
-                container.innerHTML = '<p class="text-muted">No lessons available for this term.</p>';
+                container.innerHTML = '<p class="text-muted">No lessons available for this topic.</p>';
                 return;
             }
 
@@ -251,7 +390,7 @@
             document.querySelectorAll('.lesson-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const lessonId = e.target.dataset.lessonId;
-                    window.location.href = `/lessondetails?lesson_id=${lessonId}`;
+                    window.location.href = `/subjectdetails?lesson_id=${lessonId}`;
                 });
             });
         }

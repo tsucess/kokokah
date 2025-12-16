@@ -219,7 +219,7 @@ Route::get('/wallet', function () {
 });
 
 Route::get('/chatroom', function () {
-    return view('admin.chatroom');
+    return view('users.chatroom');
 });
 
 Route::get('/announcement', function () {

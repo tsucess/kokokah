@@ -121,6 +121,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/courses/my-courses', [CourseController::class, 'myCourses']);
 });
 
+// Public course detail route (must be after specific routes)
+Route::get('/courses/{id}', [CourseController::class, 'show']);
+
 
 
 
@@ -181,7 +184,6 @@ Route::middleware('auth:sanctum')->group(function () {
         // Instructor/Admin only routes
         Route::middleware('role:instructor,admin')->group(function () {
             Route::post('/', [CourseController::class, 'store']);
-            Route::get('/{id}', [CourseController::class, 'show']);
             Route::put('/{id}', [CourseController::class, 'update']);
             Route::delete('/{id}', [CourseController::class, 'destroy']);
             Route::get('/{id}/students', [CourseController::class, 'students']);

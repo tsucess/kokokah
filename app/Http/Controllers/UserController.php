@@ -663,9 +663,9 @@ class UserController extends Controller
     private function getCategoryBreakdown($user)
     {
         return $user->enrollments()
-                   ->with('course.category')
+                   ->with('course.courseCategory')
                    ->get()
-                   ->groupBy('course.category.title')
+                   ->groupBy('course.courseCategory.title')
                    ->map(function ($enrollments, $category) {
                        return [
                            'category' => $category,

@@ -243,7 +243,7 @@ class AdminController extends Controller
     public function courses(Request $request)
     {
         try {
-            $query = Course::with(['instructor', 'category']);
+            $query = Course::with(['instructor', 'courseCategory']);
 
             // Search
             if ($request->has('search')) {

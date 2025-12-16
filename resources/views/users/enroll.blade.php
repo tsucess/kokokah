@@ -991,9 +991,9 @@
 
                 if (successCount > 0) {
                     showSuccessMessage(`Successfully purchased ${successCount} course(s) via Kudikah Wallet!`);
-                    // Redirect to success page or dashboard
+                    // Redirect to subject page to show newly enrolled courses
                     setTimeout(() => {
-                        window.location.href = '/userclass';
+                        window.location.href = '/usersubject';
                     }, 2000);
                 } else {
                     showErrorMessage(`Failed to purchase courses. Please try again.`);

@@ -157,7 +157,8 @@ class PaymentGatewayService
             $enrollment = $payment->user->enrollments()->create([
                 'course_id' => $payment->course_id,
                 'status' => 'active',
-                'enrolled_at' => now()
+                'enrolled_at' => now(),
+                'amount_paid' => $payment->amount
             ]);
 
             // Record transaction for tracking

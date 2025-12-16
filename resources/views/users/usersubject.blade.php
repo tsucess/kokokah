@@ -69,6 +69,14 @@
 
         // Initialize page
         document.addEventListener('DOMContentLoaded', async () => {
+            // Check if redirected from successful payment
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('payment_success') === 'true') {
+                ToastNotification.success('Payment Successful', 'Your course has been enrolled successfully!');
+                // Clean up URL
+                window.history.replaceState({}, document.title, '/usersubject');
+            }
+
             await loadUserData();
             await loadUserCourses();
         });
@@ -94,17 +102,23 @@
         async function loadUserCourses() {
             try {
                 const response = await CourseApiClient.getMyCourses();
+                console.log('API Response:', response);
+
                 if (response.success && response.data) {
                     // Handle response structure: { courses: [...], total: ... }
                     userCourses = response.data.courses || response.data.data || response.data;
+
+                    console.log('Courses extracted:', userCourses);
 
                     // Ensure userCourses is an array
                     if (!Array.isArray(userCourses)) {
                         userCourses = [];
                     }
 
+                    console.log('Final courses array:', userCourses);
                     renderCourses(userCourses);
                 } else {
+                    console.log('No success or data in response');
                     showNoCourses();
                 }
             } catch (error) {
@@ -149,8 +163,8 @@
             const progress = enrollment.progress || course.progress || 0;
 
             card.innerHTML = `
-                <div class="border border-dark p-3" style="border-radius: 10px;">
-                    <img src="${courseImage}" class="img-fluid" alt="${course.title}" />
+                <div class="border border-dark p-3" style="height: 200px; border-radius: 10px; overflow: hidden; text-align: center; align-items: center; justify-content: center; display: flex;">
+                    <img src="${courseImage}" class="img-fluid" style="max-height: 100%; object-fit: contain;" alt="${course.title}" />
                 </div>
                 <div class="card-item-class align-self-start">${courseLevel}</div>
                 <div class="d-flex justify-content-between align-items-center">
