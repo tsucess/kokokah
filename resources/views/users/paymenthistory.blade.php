@@ -17,9 +17,9 @@
             <div class="card border-0 shadow-sm rounded-4 mb-4" style="background: #f9f9f9; border: 1px solid #e8e8e8;">
                 <div class="card-body p-4">
                     <!-- Table Header with Search and Filters -->
-                    <div class="d-flex justify-content-between align-items-center mb-5">
+                    <div class="d-flex flex-column gap-3 align-items-md-center justify-content-between align-items-start mb-5">
                         <h5 class="fw-bold mb-0" style="font-size: 1.1rem; color: #1a1a1a;">Payment History</h5>
-                        <div class="d-flex gap-3 ">
+                        <div class="d-flex gap-3 flex-column flex-md-row">
 
                             <div class="d-flex gap-2 align-items-center search-border-custom">
                                 <i class="fa-solid fa-search fa-xs " style="color: #999;"></i>

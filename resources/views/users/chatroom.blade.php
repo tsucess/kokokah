@@ -22,7 +22,7 @@
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.28);
-  z-index: 1046;
+  z-index: 946;
 }
 
     .sidebar-mobile {
@@ -33,7 +33,7 @@
         width: 80%;
         max-width: 320px;
         background: #fff;
-        z-index: 1050;
+        z-index: 950;
         padding: 1rem;
         overflow-y: auto;
         transition: left 0.3s ease-in-out;
@@ -279,24 +279,24 @@
 </div>
 </main>
 <script>
-const overlay = document.getElementById('sidebarOverlay');
-const sidebar = document.getElementById('sidebar-mobile');
+const overlayMobile = document.getElementById('sidebarOverlay');
+const sidebarMobile = document.getElementById('sidebar-mobile');
 const toggleBtn = document.getElementById('toggleSidebar');
 
 function openSidebar() {
-  sidebar.classList.add('show');
-  overlay.classList.add('show');
+  sidebarMobile.classList.add('show');
+  overlayMobile.classList.add('show');
   document.body.style.overflow = 'hidden';
 }
 
 function closeSidebar() {
-  sidebar.classList.remove('show');
-  overlay.classList.remove('show');
+  sidebarMobile.classList.remove('show');
+  overlayMobile.classList.remove('show');
   document.body.style.overflow = '';
 }
 
 toggleBtn?.addEventListener('click', openSidebar);
-overlay.addEventListener('click', closeSidebar);
+overlayMobile.addEventListener('click', closeSidebar);
 
 document.querySelectorAll('.sidebar-item').forEach(item => {
   item.addEventListener('click', closeSidebar);

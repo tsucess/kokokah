@@ -206,6 +206,10 @@ Route::get('/userlessondetails', function () {
     return view('users.subjectdetails');
 });
 
+Route::get('/userpaymenthistory', function () {
+    return view('users.paymenthistory');
+});
+
 Route::get('/subjectselect', function () {
     return view('admin.subjectselected');
 });
