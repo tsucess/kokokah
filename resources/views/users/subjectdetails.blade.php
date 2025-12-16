@@ -236,7 +236,7 @@
                             <a class="nav-link" href="#" data-tab="quiz">Quiz</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" data-tab="note">Note</a>
+                            <a class="nav-link" href="#" data-tab="ai-chat">Ai Chat</a>
                         </li>
                     </ul>
                     <div id="material" class="tab-content-section ">
@@ -290,7 +290,7 @@
                         </div>
                     </div>
 
-                    <div id="note" class="tab-content-section d-none">
+                    <div id="ai-chat" class="tab-content-section d-none">
                             <div class="message-box-container d-flex align-items-end mb-4">
                                 <div class="message-box w-100 d-flex flex-column gap-1">
                                     <div class="d-flex gap-2 align-items-start"><i class="fa-solid fa-paperclip"
