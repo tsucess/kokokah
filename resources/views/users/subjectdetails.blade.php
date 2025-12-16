@@ -79,7 +79,7 @@
             border: 1px solid #004A53;
             border-radius: 15px;
             padding: 20px;
-            min-height: 556px;
+            min-height: 256px;
         }
 
         .message-box {
@@ -224,7 +224,7 @@
                         </div>
                     </div>
                     <div class="video-box mb-3">
-                        <img src="./images/Video.png" alt="" class="img-fluid">
+                        <img src="./images/Video.png" alt="" class="img-fluid w-100">
                     </div>
 
                     <ul class="nav nav-underline nav-fill mb-3">
@@ -291,8 +291,7 @@
                     </div>
 
                     <div id="note" class="tab-content-section d-none">
-                        <div class="lecture-box d-flex flex-column gap-3 mb-4">
-                            <div class="message-box-container d-flex align-items-end">
+                            <div class="message-box-container d-flex align-items-end mb-4">
                                 <div class="message-box w-100 d-flex flex-column gap-1">
                                     <div class="d-flex gap-2 align-items-start"><i class="fa-solid fa-paperclip"
                                             style="color:#94A3B8;"></i>
@@ -307,8 +306,6 @@
                                     </div>
 
                                 </div>
-
-                            </div>
                         </div>
 
                     </div>
