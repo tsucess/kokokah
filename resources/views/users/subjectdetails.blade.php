@@ -186,7 +186,6 @@
                             <div class="d-flex flex-column gap-2 align-items-center">
                                 <h2 class="modal-title">Rate this Subject</h2>
                                 <h3 class="modal-course">English Language</h3>
-
                             </div>
                             <div class="d-flex align-items-center gap-3 justify-content-center">
                                 <div class="star-rating">
@@ -217,7 +216,7 @@
         <section class="container-fluid d-flex flex-column gap-4">
             <h1>Lesson 13: Part of Speech</h1>
             <div class="row g-3">
-                <div class="col-12 col-lg-6">
+                <div class="col-12">
                     <div class="d-flex align-items-center gap-2 justify-content-between box mb-4">
                         <h3 class="box-title">Lesson 2 of 15</h3>
                         <div class="box-progress-bar">
@@ -230,7 +229,8 @@
 
                     <ul class="nav nav-underline nav-fill mb-3">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#" data-tab="material">Material & Links</a>
+                            <a class="nav-link active" aria-current="page" href="#" data-tab="material">Material &
+                                Links</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#" data-tab="quiz">Quiz</a>
@@ -291,7 +291,25 @@
                     </div>
 
                     <div id="note" class="tab-content-section d-none">
-                        <div class="lecture-box d-flex flex-column gap-3 mb-4"><p>This is the note section…</p></div>
+                        <div class="lecture-box d-flex flex-column gap-3 mb-4">
+                            <div class="message-box-container d-flex align-items-end">
+                                <div class="message-box w-100 d-flex flex-column gap-1">
+                                    <div class="d-flex gap-2 align-items-start"><i class="fa-solid fa-paperclip"
+                                            style="color:#94A3B8;"></i>
+                                        <textarea class="message-input flex-fill" name="" id="" cols="" rows=""
+                                            placeholder="Message to kodie..."></textarea>
+                                    </div>
+
+                                    <div class="d-flex align-items-center gap-3 justify-content-end mt-auto">
+                                        <div class="emoji d-flex justify-content-center align-items-center"><i
+                                                class="fa-solid fa-face-smile"></i></div>
+                                        <button class="send-message-btn">Send</button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
 
                     </div>
                     <div class="d-flex align-items-center gap-2 justify-content-between">
@@ -301,7 +319,7 @@
                     </div>
 
                 </div>
-                <div class="col-12 col-lg-6">
+                {{-- <div class="col-12 col-lg-6">
                     <div class="box d-flex flex-column gap-3 mb-4">
                         <h3 class="box-title">Lesson 2 of 15</h3>
                         <div class="box-progress-bar">
@@ -313,24 +331,8 @@
                                 class="fa-solid fa-book"></i>Mark
                             Lesson Complete</button>
                     </div>
-                    <div class="message-box-container d-flex align-items-end">
-                        <div class="message-box w-100 d-flex flex-column gap-1">
-                            <div class="d-flex gap-2 align-items-start"><i class="fa-solid fa-paperclip"
-                                    style="color:#94A3B8;"></i>
-                                <textarea class="message-input flex-fill" name="" id="" cols="" rows=""
-                                    placeholder="Message to kodie..."></textarea>
-                            </div>
 
-                            <div class="d-flex align-items-center gap-3 justify-content-end mt-auto">
-                                <div class="emoji d-flex justify-content-center align-items-center"><i
-                                        class="fa-solid fa-face-smile"></i></div>
-                                <button class="send-message-btn">Send</button>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
+                </div> --}}
             </div>
 
         </section>
