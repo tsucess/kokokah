@@ -194,12 +194,12 @@ Route::get('/userkoodies', function () {
     return view('users.userkoodies');
 });
 
-Route::get('/userpaymenthistory', function () {
-    return view('users.paymenthistory');
-});
-
 Route::get('/userleaderboard', function () {
     return view('users.leaderboard');
+});
+
+Route::get('/chatroom', function () {
+    return view('users.chatroom');
 });
 
 Route::get('/userlessondetails', function () {
@@ -216,10 +216,6 @@ Route::get('/subjectchart', function () {
 
 Route::get('/wallet', function () {
     return view('admin.wallet');
-});
-
-Route::get('/chatroom', function () {
-    return view('admin.chatroom');
 });
 
 Route::get('/announcement', function () {

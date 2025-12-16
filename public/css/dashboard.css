@@ -358,14 +358,21 @@ body {
 }
 
 .icon-btn {
-    width: 42px;
-    height: 42px;
+    width: 32px;
+    height: 32px;
     border-radius: 10px;
     background: #fff;
     border: 1px solid #e6edf3;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+}
+
+@media screen and (min-width:768px) {
+.icon-btn {
+    width: 42px;
+    height: 42px;
+}
 }
 
 /* Main content */
