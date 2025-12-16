@@ -194,16 +194,20 @@ Route::get('/userkoodies', function () {
     return view('users.userkoodies');
 });
 
-Route::get('/userpaymenthistory', function () {
-    return view('users.paymenthistory');
-});
-
 Route::get('/userleaderboard', function () {
     return view('users.leaderboard');
 });
 
+Route::get('/chatroom', function () {
+    return view('users.chatroom');
+});
+
 Route::get('/userlessondetails', function () {
     return view('users.subjectdetails');
+});
+
+Route::get('/userpaymenthistory', function () {
+    return view('users.paymenthistory');
 });
 
 Route::get('/subjectselect', function () {

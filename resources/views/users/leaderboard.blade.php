@@ -37,7 +37,7 @@
         .search-container {
             background-color: #F5F4F9;
             border-radius: 42px;
-            width: 238px;
+            max-width: 238px;
             height: 30px;
             gap: 4px;
             padding-inline: 5px;
@@ -57,13 +57,12 @@
             border-top-right-radius: 20px;
             height: 343px;
             box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-            padding-inline: 30px;
+            padding-inline: 10px;
         }
 
         .leaderboard-stats-container {
             max-width: 960px;
             height: 317px;
-            gap: 30px;
             margin-top: auto;
             width: 100%;
         }
@@ -133,6 +132,21 @@
             height: 50px;
         }
 
+        @media screen and (max-width:768px){
+            .leaderboard-second-img {
+            width: 50px;
+            height: 50px;
+        }
+            .leaderboard-first-img {
+            width: 80px;
+            height: 80px;
+        }
+            .leaderboard-third-img {
+            width: 40px;
+            height: 40px;
+        }
+        }
+
         .table-footer-container {
             box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0, .25);
             border-bottom-right-radius: 15px;
@@ -160,21 +174,24 @@
             color: #000000;
             font-size: 14px;
             font-weight: 600;
+            white-space: nowrap;
         }
 
         .table-data-text {
             color: #004A53;
-            font-size: 16px;
+            font-size: 14px;
         }
 
         table.leaderboard-table-container td {
             color: #004A53;
-            font-size: 16px;
+            font-size: 14px;
+            white-space: nowrap;
         }
 
         table.leaderboard-table-container td.rank-text {
             font-size: 14px;
             color: #A0A0A0;
+            white-space: nowrap;
         }
 
         .footer-btn {
@@ -193,27 +210,37 @@
             font-size: 12.9px;
         }
 
+        @media (max-width: 576px) {
+    .table-scroll::after {
+        content: "← Scroll →";
+        display: block;
+        text-align: center;
+        font-size: 12px;
+        color: #888;
+        margin-top: 6px;
+    }
+}
+
     </style>
     <main>
     <section class="container-fluid py-4 px-3">
         <section class="d-flex flex-column gap-4">
-            <header class="d-flex justify-content-between align-items-center gap-2">
+            <header class="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-items-start gap-3">
                 <div class="d-flex gap-1 align-items-center">
                     <img src="./images/leaderboard-icon.png" alt="" class="leaderboard-img">
                     <h2 class="leaderboard-title">Leaderboard</h2>
                 </div>
                 <div class="d-flex align-items-center gap-3">
                     <div class="d-flex gap-3 align-items-center">
-                        <button class="filter-btn"><i class="fa-solid fa-filter" style="color: #525252;"></i></button>
-                        <div class="d-flex align-items-center search-container"><i class="fa-solid fa-magnifying-glass fa-2xs" style="color: #8E8D93;"></i> <input type="search" name="" id="" placeholder="Search"></div>
+                        <div class="d-flex align-items-center search-container shadow-sm"><i class="fa-solid fa-magnifying-glass fa-2xs" style="color: #8E8D93;"></i> <input type="search" name="" id="" placeholder="Search"></div>
                     </div>
-                    <select name="" id="" class="select">
+                    <select name="" id="" class="select shadow-sm">
                         <option value="">This month</option>
                     </select>
                 </div>
             </header>
             <section class="d-flex justify-content-center leaderboard-container">
-                <article class="d-flex align-items-end leaderboard-stats-container">
+                <article class="d-flex align-items-end leaderboard-stats-container gap-2">
                     <div class="d-flex flex-column gap-3 w-100">
                         <div class="leaderboard-winner-container">
                             <div class="d-flex flex-column gap-1 align-items-center">
@@ -255,6 +282,7 @@
             </section>
         </section>
         <section class="table-footer-container">
+            <div class="table-responsive-sm">
             <table class="table leaderboard-table-container">
                 <thead>
                     <tr>
@@ -310,6 +338,7 @@
 
                 </tbody>
             </table>
+            </div>
             <div class="d-flex gap-3 align-items-center justify-content-between">
                 <button class="footer-btn">Previous</button>
                 <p class="footer-pagecount">Page1of 12</p>

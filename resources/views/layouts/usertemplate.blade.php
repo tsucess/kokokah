@@ -106,27 +106,23 @@
 
     <!-- Topbar -->
     <header class="topbar">
-        <div class="d-flex align-items-center gap-2">
+        <div class="d-flex align-items-center gap-1 gap-lg-2 ">
             <button class="btn btn-light d-lg-none" id="hamburger"><i class="fa-solid fa-bars"></i></button>
             {{-- <div class="d-lg-none small text-muted">Welcome back,</div>
                   <div class="d-lg-none fw-bold">Samuel (Admin)</div> --}}
         </div>
 
-        <div class="search-wrap mx-3">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input class="search-input" type="text" placeholder="Search">
+        <div class="search-wrap mx-1 mx-lg-3">
+            <i class="fa-solid fa-magnifying-glass fa-sm"></i>
+            <input class="search-input" type="text" placeholder="Search" style="font-size: 14px;">
         </div>
 
         <div class="top-icons">
-            <button class="icon-btn round-2 icon-btn-light" title="bell">
-              <i class="fa-regular fa-bell"></i>
-            </button>
-            <button class="icon-btn round-2 icon-btn-light" title="message">
-              <i class="fa-regular fa-envelope"></i>
-            </button>
-            <button class="icon-btn round-2 icon-btn-light" title="question">
-              <i class="fa-solid fa-question"></i>
-            </button>
+            <button class="icon-btn round-2 icon-btn-light" title="bell"><i class="fa-regular fa-bell fa-xs"></i></button>
+            <button class="icon-btn round-2 icon-btn-light" title="message"><i
+                    class="fa-regular fa-envelope fa-xs"></i></button>
+            <button class="icon-btn round-2 icon-btn-light" title="question"><i
+                    class="fa-solid fa-question fa-xs"></i></button>
         </div>
     </header>
 

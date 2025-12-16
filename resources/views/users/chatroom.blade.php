@@ -1,12 +1,141 @@
-{{-- @extends('admin.usertemplate') --}}
+
 @extends('layouts.usertemplate')
 
 @section('content')
+<style>
+
+    /* Mobile sidebar hidden by default */
+@media (max-width: 991.98px) {
+.chat-app-container {
+    overflow: visible !important;
+}
+
+.overlay.show {
+  display: block;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.28);
+  z-index: 946;
+}
+
+    .sidebar-mobile {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        height: 100vh;
+        width: 80%;
+        max-width: 320px;
+        background: #fff;
+        z-index: 950;
+        padding: 1rem;
+        overflow-y: auto;
+        transition: left 0.3s ease-in-out;
+        box-shadow: 2px 0 15px rgba(0,0,0,0.15);
+    }
+
+    .sidebar-mobile.show {
+        left: 0;
+    }
+
+    /* Prevent chat from being covered */
+    .chat-panel-right {
+        width: 100%;
+    }
+}
+
+</style>
 <main>
+
 <div class="container-fluid py-4">
+     <div class="overlay" id="sidebarOverlay"></div>
+     <div id="sidebar-mobile" class="sidebar-mobile d-lg-none">
+
+            <div class="input-group mb-4">
+                <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                <input type="text" class="form-control border-start-0 ps-0" placeholder="Find a Conversation">
+            </div>
+
+            <h6 class="text-muted text-uppercase small mb-2">Conservation</h6>
+
+            <a href="#" class="sidebar-item active">
+                <div class="d-flex align-items-center">
+                    <span class="badge bg-white me-2 d-flex justify-content-center align-items-center" style = "color: var(--bs-dark-teal); border-radius:20px; width: 25px;">
+                    <i class="bi bi-hash "></i>
+                    </span>
+                    General
+                </div>
+            </a>
+
+            <a href="#" class="sidebar-item">
+                <div class="d-flex align-items-center">
+                    <span class="badge me-2 d-flex justify-content-center align-items-center" style = "background: #114243; border-radius:20px; width: 25px;">
+                    <i class="bi bi-hash  text-white"></i>
+                    </span>
+                    Mathematics Help Corner
+                </div>
+                <span class="new-message-badge">1</span>
+            </a>
+
+            <a href="#" class="sidebar-item">
+                <div class="d-flex align-items-center">
+                    <span class="badge me-2 d-flex justify-content-center align-items-center" style = "background: #114243; border-radius:20px; width: 25px;">
+                    <i class="bi bi-hash  text-white"></i>
+                    </span>
+                    Science Discussions
+                </div>
+                <span class="new-message-badge">1</span>
+            </a>
+
+            <a href="#" class="sidebar-item">
+                <div class="d-flex align-items-center">
+                    <span class="badge me-2 d-flex justify-content-center align-items-center" style = "background: #114243; border-radius:20px; width: 25px;">
+                    <i class="bi bi-hash  text-white"></i>
+                    </span>
+                    English Literature & Writing
+                </div>
+            </a>
+
+            <a href="#" class="sidebar-item">
+                <div class="d-flex align-items-center">
+                    <span class="badge me-2 d-flex justify-content-center align-items-center" style = "background: #114243; border-radius:20px; width: 25px;">
+                    <i class="bi bi-hash text-white"></i>
+                    </span>
+                     History & Social Studies
+                </div>
+                <span class="new-message-badge">1</span>
+            </a>
+
+            <a href="#" class="sidebar-item">
+                <div class="d-flex align-items-center">
+                    <span class="badge me-2 d-flex justify-content-center align-items-center" style = "background: #114243; border-radius:20px; width: 25px;">
+                    <i class="bi bi-hash  text-white"></i>
+                    </span>
+                    ICT & Programming Chat
+                </div>
+            </a>
+
+            <a href="#" class="sidebar-item">
+                <div class="d-flex align-items-center">
+                    <span class="badge me-2 d-flex justify-content-center align-items-center" style = "background: #114243; border-radius:20px; width: 25px;">
+                    <i class="bi bi-hash text-white"></i>
+                    </span>
+                    Foreign Language Practice
+                </div>
+            </a>
+
+        </div>
+
+
     <div class="row g-0 chat-app-container">
 
-        <div class="col-lg-4 sidebar-left d-none d-lg-block">
+        <div class="col-lg-4 d-none d-lg-block sidebar-left">
 
             <div class="input-group mb-4">
                 <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
@@ -85,7 +214,12 @@
 
         <div class="col-12 col-lg-8 chat-panel-right">
 
+
             <div class="chat-header">
+                <!-- Toggle button: visible only on small screens -->
+    <button class="btn btn-outline-secondary d-lg-none" id="toggleSidebar">
+        <i class="bi bi-list"></i>
+    </button>
                 #General
             </div>
 
@@ -144,4 +278,30 @@
     </div>
 </div>
 </main>
+<script>
+const overlayMobile = document.getElementById('sidebarOverlay');
+const sidebarMobile = document.getElementById('sidebar-mobile');
+const toggleBtn = document.getElementById('toggleSidebar');
+
+function openSidebar() {
+  sidebarMobile.classList.add('show');
+  overlayMobile.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+  sidebarMobile.classList.remove('show');
+  overlayMobile.classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+toggleBtn?.addEventListener('click', openSidebar);
+overlayMobile.addEventListener('click', closeSidebar);
+
+document.querySelectorAll('.sidebar-item').forEach(item => {
+  item.addEventListener('click', closeSidebar);
+});
+
+</script>
+
 @endsection

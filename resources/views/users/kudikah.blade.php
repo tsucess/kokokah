@@ -167,7 +167,7 @@
                         <p class="balance-header-cardNo mb-0" id="cardNumber">Loading...</p>
                         {{-- <i class="bi bi-bank text-white fs-3 position-absolute" style="bottom: 20px; right: 20px; opacity: 0.5;"></i> --}}
                         <img src="./images/card-icon.png" alt="" class="position-absolute "
-                            style="bottom:20px; right:100px;" />
+                            style="bottom:20px; right:60px;" />
                     </div>
 
                     <div class="row g-3 mb-5">
@@ -184,7 +184,7 @@
                     </div>
 
                     <div class="bg-white rounded-3 shadow-sm">
-                        <div class="d-flex align-items-center justify-content-between p-3">
+                        <div class="d-flex flex-column flex-md-row gap-3 align-items-start align-items-md-center justify-content-between p-3">
                             <h5 class="fw-bold">Transaction History</h5>
 
                             <div class="d-flex gap-2">
@@ -463,17 +463,17 @@
                 });
 
                 html += `
-                    <div class="transaction-item" style="${borderStyle}">
+                    <div class="transaction-item " style="${borderStyle}">
                         <div class="transaction-details">
                             <div class="transaction-icon-container">
                                 ${icon}
                             </div>
                             <div>
-                                <span class="d-block">${description}</span>
-                                <small class="text-muted">${date}</small>
+                                <h6 class="d-block">${description}</h6>
+                                <p class="text-muted">${date}</p>
                             </div>
                         </div>
-                        <span class="transaction-amount ${amountClass}">${amountSign}${formatNGN(amount)}</span>
+                        <p class="transaction-amount ${amountClass}">${amountSign}${formatNGN(amount)}</p>
                     </div>
                 `;
             });
