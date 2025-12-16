@@ -407,6 +407,13 @@ class AdminController extends Controller
 
             // Transform data for frontend
             $transformedTransactions = $transactions->map(function ($transaction) {
+                // Format payment method for display
+                $paymentMethod = $transaction->payment_method ?? 'N/A';
+                if ($paymentMethod !== 'N/A') {
+                    // Capitalize gateway names (paystack -> Paystack, flutterwave -> Flutterwave, etc.)
+                    $paymentMethod = ucfirst(strtolower($paymentMethod));
+                }
+
                 return [
                     'id' => $transaction->id,
                     'user_name' => $transaction->wallet->user->first_name . ' ' . $transaction->wallet->user->last_name,
@@ -414,7 +421,7 @@ class AdminController extends Controller
                     'amount' => $transaction->amount,
                     'type' => $transaction->type,
                     'status' => $transaction->status,
-                    'payment_method' => $transaction->payment_method ?? 'N/A',
+                    'payment_method' => $paymentMethod,
                     'plan' => $transaction->type,
                     'created_at' => $transaction->created_at,
                     'reference' => $transaction->reference

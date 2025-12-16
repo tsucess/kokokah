@@ -276,7 +276,7 @@ class WalletTransaction extends Model
 
         // Create reverse transaction
         $reverseType = $this->isDebit() ? 'refund' : 'withdrawal';
-        
+
         $reverseTransaction = static::create([
             'wallet_id' => $this->wallet_id,
             'amount' => $this->amount,
@@ -288,6 +288,7 @@ class WalletTransaction extends Model
                 'original_transaction_id' => $this->id,
                 'reversal_reason' => $reason
             ],
+            'payment_method' => $this->payment_method,
             'processed_at' => now()
         ]);
 
@@ -301,7 +302,7 @@ class WalletTransaction extends Model
     }
 
     // Static methods
-    public static function createDeposit($walletId, $amount, $reference, $description = null)
+    public static function createDeposit($walletId, $amount, $reference, $description = null, $paymentMethod = null)
     {
         return static::create([
             'wallet_id' => $walletId,
@@ -310,11 +311,12 @@ class WalletTransaction extends Model
             'reference' => $reference,
             'status' => 'pending',
             'description' => $description ?? 'Wallet deposit',
-            'currency' => 'NGN'
+            'currency' => 'NGN',
+            'payment_method' => $paymentMethod
         ]);
     }
 
-    public static function createPurchase($walletId, $amount, $courseId, $reference, $description = null)
+    public static function createPurchase($walletId, $amount, $courseId, $reference, $description = null, $paymentMethod = null)
     {
         return static::create([
             'wallet_id' => $walletId,
@@ -325,6 +327,7 @@ class WalletTransaction extends Model
             'description' => $description ?? 'Course purchase',
             'course_id' => $courseId,
             'currency' => 'NGN',
+            'payment_method' => $paymentMethod,
             'processed_at' => now()
         ]);
     }
@@ -341,6 +344,7 @@ class WalletTransaction extends Model
             'description' => $description ?? 'Wallet transfer',
             'related_user_id' => Wallet::find($toWalletId)->user_id,
             'currency' => 'NGN',
+            'payment_method' => 'Wallet',
             'processed_at' => now()
         ]);
 
@@ -354,6 +358,7 @@ class WalletTransaction extends Model
             'description' => $description ?? 'Wallet transfer',
             'related_user_id' => Wallet::find($fromWalletId)->user_id,
             'currency' => 'NGN',
+            'payment_method' => 'Wallet',
             'processed_at' => now()
         ]);
 
