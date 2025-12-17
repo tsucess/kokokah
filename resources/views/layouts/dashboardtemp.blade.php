@@ -100,7 +100,7 @@
                 <a class="nav-item-link d-block nav-child" href="#">Course Approval</a>
             </div>
 
-            <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent" href="/transactions" role="button" aria-expanded="false">
+            <a class="nav-item-link" href="/transactions" role="button">
                 <span><i class="fa-solid fa-credit-card pe-3"></i>Transactions</span></a>
 
             {{-- <div class="collapse ps-4" id="paymentsMenu">
@@ -287,9 +287,10 @@
                     // If it's a child link, open parent dropdown & activate parent
                     if (link.classList.contains('nav-child')) {
                         const parentMenu = link.closest('.collapse');
-                        if (parentMenu) {
-                            const parentToggle = document.querySelector(`[href="#${parentMenu.id}"]`);
-
+                        if (parentMenu && parentMenu.id) {
+                            // Safely escape the ID for querySelector
+                            const escapedId = CSS.escape(parentMenu.id);
+                            const parentToggle = document.querySelector(`[href="#${escapedId}"]`);
 
                             const bsCollapse = new bootstrap.Collapse(parentMenu, {
                                 toggle: false
@@ -320,6 +321,13 @@
             // Select all collapsible parents
             document.querySelectorAll('.nav-parent').forEach(parent => {
                 const targetId = parent.getAttribute('href');
+
+                // Validate that targetId is a valid selector (should start with # or .)
+                if (!targetId || (targetId[0] !== '#' && targetId[0] !== '.')) {
+                    console.warn('Invalid target ID for nav-parent:', targetId);
+                    return;
+                }
+
                 const target = document.querySelector(targetId);
                 const icon = parent.querySelector('.chevron-icon');
 
@@ -345,6 +353,13 @@
                 parent.addEventListener('click', function(e) {
                     e.preventDefault();
                     const targetId = this.getAttribute('href');
+
+                    // Validate that targetId is a valid selector (should start with # or .)
+                    if (!targetId || (targetId[0] !== '#' && targetId[0] !== '.')) {
+                        console.warn('Invalid target ID:', targetId);
+                        return;
+                    }
+
                     const target = document.querySelector(targetId);
 
                     if (!target) return;

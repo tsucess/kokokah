@@ -615,10 +615,25 @@
                 const response = await LessonApiClient.markLessonComplete(currentLesson.id);
 
                 if (response.success) {
+                    // Update the lesson in allLessons array
+                    const lessonIndex = allLessons.findIndex(lesson => lesson.id === currentLesson.id);
+                    if (lessonIndex !== -1) {
+                        allLessons[lessonIndex].is_completed = true;
+                    }
+
+                    // Update current lesson
+                    currentLesson.is_completed = true;
+
                     const markCompleteBtn = document.getElementById('markCompleteBtn');
                     markCompleteBtn.disabled = true;
                     markCompleteBtn.textContent = 'Lesson Completed ✓';
                     markCompleteBtn.style.opacity = '0.6';
+
+                    // Update progress bar
+                    const completedLessons = allLessons.filter(lesson => lesson.is_completed).length;
+                    const progressPercentage = (completedLessons / allLessons.length) * 100;
+                    const progressTrack = document.getElementById('progressTrack');
+                    progressTrack.style.width = progressPercentage + '%';
 
                     showSuccess('Lesson marked as complete!');
                 } else {
