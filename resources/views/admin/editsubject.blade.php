@@ -1871,18 +1871,32 @@
                     const termsResult = await termsResponse.json();
                     console.log('Terms API Response:', termsResult);
                     if (termsResponse.ok && termsResult) {
-                        const termSelect = document.getElementById('subjectTerm');
                         // Handle both array and object with data property
                         const terms = Array.isArray(termsResult) ? termsResult : (termsResult.data || []);
                         console.log('Processed terms:', terms);
-                        termSelect.innerHTML = `<option value="">Select Term</option>`;
 
+                        // Populate subject term dropdown
+                        const termSelect = document.getElementById('subjectTerm');
+                        termSelect.innerHTML = `<option value="">Select Term</option>`;
                         terms.forEach(term => {
                             const option = document.createElement('option');
                             option.value = term.id;
                             option.textContent = term.name;
                             termSelect.appendChild(option);
                         });
+
+                        // Also populate topic term dropdown in the add topic modal
+                        const topicTermSelect = document.getElementById('topicTermSelect');
+                        if (topicTermSelect) {
+                            topicTermSelect.innerHTML = `<option value="">Select Term</option>`;
+                            terms.forEach(term => {
+                                const option = document.createElement('option');
+                                option.value = term.id;
+                                option.textContent = term.name;
+                                topicTermSelect.appendChild(option);
+                            });
+                        }
+
                         console.log('Terms loaded successfully. Total:', terms.length);
                     } else {
                         console.error('Failed to load terms. Response:', termsResult);
@@ -2519,9 +2533,16 @@
                 const modal = document.getElementById('addNewTopicModal');
                 const titleInput = modal.querySelector('input[placeholder="Enter Title"]');
                 const descInput = modal.querySelector('textarea');
+                const termSelect = document.getElementById('topicTermSelect');
 
                 if (titleInput) titleInput.value = topic.title;
                 if (descInput) descInput.value = topic.description || '';
+
+                // Populate term dropdown with the topic's current term
+                if (termSelect) {
+                    termSelect.value = topic.term_id || '';
+                    console.log('Topic term set to:', topic.term_id);
+                }
 
                 // Store the topic ID being edited
                 window.editingTopicId = topicId;
