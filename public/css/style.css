@@ -1689,7 +1689,7 @@ p {
 }
 
 .hero-banner h2 {
-    font-family: "Pridi", serif;
+    /* font-family: "Pridi", serif; */
     font-size: 45.6px;
     font-weight: 700;
     color: white;
@@ -1922,7 +1922,7 @@ div.contact-container a {
     margin-inline: auto;
     overflow-y: scroll;
     max-height: 600px;
-    height: 500px;
+    height: 540px;
 }
 .beta-content-container {
     padding-inline: 24px;
