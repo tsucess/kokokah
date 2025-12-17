@@ -54,7 +54,7 @@
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
                 <img src="{{ asset('images/Kokokah_Logo.png') }}" alt="Kokokah Logo"
-                    class="animate__animated animate__pulse hero-img">
+                    class="animate__animated animate__pulse hero-img w-100">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample05"
                 aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
