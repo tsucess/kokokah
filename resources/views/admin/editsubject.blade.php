@@ -1874,9 +1874,12 @@
                         }
                     });
                     const termsResult = await termsResponse.json();
+                    console.log('Terms API Response:', termsResult);
                     if (termsResponse.ok && termsResult) {
                         const termSelect = document.getElementById('subjectTerm');
-                        const terms = Array.isArray(termsResult) ? termsResult : [];
+                        // Handle both array and object with data property
+                        const terms = Array.isArray(termsResult) ? termsResult : (termsResult.data || []);
+                        console.log('Processed terms:', terms);
                         termSelect.innerHTML = `<option value="">Select Term</option>`;
 
                         terms.forEach(term => {
@@ -1885,6 +1888,9 @@
                             option.textContent = term.name;
                             termSelect.appendChild(option);
                         });
+                        console.log('Terms loaded successfully. Total:', terms.length);
+                    } else {
+                        console.error('Failed to load terms. Response:', termsResult);
                     }
 
                     // Load Course Categories
@@ -2185,7 +2191,16 @@
                     formData.append('course_category_id', courseCategory);
                     formData.append('level_id', courseLevel);
                     formData.append('term_id', term || null);
-                    formData.append('duration_hours', duration || 0);
+
+                    // Debug duration value
+                    console.log('Duration value:', duration, 'Type:', typeof duration, 'Parsed:', parseInt(duration));
+
+                    // Only send duration_hours if it has a valid value (min:1)
+                    // If empty or 0, don't send the field at all (let backend use existing value)
+                    if (duration && parseInt(duration) > 0) {
+                        formData.append('duration_hours', parseInt(duration));
+                    }
+
                     formData.append('price', freeCourse ? 0 : price);
                     formData.append('free', freeCourse ? 1 : 0);
                     formData.append('url', overviewUrl);

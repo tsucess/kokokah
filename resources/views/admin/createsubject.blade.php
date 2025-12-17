@@ -775,9 +775,12 @@
                     }
                 });
                 const termsResult = await termsResponse.json();
+                console.log('Terms API Response:', termsResult);
                 if (termsResponse.ok && termsResult) {
                     const termSelect = document.getElementById('subjectTerm');
-                    const terms = Array.isArray(termsResult) ? termsResult : [];
+                    // Handle both array and object with data property
+                    const terms = Array.isArray(termsResult) ? termsResult : (termsResult.data || []);
+                    console.log('Processed terms:', terms);
                     termSelect.innerHTML = `<option value="">Select Term</option>`;
                     terms.forEach(term => {
                         const option = document.createElement('option');
@@ -785,6 +788,9 @@
                         option.textContent = term.name;
                         termSelect.appendChild(option);
                     });
+                    console.log('Terms loaded successfully. Total:', terms.length);
+                } else {
+                    console.error('Failed to load terms. Response:', termsResult);
                 }
 
                 // Load Course Categories
@@ -856,6 +862,12 @@
             loadDropdownData();
 
             function showSection(sectionId) {
+                // Validate sectionId to prevent invalid selectors
+                if (!sectionId || typeof sectionId !== 'string' || sectionId.includes('/')) {
+                    console.warn('Invalid section ID:', sectionId);
+                    return;
+                }
+
                 sections.forEach(sec => sec.classList.add('d-none'));
                 const section = document.getElementById(sectionId);
                 if (section) {
@@ -863,7 +875,8 @@
                 }
 
                 navButtons.forEach(btn => btn.classList.remove('course-btn-active'));
-                const activeBtn = document.querySelector(`[data-section="${sectionId}"]`);
+                // Use a safer method to find the active button
+                const activeBtn = Array.from(navButtons).find(btn => btn.getAttribute('data-section') === sectionId);
                 if (activeBtn) {
                     activeBtn.classList.add('course-btn-active');
                 }
@@ -952,21 +965,27 @@
             navButtons.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const section = btn.getAttribute('data-section');
-                    showSection(section);
+                    if (section) {
+                        showSection(section);
+                    }
                 });
             });
 
             continueButtons.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const next = btn.getAttribute('data-next');
-                    showSection(next);
+                    if (next) {
+                        showSection(next);
+                    }
                 });
             });
 
             backButtons.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const back = btn.getAttribute('data-next');
-                    showSection(back);
+                    if (back) {
+                        showSection(back);
+                    }
                 });
             });
 

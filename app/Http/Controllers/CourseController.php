@@ -321,8 +321,8 @@ class CourseController extends Controller
                 'free'  => 'sometimes|in:0,1',
                 'price' => 'sometimes|required_unless:free,1|numeric|min:0',
                 'difficulty' => 'sometimes|in:beginner,intermediate,advanced',
-                'duration_hours' => 'nullable|integer|min:1',
-                'max_students' => 'nullable|integer|min:1',
+                'duration_hours' => 'sometimes|nullable|integer|min:1',
+                'max_students' => 'sometimes|nullable|integer|min:1',
                 'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:5048'
             ]);
 
