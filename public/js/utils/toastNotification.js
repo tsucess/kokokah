@@ -202,6 +202,4 @@ class ToastNotification {
   }
 }
 
-// Export for use in modules
 export default ToastNotification;
-

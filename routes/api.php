@@ -206,6 +206,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Topic management route
     Route::apiResource('topic', TopicController::class);
     Route::get('/courses/{courseId}/topics', [TopicController::class, 'getByCourse']);
+    Route::get('/topic/{topicId}/lessons', [TopicController::class, 'getLessons']);
 
 
     // Term management route 

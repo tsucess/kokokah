@@ -298,4 +298,3 @@ class CourseApiClient extends BaseApiClient {
 }
 
 export default CourseApiClient;
-

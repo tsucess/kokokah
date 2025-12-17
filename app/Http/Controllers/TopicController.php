@@ -42,6 +42,56 @@ class TopicController extends Controller
         return response()->json(Topic::findOrFail($id));
     }
 
+    // GET lessons for a specific topic
+    public function getLessons($topicId)
+    {
+        try {
+            $topic = Topic::findOrFail($topicId);
+            $user = \Illuminate\Support\Facades\Auth::user();
+
+            // Check if user has access to this topic's course
+            $isEnrolled = $topic->course->enrollments()->where('user_id', $user->id)->exists();
+            $isInstructor = $topic->course->instructor_id === $user->id;
+            $isAdmin = $user->hasRole('admin');
+
+            if (!$isEnrolled && !$isInstructor && !$isAdmin) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'You must be enrolled in this course to view lessons'
+                ], 403);
+            }
+
+            $lessons = $topic->lessons()
+                            ->with(['topic', 'course'])
+                            ->orderBy('order')
+                            ->get()
+                            ->map(function ($lesson) use ($user) {
+                                $lessonData = $lesson->toArray();
+
+                                // Add completion status for the user
+                                $completion = \App\Models\LessonCompletion::where('user_id', $user->id)
+                                                                    ->where('lesson_id', $lesson->id)
+                                                                    ->first();
+
+                                $lessonData['is_completed'] = $completion !== null;
+                                $lessonData['completed_at'] = $completion?->completed_at;
+                                $lessonData['time_spent'] = $completion?->time_spent ?? 0;
+
+                                return $lessonData;
+                            });
+
+            return response()->json([
+                'success' => true,
+                'data' => $lessons
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch lessons: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
     // POST create topic
     public function store(Request $request)
     {

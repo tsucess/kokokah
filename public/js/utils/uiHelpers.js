@@ -3,7 +3,7 @@
  * Handles common UI operations like alerts, loading states, etc.
  */
 
-class UIHelpers {
+export default class UIHelpers {
   /**
    * Show success alert
    */
@@ -305,5 +305,5 @@ class UIHelpers {
   }
 }
 
-export default UIHelpers;
+
 

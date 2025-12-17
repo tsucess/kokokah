@@ -220,3 +220,5 @@ class WalletApiClient extends BaseApiClient {
 
 export default WalletApiClient;
 
+
+

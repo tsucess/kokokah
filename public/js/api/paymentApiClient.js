@@ -127,4 +127,3 @@ class PaymentApiClient extends BaseApiClient {
 }
 
 export default PaymentApiClient;
-

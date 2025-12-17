@@ -92,8 +92,42 @@ class LessonApiClient extends BaseApiClient {
     static async getLessonAttachments(lessonId) {
         return this.get(`/lessons/${lessonId}/attachments`);
     }
+
+    /**
+     * Get all lessons for a topic
+     * @param {number} topicId - The topic ID
+     * @returns {Promise<Object>} Response with lessons data
+     */
+    static async getLessonsByTopic(topicId) {
+        return this.get(`/topic/${topicId}/lessons`);
+    }
+
+    /**
+     * Mark lesson as complete
+     * @param {number} lessonId - The lesson ID
+     * @returns {Promise<Object>} Response from complete operation
+     */
+    static async markLessonComplete(lessonId) {
+        return this.post(`/lessons/${lessonId}/complete`, {});
+    }
+
+    /**
+     * Start quiz attempt
+     * @param {number} quizId - The quiz ID
+     * @returns {Promise<Object>} Response from start operation
+     */
+    static async startQuizAttempt(quizId) {
+        return this.post(`/quizzes/${quizId}/start`, {});
+    }
+
+    /**
+     * Get quizzes for a lesson
+     * @param {number} lessonId - The lesson ID
+     * @returns {Promise<Object>} Response with quizzes data
+     */
+    static async getQuizzesByLesson(lessonId) {
+        return this.get(`/lessons/${lessonId}/quizzes`);
+    }
 }
 
-// Export the class as default
 export default LessonApiClient;
-

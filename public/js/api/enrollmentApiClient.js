@@ -105,4 +105,3 @@ class EnrollmentApiClient extends BaseApiClient {
 }
 
 export default EnrollmentApiClient;
-
