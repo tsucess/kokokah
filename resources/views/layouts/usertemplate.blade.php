@@ -106,15 +106,15 @@
 
     <!-- Topbar -->
     <header class="topbar">
-        <div class="d-flex align-items-center gap-1 gap-lg-2 ">
-            <button class="btn btn-light d-lg-none" id="hamburger"><i class="fa-solid fa-bars"></i></button>
-            {{-- <div class="d-lg-none small text-muted">Welcome back,</div>
-                  <div class="d-lg-none fw-bold">Samuel (Admin)</div> --}}
-        </div>
 
-        <div class="search-wrap mx-1 mx-lg-3">
-            <i class="fa-solid fa-magnifying-glass fa-sm"></i>
-            <input class="search-input" type="text" placeholder="Search" style="font-size: 14px;">
+            <button class="btn btn-light d-lg-none" id="hamburger"><i class="fa-solid fa-bars"></i></button>
+            
+
+        <div class="d-flex gap-2 shadow-sm rounded-pill align-items-center py-2 px-3  mx-1 mx-lg-3">
+            <div><img src="./images/leaderboard-award-icon.png" alt=""> <span>8</span></div>
+            <div></div>
+            <div class="ps-2" style="border-left: 1px solid #000000;"><img src="./images/point-icon.png" alt=""> <span>1,000</span></div>
+
         </div>
 
         <div class="top-icons">
@@ -129,7 +129,7 @@
     @yield('content')
 
     <!-- Footer -->
-    <div class="d-flex page-footer justify-content-between">
+    <div class="d-flex  page-footer flex-column align-items-center gap-2 gap-md-0 flex-md-row justify-content-between">
         <div class="small text-muted">© Copyright Kokokah 2025. All rights reserved.</div>
 
         <div class = "small text-muted">

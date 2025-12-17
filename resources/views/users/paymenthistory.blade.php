@@ -17,7 +17,7 @@
             <div class="card border-0 shadow-sm rounded-4 mb-4" style="background: #f9f9f9; border: 1px solid #e8e8e8;">
                 <div class="card-body p-4">
                     <!-- Table Header with Search and Filters -->
-                    <div class="d-flex flex-column gap-3 align-items-md-center justify-content-between align-items-start mb-5">
+                    <div class="d-flex flex-column gap-3 align-items-md-center flex-md-row justify-content-between align-items-start mb-5">
                         <h5 class="fw-bold mb-0" style="font-size: 1.1rem; color: #1a1a1a;">Payment History</h5>
                         <div class="d-flex gap-3 flex-column flex-md-row">
 
@@ -67,13 +67,13 @@
                     </div>
 
                     <!-- Pagination Section -->
-                    <div class="d-flex justify-content-between align-items-center mt-5 pt-4"
+                    <div class="d-flex justify-content-between align-items-center gap-2 mt-5 pt-4"
                         style="border-top: 1px solid #e8e8e8;">
                         <!-- Previous Button -->
-                        <button class="btn px-4 py-2" id="prevBtn" onclick="loadTransactions(currentPage - 1)"
+                        <button class="btn px-1 py-2 d-flex align-items-center gap-1 px-md-3" id="prevBtn" onclick="loadTransactions(currentPage - 1)"
                             style="border: 1px solid #004A53; color: #004A53; font-weight: 500; border-radius: 0.5rem;"
                             disabled>
-                            <i class="fa-solid fa-chevron-left me-2"></i> Previous
+                            <i class="fa-solid fa-chevron-left"></i> Previous
                         </button>
 
                         <!-- Pagination Info -->
@@ -89,9 +89,9 @@
                         </div>
 
                         <!-- Next Button -->
-                        <button class="btn px-4 py-2" id="nextBtn" onclick="loadTransactions(currentPage + 1)"
+                        <button class="btn px-1 py-2 d-flex align-items-center gap-1 px-md-3" id="nextBtn" onclick="loadTransactions(currentPage + 1)"
                             style="border: 1px solid #004A53; color: #004A53; font-weight: 500; border-radius: 0.5rem;">
-                            Next <i class="fa-solid fa-chevron-right ms-2"></i>
+                            Next <i class="fa-solid fa-chevron-right "></i>
                         </button>
                     </div>
                 </div>
