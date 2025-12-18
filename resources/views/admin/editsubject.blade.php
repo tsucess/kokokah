@@ -1103,16 +1103,7 @@
                 <div class="description-section">
                     <p class="description-label">Course Description</p>
 
-                    <div class="editor-toolbar">
-                        <span title="Bold"><i class="fa-solid fa-bold"></i></span>
-                        <span title="Italic"><i class="fa-solid fa-italic"></i></span>
-                        <span title="Underline"><i class="fa-solid fa-underline"></i></span>
-                        <span title="Strikethrough"><i class="fa-solid fa-strikethrough"></i></span>
-                        <span title="Upload"><i class="fa-solid fa-file-arrow-up"></i></span>
-                    </div>
-
-                    <textarea class="description-textarea" id="courseDescription" name="courseDescription"
-                        placeholder="Write subject description here..." form="courseDetailsForm"></textarea>
+            <div id="courseDescription"></div>
                 </div>
             </form>
 
@@ -1495,7 +1486,7 @@
             </div>
         </div>
     </main>
-
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
     <script type="module">
         import CourseApiClient from '/js/api/courseApiClient.js';
         import TopicApiClient from '/js/api/topicApiClient.js';
@@ -1505,6 +1496,10 @@
 
         // Get course ID from URL
         const courseId = '{{ $courseId }}';
+
+        const quillCourseDescription = new Quill('#courseDescription', {
+            theme: 'snow'
+        });
 
         // Load course data if course ID is provided
         async function loadCourseData() {
@@ -1528,7 +1523,7 @@
 
                 // Populate form fields with course data
                 if (course.title) document.getElementById('courseTitle').value = course.title;
-                if (course.description) document.getElementById('courseDescription').value = course.description;
+                if (course.description) quillCourseDescription.setText(course.description);
                 if (course.course_category_id) document.getElementById('courseCategory').value = course
                     .course_category_id;
                 if (course.level_id) document.getElementById('courseLevel').value = course.level_id;
@@ -2064,7 +2059,7 @@
                 const categoryElement = document.getElementById('courseCategory');
                 const levelElement = document.getElementById('courseLevel');
                 const timeElement = document.getElementById('courseTime');
-                const descriptionElement = document.getElementById('courseDescription');
+                const descriptionElement = quillCourseDescription;
                 const fileInput = document.getElementById('fileInput');
 
                 const title = titleElement ? titleElement.value : 'English Language';
@@ -2087,7 +2082,7 @@
                 }
 
                 const time = timeElement ? timeElement.value : '0 Hours';
-                const description = descriptionElement ? descriptionElement.value :
+                const description = descriptionElement ? descriptionElement.getText() :
                     'This comprehensive course covers essential concepts and skills.';
 
                 // Update publish section

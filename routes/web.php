@@ -265,6 +265,10 @@ Route::get('/instructors', function () {
     return view('admin.instructors');
 });
 
+Route::get('/ratingdetails', function () {
+    return view('admin.ratingdetails');
+});
+
 Route::get('/transactions', function () {
     return view('admin.transactions');
 });
