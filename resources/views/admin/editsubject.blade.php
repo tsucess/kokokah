@@ -1523,7 +1523,7 @@
 
                 // Populate form fields with course data
                 if (course.title) document.getElementById('courseTitle').value = course.title;
-                if (course.description) quillCourseDescription.setText(course.description);
+                if (course.description) quillCourseDescription.root.innerHTML = course.description;
                 if (course.course_category_id) document.getElementById('courseCategory').value = course
                     .course_category_id;
                 if (course.level_id) document.getElementById('courseLevel').value = course.level_id;
@@ -2177,7 +2177,7 @@
                 try {
                     // Get form data
                     const title = document.getElementById('courseTitle').value;
-                    const description = document.getElementById('courseDescription').value;
+                    const description = quillCourseDescription.root.innerHTML.trim();
                     const courseCategory = document.getElementById('courseCategory').value;
                     const courseLevel = document.getElementById('courseLevel').value;
                     const term = document.getElementById('subjectTerm').value;
@@ -2186,8 +2186,9 @@
                     const freeCourse = document.getElementById('free-course').checked;
                     const overviewUrl = document.getElementById('overviewVideoUrl').value;
 
-                    // Validate required fields
-                    if (!title || !description || !courseCategory || !courseLevel) {
+                    // Validate required fields - check if description has actual content (not just empty tags)
+                    const descriptionText = quillCourseDescription.getText().trim();
+                    if (!title || !descriptionText || !courseCategory || !courseLevel) {
                         ToastNotification.warning('Validation Error', 'Please fill in all required fields');
                         return;
                     }
