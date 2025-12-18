@@ -2141,11 +2141,11 @@ div.contact-container a {
 }
 
 .dropdown-fit {
-    width: 270px;
+    width: 280px;
 }
 
 .dropdown-fit .dropdown-item {
-    width: 270px;
+    width: 280px;
     box-sizing: border-box;
     white-space: nowrap;
 }
