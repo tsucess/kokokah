@@ -1114,7 +1114,7 @@
                 <div class="description-section">
                     <p class="description-label">Course Description</p>
 
-                    <div id="courseDescription"></div>
+                    <div id="courseDescription" class="ql-editor"></div>
                 </div>
             </form>
 
@@ -1277,7 +1277,7 @@
                                     <div class="d-flex flex-column gap-1">
                                         <label for="" class="lesson-label">Lesson
                                             Content</label>
-                                        <div id="lessonContent"></div>
+                                        <div id="lessonContent" class="ql-editor"></div>
                                     </div>
                                 </div>
                                 {{-- <div class="modal-form-input-border" id="content-container">

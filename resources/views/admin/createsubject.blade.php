@@ -419,7 +419,7 @@
 
                     <textarea class="description-textarea" id="courseDescription" name="courseDescription"
                         placeholder="Write subject description here..." form="courseDetailsForm"></textarea> --}}
-                    <div id="courseDescription"></div>
+                    <div id="courseDescription" class="ql-editor"></div>
                 </div>
             </form>
 

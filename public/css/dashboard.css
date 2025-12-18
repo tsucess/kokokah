@@ -2108,3 +2108,8 @@ input.search-input-custom-input {
     border-radius: 15px;
     background-color: #fff;
 }
+
+.ql-editor {
+    height: 300px;
+    overflow-y: auto;
+}
