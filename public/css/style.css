@@ -549,7 +549,7 @@ margin: 10px;
   } */
 
 .dropdown-item:hover {
-    width: 158px;
+    width: 100%;
 }
 
 .container__header {
@@ -1922,7 +1922,7 @@ div.contact-container a {
     margin-inline: auto;
     overflow-y: scroll;
     max-height: 600px;
-    height: 540px;
+    height: 90vh;
 }
 .beta-content-container {
     padding-inline: 24px;
@@ -2139,5 +2139,16 @@ div.contact-container a {
     pointer-events: none; /* important so it doesn't block the mouse */
     z-index: 9999;
 }
+
+.dropdown-fit {
+    width: 270px;
+}
+
+.dropdown-fit .dropdown-item {
+    width: 270px;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+
 
 

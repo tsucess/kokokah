@@ -46,7 +46,7 @@
     <div class="container-fluid top_header">
         <!-- Background Image -->
         {{-- <img src="images/kokokah_header.png" class="img-fluid" alt="Banner Image"> --}}
-        <h1>Transforming African Education—One School</h1>
+        <h1 class="text-center">Transforming classrooms, building futures, empowering tomorrow’s leaders</h1>
     </div>
 
     <!-- Navigation Bar - Fixed/Sticky with Overlay -->
@@ -72,9 +72,9 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">Products</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/lms">LMS</a></li>
-                            <li><a class="dropdown-item" href="/sms">SMS</a></li>
+                        <ul class="dropdown-menu dropdown-fit">
+                            <li><a class="dropdown-item" href="/lms">Learning Management System(LMS)</a></li>
+                            <li><a class="dropdown-item" href="/sms">School Management System(SMS)</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
