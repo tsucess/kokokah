@@ -147,6 +147,7 @@
             0% {
                 transform: rotate(0deg);
             }
+
             100% {
                 transform: rotate(360deg);
             }
@@ -172,16 +173,22 @@
         }
 
         @keyframes kokokah-dots {
-            0%, 20% {
+
+            0%,
+            20% {
                 content: '';
             }
+
             40% {
                 content: '.';
             }
+
             60% {
                 content: '..';
             }
-            80%, 100% {
+
+            80%,
+            100% {
                 content: '...';
             }
         }
@@ -976,6 +983,10 @@
         .select-quiz-children {
             display: none;
         }
+        .lesson-label{
+            color: #004a53;
+    font-size: 14px;
+        }
     </style>
 
     <main>
@@ -1103,7 +1114,7 @@
                 <div class="description-section">
                     <p class="description-label">Course Description</p>
 
-            <div id="courseDescription"></div>
+                    <div id="courseDescription"></div>
                 </div>
             </form>
 
@@ -1249,19 +1260,24 @@
                                 </div>
                                 {{-- youtube container --}}
                                 <div class="flex-column gap-3 hide select-children" id="youtube-container">
-                                    <div class="modal-form-input-border"><label for="" class="modal-label">Youtube Url</label>
-                                            <input class="modal-input" type="text" id="youtubeUrlInput" placeholder="Enter url" />
+                                    <div class="modal-form-input-border"><label for=""
+                                            class="modal-label">Youtube Url</label>
+                                        <input class="modal-input" type="text" id="youtubeUrlInput"
+                                            placeholder="Enter url" />
                                     </div>
-                                    <div class="modal-form-input-border"><label for="" class="modal-label">Duration (minutes)</label>
-                                            <input class="modal-input" type="number" id="videoDurationInput" placeholder="Auto-generated from URL" />
-                                            {{-- <small class="text-muted d-block mt-2">Duration will be automatically extracted from the video URL</small> --}}
+                                    <div class="modal-form-input-border"><label for=""
+                                            class="modal-label">Duration (minutes)</label>
+                                        <input class="modal-input" type="number" id="videoDurationInput"
+                                            placeholder="Auto-generated from URL" />
+                                        {{-- <small class="text-muted d-block mt-2">Duration will be automatically extracted from the video URL</small> --}}
                                     </div>
                                 </div>
                                 {{-- content container  --}}
                                 <div class="flex-column gap-3 hide select-children" id="content-container">
-                                    <div class="modal-form-input-border"><label for="" class="modal-label">Lesson
+                                    <div class="d-flex flex-column gap-1">
+                                        <label for="" class="lesson-label">Lesson
                                             Content</label>
-                                        <textarea name="" id="" class="modal-input" placeholder="Enter lesson content"></textarea>
+                                        <div id="lessonContent"></div>
                                     </div>
                                 </div>
                                 {{-- <div class="modal-form-input-border" id="content-container">
@@ -1371,8 +1387,7 @@
                                 </div>
 
                                 <div class="w-100 select-quiz-children" id='alternative-choice-container'>
-                                    <div class="d-flex align-items-center gap-2 flex-md-fill"
-                                        >
+                                    <div class="d-flex align-items-center gap-2 flex-md-fill">
                                         <div class="modal-form-input-border flex-md-fill">
                                             <label for="" class="modal-label">Option One</label>
                                             <input class="modal-input" type="text" placeholder="Option One" />
@@ -1486,7 +1501,7 @@
             </div>
         </div>
     </main>
-<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
     <script type="module">
         import CourseApiClient from '/js/api/courseApiClient.js';
         import TopicApiClient from '/js/api/topicApiClient.js';
@@ -1500,6 +1515,12 @@
         const quillCourseDescription = new Quill('#courseDescription', {
             theme: 'snow'
         });
+
+        const quillLessonContent = new Quill('#lessonContent', {
+            theme: 'snow'
+        });
+
+
 
         // Load course data if course ID is provided
         async function loadCourseData() {
@@ -2203,7 +2224,8 @@
                     formData.append('term_id', term || null);
 
                     // Debug duration value
-                    console.log('Duration value:', duration, 'Type:', typeof duration, 'Parsed:', parseInt(duration));
+                    console.log('Duration value:', duration, 'Type:', typeof duration, 'Parsed:', parseInt(
+                        duration));
 
                     // Only send duration_hours if it has a valid value (min:1)
                     // If empty or 0, don't send the field at all (let backend use existing value)
@@ -2763,7 +2785,8 @@
         async function getYouTubeDurationFromPage(videoId) {
             try {
                 // Use noembed.com service which provides duration for YouTube videos
-                const response = await fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${videoId}`);
+                const response = await fetch(
+                `https://noembed.com/embed?url=https://www.youtube.com/watch?v=${videoId}`);
                 if (response.ok) {
                     const data = await response.json();
                     console.log('YouTube noembed data:', data);
@@ -2874,7 +2897,8 @@
                 if (isYoutube) {
                     try {
                         const youtubeUrl = `https://www.youtube.com/watch?v=${videoId}`;
-                        const response = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(youtubeUrl)}&format=json`);
+                        const response = await fetch(
+                            `https://www.youtube.com/oembed?url=${encodeURIComponent(youtubeUrl)}&format=json`);
                         if (response.ok) {
                             const data = await response.json();
                             console.log('YouTube oEmbed data:', data);
@@ -2892,7 +2916,8 @@
                 // For Vimeo, we can try to fetch duration from Vimeo's oEmbed API
                 if (isVimeo) {
                     try {
-                        const response = await fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${videoId}`);
+                        const response = await fetch(
+                            `https://vimeo.com/api/oembed.json?url=https://vimeo.com/${videoId}`);
                         if (response.ok) {
                             const data = await response.json();
                             // Vimeo oEmbed returns duration in seconds
@@ -2930,7 +2955,8 @@
 
                         if (duration) {
                             videoDurationInput.value = duration;
-                            ToastNotification.success('Success', `Duration extracted: ${duration} minutes`);
+                            ToastNotification.success('Success',
+                                `Duration extracted: ${duration} minutes`);
                         } else {
                             videoDurationInput.placeholder = 'Enter duration manually (in minutes)';
                             videoDurationInput.value = '';
@@ -2991,8 +3017,8 @@
                         break;
 
                     case 'content':
-                        const contentInput = modal.querySelector('#content-container textarea');
-                        const content = contentInput ? contentInput.value.trim() : '';
+                        const contentInput = quillLessonContent;
+                        const content = contentInput ? contentInput.getText().trim() : '';
                         if (!content) {
                             ToastNotification.warning('Validation', 'Please enter lesson content');
                             return;
@@ -3087,8 +3113,8 @@
                         }
                         break;
                     case 'content':
-                        const contentInput = modal.querySelector('#content-container textarea');
-                        if (contentInput) contentInput.value = lesson.content || '';
+                        const contentInput = quillLessonContent;
+                        if (contentInput) contentInput.setText(lesson.content || '');
                         break;
                     case 'document':
                     case 'image':
@@ -3142,7 +3168,8 @@
                     multipleChoiceContainer.style.display = selectedType === 'multiple-choice' ? 'flex' : 'none';
                 }
                 if (alternativeChoiceContainer) {
-                    alternativeChoiceContainer.style.display = selectedType === 'alternative-choice' ? 'block' : 'none';
+                    alternativeChoiceContainer.style.display = selectedType === 'alternative-choice' ? 'block' :
+                        'none';
                 }
             });
         }
@@ -3212,12 +3239,14 @@
                 // Get options based on quiz type
                 let options = [];
                 if (quizType === 'multiple-choice') {
-                    const optionInputs = document.querySelectorAll('#multiple-choice-container input[placeholder*="Option"]');
+                    const optionInputs = document.querySelectorAll(
+                        '#multiple-choice-container input[placeholder*="Option"]');
                     options = Array.from(optionInputs)
                         .map(input => input.value?.trim())
                         .filter(val => val);
                 } else if (quizType === 'alternative-choice') {
-                    const optionInputs = document.querySelectorAll('#alternative-choice-container input[placeholder*="Option"]');
+                    const optionInputs = document.querySelectorAll(
+                        '#alternative-choice-container input[placeholder*="Option"]');
                     options = Array.from(optionInputs)
                         .map(input => input.value?.trim())
                         .filter(val => val);
@@ -3315,7 +3344,8 @@
             // Reset modal title and button
             const modalTitle = modal.querySelector('.modal-title');
             if (modalTitle) {
-                modalTitle.innerHTML = '<i class="fa-solid fa-chevron-left fa-2xs" style="color: #333333"></i>Interactive Quiz';
+                modalTitle.innerHTML =
+                    '<i class="fa-solid fa-chevron-left fa-2xs" style="color: #333333"></i>Interactive Quiz';
             }
             const saveBtn = modal.querySelector('.modal-form-btn');
             if (saveBtn) {
@@ -3341,7 +3371,8 @@
             // Reset modal title and button
             const modalTitle = modal.querySelector('.modal-title');
             if (modalTitle) {
-                modalTitle.innerHTML = '<i class="fa-solid fa-chevron-left fa-2xs" style="color: #333333"></i>Interactive Quiz';
+                modalTitle.innerHTML =
+                    '<i class="fa-solid fa-chevron-left fa-2xs" style="color: #333333"></i>Interactive Quiz';
             }
             const saveBtn = modal.querySelector('.modal-form-btn');
             if (saveBtn) {
@@ -3399,7 +3430,8 @@
 
                         // Populate options
                         if (quizTypeValue === 'multiple-choice') {
-                            const optionInputs = modal.querySelectorAll('#multiple-choice-container input[placeholder*="Option"]');
+                            const optionInputs = modal.querySelectorAll(
+                                '#multiple-choice-container input[placeholder*="Option"]');
                             if (question.options && Array.isArray(question.options)) {
                                 question.options.forEach((option, index) => {
                                     if (optionInputs[index]) {
@@ -3408,7 +3440,8 @@
                                 });
                             }
                         } else if (quizTypeValue === 'alternative-choice') {
-                            const optionInputs = modal.querySelectorAll('#alternative-choice-container input[placeholder*="Option"]');
+                            const optionInputs = modal.querySelectorAll(
+                                '#alternative-choice-container input[placeholder*="Option"]');
                             if (question.options && Array.isArray(question.options)) {
                                 question.options.forEach((option, index) => {
                                     if (optionInputs[index]) {
@@ -3430,7 +3463,8 @@
                     // Update modal title to indicate editing
                     const modalTitle = modal.querySelector('.modal-title');
                     if (modalTitle) {
-                        modalTitle.innerHTML = '<i class="fa-solid fa-chevron-left fa-2xs" style="color: #333333"></i>Edit Quiz';
+                        modalTitle.innerHTML =
+                            '<i class="fa-solid fa-chevron-left fa-2xs" style="color: #333333"></i>Edit Quiz';
                     }
 
                     // Update button text
