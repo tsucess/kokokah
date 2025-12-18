@@ -85,7 +85,7 @@
     <!-- Modal -->
     <div class="modal fade beta-overlay-container" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content beta-dialog-container">
                 <div class="modal-body p-0 d-flex flex-column gap-4">
                     <div class="d-flex flex-column gap-2 beta-content-container">
