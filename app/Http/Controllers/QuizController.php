@@ -389,7 +389,15 @@ class QuizController extends Controller
             $quiz = Quiz::findOrFail($id);
 
             // Check if user is instructor or admin
-            if ($quiz->lesson->course->instructor_id !== Auth::id() && !Auth::user()->hasRole('admin')) {
+            // Quiz can be attached to either a lesson or a topic
+            $course = null;
+            if ($quiz->lesson_id) {
+                $course = $quiz->lesson->course;
+            } elseif ($quiz->topic_id) {
+                $course = $quiz->topic->course;
+            }
+
+            if (!$course || ($course->instructor_id !== Auth::id() && !Auth::user()->hasRole('admin'))) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Unauthorized to update this quiz'
@@ -398,11 +406,17 @@ class QuizController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'title' => 'sometimes|string|max:255',
-                'type' => 'sometimes|in:practice,graded,final',
+                'type' => 'sometimes|in:mcq,alternate,theory',
                 'time_limit_minutes' => 'nullable|integer|min:1',
                 'max_attempts' => 'nullable|integer|min:1',
                 'passing_score' => 'nullable|integer|min:0|max:100',
-                'shuffle_questions' => 'boolean'
+                'shuffle_questions' => 'boolean',
+                'questions' => 'sometimes|array|min:1',
+                'questions.*.question_text' => 'required_with:questions|string',
+                'questions.*.type' => 'required_with:questions|in:mcq,alternate,theory',
+                'questions.*.points' => 'required_with:questions|integer|min:1',
+                'questions.*.options' => 'nullable|array',
+                'questions.*.correct_answer' => 'required_with:questions|string'
             ]);
 
             if ($validator->fails()) {
@@ -413,13 +427,43 @@ class QuizController extends Controller
                 ], 422);
             }
 
-            $quiz->update($request->all());
+            DB::beginTransaction();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Quiz updated successfully',
-                'data' => $quiz
-            ]);
+            try {
+                // Update quiz properties
+                $quizData = $request->except(['questions']);
+                $quiz->update($quizData);
+
+                // Update questions if provided
+                if ($request->has('questions')) {
+                    // Delete existing questions
+                    $quiz->questions()->delete();
+
+                    // Create new questions
+                    foreach ($request->questions as $questionData) {
+                        Question::create([
+                            'quiz_id' => $quiz->id,
+                            'question_text' => $questionData['question_text'],
+                            'type' => $questionData['type'],
+                            'points' => $questionData['points'],
+                            'options' => $questionData['options'] ?? null,
+                            'correct_answer' => $questionData['correct_answer'],
+                            'explanation' => $questionData['explanation'] ?? null
+                        ]);
+                    }
+                }
+
+                DB::commit();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Quiz updated successfully',
+                    'data' => $quiz->load('questions')
+                ]);
+            } catch (\Exception $e) {
+                DB::rollBack();
+                throw $e;
+            }
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,

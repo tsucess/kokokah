@@ -382,7 +382,7 @@
 
 
         <script type="module">
-            import CourseApiClient from '{{ asset('js/api/courseApiClient.js') }}';
+            import CourseApiClient from '/js/api/courseApiClient.js';
 
             (function() {
                 const token = () => localStorage.getItem('auth_token') || '';

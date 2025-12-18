@@ -664,7 +664,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 
     <script type="module">
-        import AdminApiClient from '{{ asset('js/api/adminApiClient.js') }}';
+        import AdminApiClient from '/js/api/adminApiClient.js';
 
         // Get CSRF token
         const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ||

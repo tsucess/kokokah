@@ -454,8 +454,8 @@
         </div>
 
         <script type="module">
-            import CourseApiClient from '{{ asset('js/api/courseApiClient.js') }}';
-            import ToastNotification from '{{ asset('js/utils/toastNotification.js') }}';
+            import CourseApiClient from '/js/api/courseApiClient.js';
+            import ToastNotification from '/js/utils/toastNotification.js';
 
             (function() {
                 // Config

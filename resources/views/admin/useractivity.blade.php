@@ -229,8 +229,8 @@
 
 
     <script type="module">
-        import UIHelpers from '{{ asset('js/utils/uiHelpers.js') }}';
-        import AdminApiClient from '{{ asset('js/api/adminApiClient.js') }}';
+        import UIHelpers from '/js/utils/uiHelpers.js';
+        import AdminApiClient from '/js/api/adminApiClient.js';
 
         // Get auth token
         const token = localStorage.getItem('auth_token');

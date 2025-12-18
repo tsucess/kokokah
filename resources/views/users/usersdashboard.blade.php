@@ -279,10 +279,10 @@ font-size: 12px;
 
 </main>
 <script type="module">
-import CourseApiClient from '{{ asset("js/api/courseApiClient.js") }}';
-import EnrollmentApiClient from '{{ asset("js/api/enrollmentApiClient.js") }}';
-import AuthApiClient from '{{ asset("js/api/authClient.js") }}';
-import ToastNotification from '{{ asset("js/utils/toastNotification.js") }}';
+import CourseApiClient from '/js/api/courseApiClient.js';
+import EnrollmentApiClient from '/js/api/enrollmentApiClient.js';
+import AuthApiClient from '/js/api/authClient.js';
+import ToastNotification from '/js/utils/toastNotification.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     // Load user data

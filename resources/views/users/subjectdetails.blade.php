@@ -320,8 +320,8 @@
 
     </main>
     <script type="module">
-        import LessonApiClient from '{{ asset('js/api/lessonApiClient.js') }}';
-        import ToastNotification from '{{ asset('js/utils/toastNotification.js') }}';
+        import LessonApiClient from '/js/api/lessonApiClient.js';
+        import ToastNotification from '/js/utils/toastNotification.js';
 
         // Global variables
         let currentLesson = null;

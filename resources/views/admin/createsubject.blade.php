@@ -756,7 +756,7 @@
     <!-- Include the Quill library -->
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
     <script type="module">
-        import CourseApiClient from '{{ asset('js/api/courseApiClient.js') }}';
+        import CourseApiClient from '/js/api/courseApiClient.js';
 
         const quill = new Quill('#courseDescription', {
             theme: 'snow'

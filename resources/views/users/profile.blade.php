@@ -523,8 +523,8 @@
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 
                 <script type="module">
-                    import UserApiClient from '{{ asset('js/api/userApiClient.js') }}';
-                    import ToastNotification from '{{ asset('js/utils/toastNotification.js') }}';
+                    import UserApiClient from '/js/api/userApiClient.js';
+                    import ToastNotification from '/js/utils/toastNotification.js';
 
                     // Load profile data on page load
                     document.addEventListener('DOMContentLoaded', async () => {

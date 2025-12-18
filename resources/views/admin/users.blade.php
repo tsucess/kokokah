@@ -112,7 +112,7 @@
     </main>
 
     <script type="module">
-        import AdminApiClient from '{{ asset('js/api/adminApiClient.js') }}';
+        import AdminApiClient from '/js/api/adminApiClient.js';
 
         // Get auth token
         const token = localStorage.getItem('auth_token');

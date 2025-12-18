@@ -114,8 +114,8 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
   <script type="module">
-    import AuthApiClient from '{{ asset('js/api/authClient.js') }}';
-    import UIHelpers from '{{ asset('js/utils/uiHelpers.js') }}';
+    import AuthApiClient from '/js/api/authClient.js';
+    import UIHelpers from '/js/utils/uiHelpers.js';
 
     // Store original button text
     UIHelpers.storeButtonText('registerBtn');

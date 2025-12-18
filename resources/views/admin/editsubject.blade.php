@@ -1497,11 +1497,11 @@
     </main>
 
     <script type="module">
-        import CourseApiClient from '{{ asset('js/api/courseApiClient.js') }}';
-        import TopicApiClient from '{{ asset('js/api/topicApiClient.js') }}';
-        import LessonApiClient from '{{ asset('js/api/lessonApiClient.js') }}';
-        import QuizApiClient from '{{ asset('js/api/quizApiClient.js') }}';
-        import ToastNotification from '{{ asset('js/utils/toastNotification.js') }}';
+        import CourseApiClient from '/js/api/courseApiClient.js';
+        import TopicApiClient from '/js/api/topicApiClient.js';
+        import LessonApiClient from '/js/api/lessonApiClient.js';
+        import QuizApiClient from '/js/api/quizApiClient.js';
+        import ToastNotification from '/js/utils/toastNotification.js';
 
         // Get course ID from URL
         const courseId = '{{ $courseId }}';
@@ -3169,6 +3169,18 @@
             });
         }
 
+        // Handle modal hide event to prevent aria-hidden focus issues
+        const quizModalElement = document.getElementById('quiz-modal');
+        if (quizModalElement) {
+            quizModalElement.addEventListener('hide.bs.modal', (e) => {
+                // Remove focus from any focused element before modal is hidden
+                const focusedElement = document.activeElement;
+                if (focusedElement && focusedElement !== document.body) {
+                    focusedElement.blur();
+                }
+            });
+        }
+
         // Save quiz function
         async function saveQuiz() {
             try {
@@ -3258,9 +3270,28 @@
                     quizModalForm.reset();
                     window.editingQuizId = null;
 
-                    // Close modal
-                    const quizModal = bootstrap.Modal.getInstance(document.getElementById('quiz-modal'));
-                    if (quizModal) quizModal.hide();
+                    // Remove focus from any focused element before closing modal
+                    const focusedElement = document.activeElement;
+                    if (focusedElement && focusedElement !== document.body) {
+                        focusedElement.blur();
+                    }
+
+                    // Close modal and remove backdrop
+                    const quizModalElement = document.getElementById('quiz-modal');
+                    const quizModal = bootstrap.Modal.getInstance(quizModalElement);
+                    if (quizModal) {
+                        quizModal.hide();
+                    }
+
+                    // Remove backdrop if it exists
+                    const backdrop = document.querySelector('.modal-backdrop');
+                    if (backdrop) {
+                        backdrop.remove();
+                    }
+
+                    // Remove modal-open class from body
+                    document.body.classList.remove('modal-open');
+                    document.body.style.overflow = '';
 
                     // Reload topics to show new/updated quiz
                     await loadTopics();
@@ -3334,6 +3365,17 @@
 
                     // Store the quiz ID being edited
                     window.editingQuizId = quizId;
+
+                    // Set the lesson or topic ID for the quiz
+                    if (quiz.lesson_id) {
+                        window.currentLessonIdForQuiz = quiz.lesson_id;
+                        window.currentTopicIdForQuiz = null;
+                        window.currentQuizType = 'lesson';
+                    } else if (quiz.topic_id) {
+                        window.currentTopicIdForQuiz = quiz.topic_id;
+                        window.currentLessonIdForQuiz = null;
+                        window.currentQuizType = 'topic';
+                    }
 
                     // Get the modal
                     const modal = document.getElementById('quiz-modal');

@@ -61,9 +61,9 @@
 
     </main>
     <script type="module">
-        import CourseApiClient from '{{ asset("js/api/courseApiClient.js") }}';
-        import UserApiClient from '{{ asset("js/api/userApiClient.js") }}';
-        import ToastNotification from '{{ asset("js/utils/toastNotification.js") }}';
+        import CourseApiClient from '/js/api/courseApiClient.js';
+        import UserApiClient from '/js/api/userApiClient.js';
+        import ToastNotification from '/js/utils/toastNotification.js';
 
         let userCourses = [];
 

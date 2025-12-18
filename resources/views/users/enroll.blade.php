@@ -611,10 +611,10 @@
     <!-- JS: bootstrap + API integration -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module">
-        import CourseApiClient from '{{ asset("js/api/courseApiClient.js") }}';
-        import PaymentApiClient from '{{ asset("js/api/paymentApiClient.js") }}';
-        import WalletApiClient from '{{ asset("js/api/walletApiClient.js") }}';
-        import ToastNotification from '{{ asset("js/utils/toastNotification.js") }}';
+        import CourseApiClient from '/js/api/courseApiClient.js';
+        import PaymentApiClient from '/js/api/paymentApiClient.js';
+        import WalletApiClient from '/js/api/walletApiClient.js';
+        import ToastNotification from '/js/utils/toastNotification.js';
 
         let allCourses = [];
 

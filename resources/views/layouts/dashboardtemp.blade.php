@@ -213,7 +213,7 @@
 
     <!-- Dashboard Module -->
     <script type="module">
-        import DashboardModule from '{{ asset('js/dashboard.js') }}'; // Initialize dashboard when DOM is ready
+        import DashboardModule from '/js/dashboard.js'; // Initialize dashboard when DOM is ready
 
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => {

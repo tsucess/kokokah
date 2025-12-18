@@ -63,7 +63,7 @@ font-size: 12px;
 
 </main>
 <script type="module">
-    import CourseApiClient from '{{ asset("js/api/courseApiClient.js") }}';
+    import CourseApiClient from '/js/api/courseApiClient.js';
 
     document.addEventListener("DOMContentLoaded", async () => {
         await loadClasses();

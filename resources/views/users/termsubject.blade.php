@@ -91,11 +91,11 @@
         </div>
     </main>
     <script type="module">
-        import CourseApiClient from '{{ asset("js/api/courseApiClient.js") }}';
-        import LessonApiClient from '{{ asset("js/api/lessonApiClient.js") }}';
-        import TopicApiClient from '{{ asset("js/api/topicApiClient.js") }}';
-        import UserApiClient from '{{ asset("js/api/userApiClient.js") }}';
-        import ToastNotification from '{{ asset("js/utils/toastNotification.js") }}';
+        import CourseApiClient from '/js/api/courseApiClient.js';
+        import LessonApiClient from '/js/api/lessonApiClient.js';
+        import TopicApiClient from '/js/api/topicApiClient.js';
+        import UserApiClient from '/js/api/userApiClient.js';
+        import ToastNotification from '/js/utils/toastNotification.js';
 
         let currentCourseId = null;
         let currentTermId = null;

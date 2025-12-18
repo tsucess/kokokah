@@ -116,7 +116,7 @@
     </main>
 
     <script type="module">
-        import TransactionApiClient from '{{ asset('js/api/transactionApiClient.js') }}';
+        import TransactionApiClient from '/js/api/transactionApiClient.js';
 
         const token = localStorage.getItem('auth_token');
         let currentPage = 1;
