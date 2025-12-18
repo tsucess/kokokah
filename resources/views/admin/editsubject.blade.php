@@ -3018,12 +3018,13 @@
 
                     case 'content':
                         const contentInput = quillLessonContent;
-                        const content = contentInput ? contentInput.getText().trim() : '';
-                        if (!content) {
+                        const contentHtml = contentInput ? contentInput.root.innerHTML.trim() : '';
+                        const contentText = contentInput ? contentInput.getText().trim() : '';
+                        if (!contentText) {
                             ToastNotification.warning('Validation', 'Please enter lesson content');
                             return;
                         }
-                        formData.append('content', content);
+                        formData.append('content', contentHtml);
                         break;
 
                     case 'document':
@@ -3114,7 +3115,7 @@
                         break;
                     case 'content':
                         const contentInput = quillLessonContent;
-                        if (contentInput) contentInput.setText(lesson.content || '');
+                        if (contentInput) contentInput.root.innerHTML = lesson.content || '';
                         break;
                     case 'document':
                     case 'image':
