@@ -2630,9 +2630,22 @@
                     ToastNotification.success('Success', 'Topic created successfully');
                 }
 
-                // Close modal
+                // Close modal with proper cleanup
                 const modalInstance = bootstrap.Modal.getInstance(modal);
-                if (modalInstance) modalInstance.hide();
+                if (modalInstance) {
+                    // Blur any focused element before closing
+                    const focusedElement = document.activeElement;
+                    if (focusedElement && focusedElement !== document.body) {
+                        focusedElement.blur();
+                    }
+                    modalInstance.hide();
+                    // Remove backdrop
+                    const backdrop = document.querySelector('.modal-backdrop');
+                    if (backdrop) backdrop.remove();
+                    // Remove modal-open class from body
+                    document.body.classList.remove('modal-open');
+                    document.body.style.overflow = '';
+                }
 
                 // Reload topics
                 await loadTopics();
@@ -3063,9 +3076,22 @@
                 uploadedFiles.audio = null;
                 uploadedFiles.document = null;
 
-                // Close modal
+                // Close modal with proper cleanup
                 const modalInstance = bootstrap.Modal.getInstance(modal);
-                if (modalInstance) modalInstance.hide();
+                if (modalInstance) {
+                    // Blur any focused element before closing
+                    const focusedElement = document.activeElement;
+                    if (focusedElement && focusedElement !== document.body) {
+                        focusedElement.blur();
+                    }
+                    modalInstance.hide();
+                    // Remove backdrop
+                    const backdrop = document.querySelector('.modal-backdrop');
+                    if (backdrop) backdrop.remove();
+                    // Remove modal-open class from body
+                    document.body.classList.remove('modal-open');
+                    document.body.style.overflow = '';
+                }
 
                 // Reload topics to refresh lessons
                 await loadTopics();
@@ -3193,7 +3219,7 @@
             });
         }
 
-        // Handle modal hide event to prevent aria-hidden focus issues
+        // Handle modal hide event to prevent aria-hidden focus issues and remove backdrop
         const quizModalElement = document.getElementById('quiz-modal');
         if (quizModalElement) {
             quizModalElement.addEventListener('hide.bs.modal', (e) => {
@@ -3202,6 +3228,48 @@
                 if (focusedElement && focusedElement !== document.body) {
                     focusedElement.blur();
                 }
+                // Remove backdrop
+                const backdrop = document.querySelector('.modal-backdrop');
+                if (backdrop) backdrop.remove();
+                // Remove modal-open class from body
+                document.body.classList.remove('modal-open');
+                document.body.style.overflow = '';
+            });
+        }
+
+        // Handle topic modal hide event to prevent aria-hidden focus issues and remove backdrop
+        const topicModalElement = document.getElementById('addNewTopicModal');
+        if (topicModalElement) {
+            topicModalElement.addEventListener('hide.bs.modal', (e) => {
+                // Remove focus from any focused element before modal is hidden
+                const focusedElement = document.activeElement;
+                if (focusedElement && focusedElement !== document.body) {
+                    focusedElement.blur();
+                }
+                // Remove backdrop
+                const backdrop = document.querySelector('.modal-backdrop');
+                if (backdrop) backdrop.remove();
+                // Remove modal-open class from body
+                document.body.classList.remove('modal-open');
+                document.body.style.overflow = '';
+            });
+        }
+
+        // Handle lesson modal hide event to prevent aria-hidden focus issues and remove backdrop
+        const lessonModalElement = document.getElementById('addLessonModal');
+        if (lessonModalElement) {
+            lessonModalElement.addEventListener('hide.bs.modal', (e) => {
+                // Remove focus from any focused element before modal is hidden
+                const focusedElement = document.activeElement;
+                if (focusedElement && focusedElement !== document.body) {
+                    focusedElement.blur();
+                }
+                // Remove backdrop
+                const backdrop = document.querySelector('.modal-backdrop');
+                if (backdrop) backdrop.remove();
+                // Remove modal-open class from body
+                document.body.classList.remove('modal-open');
+                document.body.style.overflow = '';
             });
         }
 
