@@ -40,14 +40,39 @@ class QuizController extends Controller
             }
 
             $quizzes = $lesson->quizzes()
-                            ->with(['questions' => function($query) use ($user, $isInstructor, $isAdmin) {
-                                if (!$isInstructor && !$isAdmin) {
-                                    $query->select('id', 'quiz_id', 'question_text', 'type', 'points');
-                                }
-                            }])
+                            ->with('questions')
                             ->get()
-                            ->map(function ($quiz) use ($user) {
+                            ->map(function ($quiz) use ($user, $isInstructor, $isAdmin) {
                                 $quizData = $quiz->toArray();
+
+                                // Filter question fields based on user role
+                                if (!$isInstructor && !$isAdmin) {
+                                    // Students don't see correct_answer and explanation
+                                    $quizData['questions'] = array_map(function ($question) {
+                                        return [
+                                            'id' => $question['id'],
+                                            'quiz_id' => $question['quiz_id'],
+                                            'question_text' => $question['question_text'],
+                                            'type' => $question['type'],
+                                            'options' => $question['options'],
+                                            'points' => $question['points']
+                                        ];
+                                    }, $quizData['questions']);
+                                } else {
+                                    // Instructors and admins get all fields
+                                    $quizData['questions'] = array_map(function ($question) {
+                                        return [
+                                            'id' => $question['id'],
+                                            'quiz_id' => $question['quiz_id'],
+                                            'question_text' => $question['question_text'],
+                                            'type' => $question['type'],
+                                            'options' => $question['options'],
+                                            'points' => $question['points'],
+                                            'correct_answer' => $question['correct_answer'],
+                                            'explanation' => $question['explanation']
+                                        ];
+                                    }, $quizData['questions']);
+                                }
                                 
                                 // Add user's quiz attempts
                                 $attempts = Answer::where('student_id', $user->id)
@@ -188,14 +213,39 @@ class QuizController extends Controller
             }
 
             $quizzes = $topic->quizzes()
-                            ->with(['questions' => function($query) use ($user, $isInstructor, $isAdmin) {
-                                if (!$isInstructor && !$isAdmin) {
-                                    $query->select('id', 'quiz_id', 'question_text', 'type', 'points');
-                                }
-                            }])
+                            ->with('questions')
                             ->get()
-                            ->map(function ($quiz) use ($user) {
+                            ->map(function ($quiz) use ($user, $isInstructor, $isAdmin) {
                                 $quizData = $quiz->toArray();
+
+                                // Filter question fields based on user role
+                                if (!$isInstructor && !$isAdmin) {
+                                    // Students don't see correct_answer and explanation
+                                    $quizData['questions'] = array_map(function ($question) {
+                                        return [
+                                            'id' => $question['id'],
+                                            'quiz_id' => $question['quiz_id'],
+                                            'question_text' => $question['question_text'],
+                                            'type' => $question['type'],
+                                            'options' => $question['options'],
+                                            'points' => $question['points']
+                                        ];
+                                    }, $quizData['questions']);
+                                } else {
+                                    // Instructors and admins get all fields
+                                    $quizData['questions'] = array_map(function ($question) {
+                                        return [
+                                            'id' => $question['id'],
+                                            'quiz_id' => $question['quiz_id'],
+                                            'question_text' => $question['question_text'],
+                                            'type' => $question['type'],
+                                            'options' => $question['options'],
+                                            'points' => $question['points'],
+                                            'correct_answer' => $question['correct_answer'],
+                                            'explanation' => $question['explanation']
+                                        ];
+                                    }, $quizData['questions']);
+                                }
 
                                 // Add user's quiz attempts
                                 $attempts = Answer::where('student_id', $user->id)
@@ -615,6 +665,12 @@ class QuizController extends Controller
                 $maxScore = 0;
                 $results = [];
 
+                // Delete existing answers for this attempt (allows user to change answers before final submission)
+                Answer::where('student_id', $user->id)
+                    ->whereIn('question_id', collect($request->answers)->pluck('question_id'))
+                    ->where('attempt_number', $request->attempt_number)
+                    ->delete();
+
                 foreach ($request->answers as $answerData) {
                     $question = Question::findOrFail($answerData['question_id']);
                     $maxScore += $question->points;
@@ -658,7 +714,13 @@ class QuizController extends Controller
                         'percentage' => $percentage,
                         'passed' => $passed,
                         'attempt_number' => $request->attempt_number,
-                        'results' => $results
+                        'results' => $results,
+                        'submitted_answers' => collect($request->answers)->map(function ($answer) {
+                            return [
+                                'question_id' => $answer['question_id'],
+                                'answer' => $answer['answer']
+                            ];
+                        })->toArray()
                     ]
                 ]);
             } catch (\Exception $e) {
