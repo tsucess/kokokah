@@ -679,6 +679,15 @@ class QuizController extends Controller
                     $pointsEarned = $this->gradeAnswer($question, $answerData['answer']);
                     $totalScore += $pointsEarned;
 
+                    \Log::info('Answer saved', [
+                        'question_id' => $question->id,
+                        'user_answer' => $answerData['answer'],
+                        'correct_answer' => $question->correct_answer,
+                        'points_earned' => $pointsEarned,
+                        'points_possible' => $question->points,
+                        'is_correct' => $pointsEarned === $question->points
+                    ]);
+
                     // Save answer
                     Answer::create([
                         'student_id' => $user->id,
@@ -877,11 +886,34 @@ class QuizController extends Controller
      */
     private function gradeAnswer($question, $userAnswer)
     {
+        // Debug logging
+        \Log::info('Grading answer', [
+            'question_id' => $question->id,
+            'question_type' => $question->type,
+            'user_answer' => $userAnswer,
+            'user_answer_type' => gettype($userAnswer),
+            'correct_answer' => $question->correct_answer,
+            'correct_answer_type' => gettype($question->correct_answer),
+            'user_answer_trimmed_lower' => strtolower(trim($userAnswer)),
+            'correct_answer_trimmed_lower' => strtolower(trim($question->correct_answer))
+        ]);
+
         switch ($question->type) {
             case 'multiple_choice':
+            case 'mcq':
             case 'true_false':
-                return strtolower(trim($userAnswer)) === strtolower(trim($question->correct_answer))
-                    ? $question->points : 0;
+                $userAnswerProcessed = strtolower(trim($userAnswer));
+                $correctAnswerProcessed = strtolower(trim($question->correct_answer));
+                $isCorrect = $userAnswerProcessed === $correctAnswerProcessed;
+
+                \Log::info('MCQ/TrueFalse comparison', [
+                    'user_processed' => $userAnswerProcessed,
+                    'correct_processed' => $correctAnswerProcessed,
+                    'is_correct' => $isCorrect,
+                    'points_earned' => $isCorrect ? $question->points : 0
+                ]);
+
+                return $isCorrect ? $question->points : 0;
 
             case 'short_answer':
                 // Simple string comparison (could be enhanced with fuzzy matching)

@@ -829,12 +829,14 @@
                         // Get the answer value
                         if (input.type === 'radio' && input.checked) {
                             answerValue = input.value;
+                            console.log('Found checked radio for question', questionId, ':', answerValue);
                         } else if (input.tagName === 'TEXTAREA' && input.value.trim()) {
                             answerValue = input.value;
                         }
                     });
 
                     if (questionId && answerValue) {
+                        console.log('Adding answer - questionId:', questionId, 'answerValue:', answerValue, 'type:', typeof answerValue);
                         answers.push({
                             question_id: questionId,
                             answer: answerValue
