@@ -773,6 +773,7 @@
                 const isAnswered = answeredQuizzes.has(quiz.id);
                 const canAttemptQuiz = quiz.can_attempt !== false;
                 const maxAttemptsReached = !canAttemptQuiz;
+                const isRetaking = retakingQuizId === quiz.id;
 
                 let buttonDisabled = '';
                 let buttonClass = 'submit-btn align-self-end';
@@ -782,7 +783,7 @@
                     buttonDisabled = 'disabled';
                     buttonClass += ' opacity-50';
                     buttonText = 'Max Attempts Reached';
-                } else if (isAnswered) {
+                } else if (isAnswered && !isRetaking) {
                     buttonDisabled = 'disabled';
                     buttonClass += ' opacity-50';
                     buttonText = 'Quiz Already Submitted';
@@ -796,12 +797,12 @@
                         <button class="${buttonClass}" onclick="window.submitQuiz(${quiz.id})" ${buttonDisabled}>
                             ${buttonText}
                         </button>
-                        ${isAnswered && canAttemptQuiz ? `
+                        ${isAnswered && canAttemptQuiz && !isRetaking ? `
                             <button class="btn btn-warning" onclick="window.retakeQuiz(${quiz.id})">
                                 🔄 Retake Quiz
                             </button>
                         ` : ''}
-                        ${isLastQuiz && isAnswered ? `
+                        ${isLastQuiz && isAnswered && !isRetaking ? `
                             <button class="btn btn-success" onclick="window.showAllQuizzesResultsModal()">
                                 📊 Show All Results
                             </button>
