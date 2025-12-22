@@ -675,7 +675,6 @@
                         <div class="d-flex justify-content-between align-items-start mb-2">
                             <div>
                                 <h4 class="mb-2">${quiz.title || 'Untitled Quiz'}</h4>
-                                <p class="text-muted mb-0">${quiz.description || 'No description'}</p>
                             </div>
                             <div class="text-end">
                                 <small class="text-muted d-block">Attempts: <strong>${currentAttempts}/${maxAttempts}</strong></small>
@@ -941,104 +940,6 @@
             try {
                 const quizResultsContainer = document.getElementById('quizResultsContainer');
 
-                // Create results display with quiz form showing submitted answers
-                let resultsHTML = `
-                    <div class="quiz-results p-4 border rounded" style="background-color: #f9f9f9; margin-top: 30px;">
-                        <div class="p-4 border rounded bg-light mb-4">
-                            <h4 class="mb-3">📊 Quiz Results - ${resultsData.quiz_title || 'Quiz'}</h4>
-
-                            <div class="results-summary mb-4">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="result-card text-center p-3 bg-white rounded">
-                                            <h5>Score</h5>
-                                            <h3 class="text-primary">${resultsData.score}/${resultsData.max_score}</h3>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="result-card text-center p-3 bg-white rounded">
-                                            <h5>Percentage</h5>
-                                            <h3 class="text-primary">${resultsData.percentage}%</h3>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="result-card text-center p-3 bg-white rounded">
-                                            <h5>Status</h5>
-                                            <h3 class="${resultsData.passed ? 'text-success' : 'text-danger'}">
-                                                ${resultsData.passed ? 'PASSED ✓' : 'FAILED ✗'}
-                                            </h3>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="result-card text-center p-3 bg-white rounded">
-                                            <h5>Attempt</h5>
-                                            <h3 class="text-primary">#${resultsData.attempt_number}</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <h5 class="mb-3">📝 Your Answers & Correct Answers</h5>
-                        <div class="results-details p-4 border rounded bg-white">
-                `;
-
-                // Display quiz with submitted answers highlighted and disabled
-                resultsData.results.forEach((result, index) => {
-                    const submittedAnswer = resultsData.submitted_answers.find(a => a.question_id === result.question_id);
-                    const resultClass = result.is_correct ? 'text-success' : 'text-danger';
-                    const resultIcon = result.is_correct ? '✓' : '✗';
-
-                    resultsHTML += `
-                        <div class="question-item mb-4 p-3 bg-light rounded" style="border-left: 4px solid ${result.is_correct ? '#28a745' : '#dc3545'}">
-                            <div class="d-flex justify-content-between align-items-start mb-3">
-                                <h6 class="mb-0">
-                                    <strong>Question ${index + 1}:</strong> ${result.question_text || ''}
-                                </h6>
-                                <span class="${resultClass} font-weight-bold">${resultIcon} ${result.points_earned}/${result.points_possible} pts</span>
-                            </div>
-
-                            <div class="mb-3">
-                                <strong>Your Answer:</strong>
-                                <div class="form-check mt-2 p-2 bg-white rounded" style="border-left: 3px solid ${result.is_correct ? '#28a745' : '#dc3545'}">
-                                    <input class="form-check-input" type="radio" disabled checked>
-                                    <label class="form-check-label" style="color: ${result.is_correct ? '#28a745' : '#dc3545'}; font-weight: bold;">
-                                        ${submittedAnswer ? submittedAnswer.answer : 'No answer'}
-                                    </label>
-                                </div>
-                            </div>
-
-                            ${!result.is_correct ? `
-                                <div class="mb-3">
-                                    <strong>✓ Correct Answer:</strong>
-                                    <div class="form-check mt-2 p-2 bg-white rounded" style="border-left: 3px solid #28a745">
-                                        <input class="form-check-input" type="radio" disabled checked>
-                                        <label class="form-check-label" style="color: #28a745; font-weight: bold;">
-                                            ${result.correct_answer}
-                                        </label>
-                                    </div>
-                                </div>
-                            ` : ''}
-
-                            ${result.explanation ? `
-                                <div class="mt-3 p-2 bg-light rounded">
-                                    <strong>💡 Explanation:</strong>
-                                    <p class="mb-0 text-muted mt-2">${result.explanation}</p>
-                                </div>
-                            ` : ''}
-                        </div>
-                    `;
-                });
-
-                resultsHTML += `
-                        </div>
-
-                        <div class="mt-4 d-flex gap-2">
-                            <button class="btn btn-primary" onclick="window.retakeQuiz(${quizId})">Retake Quiz</button>
-                            <button class="btn btn-secondary" onclick="location.reload()">Back to Lessons</button>
-                        </div>
-                    </div>
-                `;
 
                 // Store results for modal display - use string key for consistency
                 const quizIdStr = String(quizId);

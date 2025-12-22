@@ -126,14 +126,14 @@ class QuizController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'title' => 'required|string|max:255',
-                'type' => 'required|in:mcq,alternate,theory',
+                'type' => 'required|in:mcq,alternate',
                 'time_limit_minutes' => 'nullable|integer|min:1',
                 'max_attempts' => 'nullable|integer|min:1',
                 'passing_score' => 'nullable|integer|min:0|max:100',
                 'shuffle_questions' => 'boolean',
                 'questions' => 'required|array|min:1',
                 'questions.*.question_text' => 'required|string',
-                'questions.*.type' => 'required|in:mcq,alternate,theory',
+                'questions.*.type' => 'required|in:mcq,alternate',
                 'questions.*.points' => 'required|integer|min:1',
                 'questions.*.options' => 'nullable|array',
                 'questions.*.correct_answer' => 'required|string'
@@ -299,14 +299,14 @@ class QuizController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'title' => 'required|string|max:255',
-                'type' => 'required|in:mcq,alternate,theory',
+                'type' => 'required|in:mcq,alternate',
                 'time_limit_minutes' => 'nullable|integer|min:1',
                 'max_attempts' => 'nullable|integer|min:1',
                 'passing_score' => 'nullable|integer|min:0|max:100',
                 'shuffle_questions' => 'boolean',
                 'questions' => 'required|array|min:1',
                 'questions.*.question_text' => 'required|string',
-                'questions.*.type' => 'required|in:mcq,alternate,theory',
+                'questions.*.type' => 'required|in:mcq,alternate',
                 'questions.*.points' => 'required|integer|min:1',
                 'questions.*.options' => 'nullable|array',
                 'questions.*.correct_answer' => 'required|string'
@@ -901,12 +901,13 @@ class QuizController extends Controller
         switch ($question->type) {
             case 'multiple_choice':
             case 'mcq':
+            case 'alternate':
             case 'true_false':
                 $userAnswerProcessed = strtolower(trim($userAnswer));
                 $correctAnswerProcessed = strtolower(trim($question->correct_answer));
                 $isCorrect = $userAnswerProcessed === $correctAnswerProcessed;
 
-                \Log::info('MCQ/TrueFalse comparison', [
+                \Log::info('MCQ/Alternate comparison', [
                     'user_processed' => $userAnswerProcessed,
                     'correct_processed' => $correctAnswerProcessed,
                     'is_correct' => $isCorrect,
@@ -914,23 +915,6 @@ class QuizController extends Controller
                 ]);
 
                 return $isCorrect ? $question->points : 0;
-
-            case 'short_answer':
-                // Simple string comparison (could be enhanced with fuzzy matching)
-                $correctAnswer = strtolower(trim($question->correct_answer));
-                $userAnswerLower = strtolower(trim($userAnswer));
-
-                if ($correctAnswer === $userAnswerLower) {
-                    return $question->points;
-                }
-
-                // Partial credit for similar answers
-                similar_text($correctAnswer, $userAnswerLower, $percent);
-                return $percent >= 80 ? round($question->points * 0.8) : 0;
-
-            case 'essay':
-                // Essays require manual grading, return 0 for now
-                return 0;
 
             default:
                 return 0;

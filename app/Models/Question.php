@@ -48,13 +48,8 @@ class Question extends Model
     // Methods
     public function isCorrectAnswer($answer)
     {
-        if ($this->type === 'mcq') {
-            return $answer === $this->correct_answer;
-        }
-        
-        // For theory questions, you might want to implement more complex checking
-        // For now, we'll return true and let instructors grade manually
-        return true;
+        // MCQ and Alternate types use exact string comparison
+        return strtolower(trim($answer)) === strtolower(trim($this->correct_answer));
     }
 
     public function getAnswerByUser(User $user)
