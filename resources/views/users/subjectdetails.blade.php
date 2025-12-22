@@ -656,14 +656,32 @@
                 quizDiv.className = 'd-flex flex-column gap-4 mb-5 p-4 border rounded';
                 quizDiv.style.backgroundColor = '#f9f9f9';
                 quizDiv.setAttribute('data-quiz-id', quiz.id);
-                quizDiv.setAttribute('data-attempt-number', 1);
+
+                // Calculate next attempt number
+                const currentAttempts = quiz.attempts || 0;
+                const maxAttempts = quiz.max_attempts || 3;
+                const nextAttemptNumber = currentAttempts + 1;
+                const canAttempt = quiz.can_attempt !== false;
+
+                quizDiv.setAttribute('data-attempt-number', nextAttemptNumber);
+                quizDiv.setAttribute('data-max-attempts', maxAttempts);
+                quizDiv.setAttribute('data-current-attempts', currentAttempts);
+                quizDiv.setAttribute('data-can-attempt', canAttempt ? 'true' : 'false');
                 quizDiv.setAttribute('data-answered', answeredQuizzes.has(quiz.id) ? 'true' : 'false');
 
-                // Quiz header
+                // Quiz header with attempt info
                 let quizHTML = `
                     <div>
-                        <h4 class="mb-2">${quiz.title || 'Untitled Quiz'}</h4>
-                        <p class="text-muted mb-0">${quiz.description || 'No description'}</p>
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div>
+                                <h4 class="mb-2">${quiz.title || 'Untitled Quiz'}</h4>
+                                <p class="text-muted mb-0">${quiz.description || 'No description'}</p>
+                            </div>
+                            <div class="text-end">
+                                <small class="text-muted d-block">Attempts: <strong>${currentAttempts}/${maxAttempts}</strong></small>
+                                ${!canAttempt ? '<small class="text-danger d-block">Max attempts reached</small>' : ''}
+                            </div>
+                        </div>
                     </div>
                 `;
 
@@ -757,11 +775,24 @@
                     quizHTML += '<p class="text-muted">No questions available for this quiz</p>';
                 }
 
-                // Submit button - disabled if quiz is already answered
+                // Submit button logic
                 const isAnswered = answeredQuizzes.has(quiz.id);
-                const buttonDisabled = isAnswered ? 'disabled' : '';
-                const buttonClass = isAnswered ? 'submit-btn align-self-end opacity-50' : 'submit-btn align-self-end';
-                const buttonText = isAnswered ? 'Quiz Already Submitted' : 'Submit Quiz';
+                const canAttemptQuiz = quiz.can_attempt !== false;
+                const maxAttemptsReached = !canAttemptQuiz;
+
+                let buttonDisabled = '';
+                let buttonClass = 'submit-btn align-self-end';
+                let buttonText = 'Submit Quiz';
+
+                if (maxAttemptsReached) {
+                    buttonDisabled = 'disabled';
+                    buttonClass += ' opacity-50';
+                    buttonText = 'Max Attempts Reached';
+                } else if (isAnswered) {
+                    buttonDisabled = 'disabled';
+                    buttonClass += ' opacity-50';
+                    buttonText = 'Quiz Already Submitted';
+                }
 
                 // Check if this is the last quiz
                 const isLastQuiz = quizIndex === quizzes.length - 1;
@@ -771,6 +802,11 @@
                         <button class="${buttonClass}" onclick="window.submitQuiz(${quiz.id})" ${buttonDisabled}>
                             ${buttonText}
                         </button>
+                        ${isAnswered && canAttemptQuiz ? `
+                            <button class="btn btn-warning" onclick="window.retakeQuiz(${quiz.id})">
+                                🔄 Retake Quiz
+                            </button>
+                        ` : ''}
                         ${isLastQuiz && isAnswered ? `
                             <button class="btn btn-success" onclick="window.showAllQuizzesResultsModal()">
                                 📊 Show All Results
@@ -847,12 +883,20 @@
                 // Get the current attempt number from the quiz div
                 const quizDiv = quizContainer.querySelector(`[data-quiz-id="${quizId}"]`);
                 let attemptNumber = 1;
-                if (quizDiv && quizDiv.getAttribute('data-attempt-number')) {
-                    attemptNumber = parseInt(quizDiv.getAttribute('data-attempt-number'));
+                let maxAttempts = 3;
+                let currentAttempts = 0;
+
+                if (quizDiv) {
+                    attemptNumber = parseInt(quizDiv.getAttribute('data-attempt-number')) || 1;
+                    maxAttempts = parseInt(quizDiv.getAttribute('data-max-attempts')) || 3;
+                    currentAttempts = parseInt(quizDiv.getAttribute('data-current-attempts')) || 0;
                 }
 
                 // Get quiz title
                 const quizTitle = quizDiv ? quizDiv.querySelector('h4')?.textContent || 'Quiz' : 'Quiz';
+
+                console.log('=== QUIZ SUBMISSION INFO ===');
+                console.log('quizId:', quizId, 'attemptNumber:', attemptNumber, 'currentAttempts:', currentAttempts, 'maxAttempts:', maxAttempts);
 
                 // Submit quiz with the current attempt number
                 console.log('=== SUBMITTING QUIZ ===');
@@ -1029,13 +1073,26 @@
                     return;
                 }
 
+                // Get attempt info
+                const maxAttempts = parseInt(quizDiv.getAttribute('data-max-attempts')) || 3;
+                const currentAttempts = parseInt(quizDiv.getAttribute('data-current-attempts')) || 0;
+                const nextAttemptNumber = currentAttempts + 1;
+
+                // Check if user can attempt
+                if (nextAttemptNumber > maxAttempts) {
+                    showError(`You have reached the maximum number of attempts (${maxAttempts})`);
+                    return;
+                }
+
+                console.log('Retaking quiz:', quizId, 'Attempt:', nextAttemptNumber, 'of', maxAttempts);
+
                 // Clear the results and reload the quiz
                 quizDiv.innerHTML = '<div class="text-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>';
 
                 // Reload quizzes to get fresh quiz
                 await loadQuizzes();
 
-                showSuccess('Quiz reloaded. You can now retake it!');
+                showSuccess(`Quiz reloaded. Attempt ${nextAttemptNumber} of ${maxAttempts}`);
             } catch (error) {
                 console.error('Error retaking quiz:', error);
                 showError('Error reloading quiz');
@@ -1393,8 +1450,22 @@
          * Retake quiz from modal
          */
         window.retakeQuizFromModal = function() {
-            showError('Retake functionality will reload the page');
-            location.reload();
+            // Close the modal first
+            const modalElement = document.getElementById('quizResultsModal');
+            if (modalElement) {
+                const modal = bootstrap.Modal.getInstance(modalElement);
+                if (modal) {
+                    modal.hide();
+                }
+            }
+
+            // Reload quizzes to allow retake
+            loadQuizzes().then(() => {
+                showSuccess('Quiz reloaded. You can now retake it!');
+            }).catch(error => {
+                console.error('Error reloading quizzes:', error);
+                showError('Error reloading quiz');
+            });
         };
     </script>
 @endsection
