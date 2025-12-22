@@ -2150,5 +2150,11 @@ div.contact-container a {
     white-space: nowrap;
 }
 
+.product-images{
+   height: auto;
+
+   max-height: 400px;
+}
+
 
 
