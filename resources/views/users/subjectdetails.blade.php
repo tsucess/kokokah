@@ -1384,13 +1384,18 @@
          * Retake quiz from modal
          */
         window.retakeQuizFromModal = function() {
-            // Close the modal first
+            // Get the modal element
             const modalElement = document.getElementById('quizResultsModal');
-            if (modalElement) {
-                const modal = bootstrap.Modal.getInstance(modalElement);
-                if (modal) {
-                    modal.hide();
-                }
+
+            if (!modalElement) {
+                showError('Modal not found');
+                return;
+            }
+
+            // Close the modal first
+            const modal = bootstrap.Modal.getInstance(modalElement);
+            if (modal) {
+                modal.hide();
             }
 
             // Get the first quiz ID to retake (for now, retake all quizzes)
