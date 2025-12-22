@@ -235,16 +235,12 @@ class CourseController extends Controller
 
             $course = Course::create($courseData);
 
-            // Auto-create a default conversation for the course
-            $conversation = Conversation::create([
-                'course_id' => $course->id,
-                'name' => 'General Discussion',
-                'description' => 'General discussion channel for ' . $course->title,
-                'created_by' => Auth::id()
-            ]);
-
-            // Add instructor as participant
-            $conversation->addParticipant(Auth::id());
+            // Conversation is auto-created by Course model's booted method
+            // Add instructor as participant to the auto-created conversation
+            $conversation = $course->conversations()->first();
+            if ($conversation) {
+                $conversation->addParticipant(Auth::id());
+            }
 
             return $this->success(
                 $course->load(['courseCategory', 'curriculumCategory', 'instructor', 'level', 'term']),
