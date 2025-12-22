@@ -273,8 +273,7 @@
                         <div class="quiz-box lecture-box d-flex flex-column gap-3 mb-4" id="quizContainer">
                             <p class="text-center">Loading quizzes...</p>
                         </div>
-                        <!-- Quiz Results Container - Displays at the end -->
-                        <div id="quizResultsContainer" class="mt-5"></div>
+
                     </div>
 
                     <!-- Quiz Results Modal -->
@@ -345,12 +344,7 @@
         </section>
 
     </main>
-    <!-- Initialize quiz results store BEFORE the module script -->
-    <script>
-        if (!window.quizResultsStore) {
-            window.quizResultsStore = {};
-        }
-    </script>
+
 
     <script type="module">
         import LessonApiClient from '/js/api/lessonApiClient.js';
@@ -911,12 +905,7 @@
 
                 if (response.success) {
                     showSuccess('Quiz submitted successfully!');
-                    // Add quiz title to response data
-                    response.data.quiz_title = quizTitle;
                     console.log('Quiz submitted - quizId:', quizId, 'response.data:', response.data);
-                    // Display quiz results with submitted answers
-                    console.log('Calling displayQuizResults with quizId:', quizId);
-                    window.displayQuizResults(quizId, response.data);
 
                     // Reload quizzes to update the answered status and show "Show All Results" button
                     console.log('Reloading quizzes to update answered status');
@@ -933,33 +922,7 @@
             }
         };
 
-        /**
-         * Display quiz results with submitted answers
-         */
-        window.displayQuizResults = function(quizId, resultsData) {
-            try {
-                const quizResultsContainer = document.getElementById('quizResultsContainer');
 
-
-                // Store results for modal display - use string key for consistency
-                const quizIdStr = String(quizId);
-                window.quizResultsStore[quizIdStr] = resultsData;
-                console.log('=== STORING QUIZ RESULTS ===');
-                console.log('quizId:', quizId, 'quizIdStr:', quizIdStr);
-                console.log('resultsData:', resultsData);
-                console.log('window.quizResultsStore after storing:', window.quizResultsStore);
-                console.log('Keys in store:', Object.keys(window.quizResultsStore));
-
-                // Append results to the results container at the end
-                const resultDiv = document.createElement('div');
-                resultDiv.innerHTML = resultsHTML;
-                resultDiv.setAttribute('data-quiz-result-id', quizId);
-                quizResultsContainer.appendChild(resultDiv);
-            } catch (error) {
-                console.error('Error displaying results:', error);
-                showError('Error displaying quiz results');
-            }
-        };
 
         /**
          * Retake quiz - reload quiz for another attempt
