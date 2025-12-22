@@ -634,7 +634,7 @@
         /**
          * Display quizzes
          */
-        function displayQuizzes(quizzes, previousAnswersMap = {}, answeredQuizzes = new Set()) {
+        function displayQuizzes(quizzes, previousAnswersMap = {}, answeredQuizzes = new Set(), retakingQuizId = null) {
             const quizContainer = document.getElementById('quizContainer');
             quizContainer.innerHTML = '';
 
@@ -685,7 +685,10 @@
                         const quizAnswers = previousAnswersMap[quiz.id] || {};
                         const previousAnswer = quizAnswers[question.id];
                         const isAnswered = answeredQuizzes.has(quiz.id);
-                        const disabledAttr = isAnswered ? 'disabled' : '';
+                        // If this quiz is being retaken, don't disable it and don't pre-populate answers
+                        const isRetaking = retakingQuizId === quiz.id;
+                        const disabledAttr = (isAnswered && !isRetaking) ? 'disabled' : '';
+                        const shouldPrePopulate = !isRetaking;
 
                         quizHTML += `
                             <div class="question-item mb-4 p-3 bg-white rounded" data-question-id="${question.id}">
@@ -712,7 +715,7 @@
                                 quizHTML += '<div class="options-container">';
                                 options.forEach((option, optionIndex) => {
                                     const optionId = `${questionId}_option_${optionIndex}`;
-                                    const isChecked = previousAnswer && previousAnswer === option ? 'checked' : '';
+                                    const isChecked = shouldPrePopulate && previousAnswer && previousAnswer === option ? 'checked' : '';
                                     quizHTML += `
                                         <div class="form-check mb-2">
                                             <input class="form-check-input" type="radio" name="${questionId}" id="${optionId}" value="${option}" ${isChecked} ${disabledAttr}>
@@ -728,8 +731,8 @@
                                     '<p class="text-muted">No options available for this question</p>';
                             }
                         } else if (question.type === 'true_false') {
-                            const isTrueChecked = previousAnswer && previousAnswer === 'true' ? 'checked' : '';
-                            const isFalseChecked = previousAnswer && previousAnswer === 'false' ? 'checked' : '';
+                            const isTrueChecked = shouldPrePopulate && previousAnswer && previousAnswer === 'true' ? 'checked' : '';
+                            const isFalseChecked = shouldPrePopulate && previousAnswer && previousAnswer === 'false' ? 'checked' : '';
                             quizHTML += `
                                 <div class="options-container">
                                     <div class="form-check mb-2">
@@ -951,8 +954,16 @@
                 // Clear the results and reload the quiz
                 quizDiv.innerHTML = '<div class="text-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>';
 
-                // Reload quizzes to get fresh quiz
-                await loadQuizzes();
+                // Reload quizzes with the retaking quiz ID
+                await loadQuizzesForRetake(quizId);
+
+                // Scroll to the quiz after reload
+                setTimeout(() => {
+                    const updatedQuizDiv = quizContainer.querySelector(`[data-quiz-id="${quizId}"]`);
+                    if (updatedQuizDiv) {
+                        updatedQuizDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 300);
 
                 showSuccess(`Quiz reloaded. Attempt ${nextAttemptNumber} of ${maxAttempts}`);
             } catch (error) {
@@ -960,6 +971,60 @@
                 showError('Error reloading quiz');
             }
         };
+
+        /**
+         * Load quizzes for retake - passes the retaking quiz ID to displayQuizzes
+         */
+        async function loadQuizzesForRetake(retakingQuizId) {
+            try {
+                if (!currentLesson || !currentLesson.id) {
+                    console.error('No lesson selected');
+                    return;
+                }
+
+                const response = await LessonApiClient.getQuizzesByLesson(currentLesson.id);
+
+                if (response.success && response.data) {
+                    // Load previous answers for all quizzes
+                    const previousAnswersMap = {};
+                    const answeredQuizzes = new Set();
+
+                    for (const quiz of response.data) {
+                        try {
+                            const resultsResponse = await QuizApiClient.getQuizResults(quiz.id);
+
+                            if (resultsResponse.success && resultsResponse.data && resultsResponse.data.results) {
+                                const results = resultsResponse.data.results;
+
+                                if (Array.isArray(results) && results.length > 0) {
+                                    const latestAttempt = results[results.length - 1];
+
+                                    if (latestAttempt && latestAttempt.answers && latestAttempt.answers.length > 0) {
+                                        previousAnswersMap[quiz.id] = {};
+                                        latestAttempt.answers.forEach(answer => {
+                                            previousAnswersMap[quiz.id][answer.question_id] = answer.user_answer;
+                                        });
+                                        answeredQuizzes.add(quiz.id);
+                                    }
+                                }
+                            }
+                        } catch (error) {
+                            console.error('Error loading quiz results for quiz ' + quiz.id + ':', error);
+                        }
+                    }
+
+                    // Display quizzes with the retaking quiz ID
+                    displayQuizzes(response.data, previousAnswersMap, answeredQuizzes, retakingQuizId);
+                } else {
+                    document.getElementById('quizContainer').innerHTML =
+                        '<p class="text-center text-muted">No quizzes available for this lesson</p>';
+                }
+            } catch (error) {
+                console.error('Error loading quizzes:', error);
+                document.getElementById('quizContainer').innerHTML =
+                    '<p class="text-center text-danger">Error loading quizzes</p>';
+            }
+        }
 
         /**
          * Mark lesson as complete
@@ -1189,12 +1254,19 @@
                 const passed = overallPercentage >= 60; // Assuming 60% is passing
 
                 const modalBody = document.getElementById('quizResultsModalBody');
+                const modalElement = document.getElementById('quizResultsModal');
                 console.log('Modal body element:', modalBody);
 
                 if (!modalBody) {
                     console.error('Modal body element not found');
                     showError('Error: Modal body not found');
                     return;
+                }
+
+                // Store quiz IDs in the modal for retake functionality
+                const quizIds = allQuizResults.map(qr => qr.quiz_id);
+                if (modalElement) {
+                    modalElement.setAttribute('data-quiz-ids', JSON.stringify(quizIds));
                 }
 
                 let resultsHTML = `
@@ -1321,12 +1393,27 @@
                 }
             }
 
-            // Reload quizzes to allow retake
-            loadQuizzes().then(() => {
-                showSuccess('Quiz reloaded. You can now retake it!');
+            // Get the first quiz ID to retake (for now, retake all quizzes)
+            // In the future, you might want to show a dialog to select which quiz to retake
+            const quizIdsStr = modalElement.getAttribute('data-quiz-ids');
+            let quizIds = [];
+            try {
+                quizIds = JSON.parse(quizIdsStr);
+            } catch (e) {
+                console.error('Error parsing quiz IDs:', e);
+            }
+
+            if (quizIds.length === 0) {
+                showError('No quizzes found to retake');
+                return;
+            }
+
+            // Reload quizzes to allow retake - pass the first quiz ID as the retaking quiz
+            loadQuizzesForRetake(quizIds[0]).then(() => {
+                showSuccess('Quizzes reloaded. You can now retake them!');
             }).catch(error => {
                 console.error('Error reloading quizzes:', error);
-                showError('Error reloading quiz');
+                showError('Error reloading quizzes');
             });
         };
     </script>
