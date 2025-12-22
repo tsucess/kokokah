@@ -1254,7 +1254,7 @@
                 const passed = overallPercentage >= 60; // Assuming 60% is passing
 
                 const modalBody = document.getElementById('quizResultsModalBody');
-                const modalElement = document.getElementById('quizResultsModal');
+                const resultsModalElement = document.getElementById('quizResultsModal');
                 console.log('Modal body element:', modalBody);
 
                 if (!modalBody) {
@@ -1265,8 +1265,8 @@
 
                 // Store quiz IDs in the modal for retake functionality
                 const quizIds = allQuizResults.map(qr => qr.quiz_id);
-                if (modalElement) {
-                    modalElement.setAttribute('data-quiz-ids', JSON.stringify(quizIds));
+                if (resultsModalElement) {
+                    resultsModalElement.setAttribute('data-quiz-ids', JSON.stringify(quizIds));
                 }
 
                 let resultsHTML = `
@@ -1366,9 +1366,8 @@
                 modalBody.innerHTML = resultsHTML;
 
                 // Show modal using Bootstrap's modal API
-                const modalElement = document.getElementById('quizResultsModal');
-                if (modalElement) {
-                    const modal = new bootstrap.Modal(modalElement);
+                if (resultsModalElement) {
+                    const modal = new bootstrap.Modal(resultsModalElement);
                     modal.show();
                 } else {
                     console.error('Modal element not found');
