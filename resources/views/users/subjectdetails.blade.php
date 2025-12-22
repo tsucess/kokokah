@@ -282,15 +282,13 @@
                             <div class="modal-content">
                                 <div class="modal-header bg-light">
                                     <h5 class="modal-title" id="quizResultsModalLabel">📊 Quiz Results</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body" id="quizResultsModalBody">
                                     <!-- Results will be populated here -->
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     <button type="button" class="btn btn-primary" onclick="window.retakeQuizFromModal()">Retake Quiz</button>
                                 </div>
                             </div>
