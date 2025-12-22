@@ -43,7 +43,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'parent_last_name',
         'parent_email',
         'parent_phone',
-        'email_verified_at'
+        'email_verified_at',
+        'points'
     ];
 
     /**
@@ -249,6 +250,21 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Payment::class);
     }
 
+    public function pointsHistory()
+    {
+        return $this->hasMany(UserPointsHistory::class);
+    }
+
+    public function badgeCriteriaLogs()
+    {
+        return $this->hasMany(BadgeCriteriaLog::class);
+    }
+
+    public function levelHistory()
+    {
+        return $this->hasMany(UserLevelHistory::class);
+    }
+
     // Scopes
     public function scopeByRole($query, $role)
     {
@@ -376,6 +392,43 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     // Boot method for creating wallet
+    /**
+     * Add points to user
+     */
+    public function addPoints($amount, $reason = null)
+    {
+        $this->increment('points', $amount);
+        return $this;
+    }
+
+    /**
+     * Deduct points from user
+     */
+    public function deductPoints($amount, $reason = null)
+    {
+        if ($this->points >= $amount) {
+            $this->decrement('points', $amount);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Check if user has enough points
+     */
+    public function hasEnoughPoints($amount)
+    {
+        return $this->points >= $amount;
+    }
+
+    /**
+     * Get user's current points
+     */
+    public function getPoints()
+    {
+        return $this->points ?? 0;
+    }
+
     protected static function booted()
     {
         parent::booted();

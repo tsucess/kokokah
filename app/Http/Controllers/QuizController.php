@@ -369,12 +369,27 @@ class QuizController extends Controller
     public function show($id)
     {
         try {
-            $quiz = Quiz::with(['lesson.course', 'questions'])->findOrFail($id);
+            $quiz = Quiz::with(['lesson.course', 'topic.course', 'questions'])->findOrFail($id);
             $user = Auth::user();
 
+            // Get the course - could be from lesson or topic
+            $course = null;
+            if ($quiz->lesson && $quiz->lesson->course) {
+                $course = $quiz->lesson->course;
+            } elseif ($quiz->topic && $quiz->topic->course) {
+                $course = $quiz->topic->course;
+            }
+
+            if (!$course) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Quiz course not found'
+                ], 404);
+            }
+
             // Check access
-            $isEnrolled = $quiz->lesson->course->enrollments()->where('user_id', $user->id)->exists();
-            $isInstructor = $quiz->lesson->course->instructor_id === $user->id;
+            $isEnrolled = $course->enrollments()->where('user_id', $user->id)->exists();
+            $isInstructor = $course->instructor_id === $user->id;
             $isAdmin = $user->hasRole('admin');
 
             if (!$isEnrolled && !$isInstructor && !$isAdmin) {
@@ -750,12 +765,27 @@ class QuizController extends Controller
     public function results($id)
     {
         try {
-            $quiz = Quiz::with(['questions', 'lesson.course'])->findOrFail($id);
+            $quiz = Quiz::with(['questions', 'lesson.course', 'topic.course'])->findOrFail($id);
             $user = Auth::user();
 
+            // Get the course - could be from lesson or topic
+            $course = null;
+            if ($quiz->lesson && $quiz->lesson->course) {
+                $course = $quiz->lesson->course;
+            } elseif ($quiz->topic && $quiz->topic->course) {
+                $course = $quiz->topic->course;
+            }
+
+            if (!$course) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Quiz course not found'
+                ], 404);
+            }
+
             // Check access
-            $isEnrolled = $quiz->lesson->course->enrollments()->where('user_id', $user->id)->exists();
-            $isInstructor = $quiz->lesson->course->instructor_id === $user->id;
+            $isEnrolled = $course->enrollments()->where('user_id', $user->id)->exists();
+            $isInstructor = $course->instructor_id === $user->id;
             $isAdmin = $user->hasRole('admin');
 
             if (!$isEnrolled && !$isInstructor && !$isAdmin) {

@@ -74,6 +74,11 @@ class Enrollment extends Model
         $totalLessons = $this->course->lessons()->count();
         if ($totalLessons === 0) {
             $this->progress = 100;
+            // Auto-complete course if it has no lessons
+            if ($this->status === 'active') {
+                $this->status = 'completed';
+                $this->completed_at = now();
+            }
             $this->save();
             return;
         }
@@ -85,13 +90,13 @@ class Enrollment extends Model
                                 ->count();
 
         $this->progress = round(($completedLessons / $totalLessons) * 100);
-        
+
         // Auto-complete course if all lessons are done
         if ($this->progress >= 100 && $this->status === 'active') {
             $this->status = 'completed';
             $this->completed_at = now();
         }
-        
+
         $this->save();
     }
 

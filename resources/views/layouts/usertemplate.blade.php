@@ -56,7 +56,7 @@
                 Scoring</a>
 
             <a class="nav-item-link" href="/userkudikah"><i class="fa-solid fa-wallet me-2 pe-2"></i>Kudikah</a>
-<a class="nav-item-link" href="/userpaymenthistory"><i class="fa-solid fa-money-bill-transfer me-2 pe-2"></i></i>Payment History</a>
+            <a class="nav-item-link" href="/usersubscriptionhistory"><i class="fa-solid fa-money-bill-transfer me-2 pe-2"></i></i>Subscription History</a>
             <a class="nav-item-link" href="/userleaderboard"><i class="fa-solid fa-trophy me-2 pe-2"></i></i>Leaderboard</a>
             <a class="nav-item-link" href="/userkoodies"><i class="fa-solid fa-robot me-2 pe-2"></i>Ai</a>
             <a class="nav-item-link" href="/chatroom"><i class="fa-solid fa-comment me-2 pe-2"></i>Chatroom</a>
@@ -94,9 +94,9 @@
                     </div>
                     <div class="logout">
                         <a href="#" id="logoutBtn" title="Logout">
-                          <span>
-                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                          </span>
+                            <span>
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            </span>
                         </a>
                     </div>
                 </div>
@@ -107,18 +107,20 @@
     <!-- Topbar -->
     <header class="topbar">
 
-            <button class="btn btn-light d-lg-none" id="hamburger"><i class="fa-solid fa-bars"></i></button>
-            
+        <button class="btn btn-light d-lg-none" id="hamburger"><i class="fa-solid fa-bars"></i></button>
+
 
         <div class="d-flex gap-2 shadow-sm rounded-pill align-items-center py-2 px-3  mx-1 mx-lg-3">
-            <div><img src="./images/leaderboard-award-icon.png" alt=""> <span>8</span></div>
+            <div><img src="./images/leaderboard-award-icon.png" alt=""> <span data-badges>0</span></div>
             <div></div>
-            <div class="ps-2" style="border-left: 1px solid #000000;"><img src="./images/point-icon.png" alt=""> <span>1,000</span></div>
+            <div class="ps-2" style="border-left: 1px solid #000000;"><img src="./images/point-icon.png"
+                    alt=""> <span data-points>0</span></div>
 
         </div>
 
         <div class="top-icons">
-            <button class="icon-btn round-2 icon-btn-light" title="bell"><i class="fa-regular fa-bell fa-xs"></i></button>
+            <button class="icon-btn round-2 icon-btn-light" title="bell"><i
+                    class="fa-regular fa-bell fa-xs"></i></button>
             <button class="icon-btn round-2 icon-btn-light" title="message"><i
                     class="fa-regular fa-envelope fa-xs"></i></button>
             <button class="icon-btn round-2 icon-btn-light" title="question"><i

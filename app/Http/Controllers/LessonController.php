@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Lesson;
 use App\Models\Course;
 use App\Models\LessonCompletion;
+use App\Services\PointsAndBadgesService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -349,10 +350,22 @@ class LessonController extends Controller
             // Update course progress
             $this->updateCourseProgress($user, $lesson->course);
 
+            // Award points for completing the lesson/topic
+            $pointsService = new PointsAndBadgesService();
+            $topicId = $lesson->topic_id;
+            if ($topicId) {
+                $pointsService->awardPointsForTopicCompletion($user, $topicId);
+            }
+
+            // Refresh user to get updated points
+            $user->refresh();
+
             return response()->json([
                 'success' => true,
                 'message' => 'Lesson marked as complete',
-                'data' => $completion
+                'data' => $completion,
+                'user_points' => $user->points,
+                'points_awarded' => 5
             ]);
         } catch (\Exception $e) {
             return response()->json([

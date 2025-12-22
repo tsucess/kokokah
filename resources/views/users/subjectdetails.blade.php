@@ -180,17 +180,23 @@
             Leave Review and Rating
         </button> --}}
 
-        <!-- PDF Viewer Modal -->
-        <div class="modal fade" id="pdfViewerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="pdfViewerLabel" aria-hidden="true">
+        <!-- File Viewer Modal (handles PDFs, Images, and Documents) -->
+        <div class="modal fade" id="fileViewerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="fileViewerLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="pdfViewerLabel">PDF Viewer</h5>
+                        <h5 class="modal-title" id="fileViewerLabel">File Viewer</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        <iframe id="pdfFrame" style="width: 100%; height: 600px; border: none;"></iframe>
+                    <div class="modal-body" id="fileViewerBody" style="max-height: 70vh; overflow-y: auto;">
+                        <!-- Content will be dynamically loaded here -->
+                    </div>
+                    <div class="modal-footer">
+                        <a id="downloadFileBtn" href="#" download class="btn btn-primary">
+                            <i class="fa-solid fa-download"></i> Download
+                        </a>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -277,19 +283,23 @@
                     </div>
 
                     <!-- Quiz Results Modal -->
-                    <div class="modal fade" id="quizResultsModal" tabindex="-1" role="dialog" aria-labelledby="quizResultsModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="quizResultsModal" tabindex="-1" role="dialog"
+                        aria-labelledby="quizResultsModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header bg-light">
                                     <h5 class="modal-title" id="quizResultsModalLabel">📊 Quiz Results</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body" id="quizResultsModalBody">
                                     <!-- Results will be populated here -->
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" onclick="window.retakeQuizFromModal()">Retake Quiz</button>
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    {{-- <button type="button" class="btn btn-primary"
+                                        onclick="window.retakeQuizFromModal()">Retake Quiz</button> --}}
                                 </div>
                             </div>
                         </div>
@@ -423,7 +433,7 @@
         function updateLessonUI() {
             // Update title
             document.getElementById('lessonTitle').textContent =
-            `${currentTopic?.title || 'Topic'}: ${currentLesson.title}`;
+                `${currentTopic?.title || 'Topic'}: ${currentLesson.title}`;
 
             // Clear and update video
             const videoContainer = document.getElementById('videoContainer');
@@ -434,9 +444,9 @@
                         Your browser does not support the video tag.
                     </video>
                 `;
+                videoContainer.style.display = 'block';
             } else {
-                videoContainer.innerHTML =
-                    '<div class="d-flex justify-content-center align-items-center" style="height: 400px; background-color: #f0f0f0;"><p>No video available for this lesson</p></div>';
+                videoContainer.style.display = 'none';
             }
 
             // Update content
@@ -498,6 +508,38 @@
         }
 
         /**
+         * Get file type icon based on file extension
+         */
+        function getFileIcon(fileName) {
+            const ext = fileName.split('.').pop().toLowerCase();
+            const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp'];
+            const pdfExtensions = ['pdf'];
+            const docExtensions = ['doc', 'docx', 'txt', 'rtf'];
+            const sheetExtensions = ['xls', 'xlsx', 'csv'];
+            const presentationExtensions = ['ppt', 'pptx'];
+
+            if (imageExtensions.includes(ext)) return 'fa-image';
+            if (pdfExtensions.includes(ext)) return 'fa-file-pdf';
+            if (docExtensions.includes(ext)) return 'fa-file-word';
+            if (sheetExtensions.includes(ext)) return 'fa-file-excel';
+            if (presentationExtensions.includes(ext)) return 'fa-file-powerpoint';
+            return 'fa-file';
+        }
+
+        /**
+         * Get file type category
+         */
+        function getFileType(fileName) {
+            const ext = fileName.split('.').pop().toLowerCase();
+            const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp'];
+            const pdfExtensions = ['pdf'];
+
+            if (imageExtensions.includes(ext)) return 'image';
+            if (pdfExtensions.includes(ext)) return 'pdf';
+            return 'document';
+        }
+
+        /**
          * Load attachments for the lesson
          */
         async function loadAttachments() {
@@ -515,12 +557,13 @@
                         const btn = document.createElement('button');
                         btn.className = 'd-flex gap-3 align-items-center align-self-start lecture-download-btn';
                         btn.type = 'button';
+                        const fileIcon = getFileIcon(attachment.file_name);
                         btn.innerHTML = `
-                            <i class="fa-solid fa-file-pdf"></i>
+                            <i class="fa-solid ${fileIcon}"></i>
                             ${attachment.file_name || 'Attachment'}
                             <i class="fa-solid fa-eye"></i>
                         `;
-                        btn.onclick = () => viewPDF(attachment.file_path, attachment.file_name);
+                        btn.onclick = () => viewFile(attachment.file_path, attachment.file_name);
                         attachmentsContainer.appendChild(btn);
                     });
                 }
@@ -560,13 +603,65 @@
         }
 
         /**
-         * View PDF in modal
+         * View file in modal (handles PDFs, Images, and Documents)
          */
-        function viewPDF(filePath, fileName) {
-            const pdfFrame = document.getElementById('pdfFrame');
-            pdfFrame.src = filePath;
-            document.getElementById('pdfViewerLabel').textContent = `PDF: ${fileName}`;
-            const modal = new bootstrap.Modal(document.getElementById('pdfViewerModal'));
+        function viewFile(filePath, fileName) {
+            const fileType = getFileType(fileName);
+            const fileViewerBody = document.getElementById('fileViewerBody');
+            const fileViewerLabel = document.getElementById('fileViewerLabel');
+            const downloadBtn = document.getElementById('downloadFileBtn');
+
+            // Set download button
+            downloadBtn.href = filePath;
+            downloadBtn.download = fileName;
+
+            // Clear previous content
+            fileViewerBody.innerHTML = '';
+
+            // Display content based on file type
+            if (fileType === 'image') {
+                // Display image
+                const img = document.createElement('img');
+                img.src = filePath;
+                img.style.maxWidth = '100%';
+                img.style.height = 'auto';
+                img.style.borderRadius = '8px';
+                img.alt = fileName;
+                fileViewerBody.appendChild(img);
+                fileViewerLabel.textContent = `Image: ${fileName}`;
+            } else if (fileType === 'pdf') {
+                // Display PDF using iframe
+                const iframe = document.createElement('iframe');
+                iframe.src = filePath;
+                iframe.style.width = '100%';
+                iframe.style.height = '600px';
+                iframe.style.border = 'none';
+                fileViewerBody.appendChild(iframe);
+                fileViewerLabel.textContent = `PDF: ${fileName}`;
+            } else {
+                // Display document (fallback for other document types)
+                const docContainer = document.createElement('div');
+                docContainer.className = 'alert alert-info';
+                docContainer.innerHTML = `
+                    <div class="d-flex flex-column gap-3">
+                        <div>
+                            <i class="fa-solid ${getFileIcon(fileName)} fa-3x" style="color: #004A53;"></i>
+                        </div>
+                        <div>
+                            <h5>${fileName}</h5>
+                            <p class="text-muted mb-0">This document type cannot be previewed in the browser.</p>
+                        </div>
+                        <div>
+                            <p class="text-muted small mb-0">Click the "Download" button below to download and view this file.</p>
+                        </div>
+                    </div>
+                `;
+                fileViewerBody.appendChild(docContainer);
+                fileViewerLabel.textContent = `Document: ${fileName}`;
+            }
+
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('fileViewerModal'));
             modal.show();
         }
 
@@ -607,7 +702,8 @@
                                         previousAnswersMap[quiz.id] = {};
                                         latestAttempt.answers.forEach(answer => {
                                             // Use user_answer from the API response
-                                            previousAnswersMap[quiz.id][answer.question_id] = answer.user_answer;
+                                            previousAnswersMap[quiz.id][answer.question_id] = answer
+                                            .user_answer;
                                         });
                                         // Mark this quiz as answered
                                         answeredQuizzes.add(quiz.id);
@@ -715,7 +811,8 @@
                                 quizHTML += '<div class="options-container">';
                                 options.forEach((option, optionIndex) => {
                                     const optionId = `${questionId}_option_${optionIndex}`;
-                                    const isChecked = shouldPrePopulate && previousAnswer && previousAnswer === option ? 'checked' : '';
+                                    const isChecked = shouldPrePopulate && previousAnswer &&
+                                        previousAnswer === option ? 'checked' : '';
                                     quizHTML += `
                                         <div class="form-check mb-2">
                                             <input class="form-check-input" type="radio" name="${questionId}" id="${optionId}" value="${option}" ${isChecked} ${disabledAttr}>
@@ -731,8 +828,10 @@
                                     '<p class="text-muted">No options available for this question</p>';
                             }
                         } else if (question.type === 'true_false') {
-                            const isTrueChecked = shouldPrePopulate && previousAnswer && previousAnswer === 'true' ? 'checked' : '';
-                            const isFalseChecked = shouldPrePopulate && previousAnswer && previousAnswer === 'false' ? 'checked' : '';
+                            const isTrueChecked = shouldPrePopulate && previousAnswer && previousAnswer ===
+                                'true' ? 'checked' : '';
+                            const isFalseChecked = shouldPrePopulate && previousAnswer && previousAnswer ===
+                                'false' ? 'checked' : '';
                             quizHTML += `
                                 <div class="options-container">
                                     <div class="form-check mb-2">
@@ -797,18 +896,21 @@
                         <button class="${buttonClass}" onclick="window.submitQuiz(${quiz.id})" ${buttonDisabled}>
                             ${buttonText}
                         </button>
-                        ${isAnswered && canAttemptQuiz && !isRetaking ? `
-                            <button class="btn btn-warning" onclick="window.retakeQuiz(${quiz.id})">
-                                🔄 Retake Quiz
-                            </button>
-                        ` : ''}
                         ${isLastQuiz && isAnswered && !isRetaking ? `
-                            <button class="btn btn-success" onclick="window.showAllQuizzesResultsModal()">
-                                📊 Show All Results
-                            </button>
-                        ` : ''}
+                                <button class="btn btn-success" onclick="window.showAllQuizzesResultsModal()">
+                                    📊 Show Results
+                                </button>
+                            ` : ''}
                     </div>
                 `;
+
+                // ${
+                //  isAnswered && canAttemptQuiz && !isRetaking ? `
+            //     <button class="btn btn-warning" onclick="window.retakeQuiz(${quiz.id})">
+            //         🔄 Retake Quiz
+            //     </button>
+            // ` : ''
+                // }
 
                 quizDiv.innerHTML = quizHTML;
                 quizContainer.appendChild(quizDiv);
@@ -860,14 +962,16 @@
                         // Get the answer value
                         if (input.type === 'radio' && input.checked) {
                             answerValue = input.value;
-                            console.log('Found checked radio for question', questionId, ':', answerValue);
+                            console.log('Found checked radio for question', questionId, ':',
+                                answerValue);
                         } else if (input.tagName === 'TEXTAREA' && input.value.trim()) {
                             answerValue = input.value;
                         }
                     });
 
                     if (questionId && answerValue) {
-                        console.log('Adding answer - questionId:', questionId, 'answerValue:', answerValue, 'type:', typeof answerValue);
+                        console.log('Adding answer - questionId:', questionId, 'answerValue:', answerValue,
+                            'type:', typeof answerValue);
                         answers.push({
                             question_id: questionId,
                             answer: answerValue
@@ -891,7 +995,8 @@
                 const quizTitle = quizDiv ? quizDiv.querySelector('h4')?.textContent || 'Quiz' : 'Quiz';
 
                 console.log('=== QUIZ SUBMISSION INFO ===');
-                console.log('quizId:', quizId, 'attemptNumber:', attemptNumber, 'currentAttempts:', currentAttempts, 'maxAttempts:', maxAttempts);
+                console.log('quizId:', quizId, 'attemptNumber:', attemptNumber, 'currentAttempts:', currentAttempts,
+                    'maxAttempts:', maxAttempts);
 
                 // Submit quiz with the current attempt number
                 console.log('=== SUBMITTING QUIZ ===');
@@ -909,11 +1014,12 @@
                     showSuccess('Quiz submitted successfully!');
                     console.log('Quiz submitted - quizId:', quizId, 'response.data:', response.data);
 
-                    // Reload quizzes to update the answered status and show "Show All Results" button
-                    console.log('Reloading quizzes to update answered status');
+                    // Redirect to result page after a short delay
                     setTimeout(() => {
-                        loadQuizzes();
-                    }, 500);
+                        const resultUrl = `/userresult?quiz_id=${quizId}`;
+                        console.log('Redirecting to:', resultUrl);
+                        window.location.href = resultUrl;
+                    }, 1500);
                 } else {
                     console.error('Quiz submission failed:', response.message);
                     showError(response.message || 'Failed to submit quiz');
@@ -953,7 +1059,8 @@
                 console.log('Retaking quiz:', quizId, 'Attempt:', nextAttemptNumber, 'of', maxAttempts);
 
                 // Clear the results and reload the quiz
-                quizDiv.innerHTML = '<div class="text-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>';
+                quizDiv.innerHTML =
+                    '<div class="text-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>';
 
                 // Reload quizzes with the retaking quiz ID
                 await loadQuizzesForRetake(quizId);
@@ -962,7 +1069,10 @@
                 setTimeout(() => {
                     const updatedQuizDiv = quizContainer.querySelector(`[data-quiz-id="${quizId}"]`);
                     if (updatedQuizDiv) {
-                        updatedQuizDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        updatedQuizDiv.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
                     }
                 }, 300);
 
@@ -1003,7 +1113,8 @@
                                     if (latestAttempt && latestAttempt.answers && latestAttempt.answers.length > 0) {
                                         previousAnswersMap[quiz.id] = {};
                                         latestAttempt.answers.forEach(answer => {
-                                            previousAnswersMap[quiz.id][answer.question_id] = answer.user_answer;
+                                            previousAnswersMap[quiz.id][answer.question_id] = answer
+                                            .user_answer;
                                         });
                                         answeredQuizzes.add(quiz.id);
                                     }
@@ -1339,22 +1450,22 @@
                             </div>
 
                             ${!result.is_correct ? `
-                                <div class="mb-2">
-                                    <small class="text-muted"><strong>✓ Correct Answer:</strong></small>
-                                    <div class="p-2 bg-white rounded mt-1" style="border-left: 3px solid #28a745">
-                                        <small style="color: #28a745; font-weight: bold;">
-                                            ${result.correct_answer}
-                                        </small>
+                                    <div class="mb-2">
+                                        <small class="text-muted"><strong>✓ Correct Answer:</strong></small>
+                                        <div class="p-2 bg-white rounded mt-1" style="border-left: 3px solid #28a745">
+                                            <small style="color: #28a745; font-weight: bold;">
+                                                ${result.correct_answer}
+                                            </small>
+                                        </div>
                                     </div>
-                                </div>
-                            ` : ''}
+                                ` : ''}
 
                             ${result.explanation ? `
-                                <div class="mt-2 p-2 bg-light rounded">
-                                    <small><strong>💡 Explanation:</strong></small>
-                                    <p class="mb-0 text-muted mt-1" style="font-size: 0.85rem;">${result.explanation}</p>
-                                </div>
-                            ` : ''}
+                                    <div class="mt-2 p-2 bg-light rounded">
+                                        <small><strong>💡 Explanation:</strong></small>
+                                        <p class="mb-0 text-muted mt-1" style="font-size: 0.85rem;">${result.explanation}</p>
+                                    </div>
+                                ` : ''}
                         </div>
                     `;
                 });

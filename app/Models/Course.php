@@ -102,6 +102,11 @@ class Course extends Model
         return $this->hasMany(Certificate::class);
     }
 
+    public function conversations()
+    {
+        return $this->hasMany(Conversation::class);
+    }
+
     public function aiRecommendations()
     {
         return $this->hasMany(AiRecommendation::class);

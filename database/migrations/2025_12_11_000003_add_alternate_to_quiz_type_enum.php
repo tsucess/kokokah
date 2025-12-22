@@ -12,8 +12,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Modify the type column to include 'alternate' in the ENUM
-        DB::statement("ALTER TABLE quizzes MODIFY COLUMN type ENUM('mcq', 'alternate', 'theory') DEFAULT 'mcq'");
+        // Only run on MySQL - SQLite doesn't support MODIFY
+        if (DB::getDriverName() === 'mysql') {
+            DB::statement("ALTER TABLE quizzes MODIFY COLUMN type ENUM('mcq', 'alternate', 'theory') DEFAULT 'mcq'");
+        }
+        // SQLite doesn't need this as it doesn't enforce ENUMs
     }
 
     /**
@@ -21,8 +24,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // Revert to original ENUM without 'alternate'
-        DB::statement("ALTER TABLE quizzes MODIFY COLUMN type ENUM('mcq', 'theory') DEFAULT 'mcq'");
+        // Only run on MySQL
+        if (DB::getDriverName() === 'mysql') {
+            DB::statement("ALTER TABLE quizzes MODIFY COLUMN type ENUM('mcq', 'theory') DEFAULT 'mcq'");
+        }
     }
 };
 

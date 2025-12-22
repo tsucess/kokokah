@@ -388,6 +388,10 @@ class EnrollmentController extends Controller
                 'completed_at' => now()
             ]);
 
+            // Award points for course completion
+            $pointsService = new \App\Services\PointsAndBadgesService();
+            $pointsService->awardPointsForCourseCompletion($user, $course->id);
+
             // Generate certificate
             $certificate = Certificate::create([
                 'user_id' => $user->id,
@@ -397,12 +401,17 @@ class EnrollmentController extends Controller
                 'issued_at' => now()
             ]);
 
+            // Refresh user to get updated points
+            $user->refresh();
+
             return response()->json([
                 'success' => true,
                 'message' => 'Course completed successfully! Certificate generated.',
                 'data' => [
                     'enrollment' => $enrollment,
-                    'certificate' => $certificate
+                    'certificate' => $certificate,
+                    'user_points' => $user->points,
+                    'points_awarded' => 50
                 ]
             ]);
         } catch (\Exception $e) {

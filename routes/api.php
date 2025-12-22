@@ -11,6 +11,7 @@ use App\Http\Controllers\CourseCategoryController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EnrollmentController;
@@ -38,6 +39,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\TermController;
+use App\Http\Controllers\PointsAndBadgesController;
 
 
 
@@ -248,6 +250,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/notifications/read', [UserController::class, 'markNotificationsRead']);
         Route::post('/change-password', [UserController::class, 'changePassword']);
         Route::delete('/account', [UserController::class, 'deleteAccount']);
+        Route::get('/quiz-answers', [UserController::class, 'quizAnswers']);
+        Route::get('/all-quiz-results', [UserController::class, 'allQuizResults']);
+        Route::get('/debug-quiz-data', [UserController::class, 'debugQuizData']);
+        Route::get('/subscription-history', [UserController::class, 'subscriptionHistory']);
+        Route::get('/points', [UserController::class, 'getPoints']);
+        Route::post('/enroll-with-points', [UserController::class, 'enrollWithPoints']);
     });
 
     // Quiz management routes (authenticated)
@@ -372,6 +380,21 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users/{userId}/badges', [BadgeController::class, 'userBadges']);
     Route::get('/my-badges', [BadgeController::class, 'userBadges']);
 
+    // Points and Badges routes (enhanced)
+    Route::prefix('points-badges')->group(function () {
+        // Points endpoints
+        Route::get('/points', [PointsAndBadgesController::class, 'getUserPoints']);
+        Route::get('/points/history', [PointsAndBadgesController::class, 'getPointsHistory']);
+
+        // Badges endpoints
+        Route::get('/badges', [PointsAndBadgesController::class, 'getUserBadges']);
+        Route::get('/badges/{badgeId}', [PointsAndBadgesController::class, 'getBadgeDetails']);
+        Route::get('/badges/stats', [PointsAndBadgesController::class, 'getBadgeStats']);
+
+        // Leaderboard
+        Route::get('/leaderboard', [PointsAndBadgesController::class, 'getLeaderboard']);
+    });
+
     // Progress tracking routes (authenticated)
     Route::prefix('progress')->group(function () {
         Route::get('/courses', [ProgressController::class, 'courseProgress']);
@@ -451,6 +474,16 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{id}/analytics', [LearningPathController::class, 'analytics']);
         Route::post('/{id}/publish', [LearningPathController::class, 'publish']);
         Route::post('/{id}/unpublish', [LearningPathController::class, 'unpublish']);
+    });
+
+    // Course Conversations routes (authenticated)
+    Route::prefix('conversations')->group(function () {
+        Route::get('/course/{courseId}', [ConversationController::class, 'indexByCourse']);
+        Route::post('/', [ConversationController::class, 'store']);
+        Route::get('/{conversationId}/messages', [ConversationController::class, 'getMessages']);
+        Route::post('/{conversationId}/messages', [ConversationController::class, 'sendMessage']);
+        Route::post('/{conversationId}/join', [ConversationController::class, 'join']);
+        Route::post('/messages/{messageId}/helpful', [ConversationController::class, 'markMessageAsHelpful']);
     });
 
     // AI Chat routes (authenticated)
