@@ -2152,8 +2152,8 @@ div.contact-container a {
 
 .product-images{
    height: auto;
-
    max-height: 400px;
+   bject-fit: fill;
 }
 
 
