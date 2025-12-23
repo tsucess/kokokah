@@ -726,13 +726,13 @@
 
                         <h4 class="text-white">Learning Management System</h4>
 
-                    <p class="text-white">
-                        Your all-in-one digital classroom — structured lessons, AI-powered
-                        tutoring, chatrooms, and  academic & non-academic content for secondary school.
-                    </p>
-                    <div class="d-flex justify-content-center justify-content-md-start">
-                        <button class = "primaryButton" type = "button">Coming soon</button>
-                    </div>
+                        <p class="text-white">
+                            Your all-in-one digital classroom — structured lessons, AI-powered
+                            tutoring, chatrooms, and  academic & non-academic content for secondary school.
+                        </p>
+                        <div class="d-flex justify-content-center justify-content-md-start">
+                            <button class = "primaryButton" type = "button">Coming soon</button>
+                        </div>
                     </div>
 
                     <div class="col-12 col-lg-5">
@@ -745,7 +745,7 @@
         </div>
 
 
-    <div class = "container fade-section-left">
+        {{-- <div class = "container fade-section-left">
         <div class="row ourproduct2 product-section-teal">
             <!-- Image Section -->
             <div class="col-12 col-md-6 my-auto text-center">
@@ -768,10 +768,40 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
+
+        <div style="background-color: #A34518;" class="p-5">
+            <div class="container-fluid px-0">
+                <div class="row ourproduct2 product-section-orange p-4 add-margin">
+                    <div class="col-12 col-lg-5 mb-5 mb-lg-0">
+                        <img src="./images/marketplace-section-img.jpg" alt=""
+                            class="img-fluid product-images w-100 overflow-img"
+                            style="border:3px solid #F56824; border-radius:30px;">
+                    </div>
+                    <div class="col-12 col-lg-7 d-flex flex-column gap-3 justify-content-lg-center ">
 
 
-    <div class = "container fade-section">
+                        <h4 class="text-white">
+                            The Marketplace
+                        </h4>
+                        <p class="text-white">
+                            Africa’s academic forum for parents, teachers, and
+                            tutors to connect. Book trusted tutors for academics,
+                            test prep, and special needs learning.
+                        </p>
+                        <div class="d-flex justify-content-center justify-content-md-start">
+                            <button class = "primaryButton" type = "button">Coming Soon</button>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+        {{-- <div class = "container fade-section">
         <div class="row ourproduct2 product-section-bordered">
             <!-- Image Section -->
             <div class="col-12 col-md-6 ">
@@ -795,64 +825,150 @@
 
             </div>
         </div>
-    </div>
+    </div> --}}
+
+        <div style="background-color: #004A53;" class="p-5">
+            <div class="container-fluid px-0">
+                <div class="row ourproduct2 product-section-orange p-4 add-margin">
+
+                    <div class="col-12 col-lg-7 d-flex flex-column gap-3 justify-content-lg-center mb-5 mb-lg-0">
+                        <div class="bg-white px-3 py-2 rounded-3 align-self-start">
+                            <img src="./images/315a2f8c6c60fc789ec0066a0b5bce04b7daa28d.png" alt=""
+                                style="width:200px; height:60px;" />
+                        </div>
+
+                        <p class="text-white">
+                            Get hands-on STEM bootcamps, summer schools,
+                            and practical learning experiences to prepare
+                            students for the future of science & tech.
+                        </p>
+                        <div class="d-flex justify-content-center justify-content-md-start">
+                            <button class = "primaryButton" type = "button">Coming Soon</button>
+
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-5">
+                        <img src="./images/stemges-section-img.jpg" alt=""
+                            class="img-fluid product-images w-100 overflow-img"
+                            style="border:3px solid #F56824; border-radius:30px;">
+                    </div>
 
 
-    <div class = "container fade-section-left">
-        {{-- <div class="row  my-4 p-2 flex-column-reverse flex-md-row m-2 ourproduct1 product-section-yellow"> --}}
-        <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-yellow">
-            <!-- Text Section -->
-            <div class="col-12 col-md-6 d-flex flex-column justify-content-center gap-3  p-4 ps-lg-5 pb-4 pb-lg-0">
-                <h4>
-                    AI Chatbot
-                </h4>
-                <p>
-                    Your personal academic assistant — ask questions, get explanations,
-                    and enjoy instant feedback tailored to your study needs.
-                </p>
-
-                <div class="d-flex justify-content-center justify-content-md-start">
-                    <button class = "primaryButton greenBtn" type = "button">Coming Soon</button>
                 </div>
             </div>
-
-            <!-- Image Section -->
-            <div class="col-12 col-md-6 text-center">
-                <img src="images/lms system.png" class="img-fluid w-100 w-md-75" alt="LMS system">
-            </div>
         </div>
-    </div>
 
-    <div class = "container fade-section">
-        <div class="row ourproduct2 product-section-bordered">
-            <!-- Image Section -->
-            <div class="col-12 col-md-6 my-auto text-center">
-                <img src="images/8e967ffd660c50979f3c273bbb9d848dbb48a9db.png"
-                    class="d-block w-75 w-md-50 w-lg-25 mx-auto" alt="kudikah">
-            </div>
+        <div style="background-color: #52230C;" class="p-5">
+            <div class="container-fluid px-0">
+                <div class="row ourproduct2 product-section-orange p-4 add-margin">
 
-            <!-- Text Section -->
-            <div class="col-12 col-md-6 my-auto p-4 p-lg-5 d-flex flex-column gap-3">
-                <h4 style = "color :#004A53;">Kudikah</h4>
-                <p style = "color :#004A53;">
-                    Get hands-on STEM bootcamps, summer schools,
-                    and practical learning experiences to prepare
-                    students for the future of science & tech.
-                </p>
+                    <div class="col-12 col-lg-7 d-flex flex-column gap-3 justify-content-lg-center mb-5 mb-lg-0">
+                        <h4 class="text-white">Kudikah</h4>
+                        <p class="text-white">
+                            Get hands-on STEM bootcamps, summer schools,
+                            and practical learning experiences to prepare
+                            students for the future of science & tech.
+                        </p>
+                        <div class="d-flex justify-content-center justify-content-md-start">
+                            <button class = "primaryButton" type = "button">Coming Soon</button>
 
-                <div class="d-flex justify-content-center justify-content-md-start">
-                    <button class = "primaryButton" type = "button">Coming soon</button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-5">
+                        <img src="./images/kudikah-section-img.jpg" alt=""
+                            class="img-fluid product-images w-100 overflow-img"
+                            style="border:3px solid #F56824; border-radius:30px;">
+                    </div>
+
 
                 </div>
-
             </div>
         </div>
-    </div>
+
+
+        {{-- <div class = "container fade-section-left">
+            <div class="row  my-4 p-2 flex-column-reverse flex-md-row m-2 ourproduct1 product-section-yellow">
+            <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-yellow">
+
+                <div class="col-12 col-md-6 d-flex flex-column justify-content-center gap-3  p-4 ps-lg-5 pb-4 pb-lg-0">
+                    <h4>
+                        AI Chatbot
+                    </h4>
+                    <p>
+                        Your personal academic assistant — ask questions, get explanations,
+                        and enjoy instant feedback tailored to your study needs.
+                    </p>
+
+                    <div class="d-flex justify-content-center justify-content-md-start">
+                        <button class = "primaryButton greenBtn" type = "button">Coming Soon</button>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 text-center">
+                    <img src="images/lms system.png" class="img-fluid w-100 w-md-75" alt="LMS system">
+                </div>
+            </div>
+        </div> --}}
+
+        {{-- <div class = "container fade-section">
+            <div class="row ourproduct2 product-section-bordered">
+                <!-- Image Section -->
+                <div class="col-12 col-md-6 my-auto text-center">
+                    <img src="images/8e967ffd660c50979f3c273bbb9d848dbb48a9db.png"
+                        class="d-block w-75 w-md-50 w-lg-25 mx-auto" alt="kudikah">
+                </div>
+
+                <!-- Text Section -->
+                <div class="col-12 col-md-6 my-auto p-4 p-lg-5 d-flex flex-column gap-3">
+                    <h4 style = "color :#004A53;">Kudikah</h4>
+                    <p style = "color :#004A53;">
+                        Get hands-on STEM bootcamps, summer schools,
+                        and practical learning experiences to prepare
+                        students for the future of science & tech.
+                    </p>
+
+                    <div class="d-flex justify-content-center justify-content-md-start">
+                        <button class = "primaryButton" type = "button">Coming soon</button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div> --}}
+
+         <div style="background-color: #F6F6F6;" class="p-5">
+            <div class="container-fluid px-0">
+                <div class="row ourproduct2 product-section-orange p-4 add-margin">
+                    <div class="col-12 col-lg-5 mb-5 mb-lg-0">
+                        <img src="./images/ai-chat-section-img.jpg" alt=""
+                            class="img-fluid product-images w-100 overflow-img"
+                            style="border:3px solid #F56824; border-radius:30px;">
+                    </div>
+
+                    <div class="col-12 col-lg-7 d-flex flex-column gap-3 justify-content-lg-center">
+                        <h4>
+                        AI Chatbot
+                    </h4>
+                    <p>
+                        Your personal academic assistant — ask questions, get explanations,
+                        and enjoy instant feedback tailored to your study needs.
+                    </p>
+                        <div class="d-flex justify-content-center justify-content-md-start">
+                            <button class = "primaryButton" type = "button">Coming Soon</button>
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
 
     </div>
 
 
-    <div class = "container">
+    {{-- <div class = "container">
         <div class = "row mt-4">
             <div class = "col-12 col-md-5 col-lg-5">
                 <img src = "{{ asset('images/LMS.png') }}" class = "img-fluid animate__animated animate__pulse hero-img">
@@ -881,7 +997,32 @@
             </div>
 
         </div>
+    </div> --}}
+
+   <div style="background-color: #004A53;" class="p-5">
+    <div class="container-fluid px-0">
+        <div class="row  align-items-lg-center">
+            <div class="col-12 col-lg-6">
+                <div class="content-card rounded-4 p-4 d-flex flex-column gap-3 mb-5 mb-lg-0"
+                     style="background-color:#003E45;">
+                    <h3 class="text-white">Kokoplay</h3>
+                    <p class="text-white">
+                        Kokokah combines School Management, Exam Prep, and a Learning Management System (LMS)—helping schools automate admin tasks, boost student performance, and deliver modern digital learning in one seamless platform. Kokokah combines School Management, Exam Prep, and a Learning Management System (LMS)—helping schools automate admin tasks, boost student performance, and deliver modern digital learning in one seamless platform.
+                    </p>
+                    <button class="primaryButton">Coming Soon</button>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6 ">
+                <img src="./images/kokoplay-section-img.jpg"
+                     class="img-fluid w-100"
+                     alt="" style="max-height: 450px;">
+            </div>
+
+        </div>
     </div>
+</div>
+
 
 
     <div class="container-fluid text-center mt-5 px-3 px-lg-5 py-5 h-100 achievement-section">
