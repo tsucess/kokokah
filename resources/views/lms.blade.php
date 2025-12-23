@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- Hero Section - Yellow Background -->
-    <div class="container-fluid bgLms">
+    <div class="container-fluid bgLms px-3 px-lg-5">
         <div class="row align-items-center">
             <div class="col-12 col-md-6 col-lg-6 d-flex flex-column gap-3">
                 <h1 class="fw-bold hero-title typewriter">
@@ -15,7 +15,7 @@
                 <button class="btn btn-primary-action align-self-start">Create a free account</button>
             </div>
             <div class="col-12 col-md-6 col-lg-6 text-center mt-4 mt-md-0">
-                <img src="images/objects.png" class="img-fluid" alt="LMS Illustration">
+                <img src="images/lms-hero-img.png" class="img-fluid" alt="LMS Illustration">
             </div>
         </div>
     </div>
@@ -447,6 +447,6 @@
             });
         });
 
-         
+
     </script>
 @endsection

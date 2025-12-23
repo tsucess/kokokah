@@ -466,7 +466,7 @@
     </div>
 
     <!-- Kokokah for All Section - White Background -->
-    <div class="container-fluid section-white section-py ">
+    <div class="container-fluid section-white section-py " style="background-color: #004A53;">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-12 col-md-6 col-lg-6 mb-4 mb-md-0 fade-section-left">
@@ -475,10 +475,10 @@
                         style="max-width:752px; width:100%; height:382px; border-radius : 15px; object-fit:cover;">
                 </div>
                 <div class="col-12 col-md-6 col-lg-6 ps-md-4 fade-section">
-                    <h2 class="fw-bold mb-4 section-heading">
+                    <h2 class="fw-bold mb-4 section-heading text-white">
                         Kokokah for All
                     </h2>
-                    <p class="mb-4 hero-subtitle">
+                    <p class="mb-4 hero-subtitle text-white">
                         Kokokah is a smart, pan-African learning and school management platform built for the realities of
                         African education. Whether you're a JSS1 student in Ghana, an SSS3 student in Kenya, or an educator
                         in South Africa, our mission is simple — to give every learner from any background the opportunity

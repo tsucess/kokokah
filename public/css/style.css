@@ -1136,7 +1136,7 @@ footer p {
 
 .bgLms {
     background: url("../images/bg-lms.png");
-    padding: 60px 20px;
+   
 }
 
 .hero-section-orange {
@@ -2160,6 +2160,14 @@ div.contact-container a {
    max-height: 400px;
    object-fit: fill;
 }
+
+.paper-plane{
+    position: absolute;
+    bottom: 20px;
+    left: 45%;
+}
+
+
 
 
 
