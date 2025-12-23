@@ -507,12 +507,12 @@
             <div class="row g-4 features">
                 <!-- Feature 1 -->
                 <div class="col-12 col-md-6 col-lg-4 feature-item">
-                    <div class="feature-card ">
+                    <div class="feature-card " style="background-color: #ff6b35;">
                         <div class="mb-3">
-                            <i class="fa-solid fa-download feature-card-icon"></i>
+                            <i class="fa-solid fa-download feature-card-icon feature-card-icon-white"></i>
                         </div>
-                        <h5 class="fw-bold mb-3 feature-card-title">For Students, Parents & Schools</h5>
-                        <p class="feature-card-text">One platform for all.</p>
+                        <h5 class="fw-bold mb-3 feature-card-title text-white">For Students, Parents & Schools</h5>
+                        <p class="feature-card-text text-white">One platform for all.</p>
                     </div>
                 </div>
 
@@ -618,8 +618,9 @@
 
         <div style="background-color: #004A53;" class="p-5">
             <div class="container-fluid px-0">
-                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section">
-                    <div class="col-12 col-lg-7 d-flex flex-column gap-3 mb-5 mb-lg-0">
+                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section py-lg-3">
+                    <div class="col-12 col-lg-7 mb-5 mb-lg-0">
+                        <div class="d-flex flex-column gap-3">
                         <div class="bg-white p-1 rounded-3 align-self-start"><img src="images/Group 1171274797.png"
                                 alt="" class="" style="width:100%; height:auto; max-width:150px;" /></div>
 
@@ -634,6 +635,7 @@
 
                         <div class="d-flex justify-content-center justify-content-md-start">
                             <button class = "primaryButton" type = "button">Coming soon</button>
+                        </div>
                         </div>
                     </div>
                     <div class="col-12 col-lg-5">
@@ -670,7 +672,7 @@
 
         <div style="background-color: #F6F6F6;" class="p-5">
             <div class="container-fluid px-0">
-                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section-left">
+                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section-left py-lg-3">
                     <div class="col-12 col-lg-5 mb-5 mb-lg-0">
                         <img src="./images/sms-section-img.png" alt=""
                             class="img-fluid product-images w-100 overflow-img"
@@ -717,7 +719,7 @@
 
         <div style="background-color: #FDAF22;" class="p-5">
             <div class="container-fluid px-0">
-                <div class="row ourproduct2 product-section-teal p-4 add-margin fade-section">
+                <div class="row ourproduct2 product-section-teal p-4 add-margin fade-section py-lg-3">
                     <div class="col-12 col-lg-7 d-flex flex-column gap-3 justify-content-lg-center mb-5 mb-lg-0">
                         <div class="bg-white px-3 py-2 rounded-3 align-self-start">
                             <img src="./images/Kokokah_Logo.png" alt="" style="width:200px; height:auto;"
@@ -772,7 +774,7 @@
 
         <div style="background-color: #A34518;" class="p-5">
             <div class="container-fluid px-0">
-                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section-left">
+                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section-left py-lg-3">
                     <div class="col-12 col-lg-5 mb-5 mb-lg-0">
                         <img src="./images/marketplace-section-img.jpg" alt=""
                             class="img-fluid product-images w-100 overflow-img"
@@ -829,7 +831,7 @@
 
         <div style="background-color: #004A53;" class="p-5">
             <div class="container-fluid px-0">
-                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section">
+                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section py-lg-3">
 
                     <div class="col-12 col-lg-7 d-flex flex-column gap-3 justify-content-lg-center mb-5 mb-lg-0">
                         <div class="bg-white px-3 py-2 rounded-3 align-self-start">
@@ -860,7 +862,7 @@
 
         <div style="background-color: #52230C;" class="p-5">
             <div class="container-fluid px-0">
-                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section-left">
+                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section-left py-lg-3">
 
                     <div class="col-12 col-lg-7 d-flex flex-column gap-3 justify-content-lg-center mb-5 mb-lg-0">
                         <h4 class="text-white">Kudikah</h4>
@@ -938,7 +940,7 @@
 
          <div style="background-color: #F6F6F6;" class="p-5">
             <div class="container-fluid px-0">
-                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section">
+                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section py-lg-3">
                     <div class="col-12 col-lg-5 mb-5 mb-lg-0">
                         <img src="./images/ai-chat-section-img.jpg" alt=""
                             class="img-fluid product-images w-100 overflow-img"
@@ -1014,8 +1016,8 @@
             </div>
 
             <div class="col-12 col-lg-6 ">
-                <img src="./images/kokoplay-section-img.jpg fade-section"
-                     class="img-fluid w-100"
+                <img src="./images/kokoplay-section-img.jpg "
+                     class="img-fluid w-100 fade-section"
                      alt="" style="max-height: 450px;">
             </div>
 

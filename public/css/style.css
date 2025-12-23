@@ -463,6 +463,7 @@ li {
     color: #f15a29;
 }
 
+
 .feature-number {
     font-weight: bold;
     font-size: 2rem;
@@ -1325,6 +1326,10 @@ footer p {
     color: #ff6b35;
     font-size: 32px;
     margin-bottom: 12px;
+}
+
+.feature-card-icon-white {
+    color: #fff;
 }
 
 .feature-card-title {
