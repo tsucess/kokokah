@@ -206,8 +206,8 @@ Route::get('/userlessondetails', function () {
     return view('users.subjectdetails');
 });
 
-Route::get('/userpaymenthistory', function () {
-    return view('users.paymenthistory');
+Route::get('/subscriptionhistory', function () {
+    return view('users.subscriptionhistory');
 });
 
 Route::get('/subjectselect', function () {

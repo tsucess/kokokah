@@ -4,6 +4,7 @@
  */
 
 import AuthApiClient from './api/authClient.js';
+import PointsAndBadgesApiClient from './api/pointsAndBadgesApiClient.js';
 import UIHelpers from './utils/uiHelpers.js';
 
 class DashboardModule {
@@ -15,6 +16,7 @@ class DashboardModule {
     this.initProfileNavigation();
     this.initTooltips();
     this.loadUserProfile();
+    this.loadPointsAndBadges();
     this.highlightActivePage();
   }
 
@@ -191,6 +193,55 @@ class DashboardModule {
         profileImage.src = 'images/winner-round.png';
         console.log('No profile photo, using default avatar');
       }
+    }
+  }
+
+  /**
+   * Load and display user points and badges dynamically
+   */
+  static async loadPointsAndBadges() {
+    try {
+      // Fetch user points
+      const pointsResponse = await PointsAndBadgesApiClient.getUserPoints();
+
+      if (pointsResponse.success && pointsResponse.data) {
+        const { points = 0 } = pointsResponse.data;
+
+        // Update points in topbar
+        const pointsElements = document.querySelectorAll('[data-points]');
+        pointsElements.forEach(el => {
+          el.textContent = points.toLocaleString();
+        });
+
+        // Also update the span that displays points in the topbar
+        const topbarPoints = document.querySelector('.d-flex.gap-2 .ps-2 span');
+        if (topbarPoints) {
+          topbarPoints.textContent = points.toLocaleString();
+        }
+      }
+
+      // Fetch user badges
+      const badgesResponse = await PointsAndBadgesApiClient.getUserBadges();
+
+      if (badgesResponse.success && badgesResponse.data) {
+        const badgeCount = Array.isArray(badgesResponse.data)
+          ? badgesResponse.data.length
+          : (badgesResponse.data.data ? badgesResponse.data.data.length : 0);
+
+        // Update badges in topbar
+        const badgeElements = document.querySelectorAll('[data-badges]');
+        badgeElements.forEach(el => {
+          el.textContent = badgeCount;
+        });
+
+        // Also update the span that displays badges in the topbar
+        const topbarBadges = document.querySelector('.d-flex.gap-2 > div:first-child span');
+        if (topbarBadges) {
+          topbarBadges.textContent = badgeCount;
+        }
+      }
+    } catch (error) {
+      console.error('Error loading points and badges:', error);
     }
   }
 

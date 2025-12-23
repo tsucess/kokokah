@@ -309,6 +309,12 @@ class QuizAttempt extends Model
             if ($attempt->isDirty('completed_at') && $attempt->completed_at) {
                 $attempt->calculateTimeTaken();
             }
+
+            // Award points and badges when quiz is completed
+            if ($attempt->isDirty('status') && $attempt->status === 'completed') {
+                $pointsService = new \App\Services\PointsAndBadgesService();
+                $pointsService->awardPointsForQuizPass($attempt->user, $attempt);
+            }
         });
     }
 }

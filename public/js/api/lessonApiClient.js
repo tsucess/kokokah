@@ -128,6 +128,16 @@ class LessonApiClient extends BaseApiClient {
     static async getQuizzesByLesson(lessonId) {
         return this.get(`/lessons/${lessonId}/quizzes`);
     }
+
+    /**
+     * Submit quiz answers
+     * @param {number} quizId - The quiz ID
+     * @param {Object} data - The quiz submission data (attempt_number and answers)
+     * @returns {Promise<Object>} Response from submit operation
+     */
+    static async submitQuiz(quizId, data) {
+        return this.post(`/quizzes/${quizId}/submit`, data);
+    }
 }
 
 export default LessonApiClient;

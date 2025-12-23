@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Conversation;
 use App\Models\CurriculumCategory;
 use App\Models\CourseCategory;
 use App\Models\Level;
@@ -233,6 +234,13 @@ class CourseController extends Controller
             }
 
             $course = Course::create($courseData);
+
+            // Conversation is auto-created by Course model's booted method
+            // Add instructor as participant to the auto-created conversation
+            $conversation = $course->conversations()->first();
+            if ($conversation) {
+                $conversation->addParticipant(Auth::id());
+            }
 
             return $this->success(
                 $course->load(['courseCategory', 'curriculumCategory', 'instructor', 'level', 'term']),
