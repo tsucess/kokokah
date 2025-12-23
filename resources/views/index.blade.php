@@ -587,7 +587,7 @@
 
 
 
-    <div class="d-flex flex-column mx-md-0">
+    <div class="d-flex flex-column">
 
         {{-- <div class = "container fade-section">
             <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-bordered-red ">
@@ -618,7 +618,7 @@
 
         <div style="background-color: #004A53;" class="p-5">
             <div class="container-fluid px-0">
-                <div class="row ourproduct2 product-section-orange p-4 add-margin">
+                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section">
                     <div class="col-12 col-lg-7 d-flex flex-column gap-3 mb-5 mb-lg-0">
                         <div class="bg-white p-1 rounded-3 align-self-start"><img src="images/Group 1171274797.png"
                                 alt="" class="" style="width:100%; height:auto; max-width:150px;" /></div>
@@ -670,7 +670,7 @@
 
         <div style="background-color: #F6F6F6;" class="p-5">
             <div class="container-fluid px-0">
-                <div class="row ourproduct2 product-section-orange p-4 add-margin">
+                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section-left">
                     <div class="col-12 col-lg-5 mb-5 mb-lg-0">
                         <img src="./images/sms-section-img.png" alt=""
                             class="img-fluid product-images w-100 overflow-img"
@@ -717,7 +717,7 @@
 
         <div style="background-color: #FDAF22;" class="p-5">
             <div class="container-fluid px-0">
-                <div class="row ourproduct2 product-section-teal p-4 add-margin">
+                <div class="row ourproduct2 product-section-teal p-4 add-margin fade-section">
                     <div class="col-12 col-lg-7 d-flex flex-column gap-3 justify-content-lg-center mb-5 mb-lg-0">
                         <div class="bg-white px-3 py-2 rounded-3 align-self-start">
                             <img src="./images/Kokokah_Logo.png" alt="" style="width:200px; height:auto;"
@@ -772,7 +772,7 @@
 
         <div style="background-color: #A34518;" class="p-5">
             <div class="container-fluid px-0">
-                <div class="row ourproduct2 product-section-orange p-4 add-margin">
+                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section-left">
                     <div class="col-12 col-lg-5 mb-5 mb-lg-0">
                         <img src="./images/marketplace-section-img.jpg" alt=""
                             class="img-fluid product-images w-100 overflow-img"
@@ -829,7 +829,7 @@
 
         <div style="background-color: #004A53;" class="p-5">
             <div class="container-fluid px-0">
-                <div class="row ourproduct2 product-section-orange p-4 add-margin">
+                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section">
 
                     <div class="col-12 col-lg-7 d-flex flex-column gap-3 justify-content-lg-center mb-5 mb-lg-0">
                         <div class="bg-white px-3 py-2 rounded-3 align-self-start">
@@ -860,7 +860,7 @@
 
         <div style="background-color: #52230C;" class="p-5">
             <div class="container-fluid px-0">
-                <div class="row ourproduct2 product-section-orange p-4 add-margin">
+                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section-left">
 
                     <div class="col-12 col-lg-7 d-flex flex-column gap-3 justify-content-lg-center mb-5 mb-lg-0">
                         <h4 class="text-white">Kudikah</h4>
@@ -938,7 +938,7 @@
 
          <div style="background-color: #F6F6F6;" class="p-5">
             <div class="container-fluid px-0">
-                <div class="row ourproduct2 product-section-orange p-4 add-margin">
+                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section">
                     <div class="col-12 col-lg-5 mb-5 mb-lg-0">
                         <img src="./images/ai-chat-section-img.jpg" alt=""
                             class="img-fluid product-images w-100 overflow-img"
@@ -1003,7 +1003,7 @@
     <div class="container-fluid px-0">
         <div class="row  align-items-lg-center">
             <div class="col-12 col-lg-6">
-                <div class="content-card rounded-4 p-4 d-flex flex-column gap-3 mb-5 mb-lg-0"
+                <div class="content-card rounded-4 p-4 d-flex flex-column gap-3 mb-5 mb-lg-0 slide-up-image"
                      style="background-color:#003E45;">
                     <h3 class="text-white">Kokoplay</h3>
                     <p class="text-white">
@@ -1014,7 +1014,7 @@
             </div>
 
             <div class="col-12 col-lg-6 ">
-                <img src="./images/kokoplay-section-img.jpg"
+                <img src="./images/kokoplay-section-img.jpg fade-section"
                      class="img-fluid w-100"
                      alt="" style="max-height: 450px;">
             </div>
