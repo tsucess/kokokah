@@ -4,8 +4,6 @@
  * Extends BaseApiClient for common functionality
  */
 
-import BaseApiClient from './baseApiClient.js';
-
 class AdminApiClient extends BaseApiClient {
   /**
    * Get admin dashboard statistics
@@ -167,4 +165,5 @@ class AdminApiClient extends BaseApiClient {
   }
 }
 
-export default AdminApiClient;
+// Make available globally
+window.AdminApiClient = AdminApiClient;

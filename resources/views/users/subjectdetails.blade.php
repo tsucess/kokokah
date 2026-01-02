@@ -354,11 +354,7 @@
     </main>
 
 
-    <script type="module">
-        import LessonApiClient from '/js/api/lessonApiClient.js';
-        import QuizApiClient from '/js/api/quizApiClient.js';
-        import ToastNotification from '/js/utils/toastNotification.js';
-
+    <script>
         // Global variables
         let currentLesson = null;
         let currentTopic = null;
@@ -400,7 +396,7 @@
          */
         async function loadTopicLessons() {
             try {
-                const response = await LessonApiClient.getLessonsByTopic(topicId);
+                const response = await window.LessonApiClient.getLessonsByTopic(topicId);
 
                 if (response.success && response.data) {
                     allLessons = Array.isArray(response.data) ? response.data : [response.data];
@@ -473,7 +469,7 @@
             try {
                 if (!currentLesson || !currentLesson.id) return;
 
-                const response = await LessonApiClient.getLessonProgress(currentLesson.id);
+                const response = await window.LessonApiClient.getLessonProgress(currentLesson.id);
 
                 if (response.success) {
                     const progress = response.data;
@@ -550,7 +546,7 @@
                 // Clear previous attachments
                 attachmentsContainer.innerHTML = '';
 
-                const response = await LessonApiClient.getLessonAttachments(currentLesson.id);
+                const response = await window.LessonApiClient.getLessonAttachments(currentLesson.id);
 
                 if (response.success && response.data && response.data.length > 0) {
                     response.data.forEach(attachment => {
@@ -679,7 +675,7 @@
                 const quizContainer = document.getElementById('quizContainer');
                 quizContainer.innerHTML = '<p class="text-center text-muted">Loading quizzes...</p>';
 
-                const response = await LessonApiClient.getQuizzesByLesson(currentLesson.id);
+                const response = await window.LessonApiClient.getQuizzesByLesson(currentLesson.id);
 
                 if (response.success && response.data && response.data.length > 0) {
                     // Load previous answers for each quiz
@@ -688,7 +684,7 @@
 
                     for (const quiz of response.data) {
                         try {
-                            const resultsResponse = await QuizApiClient.getQuizResults(quiz.id);
+                            const resultsResponse = await window.QuizApiClient.getQuizResults(quiz.id);
 
                             // Check if response has results
                             if (resultsResponse.success && resultsResponse.data && resultsResponse.data.results) {
@@ -1001,7 +997,7 @@
                 // Submit quiz with the current attempt number
                 console.log('=== SUBMITTING QUIZ ===');
                 console.log('quizId:', quizId, 'attemptNumber:', attemptNumber, 'answers:', answers);
-                const response = await LessonApiClient.submitQuiz(quizId, {
+                const response = await window.LessonApiClient.submitQuiz(quizId, {
                     attempt_number: attemptNumber,
                     answers: answers
                 });
@@ -1093,7 +1089,7 @@
                     return;
                 }
 
-                const response = await LessonApiClient.getQuizzesByLesson(currentLesson.id);
+                const response = await window.LessonApiClient.getQuizzesByLesson(currentLesson.id);
 
                 if (response.success && response.data) {
                     // Load previous answers for all quizzes
@@ -1102,7 +1098,7 @@
 
                     for (const quiz of response.data) {
                         try {
-                            const resultsResponse = await QuizApiClient.getQuizResults(quiz.id);
+                            const resultsResponse = await window.QuizApiClient.getQuizResults(quiz.id);
 
                             if (resultsResponse.success && resultsResponse.data && resultsResponse.data.results) {
                                 const results = resultsResponse.data.results;
@@ -1148,7 +1144,7 @@
                     return;
                 }
 
-                const response = await LessonApiClient.markLessonComplete(currentLesson.id);
+                const response = await window.LessonApiClient.markLessonComplete(currentLesson.id);
 
                 if (response.success) {
                     // Update the lesson in allLessons array
@@ -1260,14 +1256,14 @@
          * Show error notification
          */
         window.showError = function(message) {
-            ToastNotification.error('Error', message);
+            window.ToastNotification.error('Error', message);
         };
 
         /**
          * Show success notification
          */
         window.showSuccess = function(message) {
-            ToastNotification.success('Success', message);
+            window.ToastNotification.success('Success', message);
         };
 
         /**
@@ -1290,7 +1286,7 @@
                 }
 
                 console.log('Fetching quizzes for lesson:', currentLesson.id);
-                const quizzesResponse = await LessonApiClient.getQuizzesByLesson(currentLesson.id);
+                const quizzesResponse = await window.LessonApiClient.getQuizzesByLesson(currentLesson.id);
                 console.log('Quizzes response:', quizzesResponse);
 
                 if (!quizzesResponse.success || !quizzesResponse.data) {
@@ -1307,7 +1303,7 @@
                 for (const quiz of quizzes) {
                     try {
                         console.log('Fetching results for quiz:', quiz.id);
-                        const resultsResponse = await QuizApiClient.getQuizResults(quiz.id);
+                        const resultsResponse = await window.QuizApiClient.getQuizResults(quiz.id);
                         console.log('Results response for quiz ' + quiz.id + ':', resultsResponse);
 
                         if (resultsResponse.success && resultsResponse.data && resultsResponse.data.results) {

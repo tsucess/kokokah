@@ -173,10 +173,9 @@
     <!-- Chart.js (keep after body) -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 
-    <script type="module">
-        // Import API client
-        import AdminApiClient from '/js/api/adminApiClient.js';
-
+        <!-- API Clients -->
+    <script>
+// Import API client
         // Get auth token
         const token = localStorage.getItem('auth_token');
         let currentPage = 1;
@@ -333,8 +332,7 @@
             } catch (error) {
                 console.error('Error loading recent users:', error);
             }
-        }
-    </script>
+        }    </script>
 
     <script>
         // Chart (with callout bubble plugin)

@@ -151,10 +151,7 @@
             </div>
     </main>
 
-    <script type="module">
-        import UserApiClient from '/js/api/userApiClient.js';
-        import ToastNotification from '/js/utils/toastNotification.js';
-
+    <script>
         let currentPage = 1;
         let totalPages = 1;
         let allSubscriptions = [];
@@ -172,7 +169,7 @@
          */
         async function loadUserProfile() {
             try {
-                const response = await UserApiClient.getProfile();
+                const response = await window.UserApiClient.getProfile();
                 if (response.success && response.data) {
                     const user = response.data;
                     const welcomeMessage = document.getElementById('welcomeMessage');
@@ -389,7 +386,7 @@
          * Show error message
          */
         function showError(message) {
-            ToastNotification.show(message, 'error');
+            window.ToastNotification.show(message, 'error');
         }
 
         // Make functions globally accessible

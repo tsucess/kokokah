@@ -88,19 +88,21 @@
   <!-- Axios -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-  <script type="module">
-    import AuthApiClient from '/js/api/authClient.js';
-    import UIHelpers from '/js/utils/uiHelpers.js';
+  <!-- API Clients -->
+  <script src="{{ asset('js/api/baseApiClient.js') }}"></script>
+  <script src="{{ asset('js/api/authClient.js') }}"></script>
+  <script src="{{ asset('js/utils/uiHelpers.js') }}"></script>
 
+  <script>
     // Store original button text
-    UIHelpers.storeButtonText('resetBtn');
+    window.UIHelpers.storeButtonText('resetBtn');
 
     // Get reset token from URL
-    const resetToken = UIHelpers.getUrlParameter('token');
-    const email = UIHelpers.getUrlParameter('email');
+    const resetToken = window.UIHelpers.getUrlParameter('token');
+    const email = window.UIHelpers.getUrlParameter('email');
 
     if (!resetToken || !email) {
-      UIHelpers.showError('Invalid password reset link');
+      window.UIHelpers.showError('Invalid password reset link');
     }
 
     // Password visibility toggles
@@ -137,12 +139,12 @@
     // Password strength indicator
     document.getElementById('password').addEventListener('input', (e) => {
       const password = e.target.value;
-      const strengthMsg = UIHelpers.getPasswordStrengthMessage(password);
+      const strengthMsg = window.UIHelpers.getPasswordStrengthMessage(password);
       const strengthElement = document.getElementById('passwordStrength');
 
       if (password.length === 0) {
         strengthElement.textContent = '';
-      } else if (UIHelpers.isValidPassword(password)) {
+      } else if (window.UIHelpers.isValidPassword(password)) {
         strengthElement.textContent = 'Strong password';
         strengthElement.style.color = 'green';
       } else {
@@ -159,33 +161,33 @@
       const passwordConfirm = document.getElementById('confirmPassword').value;
 
       if (!password || !passwordConfirm) {
-        UIHelpers.showError('Please fill in all fields');
+        window.UIHelpers.showError('Please fill in all fields');
         return;
       }
 
       if (password !== passwordConfirm) {
-        UIHelpers.showError('Passwords do not match');
+        window.UIHelpers.showError('Passwords do not match');
         return;
       }
 
-      if (!UIHelpers.isValidPassword(password)) {
-        UIHelpers.showError(UIHelpers.getPasswordStrengthMessage(password));
+      if (!window.UIHelpers.isValidPassword(password)) {
+        window.UIHelpers.showError(window.UIHelpers.getPasswordStrengthMessage(password));
         return;
       }
 
-      UIHelpers.setButtonLoading('resetBtn', true);
-      UIHelpers.showLoadingOverlay(true);
+      window.UIHelpers.setButtonLoading('resetBtn', true);
+      window.UIHelpers.showLoadingOverlay(true);
 
-      const result = await AuthApiClient.resetPassword(email, resetToken, password, passwordConfirm);
+      const result = await window.AuthApiClient.resetPassword(email, resetToken, password, passwordConfirm);
 
-      UIHelpers.showLoadingOverlay(false);
+      window.UIHelpers.showLoadingOverlay(false);
 
       if (result.success) {
-        UIHelpers.showSuccess('Password reset successfully! Redirecting to login...');
-        UIHelpers.redirect('/login', 1500);
+        window.UIHelpers.showSuccess('Password reset successfully! Redirecting to login...');
+        window.UIHelpers.redirect('/login', 1500);
       } else {
-        UIHelpers.showError(result.message || 'Failed to reset password');
-        UIHelpers.setButtonLoading('resetBtn', false);
+        window.UIHelpers.showError(result.message || 'Failed to reset password');
+        window.UIHelpers.setButtonLoading('resetBtn', false);
       }
     });
   </script>

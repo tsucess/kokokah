@@ -453,10 +453,12 @@
             </div>
         </div>
 
-        <script type="module">
-            import CourseApiClient from '/js/api/courseApiClient.js';
-            import ToastNotification from '/js/utils/toastNotification.js';
+        <!-- API Clients -->
+        <script src="{{ asset('js/api/baseApiClient.js') }}"></script>
+        <script src="{{ asset('js/api/courseApiClient.js') }}"></script>
+        <script src="{{ asset('js/utils/toastNotification.js') }}"></script>
 
+        <script>
             (function() {
                 // Config
                 const token = localStorage.getItem('auth_token') || '';
@@ -496,7 +498,7 @@
                 // ---------- Toast helper ----------
                 function showToast(title = '', message = '', type = 'info', timeout = 3500) {
                     const toastType = (type === 'danger') ? 'error' : type;
-                    ToastNotification.show(title, message, toastType, timeout);
+                    window.ToastNotification.show(title, message, toastType, timeout);
                 }
 
                 // ---------- Escaping ----------
@@ -580,7 +582,7 @@
                 // ---------- CRUD operations ----------
                 async function loadCategories() {
                     try {
-                        const result = await CourseApiClient.getCurriculumCategories();
+                        const result = await window.CourseApiClient.getCurriculumCategories();
                         if (result.success) {
                             categories = Array.isArray(result.data) ? result.data : (result.data.data || []);
                             populateCategorySelect();
@@ -607,7 +609,7 @@
                 async function loadLevels() {
                     showSkeletons(3);
                     try {
-                        const result = await CourseApiClient.getLevels();
+                        const result = await window.CourseApiClient.getLevels();
                         if (result.success) {
                             levels = Array.isArray(result.data) ? result.data : (result.data.data || []);
                             renderLevels();
@@ -624,7 +626,7 @@
 
                 async function createLevel(name, curriculum_category_id, description) {
                     try {
-                        const result = await CourseApiClient.createLevel({
+                        const result = await window.CourseApiClient.createLevel({
                             name,
                             curriculum_category_id,
                             description
@@ -645,7 +647,7 @@
 
                 async function updateLevel(id, name, curriculum_category_id, description) {
                     try {
-                        const result = await CourseApiClient.updateLevel(id, {
+                        const result = await window.CourseApiClient.updateLevel(id, {
                             name,
                             curriculum_category_id,
                             description
@@ -666,7 +668,7 @@
 
                 async function deleteLevelRequest(id) {
                     try {
-                        const result = await CourseApiClient.deleteLevel(id);
+                        const result = await window.CourseApiClient.deleteLevel(id);
                         if (result.success) {
                             levels = levels.filter(l => l.id !== id);
                             renderLevels();

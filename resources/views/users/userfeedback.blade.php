@@ -110,6 +110,40 @@
             height: 167px;
             padding: 0px 24px 27px;
         }
+
+        .star {
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .star.active {
+            color: #FDAF22;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .success-message {
+            color: #28a745;
+            font-size: 14px;
+            padding: 10px;
+            background-color: #d4edda;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .loading-spinner.show {
+            display: block;
+        }
     </style>
 
 
@@ -165,43 +199,202 @@
                     <h5 class="share-feedback-title">Share Your Feedback</h5>
                     <p class="header-subtitle">Help us improve by sharing your thoughts, reporting bugs, or suggesting new features.</p>
                 </header>
-                <form action="" class="d-flex flex-column gap-4">
+
+                <div id="successMessage" class="success-message" style="display: none;"></div>
+
+                <form id="feedbackForm" class="d-flex flex-column gap-4">
+                    @csrf
+
                     <div class="d-flex flex-column input-area">
-                        <label for="" class="label">Enter First Name</label>
-                        <input type="text" name="" id="" placeholder="Winner" class="input">
+                        <label for="firstName" class="label">Enter First Name *</label>
+                        <input type="text" name="first_name" id="firstName" placeholder="Winner" class="input" required>
+                        <span class="error-message" id="firstNameError"></span>
                     </div>
+
                     <div class="d-flex flex-column input-area">
-                        <label for="" class="label">Enter Last Name</label>
-                        <input type="text" name="" id="" placeholder="Effiong" class="input">
+                        <label for="lastName" class="label">Enter Last Name *</label>
+                        <input type="text" name="last_name" id="lastName" placeholder="Effiong" class="input" required>
+                        <span class="error-message" id="lastNameError"></span>
                     </div>
+
                     <div class="d-flex flex-column input-area">
-                        <label for="" class="label">Select Feedback Type *</label>
-                        <select name="" id="">
-                        <option value="">student</option>
-                    </select>
+                        <label for="feedbackType" class="label">Select Feedback Type *</label>
+                        <select name="feedback_type" id="feedbackType" required>
+                            <option value="">-- Select Type --</option>
+                            <option value="bug">Report Bugs</option>
+                            <option value="feature_request">Request Features</option>
+                            <option value="general">General Feedback</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <span class="error-message" id="feedbackTypeError"></span>
                     </div>
+
                     <div class="d-flex flex-column gap-3">
                         <h6 class="rate-title">How would you rate your overall experience?</h6>
-                        <div class="d-flex align-items-center gap-2">
-                            <i class="fa-solid fa-star fa-lg" style="color: #E5E6E7;"></i>
-                            <i class="fa-solid fa-star fa-lg" style="color: #E5E6E7;"></i>
-                            <i class="fa-solid fa-star fa-lg" style="color: #E5E6E7;"></i>
-                            <i class="fa-solid fa-star fa-lg" style="color: #E5E6E7;"></i>
-                            <i class="fa-solid fa-star fa-lg" style="color: #E5E6E7;"></i>
+                        <div class="d-flex align-items-center gap-2" id="ratingStars">
+                            <i class="fa-solid fa-star fa-lg star" data-rating="1" style="color: #E5E6E7;"></i>
+                            <i class="fa-solid fa-star fa-lg star" data-rating="2" style="color: #E5E6E7;"></i>
+                            <i class="fa-solid fa-star fa-lg star" data-rating="3" style="color: #E5E6E7;"></i>
+                            <i class="fa-solid fa-star fa-lg star" data-rating="4" style="color: #E5E6E7;"></i>
+                            <i class="fa-solid fa-star fa-lg star" data-rating="5" style="color: #E5E6E7;"></i>
                         </div>
+                        <input type="hidden" name="rating" id="ratingInput" value="">
                     </div>
+
                     <div class="d-flex flex-column input-area">
-                        <label for="" class="label">Subject</label>
-                        <input type="text" name="" id="" placeholder="Brief summary of your feedback" class="input">
+                        <label for="subject" class="label">Subject</label>
+                        <input type="text" name="subject" id="subject" placeholder="Brief summary of your feedback" class="input">
+                        <span class="error-message" id="subjectError"></span>
                     </div>
+
                     <div class="d-flex flex-column textarea-area">
-                        <label for="" class="label">Message *</label>
-                        <textarea name="" id="" class="input" placeholder="Please provide detailed information about your feedback......"></textarea>
+                        <label for="message" class="label">Message *</label>
+                        <textarea name="message" id="message" class="input" placeholder="Please provide detailed information about your feedback......" required></textarea>
+                        <span class="error-message" id="messageError"></span>
                     </div>
                 </form>
             </div>
-            <button class="align-self-center share-feedback-btn">Submit Feedback</button>
+
+            <div class="loading-spinner" id="loadingSpinner">
+                <div class="spinner-border text-warning" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p>Submitting your feedback...</p>
+            </div>
+
+            <button type="submit" form="feedbackForm" class="align-self-center share-feedback-btn" id="submitBtn">Submit Feedback</button>
         </section>
     </section>
 </main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const feedbackForm = document.getElementById('feedbackForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const successMessage = document.getElementById('successMessage');
+    const ratingStars = document.querySelectorAll('#ratingStars .star');
+    const ratingInput = document.getElementById('ratingInput');
+
+    // Star rating functionality
+    ratingStars.forEach(star => {
+        star.addEventListener('click', function() {
+            const rating = this.getAttribute('data-rating');
+            ratingInput.value = rating;
+
+            // Update star colors
+            ratingStars.forEach(s => {
+                if (s.getAttribute('data-rating') <= rating) {
+                    s.classList.add('active');
+                    s.style.color = '#FDAF22';
+                } else {
+                    s.classList.remove('active');
+                    s.style.color = '#E5E6E7';
+                }
+            });
+        });
+
+        // Hover effect
+        star.addEventListener('mouseover', function() {
+            const rating = this.getAttribute('data-rating');
+            ratingStars.forEach(s => {
+                if (s.getAttribute('data-rating') <= rating) {
+                    s.style.color = '#FDAF22';
+                } else {
+                    s.style.color = '#E5E6E7';
+                }
+            });
+        });
+    });
+
+    // Reset hover effect
+    document.getElementById('ratingStars').addEventListener('mouseleave', function() {
+        const currentRating = ratingInput.value;
+        ratingStars.forEach(s => {
+            if (currentRating && s.getAttribute('data-rating') <= currentRating) {
+                s.style.color = '#FDAF22';
+            } else {
+                s.style.color = '#E5E6E7';
+            }
+        });
+    });
+
+    // Form submission
+    feedbackForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        // Clear previous error messages
+        document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+        successMessage.style.display = 'none';
+
+        // Show loading spinner
+        loadingSpinner.classList.add('show');
+        submitBtn.disabled = true;
+
+        try {
+            const formData = new FormData(feedbackForm);
+            const data = {
+                first_name: formData.get('first_name'),
+                last_name: formData.get('last_name'),
+                feedback_type: formData.get('feedback_type'),
+                rating: formData.get('rating') || null,
+                subject: formData.get('subject'),
+                message: formData.get('message'),
+            };
+
+            const response = await fetch('/api/feedback/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                // Show success message
+                successMessage.textContent = result.message;
+                successMessage.style.display = 'block';
+
+                // Reset form
+                feedbackForm.reset();
+                ratingInput.value = '';
+                ratingStars.forEach(s => {
+                    s.classList.remove('active');
+                    s.style.color = '#E5E6E7';
+                });
+
+                // Scroll to success message
+                successMessage.scrollIntoView({ behavior: 'smooth' });
+
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 5000);
+            } else {
+                // Handle validation errors
+                if (result.errors) {
+                    Object.keys(result.errors).forEach(field => {
+                        const errorElement = document.getElementById(field + 'Error');
+                        if (errorElement) {
+                            errorElement.textContent = result.errors[field][0];
+                        }
+                    });
+                } else {
+                    alert(result.message || 'An error occurred while submitting your feedback.');
+                }
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred while submitting your feedback. Please try again.');
+        } finally {
+            // Hide loading spinner
+            loadingSpinner.classList.remove('show');
+            submitBtn.disabled = false;
+        }
+    });
+});
+</script>
 @endsection

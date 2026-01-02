@@ -5,8 +5,6 @@
  * Extends BaseApiClient for common functionality
  */
 
-import BaseApiClient from './baseApiClient.js';
-
 class PaymentApiClient extends BaseApiClient {
   /**
    * Get available payment gateways
@@ -126,4 +124,5 @@ class PaymentApiClient extends BaseApiClient {
   }
 }
 
-export default PaymentApiClient;
+// Make available globally
+window.PaymentApiClient = PaymentApiClient;

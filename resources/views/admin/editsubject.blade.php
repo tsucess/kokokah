@@ -1502,14 +1502,9 @@
         </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
-    <script type="module">
-        import CourseApiClient from '/js/api/courseApiClient.js';
-        import TopicApiClient from '/js/api/topicApiClient.js';
-        import LessonApiClient from '/js/api/lessonApiClient.js';
-        import QuizApiClient from '/js/api/quizApiClient.js';
-        import ToastNotification from '/js/utils/toastNotification.js';
-
-        // Get course ID from URL
+        <!-- API Clients -->
+    <script>
+// Get course ID from URL
         const courseId = '{{ $courseId }}';
 
         const quillCourseDescription = new Quill('#courseDescription', {
@@ -3573,6 +3568,5 @@
                 console.error('Error deleting quiz:', error);
                 ToastNotification.error('Error', 'Failed to delete quiz');
             }
-        };
-    </script>
+        };    </script>
 @endsection

@@ -210,10 +210,28 @@
     <!-- Axios (required for API calls) -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-    <!-- Dashboard Module -->
-    <script type="module">
-        import DashboardModule from '/js/dashboard.js'; // Initialize dashboard when DOM is ready
+    <!-- API Clients -->
+    <script src="/js/api/baseApiClient.js"></script>
+    <script src="/js/api/authClient.js"></script>
+    <script src="/js/api/pointsAndBadgesApiClient.js"></script>
+    <script src="/js/api/courseApiClient.js"></script>
+    <script src="/js/api/lessonApiClient.js"></script>
+    <script src="/js/api/quizApiClient.js"></script>
+    <script src="/js/api/userApiClient.js"></script>
+    <script src="/js/api/enrollmentApiClient.js"></script>
+    <script src="/js/api/badgeApiClient.js"></script>
+    <script src="/js/api/transactionApiClient.js"></script>
+    <script src="/js/api/walletApiClient.js"></script>
+    <script src="/js/api/paymentApiClient.js"></script>
+    <script src="/js/api/topicApiClient.js"></script>
+    <script src="/js/api/adminApiClient.js"></script>
+    <script src="/js/utils/uiHelpers.js"></script>
+    <script src="/js/utils/toastNotification.js"></script>
 
+    <!-- Dashboard Module -->
+    <script src="/js/dashboard.js"></script>
+    <script>
+        // Initialize dashboard when DOM is ready
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => {
                 DashboardModule.init();

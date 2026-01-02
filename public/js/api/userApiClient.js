@@ -4,8 +4,6 @@
  * Extends BaseApiClient for common functionality
  */
 
-import BaseApiClient from './baseApiClient.js';
-
 class UserApiClient extends BaseApiClient {
     /**
      * Get current user profile
@@ -107,7 +105,9 @@ class UserApiClient extends BaseApiClient {
     }
 }
 
-export default UserApiClient;
+// Make available globally
+window.UserApiClient = UserApiClient;
+
 
 
 

@@ -202,4 +202,5 @@ class ToastNotification {
   }
 }
 
-export default ToastNotification;
+// Make available globally
+window.ToastNotification = ToastNotification;

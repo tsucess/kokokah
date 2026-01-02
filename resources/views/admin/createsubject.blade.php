@@ -755,9 +755,11 @@
 
     <!-- Include the Quill library -->
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
-    <script type="module">
-        import CourseApiClient from '/js/api/courseApiClient.js';
+    <!-- API Clients -->
+    <script src="{{ asset('js/api/baseApiClient.js') }}"></script>
+    <script src="{{ asset('js/api/courseApiClient.js') }}"></script>
 
+    <script>
         const quill = new Quill('#courseDescription', {
             theme: 'snow'
         });
@@ -1066,7 +1068,7 @@
                             formData.append('thumbnail', fileInput.files[0]);
                         }
 
-                        const result = await CourseApiClient.createCourse(formData);
+                        const result = await window.CourseApiClient.createCourse(formData);
                         if (result.success) {
                             alert('Course published successfully!');
                             // Get the course ID from the response
@@ -1131,7 +1133,7 @@
                             formData.append('thumbnail', fileInput.files[0]);
                         }
 
-                        const result = await CourseApiClient.createCourse(formData);
+                        const result = await window.CourseApiClient.createCourse(formData);
                         if (result.success) {
                             alert('Course saved successfully!');
                             // Get the course ID from the response
@@ -1200,7 +1202,7 @@
                             formData.append('thumbnail', fileInput.files[0]);
                         }
 
-                        const result = await CourseApiClient.createCourse(formData);
+                        const result = await window.CourseApiClient.createCourse(formData);
                         if (result.success) {
                             alert('Course saved as draft!');
                             // Get the course ID from the response

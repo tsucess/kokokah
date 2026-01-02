@@ -45,20 +45,20 @@ return new class extends Migration
                 }
             });
             
-            // Add indexes if they don't exist (MySQL only)
-            if (Schema::hasTable('badges') && DB::getDriverName() === 'mysql') {
+            // Add indexes if they don't exist
+            if (Schema::hasTable('badges')) {
                 Schema::table('badges', function (Blueprint $table) {
                     // Check and add indexes
                     $indexExists = DB::select("SHOW INDEX FROM badges WHERE Key_name = 'badges_category_index'");
                     if (empty($indexExists)) {
                         $table->index('category');
                     }
-
+                    
                     $indexExists = DB::select("SHOW INDEX FROM badges WHERE Key_name = 'badges_type_index'");
                     if (empty($indexExists)) {
                         $table->index('type');
                     }
-
+                    
                     $indexExists = DB::select("SHOW INDEX FROM badges WHERE Key_name = 'badges_is_active_index'");
                     if (empty($indexExists)) {
                         $table->index('is_active');

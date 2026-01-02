@@ -77,11 +77,13 @@
     <!-- Axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-    <script type="module">
-        import AuthApiClient from '/js/api/authClient.js';
-        import UIHelpers from '/js/utils/uiHelpers.js';
+        <!-- API Clients -->
+    <script src="/js/api/baseApiClient.js"></script>
+    <script src="/js/api/authClient.js"></script>
+    <script src="/js/utils/uiHelpers.js"></script>
 
-        // Store original button text
+    <script>
+// Store original button text
         UIHelpers.storeButtonText('verifyBtn');
 
         // Get email from URL or session
@@ -132,8 +134,7 @@
             } else {
                 UIHelpers.showError(result.message || 'Failed to resend code');
             }
-        });
-    </script>
+        });    </script>
 </body>
 
 </html>

@@ -44,7 +44,7 @@ Route::get('/stem', function () {
 
 Route::get('/login', function () {
     return view('auth.login');
-});
+})->name('login');
 
 Route::get('/forgotpassword', function () {
     return view('auth.forgotpassword');
@@ -198,15 +198,24 @@ Route::get('/userleaderboard', function () {
     return view('users.leaderboard');
 });
 
-Route::get('/chatroom', function () {
-    return view('users.chatroom');
-});
+// Route::middleware('auth')->group(function () {
+    Route::get('/chatroom', function () {
+        // Create a token for the user if they don't have one
+        // $user = auth()->user();
+        // if ($user && !$user->tokens()->exists()) {
+        //     $token = $user->createToken('web_token')->plainTextToken;
+        //     // Pass the token to the view
+        //     return view('chat.chatroom', ['token' => $token]);
+        // }
+        return view('chat.chatroom');
+    });
+// });
 
 Route::get('/userlessondetails', function () {
     return view('users.subjectdetails');
 });
 
-Route::get('/subscriptionhistory', function () {
+Route::get('/usersubscriptionhistory', function () {
     return view('users.subscriptionhistory');
 });
 
@@ -220,10 +229,6 @@ Route::get('/subjectchart', function () {
 
 Route::get('/wallet', function () {
     return view('admin.wallet');
-});
-
-Route::get('/chatroom', function () {
-    return view('users.chatroom');
 });
 
 Route::get('/announcement', function () {

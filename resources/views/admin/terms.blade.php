@@ -444,11 +444,17 @@
             section === === = -->
 
 
-            <script type="module">
-                import CourseApiClient from '/js/api/courseApiClient.js';
-                import ToastNotification from '/js/utils/toastNotification.js';
+                <!-- API Clients -->
+    <script>
+// Wait for dependencies to be loaded
+function initializeTermsPage() {
+    if (typeof CourseApiClient === 'undefined' || typeof ToastNotification === 'undefined') {
+        // Dependencies not loaded yet, try again in 100ms
+        setTimeout(initializeTermsPage, 100);
+        return;
+    }
 
-                (function() {
+(function() {
                         // Config
                         const token = localStorage.getItem('auth_token') || '';
                         let terms = [];
@@ -709,7 +715,15 @@
                     loadTerms();
 
                 })();
-            </script>
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeTermsPage);
+} else {
+    initializeTermsPage();
+}
+    </script>
 
 
 

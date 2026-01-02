@@ -11,7 +11,7 @@ use App\Http\Controllers\CourseCategoryController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\ChatController;
-use App\Http\Controllers\ConversationController;
+use App\Http\Controllers\ChatMessageController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EnrollmentController;
@@ -35,11 +35,13 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\FeedbackController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\TermController;
 use App\Http\Controllers\PointsAndBadgesController;
+use App\Http\Controllers\AnnouncementController;
 
 
 
@@ -476,16 +478,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/{id}/unpublish', [LearningPathController::class, 'unpublish']);
     });
 
-    // Course Conversations routes (authenticated)
-    Route::prefix('conversations')->group(function () {
-        Route::get('/course/{courseId}', [ConversationController::class, 'indexByCourse']);
-        Route::post('/', [ConversationController::class, 'store']);
-        Route::get('/{conversationId}/messages', [ConversationController::class, 'getMessages']);
-        Route::post('/{conversationId}/messages', [ConversationController::class, 'sendMessage']);
-        Route::post('/{conversationId}/join', [ConversationController::class, 'join']);
-        Route::post('/messages/{messageId}/helpful', [ConversationController::class, 'markMessageAsHelpful']);
-    });
-
     // AI Chat routes (authenticated)
     Route::prefix('chat')->group(function () {
         Route::post('/start', [ChatController::class, 'startSession']);
@@ -497,6 +489,25 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/analytics', [ChatController::class, 'analytics'])->middleware('role:admin');
         Route::post('/suggestions', [ChatController::class, 'getSuggestedResponses']);
     });
+
+    // Chatrooms resource routes (authenticated)
+    Route::apiResource('chatrooms', \App\Http\Controllers\ChatroomController::class);
+
+    // Chat Room Messages routes (authenticated & authorized)
+    Route::prefix('chatrooms/{chatRoom}/messages')
+        ->middleware([
+            'auth:sanctum',
+            'ensure.user.authenticated.for.chat',
+            'authorize.chat.room.access',
+        ])
+        ->group(function () {
+            Route::get('/', [ChatMessageController::class, 'index']);
+            Route::post('/', [ChatMessageController::class, 'store'])
+                ->middleware('check.chat.room.mute.status');
+            Route::get('/{message}', [ChatMessageController::class, 'show']);
+            Route::put('/{message}', [ChatMessageController::class, 'update']);
+            Route::delete('/{message}', [ChatMessageController::class, 'destroy']);
+        });
 });
 
 // Admin-only route
@@ -592,6 +603,20 @@ Route::middleware('auth:sanctum')->prefix('notifications')->group(function () {
     Route::post('/send', [NotificationController::class, 'sendNotification'])->middleware('role:admin');
     Route::post('/broadcast', [NotificationController::class, 'broadcastNotification'])->middleware('role:admin');
     Route::get('/analytics', [NotificationController::class, 'getAnalytics'])->middleware('role:admin');
+});
+
+// Announcement routes
+Route::middleware('auth:sanctum')->prefix('announcements')->group(function () {
+    Route::get('/', [AnnouncementController::class, 'index']);
+    Route::get('/types', [AnnouncementController::class, 'getByType']);
+    Route::get('/{id}', [AnnouncementController::class, 'show']);
+
+    // Admin only routes
+    Route::middleware('role:admin')->group(function () {
+        Route::post('/', [AnnouncementController::class, 'store']);
+        Route::put('/{id}', [AnnouncementController::class, 'update']);
+        Route::delete('/{id}', [AnnouncementController::class, 'destroy']);
+    });
 });
 
 // Search routes
@@ -711,4 +736,25 @@ Route::middleware('auth:sanctum')->prefix('language')->group(function () {
 
     // Get user's language preference
     Route::get('/user', [LanguageController::class, 'getUserLanguage']);
+});
+
+// Feedback Routes
+Route::prefix('feedback')->group(function () {
+    // Public feedback submission (no auth required)
+    Route::post('/submit', [FeedbackController::class, 'store']);
+});
+
+// Authenticated Feedback Routes
+Route::middleware('auth:sanctum')->prefix('feedback')->group(function () {
+    // Get user's feedback history
+    Route::get('/my-feedback', [FeedbackController::class, 'getUserFeedback']);
+});
+
+// Admin Feedback Routes
+Route::middleware(['auth:sanctum', 'role:admin'])->prefix('feedback')->group(function () {
+    // Get all feedback
+    Route::get('/', [FeedbackController::class, 'index']);
+
+    // Get single feedback
+    Route::get('/{id}', [FeedbackController::class, 'show']);
 });

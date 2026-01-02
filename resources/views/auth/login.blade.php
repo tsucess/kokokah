@@ -98,12 +98,14 @@
   <!-- Axios -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-  <script type="module">
-    import AuthApiClient from '/js/api/authClient.js';
-    import UIHelpers from '/js/utils/uiHelpers.js';
+  <!-- API Clients -->
+  <script src="{{ asset('js/api/baseApiClient.js') }}"></script>
+  <script src="{{ asset('js/api/authClient.js') }}"></script>
+  <script src="{{ asset('js/utils/uiHelpers.js') }}"></script>
 
+  <script>
     // Store original button text
-    UIHelpers.storeButtonText('loginBtn');
+    window.UIHelpers.storeButtonText('loginBtn');
 
     // Password visibility toggle
     document.getElementById('togglePassword').addEventListener('click', () => {
@@ -131,26 +133,26 @@
 
       // Validate inputs
       if (!email || !password) {
-        UIHelpers.showError('Please fill in all fields');
+        window.UIHelpers.showError('Please fill in all fields');
         return;
       }
 
-      if (!UIHelpers.isValidEmail(email)) {
-        UIHelpers.showError('Please enter a valid email address');
+      if (!window.UIHelpers.isValidEmail(email)) {
+        window.UIHelpers.showError('Please enter a valid email address');
         return;
       }
 
       // Show loading state
-      UIHelpers.setButtonLoading('loginBtn', true);
-      UIHelpers.showLoadingOverlay(true);
+      window.UIHelpers.setButtonLoading('loginBtn', true);
+      window.UIHelpers.showLoadingOverlay(true);
 
       // Call login API
-      const result = await AuthApiClient.login(email, password);
+      const result = await window.AuthApiClient.login(email, password);
 
-      UIHelpers.showLoadingOverlay(false);
+      window.UIHelpers.showLoadingOverlay(false);
 
       if (result.success) {
-        UIHelpers.showSuccess('Login successful! Redirecting...');
+        window.UIHelpers.showSuccess('Login successful! Redirecting...');
 
         // Determine redirect URL based on user role
         let redirectUrl = '/dashboard'; // Default for admin/instructor
@@ -163,10 +165,10 @@
         }
 
         // Redirect after 1.5 seconds
-        UIHelpers.redirect(redirectUrl, 1500);
+        window.UIHelpers.redirect(redirectUrl, 1500);
       } else {
-        UIHelpers.showError(result.message || 'Login failed');
-        UIHelpers.setButtonLoading('loginBtn', false);
+        window.UIHelpers.showError(result.message || 'Login failed');
+        window.UIHelpers.setButtonLoading('loginBtn', false);
       }
     });
   </script>

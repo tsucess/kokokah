@@ -4,8 +4,6 @@
  * Extends BaseApiClient for common functionality
  */
 
-import BaseApiClient from './baseApiClient.js';
-
 class AuthApiClient extends BaseApiClient {
   /**
    * Register a new user
@@ -202,4 +200,5 @@ class AuthApiClient extends BaseApiClient {
   }
 }
 
-export default AuthApiClient;
+// Make available globally
+window.AuthApiClient = AuthApiClient;

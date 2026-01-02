@@ -8,17 +8,12 @@ return new class extends Migration
 {
     public function up(): void
     {
-        
-    Schema::table('lessons', function (Blueprint $table) {
-        // Ensure topic_id matches the type of topics.id
-        $table->unsignedBigInteger('topic_id')->nullable()->change();
-
-        // Add foreign key
-        $table->foreign('topic_id')
-              ->references('id')->on('topics')
-              ->onDelete('set null');
-    });
-
+        Schema::table('lessons', function (Blueprint $table) {
+            // Add foreign key
+            $table->foreign('topic_id')
+                  ->references('id')->on('topics')
+                  ->onDelete('set null');
+        });
     }
 
     public function down(): void

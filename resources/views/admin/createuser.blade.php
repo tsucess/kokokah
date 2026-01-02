@@ -663,10 +663,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 
-    <script type="module">
-        import AdminApiClient from '/js/api/adminApiClient.js';
-
-        // Get CSRF token
+        <!-- API Clients -->
+    <script>
+// Get CSRF token
         const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ||
             document.querySelector('input[name="_token"]')?.value;
 
@@ -967,7 +966,8 @@
                                 const userFriendlyMessage = formatValidationError(field, messages);
                                 errorMessages.push(userFriendlyMessage);
                             }
-                            const errorMessage = errorMessages.join('\n');
+                            const errorMessage = errorMessages.join('
+');
                             console.error('Validation errors:', errorMessage);
                             showAlert(errorMessage, 'error');
                         } else {
@@ -1047,6 +1047,5 @@
                     alert.remove();
                 }
             }, 5000);
-        }
-    </script>
+        }    </script>
 @endsection

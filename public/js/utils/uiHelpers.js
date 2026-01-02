@@ -3,7 +3,7 @@
  * Handles common UI operations like alerts, loading states, etc.
  */
 
-export default class UIHelpers {
+class UIHelpers {
   /**
    * Show success alert
    */
@@ -285,12 +285,12 @@ export default class UIHelpers {
    * Copy to clipboard
    */
   static formatDate(dateString) {
-            return new Date(dateString).toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-                year: "numeric"
-            });
-        }
+    return new Date(dateString).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric"
+    });
+  }
 
 
   /**
@@ -305,5 +305,5 @@ export default class UIHelpers {
   }
 }
 
-
-
+// Make available globally
+window.UIHelpers = UIHelpers;

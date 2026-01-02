@@ -115,10 +115,9 @@
             </div>
     </main>
 
-    <script type="module">
-        import TransactionApiClient from '/js/api/transactionApiClient.js';
-
-        const token = localStorage.getItem('auth_token');
+        <!-- API Clients -->
+    <script>
+const token = localStorage.getItem('auth_token');
         let currentPage = 1;
         let totalPages = 1;
         let currentSearch = '';
@@ -268,8 +267,7 @@
                 btn.onclick = () => loadTransactions(total);
                 pageNumbersDiv.appendChild(btn);
             }
-        }
-    </script>
+        }    </script>
 
     <style>
         .transactions-main {

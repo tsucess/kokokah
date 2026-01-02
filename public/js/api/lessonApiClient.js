@@ -4,8 +4,6 @@
  * Extends BaseApiClient for common functionality
  */
 
-import BaseApiClient from './baseApiClient.js';
-
 class LessonApiClient extends BaseApiClient {
     /**
      * Get all lessons for a course
@@ -140,4 +138,5 @@ class LessonApiClient extends BaseApiClient {
     }
 }
 
-export default LessonApiClient;
+// Make available globally
+window.LessonApiClient = LessonApiClient;

@@ -2,9 +2,7 @@
 
 @section('content')
 
-<script type="module">
-    import BadgeApiClient from '/js/api/badgeApiClient.js';
-
+<script>
     // Global variables
     let allLeaderboardData = [];
     let currentPage = 1;
@@ -67,7 +65,7 @@
     async function loadLeaderboard() {
         try {
             console.log('Loading leaderboard for period:', currentPeriod);
-            const response = await BadgeApiClient.getLeaderboard(currentPeriod);
+            const response = await window.BadgeApiClient.getLeaderboard(currentPeriod);
 
             if (response.success && response.data) {
                 const leaderboardData = response.data.leaderboard || response.data;

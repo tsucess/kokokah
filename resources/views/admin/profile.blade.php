@@ -522,10 +522,12 @@
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 
-                <script type="module">
-                    import UserApiClient from '/js/api/userApiClient.js';
-                    import ToastNotification from '/js/utils/toastNotification.js';
+                <!-- API Clients -->
+                <script src="{{ asset('js/api/baseApiClient.js') }}"></script>
+                <script src="{{ asset('js/api/userApiClient.js') }}"></script>
+                <script src="{{ asset('js/utils/toastNotification.js') }}"></script>
 
+                <script>
                     // Load profile data on page load
                     document.addEventListener('DOMContentLoaded', async () => {
                         console.log('Profile page loaded, fetching user data...');
@@ -541,7 +543,7 @@
                             console.log('Fetching profile data from API...');
                             console.log('Token:', localStorage.getItem('auth_token') ? 'Present' : 'Missing');
 
-                            const response = await UserApiClient.getProfile();
+                            const response = await window.UserApiClient.getProfile();
 
                             if (response.success && response.data) {
                                 const user = response.data;
@@ -630,7 +632,7 @@
                             } else {
                                 console.error('❌ Failed to fetch profile:', response);
                                 const errorMsg = response.message || response.error || 'Failed to load profile data';
-                                ToastNotification.error(errorMsg);
+                                window.ToastNotification.error(errorMsg);
                             }
                         } catch (error) {
                             console.error('❌ Error loading profile:', error);
@@ -638,14 +640,14 @@
                             // Check if it's a 401 error (unauthorized)
                             if (error.response?.status === 401 || error.status === 401) {
                                 console.log('User not authenticated, redirecting to login...');
-                                ToastNotification.error('Please log in to view your profile');
+                                window.ToastNotification.error('Please log in to view your profile');
                                 setTimeout(() => {
                                     window.location.href = '/login';
                                 }, 2000);
                                 return;
                             }
 
-                            ToastNotification.error('Failed to load profile data. Please try again.');
+                            window.ToastNotification.error('Failed to load profile data. Please try again.');
                         }
                     }
 
@@ -807,14 +809,14 @@
                             if (file) {
                                 // Validate file type
                                 if (!file.type.startsWith('image/')) {
-                                    ToastNotification.error('Please select a valid image file');
+                                    window.ToastNotification.error('Please select a valid image file');
                                     profilePhoto.value = '';
                                     return;
                                 }
 
                                 // Validate file size (5MB max)
                                 if (file.size > 5 * 1024 * 1024) {
-                                    ToastNotification.error('File size must be less than 5MB');
+                                    window.ToastNotification.error('File size must be less than 5MB');
                                     profilePhoto.value = '';
                                     return;
                                 }
@@ -858,7 +860,7 @@
                                             photoPreview.src = canvas.toDataURL();
                                         }
                                         closeCropperModal();
-                                        ToastNotification.success('Image cropped successfully');
+                                        window.ToastNotification.success('Image cropped successfully');
                                     });
                                 }
                             });
@@ -956,34 +958,34 @@
 
                             // Validation
                             if (!currentPassword || !newPassword || !confirmPassword) {
-                                ToastNotification.error('Please fill in all password fields');
+                                window.ToastNotification.error('Please fill in all password fields');
                                 return;
                             }
 
                             if (newPassword !== confirmPassword) {
-                                ToastNotification.error('New password and confirm password do not match');
+                                window.ToastNotification.error('New password and confirm password do not match');
                                 return;
                             }
 
                             if (newPassword.length < 8) {
-                                ToastNotification.error('New password must be at least 8 characters long');
+                                window.ToastNotification.error('New password must be at least 8 characters long');
                                 return;
                             }
 
-                            const response = await UserApiClient.changePassword(currentPassword, newPassword, confirmPassword);
+                            const response = await window.UserApiClient.changePassword(currentPassword, newPassword, confirmPassword);
 
                             if (response.success) {
-                                ToastNotification.success('Password changed successfully!');
+                                window.ToastNotification.success('Password changed successfully!');
                                 // Clear password fields
                                 document.getElementById('currentPassword').value = '';
                                 document.getElementById('newPassword').value = '';
                                 document.getElementById('confirmPassword').value = '';
                             } else {
-                                ToastNotification.error(response.message || 'Failed to change password');
+                                window.ToastNotification.error(response.message || 'Failed to change password');
                             }
                         } catch (error) {
                             console.error('Error changing password:', error);
-                            ToastNotification.error('An error occurred while changing password. Please try again.');
+                            window.ToastNotification.error('An error occurred while changing password. Please try again.');
                         }
                     }
 
@@ -997,10 +999,10 @@
                                 return;
                             }
 
-                            const response = await UserApiClient.deleteAccount();
+                            const response = await window.UserApiClient.deleteAccount();
 
                             if (response.success) {
-                                ToastNotification.success('Account deleted successfully. Redirecting...');
+                                window.ToastNotification.success('Account deleted successfully. Redirecting...');
                                 // Redirect to login after 2 seconds
                                 setTimeout(() => {
                                     localStorage.removeItem('auth_token');
@@ -1008,11 +1010,11 @@
                                     window.location.href = '/login';
                                 }, 2000);
                             } else {
-                                ToastNotification.error(response.message || 'Failed to delete account');
+                                window.ToastNotification.error(response.message || 'Failed to delete account');
                             }
                         } catch (error) {
                             console.error('Error deleting account:', error);
-                            ToastNotification.error('An error occurred while deleting account. Please try again.');
+                            window.ToastNotification.error('An error occurred while deleting account. Please try again.');
                         }
                     }
 
@@ -1027,7 +1029,7 @@
                             const email = document.getElementById('email').value.trim();
 
                             if (!firstName || !lastName || !email) {
-                                ToastNotification.error('Please fill in all required fields (First Name, Last Name, Email)');
+                                window.ToastNotification.error('Please fill in all required fields (First Name, Last Name, Email)');
                                 return;
                             }
 
@@ -1078,10 +1080,10 @@
                                 formData.append('avatar', profilePhoto.files[0]);
                             }
 
-                            const response = await UserApiClient.updateProfile(formData);
+                            const response = await window.UserApiClient.updateProfile(formData);
 
                             if (response.success) {
-                                ToastNotification.success('Profile updated successfully!');
+                                window.ToastNotification.success('Profile updated successfully!');
 
                                 // Update localStorage with new user data
                                 if (response.data) {
@@ -1118,10 +1120,10 @@
                                 // Reload profile data
                                 await loadProfileData();
                             } else {
-                                ToastNotification.error(response.message || 'Failed to update profile');
+                                window.ToastNotification.error(response.message || 'Failed to update profile');
                             }
                         } catch (error) {
-                            ToastNotification.error('An error occurred while saving profile. Please try again.');
+                            window.ToastNotification.error('An error occurred while saving profile. Please try again.');
                         }
                     }
 

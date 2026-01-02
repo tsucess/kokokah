@@ -381,10 +381,9 @@
 
 
 
-        <script type="module">
-            import CourseApiClient from '/js/api/courseApiClient.js';
-
-            (function() {
+            <!-- API Clients -->
+    <script>
+(function() {
                 const token = () => localStorage.getItem('auth_token') || '';
 
                 // 1. Get the stored string from localStorage
@@ -746,7 +745,6 @@
                     });
                 }
 
-            })();
-        </script>
+            })();    </script>
     </main>
 @endsection

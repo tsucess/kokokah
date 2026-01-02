@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::table('lessons', function (Blueprint $table) {
             // Add new columns
-            $table->integer('topic_id')->nullable()->after('course_id');
+            $table->unsignedBigInteger('topic_id')->nullable()->after('course_id');
             $table->string('video_type')->nullable()->after('video_url');
             $table->string('lesson_type')->nullable()->after('video_type');
 

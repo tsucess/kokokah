@@ -60,12 +60,9 @@
         </div>
 
     </main>
-    <script type="module">
-        import CourseApiClient from '/js/api/courseApiClient.js';
-        import UserApiClient from '/js/api/userApiClient.js';
-        import ToastNotification from '/js/utils/toastNotification.js';
-
-        let userCourses = [];
+        <!-- API Clients -->
+    <script>
+let userCourses = [];
 
         // Initialize page
         document.addEventListener('DOMContentLoaded', async () => {
@@ -197,6 +194,5 @@
                     <p class="text-muted">No courses enrolled yet. <a href="/userclass">Browse courses</a></p>
                 </div>
             `;
-        }
-    </script>
+        }    </script>
 @endsection

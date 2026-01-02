@@ -102,11 +102,6 @@ class Course extends Model
         return $this->hasMany(Certificate::class);
     }
 
-    public function conversations()
-    {
-        return $this->hasMany(Conversation::class);
-    }
-
     public function aiRecommendations()
     {
         return $this->hasMany(AiRecommendation::class);
@@ -152,6 +147,11 @@ class Course extends Model
         return $this->belongsToMany(LearningPath::class, 'learning_path_courses')
                     ->withPivot('sort_order', 'is_required')
                     ->withTimestamps();
+    }
+
+    public function chatRoom()
+    {
+        return $this->hasOne(ChatRoom::class);
     }
 
     // Scopes
@@ -218,24 +218,6 @@ class Course extends Model
         }
 
         return $slug;
-    }
-
-    /**
-     * Boot method to auto-create conversation when course is created
-     */
-    protected static function booted()
-    {
-        parent::booted();
-
-        static::created(function ($course) {
-            // Auto-create a default conversation for the course
-            Conversation::create([
-                'course_id' => $course->id,
-                'name' => 'General Discussion',
-                'description' => 'General discussion channel for ' . $course->title,
-                'created_by' => $course->instructor_id
-            ]);
-        });
     }
 }
 

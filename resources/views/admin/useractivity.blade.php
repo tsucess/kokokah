@@ -228,11 +228,9 @@
     </style>
 
 
-    <script type="module">
-        import UIHelpers from '/js/utils/uiHelpers.js';
-        import AdminApiClient from '/js/api/adminApiClient.js';
-
-        // Get auth token
+        <!-- API Clients -->
+    <script>
+// Get auth token
         const token = localStorage.getItem('auth_token');
         let currentPage = 1;
         let totalPages = 1;
@@ -389,7 +387,5 @@
                 btn.addEventListener('click', () => loadUsersActivities(totalPages));
                 pageNumbersContainer.appendChild(btn);
             }
-        }
-
-    </script>
+        }    </script>
 @endsection

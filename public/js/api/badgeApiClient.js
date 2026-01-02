@@ -3,8 +3,6 @@
  * Handles all badge and leaderboard related API calls
  */
 
-import BaseApiClient from './baseApiClient.js';
-
 class BadgeApiClient extends BaseApiClient {
   /**
    * Get badge leaderboard
@@ -100,5 +98,5 @@ class BadgeApiClient extends BaseApiClient {
   }
 }
 
-export default BadgeApiClient;
-
+// Make available globally
+window.BadgeApiClient = BadgeApiClient;

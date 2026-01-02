@@ -90,14 +90,9 @@
 
         </div>
     </main>
-    <script type="module">
-        import CourseApiClient from '/js/api/courseApiClient.js';
-        import LessonApiClient from '/js/api/lessonApiClient.js';
-        import TopicApiClient from '/js/api/topicApiClient.js';
-        import UserApiClient from '/js/api/userApiClient.js';
-        import ToastNotification from '/js/utils/toastNotification.js';
-
-        let currentCourseId = null;
+        <!-- API Clients -->
+    <script>
+let currentCourseId = null;
         let currentTermId = null;
         let currentTopicId = null;
         let allLessons = [];
@@ -461,6 +456,5 @@
                 li.innerHTML = `<img src="${item.icon}" class="img-fluid" style="width:15px; height:15px;"> ${item.text}`;
                 list.appendChild(li);
             });
-        }
-    </script>
+        }    </script>
 @endsection

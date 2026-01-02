@@ -4,8 +4,6 @@
  * Extends BaseApiClient for common functionality
  */
 
-import BaseApiClient from './baseApiClient.js';
-
 class TransactionApiClient extends BaseApiClient {
   /**
    * Get all transactions (admin endpoint)
@@ -163,7 +161,9 @@ class TransactionApiClient extends BaseApiClient {
   }
 }
 
-export default TransactionApiClient;
+// Make available globally
+window.TransactionApiClient = TransactionApiClient;
+
 
 
 

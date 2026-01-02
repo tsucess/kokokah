@@ -230,11 +230,9 @@
 
 <div id="toastContainer" aria-live="polite" aria-atomic="true"></div>
 
-        <script type="module">
-              import CourseApiClient from '/js/api/courseApiClient.js';
-              import ToastNotification from '/js/utils/toastNotification.js';
-
-              (function() {
+            <!-- API Clients -->
+    <script>
+(function() {
                 // Config
                 const token = localStorage.getItem('auth_token') || '';
                 let categories = [];
@@ -642,8 +640,7 @@
             // });
 
             // // Initial load
-            // renderCategories();
-        </script>
+            // renderCategories();    </script>
 
     </main>
 @endsection

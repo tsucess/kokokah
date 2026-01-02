@@ -278,12 +278,8 @@ font-size: 12px;
     </div>
 
 </main>
-<script type="module">
-import CourseApiClient from '/js/api/courseApiClient.js';
-import EnrollmentApiClient from '/js/api/enrollmentApiClient.js';
-import AuthApiClient from '/js/api/authClient.js';
-import ToastNotification from '/js/utils/toastNotification.js';
-
+    <!-- API Clients -->
+    <script>
 document.addEventListener('DOMContentLoaded', async () => {
     // Load user data
     const user = AuthApiClient.getUser();
@@ -433,7 +429,6 @@ function updateSliderButtonStates() {
     // Check if at end
     const isAtEnd = container.scrollLeft >= (container.scrollWidth - container.clientWidth - 10);
     nextBtn.disabled = isAtEnd;
-}
-</script>
+}    </script>
 
 @endsection

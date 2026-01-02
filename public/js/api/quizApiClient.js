@@ -8,8 +8,6 @@
  * - Topics: For topic-level assessment and reference
  */
 
-import BaseApiClient from './baseApiClient.js';
-
 class QuizApiClient extends BaseApiClient {
   /**
    * Get all quizzes for a lesson
@@ -131,6 +129,8 @@ class QuizApiClient extends BaseApiClient {
   }
 }
 
-export default QuizApiClient;
+// Make available globally
+window.QuizApiClient = QuizApiClient;
+
 
 

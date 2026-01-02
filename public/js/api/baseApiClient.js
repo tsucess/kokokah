@@ -228,6 +228,7 @@ class BaseApiClient {
     try {
       const response = await fetch(url, {
         ...options,
+        credentials: 'include', // Include cookies in requests
         signal: controller.signal
       });
       clearTimeout(timeoutId);
@@ -292,8 +293,6 @@ class BaseApiClient {
    * Handle error response
    */
   static handleError(error) {
-    console.error('API Error:', error);
-
     // Handle abort/timeout errors
     if (error.name === 'AbortError') {
       return {
@@ -358,4 +357,5 @@ class BaseApiClient {
   }
 }
 
-export default BaseApiClient;
+// Make available globally
+window.BaseApiClient = BaseApiClient;

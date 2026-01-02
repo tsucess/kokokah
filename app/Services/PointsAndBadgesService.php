@@ -162,13 +162,11 @@ class PointsAndBadgesService
 
             // CHATROOM BADGES
             case 'chatroom_posts':
-                // Count messages in course conversations
-                $posts = \App\Models\ConversationMessage::where('user_id', $user->id)->count();
+                $posts = \App\Models\ChatMessage::where('user_id', $user->id)->count();
                 return $posts >= (int)$criteriaValue;
 
             case 'helpful_posts':
-                // Count helpful messages (marked by instructors/admins)
-                $helpful = \App\Models\ConversationMessage::where('user_id', $user->id)
+                $helpful = \App\Models\ChatMessage::where('user_id', $user->id)
                     ->where('is_helpful', true)
                     ->count();
                 return $helpful >= (int)$criteriaValue;

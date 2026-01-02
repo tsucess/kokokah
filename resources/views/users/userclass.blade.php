@@ -62,10 +62,9 @@ font-size: 12px;
     </div>
 
 </main>
-<script type="module">
-    import CourseApiClient from '/js/api/courseApiClient.js';
-
-    document.addEventListener("DOMContentLoaded", async () => {
+    <!-- API Clients -->
+    <script>
+document.addEventListener("DOMContentLoaded", async () => {
         await loadClasses();
     });
 
@@ -132,6 +131,5 @@ font-size: 12px;
                 window.location.href = `/userenroll?level_id=${levelId}`;
             });
         });
-    }
-</script>
+    }    </script>
 @endsection

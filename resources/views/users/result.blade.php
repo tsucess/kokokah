@@ -207,13 +207,7 @@
         </div>
     </main>
 
-    <script type="module">
-        import QuizApiClient from '/js/api/quizApiClient.js';
-        import CourseApiClient from '/js/api/courseApiClient.js';
-        import TopicApiClient from '/js/api/topicApiClient.js';
-        import LessonApiClient from '/js/api/lessonApiClient.js';
-        import ToastNotification from '/js/utils/toastNotification.js';
-
+    <script>
         let quizId = null;
         let allQuizResults = [];
 
@@ -238,7 +232,7 @@
             try {
                 // If a specific quiz ID is provided, load that quiz's results
                 if (quizId) {
-                    const response = await QuizApiClient.getQuizResults(quizId);
+                    const response = await window.QuizApiClient.getQuizResults(quizId);
                     if (response.success && response.data) {
                         allQuizResults = [response.data];
                         displayResults(allQuizResults);

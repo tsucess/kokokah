@@ -522,11 +522,9 @@
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 
-                <script type="module">
-                    import UserApiClient from '/js/api/userApiClient.js';
-                    import ToastNotification from '/js/utils/toastNotification.js';
-
-                    // Load profile data on page load
+                    <!-- API Clients -->
+    <script>
+// Load profile data on page load
                     document.addEventListener('DOMContentLoaded', async () => {
                         console.log('Profile page loaded, fetching user data...');
 
@@ -1154,7 +1152,6 @@
 
                     // Expose functions to window for debugging
                     window.loadProfileData = loadProfileData;
-                    window.saveProfileData = saveProfileData;
-                </script>
+                    window.saveProfileData = saveProfileData;    </script>
     </main>
 @endsection

@@ -3,10 +3,6 @@
  * Handles dashboard interactions like logout and profile navigation
  */
 
-import AuthApiClient from './api/authClient.js';
-import PointsAndBadgesApiClient from './api/pointsAndBadgesApiClient.js';
-import UIHelpers from './utils/uiHelpers.js';
-
 class DashboardModule {
   /**
    * Initialize dashboard functionality
@@ -37,19 +33,19 @@ class DashboardModule {
       }
 
       // Show loading state
-      UIHelpers.showLoadingOverlay(true);
+      window.UIHelpers.showLoadingOverlay(true);
 
       // Call logout API
-      const result = await AuthApiClient.logout();
+      const result = await window.AuthApiClient.logout();
 
-      UIHelpers.showLoadingOverlay(false);
+      window.UIHelpers.showLoadingOverlay(false);
 
       if (result.success) {
-        UIHelpers.showSuccess('Logged out successfully! Redirecting...');
+        window.UIHelpers.showSuccess('Logged out successfully! Redirecting...');
         // Redirect to login page after 1.5 seconds
-        UIHelpers.redirect('/login', 1500);
+        window.UIHelpers.redirect('/login', 1500);
       } else {
-        UIHelpers.showError('Logout failed. Please try again.');
+        window.UIHelpers.showError('Logout failed. Please try again.');
       }
     });
   }
@@ -142,7 +138,7 @@ class DashboardModule {
    * Load and display user profile information
    */
   static loadUserProfile() {
-    const user = AuthApiClient.getUser();
+    const user = window.AuthApiClient.getUser();
 
     if (!user) return;
 
@@ -202,7 +198,7 @@ class DashboardModule {
   static async loadPointsAndBadges() {
     try {
       // Fetch user points
-      const pointsResponse = await PointsAndBadgesApiClient.getUserPoints();
+      const pointsResponse = await window.PointsAndBadgesApiClient.getUserPoints();
 
       if (pointsResponse.success && pointsResponse.data) {
         const { points = 0 } = pointsResponse.data;
@@ -221,7 +217,7 @@ class DashboardModule {
       }
 
       // Fetch user badges
-      const badgesResponse = await PointsAndBadgesApiClient.getUserBadges();
+      const badgesResponse = await window.PointsAndBadgesApiClient.getUserBadges();
 
       if (badgesResponse.success && badgesResponse.data) {
         const badgeCount = Array.isArray(badgesResponse.data)
@@ -270,7 +266,8 @@ class DashboardModule {
   }
 }
 
-export default DashboardModule;
+// Make available globally
+window.DashboardModule = DashboardModule;
 
 
 

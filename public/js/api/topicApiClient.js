@@ -4,8 +4,6 @@
  * Extends BaseApiClient for common functionality
  */
 
-import BaseApiClient from './baseApiClient.js';
-
 class TopicApiClient extends BaseApiClient {
   /**
    * Get all topics for a course
@@ -64,7 +62,9 @@ class TopicApiClient extends BaseApiClient {
   }
 }
 
-export default TopicApiClient;
+// Make available globally
+window.TopicApiClient = TopicApiClient;
+
 
 
 

@@ -3,8 +3,6 @@
  * Handles all points and badges related API calls
  */
 
-import BaseApiClient from './baseApiClient.js';
-
 class PointsAndBadgesApiClient extends BaseApiClient {
   /**
    * Get user's current points and level
@@ -128,5 +126,5 @@ class PointsAndBadgesApiClient extends BaseApiClient {
   }
 }
 
-export default PointsAndBadgesApiClient;
-
+// Make available globally
+window.PointsAndBadgesApiClient = PointsAndBadgesApiClient;

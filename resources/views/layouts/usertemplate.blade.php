@@ -152,10 +152,28 @@
     <!-- Axios (required for API calls) -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-    <!-- Dashboard Module -->
-    <script type="module">
-        import DashboardModule from '/js/dashboard.js'; // Initialize dashboard when DOM is ready
+    <!-- API Clients (must load before any scripts that use them) -->
+    <script src="{{ asset('js/api/baseApiClient.js') }}"></script>
+    <script src="{{ asset('js/api/authClient.js') }}"></script>
+    <script src="{{ asset('js/api/courseApiClient.js') }}"></script>
+    <script src="{{ asset('js/api/adminApiClient.js') }}"></script>
+    <script src="{{ asset('js/api/enrollmentApiClient.js') }}"></script>
+    <script src="{{ asset('js/api/lessonApiClient.js') }}"></script>
+    <script src="{{ asset('js/api/paymentApiClient.js') }}"></script>
+    <script src="{{ asset('js/api/quizApiClient.js') }}"></script>
+    <script src="{{ asset('js/api/topicApiClient.js') }}"></script>
+    <script src="{{ asset('js/api/transactionApiClient.js') }}"></script>
+    <script src="{{ asset('js/api/userApiClient.js') }}"></script>
+    <script src="{{ asset('js/api/walletApiClient.js') }}"></script>
+    <script src="{{ asset('js/api/badgeApiClient.js') }}"></script>
+    <script src="{{ asset('js/api/pointsAndBadgesApiClient.js') }}"></script>
+    <script src="{{ asset('js/utils/toastNotification.js') }}"></script>
+    <script src="{{ asset('js/utils/uiHelpers.js') }}"></script>
 
+    <!-- Dashboard Module -->
+    <script src="{{ asset('js/dashboard.js') }}"></script>
+    <script>
+        // Initialize dashboard when DOM is ready
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => {
                 DashboardModule.init();

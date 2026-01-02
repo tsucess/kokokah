@@ -111,10 +111,9 @@
             </div>
     </main>
 
-    <script type="module">
-        import AdminApiClient from '/js/api/adminApiClient.js';
-
-        // Get auth token
+        <!-- API Clients -->
+    <script>
+// Get auth token
         const token = localStorage.getItem('auth_token');
         let currentPage = 1;
         let totalPages = 1;
@@ -363,8 +362,7 @@
             loadUsers = async function(page = 1) {
                 await originalLoadUsers(page);
                 attachDeleteListeners();
-            };
-    </script>
+            };    </script>
 
     <style>
         .users-main {

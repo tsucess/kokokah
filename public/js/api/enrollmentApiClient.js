@@ -4,8 +4,6 @@
  * Extends BaseApiClient for common functionality
  */
 
-import BaseApiClient from './baseApiClient.js';
-
 class EnrollmentApiClient extends BaseApiClient {
   /**
    * Get user's enrollments
@@ -104,4 +102,5 @@ class EnrollmentApiClient extends BaseApiClient {
   }
 }
 
-export default EnrollmentApiClient;
+// Make available globally
+window.EnrollmentApiClient = EnrollmentApiClient;

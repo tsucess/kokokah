@@ -113,11 +113,13 @@
   <!-- Axios -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-  <script type="module">
-    import AuthApiClient from '/js/api/authClient.js';
-    import UIHelpers from '/js/utils/uiHelpers.js';
+      <!-- API Clients -->
+    <script src="/js/api/baseApiClient.js"></script>
+    <script src="/js/api/authClient.js"></script>
+    <script src="/js/utils/uiHelpers.js"></script>
 
-    // Store original button text
+    <script>
+// Store original button text
     UIHelpers.storeButtonText('registerBtn');
 
     // Password visibility toggle
@@ -230,7 +232,6 @@
         UIHelpers.showError(result.message || 'Registration failed');
         UIHelpers.setButtonLoading('registerBtn', false);
       }
-    });
-  </script>
+    });    </script>
 </body>
 </html>
