@@ -1796,12 +1796,28 @@ p {
 }
 
 .notification-label {
-    background-color: #e6e8ff;
     width: 65px;
     height: 26px;
     gap: 4px;
-    color: #1c1d1d;
     font-size: 12px;
+}
+
+/* Info Priority Badge */
+.notification-label-info {
+    background-color: #e6e8ff !important;
+    color: #1c1d1d !important;
+}
+
+/* Urgent Priority Badge */
+.notification-label-urgent {
+    background-color: #fde1d3 !important;
+    color: #f56824 !important;
+}
+
+/* Warning Priority Badge */
+.notification-label-warning {
+    background-color: #fff1d8 !important;
+    color: #fdaf22 !important;
 }
 
 .button {
@@ -2010,6 +2026,9 @@ select {
     border-radius: 20px;
     font-weight: 500;
     user-select: none;
+    gap: 4px;
+    width: auto;
+    height: auto;
 }
 
 .priority-container [data-priority]:hover {
@@ -2019,50 +2038,50 @@ select {
 
 /* Info Badge */
 .priority-container [data-priority="Info"] {
-    background-color: #e6e8ff;
-    color: #1c1d1d;
+    background-color: #e6e8ff !important;
+    color: #1c1d1d !important;
 }
 
 .priority-container [data-priority="Info"]:hover {
-    background-color: #d4d8ff;
+    background-color: #d4d8ff !important;
 }
 
 .priority-container [data-priority="Info"].active {
-    background-color: #e6e8ff;
-    border-color: #000000;
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+    background-color: #e6e8ff !important;
+    border-color: #000000 !important;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1) !important;
 }
 
 /* Urgent Badge */
 .priority-container [data-priority="Urgent"] {
-    background-color: #fde1d3;
-    color: #f56824;
+    background-color: #fde1d3 !important;
+    color: #f56824 !important;
 }
 
 .priority-container [data-priority="Urgent"]:hover {
-    background-color: #fdd0b8;
+    background-color: #fdd0b8 !important;
 }
 
 .priority-container [data-priority="Urgent"].active {
-    background-color: #fde1d3;
-    border-color: #f56824;
-    box-shadow: 0 0 0 3px rgba(245, 104, 36, 0.1);
+    background-color: #fde1d3 !important;
+    border-color: #f56824 !important;
+    box-shadow: 0 0 0 3px rgba(245, 104, 36, 0.1) !important;
 }
 
 /* Warning Badge */
 .priority-container [data-priority="Warning"] {
-    background-color: #fff1d8;
-    color: #fdaf22;
+    background-color: #fff1d8 !important;
+    color: #fdaf22 !important;
 }
 
 .priority-container [data-priority="Warning"]:hover {
-    background-color: #ffe8b8;
+    background-color: #ffe8b8 !important;
 }
 
 .priority-container [data-priority="Warning"].active {
-    background-color: #fff1d8;
-    border-color: #fdaf22;
-    box-shadow: 0 0 0 3px rgba(253, 175, 34, 0.1);
+    background-color: #fff1d8 !important;
+    border-color: #fdaf22 !important;
+    box-shadow: 0 0 0 3px rgba(253, 175, 34, 0.1) !important;
 }
 
 .modal-backdrop.show {

@@ -186,7 +186,7 @@ class DashboardModule {
         }
       } else {
         // Use default avatar if no profile photo
-        profileImage.src = 'images/winner-round.png';
+        profileImage.src = '/images/winner-round.png';
         console.log('No profile photo, using default avatar');
       }
     }

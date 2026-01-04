@@ -35,19 +35,43 @@ class PaymentGatewayService
             ])
         ]);
 
-        $gatewayService = $this->getGatewayService($gateway);
-        $response = $gatewayService->initializePayment($payment);
+        try {
+            $gatewayService = $this->getGatewayService($gateway);
+            $response = $gatewayService->initializePayment($payment);
 
-        $payment->update([
-            'gateway_reference' => $response['reference'] ?? null,
-            'gateway_response' => $response
-        ]);
+            // Check if initialization was successful
+            if (!isset($response['success']) || !$response['success']) {
+                // Mark payment as failed if gateway initialization failed
+                $payment->update([
+                    'status' => 'failed',
+                    'gateway_response' => $response,
+                    'failed_at' => now()
+                ]);
 
-        return [
-            'payment_id' => $payment->id,
-            'gateway_data' => $response,
-            'payment' => $payment
-        ];
+                throw new \Exception($response['message'] ?? 'Payment initialization failed');
+            }
+
+            // Update payment with gateway reference and response
+            $payment->update([
+                'gateway_reference' => $response['reference'] ?? null,
+                'gateway_response' => $response
+            ]);
+
+            return [
+                'success' => true,
+                'payment_id' => $payment->id,
+                'gateway_data' => $response,
+                'payment' => $payment
+            ];
+        } catch (\Exception $e) {
+            Log::error('Wallet deposit initialization failed: ' . $e->getMessage(), [
+                'user_id' => $user->id,
+                'amount' => $amount,
+                'gateway' => $gateway
+            ]);
+
+            throw $e;
+        }
     }
 
     /**

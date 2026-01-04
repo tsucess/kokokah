@@ -4,19 +4,33 @@
 
 ### For Admins
 ```
+CREATE:
 1. Go to /announcement
 2. Click "Create New Announcement"
 3. Fill form (title, type, priority, audience, description)
-4. Watch preview update in real-time
-5. Click "Publish" or "Save As Draft"
+4. Click "Publish" or "Save As Draft"
+
+EDIT:
+1. Go to /announcement
+2. Click three vertical dots on announcement
+3. Click "Edit"
+4. Modify fields
+5. Click "Save Changes"
+
+DELETE:
+1. Go to /announcement
+2. Click three vertical dots on announcement
+3. Click "Delete"
+4. Confirm deletion
 ```
 
 ### For Students
 ```
-1. Go to /userannouncement
+1. Go to /announcement
 2. View announcements
-3. Filter by type using tabs
-4. No create/edit/delete options
+3. Click announcement to view details
+4. Filter by type using tabs
+5. No create/edit/delete options
 ```
 
 ## 📁 Key Files
@@ -138,7 +152,7 @@ deleted_at      - Soft delete timestamp
 new AnnouncementManager('/api/announcements')
 - loadAnnouncements()
 - submitAnnouncement(status)
-- deleteAnnouncement(id)
+- getToken()
 - getTimeAgo(date)
 ```
 
@@ -147,12 +161,20 @@ new AnnouncementManager('/api/announcements')
 extends AnnouncementManager
 - setupTabFilters()
 - updateTabCounts()
-- editAnnouncement(id)
+- renderAnnouncements()
+- editAnnouncement(id)          // Opens edit modal
+- submitEditAnnouncement()       // Saves changes
+- deleteAnnouncement(id)         // Opens delete modal
+- confirmDeleteAnnouncement()    // Confirms deletion
 ```
 
 ### StudentAnnouncementManager
 ```javascript
 extends AnnouncementManager
+- setupTabFilters()
+- updateTabCounts()
+- renderAnnouncements()
+- viewAnnouncement(id)           // Opens view modal
 - Read-only view
 - No edit/delete
 ```
@@ -230,6 +252,13 @@ curl -X DELETE http://localhost:8000/api/announcements/1 \
 - [x] Type filtering
 - [x] Authorization checks
 - [x] Documentation complete
+- [x] Edit modal with form
+- [x] Delete confirmation modal
+- [x] Three vertical dots menu
+- [x] Student view modal
+- [x] Real-time list updates
+- [x] Form validation
+- [x] Error handling
 
 ## 🎯 Next Steps
 

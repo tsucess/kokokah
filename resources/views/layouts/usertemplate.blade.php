@@ -30,6 +30,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
     <link rel="stylesheet" href="{{ asset('css/style_theme.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
 
     {{-- @vite(['resources/css/dashboard.css']) --}}
 </head>
@@ -42,7 +43,7 @@
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
         <div class="brand">
-            <img src="images/Kokokah_Logo.png" alt="Kokokah Logo" class="img-fluid dashboard-logo">
+            <img src="{{ asset('images/Kokokah_Logo.png') }}" alt="Kokokah Logo" class="img-fluid dashboard-logo">
         </div>
 
         <nav class="nav-group" id="sidebarNav">
@@ -70,7 +71,7 @@
 
             <!-- communication dropdowns -->
             <div class="collapse ps-4" id="communication">
-                <a class="nav-item-link d-block" href="#">Announcement</a>
+                <a class="nav-item-link d-block" href="/userannouncement">Announcements</a>
                 <a class="nav-item-link d-block" href="#">Email / Messaging Center</a>
                 <a class="nav-item-link d-block" href="/userfeedback">Feedback / Surveys</a>
             </div>
@@ -83,7 +84,7 @@
         <div class="sidebar-footer mt-auto p-3">
             <a class="nav-item-link" href="#"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
             <div class="profile mt-3" id="profileSection">
-                <img class="avatar" id="profileImage" src="images/winner-round.png" alt="user"
+                <img class="avatar" id="profileImage" src="{{ asset('images/winner-round.png') }}" alt="user"
                     style="cursor: pointer; width: 40px; height: 40px; object-fit: cover; border-radius: 50%; border: 2px solid #ff00;"
                     data-bs-toggle="tooltip" data-bs-placement="top" title="Profile">
                 <div class="d-flex justify-content-between mt-4 p-2 w-100 align-items-center">
@@ -226,6 +227,9 @@
 
     <!-- Confirmation Modal -->
     <script src="{{ asset('js/utils/confirmationModal.js') }}"></script>
+
+    <!-- Kokokah Logo Loader -->
+    <script src="{{ asset('js/utils/kokokahLoader.js') }}"></script>
 </body>
 
 </html>

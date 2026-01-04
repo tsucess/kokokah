@@ -77,6 +77,151 @@
                 border: none;
             }
 
+            /* Payment Method Modal Styles */
+            .payment-method-modal {
+                display: none;
+                position: fixed;
+                z-index: 1000;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                animation: fadeIn 0.3s ease-in-out;
+            }
+
+            .payment-method-modal.show {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .payment-method-content {
+                background-color: #fff;
+                padding: 30px;
+                border-radius: 12px;
+                max-width: 500px;
+                width: 90%;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+                animation: slideUp 0.3s ease-in-out;
+            }
+
+            .payment-method-header {
+                font-size: 24px;
+                font-weight: 700;
+                color: #004A53;
+                margin-bottom: 10px;
+                font-family: 'fredoka';
+            }
+
+            .payment-method-subtitle {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 25px;
+            }
+
+            .payment-method-list {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .payment-method-item {
+                display: flex;
+                align-items: center;
+                padding: 16px;
+                border: 2px solid #e0e0e0;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                background-color: #f9f9f9;
+            }
+
+            .payment-method-item:hover {
+                border-color: #004A53;
+                background-color: #f0f8f9;
+                transform: translateX(4px);
+            }
+
+            .payment-method-item.wallet {
+                border-color: #FDAF22;
+                background-color: #fffbf0;
+            }
+
+            .payment-method-item.wallet:hover {
+                border-color: #FDAF22;
+                background-color: #fff8e6;
+            }
+
+            .payment-method-icon {
+                font-size: 28px;
+                margin-right: 16px;
+                width: 40px;
+                text-align: center;
+            }
+
+            .payment-method-info {
+                flex: 1;
+            }
+
+            .payment-method-name {
+                font-weight: 600;
+                color: #1c1d1d;
+                font-size: 16px;
+                margin-bottom: 4px;
+            }
+
+            .payment-method-desc {
+                font-size: 13px;
+                color: #999;
+            }
+
+            .payment-method-close {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                font-size: 28px;
+                font-weight: bold;
+                color: #999;
+                cursor: pointer;
+                border: none;
+                background: none;
+                padding: 0;
+                width: 30px;
+                height: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .payment-method-close:hover {
+                color: #004A53;
+            }
+
+            .payment-method-content {
+                position: relative;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            @keyframes slideUp {
+                from {
+                    transform: translateY(30px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+
             /* Toast Notification Styles */
             .toast-notification {
                 position: fixed;
@@ -301,6 +446,91 @@
                 </div>
             </div>
         </section>
+
+        <!-- Amount Input Modal -->
+        <div id="amountModal" class="payment-method-modal">
+            <div class="payment-method-content">
+                <button class="payment-method-close" onclick="closeAmountModal()">&times;</button>
+                <h2 class="payment-method-header">Add Money to Wallet</h2>
+                <p class="payment-method-subtitle">Enter the amount you want to add</p>
+
+                <div style="padding: 20px 0;">
+                    <div class="input-border">
+                        <label for="depositAmount" class="form-label">Amount (₦)</label>
+                        <input type="number" class="form-input" id="depositAmount" placeholder="Enter amount" min="100" step="100" required>
+                        <small class="text-danger d-none" id="amountErrorMsg"></small>
+                    </div>
+                    <div style="margin-top: 15px; padding: 12px; background-color: #f0f8f9; border-radius: 8px; border-left: 4px solid #004A53;">
+                        <small style="color: #666;">Minimum amount: ₦100</small>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 12px; margin-top: 20px;">
+                    <button type="button" class="addmoney-btn" style="flex: 1; background: white;" onclick="closeAmountModal()">Cancel</button>
+                    <button type="button" class="enroll-btn" style="flex: 1;" onclick="proceedToGatewaySelection()">Continue</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Gateway Modal for Adding Money to Wallet -->
+        <div id="paymentGatewayModal" class="payment-method-modal">
+            <div class="payment-method-content">
+                <button class="payment-method-close" onclick="closePaymentGatewayModal()">&times;</button>
+                <h2 class="payment-method-header">Select Payment Method</h2>
+                <p class="payment-method-subtitle">Choose your preferred payment gateway</p>
+
+                <div class="payment-method-list">
+                    <!-- Paystack -->
+                    <div class="payment-method-item" onclick="selectPaymentGateway('paystack')">
+                        <div class="payment-method-icon">
+                            <img src="./images/paystack.png" alt="Paystack" style="height: 40px; width: auto; object-fit: contain;">
+                        </div>
+                        <div class="payment-method-info">
+                            <div class="payment-method-name">Paystack</div>
+                            <div class="payment-method-desc">Fast and secure payment</div>
+                        </div>
+                    </div>
+
+                    <!-- Flutterwave -->
+                    <div class="payment-method-item" onclick="selectPaymentGateway('flutterwave')">
+                        <div class="payment-method-icon">
+                            <img src="./images/Flutterwave.png" alt="Flutterwave" style="height: 40px; max-width: 40px; width: auto; object-fit: contain;">
+                        </div>
+                        <div class="payment-method-info">
+                            <div class="payment-method-name">Flutterwave</div>
+                            <div class="payment-method-desc">Multiple payment options</div>
+                        </div>
+                    </div>
+
+                    <!-- Stripe -->
+                    <div class="payment-method-item" onclick="selectPaymentGateway('stripe')">
+                        <div class="payment-method-icon">
+                            <img src="./images/stripe.webp" alt="Stripe" style="height: 40px; width: auto; object-fit: contain;">
+                        </div>
+                        <div class="payment-method-info">
+                            <div class="payment-method-name">Stripe</div>
+                            <div class="payment-method-desc">International payments</div>
+                        </div>
+                    </div>
+
+                    <!-- PayPal -->
+                    <div class="payment-method-item" onclick="selectPaymentGateway('paypal')">
+                        <div class="payment-method-icon">
+                            <img src="./images/paypal.png" alt="PayPal" style="height: 40px; width: auto; object-fit: contain;">
+                        </div>
+                        <div class="payment-method-info">
+                            <div class="payment-method-name">PayPal</div>
+                            <div class="payment-method-desc">Secure online payment</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 12px; margin-top: 20px;">
+                    <button type="button" class="addmoney-btn" style="flex: 1; background: white;" onclick="closePaymentGatewayModal()">Cancel</button>
+                    <button type="button" class="enroll-btn" style="flex: 1;" onclick="proceedWithGateway()">Continue</button>
+                </div>
+            </div>
+        </div>
     </main>
 
     <!-- JS: Bootstrap + API integration -->
@@ -525,9 +755,9 @@ let currentTypeFilter = 'all';
          * Setup event listeners
          */
         function setupEventListeners() {
-            // Add Money button
+            // Add Money button - Show amount input modal first
             document.getElementById('addMoneyBtn').addEventListener('click', () => {
-                window.location.href = '/payments/deposit';
+                openAmountModal();
             });
 
             // Enroll Class button
@@ -572,6 +802,169 @@ let currentTypeFilter = 'all';
             const expiryInput = document.getElementById('formExpiryDate');
             if (expiryInput) {
                 expiryInput.addEventListener('input', formatExpiryDate);
+            }
+        }
+
+        /**
+         * Open amount input modal
+         */
+        function openAmountModal() {
+            const modal = document.getElementById('amountModal');
+            if (modal) {
+                modal.classList.add('show');
+                document.getElementById('depositAmount').focus();
+            }
+        }
+
+        /**
+         * Close amount input modal
+         */
+        function closeAmountModal() {
+            const modal = document.getElementById('amountModal');
+            if (modal) {
+                modal.classList.remove('show');
+            }
+            // Reset form
+            document.getElementById('depositAmount').value = '';
+            document.getElementById('amountErrorMsg').classList.add('d-none');
+        }
+
+        /**
+         * Open payment gateway modal
+         */
+        function openPaymentGatewayModal() {
+            const modal = document.getElementById('paymentGatewayModal');
+            if (modal) {
+                modal.classList.add('show');
+            }
+        }
+
+        /**
+         * Close payment gateway modal
+         */
+        function closePaymentGatewayModal() {
+            const modal = document.getElementById('paymentGatewayModal');
+            if (modal) {
+                modal.classList.remove('show');
+            }
+            // Reset gateway selection
+            modal.dataset.selectedGateway = '';
+            document.querySelectorAll('#paymentGatewayModal .payment-method-item').forEach(item => {
+                item.style.borderColor = '#e0e0e0';
+                item.style.backgroundColor = '#f9f9f9';
+            });
+        }
+
+        /**
+         * Proceed from amount modal to gateway selection
+         */
+        function proceedToGatewaySelection() {
+            const amountInput = document.getElementById('depositAmount');
+            const amount = parseFloat(amountInput.value);
+            const amountError = document.getElementById('amountErrorMsg');
+
+            // Validate amount
+            if (!amount || amount < 100) {
+                amountError.textContent = 'Amount must be at least ₦100';
+                amountError.classList.remove('d-none');
+                return;
+            }
+
+            // Store amount in session/data attribute
+            const modal = document.getElementById('paymentGatewayModal');
+            modal.dataset.depositAmount = amount;
+
+            amountError.classList.add('d-none');
+
+            // Close amount modal and open gateway modal
+            closeAmountModal();
+            openPaymentGatewayModal();
+        }
+
+        /**
+         * Handle payment gateway selection
+         */
+        function selectPaymentGateway(gateway) {
+            const modal = document.getElementById('paymentGatewayModal');
+            modal.dataset.selectedGateway = gateway;
+
+            // Update UI to show selected gateway
+            document.querySelectorAll('#paymentGatewayModal .payment-method-item').forEach(item => {
+                item.style.borderColor = '#e0e0e0';
+                item.style.backgroundColor = '#f9f9f9';
+            });
+
+            event.currentTarget.style.borderColor = '#004A53';
+            event.currentTarget.style.backgroundColor = '#f0f8f9';
+        }
+
+        /**
+         * Proceed with selected payment gateway to add money
+         */
+        async function proceedWithGateway() {
+            const modal = document.getElementById('paymentGatewayModal');
+            const selectedGateway = modal.dataset.selectedGateway;
+            const depositAmount = parseFloat(modal.dataset.depositAmount);
+
+            if (!selectedGateway) {
+                showToast('Please select a payment gateway', 'warning');
+                return;
+            }
+
+            if (!depositAmount || depositAmount < 100) {
+                showToast('Invalid amount. Please enter at least ₦100', 'warning');
+                return;
+            }
+
+            try {
+                // Show loading state
+                const continueBtn = event.target;
+                const originalText = continueBtn.textContent;
+                continueBtn.disabled = true;
+                continueBtn.textContent = 'Processing...';
+
+                console.log('Initializing wallet deposit:', {
+                    amount: depositAmount,
+                    gateway: selectedGateway,
+                    currency: 'NGN'
+                });
+
+                // Initialize wallet deposit with selected gateway
+                const result = await PaymentApiClient.initializeWalletDeposit({
+                    amount: depositAmount,
+                    gateway: selectedGateway,
+                    currency: 'NGN'
+                });
+
+                console.log('Payment initialization response:', result);
+
+                if (result.success && result.data) {
+                    // Close modal
+                    closePaymentGatewayModal();
+
+                    // Redirect to payment gateway
+                    const authUrl = result.data.gateway_data?.authorization_url || result.data.gateway_data?.link;
+                    if (authUrl) {
+                        showToast('Redirecting to ' + selectedGateway + '...', 'success');
+                        setTimeout(() => {
+                            window.location.href = authUrl;
+                        }, 1000);
+                    } else {
+                        showToast('Payment gateway URL not found', 'error');
+                        continueBtn.disabled = false;
+                        continueBtn.textContent = originalText;
+                    }
+                } else {
+                    showToast(result.message || 'Failed to initialize payment', 'error');
+                    continueBtn.disabled = false;
+                    continueBtn.textContent = originalText;
+                }
+            } catch (error) {
+                console.error('Payment initialization error:', error);
+                showToast('Error initializing payment: ' + error.message, 'error');
+                const continueBtn = event.target;
+                continueBtn.disabled = false;
+                continueBtn.textContent = 'Continue';
             }
         }
 

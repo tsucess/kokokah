@@ -86,7 +86,7 @@ class AnnouncementManager {
         previewBadge.classList.remove('urgent-badge', 'warning-badge');
         const icon = previewBadge.querySelector('i');
 
-        switch(priority) {
+        switch (priority) {
             case 'Urgent':
                 previewBadge.classList.add('urgent-badge');
                 if (icon) icon.style.color = '#F56824';
@@ -233,75 +233,12 @@ class AnnouncementManager {
     }
 
     renderAnnouncements() {
-        const container = document.querySelector('.notification-container');
-        if (!container) return;
-
-        container.innerHTML = this.currentAnnouncements.map(announcement => `
-            <div class='d-flex flex-column notification-container'>
-                <div class="d-flex gap-2 justify-content-between align-items-start">
-                    <div class="d-flex flex-column" style="gap: 14px;">
-                        <div class="d-flex gap-5 align-items-center">
-                            <h5 class="fw-semibold notification-title">${announcement.title}</h5>
-                            <div class="rounded-pill d-flex justify-content-center align-items-center notification-label">
-                                <i class="fa-solid fa-circle-info"></i>${announcement.priority}
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center fw-semibold notification-category">${announcement.type}</div>
-                    </div>
-                    <button class="button" onclick="announcementManager.deleteAnnouncement(${announcement.id})">
-                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </button>
-                </div>
-                <div class="d-flex gap-1 align-items-center">
-                    <i class="fa-solid fa-clock"></i>
-                    <span class="notification-date">${this.getTimeAgo(announcement.created_at)}</span>
-                </div>
-                <p class="notification-text">${announcement.description}</p>
-            </div>
-        `).join('');
+        // Override in subclasses for custom rendering
+        // This is a placeholder for pages that use the base class
     }
 
     filterByType(e) {
-        const type = e.target.textContent.split('(')[0].trim();
-        // Filter logic here
-    }
-
-    getTimeAgo(dateString) {
-        const date = new Date(dateString);
-        const now = new Date();
-        const seconds = Math.floor((now - date) / 1000);
-
-        if (seconds < 60) return 'just now';
-        const minutes = Math.floor(seconds / 60);
-        if (minutes < 60) return `${minutes}m ago`;
-        const hours = Math.floor(minutes / 60);
-        if (hours < 24) return `${hours}h ago`;
-        const days = Math.floor(hours / 24);
-        if (days < 7) return `${days}d ago`;
-        const weeks = Math.floor(days / 7);
-        if (weeks < 4) return `${weeks}w ago`;
-
-        return date.toLocaleDateString();
-    }
-
-    async deleteAnnouncement(id) {
-        if (!confirm('Are you sure you want to delete this announcement?')) return;
-
-        try {
-            const response = await fetch(`${this.apiBaseUrl}/${id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${this.getToken()}`
-                }
-            });
-
-            if (response.ok) {
-                alert('Announcement deleted successfully');
-                this.loadAnnouncements();
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
+        // Override in subclasses for custom filtering
     }
 
     cancelForm() {

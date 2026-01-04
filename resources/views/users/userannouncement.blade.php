@@ -133,14 +133,35 @@
                 return;
             }
 
-            container.innerHTML = filtered.map(announcement => `
+            container.innerHTML = filtered.map(announcement => {
+                // Determine priority badge classes
+                let priorityClasses = 'notification-label';
+                let iconColor = '#000000';
+
+                switch(announcement.priority) {
+                    case 'Urgent':
+                        priorityClasses += ' notification-label-urgent';
+                        iconColor = '#F56824';
+                        break;
+                    case 'Warning':
+                        priorityClasses += ' notification-label-warning';
+                        iconColor = '#FDAF22';
+                        break;
+                    case 'Info':
+                    default:
+                        priorityClasses += ' notification-label-info';
+                        iconColor = '#000000';
+                        break;
+                }
+
+                return `
                 <div class='d-flex flex-column notification-container' style="cursor: pointer;" onclick="studentManager.viewAnnouncement(${announcement.id})">
                     <div class="d-flex gap-2 justify-content-between align-items-start">
                         <div class="d-flex flex-column" style="gap: 14px;">
                             <div class="d-flex gap-5 align-items-center">
                                 <h5 class="fw-semibold notification-title">${announcement.title}</h5>
-                                <div class="rounded-pill d-flex justify-content-center align-items-center notification-label">
-                                    <i class="fa-solid fa-circle-info"></i>${announcement.priority}
+                                <div class="rounded-pill d-flex justify-content-center align-items-center ${priorityClasses}">
+                                    <i class="fa-solid fa-circle-info" style="color: ${iconColor};"></i>${announcement.priority}
                                 </div>
                             </div>
                             <div class="d-flex align-items-center justify-content-center fw-semibold notification-category">${announcement.type}</div>
@@ -152,7 +173,8 @@
                     </div>
                     <p class="notification-text">${announcement.description}</p>
                 </div>
-            `).join('');
+            `;
+            }).join('');
         }
 
         viewAnnouncement(id) {

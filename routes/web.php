@@ -304,6 +304,10 @@ Route::get('/createannouncement', function () {
     return view('admin.createannouncement');
 });
 
+Route::get('/announcement/{id}/edit', function ($id) {
+    return view('admin.editannouncement', ['announcementId' => $id]);
+});
+
 Route::get('/userkoodies', function () {
     return view('users.userkoodies');
 });

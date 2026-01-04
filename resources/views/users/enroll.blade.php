@@ -547,7 +547,9 @@
                             <div class="gateway-option">
                                 <input type="radio" id="gateway-kudikah" name="payment_gateway" value="kudikah" checked>
                                 <label for="gateway-kudikah" class="gateway-label">
-                                    <div class="gateway-icon" style="font-size: 40px;">💳</div>
+                                    <div class="gateway-icon">
+                                        <img src="{{ asset('images/card-icon.png') }}" alt="Kudikah Wallet">
+                                    </div>
                                     <div class="gateway-name">Kudikah Wallet</div>
                                 </label>
                             </div>
@@ -568,7 +570,7 @@
                                 <input type="radio" id="gateway-flutterwave" name="payment_gateway" value="flutterwave">
                                 <label for="gateway-flutterwave" class="gateway-label">
                                     <div class="gateway-icon">
-                                        <img src="{{ asset('images/Flutterwave.png') }}" alt="Flutterwave">
+                                        <img src="{{ asset('images/Flutterwave.png') }}" alt="Flutterwave" style="max-width: 50px; max-height: 50px;">
                                     </div>
                                     <div class="gateway-name">Flutterwave</div>
                                 </label>

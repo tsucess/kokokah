@@ -180,8 +180,14 @@ class PaymentController extends Controller
             $result = $this->paymentService->verifyPayment($gateway, $reference);
 
             if ($result['success']) {
-                // Redirect to user subject page to show newly enrolled course
-                $redirectUrl = config('app.frontend_url') . '/usersubject?payment_success=true&reference=' . $reference;
+                // Redirect based on payment type
+                if ($result['type'] === 'wallet_deposit') {
+                    // Redirect to wallet page for wallet deposits
+                    $redirectUrl = config('app.frontend_url') . '/userkudikah?payment_success=true&reference=' . $reference;
+                } else {
+                    // Redirect to subject page for course purchases
+                    $redirectUrl = config('app.frontend_url') . '/usersubject?payment_success=true&reference=' . $reference;
+                }
                 return redirect()->to($redirectUrl);
             }
 
