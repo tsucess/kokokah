@@ -26,6 +26,7 @@
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/responsiveness.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
 
     {{-- @vite(['resources/css/style.css', 'resources/css/responsiveness.css']) --}}
 
@@ -234,6 +235,9 @@
             });
         });
     </script>
+
+    <!-- Kokokah Logo Loader -->
+    <script src="{{ asset('js/utils/kokokahLoader.js') }}"></script>
 </body>
 
 </html>

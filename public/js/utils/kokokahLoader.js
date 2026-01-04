@@ -9,6 +9,7 @@ class KokokahLoader {
     this.loaderElement = null;
     this.isVisible = false;
     this.hideTimeout = null;
+    this.pageLoadStartTime = Date.now();
     this.init();
   }
 
@@ -18,6 +19,8 @@ class KokokahLoader {
   init() {
     this.createLoaderHTML();
     this.setupEventListeners();
+    // Show loader immediately on page load
+    this.show();
   }
 
   /**
@@ -31,7 +34,7 @@ class KokokahLoader {
     }
 
     const loaderHTML = `
-      <div class="kokokah-loader-overlay hidden" id="kokokahLoader">
+      <div class="kokokah-loader-overlay" id="kokokahLoader">
         <div class="kokokah-loader-container">
           <div class="kokokah-spinner"></div>
           <div class="kokokah-loader-text">
@@ -43,6 +46,7 @@ class KokokahLoader {
 
     document.body.insertAdjacentHTML('afterbegin', loaderHTML);
     this.loaderElement = document.getElementById('kokokahLoader');
+    this.isVisible = true;
   }
 
   /**
@@ -85,9 +89,11 @@ class KokokahLoader {
    * Show the loader
    */
   show() {
+    // If already visible, don't show again (prevents flashing)
     if (this.isVisible) return;
 
     this.isVisible = true;
+    this.pageLoadStartTime = Date.now();
 
     if (this.loaderElement) {
       this.loaderElement.classList.remove('hidden');
@@ -111,13 +117,18 @@ class KokokahLoader {
       clearTimeout(this.hideTimeout);
     }
 
+    // Ensure minimum display time of 500ms to prevent flashing
+    const elapsedTime = Date.now() - this.pageLoadStartTime;
+    const minDisplayTime = 500;
+    const delayBeforeHide = Math.max(0, minDisplayTime - elapsedTime);
+
     // Hide with transition
     this.hideTimeout = setTimeout(() => {
       if (this.loaderElement) {
         this.loaderElement.classList.add('hidden');
         this.isVisible = false;
       }
-    }, 300);
+    }, delayBeforeHide + 300);
   }
 
   /**

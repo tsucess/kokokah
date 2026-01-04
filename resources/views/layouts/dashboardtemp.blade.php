@@ -39,14 +39,6 @@
 
 <body>
 
-    <!-- Loading Overlay -->
-    <div id="loadingOverlay"
-        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 9998; justify-content: center; align-items: center;">
-        <div class="spinner-border text-light" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
-    </div>
-
     <!-- Overlay for mobile sidebar -->
     <div class="overlay" id="sidebarOverlay"></div>
 

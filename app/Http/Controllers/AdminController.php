@@ -63,12 +63,25 @@ class AdminController extends Controller
                     'draft' => Course::where('status', 'draft')->count(),
                     'new_this_month' => Course::where('created_at', '>=', now()->startOfMonth())->count(),
                     'by_category' => \App\Models\CurriculumCategory::withCount('courses')
+                                          ->whereNotNull('title')
                                           ->get()
-                                          ->pluck('courses_count', 'title'),
+                                          ->mapWithKeys(function($category) {
+                                              return [$category->title => $category->courses_count];
+                                          })
+                                          ->toArray(),
                     'most_popular' => Course::withCount('enrollments')
+                                          ->whereNotNull('title')
                                           ->orderBy('enrollments_count', 'desc')
                                           ->limit(5)
                                           ->get()
+                                          ->map(function($course) {
+                                              return [
+                                                  'id' => $course->id,
+                                                  'title' => $course->title,
+                                                  'enrollments' => $course->enrollments_count
+                                              ];
+                                          })
+                                          ->toArray()
                 ],
                 'enrollments' => [
                     'total' => Enrollment::count(),
@@ -984,9 +997,10 @@ class AdminController extends Controller
         // Recent payments
         $recentPayments = Payment::with(['user', 'course'])->where('status', 'completed')->latest()->limit(5)->get();
         foreach ($recentPayments as $payment) {
+            $courseTitle = $payment->course ? $payment->course->title : 'Unknown Course';
             $activities[] = [
                 'type' => 'payment_completed',
-                'description' => "Payment completed: {$payment->amount} for {$payment->course->title}",
+                'description' => "Payment completed: {$payment->amount} for {$courseTitle}",
                 'timestamp' => $payment->created_at,
                 'payment' => $payment
             ];
@@ -1029,9 +1043,10 @@ class AdminController extends Controller
         // Recent payments
         $recentPayments = Payment::with(['user', 'course'])->where('status', 'completed')->latest()->limit(15)->get();
         foreach ($recentPayments as $payment) {
+            $courseTitle = $payment->course ? $payment->course->title : 'Unknown Course';
             $activities[] = [
                 'type' => 'payment_completed',
-                'description' => "Payment completed: {$payment->amount} for {$payment->course->title}",
+                'description' => "Payment completed: {$payment->amount} for {$courseTitle}",
                 'timestamp' => $payment->created_at,
                 'payment' => $payment
             ];
