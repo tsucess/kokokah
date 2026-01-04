@@ -17,9 +17,11 @@
 
 ### **Copy Your Keys**
 ```
-Public Key:  pk_test_xxxxxxxxxxxxxxxxxxxxxxxx
-Secret Key:  sk_test_xxxxxxxxxxxxxxxxxxxxxxxx
+Public Key:  pk_test_[your_public_key_here]
+Secret Key:  sk_test_[your_secret_key_here]
 ```
+
+⚠️ **IMPORTANT:** Never commit actual API keys to version control. Always use `.env` file.
 
 ---
 
@@ -41,10 +43,12 @@ Secret Key:  sk_test_xxxxxxxxxxxxxxxxxxxxxxxx
 
 ### **Copy Your Keys**
 ```
-Public Key:     FLWPUBK_TEST_xxxxxxxxxxxxxxxx
-Secret Key:     FLWSECK_TEST_xxxxxxxxxxxxxxxx
-Webhook Secret: your_webhook_secret_here
+Public Key:     FLWPUBK_TEST_[your_public_key_here]
+Secret Key:     FLWSECK_TEST_[your_secret_key_here]
+Webhook Secret: [your_webhook_secret_here]
 ```
+
+⚠️ **IMPORTANT:** Never commit actual API keys to version control. Always use `.env` file.
 
 ---
 
@@ -60,16 +64,18 @@ vim .env
 
 ### **Add Paystack Keys**
 ```env
-PAYSTACK_PUBLIC_KEY=pk_test_xxxxxxxxxxxxxxxxxxxxxxxx
-PAYSTACK_SECRET_KEY=sk_test_xxxxxxxxxxxxxxxxxxxxxxxx
+PAYSTACK_PUBLIC_KEY=pk_test_[your_public_key_here]
+PAYSTACK_SECRET_KEY=sk_test_[your_secret_key_here]
 ```
 
 ### **Add Flutterwave Keys**
 ```env
-FLUTTERWAVE_PUBLIC_KEY=FLWPUBK_TEST_xxxxxxxxxxxxxxxx
-FLUTTERWAVE_SECRET_KEY=FLWSECK_TEST_xxxxxxxxxxxxxxxx
-FLUTTERWAVE_WEBHOOK_SECRET=your_webhook_secret_here
+FLUTTERWAVE_PUBLIC_KEY=FLWPUBK_TEST_[your_public_key_here]
+FLUTTERWAVE_SECRET_KEY=FLWSECK_TEST_[your_secret_key_here]
+FLUTTERWAVE_WEBHOOK_SECRET=[your_webhook_secret_here]
 ```
+
+⚠️ **IMPORTANT:** The `.env` file is in `.gitignore` and should never be committed to version control.
 
 ### **Save File**
 - If using `nano`: Press `Ctrl+X`, then `Y`, then `Enter`
