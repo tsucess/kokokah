@@ -28,8 +28,8 @@
         vertical-align: middle;
         padding-block: 7px;
     }
-    .aboutPrimaryButton{
-         width: 70%;
+    .aboutPrimaryButton {
+        width: 70%;
         height: 40px;
         vertical-align: middle;
         padding-block: 7px;
@@ -48,10 +48,10 @@
         width: 9px;
         height: 9px;
     }
-    .newsletter-button{
+    .newsletter-button {
         padding: 10px 6px;
     }
-    .achievement-card{
+    .achievement-card {
         padding: 24px 16px;
     }
 
@@ -87,7 +87,9 @@
         color: #004a53;
     }
 
-    p, ul, li {
+    p,
+    ul,
+    li {
         font-size: 0.9rem;
         line-height: 1.6;
     }
@@ -201,11 +203,11 @@
         font-size: 24px;
     }
     .swiper-button-prev {
-  --swiper-navigation-sides-offset: 20%;
-}
-.swiper-button-next {
-  --swiper-navigation-sides-offset: 20%;
-}
+        --swiper-navigation-sides-offset: 20%;
+    }
+    .swiper-button-next {
+        --swiper-navigation-sides-offset: 20%;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -317,7 +319,9 @@
         color: #004a53;
     }
 
-    p.feature, ul, li {
+    p.feature,
+    ul,
+    li {
         font-size: 0.9rem;
         line-height: 1.5;
         color: #004a53;
@@ -360,18 +364,19 @@
         line-height: 1.8;
         color: #004a53;
     }
-    p.feature, ul, li {
+    p.feature,
+    ul,
+    li {
         font-size: 1rem;
         line-height: 1.5;
         color: #004a53;
     }
-    .img-margin{
+    .img-margin {
         margin-top: -150px;
     }
     .achievement-section {
-    min-height: 700px;
-
-}
+        min-height: 700px;
+    }
 }
 
 /* ===== DESKTOP BREAKPOINTS (min-width: 992px) ===== */
@@ -544,3 +549,33 @@
         font-size: clamp(16px, 3vw, 28px);
     }
 } */
+
+@media screen and (min-width: 992px) {
+    .about-hero-img {
+        border: 10px solid #f56824;
+        border-top-left-radius: 150px;
+        border-bottom-left-radius: 150px;
+        height: 300px;
+        border-right: none;
+    }
+    .add-margin {
+        margin-block: 60px;
+    }
+    .overflow-img {
+        margin-top: -60px;
+        margin-bottom: -60px;
+        height: 400px;
+        max-height: 400px;
+    }
+    .content-card {
+        position: relative;
+        z-index: 5;
+    }
+
+    @media (min-width: 992px) {
+        .content-card {
+            margin-right: -180px;
+            border-radius: 1.5rem;
+        }
+    }
+}

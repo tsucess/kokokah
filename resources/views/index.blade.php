@@ -466,7 +466,7 @@
     </div>
 
     <!-- Kokokah for All Section - White Background -->
-    <div class="container-fluid section-white section-py ">
+    <div class="container-fluid section-white section-py " style="background-color: #004A53;">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-12 col-md-6 col-lg-6 mb-4 mb-md-0 fade-section-left">
@@ -475,10 +475,10 @@
                         style="max-width:752px; width:100%; height:382px; border-radius : 15px; object-fit:cover;">
                 </div>
                 <div class="col-12 col-md-6 col-lg-6 ps-md-4 fade-section">
-                    <h2 class="fw-bold mb-4 section-heading">
+                    <h2 class="fw-bold mb-4 section-heading text-white">
                         Kokokah for All
                     </h2>
-                    <p class="mb-4 hero-subtitle">
+                    <p class="mb-4 hero-subtitle text-white">
                         Kokokah is a smart, pan-African learning and school management platform built for the realities of
                         African education. Whether you're a JSS1 student in Ghana, an SSS3 student in Kenya, or an educator
                         in South Africa, our mission is simple — to give every learner from any background the opportunity
@@ -507,12 +507,12 @@
             <div class="row g-4 features">
                 <!-- Feature 1 -->
                 <div class="col-12 col-md-6 col-lg-4 feature-item">
-                    <div class="feature-card ">
+                    <div class="feature-card " style="background-color: #ff6b35;">
                         <div class="mb-3">
-                            <i class="fa-solid fa-download feature-card-icon"></i>
+                            <i class="fa-solid fa-download feature-card-icon feature-card-icon-white"></i>
                         </div>
-                        <h5 class="fw-bold mb-3 feature-card-title">For Students, Parents & Schools</h5>
-                        <p class="feature-card-text">One platform for all.</p>
+                        <h5 class="fw-bold mb-3 feature-card-title text-white">For Students, Parents & Schools</h5>
+                        <p class="feature-card-text text-white">One platform for all.</p>
                     </div>
                 </div>
 
@@ -587,9 +587,9 @@
 
 
 
-    <div class="d-flex flex-column gap-5 mx-4 mx-md-0">
+    <div class="d-flex flex-column">
 
-        <div class = "container fade-section">
+        {{-- <div class = "container fade-section">
             <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-bordered-red ">
                 <div class = "col col-12 col-md-7 col-lg-7 p-4 p-lg-5  my-auto d-flex flex-column gap-3">
                     <img src="images/Group 1171274797.png" alt="" class="w-75"
@@ -614,10 +614,41 @@
                 </div>
 
             </div>
+        </div> --}}
+
+        <div style="background-color: #004A53;" class="p-5">
+            <div class="container-fluid px-0">
+                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section py-lg-3">
+                    <div class="col-12 col-lg-7 mb-5 mb-lg-0">
+                        <div class="d-flex flex-column gap-3">
+                        <div class="bg-white p-1 rounded-3 align-self-start"><img src="images/Group 1171274797.png"
+                                alt="" class="" style="width:100%; height:auto; max-width:150px;" /></div>
+
+                        <p class="text-white">
+                            Kokokah houses an exam preparatory platform
+                            where African students can prepare adequately
+                            for both local and international examinations.
+                        </p>
+                        <p class="text-white">
+                            WAEC - NECO - JAMB - GCE - GMAT - SAT - TOEFL - IELTS - GRE - ACT
+                        </p>
+
+                        <div class="d-flex justify-content-center justify-content-md-start">
+                            <button class = "primaryButton" type = "button">Coming soon</button>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-5">
+                        <img src="./images/passnownow-section-icon.jpg" alt=""
+                            class="img-fluid product-images w-100 overflow-img"
+                            style="border:3px solid #F56824; border-radius:30px;">
+                    </div>
+                </div>
+            </div>
         </div>
 
 
-        <div class = "container fade-section-left">
+        {{-- <div class = "container fade-section-left">
             <div class="row ourproduct2 product-section-orange">
                 <!-- Image Section -->
                 <div class="col-12 col-md-6 col-lg-6 px-0">
@@ -637,12 +668,34 @@
 
                 </div>
             </div>
+        </div> --}}
+
+        <div style="background-color: #F6F6F6;" class="p-5">
+            <div class="container-fluid px-0">
+                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section-left py-lg-3">
+                    <div class="col-12 col-lg-5 mb-5 mb-lg-0">
+                        <img src="./images/sms-section-img.png" alt=""
+                            class="img-fluid product-images w-100 overflow-img"
+                            style="border:3px solid #F56824; border-radius:30px;">
+                    </div>
+                    <div class="col-12 col-lg-7 d-flex flex-column gap-3 justify-content-lg-center">
+                        <h4 class="text-white">School Management System (SMS)</h4>
+                        <p class = " text-white">
+                            Simplify school administration with fee
+                            tracking, digital report cards, attendance, and student
+                            portals — all in one secure platform.
+                        </p>
+                        <div class="d-flex justify-content-center justify-content-md-start">
+                            <button class = " primaryButton " type="button">Coming soon</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
 
 
-
-
-        <div class = "container fade-section">
+        {{-- <div class = "container fade-section">
             <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-bordered-green">
                 <div class = "col-12 col-md-7 col-lg-7 p-4 p-lg-5 my-auto d-flex flex-column gap-3">
                     <div class="d-flex flex-column flex-md-row align-items-start align-items-md-end gap-2"><img
@@ -662,65 +715,183 @@
                     <img src="images/lms system.png" class="img-fluid w-100 w-md-75 h-100" alt="Exam Prep">
                 </div>
             </div>
-        </div>
+        </div> --}}
 
-        <div class = "container fade-section-left">
-            <div class="row ourproduct2 product-section-teal">
-                <!-- Image Section -->
-                <div class="col-12 col-md-6 my-auto text-center">
-                    <img src="images/School Admin.png" class="img-fluid w-100 w-md-75" alt="School Admin">
-                </div>
+        <div style="background-color: #FDAF22;" class="p-5">
+            <div class="container-fluid px-0">
+                <div class="row ourproduct2 product-section-teal p-4 add-margin fade-section py-lg-3">
+                    <div class="col-12 col-lg-7 d-flex flex-column gap-3 justify-content-lg-center mb-5 mb-lg-0">
+                        <div class="bg-white px-3 py-2 rounded-3 align-self-start">
+                            <img src="./images/Kokokah_Logo.png" alt="" style="width:200px; height:auto;"
+                                class="object-cover" />
+                        </div>
 
-                <!-- Text Section -->
-                <div class="col-12 col-md-6 p-4 p-lg-5 my-auto d-flex flex-column gap-3">
-                    <h4 class="text-white">
-                        The Marketplace
-                    </h4>
-                    <p class="text-white">
-                        Africa’s academic forum for parents, teachers, and
-                        tutors to connect. Book trusted tutors for academics,
-                        test prep, and special needs learning.
-                    </p>
-                    <div class="d-flex justify-content-center justify-content-md-start">
-                        <button class = "primaryButton" type = "button">Coming Soon</button>
+                        <h4 class="text-white">Learning Management System</h4>
 
+                        <p class="text-white">
+                            Your all-in-one digital classroom — structured lessons, AI-powered
+                            tutoring, chatrooms, and  academic & non-academic content for secondary school.
+                        </p>
+                        <div class="d-flex justify-content-center justify-content-md-start">
+                            <button class = "primaryButton" type = "button">Coming soon</button>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-5">
+                        <img src="./images/lms-section-img.jpg" alt=""
+                            class="img-fluid product-images w-100 overflow-img"
+                            style="border:3px solid #004A53; border-radius:30px;">
                     </div>
                 </div>
             </div>
         </div>
 
 
-        <div class = "container fade-section">
-            <div class="row ourproduct2 product-section-bordered">
-                <!-- Image Section -->
-                <div class="col-12 col-md-6 ">
-                    <img src="images/School Admin.png" class="img-fluid w-100 w-md-75" alt="School Admin">
+        {{-- <div class = "container fade-section-left">
+        <div class="row ourproduct2 product-section-teal">
+            <!-- Image Section -->
+            <div class="col-12 col-md-6 my-auto text-center">
+                <img src="images/School Admin.png" class="img-fluid w-100 w-md-75" alt="School Admin">
+            </div>
+
+            <!-- Text Section -->
+            <div class="col-12 col-md-6 p-4 p-lg-5 my-auto d-flex flex-column gap-3">
+                <h4 class="text-white">
+                    The Marketplace
+                </h4>
+                <p class="text-white">
+                    Africa’s academic forum for parents, teachers, and
+                    tutors to connect. Book trusted tutors for academics,
+                    test prep, and special needs learning.
+                </p>
+                <div class="d-flex justify-content-center justify-content-md-start">
+                    <button class = "primaryButton" type = "button">Coming Soon</button>
+
                 </div>
+            </div>
+        </div>
+    </div> --}}
 
-                <!-- Text Section -->
-                <div class="col-12 col-md-6 p-4 p-lg-5 my-auto d-flex flex-column gap-3">
-                    <img src="./images/315a2f8c6c60fc789ec0066a0b5bce04b7daa28d.png" alt=""
-                        style="width:200px; height:60px;" />
-                    <p style = "color :#004A53;">
-                        Get hands-on STEM bootcamps, summer schools,
-                        and practical learning experiences to prepare
-                        students for the future of science & tech.
-                    </p>
-
-                    <div class="d-flex justify-content-center justify-content-md-start">
-                        <button class = "primaryButton" type = "button">Coming soon</button>
-
+        <div style="background-color: #A34518;" class="p-5">
+            <div class="container-fluid px-0">
+                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section-left py-lg-3">
+                    <div class="col-12 col-lg-5 mb-5 mb-lg-0">
+                        <img src="./images/marketplace-section-img.jpg" alt=""
+                            class="img-fluid product-images w-100 overflow-img"
+                            style="border:3px solid #F56824; border-radius:30px;">
                     </div>
+                    <div class="col-12 col-lg-7 d-flex flex-column gap-3 justify-content-lg-center ">
+
+
+                        <h4 class="text-white">
+                            The Marketplace
+                        </h4>
+                        <p class="text-white">
+                            Africa’s academic forum for parents, teachers, and
+                            tutors to connect. Book trusted tutors for academics,
+                            test prep, and special needs learning.
+                        </p>
+                        <div class="d-flex justify-content-center justify-content-md-start">
+                            <button class = "primaryButton" type = "button">Coming Soon</button>
+
+                        </div>
+                    </div>
+
 
                 </div>
             </div>
         </div>
 
 
-        <div class = "container fade-section-left">
-            {{-- <div class="row  my-4 p-2 flex-column-reverse flex-md-row m-2 ourproduct1 product-section-yellow"> --}}
+        {{-- <div class = "container fade-section">
+        <div class="row ourproduct2 product-section-bordered">
+            <!-- Image Section -->
+            <div class="col-12 col-md-6 ">
+                <img src="images/School Admin.png" class="img-fluid w-100 w-md-75" alt="School Admin">
+            </div>
+
+            <!-- Text Section -->
+            <div class="col-12 col-md-6 p-4 p-lg-5 my-auto d-flex flex-column gap-3">
+                <img src="./images/315a2f8c6c60fc789ec0066a0b5bce04b7daa28d.png" alt=""
+                    style="width:200px; height:60px;" />
+                <p style = "color :#004A53;">
+                    Get hands-on STEM bootcamps, summer schools,
+                    and practical learning experiences to prepare
+                    students for the future of science & tech.
+                </p>
+
+                <div class="d-flex justify-content-center justify-content-md-start">
+                    <button class = "primaryButton" type = "button">Coming soon</button>
+
+                </div>
+
+            </div>
+        </div>
+    </div> --}}
+
+        <div style="background-color: #004A53;" class="p-5">
+            <div class="container-fluid px-0">
+                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section py-lg-3">
+
+                    <div class="col-12 col-lg-7 d-flex flex-column gap-3 justify-content-lg-center mb-5 mb-lg-0">
+                        <div class="bg-white px-3 py-2 rounded-3 align-self-start">
+                            <img src="./images/315a2f8c6c60fc789ec0066a0b5bce04b7daa28d.png" alt=""
+                                style="width:200px; height:60px;" />
+                        </div>
+
+                        <p class="text-white">
+                            Get hands-on STEM bootcamps, summer schools,
+                            and practical learning experiences to prepare
+                            students for the future of science & tech.
+                        </p>
+                        <div class="d-flex justify-content-center justify-content-md-start">
+                            <button class = "primaryButton" type = "button">Coming Soon</button>
+
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-5">
+                        <img src="./images/stemges-section-img.jpg" alt=""
+                            class="img-fluid product-images w-100 overflow-img"
+                            style="border:3px solid #F56824; border-radius:30px;">
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div style="background-color: #52230C;" class="p-5">
+            <div class="container-fluid px-0">
+                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section-left py-lg-3">
+
+                    <div class="col-12 col-lg-7 d-flex flex-column gap-3 justify-content-lg-center mb-5 mb-lg-0">
+                        <h4 class="text-white">Kudikah</h4>
+                        <p class="text-white">
+                            Get hands-on STEM bootcamps, summer schools,
+                            and practical learning experiences to prepare
+                            students for the future of science & tech.
+                        </p>
+                        <div class="d-flex justify-content-center justify-content-md-start">
+                            <button class = "primaryButton" type = "button">Coming Soon</button>
+
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-5">
+                        <img src="./images/kudikah-section-img.jpg" alt=""
+                            class="img-fluid product-images w-100 overflow-img"
+                            style="border:3px solid #F56824; border-radius:30px;">
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+        {{-- <div class = "container fade-section-left">
+            <div class="row  my-4 p-2 flex-column-reverse flex-md-row m-2 ourproduct1 product-section-yellow">
             <div class = "row flex-column-reverse flex-md-row ourproduct1 product-section-yellow">
-                <!-- Text Section -->
+
                 <div class="col-12 col-md-6 d-flex flex-column justify-content-center gap-3  p-4 ps-lg-5 pb-4 pb-lg-0">
                     <h4>
                         AI Chatbot
@@ -735,14 +906,13 @@
                     </div>
                 </div>
 
-                <!-- Image Section -->
                 <div class="col-12 col-md-6 text-center">
                     <img src="images/lms system.png" class="img-fluid w-100 w-md-75" alt="LMS system">
                 </div>
             </div>
-        </div>
+        </div> --}}
 
-        <div class = "container fade-section">
+        {{-- <div class = "container fade-section">
             <div class="row ourproduct2 product-section-bordered">
                 <!-- Image Section -->
                 <div class="col-12 col-md-6 my-auto text-center">
@@ -766,12 +936,41 @@
 
                 </div>
             </div>
+        </div> --}}
+
+         <div style="background-color: #F6F6F6;" class="p-5">
+            <div class="container-fluid px-0">
+                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section py-lg-3">
+                    <div class="col-12 col-lg-5 mb-5 mb-lg-0">
+                        <img src="./images/ai-chat-section-img.jpg" alt=""
+                            class="img-fluid product-images w-100 overflow-img"
+                            style="border:3px solid #F56824; border-radius:30px;">
+                    </div>
+
+                    <div class="col-12 col-lg-7 d-flex flex-column gap-3 justify-content-lg-center">
+                        <h4>
+                        AI Chatbot
+                    </h4>
+                    <p>
+                        Your personal academic assistant — ask questions, get explanations,
+                        and enjoy instant feedback tailored to your study needs.
+                    </p>
+                        <div class="d-flex justify-content-center justify-content-md-start">
+                            <button class = "primaryButton" type = "button">Coming Soon</button>
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
         </div>
 
     </div>
 
 
-    <div class = "container">
+    {{-- <div class = "container">
         <div class = "row mt-4">
             <div class = "col-12 col-md-5 col-lg-5">
                 <img src = "{{ asset('images/LMS.png') }}" class = "img-fluid animate__animated animate__pulse hero-img">
@@ -800,7 +999,32 @@
             </div>
 
         </div>
+    </div> --}}
+
+   <div style="background-color: #004A53;" class="p-5">
+    <div class="container-fluid px-0">
+        <div class="row  align-items-lg-center">
+            <div class="col-12 col-lg-6">
+                <div class="content-card rounded-4 p-4 d-flex flex-column gap-3 mb-5 mb-lg-0 slide-up-image"
+                     style="background-color:#003E45;">
+                    <h3 class="text-white">Kokoplay</h3>
+                    <p class="text-white">
+                        Kokokah combines School Management, Exam Prep, and a Learning Management System (LMS)—helping schools automate admin tasks, boost student performance, and deliver modern digital learning in one seamless platform. Kokokah combines School Management, Exam Prep, and a Learning Management System (LMS)—helping schools automate admin tasks, boost student performance, and deliver modern digital learning in one seamless platform.
+                    </p>
+                    <button class="primaryButton">Coming Soon</button>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6 ">
+                <img src="./images/kokoplay-section-img.jpg "
+                     class="img-fluid w-100 fade-section"
+                     alt="" style="max-height: 450px;">
+            </div>
+
+        </div>
     </div>
+</div>
+
 
 
     <div class="container-fluid text-center mt-5 px-3 px-lg-5 py-5 h-100 achievement-section">
@@ -824,7 +1048,8 @@
                         school operations all from one dashboard.
                     </p>
                     <i class="bi bi-quote text-success fs-2 float-end"></i>
-                    <img src="{{asset('images/Lisa.png')}}" alt="Lisa" class="testimonial-img position-absolute rounded-circle">
+                    <img src="{{ asset('images/Lisa.png') }}" alt="Lisa"
+                        class="testimonial-img position-absolute rounded-circle">
                     <p class="fw-bold text-end mb-0">- Lisa</p>
                 </div>
             </div>
@@ -838,7 +1063,8 @@
                         school operations all from one dashboard.
                     </p>
                     <i class="bi bi-quote text-success fs-2 float-end"></i>
-                    <img src="{{ asset('images/Jimmy.png') }}" alt="Jimmy" class="testimonial-img position-absolute rounded-circle">
+                    <img src="{{ asset('images/Jimmy.png') }}" alt="Jimmy"
+                        class="testimonial-img position-absolute rounded-circle">
                     <p class="fw-bold text-end mb-0">- Jimmy</p>
                 </div>
             </div>

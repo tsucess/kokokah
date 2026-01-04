@@ -215,7 +215,7 @@ body {
     width: 13rem;
     /* height: 40px; */
     border-radius: 8px;
-    object-fit: cover;
+    object-fit: contain;
     /* flex-shrink: 0; */
 }
 
@@ -2207,3 +2207,6 @@ input.search-input-custom-input {
     height: 300px;
     overflow-y: auto;
 }
+
+
+

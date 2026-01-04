@@ -354,7 +354,7 @@ a.nav-link.active {
 
 /* ===== DASHBOARD LOGO ===== */
 .dashboard-logo {
-    width: 236px;
+    width: 220px;
     height: 62px;
 }
 
@@ -462,6 +462,7 @@ li {
     font-size: 2rem;
     color: #f15a29;
 }
+
 
 .feature-number {
     font-weight: bold;
@@ -1135,7 +1136,7 @@ footer p {
 
 .bgLms {
     background: url("../images/bg-lms.png");
-    padding: 60px 20px;
+   
 }
 
 .hero-section-orange {
@@ -1325,6 +1326,10 @@ footer p {
     color: #ff6b35;
     font-size: 32px;
     margin-bottom: 12px;
+}
+
+.feature-card-icon-white {
+    color: #fff;
 }
 
 .feature-card-title {
@@ -2149,6 +2154,20 @@ div.contact-container a {
     box-sizing: border-box;
     white-space: nowrap;
 }
+
+.product-images{
+   height: auto;
+   max-height: 400px;
+   object-fit: fill;
+}
+
+.paper-plane{
+    position: absolute;
+    bottom: 20px;
+    left: 45%;
+}
+
+
 
 
 

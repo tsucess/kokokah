@@ -1,11 +1,17 @@
 @extends('layouts.template')
 
 @section('content')
-    <div class = "container-fluid p-3 banner d-flex align-items-center justify-content-center"
-        style="background-color : #FDAF22; height:301px;">
-        <h2 class = "hero_header text-center typewriter">
-            Kokokah is Africa’s Leading Digital Learning and Management Platform for Secondary Schools
-        </h2>
+    <div class = "container-fluid py-5 banner" style="background-color : #FDAF22;  position:relative;">
+        <div class="row align-items-lg-center">
+            <div class="col-12 col-lg-6 mb-5 mb-lg-0">
+                <h2 class = "hero_header  typewriter">
+                    Kokokah is Africa’s Leading Digital Learning and Management Platform for Secondary Schools
+                </h2>
+            </div>
+            <div class="col-12 col-lg-6 px-lg-0"><img src="./images/about-hero-img.jpg" alt=""
+                    class="w-100 img-fluid about-hero-img " style="max-height: 400px"></div>
+        </div>
+        <img src="./images/paper-plane.png" alt="" class="paper-plane" style="width:80px; height:80px;">
     </div>
 
     <div class = "container-fluid px-3 px-lg-5 d-flex align-items-center">
