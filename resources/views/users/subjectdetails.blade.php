@@ -349,6 +349,41 @@
                 </div> --}}
             </div>
 
+            <!-- Reviews Section -->
+            <div class="row g-3 mt-5">
+                <div class="col-12">
+                    <h3 class="box-title mb-4">Course Reviews</h3>
+
+                    <!-- Review Statistics -->
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <div class="d-flex align-items-center gap-2">
+                            <div id="ratingStars" class="d-flex gap-1">
+                                <!-- Stars will be populated here -->
+                            </div>
+                            <span id="averageRating" class="fw-bold" style="font-size: 18px;">0.0</span>
+                        </div>
+                        <span id="totalReviews" class="text-muted">0 reviews</span>
+                    </div>
+
+                    <!-- Review Form -->
+                    @auth
+                        <div class="mb-4" data-course-id="{{ request()->query('course_id') ?? request()->route('courseId') }}">
+                            @include('components.review-form')
+                        </div>
+                    @else
+                        <div class="alert alert-info mb-4">
+                            <i class="fa-solid fa-info-circle"></i>
+                            Please <a href="{{ route('login') }}">login</a> to leave a review.
+                        </div>
+                    @endauth
+
+                    <!-- Reviews List -->
+                    <div id="reviewsContainer" class="d-flex flex-column gap-3">
+                        <p class="text-muted text-center">Loading reviews...</p>
+                    </div>
+                </div>
+            </div>
+
         </section>
 
     </main>
@@ -1528,5 +1563,155 @@
                 showError('Error reloading quizzes');
             });
         };
+
+        /**
+         * Load and display course reviews
+         */
+        async function loadCourseReviews() {
+            try {
+                // Get course ID from the review form container
+                const courseContainer = document.querySelector('[data-course-id]');
+                const courseId = courseContainer?.getAttribute('data-course-id') || currentTopic?.course_id;
+
+                if (!courseId) {
+                    console.warn('Course ID not found');
+                    return;
+                }
+
+                // Fetch reviews
+                const response = await fetch(`/api/courses/${courseId}/reviews`);
+                const result = await response.json();
+
+                if (!result.success) {
+                    console.error('Failed to load reviews:', result.message);
+                    return;
+                }
+
+                const data = result.data;
+                const reviews = data.reviews.data || [];
+                const stats = data.stats || {};
+
+                // Update rating display
+                updateRatingDisplay(stats);
+
+                // Display reviews
+                displayReviews(reviews);
+            } catch (error) {
+                console.error('Error loading reviews:', error);
+            }
+        }
+
+        /**
+         * Update rating statistics display
+         */
+        function updateRatingDisplay(stats) {
+            const avgRating = stats.average_rating || 0;
+            const totalReviews = stats.total_reviews || 0;
+
+            // Update average rating
+            document.getElementById('averageRating').textContent = avgRating.toFixed(1);
+            document.getElementById('totalReviews').textContent = `${totalReviews} review${totalReviews !== 1 ? 's' : ''}`;
+
+            // Update stars
+            const starsContainer = document.getElementById('ratingStars');
+            starsContainer.innerHTML = '';
+            for (let i = 1; i <= 5; i++) {
+                const star = document.createElement('i');
+                star.className = i <= Math.round(avgRating) ? 'fa-solid fa-star' : 'fa-regular fa-star';
+                star.style.color = i <= Math.round(avgRating) ? '#FFC107' : '#DDD';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        /**
+         * Display reviews in the container
+         */
+        function displayReviews(reviews) {
+            const container = document.getElementById('reviewsContainer');
+
+            if (reviews.length === 0) {
+                container.innerHTML = '<p class="text-muted text-center">No reviews yet. Be the first to review!</p>';
+                return;
+            }
+
+            container.innerHTML = reviews.map(review => `
+                <div class="review-card" style="border: 1px solid #CCDBDD; border-radius: 8px; padding: 16px; background-color: #FAFAFA;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+                        <div>
+                            <strong style="font-size: 16px;">${review.user.name}</strong>
+                            <div style="color: #FFC107; font-size: 14px;">
+                                ${'⭐'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}
+                            </div>
+                        </div>
+                        <small style="color: #7F8285;">${new Date(review.created_at).toLocaleDateString()}</small>
+                    </div>
+
+                    <h5 style="margin: 8px 0; color: #000F11;">${review.title}</h5>
+                    <p style="color: #475569; margin: 8px 0; line-height: 1.5;">${review.comment}</p>
+
+                    ${review.pros && review.pros.length > 0 ? `
+                        <div style="margin: 12px 0; padding: 8px; background-color: #E8F5E9; border-radius: 4px;">
+                            <strong style="color: #2E7D32; font-size: 14px;">✓ Pros:</strong>
+                            <ul style="margin: 4px 0 0 20px; padding: 0; color: #2E7D32; font-size: 14px;">
+                                ${review.pros.map(pro => `<li>${pro}</li>`).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+
+                    ${review.cons && review.cons.length > 0 ? `
+                        <div style="margin: 12px 0; padding: 8px; background-color: #FFEBEE; border-radius: 4px;">
+                            <strong style="color: #C62828; font-size: 14px;">✗ Cons:</strong>
+                            <ul style="margin: 4px 0 0 20px; padding: 0; color: #C62828; font-size: 14px;">
+                                ${review.cons.map(con => `<li>${con}</li>`).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+
+                    <div style="display: flex; align-items: center; gap: 12px; margin-top: 12px; padding-top: 12px; border-top: 1px solid #CCDBDD;">
+                        <button onclick="markReviewHelpful(${review.id})" style="background: none; border: none; cursor: pointer; color: #3BA0AC; font-size: 14px; padding: 0;">
+                            👍 Helpful (${review.helpful_count || 0})
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        /**
+         * Mark a review as helpful
+         */
+        async function markReviewHelpful(reviewId) {
+            try {
+                const response = await fetch(`/api/reviews/${reviewId}/helpful`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').value,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showSuccess('Thank you for marking this review as helpful!');
+                    loadCourseReviews(); // Reload reviews
+                } else {
+                    showError(result.message || 'Failed to mark review as helpful');
+                }
+            } catch (error) {
+                console.error('Error marking review as helpful:', error);
+                showError('Error marking review as helpful');
+            }
+        }
+
+        // Load reviews when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load reviews after a short delay to ensure course data is loaded
+            setTimeout(loadCourseReviews, 1000);
+        });
+
+        // Reload reviews when a new review is submitted
+        window.addEventListener('reviewSubmitted', () => {
+            loadCourseReviews();
+        });
     </script>
 @endsection

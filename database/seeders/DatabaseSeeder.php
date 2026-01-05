@@ -31,8 +31,11 @@ class DatabaseSeeder extends Seeder
 
         $this->call(TopicSeeder::class);
 
-
-
+        // Seed chatrooms and messages
+        $this->call([
+            ChatroomSeeder::class,
+            ChatMessageSeeder::class,
+        ]);
 
 
         echo "\n🎉 Database seeding completed successfully!\n";

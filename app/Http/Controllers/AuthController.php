@@ -36,12 +36,6 @@ class AuthController extends Controller
 
         $token = $user->createToken('api_token')->plainTextToken;
 
-        // Establish a session for web routes
-        auth()->login($user);
-
-        // Regenerate session ID for security
-        $request->session()->regenerate();
-
         return response()->json([
             'status' => 'success',
             'message' => 'User registered successfully',
@@ -90,12 +84,6 @@ class AuthController extends Controller
 
         // Create API token for the user
         $token = $user->createToken('api_token')->plainTextToken;
-
-        // Establish a session for web routes
-        auth()->login($user);
-
-        // Regenerate session ID for security
-        $request->session()->regenerate();
 
         \Log::info('Login successful', ['email' => $request->email, 'user_id' => $user->id]);
 

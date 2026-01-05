@@ -80,13 +80,21 @@ class FlutterwaveGateway implements PaymentGatewayInterface
     public function verifyPayment(string $reference): array
     {
         try {
+            Log::info('Flutterwave verification started', ['reference' => $reference]);
+
+            // Use verify_by_reference endpoint with tx_ref as query parameter
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . $this->secretKey,
-            ])->get($this->baseUrl . '/transactions/' . $reference . '/verify');
+            ])->get($this->baseUrl . '/transactions/verify_by_reference?tx_ref=' . $reference);
+
+            Log::info('Flutterwave verification response', [
+                'status' => $response->status(),
+                'body' => $response->body()
+            ]);
 
             if ($response->successful()) {
                 $data = $response->json();
-                
+
                 if ($data['data']['status'] === 'successful') {
                     return [
                         'status' => 'success',
@@ -105,11 +113,11 @@ class FlutterwaveGateway implements PaymentGatewayInterface
                 ];
             }
 
-            throw new \Exception('Verification request failed');
+            throw new \Exception('Verification request failed with status: ' . $response->status());
 
         } catch (\Exception $e) {
             Log::error('Flutterwave verification error: ' . $e->getMessage());
-            
+
             return [
                 'status' => 'failed',
                 'message' => 'Payment verification failed',

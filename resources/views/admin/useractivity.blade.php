@@ -11,7 +11,7 @@
                     <p class="text-muted" >Here overview of your</p>
                 </div>
                 <div>
-                    <button class="btn px-4 py-2 fw-semibold" style="background-color: #FDAF22; border: none; color: white;">
+                    <button class="btn px-4 py-2 fw-semibold" id="exportBtn" style="background-color: #FDAF22; border: none; color: white;">
                         <i class="fa-solid fa-download me-2"></i> Export
                     </button>
                 </div>
@@ -41,22 +41,18 @@
                                 <option value="dropped">Dropped</option>
                             </select> --}}
 
-                             <div class="d-flex gap-2 align-items-center search-border-custom"
-                                >
-                                <i class="fa-solid fa-search fa-xs " style="color: #999;"></i>
+                             <div class="d-flex gap-2 align-items-center search-border-custom">
+                                <i class="fa-solid fa-search fa-xs" style="color: #999;"></i>
                                 <input type="search" class="search-input-custom-input"
-                                    id="searchInput" placeholder="Search by Name or Email" aria-label="Search">
+                                    id="searchInput" placeholder="Search by Name or Date (YYYY-MM-DD)" aria-label="Search">
                             </div>
 
                             <!-- Filter Dropdown -->
-                            <select class="custom-select" id="filterSelect"
-                                >
-                                <option value="" style="">All Classes</option>
-                                <option value="course">All Courses</option>
-                                <option value="category">All Categories</option>
-                                <option value="role-student">Students</option>
-                                <option value="role-instructor">Instructors</option>
-                                <option value="role-admin">Admins</option>
+                            <select class="custom-select" id="filterSelect">
+                                <option value="">All Status</option>
+                                <option value="completed">Completed</option>
+                                <option value="pending">Pending</option>
+                                <option value="failed">Failed</option>
                             </select>
 
                             <!-- View Options -->
@@ -179,6 +175,49 @@
             outline: none;
         }
 
+        .search-border-custom {
+            border: 2px solid #004A53;
+            border-radius: 0.75rem;
+            padding: 0.5rem 1rem;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+
+        .search-border-custom:focus-within {
+            box-shadow: 0 0 0 0.2rem rgba(0, 74, 83, 0.15);
+        }
+
+        .search-input-custom-input {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 0.95rem;
+            color: #333;
+            flex: 1;
+            padding: 0;
+        }
+
+        .search-input-custom-input::placeholder {
+            color: #999;
+        }
+
+        .custom-select {
+            padding: 0.625rem 1rem;
+            font-size: 0.95rem;
+            border: 2px solid #004A53;
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+            background-color: white;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .custom-select:focus {
+            border-color: #004A53;
+            box-shadow: 0 0 0 0.2rem rgba(0, 74, 83, 0.15);
+            outline: none;
+        }
+
         .activity-table tbody tr:hover {
             background-color: #f5f5f5;
             transition: background-color 0.2s ease;
@@ -235,81 +274,231 @@
         let currentPage = 1;
         let totalPages = 1;
         let paginationData = null;
+        let allActivities = []; // Store all activities for client-side filtering
+        let filteredActivities = []; // Store filtered activities
 
         // Fetch dashboard data on page load
         document.addEventListener('DOMContentLoaded', function() {
             loadUsersActivities(1);
             setupPaginationListeners();
+            setupSearchAndFilterListeners();
         });
 
         // Setup pagination button listeners
         function setupPaginationListeners() {
             document.getElementById('prevBtn').addEventListener('click', function() {
                 if (currentPage > 1) {
-                    loadUsersActivities(currentPage - 1);
+                    currentPage--;
+                    displayFilteredActivities();
                 }
             });
 
             document.getElementById('nextBtn').addEventListener('click', function() {
                 if (currentPage < totalPages) {
-                    loadUsersActivities(currentPage + 1);
+                    currentPage++;
+                    displayFilteredActivities();
                 }
             });
+        }
+
+        // Setup search and filter listeners
+        function setupSearchAndFilterListeners() {
+            const searchInput = document.getElementById('searchInput');
+            const filterSelect = document.getElementById('filterSelect');
+            const exportBtn = document.getElementById('exportBtn');
+
+            if (searchInput) {
+                searchInput.addEventListener('input', debounce(function() {
+                    applyFiltersAndSearch();
+                }, 300));
+            }
+
+            if (filterSelect) {
+                filterSelect.addEventListener('change', function() {
+                    applyFiltersAndSearch();
+                });
+            }
+
+            if (exportBtn) {
+                exportBtn.addEventListener('click', exportToCSV);
+            }
+        }
+
+        // Debounce function for search input
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Apply filters and search
+        function applyFiltersAndSearch() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            const statusFilter = document.getElementById('filterSelect').value;
+
+            filteredActivities = allActivities.filter(activity => {
+                // Filter by status
+                if (statusFilter && activity.status !== statusFilter) {
+                    return false;
+                }
+
+                // Filter by search term (name or date)
+                if (searchTerm) {
+                    const userName = activity.user ? (activity.user.first_name + ' ' + activity.user.last_name).toLowerCase() : '';
+                    const userEmail = activity.user ? (activity.user.email || '').toLowerCase() : '';
+                    const activityDate = activity.timestamp ? activity.timestamp.split(' ')[0] : '';
+
+                    const matchesName = userName.includes(searchTerm) || userEmail.includes(searchTerm);
+                    const matchesDate = activityDate.includes(searchTerm);
+
+                    return matchesName || matchesDate;
+                }
+
+                return true;
+            });
+
+            // Reset to page 1 and display filtered results
+            currentPage = 1;
+            displayFilteredActivities();
+        }
+
+        // Display filtered activities
+        function displayFilteredActivities() {
+            const tbody = document.getElementById('usersActivitiesTableBody');
+            tbody.innerHTML = '';
+
+            if (filteredActivities.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-4">No activities found</td></tr>';
+                return;
+            }
+
+            // Paginate filtered results (10 per page)
+            const itemsPerPage = 10;
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedActivities = filteredActivities.slice(startIndex, endIndex);
+
+            paginatedActivities.forEach((activity, index) => {
+                const rowNumber = startIndex + index + 1;
+                const userName = activity.user ? (activity.user.first_name + ' ' + activity.user.last_name) : 'System';
+                const userPhoto = activity.user && activity.user.profile_photo ? 'storage/' + activity.user.profile_photo : 'images/jimmy.png';
+                const actionDescription = activity.description || 'Activity';
+                const statusBadgeColor = getStatusBadgeColor(activity.status);
+
+                const row = `
+                    <tr style="border-bottom: 1px solid #e8e8e8;">
+                        <td style="padding: 1rem; color: #666; font-size:14px;">${rowNumber}</td>
+                        <td style="padding: 1rem; font-size:14px;">
+                            <div class="d-flex align-items-center">
+                                <img src="${userPhoto}" class="rounded-circle me-3" alt="User"
+                                    width="40" height="40" style="object-fit: cover;">
+                                <span style="color: #333; font-weight: 500;">${userName}</span>
+                            </div>
+                        </td>
+                        <td style="padding: 1rem; color: #666; font-size:14px;">${actionDescription}</td>
+                        <td style="padding: 1rem; color: #666; font-size:14px;">${UIHelpers.formatDate(activity.timestamp)}</td>
+                        <td style="padding: 1rem;">
+                            <span class="badge" style="background-color: ${statusBadgeColor}; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">${activity.status.charAt(0).toUpperCase() + activity.status.slice(1)}</span>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+
+            // Update pagination info
+            totalPages = Math.ceil(filteredActivities.length / itemsPerPage);
+            updatePaginationUI();
+        }
+
+        // Get status badge color
+        function getStatusBadgeColor(status) {
+            const colors = {
+                'completed': '#28a745',
+                'pending': '#ffc107',
+                'failed': '#dc3545'
+            };
+            return colors[status] || '#6c757d';
+        }
+
+        // Export to CSV
+        function exportToCSV() {
+            if (filteredActivities.length === 0) {
+                alert('No activities to export');
+                return;
+            }
+
+            // Prepare CSV content
+            let csvContent = 'No,User Name,Action,Timestamp,Status\n';
+
+            filteredActivities.forEach((activity, index) => {
+                const userName = activity.user ? (activity.user.first_name + ' ' + activity.user.last_name) : 'System';
+                const actionDescription = activity.description || 'Activity';
+                const timestamp = UIHelpers.formatDate(activity.timestamp);
+                const status = activity.status.charAt(0).toUpperCase() + activity.status.slice(1);
+
+                // Escape quotes and wrap in quotes if contains comma
+                const escapedName = `"${userName.replace(/"/g, '""')}"`;
+                const escapedAction = `"${actionDescription.replace(/"/g, '""')}"`;
+
+                csvContent += `${index + 1},${escapedName},${escapedAction},${timestamp},${status}\n`;
+            });
+
+            // Create blob and download
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+
+            link.setAttribute('href', url);
+            link.setAttribute('download', `user_activities_${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
         // Load users Activities
         async function loadUsersActivities(page = 1) {
             try {
-                const result = await AdminApiClient.getUserActivity({ page: page, per_page: 10 });
+                const result = await AdminApiClient.getUserActivity({ page: page, per_page: 100 });
 
                 if (result.success && result.data) {
-                    currentPage = page;
                     // Handle paginated response from admin dashboard
                     const recentActivityData = result.data.recent_activity || {};
                     const activities = recentActivityData.data || [];
                     paginationData = recentActivityData;
-                    totalPages = recentActivityData.last_page || 1;
 
                     console.log('Activities:', activities);
                     console.log('Pagination:', paginationData);
 
-                    // Update table
-                    const tbody = document.getElementById('usersActivitiesTableBody');
-                    tbody.innerHTML = '';
+                    // Use actual status from database
+                    allActivities = activities.map(activity => {
+                        // Use the status from the activity data if available
+                        let status = activity.status || 'completed'; // default to completed
 
-                    if (activities.length === 0) {
-                        tbody.innerHTML =
-                            '<tr><td colspan="5" class="text-center text-muted py-4">No activities found</td></tr>';
-                    } else {
-                        activities.forEach((activity, index) => {
-                            const rowNumber = (currentPage - 1) * 10 + index + 1;
-                            const userName = activity.user ? (activity.user.first_name + ' ' + activity.user.last_name) : 'System';
-                            const userPhoto = activity.user && activity.user.profile_photo ? 'storage/' + activity.user.profile_photo : 'images/jimmy.png';
-                            const actionDescription = activity.description || 'Activity';
+                        // For payment activities, use the payment status if available
+                        if (activity.payment && activity.payment.status) {
+                            status = activity.payment.status;
+                        }
 
-                            const row = `
-                                <tr style="border-bottom: 1px solid #e8e8e8;">
-                                    <td style="padding: 1rem; color: #666; font-size:14px;">${rowNumber}</td>
-                                    <td style="padding: 1rem; font-size:14px;">
-                                        <div class="d-flex align-items-center">
-                                            <img src="${userPhoto}" class="rounded-circle me-3" alt="User"
-                                                width="40" height="40" style="object-fit: cover;">
-                                            <span style="color: #333; font-weight: 500;">${userName}</span>
-                                        </div>
-                                    </td>
-                                    <td style="padding: 1rem; color: #666; font-size:14px;">${actionDescription}</td>
-                                    <td style="padding: 1rem; color: #666; font-size:14px;">${UIHelpers.formatDate(activity.timestamp)}</td>
-                                    <td style="padding: 1rem;">
-                                        <span class="badge" style="background-color: #28a745; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">Completed</span>
-                                    </td>
-                                </tr>
-                            `;
-                            tbody.innerHTML += row;
-                        });
-                    }
+                        return {
+                            ...activity,
+                            status: status
+                        };
+                    });
 
-                    // Update pagination info
-                    updatePaginationUI();
+                    // Initialize filtered activities with all activities
+                    filteredActivities = [...allActivities];
+                    totalPages = Math.ceil(filteredActivities.length / 10);
+
+                    // Display the activities
+                    displayFilteredActivities();
                 } else {
                     console.error('Failed to load activities:', result.message);
                 }
@@ -346,7 +535,10 @@
                 btn.className = 'btn btn-sm';
                 btn.textContent = '1';
                 btn.style.cssText = 'border: 1px solid #ddd; color: #333; width: 2.5rem; height: 2.5rem; border-radius: 0.5rem;';
-                btn.addEventListener('click', () => loadUsersActivities(1));
+                btn.addEventListener('click', () => {
+                    currentPage = 1;
+                    displayFilteredActivities();
+                });
                 pageNumbersContainer.appendChild(btn);
 
                 if (startPage > 2) {
@@ -366,7 +558,10 @@
                     btn.style.cssText = 'background-color: #004A53; color: white; border: none; width: 2.5rem; height: 2.5rem; border-radius: 0.5rem; font-weight: 600;';
                 } else {
                     btn.style.cssText = 'border: 1px solid #ddd; color: #333; width: 2.5rem; height: 2.5rem; border-radius: 0.5rem;';
-                    btn.addEventListener('click', () => loadUsersActivities(i));
+                    btn.addEventListener('click', () => {
+                        currentPage = i;
+                        displayFilteredActivities();
+                    });
                 }
                 pageNumbersContainer.appendChild(btn);
             }
@@ -384,7 +579,10 @@
                 btn.className = 'btn btn-sm';
                 btn.textContent = totalPages;
                 btn.style.cssText = 'border: 1px solid #ddd; color: #333; width: 2.5rem; height: 2.5rem; border-radius: 0.5rem;';
-                btn.addEventListener('click', () => loadUsersActivities(totalPages));
+                btn.addEventListener('click', () => {
+                    currentPage = totalPages;
+                    displayFilteredActivities();
+                });
                 pageNumbersContainer.appendChild(btn);
             }
         }    </script>

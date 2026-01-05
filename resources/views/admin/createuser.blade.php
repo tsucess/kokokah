@@ -966,8 +966,7 @@
                                 const userFriendlyMessage = formatValidationError(field, messages);
                                 errorMessages.push(userFriendlyMessage);
                             }
-                            const errorMessage = errorMessages.join('
-');
+                            const errorMessage = errorMessages.join('\n');
                             console.error('Validation errors:', errorMessage);
                             showAlert(errorMessage, 'error');
                         } else {

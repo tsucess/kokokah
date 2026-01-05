@@ -995,14 +995,21 @@ class AdminController extends Controller
         }
 
         // Recent payments
-        $recentPayments = Payment::with(['user', 'course'])->where('status', 'completed')->latest()->limit(5)->get();
+        $recentPayments = Payment::with(['user', 'course'])->latest()->limit(5)->get();
         foreach ($recentPayments as $payment) {
-            $courseTitle = $payment->course ? $payment->course->title : 'Unknown Course';
+            if ($payment->type === 'wallet_deposit') {
+                $description = "Deposited Money to Wallet: {$payment->amount}";
+            } else {
+                $courseTitle = $payment->course ? $payment->course->title : 'Unknown Course';
+                $description = "Course Purchase: {$payment->amount} for {$courseTitle}";
+            }
             $activities[] = [
                 'type' => 'payment_completed',
-                'description' => "Payment completed: {$payment->amount} for {$courseTitle}",
+                'description' => $description,
                 'timestamp' => $payment->created_at,
-                'payment' => $payment
+                'user' => $payment->user,
+                'payment' => $payment,
+                'status' => $payment->status
             ];
         }
 
@@ -1041,14 +1048,21 @@ class AdminController extends Controller
         }
 
         // Recent payments
-        $recentPayments = Payment::with(['user', 'course'])->where('status', 'completed')->latest()->limit(15)->get();
+        $recentPayments = Payment::with(['user', 'course'])->latest()->limit(15)->get();
         foreach ($recentPayments as $payment) {
-            $courseTitle = $payment->course ? $payment->course->title : 'Unknown Course';
+            if ($payment->type === 'wallet_deposit') {
+                $description = "Deposited Money to Wallet: {$payment->amount}";
+            } else {
+                $courseTitle = $payment->course ? $payment->course->title : 'Unknown Course';
+                $description = "Course Purchase: {$payment->amount} for {$courseTitle}";
+            }
             $activities[] = [
                 'type' => 'payment_completed',
-                'description' => "Payment completed: {$payment->amount} for {$courseTitle}",
+                'description' => $description,
                 'timestamp' => $payment->created_at,
-                'payment' => $payment
+                'user' => $payment->user,
+                'payment' => $payment,
+                'status' => $payment->status
             ];
         }
 

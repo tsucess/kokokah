@@ -289,12 +289,69 @@
                     transform: rotate(360deg);
                 }
             }
+
+            /* Full Page Loader - Kokokah Style */
+            .page-loader {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, rgba(0, 74, 83, 0.95) 0%, rgba(43, 104, 112, 0.95) 100%);
+                z-index: 10000;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .page-loader.active {
+                display: flex;
+            }
+
+            .loader-spinner {
+                width: 60px;
+                height: 60px;
+                border: 4px solid rgba(255, 255, 255, 0.2);
+                border-top: 4px solid #FDAF22;
+                border-right: 4px solid #FDAF22;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+            }
+
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            .loader-text {
+                color: #fff;
+                font-size: 18px;
+                font-weight: 600;
+                text-align: center;
+                font-family: 'fredoka';
+            }
+
+            .loader-subtext {
+                color: rgba(255, 255, 255, 0.8);
+                font-size: 14px;
+                text-align: center;
+            }
         </style>
         <!-- Toast Notification -->
         <div id="toastNotification" class="toast-notification" style="display: none;">
             <div class="toast-content">
                 <span id="toastMessage"></span>
             </div>
+        </div>
+
+        <!-- Page Loader -->
+        <div id="pageLoader" class="page-loader">
+            <div class="loader-spinner"></div>
+            <div class="loader-text">Processing Payment</div>
+            <div class="loader-subtext">Please wait while we redirect you to the payment gateway...</div>
         </div>
 
         <section class="container-fluid p-4">
@@ -543,6 +600,9 @@ let currentTypeFilter = 'all';
 
         // Initialize page on load
         document.addEventListener('DOMContentLoaded', async () => {
+            // Hide loader in case user cancelled payment and came back
+            hidePageLoader();
+
             await loadWalletData();
             await loadTransactions();
             setupEventListeners();
@@ -945,10 +1005,11 @@ let currentTypeFilter = 'all';
                     // Redirect to payment gateway
                     const authUrl = result.data.gateway_data?.authorization_url || result.data.gateway_data?.link;
                     if (authUrl) {
-                        showToast('Redirecting to ' + selectedGateway + '...', 'success');
+                        // Show page loader to prevent user interaction
+                        showPageLoader();
                         setTimeout(() => {
                             window.location.href = authUrl;
-                        }, 1000);
+                        }, 500);
                     } else {
                         showToast('Payment gateway URL not found', 'error');
                         continueBtn.disabled = false;
@@ -1214,5 +1275,26 @@ let currentTypeFilter = 'all';
                     toast.classList.remove('hide');
                 }, 300);
             }, 3000);
-        }    </script>
+        }
+
+        /**
+         * Show page loader overlay
+         */
+        function showPageLoader() {
+            const loader = document.getElementById('pageLoader');
+            if (loader) {
+                loader.classList.add('active');
+            }
+        }
+
+        /**
+         * Hide page loader overlay
+         */
+        function hidePageLoader() {
+            const loader = document.getElementById('pageLoader');
+            if (loader) {
+                loader.classList.remove('active');
+            }
+        }
+    </script>
 @endsection

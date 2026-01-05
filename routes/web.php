@@ -125,8 +125,9 @@ Route::get('/terms', function () {
     return view('admin.terms');
 });
 
-Route::get('/rating', function () {
-    return view('admin.rating');
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/rating', [App\Http\Controllers\RatingController::class, 'index'])->name('admin.rating.index');
+    Route::get('/rating/{courseId}', [App\Http\Controllers\RatingController::class, 'show'])->name('admin.rating.show');
 });
 
 Route::get('/instructor', function () {
@@ -270,8 +271,9 @@ Route::get('/instructors', function () {
     return view('admin.instructors');
 });
 
+// Legacy route - redirect to new rating details
 Route::get('/ratingdetails', function () {
-    return view('admin.ratingdetails');
+    return redirect('/rating');
 });
 
 Route::get('/transactions', function () {

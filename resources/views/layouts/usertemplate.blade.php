@@ -120,12 +120,16 @@
         </div>
 
         <div class="top-icons">
-            <button class="icon-btn round-2 icon-btn-light" title="bell"><i
-                    class="fa-regular fa-bell fa-xs"></i></button>
+            <button class="icon-btn round-2 icon-btn-light" title="Notifications"
+                    id="notificationBellBtn" style="position: relative;">
+                <i class="fa-regular fa-bell fa-xs"></i>
+            </button>
             <button class="icon-btn round-2 icon-btn-light" title="message"><i
                     class="fa-regular fa-envelope fa-xs"></i></button>
-            <button class="icon-btn round-2 icon-btn-light" title="question"><i
-                    class="fa-solid fa-question fa-xs"></i></button>
+            <button class="icon-btn round-2 icon-btn-light" title="Help & FAQ"
+                    onclick="window.location.href='/help'">
+                <i class="fa-solid fa-question fa-xs"></i>
+            </button>
         </div>
     </header>
 
@@ -225,11 +229,101 @@
         });
     </script>
 
+    <!-- Notification Modal -->
+    <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="notificationModalLabel">Notifications</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <!-- Tab Navigation -->
+                    <ul class="nav nav-tabs mb-3" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="announcements-tab" data-bs-toggle="tab"
+                               href="#announcements" role="tab" aria-controls="announcements" aria-selected="true">
+                                Announcements
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="messages-tab" data-bs-toggle="tab"
+                               href="#messages" role="tab" aria-controls="messages" aria-selected="false">
+                                Messages
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="notifications-tab" data-bs-toggle="tab"
+                               href="#notifications" role="tab" aria-controls="notifications" aria-selected="false">
+                                Notifications
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab Content -->
+                    <div class="tab-content">
+                        <!-- Announcements Tab -->
+                        <div id="announcements" class="tab-pane fade show active" role="tabpanel" aria-labelledby="announcements-tab">
+                            <div id="announcementsList" class="notification-list">
+                                <p class="text-muted text-center py-4">Loading announcements...</p>
+                            </div>
+                        </div>
+
+                        <!-- Messages Tab -->
+                        <div id="messages" class="tab-pane fade" role="tabpanel" aria-labelledby="messages-tab">
+                            <div id="messagesList" class="notification-list">
+                                <p class="text-muted text-center py-4">Loading messages...</p>
+                            </div>
+                        </div>
+
+                        <!-- Notifications Tab -->
+                        <div id="notifications" class="tab-pane fade" role="tabpanel" aria-labelledby="notifications-tab">
+                            <div id="notificationsList" class="notification-list">
+                                <p class="text-muted text-center py-4">Loading notifications...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-primary" id="markAllReadBtn">
+                        Mark All as Read
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Confirmation Modal -->
     <script src="{{ asset('js/utils/confirmationModal.js') }}"></script>
 
     <!-- Kokokah Logo Loader -->
     <script src="{{ asset('js/utils/kokokahLoader.js') }}"></script>
+
+    <!-- Notification API Client -->
+    <script src="{{ asset('js/api/notificationApiClient.js') }}"></script>
+
+    <!-- Notification Modal Component -->
+    <script src="{{ asset('js/components/notificationModal.js') }}"></script>
+
+    <!-- Initialize Notification Modal -->
+    <script>
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                if (window.NotificationModalComponent) {
+                    window.NotificationModalComponent.init();
+                }
+            });
+        } else {
+            if (window.NotificationModalComponent) {
+                window.NotificationModalComponent.init();
+            }
+        }
+    </script>
 </body>
 
 </html>

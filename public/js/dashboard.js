@@ -13,6 +13,7 @@ class DashboardModule {
     this.initTooltips();
     this.loadUserProfile();
     this.loadPointsAndBadges();
+    this.initNotificationBell();
     this.highlightActivePage();
   }
 
@@ -238,6 +239,68 @@ class DashboardModule {
       }
     } catch (error) {
       console.error('Error loading points and badges:', error);
+    }
+  }
+
+  /**
+   * Initialize notification bell icon
+   */
+  static async initNotificationBell() {
+    const bellBtn = document.querySelector('.top-icons button:first-child');
+    if (!bellBtn) return;
+
+    // Make button position relative for badge positioning
+    bellBtn.style.position = 'relative';
+
+    // Load initial notifications
+    await this.loadNotifications();
+
+    // Add click handler to open modal
+    bellBtn.addEventListener('click', () => this.openNotificationModal());
+
+    // Auto-refresh notifications every 60 seconds
+    setInterval(() => this.loadNotifications(), 60000);
+  }
+
+  /**
+   * Load notifications and update badge
+   */
+  static async loadNotifications() {
+    try {
+      const count = await window.NotificationApiClient.getUnreadCount();
+      this.updateNotificationBadge(count);
+    } catch (error) {
+      console.error('Error loading notifications:', error);
+    }
+  }
+
+  /**
+   * Update notification badge with unread count
+   */
+  static updateNotificationBadge(count) {
+    const bellBtn = document.querySelector('.top-icons button:first-child');
+    if (!bellBtn) return;
+
+    let badge = bellBtn.querySelector('.notification-badge');
+
+    if (count > 0) {
+      if (!badge) {
+        badge = document.createElement('span');
+        badge.className = 'notification-badge';
+        bellBtn.appendChild(badge);
+      }
+      badge.textContent = count > 9 ? '9+' : count;
+    } else if (badge) {
+      badge.remove();
+    }
+  }
+
+  /**
+   * Open notification modal
+   */
+  static openNotificationModal() {
+    if (window.NotificationModalComponent) {
+      window.NotificationModalComponent.show();
     }
   }
 

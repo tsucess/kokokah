@@ -164,6 +164,15 @@
 
         // Load chatrooms on page load
         document.addEventListener('DOMContentLoaded', async () => {
+            // Wait for API_BASE_URL to be defined
+            if (typeof API_BASE_URL === 'undefined') {
+                console.error('API_BASE_URL is not defined. Waiting for scripts to load...');
+                setTimeout(() => {
+                    loadChatrooms();
+                }, 500);
+                return;
+            }
+
             // Check if user has a valid token
             let token = localStorage.getItem('auth_token');
 
@@ -178,6 +187,9 @@
 
             if (!token) {
                 console.warn('No auth token found. User may not be logged in.');
+                alert('Please log in to access the chatroom');
+                window.location.href = '/login';
+                return;
             } else {
                 console.log('Auth token found:', token.substring(0, 10) + '...');
             }
@@ -312,7 +324,18 @@
         // Render messages
         function renderMessages(messages) {
             console.log('renderMessages called with:', messages);
-            const currentUserId = JSON.parse(localStorage.getItem('auth_user'))?.id;
+
+            // Get current user ID from localStorage
+            let currentUserId = null;
+            const authUserStr = localStorage.getItem('auth_user');
+            if (authUserStr) {
+                try {
+                    const authUser = JSON.parse(authUserStr);
+                    currentUserId = authUser?.id;
+                } catch (e) {
+                    console.error('Failed to parse auth_user:', e);
+                }
+            }
             console.log('Current user ID:', currentUserId);
 
             if (!messages || messages.length === 0) {
@@ -322,14 +345,20 @@
             }
 
             const html = messages.map(msg => {
-                const isCurrentUser = msg.user_id === currentUserId;
+                const isCurrentUser = msg.user_id === currentUserId || msg.user_id == currentUserId;
+                const userFirstName = msg.user?.first_name || 'Unknown';
+                const userLastName = msg.user?.last_name || 'User';
+                const profilePhoto = msg.user?.profile_photo || '/images/default-avatar.png';
+                const messageTime = new Date(msg.created_at).toLocaleTimeString();
+                const messageContent = msg.content || '';
+
                 return `
                     <div class="chat-message ${isCurrentUser ? 'current-user-message' : ''}">
-                        ${!isCurrentUser ? `<img src="${msg.user?.profile_photo || 'images/default-avatar.png'}" alt="Avatar" class="message-avatar">` : ''}
+                        ${!isCurrentUser ? `<img src="${profilePhoto}" alt="Avatar" class="message-avatar" onerror="this.src='/images/default-avatar.png'">` : ''}
                         <div class="message-content">
-                            ${!isCurrentUser ? `<span class="message-user">${msg.user?.first_name} ${msg.user?.last_name}</span>` : ''}
-                            <span class="message-timestamp">${new Date(msg.created_at).toLocaleTimeString()}</span>
-                            <p class="mb-1">${msg.content}</p>
+                            ${!isCurrentUser ? `<span class="message-user">${userFirstName} ${userLastName}</span>` : ''}
+                            <span class="message-timestamp">${messageTime}</span>
+                            <p class="mb-1">${messageContent}</p>
                         </div>
                     </div>
                 `;
