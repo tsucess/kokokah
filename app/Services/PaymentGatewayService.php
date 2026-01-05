@@ -35,19 +35,43 @@ class PaymentGatewayService
             ])
         ]);
 
-        $gatewayService = $this->getGatewayService($gateway);
-        $response = $gatewayService->initializePayment($payment);
+        try {
+            $gatewayService = $this->getGatewayService($gateway);
+            $response = $gatewayService->initializePayment($payment);
 
-        $payment->update([
-            'gateway_reference' => $response['reference'] ?? null,
-            'gateway_response' => $response
-        ]);
+            // Check if initialization was successful
+            if (!isset($response['success']) || !$response['success']) {
+                // Mark payment as failed if gateway initialization failed
+                $payment->update([
+                    'status' => 'failed',
+                    'gateway_response' => $response,
+                    'failed_at' => now()
+                ]);
 
-        return [
-            'payment_id' => $payment->id,
-            'gateway_data' => $response,
-            'payment' => $payment
-        ];
+                throw new \Exception($response['message'] ?? 'Payment initialization failed');
+            }
+
+            // Update payment with gateway reference and response
+            $payment->update([
+                'gateway_reference' => $response['reference'] ?? null,
+                'gateway_response' => $response
+            ]);
+
+            return [
+                'success' => true,
+                'payment_id' => $payment->id,
+                'gateway_data' => $response,
+                'payment' => $payment
+            ];
+        } catch (\Exception $e) {
+            Log::error('Wallet deposit initialization failed: ' . $e->getMessage(), [
+                'user_id' => $user->id,
+                'amount' => $amount,
+                'gateway' => $gateway
+            ]);
+
+            throw $e;
+        }
     }
 
     /**
@@ -139,7 +163,8 @@ class PaymentGatewayService
                 $payment->amount,
                 $payment->gateway_reference,
                 "Wallet deposit via {$payment->gateway}",
-                ['payment_id' => $payment->id]
+                ['payment_id' => $payment->id],
+                $payment->gateway
             );
 
             return [
@@ -149,14 +174,15 @@ class PaymentGatewayService
                 'transaction' => $transaction,
                 'new_balance' => $wallet->balance
             ];
-        } 
+        }
         
         if ($payment->type === 'course_purchase') {
             // Enroll user in course
             $enrollment = $payment->user->enrollments()->create([
                 'course_id' => $payment->course_id,
                 'status' => 'active',
-                'enrolled_at' => now()
+                'enrolled_at' => now(),
+                'amount_paid' => $payment->amount
             ]);
 
             // Record transaction for tracking
@@ -168,6 +194,7 @@ class PaymentGatewayService
                 'status' => 'success',
                 'description' => "Course purchase: {$payment->course->title}",
                 'course_id' => $payment->course_id,
+                'payment_method' => $payment->gateway,
                 'metadata' => ['payment_id' => $payment->id]
             ]);
 

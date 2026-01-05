@@ -12,10 +12,14 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Register middleware aliases for Laravel 12
         $middleware->alias([
             'role' => \App\Http\Middleware\RoleMiddleware::class,
             'rate.limit' => \App\Http\Middleware\RateLimitMiddleware::class,
             'security.headers' => \App\Http\Middleware\SecurityHeadersMiddleware::class,
+            'ensure.user.authenticated.for.chat' => \App\Http\Middleware\EnsureUserIsAuthenticatedForChat::class,
+            'authorize.chat.room.access' => \App\Http\Middleware\AuthorizeChatRoomAccess::class,
+            'check.chat.room.mute.status' => \App\Http\Middleware\CheckChatRoomMuteStatus::class,
         ]);
 
         // Apply global middleware

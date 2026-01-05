@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Lesson;
 use App\Models\Course;
 use App\Models\LessonCompletion;
+use App\Services\PointsAndBadgesService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -82,14 +83,33 @@ class LessonController extends Controller
                 ], 403);
             }
 
-            $validator = Validator::make($request->all(), [
+            // Get lesson type from request
+            $lessonType = $request->input('lesson_type', 'content');
+
+            // Build validation rules based on lesson type
+            $rules = [
                 'title' => 'required|string|max:255',
-                'content' => 'required|string',
-                'video_url' => 'nullable|url',
+                'topic_id' => 'required|integer|exists:topics,id',
+                'lesson_type' => 'required|in:content,youtube,document,image,audio',
                 'duration_minutes' => 'nullable|integer|min:1',
-                'is_free' => 'boolean',
-                'attachment' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,zip|max:10240'
-            ]);
+            ];
+
+            // Add type-specific validation rules
+            switch ($lessonType) {
+                case 'youtube':
+                    $rules['video_url'] = 'required|url';
+                    break;
+                case 'content':
+                    $rules['content'] = 'required|string';
+                    break;
+                case 'document':
+                case 'image':
+                case 'audio':
+                    $rules['attachment'] = 'required|file|mimes:pdf,doc,docx,ppt,pptx,xls,xlsx,zip,jpg,jpeg,png,gif,webp,mp3,wav,m4a|max:10240';
+                    break;
+            }
+
+            $validator = Validator::make($request->all(), $rules);
 
             if ($validator->fails()) {
                 return response()->json([
@@ -105,12 +125,15 @@ class LessonController extends Controller
             $lessonData = $request->except(['attachment']);
             $lessonData['course_id'] = $course->id;
             $lessonData['order'] = $nextOrder;
-            $lessonData['is_free'] = $request->boolean('is_free', false);
 
-            // Handle file attachment
+            // Handle file attachment based on lesson type
             if ($request->hasFile('attachment')) {
-                $attachmentPath = $request->file('attachment')->store('lesson-attachments', 'public');
+                $file = $request->file('attachment');
+                $attachmentPath = $file->store('lesson-attachments', 'public');
                 $lessonData['attachment'] = $attachmentPath;
+
+                // Set attachment type to the actual file extension
+                $lessonData['attachment_type'] = $file->getClientOriginalExtension();
             }
 
             $lesson = Lesson::create($lessonData);
@@ -141,9 +164,8 @@ class LessonController extends Controller
             $isEnrolled = $lesson->course->enrollments()->where('user_id', $user->id)->exists();
             $isInstructor = $lesson->course->instructor_id === $user->id;
             $isAdmin = $user->hasRole('admin');
-            $isFreeLesson = $lesson->is_free;
 
-            if (!$isEnrolled && !$isInstructor && !$isAdmin && !$isFreeLesson) {
+            if (!$isEnrolled && !$isInstructor && !$isAdmin) {
                 return response()->json([
                     'success' => false,
                     'message' => 'You must be enrolled in this course to view this lesson'
@@ -207,10 +229,10 @@ class LessonController extends Controller
                 'title' => 'sometimes|string|max:255',
                 'content' => 'sometimes|string',
                 'video_url' => 'nullable|url',
+                'lesson_type' => 'sometimes|in:content,youtube,document,image,audio',
                 'duration_minutes' => 'nullable|integer|min:1',
-                'is_free' => 'boolean',
                 'order' => 'sometimes|integer|min:1',
-                'attachment' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,zip|max:10240'
+                'attachment' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,xls,xlsx,zip,jpg,jpeg,png,gif,webp,mp3,wav,m4a|max:10240'
             ]);
 
             if ($validator->fails()) {
@@ -229,8 +251,12 @@ class LessonController extends Controller
                 if ($lesson->attachment) {
                     Storage::disk('public')->delete($lesson->attachment);
                 }
-                $attachmentPath = $request->file('attachment')->store('lesson-attachments', 'public');
+                $file = $request->file('attachment');
+                $attachmentPath = $file->store('lesson-attachments', 'public');
                 $updateData['attachment'] = $attachmentPath;
+
+                // Set attachment type to the actual file extension
+                $updateData['attachment_type'] = $file->getClientOriginalExtension();
             }
 
             $lesson->update($updateData);
@@ -294,7 +320,7 @@ class LessonController extends Controller
 
             // Check if user is enrolled in the course
             $isEnrolled = $lesson->course->enrollments()->where('user_id', $user->id)->exists();
-            if (!$isEnrolled && !$lesson->is_free) {
+            if (!$isEnrolled) {
                 return response()->json([
                     'success' => false,
                     'message' => 'You must be enrolled in this course to complete lessons'
@@ -324,10 +350,22 @@ class LessonController extends Controller
             // Update course progress
             $this->updateCourseProgress($user, $lesson->course);
 
+            // Award points for completing the lesson/topic
+            $pointsService = new PointsAndBadgesService();
+            $topicId = $lesson->topic_id;
+            if ($topicId) {
+                $pointsService->awardPointsForTopicCompletion($user, $topicId);
+            }
+
+            // Refresh user to get updated points
+            $user->refresh();
+
             return response()->json([
                 'success' => true,
                 'message' => 'Lesson marked as complete',
-                'data' => $completion
+                'data' => $completion,
+                'user_points' => $user->points,
+                'points_awarded' => 5
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -394,7 +432,7 @@ class LessonController extends Controller
 
             // Check if user is enrolled
             $isEnrolled = $lesson->course->enrollments()->where('user_id', $user->id)->exists();
-            if (!$isEnrolled && !$lesson->is_free) {
+            if (!$isEnrolled) {
                 return response()->json([
                     'success' => false,
                     'message' => 'You must be enrolled in this course'
@@ -440,7 +478,7 @@ class LessonController extends Controller
             $isInstructor = $lesson->course->instructor_id === $user->id;
             $isAdmin = $user->hasRole('admin');
 
-            if (!$isEnrolled && !$isInstructor && !$isAdmin && !$lesson->is_free) {
+            if (!$isEnrolled && !$isInstructor && !$isAdmin) {
                 return response()->json([
                     'success' => false,
                     'message' => 'You must be enrolled to access attachments'

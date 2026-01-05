@@ -44,7 +44,7 @@ Route::get('/stem', function () {
 
 Route::get('/login', function () {
     return view('auth.login');
-});
+})->name('login');
 
 Route::get('/forgotpassword', function () {
     return view('auth.forgotpassword');
@@ -75,8 +75,22 @@ Route::get('/market', function () {
     return view('market');
 });
 
-Route::get('/profiles', function () {
+Route::get('/test-auth', function () {
+    return response()->json([
+        'authenticated' => auth()->check(),
+        'user' => auth()->user(),
+        'guard' => auth()->getDefaultDriver()
+    ]);
+});
+
+
+// Profile routes - simple views that load profile data via API
+Route::get('/adminprofile', function () {
     return view('admin.profile');
+});
+
+Route::get('/userprofile', function () {
+    return view('users.profile');
 });
 
 Route::get('/profile', function () {
@@ -89,6 +103,10 @@ Route::get('/application', function () {
 
 Route::get('/categories', function () {
     return view('admin.categories');
+});
+
+Route::get('/report', function () {
+    return view('admin.report');
 });
 
 Route::get('/curriculum-categories', function () {
@@ -107,9 +125,7 @@ Route::get('/terms', function () {
     return view('admin.terms');
 });
 
-Route::get('/rating', function () {
-    return view('admin.rating');
-});
+
 
 Route::get('/instructor', function () {
     return view('admin.instructor');
@@ -148,12 +164,57 @@ Route::get('/usersubject', function () {
     return view('users.usersubject');
 });
 
-Route::get('/enroll', function () {
+Route::get('/userresult', function () {
+    return view('users.result');
+});
+
+Route::get('/userenroll', function () {
     return view('users.enroll');
+});
+
+Route::get('/userannouncement', function () {
+    return view('users.userannouncement');
 });
 
 Route::get('/termsubject', function () {
     return view('users.termsubject');
+});
+
+Route::get('/userkudikah', function () {
+    return view('users.kudikah');
+});
+
+Route::get('/userfeedback', function () {
+    return view('users.userfeedback');
+});
+
+Route::get('/userkoodies', function () {
+    return view('users.userkoodies');
+});
+
+Route::get('/userleaderboard', function () {
+    return view('users.leaderboard');
+});
+
+// Route::middleware('auth')->group(function () {
+    Route::get('/chatroom', function () {
+        // Create a token for the user if they don't have one
+        // $user = auth()->user();
+        // if ($user && !$user->tokens()->exists()) {
+        //     $token = $user->createToken('web_token')->plainTextToken;
+        //     // Pass the token to the view
+        //     return view('chat.chatroom', ['token' => $token]);
+        // }
+        return view('chat.chatroom');
+    });
+// });
+
+Route::get('/userlessondetails', function () {
+    return view('users.subjectdetails');
+});
+
+Route::get('/usersubscriptionhistory', function () {
+    return view('users.subscriptionhistory');
 });
 
 Route::get('/subjectselect', function () {
@@ -166,10 +227,6 @@ Route::get('/subjectchart', function () {
 
 Route::get('/wallet', function () {
     return view('admin.wallet');
-});
-
-Route::get('/chatroom', function () {
-    return view('admin.chatroom');
 });
 
 Route::get('/announcement', function () {
@@ -211,6 +268,20 @@ Route::get('/instructors', function () {
     return view('admin.instructors');
 });
 
+// Rating routes
+Route::get('/rating', function () {
+    return view('admin.rating');
+});
+
+Route::get('/rating-details', function () {
+    return view('admin.ratingdetails');
+});
+
+// Legacy route - redirect to new rating details
+Route::get('/ratingdetails', function () {
+    return redirect('/rating');
+});
+
 Route::get('/transactions', function () {
     return view('admin.transactions');
 });
@@ -227,12 +298,22 @@ Route::get('/createsubject', function () {
     return view('admin.createsubject');
 });
 
+Route::get('/editsubject/{id?}', function ($id = null) {
+    // Get ID from URL parameter or query string
+    $courseId = $id ?? request()->query('id');
+    return view('admin.editsubject', ['courseId' => $courseId]);
+});
+
 Route::get('/publish', function () {
     return view('admin.publish');
 });
 
 Route::get('/createannouncement', function () {
     return view('admin.createannouncement');
+});
+
+Route::get('/announcement/{id}/edit', function ($id) {
+    return view('admin.editannouncement', ['announcementId' => $id]);
 });
 
 Route::get('/userkoodies', function () {

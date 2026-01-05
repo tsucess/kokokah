@@ -512,7 +512,7 @@ class BadgeController extends Controller
         $period = $request->get('period', 'all_time'); // all_time, this_month, this_year
         $category = $request->get('category'); // optional filter by badge category
 
-        $query = User::select('users.id', 'users.first_name', 'users.last_name', 'users.email')
+        $query = User::select('users.id', 'users.first_name', 'users.last_name', 'users.email', 'users.profile_photo', 'users.points')
                     ->selectRaw('COUNT(user_badges.id) as badges_count')
                     ->selectRaw('COALESCE(SUM(badges.points), 0) as total_points')
                     ->leftJoin('user_badges', function($join) use ($period) {
@@ -531,16 +531,18 @@ class BadgeController extends Controller
             $query->where('badges.type', $category); // Use 'type' instead of 'category'
         }
 
-        $leaderboard = $query->groupBy('users.id', 'users.first_name', 'users.last_name', 'users.email')
+        $leaderboard = $query->groupBy('users.id', 'users.first_name', 'users.last_name', 'users.email', 'users.profile_photo', 'users.points')
                            ->orderBy('total_points', 'desc')
                            ->orderBy('badges_count', 'desc')
                            ->limit(50)
                            ->get();
 
-        // Add rank to each user
+        // Add rank to each user and calculate level
         $leaderboard = $leaderboard->map(function($user, $index) {
             $userData = $user->toArray();
             $userData['rank'] = $index + 1;
+            $userData['level'] = $this->calculateUserLevel($user->points);
+            $userData['profile_photo'] = $user->profile_photo ? '/storage/' . $user->profile_photo : null;
             return $userData;
         });
 
@@ -552,6 +554,17 @@ class BadgeController extends Controller
                 'category' => $category
             ]
         ]);
+    }
+
+    /**
+     * Calculate user level based on points
+     */
+    private function calculateUserLevel($points)
+    {
+        if ($points >= 1000) return 'Expert';
+        if ($points >= 500) return 'Advanced';
+        if ($points >= 100) return 'Intermediate';
+        return 'Amateur';
     }
 
     /**

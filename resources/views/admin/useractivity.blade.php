@@ -6,12 +6,12 @@
             <!-- Header Section -->
             <div class="d-flex justify-content-between align-items-start mb-5">
                 <div>
-                    <h1 class="fw-bold mb-2" style="font-size: 32px; color: #004A53; font-family: 'Fredoka One', sans-serif;">
+                    <h1 class="">
                         User Activity Logs</h1>
-                    <p class="text-muted" style="font-size: 0.95rem;">Here overview of your</p>
+                    <p class="text-muted" >Here overview of your</p>
                 </div>
                 <div>
-                    <button class="btn px-4 py-2 fw-semibold" style="background-color: #FDAF22; border: none; color: white;">
+                    <button class="btn px-4 py-2 fw-semibold" id="exportBtn" style="background-color: #FDAF22; border: none; color: white;">
                         <i class="fa-solid fa-download me-2"></i> Export
                     </button>
                 </div>
@@ -25,7 +25,7 @@
                         <h5 class="fw-bold mb-0" style="font-size: 1.1rem; color: #1a1a1a;">User Activity Logs</h5>
                         <div class="d-flex gap-3 justify-content-end" style="flex: 1; margin-left: 2rem;">
                             <!-- Search Input -->
-                            <div class="position-relative flex-grow-1" style="max-width: 300px;">
+                            {{-- <div class="position-relative flex-grow-1" style="max-width: 300px;">
                                 <i class="fa-solid fa-search position-absolute top-50 start-0 translate-middle-y ms-3"
                                     style="color: #999;"></i>
                                 <input type="text" class="form-control search-input-custom" id="searchInput"
@@ -39,6 +39,20 @@
                                 <option value="subscribed">Subscribed</option>
                                 <option value="completed">Completed</option>
                                 <option value="dropped">Dropped</option>
+                            </select> --}}
+
+                             <div class="d-flex gap-2 align-items-center search-border-custom">
+                                <i class="fa-solid fa-search fa-xs" style="color: #999;"></i>
+                                <input type="search" class="search-input-custom-input"
+                                    id="searchInput" placeholder="Search by Name or Date (YYYY-MM-DD)" aria-label="Search">
+                            </div>
+
+                            <!-- Filter Dropdown -->
+                            <select class="custom-select" id="filterSelect">
+                                <option value="">All Status</option>
+                                <option value="completed">Completed</option>
+                                <option value="pending">Pending</option>
+                                <option value="failed">Failed</option>
                             </select>
 
                             <!-- View Options -->
@@ -56,85 +70,33 @@
                         <table class="table table-hover align-middle activity-table">
                             <thead>
                                 <tr style="background-color: #f0f0f0; border-bottom: 2px solid #e8e8e8;">
-                                    <th style="color: #333; font-weight: 600; padding: 1rem;">No</th>
-                                    <th style="color: #333; font-weight: 600; padding: 1rem;">Users</th>
-                                    <th style="color: #333; font-weight: 600; padding: 1rem;">Action</th>
-                                    <th style="color: #333; font-weight: 600; padding: 1rem;">Timestamp</th>
-                                    <th style="color: #333; font-weight: 600; padding: 1rem;">Status</th>
+                                    <th class="useractivity-table-title">No</th>
+                                    <th class="useractivity-table-title">Users</th>
+                                    <th class="useractivity-table-title">Action</th>
+                                    <th class="useractivity-table-title">Timestamp</th>
+                                    <th class="useractivity-table-title">Status</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="usersActivitiesTableBody">
                                 <!-- Row 1 -->
                                 <tr style="border-bottom: 1px solid #e8e8e8;">
-                                    <td style="padding: 1rem; color: #666;">01</td>
+                                    <td style="padding: 1rem; color: #666; font-size:14px;">01</td>
                                     <td style="padding: 1rem;">
                                         <div class="d-flex align-items-center">
                                             <img src="images/jimmy.png" class="rounded-circle me-3" alt="User"
                                                 width="40" height="40" style="object-fit: cover;">
-                                            <span style="color: #333; font-weight: 500;">Winner Effiong</span>
+                                            <span style="color: #333; font-weight: 500; font-size:14px;">Winner Effiong</span>
                                         </div>
                                     </td>
-                                    <td style="padding: 1rem; color: #666;">Enrolled in "React"</td>
-                                    <td style="padding: 1rem; color: #666;">Sept 01, 2025</td>
+                                    <td style="padding: 1rem; color: #666; font-size:14px;">Enrolled in "React"</td>
+                                    <td style="padding: 1rem; color: #666; font-size:14px;">Sept 01, 2025</td>
                                     <td style="padding: 1rem;">
                                         <span class="badge"
-                                            style="background-color: #28a745; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">Completed</span>
+                                            style="background-color: #28a745; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem; font-size:14px;">Completed</span>
                                     </td>
                                 </tr>
 
-                                <!-- Row 2 -->
-                                <tr style="border-bottom: 1px solid #e8e8e8;">
-                                    <td style="padding: 1rem; color: #666;">02</td>
-                                    <td style="padding: 1rem;">
-                                        <div class="d-flex align-items-center">
-                                            <img src="images/jimmy.png" class="rounded-circle me-3" alt="User"
-                                                width="40" height="40" style="object-fit: cover;">
-                                            <span style="color: #333; font-weight: 500;">Winner Effiong</span>
-                                        </div>
-                                    </td>
-                                    <td style="padding: 1rem; color: #666;">Subscribed to "Premium"</td>
-                                    <td style="padding: 1rem; color: #666;">Sept 01, 2025</td>
-                                    <td style="padding: 1rem;">
-                                        <span class="badge"
-                                            style="background-color: #004A53; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">Active</span>
-                                    </td>
-                                </tr>
 
-                                <!-- Row 3 -->
-                                <tr style="border-bottom: 1px solid #e8e8e8;">
-                                    <td style="padding: 1rem; color: #666;">03</td>
-                                    <td style="padding: 1rem;">
-                                        <div class="d-flex align-items-center">
-                                            <img src="images/jimmy.png" class="rounded-circle me-3" alt="User"
-                                                width="40" height="40" style="object-fit: cover;">
-                                            <span style="color: #333; font-weight: 500;">Winner Effiong</span>
-                                        </div>
-                                    </td>
-                                    <td style="padding: 1rem; color: #666;">Completed "Python Basics"</td>
-                                    <td style="padding: 1rem; color: #666;">Aug 28, 2025</td>
-                                    <td style="padding: 1rem;">
-                                        <span class="badge"
-                                            style="background-color: #ffc107; color: #333; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">Pending</span>
-                                    </td>
-                                </tr>
-
-                                <!-- Row 4 -->
-                                <tr style="border-bottom: 1px solid #e8e8e8;">
-                                    <td style="padding: 1rem; color: #666;">04</td>
-                                    <td style="padding: 1rem;">
-                                        <div class="d-flex align-items-center">
-                                            <img src="images/jimmy.png" class="rounded-circle me-3" alt="User"
-                                                width="40" height="40" style="object-fit: cover;">
-                                            <span style="color: #333; font-weight: 500;">Winner Effiong</span>
-                                        </div>
-                                    </td>
-                                    <td style="padding: 1rem; color: #666;">Dropped "Advanced CSS"</td>
-                                    <td style="padding: 1rem; color: #666;">Aug 25, 2025</td>
-                                    <td style="padding: 1rem;">
-                                        <span class="badge"
-                                            style="background-color: #dc3545; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">Dropped</span>
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -143,7 +105,7 @@
                     <div class="d-flex justify-content-between align-items-center mt-5 pt-4"
                         style="border-top: 1px solid #e8e8e8;">
                         <!-- Previous Button -->
-                        <button class="btn px-4 py-2"
+                        <button id="prevBtn" class="btn px-4 py-2"
                             style="border: 1px solid #004A53; color: #004A53; font-weight: 500; border-radius: 0.5rem;">
                             <i class="fa-solid fa-chevron-left me-2"></i> Previous
                         </button>
@@ -151,25 +113,17 @@
                         <!-- Pagination Info -->
                         <div class="d-flex align-items-center gap-3">
                             <span class="text-muted fw-semibold" style="font-size: 0.9rem;">Page <strong
-                                    style="color: #004A53;">1</strong> of <strong
-                                    style="color: #004A53;">12</strong></span>
+                                    id="currentPageNum" style="color: #004A53;">1</strong> of <strong
+                                    id="totalPageNum" style="color: #004A53;">1</strong></span>
 
                             <!-- Page Numbers -->
-                            <div class="d-flex gap-2">
-                                <button class="btn btn-sm"
-                                    style="background-color: #004A53; color: white; border: none; width: 2.5rem; height: 2.5rem; border-radius: 0.5rem; font-weight: 600;">1</button>
-                                <button class="btn btn-sm"
-                                    style="border: 1px solid #ddd; color: #333; width: 2.5rem; height: 2.5rem; border-radius: 0.5rem;">2</button>
-                                <button class="btn btn-sm"
-                                    style="border: 1px solid #ddd; color: #333; width: 2.5rem; height: 2.5rem; border-radius: 0.5rem;">3</button>
-                                <span style="color: #999;">...</span>
-                                <button class="btn btn-sm"
-                                    style="border: 1px solid #ddd; color: #333; width: 2.5rem; height: 2.5rem; border-radius: 0.5rem;">12</button>
+                            <div class="d-flex gap-2" id="pageNumbersContainer">
+                                <!-- Page numbers will be generated here -->
                             </div>
                         </div>
 
                         <!-- Next Button -->
-                        <button class="btn px-4 py-2"
+                        <button id="nextBtn" class="btn px-4 py-2"
                             style="border: 1px solid #004A53; color: #004A53; font-weight: 500; border-radius: 0.5rem;">
                             Next <i class="fa-solid fa-chevron-right ms-2"></i>
                         </button>
@@ -216,6 +170,49 @@
         }
 
         .filter-select-custom:focus {
+            border-color: #004A53;
+            box-shadow: 0 0 0 0.2rem rgba(0, 74, 83, 0.15);
+            outline: none;
+        }
+
+        .search-border-custom {
+            border: 2px solid #004A53;
+            border-radius: 0.75rem;
+            padding: 0.5rem 1rem;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+
+        .search-border-custom:focus-within {
+            box-shadow: 0 0 0 0.2rem rgba(0, 74, 83, 0.15);
+        }
+
+        .search-input-custom-input {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 0.95rem;
+            color: #333;
+            flex: 1;
+            padding: 0;
+        }
+
+        .search-input-custom-input::placeholder {
+            color: #999;
+        }
+
+        .custom-select {
+            padding: 0.625rem 1rem;
+            font-size: 0.95rem;
+            border: 2px solid #004A53;
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+            background-color: white;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .custom-select:focus {
             border-color: #004A53;
             box-shadow: 0 0 0 0.2rem rgba(0, 74, 83, 0.15);
             outline: none;
@@ -268,4 +265,325 @@
             }
         }
     </style>
+
+
+        <!-- API Clients -->
+    <script>
+// Get auth token
+        const token = localStorage.getItem('auth_token');
+        let currentPage = 1;
+        let totalPages = 1;
+        let paginationData = null;
+        let allActivities = []; // Store all activities for client-side filtering
+        let filteredActivities = []; // Store filtered activities
+
+        // Fetch dashboard data on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUsersActivities(1);
+            setupPaginationListeners();
+            setupSearchAndFilterListeners();
+        });
+
+        // Setup pagination button listeners
+        function setupPaginationListeners() {
+            document.getElementById('prevBtn').addEventListener('click', function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    displayFilteredActivities();
+                }
+            });
+
+            document.getElementById('nextBtn').addEventListener('click', function() {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    displayFilteredActivities();
+                }
+            });
+        }
+
+        // Setup search and filter listeners
+        function setupSearchAndFilterListeners() {
+            const searchInput = document.getElementById('searchInput');
+            const filterSelect = document.getElementById('filterSelect');
+            const exportBtn = document.getElementById('exportBtn');
+
+            if (searchInput) {
+                searchInput.addEventListener('input', debounce(function() {
+                    applyFiltersAndSearch();
+                }, 300));
+            }
+
+            if (filterSelect) {
+                filterSelect.addEventListener('change', function() {
+                    applyFiltersAndSearch();
+                });
+            }
+
+            if (exportBtn) {
+                exportBtn.addEventListener('click', exportToCSV);
+            }
+        }
+
+        // Debounce function for search input
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Apply filters and search
+        function applyFiltersAndSearch() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            const statusFilter = document.getElementById('filterSelect').value;
+
+            filteredActivities = allActivities.filter(activity => {
+                // Filter by status
+                if (statusFilter && activity.status !== statusFilter) {
+                    return false;
+                }
+
+                // Filter by search term (name or date)
+                if (searchTerm) {
+                    const userName = activity.user ? (activity.user.first_name + ' ' + activity.user.last_name).toLowerCase() : '';
+                    const userEmail = activity.user ? (activity.user.email || '').toLowerCase() : '';
+                    const activityDate = activity.timestamp ? activity.timestamp.split(' ')[0] : '';
+
+                    const matchesName = userName.includes(searchTerm) || userEmail.includes(searchTerm);
+                    const matchesDate = activityDate.includes(searchTerm);
+
+                    return matchesName || matchesDate;
+                }
+
+                return true;
+            });
+
+            // Reset to page 1 and display filtered results
+            currentPage = 1;
+            displayFilteredActivities();
+        }
+
+        // Display filtered activities
+        function displayFilteredActivities() {
+            const tbody = document.getElementById('usersActivitiesTableBody');
+            tbody.innerHTML = '';
+
+            if (filteredActivities.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-4">No activities found</td></tr>';
+                return;
+            }
+
+            // Paginate filtered results (10 per page)
+            const itemsPerPage = 10;
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedActivities = filteredActivities.slice(startIndex, endIndex);
+
+            paginatedActivities.forEach((activity, index) => {
+                const rowNumber = startIndex + index + 1;
+                const userName = activity.user ? (activity.user.first_name + ' ' + activity.user.last_name) : 'System';
+                const userPhoto = activity.user && activity.user.profile_photo ? 'storage/' + activity.user.profile_photo : 'images/jimmy.png';
+                const actionDescription = activity.description || 'Activity';
+                const statusBadgeColor = getStatusBadgeColor(activity.status);
+
+                const row = `
+                    <tr style="border-bottom: 1px solid #e8e8e8;">
+                        <td style="padding: 1rem; color: #666; font-size:14px;">${rowNumber}</td>
+                        <td style="padding: 1rem; font-size:14px;">
+                            <div class="d-flex align-items-center">
+                                <img src="${userPhoto}" class="rounded-circle me-3" alt="User"
+                                    width="40" height="40" style="object-fit: cover;">
+                                <span style="color: #333; font-weight: 500;">${userName}</span>
+                            </div>
+                        </td>
+                        <td style="padding: 1rem; color: #666; font-size:14px;">${actionDescription}</td>
+                        <td style="padding: 1rem; color: #666; font-size:14px;">${UIHelpers.formatDate(activity.timestamp)}</td>
+                        <td style="padding: 1rem;">
+                            <span class="badge" style="background-color: ${statusBadgeColor}; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">${activity.status.charAt(0).toUpperCase() + activity.status.slice(1)}</span>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+
+            // Update pagination info
+            totalPages = Math.ceil(filteredActivities.length / itemsPerPage);
+            updatePaginationUI();
+        }
+
+        // Get status badge color
+        function getStatusBadgeColor(status) {
+            const colors = {
+                'completed': '#28a745',
+                'pending': '#ffc107',
+                'failed': '#dc3545'
+            };
+            return colors[status] || '#6c757d';
+        }
+
+        // Export to CSV
+        function exportToCSV() {
+            if (filteredActivities.length === 0) {
+                alert('No activities to export');
+                return;
+            }
+
+            // Prepare CSV content
+            let csvContent = 'No,User Name,Action,Timestamp,Status\n';
+
+            filteredActivities.forEach((activity, index) => {
+                const userName = activity.user ? (activity.user.first_name + ' ' + activity.user.last_name) : 'System';
+                const actionDescription = activity.description || 'Activity';
+                const timestamp = UIHelpers.formatDate(activity.timestamp);
+                const status = activity.status.charAt(0).toUpperCase() + activity.status.slice(1);
+
+                // Escape quotes and wrap in quotes if contains comma
+                const escapedName = `"${userName.replace(/"/g, '""')}"`;
+                const escapedAction = `"${actionDescription.replace(/"/g, '""')}"`;
+
+                csvContent += `${index + 1},${escapedName},${escapedAction},${timestamp},${status}\n`;
+            });
+
+            // Create blob and download
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+
+            link.setAttribute('href', url);
+            link.setAttribute('download', `user_activities_${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Load users Activities
+        async function loadUsersActivities(page = 1) {
+            try {
+                const result = await AdminApiClient.getUserActivity({ page: page, per_page: 100 });
+
+                if (result.success && result.data) {
+                    // Handle paginated response from admin dashboard
+                    const recentActivityData = result.data.recent_activity || {};
+                    const activities = recentActivityData.data || [];
+                    paginationData = recentActivityData;
+
+                    console.log('Activities:', activities);
+                    console.log('Pagination:', paginationData);
+
+                    // Use actual status from database
+                    allActivities = activities.map(activity => {
+                        // Use the status from the activity data if available
+                        let status = activity.status || 'completed'; // default to completed
+
+                        // For payment activities, use the payment status if available
+                        if (activity.payment && activity.payment.status) {
+                            status = activity.payment.status;
+                        }
+
+                        return {
+                            ...activity,
+                            status: status
+                        };
+                    });
+
+                    // Initialize filtered activities with all activities
+                    filteredActivities = [...allActivities];
+                    totalPages = Math.ceil(filteredActivities.length / 10);
+
+                    // Display the activities
+                    displayFilteredActivities();
+                } else {
+                    console.error('Failed to load activities:', result.message);
+                }
+            } catch (error) {
+                console.error('Error loading activities:', error);
+            }
+        }
+
+        // Update pagination UI
+        function updatePaginationUI() {
+            // Update page numbers
+            document.getElementById('currentPageNum').textContent = currentPage;
+            document.getElementById('totalPageNum').textContent = totalPages;
+
+            // Update Previous/Next buttons
+            document.getElementById('prevBtn').disabled = currentPage === 1;
+            document.getElementById('nextBtn').disabled = currentPage === totalPages;
+
+            // Generate page number buttons
+            const pageNumbersContainer = document.getElementById('pageNumbersContainer');
+            pageNumbersContainer.innerHTML = '';
+
+            const maxPagesToShow = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+            let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+
+            if (endPage - startPage < maxPagesToShow - 1) {
+                startPage = Math.max(1, endPage - maxPagesToShow + 1);
+            }
+
+            // Add first page if not visible
+            if (startPage > 1) {
+                const btn = document.createElement('button');
+                btn.className = 'btn btn-sm';
+                btn.textContent = '1';
+                btn.style.cssText = 'border: 1px solid #ddd; color: #333; width: 2.5rem; height: 2.5rem; border-radius: 0.5rem;';
+                btn.addEventListener('click', () => {
+                    currentPage = 1;
+                    displayFilteredActivities();
+                });
+                pageNumbersContainer.appendChild(btn);
+
+                if (startPage > 2) {
+                    const dots = document.createElement('span');
+                    dots.textContent = '...';
+                    dots.style.color = '#999';
+                    pageNumbersContainer.appendChild(dots);
+                }
+            }
+
+            // Add page numbers
+            for (let i = startPage; i <= endPage; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'btn btn-sm';
+                btn.textContent = i;
+                if (i === currentPage) {
+                    btn.style.cssText = 'background-color: #004A53; color: white; border: none; width: 2.5rem; height: 2.5rem; border-radius: 0.5rem; font-weight: 600;';
+                } else {
+                    btn.style.cssText = 'border: 1px solid #ddd; color: #333; width: 2.5rem; height: 2.5rem; border-radius: 0.5rem;';
+                    btn.addEventListener('click', () => {
+                        currentPage = i;
+                        displayFilteredActivities();
+                    });
+                }
+                pageNumbersContainer.appendChild(btn);
+            }
+
+            // Add last page if not visible
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    const dots = document.createElement('span');
+                    dots.textContent = '...';
+                    dots.style.color = '#999';
+                    pageNumbersContainer.appendChild(dots);
+                }
+
+                const btn = document.createElement('button');
+                btn.className = 'btn btn-sm';
+                btn.textContent = totalPages;
+                btn.style.cssText = 'border: 1px solid #ddd; color: #333; width: 2.5rem; height: 2.5rem; border-radius: 0.5rem;';
+                btn.addEventListener('click', () => {
+                    currentPage = totalPages;
+                    displayFilteredActivities();
+                });
+                pageNumbersContainer.appendChild(btn);
+            }
+        }    </script>
 @endsection

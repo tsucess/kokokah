@@ -9,26 +9,26 @@ class TermSeeder extends Seeder
 {
     public function run(): void
     {
-        $currentYear = now()->year;
+        // $currentYear = now()->year;
         $terms = [
-            ['name' => 'First Term', 'year' => $currentYear],
-            ['name' => 'Second Term', 'year' => $currentYear],
-            ['name' => 'Third Term', 'year' => $currentYear],
-            
+            ['name' => 'First Term'],
+            ['name' => 'Second Term'],
+            ['name' => 'Third Term'],
+
             // Previous year
-            ['name' => 'First Term', 'year' => $currentYear - 1],
-            ['name' => 'Second Term', 'year' => $currentYear - 1],
-            ['name' => 'Third Term', 'year' => $currentYear - 1],
-            
+            ['name' => 'First Term'],
+            ['name' => 'Second Term'],
+            ['name' => 'Third Term'],
+
             // Next year
-            ['name' => 'First Term', 'year' => $currentYear + 1],
-            ['name' => 'Second Term', 'year' => $currentYear + 1],
-            ['name' => 'Third Term', 'year' => $currentYear + 1],
+            ['name' => 'First Term'],
+            ['name' => 'Second Term'],
+            ['name' => 'Third Term'],
         ];
 
         foreach ($terms as $term) {
             Term::updateOrCreate(
-                ['name' => $term['name'], 'year' => $term['year']],
+                ['name' => $term['name']],
                 $term
             );
         }

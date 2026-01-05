@@ -7,7 +7,8 @@ use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Quiz;
 use App\Models\Assignment;
-use App\Models\Category;
+use App\Models\CurriculumCategory;
+use App\Models\CourseCategory;
 use App\Models\Term;
 use App\Models\Level;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -36,7 +37,7 @@ class LessonQuizAssignmentEndpointsTest extends TestCase
         $this->instructorToken = $this->instructor->createToken('api-token')->plainTextToken;
         $this->studentToken = $this->student->createToken('api-token')->plainTextToken;
 
-        $category = Category::factory()->create();
+        $category = CurriculumCategory::factory()->create();
         $term = Term::factory()->create();
         $level = Level::factory()->create();
 

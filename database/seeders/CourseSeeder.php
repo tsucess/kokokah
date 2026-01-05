@@ -3,7 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Course;
-use App\Models\Category;
+use App\Models\CurriculumCategory;
+use App\Models\CourseCategory;
 use App\Models\User;
 use App\Models\Level;
 use App\Models\Term;
@@ -25,7 +26,7 @@ class CourseSeeder extends Seeder
         }
 
         // Get categories
-        $categories = Category::all();
+        $categories = CurriculumCategory::all();
         if ($categories->isEmpty()) {
             echo "❌ No categories found! Please run CategorySeeder first.\n";
             return;

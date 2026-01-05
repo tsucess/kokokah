@@ -171,25 +171,37 @@ class PaymentController extends Controller
     public function callback(Request $request, string $gateway)
     {
         try {
+            Log::info("Payment callback received from {$gateway}", $request->all());
+
             $reference = $this->extractCallbackReference($gateway, $request);
-            
+            Log::info("Extracted reference from {$gateway} callback", ['reference' => $reference]);
+
             if (!$reference) {
-                return redirect()->to(config('app.frontend_url') . '/payment/failed?error=missing_reference');
+                Log::warning("No reference found in {$gateway} callback");
+                return redirect()->to(config('app.url') . '/payment/failed?error=missing_reference');
             }
 
             $result = $this->paymentService->verifyPayment($gateway, $reference);
+            Log::info("Payment verification result", ['result' => $result]);
 
             if ($result['success']) {
-                $redirectUrl = config('app.frontend_url') . '/payment/success?reference=' . $reference;
+                // Redirect based on payment type
+                if ($result['type'] === 'wallet_deposit') {
+                    // Redirect to wallet page for wallet deposits
+                    $redirectUrl = config('app.url') . '/userkudikah?payment_success=true&reference=' . $reference;
+                } else {
+                    // Redirect to subject page for course purchases
+                    $redirectUrl = config('app.url') . '/usersubject?payment_success=true&reference=' . $reference;
+                }
                 return redirect()->to($redirectUrl);
             }
 
-            $redirectUrl = config('app.frontend_url') . '/payment/failed?reference=' . $reference;
+            $redirectUrl = config('app.url') . '/payment/failed?reference=' . $reference;
             return redirect()->to($redirectUrl);
 
         } catch (\Exception $e) {
             Log::error("Callback processing failed for {$gateway}: " . $e->getMessage());
-            $redirectUrl = config('app.frontend_url') . '/payment/failed?error=processing_failed';
+            $redirectUrl = config('app.url') . '/payment/failed?error=processing_failed';
             return redirect()->to($redirectUrl);
         }
     }

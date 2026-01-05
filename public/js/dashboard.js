@@ -3,9 +3,6 @@
  * Handles dashboard interactions like logout and profile navigation
  */
 
-import AuthApiClient from './api/authClient.js';
-import UIHelpers from './utils/uiHelpers.js';
-
 class DashboardModule {
   /**
    * Initialize dashboard functionality
@@ -15,6 +12,9 @@ class DashboardModule {
     this.initProfileNavigation();
     this.initTooltips();
     this.loadUserProfile();
+    this.loadPointsAndBadges();
+    this.initNotificationBell();
+    this.highlightActivePage();
   }
 
   /**
@@ -27,25 +27,26 @@ class DashboardModule {
     logoutBtn.addEventListener('click', async (e) => {
       e.preventDefault();
 
-      // Show confirmation dialog
-      if (!confirm('Are you sure you want to logout?')) {
+      // Show confirmation modal
+      const confirmed = await window.confirmationModal.showLogoutConfirmation();
+      if (!confirmed) {
         return;
       }
 
       // Show loading state
-      UIHelpers.showLoadingOverlay(true);
+      window.UIHelpers.showLoadingOverlay(true);
 
       // Call logout API
-      const result = await AuthApiClient.logout();
+      const result = await window.AuthApiClient.logout();
 
-      UIHelpers.showLoadingOverlay(false);
+      window.UIHelpers.showLoadingOverlay(false);
 
       if (result.success) {
-        UIHelpers.showSuccess('Logged out successfully! Redirecting...');
+        window.UIHelpers.showSuccess('Logged out successfully! Redirecting...');
         // Redirect to login page after 1.5 seconds
-        UIHelpers.redirect('/login', 1500);
+        window.UIHelpers.redirect('/login', 1500);
       } else {
-        UIHelpers.showError('Logout failed. Please try again.');
+        window.UIHelpers.showError('Logout failed. Please try again.');
       }
     });
   }
@@ -60,10 +61,36 @@ class DashboardModule {
 
     if (!profileSection) return;
 
-    // Make profile section clickable
+
+
+
+
+
     const navigateToProfile = () => {
-      window.location.href = '/profile';
+      // Check if user is authenticated
+      const token = localStorage.getItem('auth_token');
+      const user = localStorage.getItem('auth_user');
+
+      if (!token || !user) {
+        // No token, redirect to login
+        console.log('No authentication token found, redirecting to login...');
+        window.location.href = '/login';
+      } else {
+        // Token exists, make API call to get user data with token
+        const userData = JSON.parse(user);
+        if (userData.role === 'student') {
+          window.location.href = '/userprofile';
+        } else {
+          window.location.href = '/adminprofile';
+        }
+
+      }
     };
+    // const navigateToProfile = () => {
+    //   window.location.href = '/profiles';
+    // };
+
+
 
     if (profileSection) {
       profileSection.addEventListener('click', (e) => {
@@ -112,7 +139,7 @@ class DashboardModule {
    * Load and display user profile information
    */
   static loadUserProfile() {
-    const user = AuthApiClient.getUser();
+    const user = window.AuthApiClient.getUser();
 
     if (!user) return;
 
@@ -149,15 +176,166 @@ class DashboardModule {
     const profileImage = document.getElementById('profileImage');
     if (profileImage) {
       if (user.profile_photo) {
-        // Use storage URL for profile photos
-        profileImage.src = `/storage/${user.profile_photo}`;
+        // Check if profile_photo is already a full URL (starts with /)
+        if (user.profile_photo.startsWith('/')) {
+          profileImage.src = user.profile_photo;
+          console.log('Profile photo is a full URL:', user.profile_photo);
+        } else {
+          // Otherwise, add /storage/ prefix
+          profileImage.src = `/storage/${user.profile_photo}`;
+          console.log('Profile photo is a relative path, added /storage/ prefix:', profileImage.src);
+        }
       } else {
         // Use default avatar if no profile photo
-        profileImage.src = 'images/winner-round.png';
+        profileImage.src = '/images/winner-round.png';
+        console.log('No profile photo, using default avatar');
       }
     }
   }
+
+  /**
+   * Load and display user points and badges dynamically
+   */
+  static async loadPointsAndBadges() {
+    try {
+      // Fetch user points
+      const pointsResponse = await window.PointsAndBadgesApiClient.getUserPoints();
+
+      if (pointsResponse.success && pointsResponse.data) {
+        const { points = 0 } = pointsResponse.data;
+
+        // Update points in topbar
+        const pointsElements = document.querySelectorAll('[data-points]');
+        pointsElements.forEach(el => {
+          el.textContent = points.toLocaleString();
+        });
+
+        // Also update the span that displays points in the topbar
+        const topbarPoints = document.querySelector('.d-flex.gap-2 .ps-2 span');
+        if (topbarPoints) {
+          topbarPoints.textContent = points.toLocaleString();
+        }
+      }
+
+      // Fetch user badges
+      const badgesResponse = await window.PointsAndBadgesApiClient.getUserBadges();
+
+      if (badgesResponse.success && badgesResponse.data) {
+        const badgeCount = Array.isArray(badgesResponse.data)
+          ? badgesResponse.data.length
+          : (badgesResponse.data.data ? badgesResponse.data.data.length : 0);
+
+        // Update badges in topbar
+        const badgeElements = document.querySelectorAll('[data-badges]');
+        badgeElements.forEach(el => {
+          el.textContent = badgeCount;
+        });
+
+        // Also update the span that displays badges in the topbar
+        const topbarBadges = document.querySelector('.d-flex.gap-2 > div:first-child span');
+        if (topbarBadges) {
+          topbarBadges.textContent = badgeCount;
+        }
+      }
+    } catch (error) {
+      console.error('Error loading points and badges:', error);
+    }
+  }
+
+  /**
+   * Initialize notification bell icon
+   */
+  static async initNotificationBell() {
+    const bellBtn = document.querySelector('.top-icons button:first-child');
+    if (!bellBtn) return;
+
+    // Make button position relative for badge positioning
+    bellBtn.style.position = 'relative';
+
+    // Load initial notifications
+    await this.loadNotifications();
+
+    // Add click handler to open modal
+    bellBtn.addEventListener('click', () => this.openNotificationModal());
+
+    // Auto-refresh notifications every 60 seconds
+    setInterval(() => this.loadNotifications(), 60000);
+  }
+
+  /**
+   * Load notifications and update badge
+   */
+  static async loadNotifications() {
+    try {
+      // Check if NotificationApiClient is available
+      if (!window.NotificationApiClient) {
+        console.warn('NotificationApiClient not loaded yet');
+        return;
+      }
+      const count = await window.NotificationApiClient.getUnreadCount();
+      this.updateNotificationBadge(count);
+    } catch (error) {
+      console.error('Error loading notifications:', error);
+    }
+  }
+
+  /**
+   * Update notification badge with unread count
+   */
+  static updateNotificationBadge(count) {
+    const bellBtn = document.querySelector('.top-icons button:first-child');
+    if (!bellBtn) return;
+
+    let badge = bellBtn.querySelector('.notification-badge');
+
+    if (count > 0) {
+      if (!badge) {
+        badge = document.createElement('span');
+        badge.className = 'notification-badge';
+        bellBtn.appendChild(badge);
+      }
+      badge.textContent = count > 9 ? '9+' : count;
+    } else if (badge) {
+      badge.remove();
+    }
+  }
+
+  /**
+   * Open notification modal
+   */
+  static openNotificationModal() {
+    if (window.NotificationModalComponent) {
+      window.NotificationModalComponent.show();
+    }
+  }
+
+  /**
+   * Highlight the active page in the sidebar
+   */
+  static highlightActivePage() {
+    // Get current page path
+    const currentPath = window.location.pathname;
+
+    // Get all sidebar navigation links
+    const navLinks = document.querySelectorAll('.nav-item-link');
+
+    // Remove active class from all links
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+    });
+
+    // Add active class to the matching link
+    navLinks.forEach(link => {
+      const href = link.getAttribute('href');
+      if (href && currentPath === href) {
+        link.classList.add('active');
+      }
+    });
+  }
 }
 
-export default DashboardModule;
+// Make available globally
+window.DashboardModule = DashboardModule;
+
+
 

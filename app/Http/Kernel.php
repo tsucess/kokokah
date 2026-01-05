@@ -30,6 +30,9 @@ class Kernel extends HttpKernel
     'api' => [
         // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class, // 👈 add this
         EnsureFrontendRequestsAreStateful::class,
+        \App\Http\Middleware\EncryptCookies::class,
+        \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+        \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
         \Illuminate\Routing\Middleware\SubstituteBindings::class,
     ],
@@ -48,6 +51,11 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'role' => \App\Http\Middleware\RoleMiddleware::class,
+
+        // Chat authorization middleware
+        'ensure.user.authenticated.for.chat' => \App\Http\Middleware\EnsureUserIsAuthenticatedForChat::class,
+        'authorize.chat.room.access' => \App\Http\Middleware\AuthorizeChatRoomAccess::class,
+        'check.chat.room.mute.status' => \App\Http\Middleware\CheckChatRoomMuteStatus::class,
     ];
 }
 

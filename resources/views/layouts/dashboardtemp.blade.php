@@ -19,29 +19,25 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
-    <link href="css/style.css" rel="stylesheet">
-
-
     <!-- Inter font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-    @vite(['resources/css/dashboard.css','resources/css/access.css'])
+    <link rel="stylesheet" href="{{ asset('css/style_theme.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/access.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
+    {{-- @vite(['resources/css/dashboard.css','resources/css/access.css']) --}}
+
+    <!-- Include stylesheet quilljs -->
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 
 
 </head>
 
 <body>
-
-    <!-- Loading Overlay -->
-    <div id="loadingOverlay"
-        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 9998; justify-content: center; align-items: center;">
-        <div class="spinner-border text-light" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
-    </div>
 
     <!-- Overlay for mobile sidebar -->
     <div class="overlay" id="sidebarOverlay"></div>
@@ -49,7 +45,7 @@
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar" style="height: 100vh; overflow-y: auto; overflow-x: hidden;">
         <div class="brand p-3">
-            <a href="/"><img src="images/Kokokah_Logo.png" alt="Kokokah Logo"
+            <a href="/"><img src="{{ asset('images/Kokokah_Logo.png') }}" alt="Kokokah Logo"
                     class="img-fluid dashboard-logo"></a>
         </div>
 
@@ -79,48 +75,44 @@
             <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
                 data-bs-toggle="collapse" href="#subjectsMenu" role="button" aria-expanded="true"
                 aria-controls="subjectsMenu">
-                <span><i class="fa-solid fa-book-open me-2 pe-2"></i> Subject Management</span>
+                <span><i class="fa-solid fa-book-open me-2 pe-2"></i> Course Management</span>
                 <i class="fa-solid fa-chevron-down chevron-icon"></i>
             </a>
 
 
             <!-- Dropdown items -->
             <div class="collapse ps-4" id="subjectsMenu">
-                <a class="nav-item-link d-block nav-child" href="/subjects">All Subject</a>
-                <a class="nav-item-link d-block nav-child" href="/createsubject">Create New Subject</a>
-                <a class="nav-item-link d-block nav-child" href="/categories">Subject Categories</a>
+                <a class="nav-item-link d-block nav-child" href="/subjects">All Courses</a>
+                <a class="nav-item-link d-block nav-child" href="/createsubject">Create New Course</a>
+                <a class="nav-item-link d-block nav-child" href="/categories">Course Categories</a>
                 <a class="nav-item-link d-block nav-child" href="/curriculum-categories">Curriculum Categories</a>
                 <a class="nav-item-link d-block nav-child" href="/levels">Levels & Classes</a>
                 <a class="nav-item-link d-block nav-child" href="/terms">Academic Terms</a>
-                <a class="nav-item-link d-block nav-child" href="/rating">Subject Reviews & Rating</a>
-                <a class="nav-item-link d-block nav-child" href="#">Subject Approval</a>
+                <a class="nav-item-link d-block nav-child" href="/rating">Course Reviews & Rating</a>
             </div>
 
-            <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
-                data-bs-toggle="collapse" href="#paymentsMenu" role="button" aria-expanded="false"
-                aria-controls="paymentsMenu">
-                <span><i class="fa-solid fa-credit-card pe-3"></i> Payments & Transactions</span>
+            <a class="nav-item-link" href="/transactions" role="button">
+                <span><i class="fa-solid fa-credit-card pe-3"></i>Transactions</span></a>
 
-                <i class="fa-solid fa-chevron-down small chevron-icon"></i>
-            </a>
-
-            <div class="collapse ps-4" id="paymentsMenu">
+            {{-- <div class="collapse ps-4" id="paymentsMenu">
                 <a class="nav-item-link d-block nav-child" href="/transactions">Transactions</a>
                 <a class="nav-item-link d-block nav-child" href="#">Payment History</a>
                 <a class="nav-item-link d-block nav-child" href="#">Invoices</a>
-            </div>
-
-            <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
+            </div> --}}
+            <a class="nav-item-link" href="/report">
+                <i class="fa-solid fa-chart-line pe-3"></i> Reports & Analytics
+            </a>
+            {{-- <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
                 data-bs-toggle="collapse" href="#analyticsMenu" role="button" aria-expanded="false"
                 aria-controls="analyticsMenu">
                 <span><i class="fa-solid fa-chart-line pe-3"></i> Reports & Analytics</span>
                 <i class="fa-solid fa-chevron-down small chevron-icon"></i>
-            </a>
+            </a> --}}
 
-            <div class="collapse ps-4" id="analyticsMenu">
+            {{-- <div class="collapse ps-4" id="analyticsMenu">
                 <a class="nav-item-link d-block nav-child" href="#">Reports</a>
                 <a class="nav-item-link d-block nav-child" href="#">Analytics</a>
-            </div>
+            </div> --}}
 
             <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
                 data-bs-toggle="collapse" href="#communicationMenu" role="button" aria-expanded="false"
@@ -137,8 +129,9 @@
 
         <div class="sidebar-footer mt-auto p-3">
             <a class="nav-item-link" href="#"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
+
             <div class="profile mt-3" id="profileSection">
-                <img class="avatar" id="profileImage" src="images/winner-round.png" alt="user"
+                <img class="avatar" id="profileImage" src="{{ asset('images/winner-round.png') }}" alt="user"
                     style="cursor: pointer; width: 40px; height: 40px; object-fit: cover; border-radius: 50%; border: 2px solid #ff00;"
                     data-bs-toggle="tooltip" data-bs-placement="top" title="Profile">
                 <div class="d-flex justify-content-between mt-4 p-2 w-100 align-items-center">
@@ -209,10 +202,29 @@
     <!-- Axios (required for API calls) -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-    <!-- Dashboard Module -->
-    <script type="module">
-        import DashboardModule from '{{ asset('js/dashboard.js') }}'; // Initialize dashboard when DOM is ready
+    <!-- API Clients -->
+    <script src="/js/api/baseApiClient.js"></script>
+    <script src="/js/api/authClient.js"></script>
+    <script src="/js/api/pointsAndBadgesApiClient.js"></script>
+    <script src="/js/api/courseApiClient.js"></script>
+    <script src="/js/api/lessonApiClient.js"></script>
+    <script src="/js/api/quizApiClient.js"></script>
+    <script src="/js/api/userApiClient.js"></script>
+    <script src="/js/api/enrollmentApiClient.js"></script>
+    <script src="/js/api/badgeApiClient.js"></script>
+    <script src="/js/api/transactionApiClient.js"></script>
+    <script src="/js/api/walletApiClient.js"></script>
+    <script src="/js/api/paymentApiClient.js"></script>
+    <script src="/js/api/topicApiClient.js"></script>
+    <script src="/js/api/adminApiClient.js"></script>
+    <script src="/js/api/notificationApiClient.js"></script>
+    <script src="/js/utils/uiHelpers.js"></script>
+    <script src="/js/utils/toastNotification.js"></script>
 
+    <!-- Dashboard Module -->
+    <script src="/js/dashboard.js"></script>
+    <script>
+        // Initialize dashboard when DOM is ready
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => {
                 DashboardModule.init();
@@ -266,36 +278,40 @@
         function setActiveNavigation() {
             const currentPath = window.location.pathname;
 
-            // Remove active class from all nav items
+            // Clear previous active states
             document.querySelectorAll('.nav-item-link, .nav-child').forEach(link => {
                 link.classList.remove('active');
             });
 
-            // Check each nav link
+            // Loop each nav link
             document.querySelectorAll('.nav-item-link, .nav-child').forEach(link => {
                 const href = link.getAttribute('href');
-                if (href && currentPath.includes(href.replace('/', ''))) {
+
+                // Skip non-URL links (e.g., parent toggles with href="#subjectsMenu")
+                if (!href || href.startsWith('#')) return;
+
+                // Exact match only
+                if (href === currentPath) {
                     link.classList.add('active');
 
-                    // If it's a child item, expand parent and mark parent as active
+                    // If it's a child link, open parent dropdown & activate parent
                     if (link.classList.contains('nav-child')) {
                         const parentMenu = link.closest('.collapse');
-                        if (parentMenu) {
-                            const parentToggle = document.querySelector(`[href="#${parentMenu.id}"]`);
-                            if (parentToggle) {
-                                parentToggle.classList.add('active');
-                                // Expand the menu
-                                const bsCollapse = new bootstrap.Collapse(parentMenu, {
-                                    toggle: false
-                                });
-                                bsCollapse.show();
-                            }
+                        if (parentMenu && parentMenu.id) {
+                            // Safely escape the ID for querySelector
+                            const escapedId = CSS.escape(parentMenu.id);
+                            const parentToggle = document.querySelector(`[href="#${escapedId}"]`);
+
+                            const bsCollapse = new bootstrap.Collapse(parentMenu, {
+                                toggle: false
+                            });
+                            bsCollapse.show();
                         }
                     }
                 }
             });
 
-            // Special case for dashboard
+            // Dashboard special case
             if (currentPath === '/dashboard' || currentPath === '/') {
                 document.getElementById('dashboardLink')?.classList.add('active');
             }
@@ -315,6 +331,13 @@
             // Select all collapsible parents
             document.querySelectorAll('.nav-parent').forEach(parent => {
                 const targetId = parent.getAttribute('href');
+
+                // Validate that targetId is a valid selector (should start with # or .)
+                if (!targetId || (targetId[0] !== '#' && targetId[0] !== '.')) {
+                    console.warn('Invalid target ID for nav-parent:', targetId);
+                    return;
+                }
+
                 const target = document.querySelector(targetId);
                 const icon = parent.querySelector('.chevron-icon');
 
@@ -340,6 +363,13 @@
                 parent.addEventListener('click', function(e) {
                     e.preventDefault();
                     const targetId = this.getAttribute('href');
+
+                    // Validate that targetId is a valid selector (should start with # or .)
+                    if (!targetId || (targetId[0] !== '#' && targetId[0] !== '.')) {
+                        console.warn('Invalid target ID:', targetId);
+                        return;
+                    }
+
                     const target = document.querySelector(targetId);
 
                     if (!target) return;
@@ -349,7 +379,8 @@
 
                     // Close all other collapse menus
                     document.querySelectorAll('.collapse').forEach(collapse => {
-                        if (collapse.id !== targetId && collapse.classList.contains('show')) {
+                        if (collapse.id !== targetId && collapse.classList.contains(
+                            'show')) {
                             const bsCollapse = bootstrap.Collapse.getInstance(collapse);
                             if (bsCollapse) {
                                 bsCollapse.hide();
@@ -358,7 +389,10 @@
                     });
 
                     // Toggle current dropdown
-                    const bsCollapse = bootstrap.Collapse.getInstance(target) || new bootstrap.Collapse(target, { toggle: false });
+                    const bsCollapse = bootstrap.Collapse.getInstance(target) || new bootstrap
+                        .Collapse(target, {
+                            toggle: false
+                        });
                     if (isCurrentOpen) {
                         bsCollapse.hide();
                     } else {
@@ -368,6 +402,12 @@
             });
         });
     </script>
+
+    <!-- Kokokah Logo Loader -->
+    <script src="{{ asset('js/utils/kokokahLoader.js') }}"></script>
+
+    <!-- Confirmation Modal -->
+    <script src="{{ asset('js/utils/confirmationModal.js') }}"></script>
 
 </body>
 

@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Notifications\ResetPasswordNotification;
 use App\Notifications\VerificationCodeNotification;
 
@@ -15,7 +16,7 @@ use App\Notifications\VerificationCodeNotification;
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -42,7 +43,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'parent_last_name',
         'parent_email',
         'parent_phone',
-        'email_verified_at'
+        'email_verified_at',
+        'points'
     ];
 
     /**
@@ -102,9 +104,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Level::class);
     }
 
-    public function categories()
+    public function curriculumCategories()
     {
-        return $this->hasMany(Category::class);
+        return $this->hasMany(CurriculumCategory::class);
+    }
+
+    public function courseCategories()
+    {
+        return $this->hasMany(CourseCategory::class);
     }
 
     public function instructedCourses()
@@ -139,9 +146,37 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(Wallet::class);
     }
 
+    public function paymentMethods()
+    {
+        return $this->hasMany(PaymentMethod::class);
+    }
+
     public function chatSessions()
     {
         return $this->hasMany(ChatSession::class);
+    }
+
+    // Chat Room Relationships
+    public function chatRooms()
+    {
+        return $this->belongsToMany(ChatRoom::class, 'chat_room_users')
+                    ->withPivot('role', 'is_active', 'is_muted', 'is_pinned', 'joined_at', 'last_read_at', 'unread_count', 'notification_level')
+                    ->withTimestamps();
+    }
+
+    public function createdChatRooms()
+    {
+        return $this->hasMany(ChatRoom::class, 'created_by');
+    }
+
+    public function chatMessages()
+    {
+        return $this->hasMany(ChatMessage::class);
+    }
+
+    public function messageReactions()
+    {
+        return $this->hasMany(MessageReaction::class);
     }
 
     public function aiRecommendations()
@@ -236,6 +271,21 @@ class User extends Authenticatable implements MustVerifyEmail
     public function payments()
     {
         return $this->hasMany(Payment::class);
+    }
+
+    public function pointsHistory()
+    {
+        return $this->hasMany(UserPointsHistory::class);
+    }
+
+    public function badgeCriteriaLogs()
+    {
+        return $this->hasMany(BadgeCriteriaLog::class);
+    }
+
+    public function levelHistory()
+    {
+        return $this->hasMany(UserLevelHistory::class);
     }
 
     // Scopes
@@ -365,6 +415,43 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     // Boot method for creating wallet
+    /**
+     * Add points to user
+     */
+    public function addPoints($amount, $reason = null)
+    {
+        $this->increment('points', $amount);
+        return $this;
+    }
+
+    /**
+     * Deduct points from user
+     */
+    public function deductPoints($amount, $reason = null)
+    {
+        if ($this->points >= $amount) {
+            $this->decrement('points', $amount);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Check if user has enough points
+     */
+    public function hasEnoughPoints($amount)
+    {
+        return $this->points >= $amount;
+    }
+
+    /**
+     * Get user's current points
+     */
+    public function getPoints()
+    {
+        return $this->points ?? 0;
+    }
+
     protected static function booted()
     {
         parent::booted();

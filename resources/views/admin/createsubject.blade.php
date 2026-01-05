@@ -7,7 +7,7 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 2rem;
+            margin-bottom: .4rem;
         }
 
         .subject-header h3 {
@@ -65,7 +65,7 @@
         .nav-buttons-container {
             display: flex;
             gap: 1rem;
-            margin-bottom: 2rem;
+            margin-bottom: .2rem;
             flex-wrap: wrap;
         }
 
@@ -286,6 +286,14 @@
                 width: 100%;
             }
         }
+
+        .small-check {
+            width: 0.8rem;
+            height: 0.8rem;
+            transform: scale(0.8);
+            margin: 0;
+            /* optional: keeps alignment clean */
+        }
     </style>
 
     <main>
@@ -297,15 +305,15 @@
                     <p>Here overview of your</p>
                 </div>
 
-                <div class="header-buttons">
+                {{-- <div class="header-buttons">
                     <button type="button" class="btn btn-draft" id="saveDraftBtn">
                         Save As Draft
                     </button>
 
-                    <button type="button" class="btn btn-publish" id="publishBtn">
+                    <button type="button" class="btn btn-publish" id="finalPublishBtn">
                         Publish Course
                     </button>
-                </div>
+                </div> --}}
             </div>
         </div>
 
@@ -324,11 +332,11 @@
                     <i class="fa fa-arrow-right"></i>
                 </button>
 
-                <button type="button" class="coursebtn" data-section="curriculum">
+                {{-- <button type="button" class="coursebtn" data-section="curriculum">
                     <i class="fa-solid fa-circle fa-2xs"></i>
                     Curriculum
                     <i class="fa fa-arrow-right"></i>
-                </button>
+                </button> --}}
 
                 <button type="button" class="coursebtn" data-section="publish">
                     <i class="fa-solid fa-circle fa-2xs"></i>
@@ -347,55 +355,61 @@
             <form id="courseDetailsForm">
                 @csrf
 
-                <div class="form-group-custom mb-3">
-                    <label for="subjectTitle">Subject Title</label>
-                    <input type="text" class="form-control" id="subjectTitle" name="subjectTitle"
-                        placeholder="Enter Subject Title" required>
+                <input type="hidden" class="form-control" id="curriculumCategoryId" name="curriculumCategoryId" required>
+                <div class="form-row-two">
+                    <div class="form-group-custom">
+                        <label for="courseTitle">Course Title</label>
+                        <input type="text" class="form-control" id="courseTitle" name="courseTitle"
+                            placeholder="Enter Subject Title" required>
+                    </div>
+                    <div class="form-group-custom">
+                        <label for="subjectTerm">Term</label>
+                        <select class="form-control" id="subjectTerm" name="subjectTerm" required></select>
+                    </div>
+
                 </div>
 
                 <div class="form-row-two">
                     <div class="form-group-custom">
-                        <label for="subjectCategory">Subject Category</label>
-                        <select class="form-control" id="subjectCategory" name="subjectCategory" required>
-                            <option value="">Select Category</option>
-                            <option value="science">Science</option>
-                            <option value="art">Art</option>
-                            <option value="commercial">Commercial</option>
+                        <label for="courseCategory">Course Category</label>
+                        <select class="form-control" id="courseCategory" name="courseCategory" required>
+
                         </select>
                     </div>
 
                     <div class="form-group-custom">
-                        <label for="subjectLevel">Subject Level</label>
-                        <select class="form-control" id="subjectLevel" name="subjectLevel" required>
-                            <option value="">Select Level</option>
-                            <option value="jss1">JSS 1</option>
-                            <option value="jss2">JSS 2</option>
-                            <option value="jss3">JSS 3</option>
-                            <option value="ss1">SS 1</option>
-                            <option value="ss2">SS 2</option>
-                            <option value="ss3">SS 3</option>
-                        </select>
+                        <label for="courseLevel">Course Level</label>
+                        <select class="form-control" id="courseLevel" name="courseLevel" required></select>
                     </div>
                 </div>
 
                 <div class="form-row-two">
                     <div class="form-group-custom">
-                        <label for="subjectTime">Subject Time</label>
-                        <input type="text" class="form-control" id="subjectTime" name="subjectTime"
+                        <label for="courseTime">Duration</label>
+                        <input type="text" class="form-control" id="courseTime" name="courseTime"
                             placeholder="e.g., 2 hours" required>
                     </div>
 
                     <div class="form-group-custom">
-                        <label for="totalLesson">Total Lessons</label>
-                        <input type="number" class="form-control" id="totalLesson" name="totalLesson"
-                            placeholder="e.g., 12" min="1" required>
+                        <div class="d-flex align-items-center gap-2">
+                            <label for="coursePrice">Price</label>
+                            <div class="form-check d-flex gap-1 align-items-center ">
+                                <input class="form-check-input small-check" type="checkbox" value="" id="free-course">
+                                <label class="form-check-label" for="checkChecked">
+                                    Free Course
+                                </label>
+                            </div>
+                        </div>
+
+                        <input type="number" class="form-control" id="coursePrice" name="coursePrice"
+                            placeholder="e.g., 200" min="1" required>
                     </div>
                 </div>
 
                 <div class="description-section">
-                    <p class="description-label">Subject Description</p>
+                    <p class="description-label">Course Description</p>
 
-                    <div class="editor-toolbar">
+                    {{-- <div class="editor-toolbar">
                         <span title="Bold"><i class="fa-solid fa-bold"></i></span>
                         <span title="Italic"><i class="fa-solid fa-italic"></i></span>
                         <span title="Underline"><i class="fa-solid fa-underline"></i></span>
@@ -403,8 +417,9 @@
                         <span title="Upload"><i class="fa-solid fa-file-arrow-up"></i></span>
                     </div>
 
-                    <textarea class="description-textarea" id="subjectDescription" name="subjectDescription"
-                        placeholder="Write subject description here..." form="courseDetailsForm"></textarea>
+                    <textarea class="description-textarea" id="courseDescription" name="courseDescription"
+                        placeholder="Write subject description here..." form="courseDetailsForm"></textarea> --}}
+                    <div id="courseDescription" class="ql-editor"></div>
                 </div>
             </form>
 
@@ -418,21 +433,20 @@
         <!-- Media Section -->
         <div class="container bg-white d-none content-section" id="media">
             <div class="section-header">
-                <h5>Subject Media</h5>
+                <h5>Course Media</h5>
             </div>
 
             <form id="mediaUploadForm">
                 @csrf
 
                 <div class="form-group-custom mb-3">
-                    <label>Upload Subject Image</label>
+                    <label>Overview Video URL</label>
                     <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
-                        <input type="text" class="form-control" id="fileNameDisplay" placeholder="No file selected"
-                            readonly style="flex: 1;">
-                        <button type="button" class="btn btn-publish" id="uploadButton"
-                            style="padding: 0.75rem 1.5rem;">
-                            Upload File
-                        </button>
+                        <input type="text" class="form-control" placeholder="https://preview.youtube.com"
+                            style="flex: 1;">
+                    </div>
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                        <p>Thumbnail: <span id="fileNameDisplay"></span></p>
                     </div>
 
                     <label
@@ -441,7 +455,7 @@
                         <i class="fa-solid fa-file-circle-check"
                             style="font-size: 2rem; color: #004A53; margin-bottom: 0.5rem;"></i>
                         <h5 style="margin: 0.5rem 0; color: #333;">Upload Image</h5>
-                        <p style="margin: 0; color: #666; font-size: 0.9rem;">PNG, JPEG, GIF (max 2MB)</p>
+                        <p style="margin: 0; color: #666; font-size: 0.9rem;"> PNG, JPEG, GIF (max 2MB)</p>
                     </label>
                     <input type="file" id="fileInput" name="file" class="d-none" accept="image/*,.mp4,.webm">
                 </div>
@@ -451,477 +465,12 @@
                 <button type="button" class="btn btn-back back-btn" data-next="details">
                     Previous
                 </button>
-                <button type="button" class="btn btn-continue continue-btn" data-next="curriculum">
-                    Continue
-                </button>
-            </div>
-        </div>
-
-        <!-- Curriculum Section -->
-        <div class="container bg-white d-none content-section" id="curriculum">
-            <style>
-                .curriculum-header {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: flex-start;
-                    margin-bottom: 2rem;
-                    flex-wrap: wrap;
-                    gap: 1rem;
-                }
-
-                .curriculum-header-text h5 {
-                    font-size: 1.25rem;
-                    color: #004A53;
-                    font-weight: 600;
-                    margin-bottom: 0.5rem;
-                }
-
-                .curriculum-header-text p {
-                    color: #666;
-                    font-size: 0.95rem;
-                    margin: 0;
-                }
-
-                .btn-add-topic {
-                    background-color: #FDAF22;
-                    border: none;
-                    color: white;
-                    font-weight: 500;
-                    padding: 0.75rem 1.5rem;
-                    border-radius: 0.375rem;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                    white-space: nowrap;
-                }
-
-                .btn-add-topic:hover {
-                    background-color: #e59a0f;
-                }
-
-                .lesson-item {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    padding: 1rem;
-                    border: 1px solid #ddd;
-                    border-radius: 0.375rem;
-                    margin-bottom: 1rem;
-                    transition: all 0.3s ease;
-                }
-
-                .lesson-item:hover {
-                    border-color: #004A53;
-                    background-color: #f9f9f9;
-                }
-
-                .lesson-item-content {
-                    display: flex;
-                    align-items: center;
-                    gap: 0.75rem;
-                    color: #333;
-                }
-
-                .lesson-item-actions {
-                    display: flex;
-                    gap: 1rem;
-                    align-items: center;
-                }
-
-                .lesson-item-actions button {
-                    background: none;
-                    border: none;
-                    cursor: pointer;
-                    color: #666;
-                    transition: color 0.3s ease;
-                    padding: 0.25rem 0.5rem;
-                }
-
-                .lesson-item-actions button:hover {
-                    color: #004A53;
-                }
-
-                .btn-add-lesson {
-                    background-color: white;
-                    border: 1px solid #004A53;
-                    color: #004A53;
-                    font-weight: 500;
-                    padding: 0.75rem 1.5rem;
-                    border-radius: 0.375rem;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                    margin-bottom: 2rem;
-                }
-
-                .btn-add-lesson:hover {
-                    background-color: #f0f8f9;
-                }
-
-                .curriculum-actions {
-                    display: flex;
-                    gap: 1rem;
-                    justify-content: flex-end;
-                    margin-top: 2rem;
-                    flex-wrap: wrap;
-                }
-
-                .modal-backdrop.show {
-                    background-color: #004a53 !important;
-                }
-
-                .modal-dialog {
-                    max-width: 600px;
-                    margin: auto;
-                }
-
-                .modal-container {
-                    background-color: #fff;
-                    border-radius: 10px;
-                    padding: 20px 16px;
-                }
-
-                .modal-content {
-                    border: none;
-                }
-
-                .modal-header {
-                    padding: 20px;
-                }
-
-                .modal-title {
-                    font-family: "Fredoka", sans-serif;
-                    color: #000;
-                    font-size: 24px;
-                }
-
-                .modal-header-btn {
-                    background-color: transparent;
-                    border: none;
-                }
-
-                .modal-form-container {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 20px;
-                    width: 100%;
-                }
-
-                .modal-form {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 24px;
-                }
-
-                .modal-form-input-border {
-                    border: 1.5px solid #004a53;
-                    display: flex;
-                    flex-direction: column;
-                    padding: 14px 27px 14px;
-                    border-radius: 15px;
-                    position: relative;
-                }
-
-                .modal-label {
-                    position: absolute;
-                    top: -15px;
-                    color: #004a53;
-                    font-size: 14px;
-                    background-color: white;
-                    padding: 0px 4px;
-                    align-self: start;
-                }
-
-                .modal-input {
-                    outline: none;
-                    border: none;
-                    font-size: 14px;
-                    color: #aebaca;
-                    background-color: transparent;
-                }
-
-                .modal-form-btn {
-                    color: #f2f2f2;
-                    font-size: 16px;
-                    font-weight: 600;
-                    background-color: #004a53;
-                    padding-block: 16px;
-                    border: none;
-                }
-
-                .upload-file-container {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 8px;
-                }
-
-                .upload-label {
-                    color: #004a53;
-                    font-size: 14px;
-                    font-weight: 600;
-                }
-
-                .upload-btn {
-                    background-color: #004a53;
-                    color: #ffffff;
-                    font-size: 16px;
-                    border: 1.5px solid #004a53;
-                    border-top-right-radius: 15px;
-                    border-bottom-right-radius: 15px;
-                    padding-inline: 15px;
-                }
-
-                .upload-input {
-                    border: 1.5px solid #004a53;
-                    border-radius: 15px;
-                    padding: 12px 15px;
-                }
-
-                .textarea {
-                    outline: none;
-                    border: none;
-                    font-size: 14px;
-                    color: #aebaca;
-                    height: 150px;
-                }
-
-                .hide {
-                    display: none;
-                }
-
-                @media (max-width: 768px) {
-                    .curriculum-header {
-                        flex-direction: column;
-                    }
-
-                    .curriculum-actions {
-                        flex-direction: column;
-                    }
-
-                    .curriculum-actions button {
-                        width: 100%;
-                    }
-                }
-            </style>
-
-            <div class="curriculum-header">
-                <div class="curriculum-header-text">
-                    <h5>Curriculum</h5>
-                    <p>Manage course topics and lessons</p>
-                </div>
-
-                {{-- add new topic modal --}}
-                <div class="modal fade" id="addNewTopicModal" data-bs-keyboard="false" tabindex="-1"
-                    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content border-0 modal-container">
-                            <div class="modal-header border-0 d-flex justify-content-between align-items-center">
-                                <h1 class="modal-title" id="staticBackdropLabel">Add Topic</h1>
-                                <button type="button" class="modal-header-btn" data-bs-dismiss="modal"
-                                    aria-label="Close">
-                                    <i class="fa-solid fa-circle-xmark"></i>
-                                </button>
-                            </div>
-                            <form class="modal-form-container">
-                                <div class="modal-form">
-                                    <div class="modal-form-input-border">
-                                        <label for="" class="modal-label">Title</label>
-                                        <input class="modal-input" type="text" placeholder="Enter Title" />
-                                    </div>
-                                    <div class="modal-form-input-border">
-                                        <label for="" class="modal-label">Topic Description</label>
-                                        <textarea name="" id="" class="modal-input"></textarea>
-                                    </div>
-                                </div>
-                                <button class="modal-form-btn">Save</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <button type="button" class="btn btn-add-topic" data-bs-toggle="modal"
-                    data-bs-target="#addNewTopicModal">
-                    <i class="fa-solid fa-plus me-2"></i> Add New Topic
-                </button>
-            </div>
-
-            <div class="accordion mb-4" id="curriculumAccordion">
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            <i class="fa-solid fa-book-open me-2"></i> Parts of Speech
-                        </button>
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#curriculumAccordion">
-                        <div class="accordion-body">
-                            <p>This section covers the fundamental parts of speech in English language.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="lesson-item">
-                <div class="lesson-item-content">
-                    <i class="fa-solid fa-circle-play"></i>
-                    <span>Nouns</span>
-                </div>
-                <div class="lesson-item-actions">
-                    <button type="button" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                    <button type="button" title="Delete"><i class="fa-solid fa-trash"></i></button>
-                </div>
-            </div>
-
-            <div class="lesson-item">
-                <div class="lesson-item-content">
-                    <i class="fa-solid fa-circle-play"></i>
-                    <span>Pronouns</span>
-                </div>
-                <div class="lesson-item-actions">
-                    <button type="button" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                    <button type="button" title="Delete"><i class="fa-solid fa-trash"></i></button>
-                </div>
-            </div>
-
-
-            {{-- add lesson modal --}}
-
-            <div class="modal fade" id="addLessonModal" data-bs-keyboard="false" tabindex="-1"
-                aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content border-0 modal-container">
-                        <div class="modal-header border-0 d-flex justify-content-between align-items-center">
-                            <h1 class="modal-title" id="staticBackdropLabel">New Lesson</h1>
-                            <button type="button" class="modal-header-btn" data-bs-dismiss="modal" aria-label="Close">
-                                <i class="fa-solid fa-circle-xmark"></i>
-                            </button>
-                        </div>
-                        <form class="modal-form-container">
-                            <div class="modal-form">
-                                <div class="modal-form-input-border">
-                                    <label for="" class="modal-label">Lesson Type</label>
-                                    <select name="" id="addContent" class="modal-input">
-                                        <option value="image">Image</option>
-                                        <option value="youtube">Youtube</option>
-                                        <option value="audio">Audio</option>
-                                        <option value="content">Content</option>
-                                        <option value="document">Document</option>
-                                    </select>
-                                </div>
-
-                                <!-- image container -->
-                                <div class="flex-column gap-3 select-children" id="image-container">
-                                    <div class="modal-form-input-border">
-                                        <label for="" class="modal-label">Title</label>
-                                        <input class="modal-input" type="text" placeholder="Art" />
-                                    </div>
-                                    <div class="upload-file-container">
-                                        <label for="" class="upload-label">Upload File (Size:2mb, Dimension:400px
-                                            by 250px)
-                                        </label>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control upload-input p-3"
-                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
-                                                placeholder="Upload file" aria-label="Recipient’s username"
-                                                aria-describedby="basic-addon2" />
-                                            <button class="upload-btn" type="button" id="button-addon2">
-                                                Upload File
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- youtube container -->
-                                <div class="flex-column gap-3 hide select-children" id="youtube-container">
-                                    <div class="modal-form-input-border">
-                                        <label for="" class="modal-label">Title</label>
-                                        <input class="modal-input" type="text" placeholder="Enter title" />
-                                    </div>
-                                    <div class="modal-form-input-border">
-                                        <label for="" class="modal-label">Youtube Url</label>
-                                        <input class="modal-input" type="text" placeholder="Enter url" />
-                                    </div>
-                                </div>
-
-                                <!-- content container -->
-                                <div class="flex-column gap-3 hide select-children" id="content-container">
-                                    <div class="modal-form-input-border">
-                                        <label for="" class="modal-label">Title</label>
-                                        <input class="modal-input" type="text" placeholder="Enter title" />
-                                    </div>
-                                    <div class="modal-form-input-border">
-                                        <label for="" class="modal-label">Lesson Content</label>
-                                        <textarea name="" id="" class="modal-input"></textarea>
-                                    </div>
-                                </div>
-
-                                <!-- audio-container -->
-                                <div class="flex-column gap-3 hide select-children" id="audio-container">
-                                    <div class="modal-form-input-border">
-                                        <label for="" class="modal-label">Title</label>
-                                        <input class="modal-input" type="text" placeholder="Enter title" />
-                                    </div>
-                                    <div class="upload-file-container">
-                                        <label for="" class="upload-label">Upload File (Size:2mb, Dimension:400px
-                                            by 250px)
-                                        </label>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control upload-input p-3"
-                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
-                                                placeholder="Upload file" aria-label="Recipient’s username"
-                                                aria-describedby="basic-addon2" />
-                                            <button class="upload-btn" type="button" id="button-addon2">
-                                                Upload File
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- document-container -->
-                                <div class="flex-column gap-3 hide select-children" id="document-container">
-                                    <div class="modal-form-input-border">
-                                        <label for="" class="modal-label">Lesson Type</label>
-                                        <select name="" id="" class="modal-input">
-                                            <option value="">image</option>
-                                        </select>
-                                    </div>
-                                    <div class="modal-form-input-border">
-                                        <label for="" class="modal-label">Title</label>
-                                        <input class="modal-input" type="text" placeholder="Enter title" />
-                                    </div>
-                                    <div class="upload-file-container">
-                                        <label for="" class="upload-label">Upload File (Size:2mb, Dimension:400px
-                                            by 250px)
-                                        </label>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control upload-input p-3"
-                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
-                                                placeholder="Upload file" aria-label="Recipient’s username"
-                                                aria-describedby="basic-addon2" />
-                                            <button class="upload-btn" type="button" id="button-addon2">
-                                                Upload File
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="modal-form-btn">Save</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <button type="button" class="btn btn-add-lesson" data-bs-toggle="modal" data-bs-target="#addLessonModal">
-                <i class="fa-solid fa-plus me-2"></i> Add Lesson
-            </button>
-
-            <div class="curriculum-actions">
-                <button type="button" class="btn btn-back back-btn" data-next="media">
-                    Previous
-                </button>
                 <button type="button" class="btn btn-continue continue-btn" data-next="publish">
                     Continue
                 </button>
             </div>
         </div>
+
 
         <!-- Publish Section -->
         <div class="container bg-white d-none content-section" id="publish">
@@ -1148,22 +697,22 @@
                         <h6>Subject Overview</h6>
                         <h2 id="publishSubjectTitle">English Language</h2>
                     </div>
-                    <div class="overview-actions">
+                    {{-- <div class="overview-actions">
                         <button type="button" title="Edit"><i class="fa-solid fa-check-circle"
                                 style="color: #004A53; font-size: 1.5rem;"></i></button>
                         <button type="button" title="More options"><i
                                 class="fa-solid fa-ellipsis-vertical"></i></button>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <div class="overview-meta">
-                    <div class="meta-item">
+                    {{-- <div class="meta-item">
                         <i class="fa-solid fa-book"></i>
                         <span id="publishTopics">0 Topics</span>
-                    </div>
+                    </div> --}}
                     <div class="meta-item">
                         <i class="fa-solid fa-graduation-cap"></i>
-                        <span id="publishLessons">0 Lessons</span>
+                        <span id="publishCategory">0 Category</span>
                     </div>
                     <div class="meta-item">
                         <i class="fa-solid fa-clock"></i>
@@ -1172,6 +721,10 @@
                     <div class="meta-item">
                         <i class="fa-solid fa-layer-group"></i>
                         <span id="publishLevel">Level</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fa-solid fa-money-bill"></i>
+                        <span id="publishPrice">0 Price</span>
                     </div>
                 </div>
 
@@ -1185,74 +738,104 @@
                     </p>
                 </div>
 
-                <div class="course-description-section">
-                    <h6>Key Areas of Study:</h6>
-                    <ul class="key-areas-list" id="publishKeyAreas">
-                        <li>Fundamental Concepts</li>
-                        <li>Practical Applications</li>
-                        <li>Advanced Techniques</li>
-                        <li>Real-world Examples</li>
-                        <li>Assessment & Evaluation</li>
-                    </ul>
+                <div class="publish-actions">
+                    <button type="button" class="btn btn-back back-btn" data-next="media">
+                        Back
+                    </button>
+                    <button type="button" class="btn btn-publish" id="saveNowBtn">
+                        Save Now
+                    </button>
                 </div>
-
-                <div class="curriculum-preview">
-                    <h6>Curriculum</h6>
-                    <div id="curriculumPreviewContainer">
-                        <div class="curriculum-item">
-                            <div class="curriculum-item-content">
-                                <div class="curriculum-item-icon">
-                                    <i class="fa-solid fa-book-open"></i>
-                                </div>
-                                <div class="curriculum-item-text">
-                                    <h6>Parts of Speech</h6>
-                                    <p>Foundation concepts</p>
-                                </div>
-                            </div>
-                            <div class="curriculum-item-meta">
-                                <span><i class="fa-solid fa-graduation-cap"></i> 5 Lessons</span>
-                                <span><i class="fa-solid fa-clock"></i> 2 Units</span>
-                            </div>
-                            <div class="curriculum-item-check">
-                                <i class="fa-solid fa-check-circle"></i>
-                            </div>
-                        </div>
-
-                        <div class="curriculum-item">
-                            <div class="curriculum-item-content">
-                                <div class="curriculum-item-icon">
-                                    <i class="fa-solid fa-book-open"></i>
-                                </div>
-                                <div class="curriculum-item-text">
-                                    <h6>Sentence Structure</h6>
-                                    <p>Building complex sentences</p>
-                                </div>
-                            </div>
-                            <div class="curriculum-item-meta">
-                                <span><i class="fa-solid fa-graduation-cap"></i> 4 Lessons</span>
-                                <span><i class="fa-solid fa-clock"></i> 2 Units</span>
-                            </div>
-                            <div class="curriculum-item-check">
-                                <i class="fa-solid fa-check-circle"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="publish-actions">
-                <button type="button" class="btn btn-back back-btn" data-next="curriculum">
-                    Back
-                </button>
-                <button type="button" class="btn btn-publish" id="finalPublishBtn">
-                    Publish Now
-                </button>
             </div>
         </div>
+
+        <div id="toastContainer" class="toast-container position-fixed top-0 end-0 p-3"></div>
+
     </main>
 
+    <!-- Include the Quill library -->
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 
     <script>
+        const quill = new Quill('#courseDescription', {
+            theme: 'snow'
+        });
+
+        // Load dropdown data
+        async function loadDropdownData() {
+            try {
+                const token = localStorage.getItem('auth_token');
+
+                // Load Terms
+                const termsResponse = await fetch('/api/term', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const termsResult = await termsResponse.json();
+                console.log('Terms API Response:', termsResult);
+                if (termsResponse.ok && termsResult) {
+                    const termSelect = document.getElementById('subjectTerm');
+                    // Handle both array and object with data property
+                    const terms = Array.isArray(termsResult) ? termsResult : (termsResult.data || []);
+                    console.log('Processed terms:', terms);
+                    termSelect.innerHTML = `<option value="">Select Term</option>`;
+                    terms.forEach(term => {
+                        const option = document.createElement('option');
+                        option.value = term.id;
+                        option.textContent = term.name;
+                        termSelect.appendChild(option);
+                    });
+                    console.log('Terms loaded successfully. Total:', terms.length);
+                } else {
+                    console.error('Failed to load terms. Response:', termsResult);
+                }
+
+                // Load Course Categories
+                const categoriesResponse = await fetch('/api/course-category', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const categoriesResult = await categoriesResponse.json();
+                if (categoriesResponse.ok && categoriesResult) {
+                    const categorySelect = document.getElementById('courseCategory');
+                    const categories = Array.isArray(categoriesResult) ? categoriesResult : [];
+                    categorySelect.innerHTML = `<option value="">Select Course Category</option>`;
+                    categories.forEach(category => {
+                        const option = document.createElement('option');
+                        option.value = category.id;
+                        option.textContent = category.title;
+                        categorySelect.appendChild(option);
+                    });
+                }
+
+                // Load Course Levels
+                const levelsResponse = await fetch('/api/level', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const levelsResult = await levelsResponse.json();
+                if (levelsResponse.ok && levelsResult) {
+                    const levelSelect = document.getElementById('courseLevel');
+                    const levels = Array.isArray(levelsResult) ? levelsResult : [];
+                    levelSelect.innerHTML = `<option value="">Select Course Level</option>`;
+                    levels.forEach(level => {
+                        const option = document.createElement('option');
+                        option.value = level.id;
+                        option.textContent = level.name;
+                        levelSelect.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading dropdown data:', error);
+            }
+        }
+
         // Navigation between sections
         document.addEventListener('DOMContentLoaded', () => {
             const navButtons = document.querySelectorAll('.coursebtn');
@@ -1260,7 +843,30 @@
             const continueButtons = document.querySelectorAll('.continue-btn');
             const backButtons = document.querySelectorAll('.back-btn');
 
+            // Initialize courseData object to track form values
+            const courseData = {
+                title: '',
+                category: '',
+                categoryName: '',
+                level: '',
+                levelName: '',
+                duration: '',
+                description: '',
+                price: '',
+                freeCourse: false,
+                imageFile: null
+            };
+
+            // Load dropdown data
+            loadDropdownData();
+
             function showSection(sectionId) {
+                // Validate sectionId to prevent invalid selectors
+                if (!sectionId || typeof sectionId !== 'string' || sectionId.includes('/')) {
+                    console.warn('Invalid section ID:', sectionId);
+                    return;
+                }
+
                 sections.forEach(sec => sec.classList.add('d-none'));
                 const section = document.getElementById(sectionId);
                 if (section) {
@@ -1268,7 +874,8 @@
                 }
 
                 navButtons.forEach(btn => btn.classList.remove('course-btn-active'));
-                const activeBtn = document.querySelector(`[data-section="${sectionId}"]`);
+                // Use a safer method to find the active button
+                const activeBtn = Array.from(navButtons).find(btn => btn.getAttribute('data-section') === sectionId);
                 if (activeBtn) {
                     activeBtn.classList.add('course-btn-active');
                 }
@@ -1279,60 +886,72 @@
                 }
             }
 
-            // addlessong modal js
 
-            const selectContainer = document.getElementById("addContent");
 
-            function showSelectedContainer(contentType) {
-                document
-                    .querySelectorAll(".select-children")
-                    .forEach((container) => (container.style.display = "none"));
-
-                if (contentType === "image") {
-                    document.getElementById("image-container").style.display = "flex";
-                }
-                if (contentType === "youtube") {
-                    document.getElementById("youtube-container").style.display = "flex";
-                }
-                if (contentType === "audio") {
-                    document.getElementById("audio-container").style.display = "flex";
-                }
-                if (contentType === "content") {
-                    document.getElementById("content-container").style.display = "flex";
-                }
-                if (contentType === "document") {
-                    document.getElementById("document-container").style.display = "flex";
-                }
-            }
-
-            document.addEventListener("DOMContentLoaded", () => {
-                showSelectedContainer(selectContainer.value);
+            // Get data from form fields
+            document.getElementById('courseTitle').addEventListener('input', e => {
+                courseData.title = e.target.value;
             });
 
-            selectContainer.addEventListener("change", (e) => {
-                showSelectedContainer(e.target.value);
+            document.getElementById('courseCategory').addEventListener('change', e => {
+                courseData.category = e.target.value;
+                // Store the category name for display
+                const selectedOption = e.target.options[e.target.selectedIndex];
+                courseData.categoryName = selectedOption.textContent;
+            });
+
+            document.getElementById('courseLevel').addEventListener('change', e => {
+                courseData.level = e.target.value;
+                // Store the level name for display
+                const selectedOption = e.target.options[e.target.selectedIndex];
+                courseData.levelName = selectedOption.textContent;
+            });
+
+            document.getElementById('courseTime').addEventListener('input', e => {
+                courseData.duration = e.target.value;
+            });
+
+            document.getElementById('coursePrice').addEventListener('input', e => {
+                courseData.price = e.target.value;
+            });
+
+            quill.on('text-change', function () {
+    courseData.description = quill.getText();
+});
+
+            document.getElementById('free-course').addEventListener('change', e => {
+                const checked = e.target.checked;
+
+                courseData.freeCourse = checked;
+                const priceInput = document.getElementById("coursePrice");
+
+                priceInput.disabled = checked;
+
+                if (checked) {
+                    priceInput.value = "";
+                    courseData.price = "";
+                }
+            })
+
+            // File upload
+            document.getElementById('fileInput').addEventListener('change', e => {
+                courseData.imageFile = e.target.files[0];
+
+                if (courseData.imageFile) {
+                    document.getElementById("fileNameDisplay").textContent = courseData.imageFile.name;
+                }
             });
 
             function populatePublishSection() {
-                // Get data from form fields
-                const title = document.getElementById('subjectTitle').value || 'English Language';
-                const category = document.getElementById('subjectCategory').value || 'Language';
-                const level = document.getElementById('subjectLevel').value || 'JSS 1';
-                const time = document.getElementById('subjectTime').value || '0 Hours';
-                const lessons = document.getElementById('totalLesson').value || '0';
-                const description = document.getElementById('subjectDescription').value ||
-                    'This comprehensive course covers essential concepts and skills.';
-                const fileInput = document.getElementById('fileInput');
+                // document.getElementById('overviewUrl').textContent = courseData.url;
+                document.getElementById('publishSubjectTitle').textContent = courseData.title;
+                document.getElementById('publishCategory').textContent = (courseData.categoryName || 'Category');
+                document.getElementById('publishPrice').textContent = courseData.freeCourse ? 'Free Course' :
+                    courseData.price + ' Price';
+                document.getElementById('publishTime').textContent = courseData.duration + ' Hours';
+                document.getElementById('publishLevel').textContent = (courseData.levelName || 'Level');
+                document.getElementById('publishDescription').textContent = courseData.description;
 
-                // Update publish section
-                document.getElementById('publishSubjectTitle').textContent = title;
-                document.getElementById('publishTopics').textContent = '0 Topics';
-                document.getElementById('publishLessons').textContent = lessons + ' Lessons';
-                document.getElementById('publishTime').textContent = time;
-                document.getElementById('publishLevel').textContent = level;
-                document.getElementById('publishDescription').textContent = description;
-
-                // Update course image if file is selected
                 if (fileInput && fileInput.files && fileInput.files[0]) {
                     const reader = new FileReader();
                     reader.onload = (e) => {
@@ -1345,21 +964,27 @@
             navButtons.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const section = btn.getAttribute('data-section');
-                    showSection(section);
+                    if (section) {
+                        showSection(section);
+                    }
                 });
             });
 
             continueButtons.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const next = btn.getAttribute('data-next');
-                    showSection(next);
+                    if (next) {
+                        showSection(next);
+                    }
                 });
             });
 
             backButtons.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const back = btn.getAttribute('data-next');
-                    showSection(back);
+                    if (back) {
+                        showSection(back);
+                    }
                 });
             });
 
@@ -1382,45 +1007,213 @@
                 });
             }
 
+            // Helper function to generate slug from title
+            function generateSlug(title) {
+                return title
+                    .toLowerCase()
+                    .trim()
+                    .replace(/[^\w\s-]/g, '')
+                    .replace(/\s+/g, '-')
+                    .replace(/-+/g, '-');
+            }
+
             // Publish button handler
             const finalPublishBtn = document.getElementById('finalPublishBtn');
             if (finalPublishBtn) {
-                finalPublishBtn.addEventListener('click', () => {
-                    const title = document.getElementById('subjectTitle').value;
-                    const category = document.getElementById('subjectCategory').value;
-                    const level = document.getElementById('subjectLevel').value;
+                finalPublishBtn.addEventListener('click', async () => {
+                    const title = document.getElementById('courseTitle').value;
+                    const category = document.getElementById('courseCategory').value;
+                    const level = document.getElementById('courseLevel').value;
+                    const description = quill.getText().trim();
+                    const term = document.getElementById('subjectTerm').value;
 
-                    if (!title || !category || !level) {
+
+                    if (!title || !category || !level || !description) {
                         alert('Please fill in all required fields');
                         return;
                     }
 
-                    // Here you would submit the form to the server
-                    console.log('Publishing course:', {
-                        title,
-                        category,
-                        level,
-                        time: document.getElementById('subjectTime').value,
-                        lessons: document.getElementById('totalLesson').value,
-                        description: document.getElementById('subjectDescription').value
-                    });
+                    try {
+                        // Create FormData for file upload
+                        const formData = new FormData();
 
-                    alert('Course published successfully!');
+                        // Add required fields
+                        formData.append('title', title);
+                        formData.append('slug', generateSlug(title));
+                        formData.append('description', description);
+                        formData.append('course_category_id', category);
+                        formData.append('curriculum_category_id',
+                        category); // Using same category for both
+                        formData.append('level_id', level);
+                        formData.append('price', courseData.price || 0);
+                        formData.append('free', courseData.freeCourse ? 1 : 0);
+                        formData.append('url', generateSlug(title));
+
+                        // Add optional fields
+                        if (term) {
+                            formData.append('term_id', term);
+                        }
+
+                        const duration = document.getElementById('courseTime').value;
+                        if (duration) {
+                            formData.append('duration_hours', duration);
+                        }
+
+                        // Add image if selected
+                        const fileInput = document.getElementById('fileInput');
+                        if (fileInput && fileInput.files && fileInput.files[0]) {
+                            formData.append('thumbnail', fileInput.files[0]);
+                        }
+
+                        const result = await window.CourseApiClient.createCourse(formData);
+                        if (result.success) {
+                            alert('Course published successfully!');
+                            // Get the course ID from the response
+                            const courseId = result.data?.id || result.id;
+                            setTimeout(() => {
+                                window.location.href = `/editsubject/${courseId}`;
+                            }, 1500);
+                        } else {
+                            alert('Error: ' + (result.message || 'Failed to publish course'));
+                        }
+                    } catch (error) {
+                        console.error('Publish error:', error);
+                        alert('Error publishing course: ' + error.message);
+                    }
+                });
+            }
+
+            // Save Now button handler (from publish section)
+            const saveNowBtn = document.getElementById('saveNowBtn');
+            if (saveNowBtn) {
+                saveNowBtn.addEventListener('click', async () => {
+                    const title = document.getElementById('courseTitle').value;
+                    const category = document.getElementById('courseCategory').value;
+                    const level = document.getElementById('courseLevel').value;
+                    const description = quill.getText().trim();
+                    const term = document.getElementById('subjectTerm').value;
+
+                    if (!title || !category || !level || !description) {
+                        alert('Please fill in all required fields');
+                        return;
+                    }
+
+                    try {
+                        // Create FormData for file upload
+                        const formData = new FormData();
+                        console.log(category)
+                        // Add required fields
+                        formData.append('title', title);
+                        formData.append('slug', generateSlug(title));
+                        formData.append('description', description);
+                        formData.append('course_category_id', category);
+                        formData.append('curriculum_category_id',
+                        category); // Using same category for both
+                        formData.append('level_id', level);
+                        formData.append('price', courseData.price || 0);
+                        formData.append('free', courseData.freeCourse ? 1 : 0);
+                        formData.append('url', generateSlug(title));
+
+                        // Add optional fields
+                        if (term) {
+                            formData.append('term_id', term);
+                        }
+
+                        const duration = document.getElementById('courseTime').value;
+                        if (duration) {
+                            formData.append('duration_hours', duration);
+                        }
+
+                        // Add image if selected
+                        const fileInput = document.getElementById('fileInput');
+                        if (fileInput && fileInput.files && fileInput.files[0]) {
+                            formData.append('thumbnail', fileInput.files[0]);
+                        }
+
+                        const result = await window.CourseApiClient.createCourse(formData);
+                        if (result.success) {
+                            alert('Course saved successfully!');
+                            // Get the course ID from the response
+                            const courseId = result.data?.id || result.id;
+                            setTimeout(() => {
+                                window.location.href = `/editsubject/${courseId}`;
+                            }, 1500);
+                        } else {
+                            alert('Error: ' + (result.message || 'Failed to save course'));
+                        }
+                    } catch (error) {
+                        console.error('Save error:', error);
+                        alert('Error saving course: ' + error.message);
+                    }
                 });
             }
 
             // Save draft button handler
             const saveDraftBtn = document.getElementById('saveDraftBtn');
             if (saveDraftBtn) {
-                saveDraftBtn.addEventListener('click', () => {
-                    const title = document.getElementById('subjectTitle').value;
-                    if (!title) {
-                        alert('Please enter a subject title');
+                saveDraftBtn.addEventListener('click', async () => {
+                    const title = document.getElementById('courseTitle').value;
+                    const category = document.getElementById('courseCategory').value;
+                    const description = document.getElementById('courseDescription').value;
+                    const term = document.getElementById('subjectTerm').value;
+
+                    console.log(title, category, description)
+                    if (!title || !category || !description) {
+                        alert('Please fill in all required fields');
                         return;
                     }
 
-                    console.log('Saving draft...');
-                    alert('Course saved as draft!');
+                    try {
+                        // Create FormData for file upload
+                        const formData = new FormData();
+
+                        // Add required fields
+                        formData.append('title', title);
+                        formData.append('slug', generateSlug(title));
+                        formData.append('description', description);
+                        formData.append('course_category_id', category);
+                        formData.append('curriculum_category_id',
+                        category); // Using same category for both
+                        formData.append('price', courseData.price || 0);
+                        formData.append('free', courseData.freeCourse ? 1 : 0);
+                        formData.append('url', generateSlug(title));
+
+                        // Add optional fields
+                        const level = document.getElementById('courseLevel').value;
+                        if (level) {
+                            formData.append('level_id', level);
+                        }
+
+                        if (term) {
+                            formData.append('term_id', term);
+                        }
+
+                        const duration = document.getElementById('courseTime').value;
+                        if (duration) {
+                            formData.append('duration_hours', duration);
+                        }
+
+                        // Add image if selected
+                        const fileInput = document.getElementById('fileInput');
+                        if (fileInput && fileInput.files && fileInput.files[0]) {
+                            formData.append('thumbnail', fileInput.files[0]);
+                        }
+
+                        const result = await window.CourseApiClient.createCourse(formData);
+                        if (result.success) {
+                            alert('Course saved as draft!');
+                            // Get the course ID from the response
+                            const courseId = result.data?.id || result.id;
+                            setTimeout(() => {
+                                window.location.href = `/editsubject/${courseId}`;
+                            }, 1500);
+                        } else {
+                            alert('Error: ' + (result.message || 'Failed to save draft'));
+                        }
+                    } catch (error) {
+                        console.error('Save draft error:', error);
+                        alert('Error saving draft: ' + error.message);
+                    }
                 });
             }
 

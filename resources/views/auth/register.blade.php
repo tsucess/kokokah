@@ -17,8 +17,8 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 
   <!-- Custom CSS -->
-  <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-  <link href="{{ asset('css/access.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/style.css') }}?v={{ time() }}" rel="stylesheet">
+  <link href="{{ asset('css/access.css') }}?v={{ time() }}" rel="stylesheet">
 </head>
 <body>
 
@@ -40,7 +40,7 @@
           <h4 class="auth-heading">Sign up</h4>
           <p class="auth-subheading">Create your account to get started.</p>
 
-          <form id="registerForm" method="POST">
+          <form id="registerForm" method="POST" action="javascript:void(0);" data-ajax>
             @csrf
             <div class="custom-form-group">
               <label for="firstName" class="custom-label">Enter First Name</label>
@@ -54,7 +54,7 @@
 
             <div class="custom-form-group">
               <label for="email" class="custom-label">Enter Email Address</label>
-              <input type="email" class="form-control-custom" id="email" name="email" placeholder="majorsignature@gmail.com" aria-label="Email Address" autocomplete="email" required>
+              <input type="email" class="form-control-custom" id="email" name="email" placeholder="user@example.com" aria-label="Email Address" autocomplete="email" required>
             </div>
 
             <div class="custom-form-group">
@@ -113,11 +113,13 @@
   <!-- Axios -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-  <script type="module">
-    import AuthApiClient from '{{ asset('js/api/authClient.js') }}';
-    import UIHelpers from '{{ asset('js/utils/uiHelpers.js') }}';
+      <!-- API Clients -->
+    <script src="/js/api/baseApiClient.js"></script>
+    <script src="/js/api/authClient.js"></script>
+    <script src="/js/utils/uiHelpers.js"></script>
 
-    // Store original button text
+    <script>
+// Store original button text
     UIHelpers.storeButtonText('registerBtn');
 
     // Password visibility toggle
@@ -230,7 +232,6 @@
         UIHelpers.showError(result.message || 'Registration failed');
         UIHelpers.setButtonLoading('registerBtn', false);
       }
-    });
-  </script>
+    });    </script>
 </body>
 </html>

@@ -29,7 +29,7 @@ class AdminController extends Controller
     /**
      * Get admin dashboard overview
      */
-    public function dashboard()
+    public function dashboard(Request $request)
     {
         try {
             // Cache dashboard stats for 5 minutes to improve performance
@@ -62,13 +62,26 @@ class AdminController extends Controller
                     'published' => Course::where('status', 'published')->count(),
                     'draft' => Course::where('status', 'draft')->count(),
                     'new_this_month' => Course::where('created_at', '>=', now()->startOfMonth())->count(),
-                    'by_category' => \App\Models\Category::withCount('courses')
+                    'by_category' => \App\Models\CurriculumCategory::withCount('courses')
+                                          ->whereNotNull('title')
                                           ->get()
-                                          ->pluck('courses_count', 'title'),
+                                          ->mapWithKeys(function($category) {
+                                              return [$category->title => $category->courses_count];
+                                          })
+                                          ->toArray(),
                     'most_popular' => Course::withCount('enrollments')
+                                          ->whereNotNull('title')
                                           ->orderBy('enrollments_count', 'desc')
                                           ->limit(5)
                                           ->get()
+                                          ->map(function($course) {
+                                              return [
+                                                  'id' => $course->id,
+                                                  'title' => $course->title,
+                                                  'enrollments' => $course->enrollments_count
+                                              ];
+                                          })
+                                          ->toArray()
                 ],
                 'enrollments' => [
                     'total' => Enrollment::count(),
@@ -99,8 +112,12 @@ class AdminController extends Controller
                 ];
             });
 
-            // Recent activity
-            $recentActivity = $this->getRecentActivity();
+            // Get pagination parameters
+            $page = $request->get('page', 1);
+            $perPage = $request->get('per_page', 10);
+
+            // Recent activity with pagination
+            $recentActivity = $this->getRecentActivityPaginated($page, $perPage);
 
             // System health
             $systemHealth = $this->getSystemHealth();
@@ -239,7 +256,7 @@ class AdminController extends Controller
     public function courses(Request $request)
     {
         try {
-            $query = Course::with(['instructor', 'category']);
+            $query = Course::with(['instructor', 'courseCategory']);
 
             // Search
             if ($request->has('search')) {
@@ -403,6 +420,13 @@ class AdminController extends Controller
 
             // Transform data for frontend
             $transformedTransactions = $transactions->map(function ($transaction) {
+                // Format payment method for display
+                $paymentMethod = $transaction->payment_method ?? 'N/A';
+                if ($paymentMethod !== 'N/A') {
+                    // Capitalize gateway names (paystack -> Paystack, flutterwave -> Flutterwave, etc.)
+                    $paymentMethod = ucfirst(strtolower($paymentMethod));
+                }
+
                 return [
                     'id' => $transaction->id,
                     'user_name' => $transaction->wallet->user->first_name . ' ' . $transaction->wallet->user->last_name,
@@ -410,7 +434,7 @@ class AdminController extends Controller
                     'amount' => $transaction->amount,
                     'type' => $transaction->type,
                     'status' => $transaction->status,
-                    'payment_method' => $transaction->payment_method ?? 'N/A',
+                    'payment_method' => $paymentMethod,
                     'plan' => $transaction->type,
                     'created_at' => $transaction->created_at,
                     'reference' => $transaction->reference
@@ -971,13 +995,21 @@ class AdminController extends Controller
         }
 
         // Recent payments
-        $recentPayments = Payment::with(['user', 'course'])->where('status', 'completed')->latest()->limit(5)->get();
+        $recentPayments = Payment::with(['user', 'course'])->latest()->limit(5)->get();
         foreach ($recentPayments as $payment) {
+            if ($payment->type === 'wallet_deposit') {
+                $description = "Deposited Money to Wallet: {$payment->amount}";
+            } else {
+                $courseTitle = $payment->course ? $payment->course->title : 'Unknown Course';
+                $description = "Course Purchase: {$payment->amount} for {$courseTitle}";
+            }
             $activities[] = [
                 'type' => 'payment_completed',
-                'description' => "Payment completed: {$payment->amount} for {$payment->course->title}",
+                'description' => $description,
                 'timestamp' => $payment->created_at,
-                'payment' => $payment
+                'user' => $payment->user,
+                'payment' => $payment,
+                'status' => $payment->status
             ];
         }
 
@@ -987,6 +1019,78 @@ class AdminController extends Controller
         });
 
         return array_slice($activities, 0, 15);
+    }
+
+    private function getRecentActivityPaginated($page = 1, $perPage = 10)
+    {
+        $activities = [];
+
+        // Recent user registrations
+        $recentUsers = User::latest()->limit(15)->get();
+        foreach ($recentUsers as $user) {
+            $activities[] = [
+                'type' => 'user_registered',
+                'description' => "New user registered: {$user->first_name} {$user->last_name}",
+                'timestamp' => $user->created_at,
+                'user' => $user
+            ];
+        }
+
+        // Recent course creations
+        $recentCourses = Course::with('instructor')->latest()->limit(15)->get();
+        foreach ($recentCourses as $course) {
+            $activities[] = [
+                'type' => 'course_created',
+                'description' => "New course created: {$course->title}",
+                'timestamp' => $course->created_at,
+                'course' => $course
+            ];
+        }
+
+        // Recent payments
+        $recentPayments = Payment::with(['user', 'course'])->latest()->limit(15)->get();
+        foreach ($recentPayments as $payment) {
+            if ($payment->type === 'wallet_deposit') {
+                $description = "Deposited Money to Wallet: {$payment->amount}";
+            } else {
+                $courseTitle = $payment->course ? $payment->course->title : 'Unknown Course';
+                $description = "Course Purchase: {$payment->amount} for {$courseTitle}";
+            }
+            $activities[] = [
+                'type' => 'payment_completed',
+                'description' => $description,
+                'timestamp' => $payment->created_at,
+                'user' => $payment->user,
+                'payment' => $payment,
+                'status' => $payment->status
+            ];
+        }
+
+        // Sort by timestamp
+        usort($activities, function($a, $b) {
+            return $b['timestamp'] <=> $a['timestamp'];
+        });
+
+        // Get total count
+        $total = count($activities);
+
+        // Calculate pagination
+        $lastPage = ceil($total / $perPage);
+        $offset = ($page - 1) * $perPage;
+
+        // Get paginated slice
+        $paginatedActivities = array_slice($activities, $offset, $perPage);
+
+        // Return paginated response
+        return [
+            'data' => $paginatedActivities,
+            'current_page' => $page,
+            'per_page' => $perPage,
+            'total' => $total,
+            'last_page' => $lastPage,
+            'from' => $offset + 1,
+            'to' => min($offset + $perPage, $total)
+        ];
     }
 
     private function getSystemHealth()
@@ -1545,7 +1649,8 @@ class AdminController extends Controller
 
             // Prevent deleting the last admin
             if ($user->role === 'admin') {
-                $adminCount = User::where('role', 'admin')->count();
+                // Count only non-deleted admins
+                $adminCount = User::where('role', 'admin')->whereNull('deleted_at')->count();
                 if ($adminCount <= 1) {
                     return response()->json([
                         'success' => false,

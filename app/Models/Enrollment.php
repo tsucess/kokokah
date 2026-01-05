@@ -15,13 +15,15 @@ class Enrollment extends Model
         'progress',
         'status',
         'enrolled_at',
-        'completed_at'
+        'completed_at',
+        'amount_paid'
     ];
 
     protected $casts = [
         'progress' => 'integer',
         'enrolled_at' => 'datetime',
         'completed_at' => 'datetime',
+        'amount_paid' => 'decimal:2',
     ];
 
     // Relationships

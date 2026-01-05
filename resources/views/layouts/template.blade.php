@@ -24,7 +24,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    @vite(['resources/css/style.css', 'resources/css/responsiveness.css'])
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/responsiveness.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
+
+    {{-- @vite(['resources/css/style.css', 'resources/css/responsiveness.css']) --}}
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
@@ -34,6 +38,8 @@
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
+    {{-- swiper.js --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
 </head>
 
 <body>
@@ -41,7 +47,7 @@
     <div class="container-fluid top_header">
         <!-- Background Image -->
         {{-- <img src="images/kokokah_header.png" class="img-fluid" alt="Banner Image"> --}}
-        <h1>Transforming African Education—One School</h1>
+        <h1 class="text-center">Transforming classrooms, building futures, empowering tomorrow’s leaders</h1>
     </div>
 
     <!-- Navigation Bar - Fixed/Sticky with Overlay -->
@@ -49,7 +55,7 @@
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
                 <img src="{{ asset('images/Kokokah_Logo.png') }}" alt="Kokokah Logo"
-                    class="animate__animated animate__pulse hero-img">
+                    class="animate__animated animate__pulse hero-img w-100">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample05"
                 aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,9 +73,9 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">Products</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/lms">LMS</a></li>
-                            <li><a class="dropdown-item" href="/sms">SMS</a></li>
+                        <ul class="dropdown-menu dropdown-fit">
+                            <li><a class="dropdown-item" href="/lms">Learning Management System(LMS)</a></li>
+                            <li><a class="dropdown-item" href="/sms">School Management System(SMS)</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -80,10 +86,10 @@
                     </li>
                 </ul>
 
-                <div class="d-flex flex-column flex-lg-row gap-3 px-0">
+                {{-- <div class="d-flex flex-column flex-lg-row gap-3 px-0">
                     <button class="btn-nav-primary">Explore Kokokah</button>
                     <button class="btn-nav-secondary">Get a Demo</button>
-                </div>
+                </div> --}}
             </div>
         </div>
     </nav>
@@ -491,19 +497,19 @@
                 <div class="col-6 col-md-2 col-lg-2">
                     <h6 class="footer-heading">Short Links</h6>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="#" class="footer-link">Features</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="footer-link">How it works</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="footer-link">Security</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="footer-link">Testimonial</a></li>
+                        <li class="nav-item mb-2"><a href="/" class="footer-link">Home</a></li>
+                        <li class="nav-item mb-2"><a href="/about" class="footer-link">About Us</a></li>
+                        <li class="nav-item mb-2"><a href="/lms" class="footer-link">Lms</a></li>
+                        <li class="nav-item mb-2"><a href="/sms" class="footer-link">Sms</a></li>
                     </ul>
                 </div>
 
                 <div class="col-6 col-md-2 col-lg-2">
                     <h6 class="footer-heading">Other Pages</h6>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="#" class="footer-link">Privacy Policy</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="footer-link">Terms & Condition</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="footer-link">404</a></li>
+                        <li class="nav-item mb-2"><a href="/kokoplay" class="footer-link">Kokoplay</a></li>
+                        <li class="nav-item mb-2"><a href="/contact" class="footer-link">Contact</a></li>
+                        {{-- <li class="nav-item mb-2"><a href="#" class="footer-link">404</a></li> --}}
                     </ul>
                 </div>
 
@@ -585,6 +591,9 @@
             });
         });
     </script>
+
+    <!-- Kokokah Logo Loader -->
+    <script src="{{ asset('js/utils/kokokahLoader.js') }}"></script>
 </body>
 
 

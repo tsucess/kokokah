@@ -28,6 +28,16 @@ class DatabaseSeeder extends Seeder
             StudentUserSeeder::class,
         ]);
 
+
+        $this->call(TopicSeeder::class);
+
+        // Seed chatrooms and messages
+        $this->call([
+            ChatroomSeeder::class,
+            ChatMessageSeeder::class,
+        ]);
+
+
         echo "\n🎉 Database seeding completed successfully!\n";
         echo "📊 Total users created:\n";
         echo "   👑 Admins: " . User::where('role', 'admin')->count() . "\n";

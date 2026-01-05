@@ -12,16 +12,19 @@ class Course extends Model
 
     protected $fillable = [
         'title',
+        'slug',
         'description',
-        'category_id',
+        'curriculum_category_id',
+        'course_category_id',
         'instructor_id',
         'term_id',
         'level_id',
         'price',
+        'free',
         'status',
+        'thumbnail',
+        'url',
         'duration_hours',
-        'difficulty',
-        'max_students',
         'published_at'
     ];
 
@@ -29,13 +32,22 @@ class Course extends Model
         'price' => 'decimal:2',
         'published_at' => 'datetime',
         'duration_hours' => 'integer',
-        'max_students' => 'integer',
+        'free' => 'boolean',
+    ];
+
+    protected $appends = [
+        'thumbnail_url',
     ];
 
     // Relationships
-    public function category()
+    public function curriculumCategory()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(CurriculumCategory::class, 'curriculum_category_id');
+    }
+
+    public function courseCategory()
+    {
+        return $this->belongsTo(CourseCategory::class, 'course_category_id');
     }
 
     public function instructor()
@@ -56,6 +68,11 @@ class Course extends Model
     public function lessons()
     {
         return $this->hasMany(Lesson::class)->orderBy('order');
+    }
+
+    public function topics()
+    {
+        return $this->hasMany(Topic::class)->orderBy('order');
     }
 
     public function enrollments()
@@ -132,15 +149,15 @@ class Course extends Model
                     ->withTimestamps();
     }
 
+    public function chatRoom()
+    {
+        return $this->hasOne(ChatRoom::class);
+    }
+
     // Scopes
     public function scopePublished($query)
     {
         return $query->where('status', 'published');
-    }
-
-    public function scopeByDifficulty($query, $difficulty)
-    {
-        return $query->where('difficulty', $difficulty);
     }
 
     public function scopeByLevel($query, $levelId)
@@ -153,7 +170,7 @@ class Course extends Model
         return $query->where('instructor_id', $instructorId);
     }
 
-    // Accessors & Mutators
+    // Accessors
     public function getAverageRatingAttribute()
     {
         return $this->reviews()->avg('rating');
@@ -168,14 +185,41 @@ class Course extends Model
     {
         $total = $this->enrollments()->count();
         if ($total === 0) return 0;
-        
+
         $completed = $this->enrollments()->where('status', 'completed')->count();
         return round(($completed / $total) * 100, 2);
     }
 
-    public function getIsFullAttribute()
+    /**
+     * Get the full URL for the thumbnail image
+     */
+    public function getThumbnailUrlAttribute()
     {
-        if (!$this->max_students) return false;
-        return $this->enrollments()->where('status', 'active')->count() >= $this->max_students;
+        if (!$this->thumbnail) {
+            return null;
+        }
+        // Return relative path for better compatibility with different hosts
+        return '/storage/' . $this->thumbnail;
+    }
+
+    /**
+     * Generate a unique slug from the course title
+     */
+    public static function generateSlug($title)
+    {
+        $slug = \Illuminate\Support\Str::slug($title);
+
+        // Check if slug already exists
+        $count = self::where('slug', $slug)->count();
+
+        // If slug exists, append a number to make it unique
+        if ($count > 0) {
+            $slug = $slug . '-' . ($count + 1);
+        }
+
+        return $slug;
     }
 }
+
+
+

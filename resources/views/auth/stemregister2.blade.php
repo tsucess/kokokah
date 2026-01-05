@@ -223,7 +223,9 @@
       box-shadow: none;
     }
   </style>
-  @vite(['resources/css/style.css'])
+   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+   
+  {{-- @vite(['resources/css/style.css']) --}}
 </head>
 
 <body>
@@ -251,12 +253,12 @@
 
           <form>
         <div class="mb-4 form-floating">
-      <input type="text" class="form-control" id="fullname" placeholder="majorsignature">
+      <input type="text" class="form-control" id="fullname" placeholder="username">
       <label for="parentname">Enter Parent/Guardian Name</label>
     </div>
 
     <div class="mb-4 form-floating">
-      <input type="email" class="form-control" id="email" placeholder="majorsignature@gmail.com">
+      <input type="email" class="form-control" id="email" placeholder="user@example.com">
       <label for="parentemail">Enter Parent/Guardian Name Email Address</label>
     </div>
 

@@ -4,7 +4,8 @@ namespace Tests\Unit\Models;
 
 use App\Models\Course;
 use App\Models\User;
-use App\Models\Category;
+use App\Models\CurriculumCategory;
+use App\Models\CourseCategory;
 use App\Models\Term;
 use App\Models\Level;
 use App\Models\Lesson;
@@ -26,7 +27,7 @@ class CourseTest extends TestCase
         parent::setUp();
         
         $this->instructor = User::factory()->create(['role' => 'instructor']);
-        $this->category = Category::factory()->create();
+        $this->category = CurriculumCategory::factory()->create();
         $this->term = Term::factory()->create();
         $this->level = Level::factory()->create();
     }

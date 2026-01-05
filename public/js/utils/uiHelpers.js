@@ -49,6 +49,7 @@ class UIHelpers {
 
     // Use textContent to prevent XSS attacks
     alertDiv.textContent = message;
+    alertDiv.style.fontSize = '14px';
 
     // Create close button
     const closeBtn = document.createElement('button');
@@ -283,6 +284,18 @@ class UIHelpers {
   /**
    * Copy to clipboard
    */
+  static formatDate(dateString) {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric"
+    });
+  }
+
+
+  /**
+   * Copy to clipboard
+   */
   static copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(() => {
       this.showSuccess('Copied to clipboard!');
@@ -292,5 +305,5 @@ class UIHelpers {
   }
 }
 
-export default UIHelpers;
-
+// Make available globally
+window.UIHelpers = UIHelpers;

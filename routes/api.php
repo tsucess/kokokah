@@ -6,9 +6,12 @@ use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BadgeController;
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CurriculumCategoryController;
+use App\Http\Controllers\CourseCategoryController;
+use App\Http\Controllers\LevelController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ChatMessageController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EnrollmentController;
@@ -32,8 +35,17 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\FeedbackController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use App\Http\Controllers\TopicController;
+use App\Http\Controllers\TermController;
+use App\Http\Controllers\PointsAndBadgesController;
+use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\RatingController;
+
+
+
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -88,13 +100,20 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 
-Route::get('/', function() {
+Route::get('/', function () {
     return 'API';
 });
 
 
+// Curriculum Category (LMS curriculum) 
+Route::apiResource('curriculum-category', CurriculumCategoryController::class);
 
-Route::apiResource('category', CategoryController::class);
+// Course Category (general category for courses)
+Route::apiResource('course-category', CourseCategoryController::class);
+
+// Student Level (general user level)
+Route::apiResource('level', LevelController::class);
+
 
 // Public course routes
 Route::get('/courses', [CourseController::class, 'index']);
@@ -107,6 +126,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/courses/my-courses', [CourseController::class, 'myCourses']);
 });
 
+// Public course detail route (must be after specific routes)
 Route::get('/courses/{id}', [CourseController::class, 'show']);
 
 
@@ -114,10 +134,10 @@ Route::get('/courses/{id}', [CourseController::class, 'show']);
 
 
 
-Route::post('/register', [AuthController::class,'register']);
-Route::post('/login', [AuthController::class,'login']);
-Route::post('/forgot-password', [PasswordResetController::class,'sendResetLinkEmail']);
-Route::post('/reset-password', [PasswordResetController::class,'reset']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLinkEmail']);
+Route::post('/reset-password', [PasswordResetController::class, 'reset']);
 
 // Email verification with code routes (public)
 Route::post('/email/send-verification-code', [AuthController::class, 'sendVerificationCode']);
@@ -135,8 +155,8 @@ Route::prefix('payments')->group(function () {
 
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', [AuthController::class,'user']);
-    Route::post('/logout', [AuthController::class,'logout']);
+    Route::get('/user', [AuthController::class, 'user']);
+    Route::post('/logout', [AuthController::class, 'logout']);
 
     // Wallet routes
     Route::prefix('wallet')->group(function () {
@@ -147,6 +167,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/rewards', [WalletController::class, 'rewards']);
         Route::post('/claim-login-reward', [WalletController::class, 'claimLoginReward']);
         Route::post('/check-affordability', [WalletController::class, 'checkAffordability']);
+
+        // Payment method routes
+        Route::get('/payment-methods', [WalletController::class, 'getPaymentMethods']);
+        Route::post('/payment-methods', [WalletController::class, 'addPaymentMethod']);
+        Route::delete('/payment-methods/{methodId}', [WalletController::class, 'deletePaymentMethod']);
+        Route::post('/payment-methods/{methodId}/set-default', [WalletController::class, 'setDefaultPaymentMethod']);
     });
 
     // Payment routes (handles all gateway payments)
@@ -181,6 +207,15 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/', [LessonController::class, 'index']);
         Route::post('/', [LessonController::class, 'store']);
     });
+
+    // Topic management route
+    Route::apiResource('topic', TopicController::class);
+    Route::get('/courses/{courseId}/topics', [TopicController::class, 'getByCourse']);
+    Route::get('/topic/{topicId}/lessons', [TopicController::class, 'getLessons']);
+
+
+    // Term management route 
+    Route::apiResource('term', TermController::class);
 
     Route::prefix('lessons')->group(function () {
         Route::get('/{id}', [LessonController::class, 'show']);
@@ -217,14 +252,29 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/notifications', [UserController::class, 'notifications']);
         Route::post('/notifications/read', [UserController::class, 'markNotificationsRead']);
         Route::post('/change-password', [UserController::class, 'changePassword']);
+        Route::delete('/account', [UserController::class, 'deleteAccount']);
+        Route::get('/quiz-answers', [UserController::class, 'quizAnswers']);
+        Route::get('/all-quiz-results', [UserController::class, 'allQuizResults']);
+        Route::get('/debug-quiz-data', [UserController::class, 'debugQuizData']);
+        Route::get('/subscription-history', [UserController::class, 'subscriptionHistory']);
+        Route::get('/points', [UserController::class, 'getPoints']);
+        Route::post('/enroll-with-points', [UserController::class, 'enrollWithPoints']);
     });
 
     // Quiz management routes (authenticated)
+    // Lesson-level quizzes
     Route::prefix('lessons/{lessonId}/quizzes')->group(function () {
-        Route::get('/', [QuizController::class, 'index']);
-        Route::post('/', [QuizController::class, 'store']);
+        Route::get('/', [QuizController::class, 'indexByLesson']);
+        Route::post('/', [QuizController::class, 'storeForLesson']);
     });
 
+    // Topic-level quizzes
+    Route::prefix('topics/{topicId}/quizzes')->group(function () {
+        Route::get('/', [QuizController::class, 'indexByTopic']);
+        Route::post('/', [QuizController::class, 'storeForTopic']);
+    });
+
+    // General quiz routes
     Route::prefix('quizzes')->group(function () {
         Route::get('/{id}', [QuizController::class, 'show']);
         Route::put('/{id}', [QuizController::class, 'update']);
@@ -280,6 +330,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/{id}/reject', [ReviewController::class, 'reject']);
     });
 
+    // Rating management routes (authenticated)
+    Route::prefix('ratings')->group(function () {
+        Route::get('/', [RatingController::class, 'index'])->name('admin.rating.index');
+        Route::get('/{courseId}', [RatingController::class, 'show'])->name('admin.rating.show');
+    });
+
     // Forum management routes (authenticated)
     Route::prefix('courses/{courseId}/forum')->group(function () {
         Route::get('/', [ForumController::class, 'index']);
@@ -332,6 +388,21 @@ Route::middleware('auth:sanctum')->group(function () {
     // User badges routes
     Route::get('/users/{userId}/badges', [BadgeController::class, 'userBadges']);
     Route::get('/my-badges', [BadgeController::class, 'userBadges']);
+
+    // Points and Badges routes (enhanced)
+    Route::prefix('points-badges')->group(function () {
+        // Points endpoints
+        Route::get('/points', [PointsAndBadgesController::class, 'getUserPoints']);
+        Route::get('/points/history', [PointsAndBadgesController::class, 'getPointsHistory']);
+
+        // Badges endpoints
+        Route::get('/badges', [PointsAndBadgesController::class, 'getUserBadges']);
+        Route::get('/badges/{badgeId}', [PointsAndBadgesController::class, 'getBadgeDetails']);
+        Route::get('/badges/stats', [PointsAndBadgesController::class, 'getBadgeStats']);
+
+        // Leaderboard
+        Route::get('/leaderboard', [PointsAndBadgesController::class, 'getLeaderboard']);
+    });
 
     // Progress tracking routes (authenticated)
     Route::prefix('progress')->group(function () {
@@ -425,6 +496,25 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/analytics', [ChatController::class, 'analytics'])->middleware('role:admin');
         Route::post('/suggestions', [ChatController::class, 'getSuggestedResponses']);
     });
+
+    // Chatrooms resource routes (authenticated)
+    Route::apiResource('chatrooms', \App\Http\Controllers\ChatroomController::class);
+
+    // Chat Room Messages routes (authenticated & authorized)
+    Route::prefix('chatrooms/{chatRoom}/messages')
+        ->middleware([
+            'auth:sanctum',
+            'ensure.user.authenticated.for.chat',
+            'authorize.chat.room.access',
+        ])
+        ->group(function () {
+            Route::get('/', [ChatMessageController::class, 'index']);
+            Route::post('/', [ChatMessageController::class, 'store'])
+                ->middleware('check.chat.room.mute.status');
+            Route::get('/{message}', [ChatMessageController::class, 'show']);
+            Route::put('/{message}', [ChatMessageController::class, 'update']);
+            Route::delete('/{message}', [ChatMessageController::class, 'destroy']);
+        });
 });
 
 // Admin-only route
@@ -520,6 +610,20 @@ Route::middleware('auth:sanctum')->prefix('notifications')->group(function () {
     Route::post('/send', [NotificationController::class, 'sendNotification'])->middleware('role:admin');
     Route::post('/broadcast', [NotificationController::class, 'broadcastNotification'])->middleware('role:admin');
     Route::get('/analytics', [NotificationController::class, 'getAnalytics'])->middleware('role:admin');
+});
+
+// Announcement routes
+Route::middleware('auth:sanctum')->prefix('announcements')->group(function () {
+    Route::get('/', [AnnouncementController::class, 'index']);
+    Route::get('/types', [AnnouncementController::class, 'getByType']);
+    Route::get('/{id}', [AnnouncementController::class, 'show']);
+
+    // Admin only routes
+    Route::middleware('role:admin')->group(function () {
+        Route::post('/', [AnnouncementController::class, 'store']);
+        Route::put('/{id}', [AnnouncementController::class, 'update']);
+        Route::delete('/{id}', [AnnouncementController::class, 'destroy']);
+    });
 });
 
 // Search routes
@@ -639,4 +743,25 @@ Route::middleware('auth:sanctum')->prefix('language')->group(function () {
 
     // Get user's language preference
     Route::get('/user', [LanguageController::class, 'getUserLanguage']);
+});
+
+// Feedback Routes
+Route::prefix('feedback')->group(function () {
+    // Public feedback submission (no auth required)
+    Route::post('/submit', [FeedbackController::class, 'store']);
+});
+
+// Authenticated Feedback Routes
+Route::middleware('auth:sanctum')->prefix('feedback')->group(function () {
+    // Get user's feedback history
+    Route::get('/my-feedback', [FeedbackController::class, 'getUserFeedback']);
+});
+
+// Admin Feedback Routes
+Route::middleware(['auth:sanctum', 'role:admin'])->prefix('feedback')->group(function () {
+    // Get all feedback
+    Route::get('/', [FeedbackController::class, 'index']);
+
+    // Get single feedback
+    Route::get('/{id}', [FeedbackController::class, 'show']);
 });

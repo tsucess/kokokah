@@ -663,8 +663,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 
+        <!-- API Clients -->
     <script>
-        // Get CSRF token
+// Get CSRF token
         const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ||
             document.querySelector('input[name="_token"]')?.value;
 
@@ -907,30 +908,35 @@
 
                 // Only append optional fields if they have values
                 const dateOfBirth = document.getElementById('dateOfBirth').value;
-                if (dateOfBirth) formData.append('date_of_birth', dateOfBirth);
+                if (dateOfBirth) {
+                    // Ensure date is in yyyy-MM-dd format (not ISO 8601)
+                    const dateObj = new Date(dateOfBirth);
+                    const formattedDate = dateObj.toISOString().split('T')[0];
+                    formData.append('date_of_birth', formattedDate);
+                }
 
-                const phoneNumber = document.getElementById('phoneNumber').value;
+                const phoneNumber = document.getElementById('phoneNumber').value.trim();
                 if (phoneNumber) formData.append('phone_number', phoneNumber);
 
-                const homeAddress = document.getElementById('homeAddress').value;
+                const homeAddress = document.getElementById('homeAddress').value.trim();
                 if (homeAddress) formData.append('home_address', homeAddress);
 
-                const state = document.getElementById('state').value;
+                const state = document.getElementById('state').value.trim();
                 if (state) formData.append('state', state);
 
-                const zipcode = document.getElementById('zipcode').value;
+                const zipcode = document.getElementById('zipcode').value.trim();
                 if (zipcode) formData.append('zipcode', zipcode);
 
-                const parentFirstName = document.getElementById('parentFirstName').value;
+                const parentFirstName = document.getElementById('parentFirstName').value.trim();
                 if (parentFirstName) formData.append('parent_first_name', parentFirstName);
 
-                const parentLastName = document.getElementById('parentLastName').value;
+                const parentLastName = document.getElementById('parentLastName').value.trim();
                 if (parentLastName) formData.append('parent_last_name', parentLastName);
 
-                const parentEmail = document.getElementById('parentEmail').value;
+                const parentEmail = document.getElementById('parentEmail').value.trim();
                 if (parentEmail) formData.append('parent_email', parentEmail);
 
-                const parentPhone = document.getElementById('parentPhone').value;
+                const parentPhone = document.getElementById('parentPhone').value.trim();
                 if (parentPhone) formData.append('parent_phone', parentPhone);
 
                 // Add profile photo if selected
@@ -942,47 +948,29 @@
                     saveBtn.disabled = true;
                     saveBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Saving...';
 
-                    // Get the auth token from localStorage
-                    const token = localStorage.getItem('auth_token');
+                    const result = await AdminApiClient.createUser(formData);
 
-                    const headers = {
-                        'X-CSRF-TOKEN': csrfToken,
-                        'Accept': 'application/json'
-                    };
-
-                    // Add Authorization header if token exists
-                    if (token) {
-                        headers['Authorization'] = `Bearer ${token}`;
-                    }
-
-                    const response = await fetch('/api/admin/users', {
-                        method: 'POST',
-                        headers: headers,
-                        body: formData
-                    });
-
-                    const data = await response.json();
-
-                    if (response.ok) {
+                    if (result.success) {
                         showAlert('User created successfully!', 'success');
                         setTimeout(() => {
                             window.location.href = '/users';
                         }, 1500);
                     } else {
-                        // Log validation errors for debugging
-                        console.log('Response status:', response.status);
-                        console.log('Response data:', data);
+                        // Handle error response
+                        console.log('Request failed:', result);
 
-                        if (data.errors) {
-                            // Show validation errors
-                            let errorMessage = 'Validation errors:\n';
-                            for (const [field, messages] of Object.entries(data.errors)) {
-                                errorMessage += `${field}: ${messages.join(', ')}\n`;
+                        if (result.errors) {
+                            // Show validation errors with user-friendly messages
+                            let errorMessages = [];
+                            for (const [field, messages] of Object.entries(result.errors)) {
+                                const userFriendlyMessage = formatValidationError(field, messages);
+                                errorMessages.push(userFriendlyMessage);
                             }
-                            console.error(errorMessage);
+                            const errorMessage = errorMessages.join('\n');
+                            console.error('Validation errors:', errorMessage);
                             showAlert(errorMessage, 'error');
                         } else {
-                            showAlert(data.message || 'Failed to create user', 'error');
+                            showAlert(result.message || 'Failed to create user', 'error');
                         }
                     }
                 } catch (error) {
@@ -1008,6 +996,37 @@
             });
         }
 
+        // Format validation error messages to be user-friendly
+        function formatValidationError(field, messages) {
+            const fieldLabels = {
+                'first_name': 'First Name',
+                'last_name': 'Last Name',
+                'email': 'Email Address',
+                'password': 'Password',
+                'role': 'Role',
+                'gender': 'Gender',
+                'date_of_birth': 'Date of Birth',
+                'phone_number': 'Phone Number',
+                'home_address': 'Home Address',
+                'state': 'State',
+                'zipcode': 'Zip Code',
+                'parent_first_name': 'Parent First Name',
+                'parent_last_name': 'Parent Last Name',
+                'parent_email': 'Parent Email',
+                'parent_phone': 'Parent Phone',
+                'profile_photo': 'Profile Photo'
+            };
+
+            const fieldLabel = fieldLabels[field] || field;
+            const messageText = Array.isArray(messages) ? messages[0] : messages;
+
+            // Extract the actual error message (remove field name if it's at the start)
+            let cleanMessage = messageText.replace(new RegExp(`^The ${field} field `, 'i'), '');
+            cleanMessage = cleanMessage.replace(new RegExp(`^The ${fieldLabel.toLowerCase()} field `, 'i'), '');
+
+            return `${fieldLabel}: ${cleanMessage}`;
+        }
+
         // Alert helper function
         function showAlert(message, type) {
             const alertContainer = document.getElementById('alertContainer');
@@ -1027,6 +1046,5 @@
                     alert.remove();
                 }
             }, 5000);
-        }
-    </script>
+        }    </script>
 @endsection

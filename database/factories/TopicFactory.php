@@ -1,0 +1,20 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Topic;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class TopicFactory extends Factory
+{
+    protected $model = Topic::class;
+
+    public function definition()
+    {
+        return [
+            'title' => $this->faker->sentence(3),
+            'course_id' => null, // or fake number if needed
+            'order' => $this->faker->numberBetween(0, 20),
+        ];
+    }
+}

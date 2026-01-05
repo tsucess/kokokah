@@ -12,18 +12,20 @@ class Answer extends Model
     protected $fillable = [
         'question_id',
         'student_id',
-        'answer',
+        'answer_text',
         'score',
         'attempt_number',
         'points_earned',
-        'points_possible'
+        'points_possible',
+        'is_correct'
     ];
 
     protected $casts = [
-        'score',
-        'attempt_number',
-        'points_earned',
+        'score' => 'integer',
+        'attempt_number' => 'integer',
+        'points_earned' => 'integer',
         'points_possible' => 'integer',
+        'is_correct' => 'boolean'
     ];
 
     // Relationships
@@ -55,18 +57,12 @@ class Answer extends Model
 
     public function scopeCorrect($query)
     {
-        return $query->where('score',
-        'attempt_number',
-        'points_earned',
-        'points_possible', '>', 0);
+        return $query->where('is_correct', true);
     }
 
     public function scopeIncorrect($query)
     {
-        return $query->where('score',
-        'attempt_number',
-        'points_earned',
-        'points_possible', 0);
+        return $query->where('is_correct', false);
     }
 
     // Methods

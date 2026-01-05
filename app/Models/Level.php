@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +12,8 @@ class Level extends Model
 
     protected $fillable = [
         'name',
-        'type'
+        'curriculum_category_id',
+        'description'
     ];
 
     // Relationships
@@ -25,24 +27,32 @@ class Level extends Model
         return $this->hasMany(Course::class);
     }
 
+    public function curriculumCategory()
+    {
+        return $this->belongsTo(CurriculumCategory::class);
+    }
+
     // Scopes
-    public function scopeByType($query, $type)
-    {
-        return $query->where('type', $type);
-    }
+    // public function scopeByCategory($query, $categoryId)
+    // {
+    //     return $query->where('curriculum_category_id', $categoryId);
+    // }
 
-    public function scopeSecondary($query)
-    {
-        return $query->where('type', 'secondary');
-    }
+    // public function scopeSecondary($query)
+    // {
+    //     $categoryId = CurriculumCategory::where('title', 'Secondary')->value('id');
+    //     return $query->where('curriculum_category_id', $categoryId);
+    // }
 
-    public function scopeUniversity($query)
-    {
-        return $query->where('type', 'university');
-    }
+    // public function scopeUniversity($query)
+    // {
+    //     $categoryId = CurriculumCategory::where('title', 'University')->value('id');
+    //     return $query->where('curriculum_category_id', $categoryId);
+    // }
 
-    public function scopeGrade($query)
-    {
-        return $query->where('type', 'grade');
-    }
+    // public function scopeGrade($query)
+    // {
+    //     $categoryId = CurriculumCategory::where('title', 'Grade')->value('id');
+    //     return $query->where('curriculum_category_id', $categoryId);
+    // }
 }

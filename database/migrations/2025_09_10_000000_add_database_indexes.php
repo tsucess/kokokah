@@ -45,9 +45,7 @@ return new class extends Migration
             $table->index(['student_id', 'question_id']); // Unique student answers
         });
 
-        Schema::table('chat_messages', function (Blueprint $table) {
-            $table->index(['chat_session_id', 'created_at']); // Chronological messages
-        });
+        // chat_messages indexes are now created in the main migration (2025_12_30_000003)
     }
 
     public function down(): void
@@ -88,8 +86,6 @@ return new class extends Migration
             $table->dropIndex(['student_id', 'question_id']);
         });
 
-        Schema::table('chat_messages', function (Blueprint $table) {
-            $table->dropIndex(['chat_session_id', 'created_at']);
-        });
+        // chat_messages indexes are now created in the main migration (2025_12_30_000003)
     }
 };

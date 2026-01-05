@@ -1,104 +1,58 @@
 {{-- @extends('admin.usertemplate') --}}
-@extends('users.usertemplate')
+@extends('layouts.usertemplate')
 
 @section('content')
+<style>
+    .card-container{
+        display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  position: relative;
+  z-index: 10;
+    }
+    .card-item-class{
+background-color: #FDAF22;
+padding: 4px 28px;
+border-radius: 5px;
+color: #000F11;
+font-size: 12px;
+    }
+    .enroll-btn{
+        border:1px solid #004A53;
+        border-radius: 4px;
+        padding: 16px 20px;
+        color:#004A53 ;
+        font-size: 16px;
+        font-weight: 600;
+    }
+    @media screen and (max-width:500px){
+        .enroll-btn{
+            padding-block: 10px;
+        }
+    }
+</style>
 <main>
-    {{-- <div class="container m-2">
-<div class="row">
-        <div>
-          <h4>Hello Samuel
-            <i class="fa-solid fa-hands-clapping text-warning"></i>
-          </h4>
-          <p>Let`s learn something new today</p>
-        </div>
 
-      </div>
-
-    </div> --}}
 
     <!-- Header -->
-  <div class="header-section container-fluid">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-12 col-md-6 mt-2">
+  <div class="header-section container-fluid align-items-center d-flex justify-content-center justify-content-lg-start" style="height:200px;">
+        <div class="d-flex flex-column gap-2 align-items-center align-items-lg-start">
           <h3>Class</h3>
           <p>Let’s learn something new today!</p>
         </div>
 
-      </div>
-    </div>
   </div>
 
-    <div class  = "container position-relative " style="margin-top: -70px; z-index:5;">
-        <div class = "row justify-content-between mx-auto">
-
-            <div class = "col-12 col-md-4 col-lg-4 mb-5 p-3 bg-white mysubject">
-
-                <div class = "border border-dark p-3" style="border-radius: 10px;">
-                    <img src = "images/Kokokah_Logo.png" class = "img-fluid" />
-                </div>
-                <button class = "btn primaryButton mt-2 mb-2" type = "button">JSS 1</button>
-                <h5 class = "subjects">Junior Secondary School 1</h5>
-
-                <button class="btn w-100 secondaryButton" type="button">Enroll</button>
+    <div class  = "container position-relative " style="margin-top: -70px;">
+        <div class = "card-container" id="coursesContainer">
+            <!-- Classes will be loaded here dynamically -->
+            <div class="text-center w-100" id="loadingMessage">
+                <p class="text-muted">Loading classes...</p>
             </div>
-
-
-            <div class = "col-12 col-md-4 col-lg-4 mb-5 p-3 bg-white mysubject">
-            <div class = "border border-dark p-3" style="border-radius: 10px;">
-                    <img src = "images/Kokokah_Logo.png" class = "img-fluid" />
-            </div>
-                <button class = "btn primaryButton mt-2 mb-2" type = "button">JSS 2</button>
-                <h5 class = "subjects">Junior Secondary School 2</h5>
-                <button class="btn w-100 secondaryButton" type="button">Enroll</button>
-            </div>
-
-            <div class = "col-12 col-md-4 col-lg-4 mb-5 p-3 bg-white mysubject">
-            <div class = "border border-dark p-3" style="border-radius: 10px;">
-                    <img src = "images/Kokokah_Logo.png" class = "img-fluid" />
-            </div>
-                <button class = "btn primaryButton mt-2 mb-2" type = "button">JSS 3</button>
-                <h5 class = "subjects">Junior Secondary School 3</h5>
-            <button class="btn w-100 secondaryButton" type="button">Enroll</button>
-
         </div>
+
     </div>
 
-
-
-
-
-    <div class = "row justify-content-between">
-
-            <div class = "col-12 col-md-4 col-lg-4 mb-5 p-3 bg-white mysubject">
-
-                <div class = "border border-dark p-3" style="border-radius: 10px;">
-                    <img src = "images/Kokokah_Logo.png" class = "img-fluid" />
-                </div>
-                <button class = "btn primaryButton mt-2 mb-2" type = "button">SS 1</button>
-                <h5 class = "subjects">Senior Secondary School 1</h5>
-                <button class="btn w-100 secondaryButton" type="button">Enroll</button>
-            </div>
-
-
-            <div class = "col-12 col-md-4 col-lg-4 mb-5 p-3 bg-white mysubject">
-            <div class = "border border-dark p-3" style="border-radius: 10px;">
-                    <img src = "images/Kokokah_Logo.png" class = "img-fluid" />
-            </div>
-                <button class = "btn primaryButton mt-2 mb-2" type = "button">SS 2</button>
-                <h5 class = "subjects">Senior Secondary School 2</h5>
-                <button class="btn w-100 secondaryButton" type="button">Enroll</button>
-            </div>
-
-            <div class = "col-12 col-md-4 col-lg-4 mb-5 p-3 bg-white mysubject">
-            <div class = "border border-dark p-3" style="border-radius: 10px;">
-                    <img src = "images/Kokokah_Logo.png" class = "img-fluid" />
-            </div>
-                <button class = "btn primaryButton mt-2 mb-2" type = "button">SS 3</button>
-                <h5 class = "subjects">Senior Secondary School 3</h5>
-                <button class="btn w-100 secondaryButton" type="button">Enroll</button>
-
-        </div>
     </div>
 
     </div>
@@ -108,4 +62,74 @@
     </div>
 
 </main>
+    <!-- API Clients -->
+    <script>
+document.addEventListener("DOMContentLoaded", async () => {
+        await loadClasses();
+    });
+
+    /**
+     * Load classes (levels) from API and display them
+     */
+    async function loadClasses() {
+        try {
+            const container = document.getElementById('coursesContainer');
+            const loadingMessage = document.getElementById('loadingMessage');
+
+            // Fetch levels/classes from API
+            const result = await CourseApiClient.getLevels();
+
+            if (result.success && result.data && result.data.length > 0) {
+                // Clear loading message
+                loadingMessage.remove();
+
+                // Generate HTML for each class/level
+                const classesHtml = result.data.map((classItem, index) => `
+                    <div class="p-3 rounded-4 bg-white mysubject d-flex flex-column gap-3 w-100">
+                        <div class="border border-dark p-2 text-center" style="border-radius: 10px;">
+                            <img src="images/Kokokah_Logo.png"
+                                 class="img-fluid userdasboard-card-img"
+                                 alt="${classItem.name}"
+                                 style="max-height: 150px; object-fit: cover;" />
+                        </div>
+                        <div class="card-item-class align-self-start">${classItem.curriculum_category?.title || 'Class'}</div>
+                        <h5 class="subjects">${classItem.name}</h5>
+                        <p class="text-muted small" style="margin: 0;">${classItem.description ? classItem.description.substring(0, 80) + '...' : 'Explore this class'}</p>
+                        <button class="enroll-btn" data-level-id="${classItem.id}">Enroll</button>
+                    </div>
+                `).join('');
+
+                container.innerHTML = classesHtml;
+
+                // Attach event listeners to enroll buttons
+                attachEnrollListeners();
+            } else {
+                // No classes found
+                loadingMessage.innerHTML = '<p class="text-muted">No classes available at the moment.</p>';
+            }
+        } catch (error) {
+            console.error('Error loading classes:', error);
+            const loadingMessage = document.getElementById('loadingMessage');
+            loadingMessage.innerHTML = '<p class="text-danger">Failed to load classes. Please try again later.</p>';
+        }
+    }
+
+    /**
+     * Attach event listeners to enroll buttons
+     */
+    function attachEnrollListeners() {
+        const enrollBtns = document.querySelectorAll('button.enroll-btn');
+
+        enrollBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const levelId = this.getAttribute('data-level-id');
+
+                // Navigate to enrollment page with level ID
+                window.location.href = `/userenroll?level_id=${levelId}`;
+            });
+        });
+    }    </script>
 @endsection

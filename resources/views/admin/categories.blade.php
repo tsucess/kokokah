@@ -1,128 +1,646 @@
 @extends('layouts.dashboardtemp')
 
 @section('content')
-<main class="categories-main">
-    <div class="container-fluid px-5 py-4">
-        <!-- Header Section -->
-        <div class="d-flex justify-content-between align-items-start mb-5">
-            <div>
-                <h1 class="fw-bold mb-2">Subject Categories</h1>
-                <p class="text-muted" style="font-size: 0.95rem;">Here overview of your</p>
+    <style>
+        .modal-backdrop.show {
+                background-color: rgba(0, 74, 83, 0.5) !important;
+            }
+
+            .modal-content {
+                border: none;
+                border-radius: 15px;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            }
+
+            .modal-header {
+                border-bottom: 1px solid #e0e0e0;
+                padding: 20px;
+            }
+
+            .modal-title {
+                font-family: "Fredoka One", sans-serif;
+                color: #004A53;
+                font-size: 22px;
+                font-weight: 600;
+            }
+
+            .btn-close {
+                color: #666;
+                opacity: 1;
+            }
+
+            .btn-close:hover {
+                color: #004A53;
+            }
+
+            .modal-body {
+                padding: 30px 20px;
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            .form-label {
+                color: #004A53;
+                font-weight: 600;
+                font-size: 14px;
+                margin-bottom: 8px;
+                display: block;
+            }
+
+            .form-control {
+                border: 1.5px solid #004A53;
+                border-radius: 8px;
+                padding: 12px 16px;
+                font-size: 14px;
+                color: #333;
+                transition: all 0.3s ease;
+            }
+
+            .form-control:focus {
+                border-color: #FDAF22;
+                box-shadow: 0 0 0 0.2rem rgba(253, 175, 34, 0.25);
+                color: #333;
+            }
+
+            .form-control::placeholder {
+                color: #aaa;
+            }
+
+            .modal-footer {
+                padding: 20px;
+                border-top: 1px solid #e0e0e0;
+                gap: 10px;
+            }
+
+            .btn-primary-custom {
+                background-color: #FDAF22;
+                border: none;
+                color: white;
+                font-weight: 600;
+                padding: 12px 24px;
+                border-radius: 8px;
+                transition: all 0.3s ease;
+            }
+
+            .btn-primary-custom:hover {
+                background-color: #e59a0f;
+                color: white;
+            }
+
+            .btn-secondary-custom {
+                background-color: #6c757d;
+                border: none;
+                color: white;
+                font-weight: 600;
+                padding: 12px 24px;
+                border-radius: 8px;
+                transition: all 0.3s ease;
+            }
+
+            .btn-secondary-custom:hover {
+                background-color: #5a6268;
+                color: white;
+            }
+        .action-btn {
+            background-color: white;
+            border: 1px solid #ddd;
+            color: #666;
+            width: 26px;
+            height: 26px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            border-color: #004A53;
+            color: #004A53;
+            background-color: #f0f8f9;
+        }
+
+        .action-btn.delete:hover {
+            border-color: #dc3545;
+            color: #dc3545;
+            background-color: #ffe5e5;
+        }
+        .btn-danger-custom {
+                background-color: #dc3545;
+                border: none;
+                color: white;
+                font-weight: 600;
+                padding: 12px 24px;
+                border-radius: 8px;
+                transition: all 0.3s ease;
+            }
+
+            .btn-danger-custom:hover {
+                background-color: #c82333;
+                color: white;
+            }
+        #toastContainer {
+                position: fixed;
+                top: 1rem;
+                right: 1rem;
+                z-index: 1080;
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                pointer-events: none;
+            }
+
+            .toast {
+                pointer-events: auto;
+            }
+    </style>
+    <main class="categories-main">
+        <div class="container-fluid px-5 py-4">
+            <!-- Header Section -->
+            <div class="d-flex justify-content-between align-items-start mb-5">
+                <div>
+                    <h1 class="fw-bold mb-2">Course Categories</h1>
+                    <p class="text-muted">Here overview of your</p>
+                </div>
+                <button class="btn px-4 py-2 fw-semibold" style="background-color: #FDAF22; border: none; color: white;"
+                    type="button" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                    <i class="fa-solid fa-plus me-2"></i> Add Category
+                </button>
             </div>
-            <button class="btn px-4 py-2 fw-semibold" style="background-color: #FDAF22; border: none; color: white;" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                <i class="fa-solid fa-plus me-2"></i> Add Category
-            </button>
+
+            <!-- Modal component -->
+            <div class="modal fade" id="addCategoryModal" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content border-0 modal-container">
+                        <div class="modal-header border-0 d-flex justify-content-between align-items-center">
+                            <h1 class="modal-title" id="modalTitle">Add Category</h1>
+                            <button type="button" class="modal-header-btn" data-bs-dismiss="modal" aria-label="Close">
+                                <i class="fa-solid fa-circle-xmark"></i> 
+                            </button>
+                        </div>
+                        <form id="categoryForm" class="modal-form-container">
+                            <div class="modal-form">
+                                <div class="modal-form-input-border">
+                                    <label class="modal-label">Course Name</label>
+                                    <input id="categoryName" class="modal-input" type="text" placeholder="e.g. Science"
+                                        required />
+                                </div>
+                                <div class="modal-form-input-border">
+                                    <label class="modal-label">Course Description</label>
+                                    <textarea id="categoryDesc" class="modal-input" placeholder="Enter description"></textarea>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="modal-form-btn" id="saveBtn">Save Category</button>
+                            <input type="hidden" id="editId">
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+            {{-- Delete Confirmation Modal --}}
+            <div class="modal fade" id="deleteCategoryModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title">Delete Category</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete this category?
+                        </div>
+                        <div class="d-flex gap-2 p-3 justify-content-end">
+                            <button type="button" class="btn btn-secondary-custom" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-danger-custom"
+                                id="confirmDeleteCategoryBtn">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Categories Grid -->
+            <div class="row g-4" id="categoriesGrid"></div>
         </div>
 
-        <!-- Modal component -->
-           <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 modal-container">
-                <div class="modal-header border-0 d-flex justify-content-between align-items-center">
-                    <h1 class="modal-title" id="staticBackdropLabel">Add Category</h1>
-                    <button type="button" class="modal-header-btn" data-bs-dismiss="modal" aria-label="Close">
-          <i class="fa-solid fa-circle-xmark"></i>
-        </button>
-                </div>
-                <form class="modal-form-container">
-                    <div class="modal-form">
-                        <div class="modal-form-input-border">
-                            <label for="" class="modal-label">Category Name</label>
-                            <input class="modal-input" type="text" placeholder="Art" />
-                        </div>
-                        <div class="modal-form-input-border">
-                            <label for="" class="modal-label">Subject Name</label>
-                            <input type="text" class="modal-input" placeholder="Art" />
-                        </div>
-                    </div>
-                    <button class="modal-form-btn">Add Category</button>
-                </form>
-            </div>
-        </div>
-    </div>
+<div id="toastContainer" aria-live="polite" aria-atomic="true"></div>
 
-        <!-- Categories Grid -->
-        <div class="row g-4">
-            <!-- Sciences Card -->
-            <div class="col-12">
-                <div class="card border-0 shadow-sm rounded-3" style="background: #f9f9f9; border: 1px solid #e8e8e8;">
-                    <div class="card-body p-4 d-flex justify-content-between align-items-start">
-                        <div class="flex-grow-1">
-                            <h5 class="fw-bold mb-2" style="color: #1a1a1a; font-size: 1.1rem;">Sciences</h5>
-                            <p class="text-muted mb-0" style="font-size: 0.9rem;">Mathematic, Physics, Chemistry, Further Mathematics, Agricultural Science</p>
-                        </div>
-                        <div class="d-flex gap-2 ms-3">
-                            <button class="btn btn-sm btn-light" style="border: 1px solid #ddd; color: #666;">
-                                <i class="fa-solid fa-pen"></i>
-                            </button>
-                            <button class="btn btn-sm btn-light" style="border: 1px solid #ddd; color: #666;">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- API Clients -->
+    <script>
+(function() {
+                // Config
+                const token = localStorage.getItem('auth_token') || '';
+                let categories = [];
+                let currentEditId = null;
+                let currentDeleteId = null;
+                let isSaving = false;
 
-            <!-- Arts Card -->
-            <div class="col-12">
-                <div class="card border-0 shadow-sm rounded-3" style="background: #f9f9f9; border: 1px solid #e8e8e8;">
-                    <div class="card-body p-4 d-flex justify-content-between align-items-start">
-                        <div class="flex-grow-1">
-                            <h5 class="fw-bold mb-2" style="color: #1a1a1a; font-size: 1.1rem;">Arts</h5>
-                            <p class="text-muted mb-0" style="font-size: 0.9rem;">English Language, Literature-in-English, Government, CRS</p>
-                        </div>
-                        <div class="d-flex gap-2 ms-3">
-                            <button class="btn btn-sm btn-light" style="border: 1px solid #ddd; color: #666;">
-                                <i class="fa-solid fa-pen"></i>
-                            </button>
-                            <button class="btn btn-sm btn-light" style="border: 1px solid #ddd; color: #666;">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                // DOM refs - will be initialized when DOM is ready
+                let grid, categoryForm, categoryNameInput, categoryDescInput, modalEl, modalTitle;
 
-            <!-- Commercial Card -->
-            <div class="col-12">
-                <div class="card border-0 shadow-sm rounded-3" style="background: #f9f9f9; border: 1px solid #e8e8e8;">
-                    <div class="card-body p-4 d-flex justify-content-between align-items-start">
-                        <div class="flex-grow-1">
-                            <h5 class="fw-bold mb-2" style="color: #1a1a1a; font-size: 1.1rem;">Commercial</h5>
-                            <p class="text-muted mb-0" style="font-size: 0.9rem;">Accounting, Commerce, Economics</p>
-                        </div>
-                        <div class="d-flex gap-2 ms-3">
-                            <button class="btn btn-sm btn-light" style="border: 1px solid #ddd; color: #666;">
-                                <i class="fa-solid fa-pen"></i>
-                            </button>
-                            <button class="btn btn-sm btn-light" style="border: 1px solid #ddd; color: #666;">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                function initializeDOMRefs() {
+                    grid = document.getElementById('categoriesGrid');
+                    categoryForm = document.getElementById('categoryForm');
+                    categoryNameInput = document.getElementById('categoryName');
+                    categoryDescInput = document.getElementById('categoryDesc');
+                    modalEl = document.getElementById('addCategoryModal');
+                    modalTitle = document.getElementById('modalTitle');
+                }
 
-            <!-- General Card -->
-            <div class="col-12">
-                <div class="card border-0 shadow-sm rounded-3" style="background: #f9f9f9; border: 1px solid #e8e8e8;">
-                    <div class="card-body p-4 d-flex justify-content-between align-items-start">
-                        <div class="flex-grow-1">
-                            <h5 class="fw-bold mb-2" style="color: #1a1a1a; font-size: 1.1rem;">General</h5>
-                            <p class="text-muted mb-0" style="font-size: 0.9rem;">Civic Education, ICT, Physical and Health Education</p>
-                        </div>
-                        <div class="d-flex gap-2 ms-3">
-                            <button class="btn btn-sm btn-light" style="border: 1px solid #ddd; color: #666;">
-                                <i class="fa-solid fa-pen"></i>
-                            </button>
-                            <button class="btn btn-sm btn-light" style="border: 1px solid #ddd; color: #666;">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>
+                // Toast helper - now using centralized ToastNotification utility
+                function showToast(title = '', message = '', type = 'info', timeout = 3500) {
+                    const toastType = (type === 'danger') ? 'error' : type;
+                    ToastNotification.show(title, message, toastType, timeout);
+                }
+
+                // ---------- Skeleton UI ----------
+                function showSkeletons(count = 3) {
+                    grid.innerHTML = '';
+                    const wrap = document.createElement('div');
+                    wrap.className = 'skeleton-grid';
+                    for (let i = 0; i < count; i++) {
+                        const card = document.createElement('div');
+                        card.className = 'skeleton-card';
+                        card.innerHTML = `
+                    <div class="skeleton-line mid"></div>
+                    <div class="skeleton-line short"></div>
+                `;
+                        wrap.appendChild(card);
+                    }
+                    grid.appendChild(wrap);
+                }
+
+                // ---------- Render categories ----------
+                function rendercategories() {
+                    if (!Array.isArray(categories) || categories.length === 0) {
+                        grid.innerHTML = `
+                        <div class="p-3 text-muted">No categories found. Click "Add category" to create one.</div>
+                        `;
+                                        return;
+                                    }
+
+                                    grid.innerHTML = categories.map(category => `
+                         <div class="col-12">
+                                 <div class="card border-0 shadow-sm rounded-3" style="background:#f9f9f9;">
+                                     <div class="card-body p-4 d-flex justify-content-between align-items-start">
+                                         <div>
+                                             <h5 class="fw-bold mb-2">${escapeHtml(category.title)}</h5>
+                                             <p class="text-muted mb-0">${escapeHtml(category.description)}</p>
+                                         </div>
+                                         <div class="d-flex gap-2">
+                                             <button class="action-btn" onclick="editcategory(${category.id})">
+                                                 <i class="fa-solid fa-pen"></i>
+                                             </button>
+                                             <button class=" action-btn delete" onclick="openDeleteModal(${category.id})">
+                                                 <i class="fa-solid fa-trash"></i>
+                                             </button>
+                                         </div>
+                                     </div>
+                                 </div>
+                            </div>
+                    `).join('');
+                                }
+
+                // simple escaping to avoid XSS if API returns unexpected HTML
+                function escapeHtml(str = '') {
+                    return String(str)
+                        .replace(/&/g, "&amp;")
+                        .replace(/</g, "&lt;")
+                        .replace(/>/g, "&gt;")
+                        .replace(/"/g, "&quot;")
+                        .replace(/'/g, "&#039;");
+                }
+
+                // ---------- API helpers ----------
+                async function apiFetch(url, opts = {}) {
+                    const headers = Object.assign({
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                    }, opts.headers || {});
+
+                    if (token) headers["Authorization"] = `Bearer ${token}`;
+
+                    const options = Object.assign({}, opts, {
+                        headers
+                    });
+
+                    const res = await fetch(url, options);
+                    const contentType = res.headers.get('content-type') || '';
+
+                    let data = null;
+                    if (contentType.includes('application/json')) {
+                        data = await res.json();
+                    } else {
+                        data = await res.text();
+                    }
+
+                    if (!res.ok) {
+                        const message = (data && data.message) ? data.message : (typeof data === 'string' ? data :
+                            'Request failed');
+                        const err = new Error(message);
+                        err.status = res.status;
+                        err.payload = data;
+                        throw err;
+                    }
+
+                    return data;
+                }
+
+                // ---------- CRUD operations ----------
+                async function loadcategories() {
+                    showSkeletons(3); // chosen: 3 skeleton cards
+                    try {
+                        const result = await CourseApiClient.getCategories();
+                        if (result.success) {
+                            categories = Array.isArray(result.data) ? result.data : (result.data.data || []);
+                            rendercategories();
+                        } else {
+                            grid.innerHTML = `<div class="p-3 text-danger">Failed to load categories.</div>`;
+                            showToast('Error', result.message || 'Failed to load categories.', 'danger');
+                        }
+                    } catch (err) {
+                        grid.innerHTML = `<div class="p-3 text-danger">Failed to load categories.</div>`;
+                        console.error('Load categories error:', err);
+                        showToast('Error', 'Failed to load categories. ' + (err.message || ''), 'danger');
+                    }
+                }
+
+                async function createcategory(title, description) {
+                    try {
+                        const result = await CourseApiClient.createCategory({
+                            title,
+                            description
+                        });
+                        if (result.success) {
+                            const newcategory = result.data;
+                            categories.push(newcategory);
+                            rendercategories();
+                            showToast('Success', 'category created successfully.', 'success');
+                        } else {
+                            showToast('Error', result.message || 'Failed to create category.', 'danger');
+                            throw new Error(result.message);
+                        }
+                    } catch (err) {
+                        console.error('Create category error:', err);
+                        showToast('Error', 'Failed to create category. ' + (err.message || ''), 'danger');
+                        throw err;
+                    }
+                }
+
+                async function updatecategory(id, title, description) {
+                    try {
+                        const result = await CourseApiClient.updateCategory(id, {
+                            title,
+                            description
+                        });
+                        if (result.success) {
+                            const updated = result.data;
+                            const idx = categories.findIndex(t => t.id === id);
+                            if (idx > -1) categories[idx] = updated;
+                            rendercategories();
+                            showToast('Success', 'category updated.', 'success');
+                        } else {
+                            showToast('Error', result.message || 'Failed to update category.', 'danger');
+                            throw new Error(result.message);
+                        }
+                    } catch (err) {
+                        console.error('Update category error:', err);
+                        showToast('Error', 'Failed to update category. ' + (err.message || ''), 'danger');
+                        throw err;
+                    }
+                }
+
+                async function deletecategoryRequest(id) {
+                    try {
+                        const result = await CourseApiClient.deleteCategory(id);
+                        if (result.success) {
+                            categories = categories.filter(t => t.id !== id);
+                            rendercategories();
+                            showToast('Success', 'category deleted.', 'success');
+                        } else {
+                            showToast('Error', result.message || 'Failed to delete category.', 'danger');
+                            throw new Error(result.message);
+                        }
+                    } catch (err) {
+                        console.error('Delete category error:', err);
+                        showToast('Error', 'Failed to delete category. ' + (err.message || ''), 'danger');
+                        throw err;
+                    }
+                }
+
+
+
+                // ---------- Modal helpers (exposed to global for inline onclick use) ----------
+                window.editcategory = function(id) {
+                    const t = categories.find(x => x.id === id);
+                    if (!t) return showToast('Error', 'category not found locally.', 'danger');
+                    currentEditId = id;
+                    categoryNameInput.value = t.title || '';
+                    categoryDescInput.value = t.description || '';
+                    modalTitle.textContent = 'Edit category';
+                    new bootstrap.Modal(modalEl).show();
+                };
+
+                window.openDeleteModal = function(id) {
+                    currentDeleteId = id;
+                    new bootstrap.Modal(document.getElementById('deleteCategoryModal')).show();
+                };
+
+                function setupEventListeners() {
+                    // Form handling
+                    categoryForm.addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        if (isSaving) return;
+                        const name = categoryNameInput.value.trim();
+                        const description = categoryDescInput.value.trim();
+                        if (!name || !description) {
+                            showToast('Validation', 'Please enter a category name.', 'info');
+                            return;
+                        }
+
+                        try {
+                            isSaving = true;
+                            // disable submit button
+                            const submitBtn = categoryForm.querySelector('button[type="submit"]');
+                            if (submitBtn) submitBtn.setAttribute('disabled', 'disabled');
+
+                            if (currentEditId) {
+                                await updatecategory(currentEditId, name, description);
+                                currentEditId = null;
+                            } else {
+                                await createcategory(name, description);
+                            }
+
+                            categoryForm.reset();
+                            const bsModal = bootstrap.Modal.getInstance(modalEl);
+                            if (bsModal) bsModal.hide();
+                        } catch (err) {
+                            // errors surfaced in functions
+                        } finally {
+                            isSaving = false;
+                            const submitBtn = categoryForm.querySelector('button[type="submit"]');
+                            if (submitBtn) submitBtn.removeAttribute('disabled');
+                        }
+                    });
+
+                    // Confirm delete button handler
+                    document.getElementById('confirmDeleteCategoryBtn').addEventListener('click', async () => {
+                        if (!currentDeleteId) return;
+                        const bs = bootstrap.Modal.getInstance(document.getElementById('deleteCategoryModal'));
+                        try {
+                            await deletecategoryRequest(currentDeleteId);
+                        } catch (err) {
+                            // handled in deletecategoryRequest
+                        } finally {
+                            currentDeleteId = null;
+                            if (bs) bs.hide();
+                        }
+                    });
+
+                    // Reset add/edit modal on close
+                    modalEl.addEventListener('hidden.bs.modal', () => {
+                        currentEditId = null;
+                        modalTitle.textContent = 'Add category';
+                        categoryForm.reset();
+                    });
+                }
+
+                // Initialize DOM references when DOM is ready
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', () => {
+                        initializeDOMRefs();
+                        setupEventListeners();
+                        loadcategories();
+                    });
+                } else {
+                    initializeDOMRefs();
+                    setupEventListeners();
+                    loadcategories();
+                }
+
+            })();
+            // Sample data
+            // const categories = [{
+            //         id: 1,
+            //         name: "Sciences",
+            //         description: "Maths, Physics, Chemistry"
+            //     },
+            //     {
+            //         id: 2,
+            //         name: "Arts",
+            //         description: "English, Literature, Government"
+            //     },
+            //     {
+            //         id: 3,
+            //         name: "Commercial",
+            //         description: "Accounting, Commerce"
+            //     },
+            //     {
+            //         id: 4,
+            //         name: "General",
+            //         description: "Civic Education, ICT"
+            //     }
+            // ];
+
+            // let currentEditId = null;
+            // let currentDeleteId = null;
+
+            // // Render categories
+            // function renderCategories() {
+            //     const grid = document.getElementById("categoriesGrid");
+            //     grid.innerHTML = categories.map(cat => `
+            //                 <div class="col-12">
+            //                     <div class="card border-0 shadow-sm rounded-3" style="background:#f9f9f9;">
+            //                         <div class="card-body p-4 d-flex justify-content-between align-items-start">
+            //                             <div>
+            //                                 <h5 class="fw-bold mb-2">${cat.name}</h5>
+            //                                 <p class="text-muted mb-0">${cat.description}</p>
+            //                             </div>
+            //                             <div class="d-flex gap-2">
+            //                                 <button class="action-btn" onclick="editCategory(${cat.id})">
+            //                                     <i class="fa-solid fa-pen"></i>
+            //                                 </button>
+            //                                 <button class=" action-btn delete" onclick="deleteCategory(${cat.id})">
+            //                                     <i class="fa-solid fa-trash"></i>
+            //                                 </button>
+            //                             </div>
+            //                         </div>
+            //                     </div>
+            //                 </div>
+            //             `).join("");
+            // }
+
+            // // Handle form submission (Add / Edit)
+            // document.getElementById("categoryForm").addEventListener("submit", (e) => {
+            //     e.preventDefault();
+            //     const name = document.getElementById("catName").value;
+            //     const desc = document.getElementById("catDesc").value;
+
+            //     if (currentEditId) {
+            //         // Edit existing
+            //         const cat = categories.find(c => c.id === currentEditId);
+            //         if (cat) {
+            //             cat.name = name;
+            //             cat.description = desc;
+            //         }
+            //     } else {
+            //         // Add new
+            //         categories.push({
+            //             id: Math.max(...categories.map(c => c.id), 0) + 1,
+            //             name,
+            //             description: desc
+            //         });
+            //     }
+
+            //     renderCategories();
+            //     document.getElementById("categoryForm").reset();
+            //     currentEditId = null;
+            //     bootstrap.Modal.getInstance(document.getElementById("staticBackdrop")).hide();
+            // });
+
+            // // Edit category
+            // function editCategory(id) {
+            //     const cat = categories.find(c => c.id === id);
+            //     if (cat) {
+            //         currentEditId = id;
+            //         document.getElementById("catName").value = cat.name;
+            //         document.getElementById("catDesc").value = cat.description;
+
+            //         document.getElementById("saveBtn").textContent = "Update Category";
+
+            //         new bootstrap.Modal(document.getElementById("staticBackdrop")).show();
+            //     }
+            // }
+
+            // // Delete category
+            // function deleteCategory(id) {
+            //     currentDeleteId = id;
+            //     new bootstrap.Modal(document.getElementById("deleteCategoryModal")).show();
+            // }
+
+            // document.getElementById("confirmDeleteCategoryBtn").addEventListener("click", () => {
+            //     const index = categories.findIndex(c => c.id === currentDeleteId);
+            //     if (index > -1) {
+            //         categories.splice(index, 1);
+            //         renderCategories();
+            //     }
+            //     bootstrap.Modal.getInstance(document.getElementById("deleteCategoryModal")).hide();
+            // });
+
+            // // Reset modal on close
+            // document.getElementById("staticBackdrop").addEventListener("hidden.bs.modal", () => {
+            //     currentEditId = null;
+            //     document.getElementById("saveBtn").textContent = "Add Category";
+            //     document.getElementById("categoryForm").reset();
+            // });
+
+            // // Initial load
+            // renderCategories();    </script>
+
+    </main>
 @endsection

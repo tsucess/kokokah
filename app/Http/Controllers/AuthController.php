@@ -35,7 +35,6 @@ class AuthController extends Controller
         $user->sendEmailVerificationNotification();
 
         $token = $user->createToken('api_token')->plainTextToken;
-        
 
         return response()->json([
             'status' => 'success',
@@ -48,19 +47,49 @@ class AuthController extends Controller
     // Login
     public function login(Request $request)
     {
-        $request->validate(['email' => 'required|email|exists:users', 'password' => 'required']);
+        // Validate required fields only (not existence)
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
 
-        if (!Auth::attempt($request->only('email', 'password'))) {
+        // Find user by email
+        $user = User::where('email', $request->email)->first();
+
+        // Debug logging
+        \Log::info('Login attempt', [
+            'email' => $request->email,
+            'user_found' => $user ? true : false,
+            'user_id' => $user?->id,
+            'password_provided' => !empty($request->password),
+            'password_length' => strlen($request->password)
+        ]);
+
+        // Check if user exists and password is correct
+        if (!$user) {
+            \Log::warning('Login failed: User not found', ['email' => $request->email]);
             return response()->json([
-                'message' => 'Invalid credentials'
+                'success' => false,
+                'message' => 'Invalid email or password'
             ], 401);
         }
 
-        $user = Auth::user();
+        if (!Hash::check($request->password, $user->password)) {
+            \Log::warning('Login failed: Password mismatch', ['email' => $request->email, 'user_id' => $user->id]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid email or password'
+            ], 401);
+        }
+
+        // Create API token for the user
         $token = $user->createToken('api_token')->plainTextToken;
+
+        \Log::info('Login successful', ['email' => $request->email, 'user_id' => $user->id]);
 
         return response()->json([
             'status' => 'success',
+            'success' => true,
             'message' => 'Login successful',
             'user' => $user,
             'token' => $token

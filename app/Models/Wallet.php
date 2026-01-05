@@ -43,7 +43,7 @@ class Wallet extends Model
 
     // Methods
     // Deposit money into wallet
-    public function deposit($amount, $reference = null, $description = null, $metadata = null)
+    public function deposit($amount, $reference = null, $description = null, $metadata = null, $paymentMethod = null)
     {
         $transaction = $this->transactions()->create([
             'amount' => $amount,
@@ -51,7 +51,8 @@ class Wallet extends Model
             'reference' => $reference ?: 'DEP-' . uniqid(),
             'status' => 'success',
             'description' => $description ?: 'Wallet deposit',
-            'metadata' => $metadata
+            'metadata' => $metadata,
+            'payment_method' => $paymentMethod
         ]);
 
         $this->increment('balance', $amount);
@@ -133,7 +134,8 @@ class Wallet extends Model
         $this->user->enrollments()->create([
             'course_id' => $course->id,
             'status' => 'active',
-            'enrolled_at' => now()
+            'enrolled_at' => now(),
+            'amount_paid' => $amount
         ]);
 
         return $transaction;
@@ -149,7 +151,8 @@ class Wallet extends Model
             'status' => 'success',
             'description' => $description,
             'reward_type' => $rewardType,
-            'metadata' => $metadata
+            'metadata' => $metadata,
+            'payment_method' => 'Reward'
         ]);
 
         $this->increment('balance', $amount);
@@ -169,7 +172,8 @@ class Wallet extends Model
             'type' => 'debit',
             'reference' => $reference ?: 'WTH-' . uniqid(),
             'status' => 'success',
-            'description' => $description ?: 'Wallet withdrawal'
+            'description' => $description ?: 'Wallet withdrawal',
+            'payment_method' => 'Wallet'
         ]);
 
         $this->decrement('balance', $amount);

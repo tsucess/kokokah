@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\LessonCompletion;
+use App\Models\Answer;
+use App\Models\Enrollment;
+use App\Services\PointsAndBadgesService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -20,9 +23,14 @@ class UserController extends Controller
     public function profile()
     {
         $user = Auth::user();
-        
+
         $profileData = $user->toArray();
-        
+
+        // Convert profile_photo to full URL
+        if ($profileData['profile_photo']) {
+            $profileData['profile_photo'] = '/storage/' . $profileData['profile_photo'];
+        }
+
         // Add additional profile information
         $profileData['stats'] = [
             'total_enrollments' => $user->enrollments()->count(),
@@ -30,7 +38,9 @@ class UserController extends Controller
             'certificates_earned' => $user->certificates()->count(),
             'total_rewards' => $user->rewards()->sum('amount'),
             'current_streak' => $this->calculateLoginStreak($user),
-            'total_study_time' => LessonCompletion::where('user_id', $user->id)->sum('time_spent')
+            'total_study_time' => LessonCompletion::where('user_id', $user->id)->sum('time_spent'),
+            'points' => $user->getPoints(),
+            'level' => $this->calculateUserLevel($user->getPoints())
         ];
 
         // Add wallet information
@@ -69,10 +79,18 @@ class UserController extends Controller
             'city' => 'nullable|string|max:100',
             'timezone' => 'nullable|string|max:50',
             'language' => 'nullable|string|max:10',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:5048'
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'parent_first_name' => 'nullable|string|max:255',
+            'parent_last_name' => 'nullable|string|max:255',
+            'parent_email' => 'nullable|email',
+            'parent_phone' => 'nullable|string|max:20'
         ]);
 
         if ($validator->fails()) {
+            \Log::error('Profile update validation failed', [
+                'errors' => $validator->errors()->toArray(),
+                'request_data' => $request->except(['avatar', 'password'])
+            ]);
             return response()->json([
                 'success' => false,
                 'message' => 'Validation failed',
@@ -83,22 +101,28 @@ class UserController extends Controller
         try {
             $updateData = $request->except(['avatar']);
 
-            // Handle avatar upload
+            // Handle avatar upload - save to profile_photo column
             if ($request->hasFile('avatar')) {
-                // Delete old avatar
-                if ($user->avatar) {
-                    Storage::disk('public')->delete($user->avatar);
+                // Delete old profile photo
+                if ($user->profile_photo) {
+                    Storage::disk('public')->delete($user->profile_photo);
                 }
-                $avatarPath = $request->file('avatar')->store('avatars', 'public');
-                $updateData['avatar'] = $avatarPath;
+                $profilePhotoPath = $request->file('avatar')->store('profile_photos', 'public');
+                $updateData['profile_photo'] = $profilePhotoPath;
             }
 
             $user->update($updateData);
 
+            // Return user with full profile photo URL
+            $userData = $user->fresh()->toArray();
+            if ($userData['profile_photo']) {
+                $userData['profile_photo'] = '/storage/' . $userData['profile_photo'];
+            }
+
             return response()->json([
                 'success' => true,
                 'message' => 'Profile updated successfully',
-                'data' => $user->fresh()
+                'data' => $userData
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -124,7 +148,9 @@ class UserController extends Controller
                 'certificates_earned' => $user->certificates()->count(),
                 'total_study_time' => LessonCompletion::where('user_id', $user->id)->sum('time_spent'),
                 'current_streak' => $this->calculateLoginStreak($user),
-                'wallet_balance' => $user->getOrCreateWallet()->balance
+                'wallet_balance' => $user->getOrCreateWallet()->balance,
+                'points' => $user->getPoints(),
+                'level' => $this->calculateUserLevel($user->getPoints())
             ],
             'recent_enrollments' => $user->enrollments()
                                        ->with(['course.category', 'course.instructor'])
@@ -272,6 +298,331 @@ class UserController extends Controller
     }
 
     /**
+     * Get user's current points
+     */
+    public function getPoints()
+    {
+        try {
+            $user = Auth::user();
+
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'user_id' => $user->id,
+                    'points' => $user->getPoints(),
+                    'level' => $this->calculateUserLevel($user->getPoints())
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch points: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Enroll in a course using points
+     */
+    public function enrollWithPoints(Request $request)
+    {
+        try {
+            $user = Auth::user();
+
+            $validator = Validator::make($request->all(), [
+                'course_id' => 'required|exists:courses,id'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validation failed',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            // Check if already enrolled
+            $existingEnrollment = Enrollment::where('user_id', $user->id)
+                                           ->where('course_id', $request->course_id)
+                                           ->first();
+
+            if ($existingEnrollment) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'You are already enrolled in this course'
+                ], 400);
+            }
+
+            // Get course price
+            $course = \App\Models\Course::findOrFail($request->course_id);
+            $coursePrice = $course->price ?? 0;
+
+            // Use points service to enroll
+            $pointsService = new PointsAndBadgesService();
+            $result = $pointsService->enrollWithPoints($user, $request->course_id, $coursePrice);
+
+            if (!$result['success']) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $result['message']
+                ], 400);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => $result['message'],
+                'data' => [
+                    'enrollment' => $result['enrollment'],
+                    'remaining_points' => $result['remaining_points']
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to enroll with points: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Calculate user level based on points
+     */
+    private function calculateUserLevel($points)
+    {
+        if ($points >= 1000) return 'Expert';
+        if ($points >= 500) return 'Advanced';
+        if ($points >= 100) return 'Intermediate';
+        return 'Amateur';
+    }
+
+    /**
+     * Get all quiz answers for the current user
+     */
+    public function quizAnswers()
+    {
+        try {
+            $user = Auth::user();
+
+            // Get all answers for the current user with question and quiz information
+            $answers = Answer::with(['question.quiz'])
+                            ->where('student_id', $user->id)
+                            ->get()
+                            ->map(function ($answer) {
+                                return [
+                                    'id' => $answer->id,
+                                    'question_id' => $answer->question_id,
+                                    'quiz_id' => $answer->question->quiz_id,
+                                    'answer_text' => $answer->answer_text,
+                                    'attempt_number' => $answer->attempt_number,
+                                    'points_earned' => $answer->points_earned,
+                                    'points_possible' => $answer->points_possible,
+                                    'is_correct' => $answer->is_correct,
+                                    'created_at' => $answer->created_at
+                                ];
+                            });
+
+            return response()->json([
+                'success' => true,
+                'data' => $answers
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch quiz answers: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Get all quiz results for the current user grouped by course
+     */
+    public function allQuizResults()
+    {
+        try {
+            $user = Auth::user();
+
+            // Get all answers grouped by quiz
+            $answers = Answer::with(['question.quiz'])
+                            ->where('student_id', $user->id)
+                            ->get()
+                            ->groupBy(function($answer) {
+                                return $answer->question->quiz_id;
+                            });
+
+            // Build results for each quiz
+            $quizzesByQuiz = [];
+            foreach ($answers as $quizId => $quizAnswers) {
+                $quiz = \App\Models\Quiz::with(['lesson.course', 'topic.course', 'questions'])->find($quizId);
+
+                if (!$quiz) continue;
+
+                // Get the course
+                $course = null;
+                if ($quiz->lesson && $quiz->lesson->course) {
+                    $course = $quiz->lesson->course;
+                } elseif ($quiz->topic && $quiz->topic->course) {
+                    $course = $quiz->topic->course;
+                }
+
+                if (!$course) continue;
+
+                // Group answers by attempt
+                $attemptGroups = $quizAnswers->groupBy('attempt_number');
+
+                $attempts = $attemptGroups->map(function($attemptAnswers) use ($quiz) {
+                    $totalScore = $attemptAnswers->sum('points_earned');
+                    $maxScore = $attemptAnswers->sum('points_possible');
+                    $percentage = $maxScore > 0 ? round(($totalScore / $maxScore) * 100, 2) : 0;
+
+                    return [
+                        'attempt_number' => $attemptAnswers->first()->attempt_number,
+                        'score' => $totalScore,
+                        'max_score' => $maxScore,
+                        'percentage' => $percentage,
+                        'passed' => $quiz->passing_score ? $percentage >= $quiz->passing_score : true,
+                        'submitted_at' => $attemptAnswers->first()->created_at,
+                        'answers' => $attemptAnswers->map(function($answer) {
+                            return [
+                                'question_id' => $answer->question_id,
+                                'question_text' => $answer->question->question_text,
+                                'user_answer' => $answer->answer_text,
+                                'correct_answer' => $answer->question->correct_answer,
+                                'points_earned' => $answer->points_earned,
+                                'points_possible' => $answer->points_possible,
+                                'is_correct' => $answer->is_correct,
+                                'explanation' => $answer->question->explanation
+                            ];
+                        })->toArray()
+                    ];
+                })->values();
+
+                $quizzesByQuiz[$quizId] = [
+                    'quiz' => [
+                        'id' => $quiz->id,
+                        'title' => $quiz->title,
+                        'type' => $quiz->type,
+                        'passing_score' => $quiz->passing_score
+                    ],
+                    'course_id' => $course->id,
+                    'course_title' => $course->title,
+                    'topic' => $quiz->topic ? [
+                        'id' => $quiz->topic->id,
+                        'title' => $quiz->topic->title
+                    ] : null,
+                    'lesson' => $quiz->lesson ? [
+                        'id' => $quiz->lesson->id,
+                        'title' => $quiz->lesson->title
+                    ] : null,
+                    'results' => $attempts
+                ];
+            }
+
+            // Group by course and aggregate results
+            $courseResults = [];
+            foreach ($quizzesByQuiz as $quizData) {
+                $courseId = $quizData['course_id'];
+                $courseTitle = $quizData['course_title'];
+
+                if (!isset($courseResults[$courseId])) {
+                    $courseResults[$courseId] = [
+                        'course' => [
+                            'id' => $courseId,
+                            'title' => $courseTitle
+                        ],
+                        'total_points_earned' => 0,
+                        'total_points_possible' => 0,
+                        'quizzes' => []
+                    ];
+                }
+
+                // Get the latest attempt for this quiz
+                if (!empty($quizData['results'])) {
+                    $latestAttempt = $quizData['results'][count($quizData['results']) - 1];
+                    $courseResults[$courseId]['total_points_earned'] += $latestAttempt['score'];
+                    $courseResults[$courseId]['total_points_possible'] += $latestAttempt['max_score'];
+                }
+
+                $courseResults[$courseId]['quizzes'][] = $quizData;
+            }
+
+            // Calculate percentage for each course
+            $finalResults = [];
+            foreach ($courseResults as $courseData) {
+                $totalEarned = $courseData['total_points_earned'];
+                $totalPossible = $courseData['total_points_possible'];
+                $percentage = $totalPossible > 0 ? round(($totalEarned / $totalPossible) * 100, 2) : 0;
+
+                $finalResults[] = [
+                    'course' => $courseData['course'],
+                    'total_points_earned' => $totalEarned,
+                    'total_points_possible' => $totalPossible,
+                    'percentage' => $percentage,
+                    'passed' => $percentage >= 70,
+                    'quizzes' => $courseData['quizzes']
+                ];
+            }
+
+            return response()->json([
+                'success' => true,
+                'data' => $finalResults
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch quiz results: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Debug endpoint to check quiz data
+     */
+    public function debugQuizData()
+    {
+        try {
+            $user = Auth::user();
+
+            // Get all enrollments
+            $enrollments = \App\Models\Enrollment::where('user_id', $user->id)->get();
+
+            // Get all answers for this user
+            $answers = Answer::where('student_id', $user->id)->count();
+
+            // Get all courses with topics and quizzes
+            $courses = \App\Models\Course::with(['topics.quizzes', 'lessons.quizzes'])
+                            ->whereHas('enrollments', function($q) use ($user) {
+                                $q->where('user_id', $user->id);
+                            })
+                            ->get();
+
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'user_id' => $user->id,
+                    'enrollments_count' => $enrollments->count(),
+                    'answers_count' => $answers,
+                    'courses' => $courses->map(function($course) {
+                        return [
+                            'id' => $course->id,
+                            'title' => $course->title,
+                            'topics_count' => $course->topics->count(),
+                            'lessons_count' => $course->lessons->count(),
+                            'topic_quizzes_count' => $course->topics->sum(fn($t) => $t->quizzes->count()),
+                            'lesson_quizzes_count' => $course->lessons->sum(fn($l) => $l->quizzes->count()),
+                        ];
+                    })
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Debug error: ' . $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ], 500);
+        }
+    }
+
+    /**
      * Mark notifications as read
      */
     public function markNotificationsRead(Request $request)
@@ -342,6 +693,37 @@ class UserController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to change password: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Delete user account
+     */
+    public function deleteAccount(Request $request)
+    {
+        $user = Auth::user();
+
+        try {
+            // Delete profile photo if exists
+            if ($user->profile_photo) {
+                Storage::disk('public')->delete($user->profile_photo);
+            }
+
+            // Delete all user tokens (logout from all devices)
+            $user->tokens()->delete();
+
+            // Delete the user
+            $user->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Account deleted successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete account: ' . $e->getMessage()
             ], 500);
         }
     }
@@ -613,9 +995,9 @@ class UserController extends Controller
     private function getCategoryBreakdown($user)
     {
         return $user->enrollments()
-                   ->with('course.category')
+                   ->with('course.courseCategory')
                    ->get()
-                   ->groupBy('course.category.title')
+                   ->groupBy('course.courseCategory.title')
                    ->map(function ($enrollments, $category) {
                        return [
                            'category' => $category,
@@ -661,5 +1043,59 @@ class UserController extends Controller
         $completedEnrollments = $user->enrollments()->where('status', 'completed')->count();
 
         return $totalEnrollments > 0 ? round(($completedEnrollments / $totalEnrollments) * 100, 1) : 0;
+    }
+
+    /**
+     * Get subscription history from enrollments only
+     */
+    public function subscriptionHistory(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $page = $request->get('page', 1);
+            $perPage = $request->get('per_page', 10);
+
+            // Get user's enrollments with course details
+            $enrollments = $user->enrollments()
+                ->with('course')
+                ->orderBy('enrolled_at', 'desc')
+                ->paginate($perPage, ['*'], 'page', $page);
+
+            // Format subscription history from enrollments only
+            $subscriptionHistory = [];
+
+            foreach ($enrollments->items() as $enrollment) {
+                $subscriptionHistory[] = [
+                    'id' => 'enrollment_' . $enrollment->id,
+                    'type' => 'enrollment',
+                    'course' => [
+                        'id' => $enrollment->course->id,
+                        'title' => $enrollment->course->title,
+                        'price' => $enrollment->course->price
+                    ],
+                    'amount' => $enrollment->amount_paid ?? $enrollment->course->price,
+                    'status' => $enrollment->status,
+                    'date' => $enrollment->enrolled_at,
+                    'completed_at' => $enrollment->completed_at,
+                    'progress' => $enrollment->progress
+                ];
+            }
+
+            return response()->json([
+                'success' => true,
+                'data' => $subscriptionHistory,
+                'pagination' => [
+                    'current_page' => $enrollments->currentPage(),
+                    'per_page' => $enrollments->perPage(),
+                    'total' => $enrollments->total(),
+                    'last_page' => $enrollments->lastPage()
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch subscription history: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }

@@ -17,8 +17,8 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 
   <!-- Custom CSS -->
-  <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-  <link href="{{ asset('css/access.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/style.css') }}?v={{ time() }}" rel="stylesheet">
+  <link href="{{ asset('css/access.css') }}?v={{ time() }}" rel="stylesheet">
 
 </head>
 <body>
@@ -41,14 +41,14 @@
           <h4 class="auth-heading">Sign in</h4>
           <p class="auth-subheading">Please login to continue to your account.</p>
 
-          <form id="loginForm" method="POST">
+          <form id="loginForm" method="POST" action="javascript:void(0);" data-ajax>
                 @csrf
                 <div class = "pt-3">
                 <div class="custom-form-group">
 
                     <label for="email" class="custom-label">Email</label>
 
-                    <input type="email" class="form-control-custom" id="email" name="email" placeholder="majorsignature@gmail.com" aria-label="Email Address" autocomplete="email" required>
+                    <input type="email" class="form-control-custom" id="email" name="email" placeholder="user@example.com" aria-label="Email Address" autocomplete="email" required>
                 </div>
 
 
@@ -98,12 +98,14 @@
   <!-- Axios -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-  <script type="module">
-    import AuthApiClient from '{{ asset('js/api/authClient.js') }}';
-    import UIHelpers from '{{ asset('js/utils/uiHelpers.js') }}';
+  <!-- API Clients -->
+  <script src="{{ asset('js/api/baseApiClient.js') }}"></script>
+  <script src="{{ asset('js/api/authClient.js') }}"></script>
+  <script src="{{ asset('js/utils/uiHelpers.js') }}"></script>
 
+  <script>
     // Store original button text
-    UIHelpers.storeButtonText('loginBtn');
+    window.UIHelpers.storeButtonText('loginBtn');
 
     // Password visibility toggle
     document.getElementById('togglePassword').addEventListener('click', () => {
@@ -131,31 +133,42 @@
 
       // Validate inputs
       if (!email || !password) {
-        UIHelpers.showError('Please fill in all fields');
+        window.UIHelpers.showError('Please fill in all fields');
         return;
       }
 
-      if (!UIHelpers.isValidEmail(email)) {
-        UIHelpers.showError('Please enter a valid email address');
+      if (!window.UIHelpers.isValidEmail(email)) {
+        window.UIHelpers.showError('Please enter a valid email address');
         return;
       }
 
       // Show loading state
-      UIHelpers.setButtonLoading('loginBtn', true);
-      UIHelpers.showLoadingOverlay(true);
+      window.UIHelpers.setButtonLoading('loginBtn', true);
+      window.UIHelpers.showLoadingOverlay(true);
 
       // Call login API
-      const result = await AuthApiClient.login(email, password);
+      const result = await window.AuthApiClient.login(email, password);
 
-      UIHelpers.showLoadingOverlay(false);
+      window.UIHelpers.showLoadingOverlay(false);
 
       if (result.success) {
-        UIHelpers.showSuccess('Login successful! Redirecting...');
-        // Redirect to dashboard after 1.5 seconds
-        UIHelpers.redirect('/dashboard', 1500);
+        window.UIHelpers.showSuccess('Login successful! Redirecting...');
+
+        // Determine redirect URL based on user role
+        let redirectUrl = '/dashboard'; // Default for admin/instructor
+
+        // Get user from result.data.user or result.user
+        const user = result.data?.user || result.user;
+
+        if (user && user.role === 'student') {
+          redirectUrl = '/usersdashboard';
+        }
+
+        // Redirect after 1.5 seconds
+        window.UIHelpers.redirect(redirectUrl, 1500);
       } else {
-        UIHelpers.showError(result.message || 'Login failed');
-        UIHelpers.setButtonLoading('loginBtn', false);
+        window.UIHelpers.showError(result.message || 'Login failed');
+        window.UIHelpers.setButtonLoading('loginBtn', false);
       }
     });
   </script>

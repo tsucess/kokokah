@@ -20,8 +20,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/access.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}?v={{ time() }}" rel="stylesheet">
+    <link href="{{ asset('css/access.css') }}?v={{ time() }}" rel="stylesheet">
 
 </head>
 
@@ -41,24 +41,31 @@
                     <a href = "/login" class="btn btn-link mb-4 p-0"
                         style="color: #313131; font-weight: 500; text-decoration: none;"> <i
                             class="fa fa-arrow-left"></i> Back to login</a>
+
+                    <!-- Alert Container -->
+                    <div id="alertContainer"></div>
+
                     <!-- Heading -->
                     <h4 class = "text-dark mb-2">Verify code</h4>
                     <p class="mb-4" style = "color:#969696;font:inter;">An authentication code has been sent to your
                         email</p>
 
-                    <div class="custom-form-group">
+                    <form id="verifyForm" method="POST" action="javascript:void(0);">
+                        @csrf
+                        <div class="custom-form-group">
 
                         <label for="verifycode" class="custom-label">Enter code</label>
 
                         <input type="text" class="form-control-custom" id="verifycode" placeholder="80EAS33">
-                    </div>
-                    <p>
-                        Didn’t receive a code?
-                        <a href = "#" style = "color:red; text-decoration:none;">Resend</a>
-                    </p>
+                        </div>
+                        <p>
+                            Didn’t receive a code?
+                            <a href = "#" id="resendLink" style="color: #FDAF22; text-decoration: none; cursor: pointer;">Resend</a>
+                        </p>
 
 
-                    <button type="submit" class="btn primaryButton w-100">Verify</button>
+                        <button type="submit" class="btn primaryButton w-100" id="verifyBtn">Verify</button>
+                    </form>
 
                 </div>
             </div>
@@ -74,21 +81,43 @@
     <!-- Axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-    <script type="module">
-        import AuthApiClient from '{{ asset('js/api/authClient.js') }}';
-        import UIHelpers from '{{ asset('js/utils/uiHelpers.js') }}';
+        <!-- API Clients -->
+    <script src="/js/api/baseApiClient.js"></script>
+    <script src="/js/api/authClient.js"></script>
+    <script src="/js/utils/uiHelpers.js"></script>
 
+    <script>
         // Store original button text
         UIHelpers.storeButtonText('verifyBtn');
 
-        // Get email from URL or session
-        const email = UIHelpers.getUrlParameter('email') || sessionStorage.getItem('registerEmail');
+        // Get email from URL or session (check both registerEmail and resetEmail)
+        let email = UIHelpers.getUrlParameter('email') ||
+                    sessionStorage.getItem('registerEmail') ||
+                    sessionStorage.getItem('resetEmail');
+
+        console.log('Page loaded - Email from URL:', UIHelpers.getUrlParameter('email'));
+        console.log('Page loaded - Email from registerEmail:', sessionStorage.getItem('registerEmail'));
+        console.log('Page loaded - Email from resetEmail:', sessionStorage.getItem('resetEmail'));
+        console.log('Final email value:', email);
+
+        // Validate email on page load
+        if (!email) {
+            UIHelpers.showError('Email not found. Please register again.');
+            console.error('Email not found on page load');
+        }
 
         // Handle verify form submission
         document.getElementById('verifyForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
             const code = document.getElementById('verifycode').value.trim();
+
+            console.log('Verify form submitted - Email:', email, 'Code:', code);
+
+            if (!email) {
+                UIHelpers.showError('Email not found. Please try again.');
+                return;
+            }
 
             if (!code) {
                 UIHelpers.showError('Please enter the verification code');
@@ -101,8 +130,11 @@
             }
 
             UIHelpers.setButtonLoading('verifyBtn', true);
+            UIHelpers.showLoadingOverlay(true);
 
             const result = await AuthApiClient.verifyEmailWithCode(email, code);
+
+            UIHelpers.showLoadingOverlay(false);
 
             if (result.success) {
                 UIHelpers.showSuccess('Email verified successfully! Redirecting to dashboard...');
@@ -117,15 +149,36 @@
         document.getElementById('resendLink').addEventListener('click', async (e) => {
             e.preventDefault();
 
+            console.log('Resend button clicked - Email:', email);
+
             if (!email) {
-                UIHelpers.showError('Email not found. Please register again.');
+                UIHelpers.showError('Email not found. Please try again.');
+                console.error('Email not found when resending');
                 return;
             }
 
+            // Disable resend link during request
+            const resendLink = document.getElementById('resendLink');
+            const originalText = resendLink.textContent;
+            resendLink.style.pointerEvents = 'none';
+            resendLink.style.opacity = '0.5';
+            resendLink.textContent = 'Sending...';
+
+            console.log('Calling resendVerificationCode API with email:', email);
+
             const result = await AuthApiClient.resendVerificationCode(email);
+
+            console.log('Resend API Response:', result);
+
+            // Re-enable resend link
+            resendLink.style.pointerEvents = 'auto';
+            resendLink.style.opacity = '1';
+            resendLink.textContent = originalText;
 
             if (result.success) {
                 UIHelpers.showSuccess('Verification code resent to your email');
+                // Clear the code input field
+                document.getElementById('verifycode').value = '';
             } else {
                 UIHelpers.showError(result.message || 'Failed to resend code');
             }

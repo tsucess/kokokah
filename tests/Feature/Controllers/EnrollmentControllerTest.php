@@ -5,7 +5,8 @@ namespace Tests\Feature\Controllers;
 use App\Models\User;
 use App\Models\Course;
 use App\Models\Enrollment;
-use App\Models\Category;
+use App\Models\CurriculumCategory;
+use App\Models\CourseCategory;
 use App\Models\Term;
 use App\Models\Level;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -31,7 +32,7 @@ class EnrollmentControllerTest extends TestCase
         // Give student wallet balance for enrollment
         $this->student->wallet->update(['balance' => 10000.00]);
 
-        $category = Category::factory()->create();
+        $category = CurriculumCategory::factory()->create();
         $term = Term::factory()->create();
         $level = Level::factory()->create();
 

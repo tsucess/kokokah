@@ -1,188 +1,110 @@
 /**
  * Authentication API Client
  * Handles all authentication-related API calls
+ * Extends BaseApiClient for common functionality
  */
 
-const API_BASE_URL = '/api';
-const TOKEN_KEY = 'auth_token';
-const USER_KEY = 'auth_user';
-const REQUEST_TIMEOUT = 30000; // 30 seconds
-
-// Configure axios with timeout
-axios.defaults.timeout = REQUEST_TIMEOUT;
-
-class AuthApiClient {
+class AuthApiClient extends BaseApiClient {
   /**
    * Register a new user
    */
   static async register(firstName, lastName, email, password, role = 'student') {
-    try {
-      const response = await axios.post(`${API_BASE_URL}/register`, {
-        first_name: firstName,
-        last_name: lastName,
-        email: email,
-        password: password,
-        password_confirmation: password,
-        role: role
-      });
+    const response = await this.post('/register', {
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      password: password,
+      password_confirmation: password,
+      role: role
+    });
 
-      if (response.data.status === 'success' || response.data.success) {
-        // Store token and user data
-        const token = response.data.token || (response.data.data && response.data.data.token);
-        const user = response.data.user || (response.data.data && response.data.data.user);
-        this.setToken(token);
-        this.setUser(user);
-        return { success: true, data: { token, user } };
-      }
-      return { success: false, message: response.data.message };
-    } catch (error) {
-      return this.handleError(error);
+    if (response.success) {
+      const token = response.data.token || response.data.data?.token;
+      const user = response.data.user || response.data.data?.user;
+      this.setToken(token);
+      this.setUser(user);
+      return { success: true, data: { token, user } };
     }
+    return response;
   }
 
   /**
    * Login user
    */
   static async login(email, password) {
-    try {
-      const response = await axios.post(`${API_BASE_URL}/login`, {
-        email: email,
-        password: password
-      });
+    const response = await this.post('/login', {
+      email: email,
+      password: password
+    });
 
-      // Check for both 'status' and 'success' fields
-      if (response.data.status === 'success' || response.data.success) {
-        // Extract token and user from correct location
-        const token = response.data.token || (response.data.data && response.data.data.token);
-        const user = response.data.user || (response.data.data && response.data.data.user);
-        this.setToken(token);
-        this.setUser(user);
-        return { success: true, data: { token, user } };
-      }
-      return { success: false, message: response.data.message };
-    } catch (error) {
-      return this.handleError(error);
+    if (response.success) {
+      const token = response.data.token || response.data.data?.token;
+      const user = response.data.user || response.data.data?.user;
+      this.setToken(token);
+      this.setUser(user);
+      return { success: true, data: { token, user } };
     }
+    return response;
   }
 
   /**
    * Send verification code to email
    */
   static async sendVerificationCode(email) {
-    try {
-      const response = await axios.post(`${API_BASE_URL}/email/send-verification-code`, {
-        email: email
-      });
-
-      if (response.data.success) {
-        return { success: true, message: response.data.message };
-      }
-      return { success: false, message: response.data.message };
-    } catch (error) {
-      return this.handleError(error);
-    }
+    return this.post('/email/send-verification-code', {
+      email: email
+    });
   }
 
   /**
    * Verify email with code
    */
   static async verifyEmailWithCode(email, code) {
-    try {
-      const response = await axios.post(`${API_BASE_URL}/email/verify-with-code`, {
-        email: email,
-        code: code
-      });
-
-      if (response.data.success) {
-        return { success: true, message: response.data.message };
-      }
-      return { success: false, message: response.data.message };
-    } catch (error) {
-      return this.handleError(error);
-    }
+    return this.post('/email/verify-with-code', {
+      email: email,
+      code: code
+    });
   }
 
   /**
    * Resend verification code
    */
   static async resendVerificationCode(email) {
-    try {
-      const response = await axios.post(`${API_BASE_URL}/email/resend-verification-code`, {
-        email: email
-      });
-
-      if (response.data.success) {
-        return { success: true, message: response.data.message };
-      }
-      return { success: false, message: response.data.message };
-    } catch (error) {
-      return this.handleError(error);
-    }
+    return this.post('/email/resend-verification-code', {
+      email: email
+    });
   }
 
   /**
    * Send password reset link
    */
   static async sendPasswordResetLink(email) {
-    try {
-      const response = await axios.post(`${API_BASE_URL}/forgot-password`, {
-        email: email
-      });
-
-      if (response.data.success) {
-        return { success: true, message: response.data.message };
-      }
-      return { success: false, message: response.data.message };
-    } catch (error) {
-      return this.handleError(error);
-    }
+    return this.post('/forgot-password', {
+      email: email
+    });
   }
 
   /**
    * Reset password with token
    */
   static async resetPassword(email, token, password, passwordConfirmation) {
-    try {
-      const response = await axios.post(`${API_BASE_URL}/reset-password`, {
-        email: email,
-        token: token,
-        password: password,
-        password_confirmation: passwordConfirmation
-      });
-
-      if (response.data.success) {
-        return { success: true, message: response.data.message };
-      }
-      return { success: false, message: response.data.message };
-    } catch (error) {
-      return this.handleError(error);
-    }
+    return this.post('/reset-password', {
+      email: email,
+      token: token,
+      password: password,
+      password_confirmation: passwordConfirmation
+    });
   }
 
   /**
    * Get current user
    */
   static async getCurrentUser() {
-    try {
-      const token = this.getToken();
-      if (!token) {
-        return { success: false, message: 'No token found' };
-      }
-
-      const response = await axios.get(`${API_BASE_URL}/user`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-
-      if (response.data.success) {
-        this.setUser(response.data.data);
-        return { success: true, data: response.data.data };
-      }
-      return { success: false, message: response.data.message };
-    } catch (error) {
-      return this.handleError(error);
+    const response = await this.get('/user');
+    if (response.success) {
+      this.setUser(response.data);
     }
+    return response;
   }
 
   /**
@@ -190,65 +112,46 @@ class AuthApiClient {
    */
   static async logout() {
     try {
-      const token = this.getToken();
-      if (token) {
-        await axios.post(`${API_BASE_URL}/logout`, {}, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-      }
-
-      // Clear stored data
-      this.clearToken();
-      this.clearUser();
-      return { success: true, message: 'Logged out successfully' };
+      await this.post('/logout');
     } catch (error) {
-      // Clear stored data even if logout fails
-      this.clearToken();
-      this.clearUser();
-      return { success: true, message: 'Logged out' };
+      console.error('Logout error:', error);
     }
+
+    // Clear stored data regardless of API response
+    this.clearToken();
+    this.clearUser();
+    return { success: true, message: 'Logged out successfully' };
   }
 
   /**
-   * Token Management
+   * Update user profile
    */
-  static setToken(token) {
-    localStorage.setItem(TOKEN_KEY, token);
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  }
-
-  static getToken() {
-    return localStorage.getItem(TOKEN_KEY);
-  }
-
-  static clearToken() {
-    localStorage.removeItem(TOKEN_KEY);
-    delete axios.defaults.headers.common['Authorization'];
+  static async updateProfile(userData) {
+    const response = await this.put('/user/profile', userData);
+    if (response.success) {
+      this.setUser(response.data);
+    }
+    return response;
   }
 
   /**
-   * User Management
+   * Change password
    */
-  static setUser(user) {
-    localStorage.setItem(USER_KEY, JSON.stringify(user));
-  }
-
-  static getUser() {
-    const user = localStorage.getItem(USER_KEY);
-    return user ? JSON.parse(user) : null;
-  }
-
-  static clearUser() {
-    localStorage.removeItem(USER_KEY);
+  static async changePassword(currentPassword, newPassword, newPasswordConfirmation) {
+    return this.post('/user/change-password', {
+      current_password: currentPassword,
+      password: newPassword,
+      password_confirmation: newPasswordConfirmation
+    });
   }
 
   /**
-   * Check if user is authenticated
+   * Verify password
    */
-  static isAuthenticated() {
-    return !!this.getToken();
+  static async verifyPassword(password) {
+    return this.post('/user/verify-password', {
+      password: password
+    });
   }
 
   /**
@@ -297,5 +200,5 @@ class AuthApiClient {
   }
 }
 
-export default AuthApiClient;
-
+// Make available globally
+window.AuthApiClient = AuthApiClient;

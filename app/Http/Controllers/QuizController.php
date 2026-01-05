@@ -6,10 +6,12 @@ use App\Models\Quiz;
 use App\Models\Question;
 use App\Models\Answer;
 use App\Models\Lesson;
+use App\Models\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class QuizController extends Controller
 {
@@ -19,7 +21,7 @@ class QuizController extends Controller
     /**
      * Get lesson quizzes
      */
-    public function index($lessonId)
+    public function indexByLesson($lessonId)
     {
         try {
             $lesson = Lesson::findOrFail($lessonId);
@@ -30,7 +32,7 @@ class QuizController extends Controller
             $isInstructor = $lesson->course->instructor_id === $user->id;
             $isAdmin = $user->hasRole('admin');
 
-            if (!$isEnrolled && !$isInstructor && !$isAdmin && !$lesson->is_free) {
+            if (!$isEnrolled && !$isInstructor && !$isAdmin) {
                 return response()->json([
                     'success' => false,
                     'message' => 'You must be enrolled in this course to view quizzes'
@@ -38,14 +40,39 @@ class QuizController extends Controller
             }
 
             $quizzes = $lesson->quizzes()
-                            ->with(['questions' => function($query) use ($user, $isInstructor, $isAdmin) {
-                                if (!$isInstructor && !$isAdmin) {
-                                    $query->select('id', 'quiz_id', 'question_text', 'type', 'points');
-                                }
-                            }])
+                            ->with('questions')
                             ->get()
-                            ->map(function ($quiz) use ($user) {
+                            ->map(function ($quiz) use ($user, $isInstructor, $isAdmin) {
                                 $quizData = $quiz->toArray();
+
+                                // Filter question fields based on user role
+                                if (!$isInstructor && !$isAdmin) {
+                                    // Students don't see correct_answer and explanation
+                                    $quizData['questions'] = array_map(function ($question) {
+                                        return [
+                                            'id' => $question['id'],
+                                            'quiz_id' => $question['quiz_id'],
+                                            'question_text' => $question['question_text'],
+                                            'type' => $question['type'],
+                                            'options' => $question['options'],
+                                            'points' => $question['points']
+                                        ];
+                                    }, $quizData['questions']);
+                                } else {
+                                    // Instructors and admins get all fields
+                                    $quizData['questions'] = array_map(function ($question) {
+                                        return [
+                                            'id' => $question['id'],
+                                            'quiz_id' => $question['quiz_id'],
+                                            'question_text' => $question['question_text'],
+                                            'type' => $question['type'],
+                                            'options' => $question['options'],
+                                            'points' => $question['points'],
+                                            'correct_answer' => $question['correct_answer'],
+                                            'explanation' => $question['explanation']
+                                        ];
+                                    }, $quizData['questions']);
+                                }
                                 
                                 // Add user's quiz attempts
                                 $attempts = Answer::where('student_id', $user->id)
@@ -82,9 +109,9 @@ class QuizController extends Controller
     }
 
     /**
-     * Create a new quiz
+     * Create a new quiz for a lesson
      */
-    public function store(Request $request, $lessonId)
+    public function storeForLesson(Request $request, $lessonId)
     {
         try {
             $lesson = Lesson::findOrFail($lessonId);
@@ -99,14 +126,14 @@ class QuizController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'title' => 'required|string|max:255',
-                'type' => 'required|in:mcq,theory',
+                'type' => 'required|in:mcq,alternate',
                 'time_limit_minutes' => 'nullable|integer|min:1',
                 'max_attempts' => 'nullable|integer|min:1',
                 'passing_score' => 'nullable|integer|min:0|max:100',
                 'shuffle_questions' => 'boolean',
                 'questions' => 'required|array|min:1',
                 'questions.*.question_text' => 'required|string',
-                'questions.*.type' => 'required|in:mcq,theory',
+                'questions.*.type' => 'required|in:mcq,alternate',
                 'questions.*.points' => 'required|integer|min:1',
                 'questions.*.options' => 'nullable|array',
                 'questions.*.correct_answer' => 'required|string'
@@ -126,6 +153,180 @@ class QuizController extends Controller
                 // Create quiz
                 $quizData = $request->except(['questions']);
                 $quizData['lesson_id'] = $lesson->id;
+                $quizData['topic_id'] = $lesson->topic_id;
+                $quizData['slug'] = Str::slug($request->title) . '-' . uniqid();
+                $quizData['shuffle_questions'] = $request->boolean('shuffle_questions', false);
+
+                $quiz = Quiz::create($quizData);
+
+                // Create questions
+                foreach ($request->questions as $questionData) {
+                    $question = Question::create([
+                        'quiz_id' => $quiz->id,
+                        'question_text' => $questionData['question_text'],
+                        'type' => $questionData['type'],
+                        'points' => $questionData['points'],
+                        'options' => $questionData['options'] ?? null,
+                        'correct_answer' => $questionData['correct_answer'],
+                        'explanation' => $questionData['explanation'] ?? null
+                    ]);
+                }
+
+                DB::commit();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Quiz created successfully',
+                    'data' => $quiz->load('questions')
+                ], 201);
+            } catch (\Exception $e) {
+                DB::rollBack();
+                throw $e;
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to create quiz: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Get topic quizzes
+     */
+    public function indexByTopic($topicId)
+    {
+        try {
+            $topic = Topic::findOrFail($topicId);
+            $user = Auth::user();
+
+            // Check if user has access to this topic's course
+            $isEnrolled = $topic->course->enrollments()->where('user_id', $user->id)->exists();
+            $isInstructor = $topic->course->instructor_id === $user->id;
+            $isAdmin = $user->hasRole('admin');
+
+            if (!$isEnrolled && !$isInstructor && !$isAdmin) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'You must be enrolled in this course to view quizzes'
+                ], 403);
+            }
+
+            $quizzes = $topic->quizzes()
+                            ->with('questions')
+                            ->get()
+                            ->map(function ($quiz) use ($user, $isInstructor, $isAdmin) {
+                                $quizData = $quiz->toArray();
+
+                                // Filter question fields based on user role
+                                if (!$isInstructor && !$isAdmin) {
+                                    // Students don't see correct_answer and explanation
+                                    $quizData['questions'] = array_map(function ($question) {
+                                        return [
+                                            'id' => $question['id'],
+                                            'quiz_id' => $question['quiz_id'],
+                                            'question_text' => $question['question_text'],
+                                            'type' => $question['type'],
+                                            'options' => $question['options'],
+                                            'points' => $question['points']
+                                        ];
+                                    }, $quizData['questions']);
+                                } else {
+                                    // Instructors and admins get all fields
+                                    $quizData['questions'] = array_map(function ($question) {
+                                        return [
+                                            'id' => $question['id'],
+                                            'quiz_id' => $question['quiz_id'],
+                                            'question_text' => $question['question_text'],
+                                            'type' => $question['type'],
+                                            'options' => $question['options'],
+                                            'points' => $question['points'],
+                                            'correct_answer' => $question['correct_answer'],
+                                            'explanation' => $question['explanation']
+                                        ];
+                                    }, $quizData['questions']);
+                                }
+
+                                // Add user's quiz attempts
+                                $attempts = Answer::where('student_id', $user->id)
+                                                ->whereIn('question_id', $quiz->questions->pluck('id'))
+                                                ->get()
+                                                ->groupBy('attempt_number');
+
+                                $quizData['attempts'] = $attempts->count();
+                                $quizData['max_attempts'] = $quiz->max_attempts;
+                                $quizData['can_attempt'] = $quiz->max_attempts === null || $attempts->count() < $quiz->max_attempts;
+
+                                // Add best score
+                                if ($attempts->count() > 0) {
+                                    $scores = $attempts->map(function ($attemptAnswers) {
+                                        return $attemptAnswers->sum('points_earned');
+                                    });
+                                    $quizData['best_score'] = $scores->max();
+                                    $quizData['latest_score'] = $scores->last();
+                                }
+
+                                return $quizData;
+                            });
+
+            return response()->json([
+                'success' => true,
+                'data' => $quizzes
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch quizzes: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Create a new quiz for a topic
+     */
+    public function storeForTopic(Request $request, $topicId)
+    {
+        try {
+            $topic = Topic::findOrFail($topicId);
+
+            // Check if user is instructor or admin
+            if ($topic->course->instructor_id !== Auth::id() && !Auth::user()->hasRole('admin')) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Unauthorized to create quizzes for this topic'
+                ], 403);
+            }
+
+            $validator = Validator::make($request->all(), [
+                'title' => 'required|string|max:255',
+                'type' => 'required|in:mcq,alternate',
+                'time_limit_minutes' => 'nullable|integer|min:1',
+                'max_attempts' => 'nullable|integer|min:1',
+                'passing_score' => 'nullable|integer|min:0|max:100',
+                'shuffle_questions' => 'boolean',
+                'questions' => 'required|array|min:1',
+                'questions.*.question_text' => 'required|string',
+                'questions.*.type' => 'required|in:mcq,alternate',
+                'questions.*.points' => 'required|integer|min:1',
+                'questions.*.options' => 'nullable|array',
+                'questions.*.correct_answer' => 'required|string'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validation failed',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            DB::beginTransaction();
+
+            try {
+                // Create quiz
+                $quizData = $request->except(['questions']);
+                $quizData['topic_id'] = $topic->id;
+                $quizData['slug'] = Str::slug($request->title) . '-' . uniqid();
                 $quizData['shuffle_questions'] = $request->boolean('shuffle_questions', false);
 
                 $quiz = Quiz::create($quizData);
@@ -168,15 +369,30 @@ class QuizController extends Controller
     public function show($id)
     {
         try {
-            $quiz = Quiz::with(['lesson.course', 'questions'])->findOrFail($id);
+            $quiz = Quiz::with(['lesson.course', 'topic.course', 'questions'])->findOrFail($id);
             $user = Auth::user();
 
+            // Get the course - could be from lesson or topic
+            $course = null;
+            if ($quiz->lesson && $quiz->lesson->course) {
+                $course = $quiz->lesson->course;
+            } elseif ($quiz->topic && $quiz->topic->course) {
+                $course = $quiz->topic->course;
+            }
+
+            if (!$course) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Quiz course not found'
+                ], 404);
+            }
+
             // Check access
-            $isEnrolled = $quiz->lesson->course->enrollments()->where('user_id', $user->id)->exists();
-            $isInstructor = $quiz->lesson->course->instructor_id === $user->id;
+            $isEnrolled = $course->enrollments()->where('user_id', $user->id)->exists();
+            $isInstructor = $course->instructor_id === $user->id;
             $isAdmin = $user->hasRole('admin');
 
-            if (!$isEnrolled && !$isInstructor && !$isAdmin && !$quiz->lesson->is_free) {
+            if (!$isEnrolled && !$isInstructor && !$isAdmin) {
                 return response()->json([
                     'success' => false,
                     'message' => 'You must be enrolled to view this quiz'
@@ -238,7 +454,15 @@ class QuizController extends Controller
             $quiz = Quiz::findOrFail($id);
 
             // Check if user is instructor or admin
-            if ($quiz->lesson->course->instructor_id !== Auth::id() && !Auth::user()->hasRole('admin')) {
+            // Quiz can be attached to either a lesson or a topic
+            $course = null;
+            if ($quiz->lesson_id) {
+                $course = $quiz->lesson->course;
+            } elseif ($quiz->topic_id) {
+                $course = $quiz->topic->course;
+            }
+
+            if (!$course || ($course->instructor_id !== Auth::id() && !Auth::user()->hasRole('admin'))) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Unauthorized to update this quiz'
@@ -247,11 +471,17 @@ class QuizController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'title' => 'sometimes|string|max:255',
-                'type' => 'sometimes|in:practice,graded,final',
+                'type' => 'sometimes|in:mcq,alternate,theory',
                 'time_limit_minutes' => 'nullable|integer|min:1',
                 'max_attempts' => 'nullable|integer|min:1',
                 'passing_score' => 'nullable|integer|min:0|max:100',
-                'shuffle_questions' => 'boolean'
+                'shuffle_questions' => 'boolean',
+                'questions' => 'sometimes|array|min:1',
+                'questions.*.question_text' => 'required_with:questions|string',
+                'questions.*.type' => 'required_with:questions|in:mcq,alternate,theory',
+                'questions.*.points' => 'required_with:questions|integer|min:1',
+                'questions.*.options' => 'nullable|array',
+                'questions.*.correct_answer' => 'required_with:questions|string'
             ]);
 
             if ($validator->fails()) {
@@ -262,13 +492,43 @@ class QuizController extends Controller
                 ], 422);
             }
 
-            $quiz->update($request->all());
+            DB::beginTransaction();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Quiz updated successfully',
-                'data' => $quiz
-            ]);
+            try {
+                // Update quiz properties
+                $quizData = $request->except(['questions']);
+                $quiz->update($quizData);
+
+                // Update questions if provided
+                if ($request->has('questions')) {
+                    // Delete existing questions
+                    $quiz->questions()->delete();
+
+                    // Create new questions
+                    foreach ($request->questions as $questionData) {
+                        Question::create([
+                            'quiz_id' => $quiz->id,
+                            'question_text' => $questionData['question_text'],
+                            'type' => $questionData['type'],
+                            'points' => $questionData['points'],
+                            'options' => $questionData['options'] ?? null,
+                            'correct_answer' => $questionData['correct_answer'],
+                            'explanation' => $questionData['explanation'] ?? null
+                        ]);
+                    }
+                }
+
+                DB::commit();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Quiz updated successfully',
+                    'data' => $quiz->load('questions')
+                ]);
+            } catch (\Exception $e) {
+                DB::rollBack();
+                throw $e;
+            }
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -327,7 +587,7 @@ class QuizController extends Controller
 
             // Check access
             $isEnrolled = $quiz->lesson->course->enrollments()->where('user_id', $user->id)->exists();
-            if (!$isEnrolled && !$quiz->lesson->is_free) {
+            if (!$isEnrolled) {
                 return response()->json([
                     'success' => false,
                     'message' => 'You must be enrolled to take this quiz'
@@ -420,6 +680,12 @@ class QuizController extends Controller
                 $maxScore = 0;
                 $results = [];
 
+                // Delete existing answers for this attempt (allows user to change answers before final submission)
+                Answer::where('student_id', $user->id)
+                    ->whereIn('question_id', collect($request->answers)->pluck('question_id'))
+                    ->where('attempt_number', $request->attempt_number)
+                    ->delete();
+
                 foreach ($request->answers as $answerData) {
                     $question = Question::findOrFail($answerData['question_id']);
                     $maxScore += $question->points;
@@ -427,6 +693,15 @@ class QuizController extends Controller
                     // Grade the answer
                     $pointsEarned = $this->gradeAnswer($question, $answerData['answer']);
                     $totalScore += $pointsEarned;
+
+                    \Log::info('Answer saved', [
+                        'question_id' => $question->id,
+                        'user_answer' => $answerData['answer'],
+                        'correct_answer' => $question->correct_answer,
+                        'points_earned' => $pointsEarned,
+                        'points_possible' => $question->points,
+                        'is_correct' => $pointsEarned === $question->points
+                    ]);
 
                     // Save answer
                     Answer::create([
@@ -463,7 +738,13 @@ class QuizController extends Controller
                         'percentage' => $percentage,
                         'passed' => $passed,
                         'attempt_number' => $request->attempt_number,
-                        'results' => $results
+                        'results' => $results,
+                        'submitted_answers' => collect($request->answers)->map(function ($answer) {
+                            return [
+                                'question_id' => $answer['question_id'],
+                                'answer' => $answer['answer']
+                            ];
+                        })->toArray()
                     ]
                 ]);
             } catch (\Exception $e) {
@@ -484,15 +765,30 @@ class QuizController extends Controller
     public function results($id)
     {
         try {
-            $quiz = Quiz::with(['questions', 'lesson.course'])->findOrFail($id);
+            $quiz = Quiz::with(['questions', 'lesson.course', 'topic.course'])->findOrFail($id);
             $user = Auth::user();
 
+            // Get the course - could be from lesson or topic
+            $course = null;
+            if ($quiz->lesson && $quiz->lesson->course) {
+                $course = $quiz->lesson->course;
+            } elseif ($quiz->topic && $quiz->topic->course) {
+                $course = $quiz->topic->course;
+            }
+
+            if (!$course) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Quiz course not found'
+                ], 404);
+            }
+
             // Check access
-            $isEnrolled = $quiz->lesson->course->enrollments()->where('user_id', $user->id)->exists();
-            $isInstructor = $quiz->lesson->course->instructor_id === $user->id;
+            $isEnrolled = $course->enrollments()->where('user_id', $user->id)->exists();
+            $isInstructor = $course->instructor_id === $user->id;
             $isAdmin = $user->hasRole('admin');
 
-            if (!$isEnrolled && !$isInstructor && !$isAdmin && !$quiz->lesson->is_free) {
+            if (!$isEnrolled && !$isInstructor && !$isAdmin) {
                 return response()->json([
                     'success' => false,
                     'message' => 'You must be enrolled to view quiz results'
@@ -620,28 +916,35 @@ class QuizController extends Controller
      */
     private function gradeAnswer($question, $userAnswer)
     {
+        // Debug logging
+        \Log::info('Grading answer', [
+            'question_id' => $question->id,
+            'question_type' => $question->type,
+            'user_answer' => $userAnswer,
+            'user_answer_type' => gettype($userAnswer),
+            'correct_answer' => $question->correct_answer,
+            'correct_answer_type' => gettype($question->correct_answer),
+            'user_answer_trimmed_lower' => strtolower(trim($userAnswer)),
+            'correct_answer_trimmed_lower' => strtolower(trim($question->correct_answer))
+        ]);
+
         switch ($question->type) {
             case 'multiple_choice':
+            case 'mcq':
+            case 'alternate':
             case 'true_false':
-                return strtolower(trim($userAnswer)) === strtolower(trim($question->correct_answer))
-                    ? $question->points : 0;
+                $userAnswerProcessed = strtolower(trim($userAnswer));
+                $correctAnswerProcessed = strtolower(trim($question->correct_answer));
+                $isCorrect = $userAnswerProcessed === $correctAnswerProcessed;
 
-            case 'short_answer':
-                // Simple string comparison (could be enhanced with fuzzy matching)
-                $correctAnswer = strtolower(trim($question->correct_answer));
-                $userAnswerLower = strtolower(trim($userAnswer));
+                \Log::info('MCQ/Alternate comparison', [
+                    'user_processed' => $userAnswerProcessed,
+                    'correct_processed' => $correctAnswerProcessed,
+                    'is_correct' => $isCorrect,
+                    'points_earned' => $isCorrect ? $question->points : 0
+                ]);
 
-                if ($correctAnswer === $userAnswerLower) {
-                    return $question->points;
-                }
-
-                // Partial credit for similar answers
-                similar_text($correctAnswer, $userAnswerLower, $percent);
-                return $percent >= 80 ? round($question->points * 0.8) : 0;
-
-            case 'essay':
-                // Essays require manual grading, return 0 for now
-                return 0;
+                return $isCorrect ? $question->points : 0;
 
             default:
                 return 0;

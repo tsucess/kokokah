@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
-use App\Models\Category;
+use App\Models\CurriculumCategory;
+use App\Models\CourseCategory;
 use App\Models\Level;
 use App\Models\Enrollment;
+use App\Models\User;
 use App\Services\WalletService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,129 +21,243 @@ class CourseController extends Controller
     public function __construct(WalletService $walletService)
     {
         $this->walletService = $walletService;
-        // Middleware is applied at route level in routes/api.php
     }
 
-    /**
-     * Display a listing of courses
-     */
-    public function index(Request $request)
+    /*------------------------------------------
+    | Helper Methods
+    ------------------------------------------*/
+
+    private function success($data = [], $message = 'OK', $code = 200)
     {
-        $query = Course::with(['category', 'instructor', 'level', 'term'])
-                      ->where('status', 'published');
+        return response()->json([
+            'success' => true,
+            'message' => $message,
+            'data'    => $data
+        ], $code);
+    }
 
-        // Apply filters
-        if ($request->has('category_id')) {
-            $query->where('category_id', $request->category_id);
+    private function error($message, $code = 400, $errors = null)
+    {
+        return response()->json([
+            'success' => false,
+            'message' => $message,
+            'errors'  => $errors
+        ], $code);
+    }
+
+    private function validateRequest(Request $request, array $rules)
+    {
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return $this->error('Validation failed', 422, $validator->errors());
         }
 
-        if ($request->has('level_id')) {
-            $query->where('level_id', $request->level_id);
+        return null;
+    }
+
+    private function userCanModify(Course $course)
+    {
+        return $course->instructor_id == Auth::id() || Auth::user()->hasRole('admin');
+    }
+
+    private function uploadThumbnail(Request $request, $existing = null)
+    {
+        if (!$request->hasFile('thumbnail')) return $existing;
+
+        if ($existing) {
+            Storage::disk('public')->delete($existing);
         }
 
-        if ($request->has('difficulty')) {
-            $query->where('difficulty', $request->difficulty);
+        return $request->file('thumbnail')->store('course-thumbnails', 'public');
+    }
+
+    /*------------------------------------------
+    | List Courses
+    ------------------------------------------*/
+
+    // public function index(Request $request)
+    // {
+    //     $query = Course::with(['courseCategory', 'curriculumCategory', 'instructor', 'level', 'term'])
+    //                    ->where('status', 'published');
+
+    //     // Dynamic filtering
+    //     $filters = [
+    //         'curriculum_category_id',
+    //         'course_category_id',
+    //         'level_id',
+    //         'difficulty'
+    //     ];
+
+    //     foreach ($filters as $filter) {
+    //         if ($request->filled($filter)) {
+    //             $query->where($filter, $request->$filter);
+    //         }
+    //     }
+
+    //     if ($request->has('price_range')) {
+    //         [$min, $max] = explode('-', $request->price_range);
+    //         $query->whereBetween('price', [(float)$min, (float)$max]);
+    //     }
+
+    //     if ($request->filled('search')) {
+    //         $s = $request->search;
+    //         $query->where(fn($q) =>
+    //             $q->where('title', 'LIKE', "%$s%")
+    //               ->orWhere('description', 'LIKE', "%$s%")
+    //         );
+    //     }
+
+    //     $query->orderBy($request->get('sort_by', 'created_at'), $request->get('sort_order', 'desc'));
+
+    //     return $this->success([
+    //         'courses' => $query->paginate($request->get('per_page', 12)),
+    //         'filters' => [
+    //             'curriculumCategories' => CurriculumCategory::all(),
+    //             'courseCategories'     => CourseCategory::all(),
+    //             'levels'               => Level::all(),
+    //             'difficulties'         => ['beginner', 'intermediate', 'advanced']
+    //         ]
+    //     ]);
+    // }
+   public function index(Request $request)
+    {
+        $user = auth('sanctum')->user(); // Get authenticated user
+        $userRole = $user ? $user->role : null;
+
+        $query = Course::with(['courseCategory', 'curriculumCategory', 'instructor', 'level', 'term']);
+
+        // Only show published courses if user is not admin or instructor
+        if (!$user || !in_array($userRole, ['admin', 'instructor'])) {
+            $query->where('status', 'published');
         }
 
-        if ($request->has('price_range')) {
-            $range = explode('-', $request->price_range);
-            if (count($range) == 2) {
-                $query->whereBetween('price', [$range[0], $range[1]]);
+        // Dynamic filtering
+        $filters = [
+            'curriculum_category_id',
+            'course_category_id',
+            'level_id',
+            'difficulty'
+        ];
+
+        foreach ($filters as $filter) {
+            if ($request->filled($filter)) {
+                $query->where($filter, $request->$filter);
             }
         }
 
-        if ($request->has('search')) {
-            $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->where('title', 'LIKE', "%{$search}%")
-                  ->orWhere('description', 'LIKE', "%{$search}%");
-            });
+        if ($request->has('price_range')) {
+            [$min, $max] = explode('-', $request->price_range);
+            $query->whereBetween('price', [(float)$min, (float)$max]);
         }
 
-        // Sorting
-        $sortBy = $request->get('sort_by', 'created_at');
-        $sortOrder = $request->get('sort_order', 'desc');
-        $query->orderBy($sortBy, $sortOrder);
+        if ($request->filled('search')) {
+            $s = $request->search;
+            $query->where(fn($q) =>
+                $q->where('title', 'LIKE', "%$s%")
+                ->orWhere('description', 'LIKE', "%$s%")
+            );
+        }
 
+        $query->orderBy($request->get('sort_by', 'created_at'), $request->get('sort_order', 'desc'));
+
+        // Get paginated courses
         $courses = $query->paginate($request->get('per_page', 12));
 
-        return response()->json([
-            'success' => true,
-            'data' => $courses,
+        // Get total students in system for progress calculation
+        $totalStudentsInSystem = User::where('role', 'student')->count();
+
+        // Transform courses to include enrollment count and average rating
+        $courses->getCollection()->transform(function ($course) use ($totalStudentsInSystem) {
+            $courseData = $course->toArray();
+            $enrollmentCount = $course->enrollments()->count();
+
+            // Calculate progress as (enrollments / total_students) * 100
+            $progress = $totalStudentsInSystem > 0
+                ? round(($enrollmentCount / $totalStudentsInSystem) * 100, 2)
+                : 0;
+
+            $courseData['enrollment_count'] = $enrollmentCount;
+            $courseData['progress'] = $progress;
+            $courseData['average_rating'] = round($course->reviews()->avg('rating') ?? 0, 1);
+
+            return $courseData;
+        });
+
+        return $this->success([
+            'courses' => $courses,
             'filters' => [
-                'categories' => Category::all(),
-                'levels' => Level::all(),
-                'difficulties' => ['beginner', 'intermediate', 'advanced']
-            ]
+                'curriculumCategories' => CurriculumCategory::all(),
+                'courseCategories'     => CourseCategory::all(),
+                'levels'               => Level::all(),
+                'difficulties'         => ['beginner', 'intermediate', 'advanced']
+            ],
+            'user_role' => $userRole,
+            'total_students_in_system' => $totalStudentsInSystem
         ]);
     }
 
-    /**
-     * Store a newly created course
-     */
+
+
+    /*------------------------------------------
+    | Create Course
+    ------------------------------------------*/
+
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:255',
+        $validation = $this->validateRequest($request, [
+            'title'       => 'required|string|max:255',
             'description' => 'required|string',
-            'category_id' => 'required|exists:categories,id',
+            'curriculum_category_id' => 'required|exists:curriculum_categories,id',
+            'course_category_id'     => 'required|exists:course_categories,id',
             'level_id' => 'nullable|exists:levels,id',
-            'term_id' => 'nullable|exists:terms,id',
-            'price' => 'required|numeric|min:0',
-            'difficulty' => 'required|in:beginner,intermediate,advanced',
+            'term_id'  => 'nullable|exists:terms,id',
+            'price'    => 'required|numeric|min:0',
+            'free'     => 'required|boolean',
+            'url'      => 'nullable|string|max:255',
             'duration_hours' => 'nullable|integer|min:1',
-            'max_students' => 'nullable|integer|min:1',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:5048'
         ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation failed',
-                'errors' => $validator->errors()
-            ], 422);
-        }
+        if ($validation) return $validation;
 
         try {
-            $courseData = $request->except(['thumbnail']);
-            $courseData['instructor_id'] = Auth::id();
+            $courseData = $request->except('thumbnail');
             $courseData['status'] = 'draft';
+            $courseData['instructor_id'] = Auth::id();
+            $courseData['thumbnail'] = $this->uploadThumbnail($request);
 
-            // Handle thumbnail upload
-            if ($request->hasFile('thumbnail')) {
-                $thumbnailPath = $request->file('thumbnail')->store('course-thumbnails', 'public');
-                $courseData['thumbnail'] = $thumbnailPath;
+            // Generate slug from title if not provided
+            if (!isset($courseData['slug']) || empty($courseData['slug'])) {
+                $courseData['slug'] = Course::generateSlug($courseData['title']);
             }
 
             $course = Course::create($courseData);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Course created successfully',
-                'data' => $course->load(['category', 'instructor', 'level', 'term'])
-            ], 201);
+            return $this->success(
+                $course->load(['courseCategory', 'curriculumCategory', 'instructor', 'level', 'term']),
+                'Course created successfully',
+                201
+            );
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to create course: ' . $e->getMessage()
-            ], 500);
+            return $this->error("Failed to create course: {$e->getMessage()}", 500);
         }
     }
 
-    /**
-     * Display the specified course
-     */
+    /*------------------------------------------
+    | Show Course Details
+    ------------------------------------------*/
+
     public function show($id)
     {
         try {
             $course = Course::with([
-                'category', 
-                'instructor', 
-                'level', 
-                'term', 
-                'lessons' => function($query) {
-                    $query->orderBy('order');
-                },
+                'curriculumCategory',
+                'courseCategory',
+                'instructor',
+                'level',
+                'term',
+                'lessons' => fn($q) => $q->orderBy('order'),
                 'reviews.user',
                 'tags'
             ])->findOrFail($id);
@@ -152,543 +268,346 @@ class CourseController extends Controller
 
             if ($user) {
                 $enrollment = Enrollment::where('user_id', $user->id)
-                                      ->where('course_id', $course->id)
-                                      ->first();
-                $isEnrolled = $enrollment !== null;
+                                        ->where('course_id', $course->id)
+                                        ->first();
+                $isEnrolled = (bool) $enrollment;
             }
 
-            $courseData = $course->toArray();
-            $courseData['is_enrolled'] = $isEnrolled;
-            $courseData['enrollment'] = $enrollment;
-            $courseData['total_lessons'] = $course->lessons->count();
-            $courseData['total_duration'] = $course->lessons->sum('duration_minutes');
-            $courseData['average_rating'] = $course->reviews->avg('rating');
-            $courseData['total_reviews'] = $course->reviews->count();
-            $courseData['total_students'] = $course->enrollments()->count();
+            $data = $course->toArray();
+            $data['is_enrolled'] = $isEnrolled;
+            $data['enrollment'] = $enrollment;
+            $data['total_lessons'] = $course->lessons->count();
+            $data['total_duration'] = $course->lessons->sum('duration_minutes');
+            $data['average_rating'] = $course->reviews->avg('rating');
+            $data['total_reviews'] = $course->reviews->count();
+            $data['total_students'] = $course->enrollments()->count();
 
-            return response()->json([
-                'success' => true,
-                'data' => $courseData
-            ]);
-        } catch (\Exception) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Course not found'
-            ], 404);
+            return $this->success($data);
+        } catch (\Exception $e) {
+            \Log::error('Course show error: ' . $e->getMessage());
+            return $this->error('Course not found', 404);
         }
     }
 
-    /**
-     * Update the specified course
-     */
+    /*------------------------------------------
+    | Update Course
+    ------------------------------------------*/
+
     public function update(Request $request, $id)
     {
         try {
             $course = Course::findOrFail($id);
 
-            // Check if user owns the course or is admin
-            if ($course->instructor_id !== Auth::id() && !Auth::user()->hasRole('admin')) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Unauthorized to update this course'
-                ], 403);
+            if (!$this->userCanModify($course)) {
+                return $this->error('Unauthorized to update this course', 403);
             }
 
-            $validator = Validator::make($request->all(), [
+            // Log incoming request data
+            \Log::info('Course update request:', [
+                'id' => $id,
+                'all_data' => $request->all(),
+                'free' => $request->input('free'),
+                'free_type' => gettype($request->input('free')),
+                'price' => $request->input('price'),
+                'price_type' => gettype($request->input('price'))
+            ]);
+
+            $validation = $this->validateRequest($request, [
                 'title' => 'sometimes|string|max:255',
+                'slug' => 'sometimes|string|max:255',
                 'description' => 'sometimes|string',
-                'category_id' => 'sometimes|exists:categories,id',
-                'level_id' => 'nullable|exists:levels,id',
-                'term_id' => 'nullable|exists:terms,id',
-                'price' => 'sometimes|numeric|min:0',
+                'course_category_id' => 'sometimes|exists:course_categories,id',
+                'curriculum_category_id' => 'sometimes|exists:curriculum_categories,id',
+                'free'  => 'sometimes|in:0,1',
+                'price' => 'sometimes|required_unless:free,1|numeric|min:0',
                 'difficulty' => 'sometimes|in:beginner,intermediate,advanced',
-                'duration_hours' => 'nullable|integer|min:1',
-                'max_students' => 'nullable|integer|min:1',
+                'duration_hours' => 'sometimes|nullable|integer|min:1',
+                'max_students' => 'sometimes|nullable|integer|min:1',
                 'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:5048'
             ]);
 
-            if ($validator->fails()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Validation failed',
-                    'errors' => $validator->errors()
-                ], 422);
+            if ($validation) return $validation;
+
+            $data = $request->except('thumbnail');
+            $data['thumbnail'] = $this->uploadThumbnail($request, $course->thumbnail);
+
+            // Generate slug from title if title is being updated and slug is not provided
+            if ($request->has('title') && !$request->has('slug')) {
+                $data['slug'] = Course::generateSlug($request->input('title'));
             }
 
-            $updateData = $request->except(['thumbnail']);
+            $course->update($data);
 
-            // Handle thumbnail upload
-            if ($request->hasFile('thumbnail')) {
-                // Delete old thumbnail
-                if ($course->thumbnail) {
-                    Storage::disk('public')->delete($course->thumbnail);
-                }
-                $thumbnailPath = $request->file('thumbnail')->store('course-thumbnails', 'public');
-                $updateData['thumbnail'] = $thumbnailPath;
-            }
+            return $this->success(
+                $course->load(['courseCategory', 'instructor', 'level', 'term']),
+                'Course updated successfully'
+            );
 
-            $course->update($updateData);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Course updated successfully',
-                'data' => $course->load(['category', 'instructor', 'level', 'term'])
-            ]);
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to update course: ' . $e->getMessage()
-            ], 500);
+            return $this->error("Failed to update course: {$e->getMessage()}", 500);
         }
     }
 
-    /**
-     * Remove the specified course
-     */
+    /*------------------------------------------
+    | Delete Course
+    ------------------------------------------*/
+
     public function destroy($id)
     {
         try {
             $course = Course::findOrFail($id);
 
-            // Check if user owns the course or is admin
-            if ($course->instructor_id !== Auth::id() && !Auth::user()->hasRole('admin')) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Unauthorized to delete this course'
-                ], 403);
+            if (!$this->userCanModify($course)) {
+                return $this->error('Unauthorized to delete this course', 403);
             }
 
-            // Check if course has enrollments
             if ($course->enrollments()->count() > 0) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Cannot delete course with active enrollments'
-                ], 400);
+                return $this->error('Cannot delete course with active enrollments', 400);
             }
 
-            // Delete thumbnail
             if ($course->thumbnail) {
                 Storage::disk('public')->delete($course->thumbnail);
             }
 
             $course->delete();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Course deleted successfully'
-            ]);
+            return $this->success([], 'Course deleted successfully');
+
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to delete course: ' . $e->getMessage()
-            ], 500);
+            return $this->error("Failed to delete course: {$e->getMessage()}", 500);
         }
     }
 
-    /**
-     * Search courses
-     */
+    /*------------------------------------------
+    | Search Courses
+    ------------------------------------------*/
+
     public function search(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $validation = $this->validateRequest($request, [
             'q' => 'required|string|min:2',
-            'category_id' => 'nullable|exists:categories,id',
+            'curriculum_category_id' => 'nullable|exists:curriculum_categories,id',
+            'course_category_id' => 'nullable|exists:course_categories,id',
             'level_id' => 'nullable|exists:levels,id',
             'difficulty' => 'nullable|in:beginner,intermediate,advanced',
             'min_price' => 'nullable|numeric|min:0',
             'max_price' => 'nullable|numeric|min:0',
-            'sort_by' => 'nullable|in:title,price,created_at,rating',
+            'sort_by'  => 'nullable|in:title,price,created_at,rating',
             'sort_order' => 'nullable|in:asc,desc'
         ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation failed',
-                'errors' => $validator->errors()
-            ], 422);
+        if ($validation) return $validation;
+
+        $query = Course::with(['courseCategory', 'instructor', 'level'])
+                       ->where('status', 'published');
+
+        $search = $request->q;
+
+        $query->where(fn($q) =>
+            $q->where('title', 'LIKE', "%$search%")
+              ->orWhere('description', 'LIKE', "%$search%")
+        );
+
+        foreach (['curriculum_category_id', 'course_category_id', 'level_id', 'difficulty'] as $filter) {
+            if ($request->filled($filter)) {
+                $query->where($filter, $request->$filter);
+            }
         }
 
-        $query = Course::with(['category', 'instructor', 'level'])
-                      ->where('status', 'published');
+        if ($request->filled('min_price')) $query->where('price', '>=', $request->min_price);
+        if ($request->filled('max_price')) $query->where('price', '<=', $request->max_price);
 
-        // Search in title and description
-        $searchTerm = $request->q;
-        $query->where(function($q) use ($searchTerm) {
-            $q->where('title', 'LIKE', "%{$searchTerm}%")
-              ->orWhere('description', 'LIKE', "%{$searchTerm}%");
-        });
-
-        // Apply filters
-        if ($request->has('category_id')) {
-            $query->where('category_id', $request->category_id);
-        }
-
-        if ($request->has('level_id')) {
-            $query->where('level_id', $request->level_id);
-        }
-
-        if ($request->has('difficulty')) {
-            $query->where('difficulty', $request->difficulty);
-        }
-
-        if ($request->has('min_price')) {
-            $query->where('price', '>=', $request->min_price);
-        }
-
-        if ($request->has('max_price')) {
-            $query->where('price', '<=', $request->max_price);
-        }
-
-        // Sorting
-        $sortBy = $request->get('sort_by', 'created_at');
-        $sortOrder = $request->get('sort_order', 'desc');
-        
-        if ($sortBy === 'rating') {
+        if ($request->sort_by === 'rating') {
             $query->withAvg('reviews', 'rating')
-                  ->orderBy('reviews_avg_rating', $sortOrder);
+                  ->orderBy('reviews_avg_rating', $request->sort_order ?? 'desc');
         } else {
-            $query->orderBy($sortBy, $sortOrder);
+            $query->orderBy($request->sort_by ?? 'created_at', $request->sort_order ?? 'desc');
         }
 
-        $courses = $query->paginate($request->get('per_page', 12));
-
-        return response()->json([
-            'success' => true,
-            'data' => $courses,
-            'search_term' => $searchTerm
+        return $this->success([
+            'results' => $query->paginate($request->get('per_page', 12)),
+            'search_term' => $search
         ]);
     }
 
-    /**
-     * Get featured courses
-     */
+    /*------------------------------------------
+    | Featured and Popular Courses
+    ------------------------------------------*/
+
     public function featured()
     {
-        $courses = Course::with(['category', 'instructor', 'level'])
-                        ->where('status', 'published')
-                        ->where('is_featured', true)
-                        ->orderBy('created_at', 'desc')
-                        ->limit(8)
-                        ->get();
-
-        return response()->json([
-            'success' => true,
-            'data' => $courses
-        ]);
+        return $this->success(
+            Course::with(['courseCategory', 'instructor', 'level'])
+                ->where('status', 'published')
+                ->where('is_featured', true)
+                ->latest()
+                ->limit(8)
+                ->get()
+        );
     }
 
-    /**
-     * Get popular courses
-     */
     public function popular()
     {
-        $courses = Course::with(['category', 'instructor', 'level'])
-                        ->where('status', 'published')
-                        ->withCount('enrollments')
-                        ->orderBy('enrollments_count', 'desc')
-                        ->limit(8)
-                        ->get();
-
-        return response()->json([
-            'success' => true,
-            'data' => $courses
-        ]);
+        return $this->success(
+            Course::with(['courseCategory', 'instructor', 'level'])
+                ->where('status', 'published')
+                ->withCount('enrollments')
+                ->orderBy('enrollments_count', 'desc')
+                ->limit(8)
+                ->get()
+        );
     }
 
-    /**
-     * Get user's enrolled courses
-     */
+    /*------------------------------------------
+    | My Courses
+    ------------------------------------------*/
+
     public function myCourses()
     {
         try {
             $user = Auth::user();
 
-            if (!$user) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'User not authenticated'
-                ], 401);
-            }
+            if (!$user) return $this->error('User not authenticated', 401);
 
-            // Get enrollments and manually check for valid courses
             $enrollments = Enrollment::where('user_id', $user->id)
-                                    ->orderBy('enrolled_at', 'desc')
-                                    ->get();
+                                     ->latest('enrolled_at')
+                                     ->get();
 
-            $validEnrollments = [];
+            $results = [];
 
-            foreach ($enrollments as $enrollment) {
-                // Check if course exists before loading relationships
-                $course = \App\Models\Course::with(['category', 'instructor', 'level'])
-                                          ->find($enrollment->course_id);
-
+            foreach ($enrollments as $e) {
+                $course = Course::with(['courseCategory', 'instructor', 'level'])->find($e->course_id);
                 if ($course) {
-                    $enrollmentData = $enrollment->toArray();
-                    $enrollmentData['course'] = $course->toArray();
-                    $validEnrollments[] = $enrollmentData;
+                    $item = $e->toArray();
+                    $item['course'] = $course;
+                    $results[] = $item;
                 }
             }
 
-            return response()->json([
-                'success' => true,
-                'data' => $validEnrollments,
-                'total' => count($validEnrollments)
+            return $this->success([
+                'courses' => $results,
+                'total' => count($results)
             ]);
-        } catch (\Exception $e) {
-            \Log::error('My Courses Error: ' . $e->getMessage());
-            \Log::error('Stack trace: ' . $e->getTraceAsString());
 
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to fetch courses',
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ], 500);
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage(), 500);
         }
     }
 
-    /**
-     * Enroll in a course
-     */
+    /*------------------------------------------
+    | Enrollment
+    ------------------------------------------*/
+
     public function enroll($id)
     {
         try {
             $user = Auth::user();
             $course = Course::findOrFail($id);
 
-            // Check if already enrolled
-            $existingEnrollment = Enrollment::where('user_id', $user->id)
-                                          ->where('course_id', $course->id)
-                                          ->first();
-
-            if ($existingEnrollment) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Already enrolled in this course'
-                ], 400);
+            // Already enrolled?
+            if (Enrollment::where('user_id', $user->id)
+                          ->where('course_id', $id)
+                          ->exists()) {
+                return $this->error('Already enrolled in this course');
             }
 
-            // Check if course is published
             if ($course->status !== 'published') {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Course is not available for enrollment'
-                ], 400);
+                return $this->error('Course not available for enrollment');
             }
 
-            // Check max students limit
             if ($course->max_students && $course->enrollments()->count() >= $course->max_students) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Course is full'
-                ], 400);
+                return $this->error('Course is full');
             }
 
-            // Use wallet to purchase course
             $transaction = $this->walletService->purchaseCourse($user, $course);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Successfully enrolled in course',
-                'data' => [
-                    'enrollment' => $transaction['enrollment'],
-                    'transaction' => $transaction['transaction'],
-                    'new_balance' => $user->wallet->balance
-                ]
-            ]);
+            return $this->success([
+                'enrollment'   => $transaction['enrollment'],
+                'transaction'  => $transaction['transaction'],
+                'new_balance'  => $user->wallet->balance
+            ], 'Successfully enrolled in course');
+
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Enrollment failed: ' . $e->getMessage()
-            ], 400);
+            return $this->error("Enrollment failed: {$e->getMessage()}", 400);
         }
     }
 
-    /**
-     * Unenroll from a course
-     */
     public function unenroll($id)
     {
         try {
             $user = Auth::user();
+
             $enrollment = Enrollment::where('user_id', $user->id)
-                                  ->where('course_id', $id)
-                                  ->first();
+                                    ->where('course_id', $id)
+                                    ->first();
 
-            if (!$enrollment) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Not enrolled in this course'
-                ], 400);
-            }
+            if (!$enrollment) return $this->error('Not enrolled in this course');
 
-            // Check if course has been started (has progress)
             if ($enrollment->progress > 0) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Cannot unenroll from a course that has been started'
-                ], 400);
+                return $this->error('Cannot unenroll from a started course');
             }
 
             $enrollment->delete();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Successfully unenrolled from course'
-            ]);
+            return $this->success([], 'Successfully unenrolled');
+
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unenrollment failed: ' . $e->getMessage()
-            ], 500);
+            return $this->error("Unenrollment failed: {$e->getMessage()}", 500);
         }
     }
 
-    /**
-     * Get course students (instructor only)
-     */
+    /*------------------------------------------
+    | Students & Analytics
+    ------------------------------------------*/
+
     public function students($id)
     {
         try {
             $course = Course::findOrFail($id);
 
-            // Check if user owns the course or is admin
-            if ($course->instructor_id !== Auth::id() && !Auth::user()->hasRole('admin')) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Unauthorized to view course students'
-                ], 403);
+            if (!$this->userCanModify($course)) {
+                return $this->error('Unauthorized', 403);
             }
 
-            $enrollments = Enrollment::with(['user'])
-                                   ->where('course_id', $course->id)
-                                   ->orderBy('enrolled_at', 'desc')
-                                   ->get();
+            $students = Enrollment::with('user')
+                                  ->where('course_id', $id)
+                                  ->latest('enrolled_at')
+                                  ->get();
 
-            return response()->json([
-                'success' => true,
-                'data' => $enrollments
-            ]);
+            return $this->success($students);
+
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to fetch students: ' . $e->getMessage()
-            ], 500);
+            return $this->error("Failed to fetch students: {$e->getMessage()}", 500);
         }
     }
 
-    /**
-     * Get course analytics (instructor only)
-     */
     public function analytics($id)
     {
         try {
             $course = Course::findOrFail($id);
 
-            // Check if user owns the course or is admin
-            if ($course->instructor_id !== Auth::id() && !Auth::user()->hasRole('admin')) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Unauthorized to view course analytics'
-                ], 403);
+            if (!$this->userCanModify($course)) {
+                return $this->error('Unauthorized', 403);
             }
+
+            $total = $course->enrollments()->count();
+            $completed = $course->enrollments()->where('status', 'completed')->count();
 
             $analytics = [
-                'total_enrollments' => $course->enrollments()->count(),
-                'active_students' => $course->enrollments()->where('status', 'active')->count(),
-                'completed_students' => $course->enrollments()->where('status', 'completed')->count(),
-                'average_progress' => $course->enrollments()->avg('progress'),
-                'total_revenue' => $course->enrollments()->sum('amount_paid'),
-                'average_rating' => $course->reviews()->avg('rating'),
-                'total_reviews' => $course->reviews()->count(),
-                'completion_rate' => $course->enrollments()->count() > 0
-                    ? ($course->enrollments()->where('status', 'completed')->count() / $course->enrollments()->count()) * 100
-                    : 0
+                'total_enrollments'  => $total,
+                'active_students'    => $course->enrollments()->where('status', 'active')->count(),
+                'completed_students' => $completed,
+                'average_progress'   => $course->enrollments()->avg('progress'),
+                'total_revenue'      => $course->enrollments()->sum('amount_paid'),
+                'average_rating'     => $course->reviews()->avg('rating'),
+                'total_reviews'      => $course->reviews()->count(),
+                'completion_rate'    => $total > 0 ? ($completed / $total) * 100 : 0
             ];
 
-            return response()->json([
-                'success' => true,
-                'data' => $analytics
-            ]);
+            return $this->success($analytics);
+
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to fetch analytics: ' . $e->getMessage()
-            ], 500);
-        }
-    }
-
-    /**
-     * Publish a course
-     */
-    public function publish($id)
-    {
-        try {
-            $course = Course::findOrFail($id);
-
-            // Check if user owns the course or is admin
-            if ($course->instructor_id !== Auth::id() && !Auth::user()->hasRole('admin')) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Unauthorized to publish this course'
-                ], 403);
-            }
-
-            // Validate course has required content
-            if ($course->lessons()->count() === 0) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Course must have at least one lesson to be published'
-                ], 400);
-            }
-
-            $course->update([
-                'status' => 'published',
-                'published_at' => now()
-            ]);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Course published successfully',
-                'data' => $course
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to publish course: ' . $e->getMessage()
-            ], 500);
-        }
-    }
-
-    /**
-     * Unpublish a course
-     */
-    public function unpublish($id)
-    {
-        try {
-            $course = Course::findOrFail($id);
-
-            // Check if user owns the course or is admin
-            if ($course->instructor_id !== Auth::id() && !Auth::user()->hasRole('admin')) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Unauthorized to unpublish this course'
-                ], 403);
-            }
-
-            $course->update(['status' => 'draft']);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Course unpublished successfully',
-                'data' => $course
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to unpublish course: ' . $e->getMessage()
-            ], 500);
+            return $this->error("Failed to fetch analytics: {$e->getMessage()}", 500);
         }
     }
 }

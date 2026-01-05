@@ -13,11 +13,23 @@ class CourseReview extends Model
         'course_id',
         'user_id',
         'rating',
-        'review'
+        'review',
+        'title',
+        'comment',
+        'pros',
+        'cons',
+        'status',
+        'helpful_count',
+        'moderated_by',
+        'moderated_at',
+        'rejection_reason'
     ];
 
     protected $casts = [
         'rating' => 'integer',
+        'pros' => 'array',
+        'cons' => 'array',
+        'moderated_at' => 'datetime',
     ];
 
     // Relationships
@@ -29,6 +41,16 @@ class CourseReview extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function helpfulMarks()
+    {
+        return $this->hasMany(ReviewHelpful::class, 'review_id');
+    }
+
+    public function moderator()
+    {
+        return $this->belongsTo(User::class, 'moderated_by');
     }
 
     // Scopes
@@ -55,6 +77,21 @@ class CourseReview extends Model
     public function scopeLowRated($query)
     {
         return $query->where('rating', '<=', 2);
+    }
+
+    public function scopeApproved($query)
+    {
+        return $query->where('status', 'approved');
+    }
+
+    public function scopePending($query)
+    {
+        return $query->where('status', 'pending');
+    }
+
+    public function scopeRejected($query)
+    {
+        return $query->where('status', 'rejected');
     }
 
     // Methods

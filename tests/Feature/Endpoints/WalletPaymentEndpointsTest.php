@@ -4,7 +4,8 @@ namespace Tests\Feature\Endpoints;
 
 use App\Models\User;
 use App\Models\Course;
-use App\Models\Category;
+use App\Models\CurriculumCategory;
+use App\Models\CourseCategory;
 use App\Models\Term;
 use App\Models\Level;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -29,7 +30,7 @@ class WalletPaymentEndpointsTest extends TestCase
         $this->user->wallet->update(['balance' => 5000.00]);
 
         // Create a test course
-        $category = Category::factory()->create();
+        $category = CurriculumCategory::factory()->create();
         $term = Term::factory()->create();
         $level = Level::factory()->create();
 

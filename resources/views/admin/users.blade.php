@@ -23,18 +23,18 @@
                     <!-- Table Header with Search and Filters -->
                     <div class="d-flex justify-content-between align-items-center mb-5">
                         <h5 class="fw-bold mb-0" style="font-size: 1.1rem; color: #1a1a1a;">All Users List</h5>
-                        <div class="d-flex gap-3 justify-content-end" style="flex: 1; margin-left: 2rem;">
+                        <div class="d-flex gap-3 justify-content-end" >
                             <!-- Search Input -->
-                            <div class="position-relative flex-grow-1 d-flex gap-2 align-items-center search-input-custom py-1 px-2"
-                                style="max-width: 300px;">
-                                <i class="fa-solid fa-search fa-lg " style="color: #999;"></i>
-                                <input type="text" class="form-control  " style="border:none; outline:none;"
+                            <div class="d-flex gap-2 align-items-center search-border-custom"
+                                >
+                                <i class="fa-solid fa-search fa-xs " style="color: #999;"></i>
+                                <input type="search" class="search-input-custom-input"
                                     id="searchInput" placeholder="Search by Name or Email" aria-label="Search">
                             </div>
 
                             <!-- Filter Dropdown -->
-                            <select class="form-select filter-select-custom" id="filterSelect"
-                                style="max-width: 200px; height:45px; font-size:14px;">
+                            <select class="custom-select" id="filterSelect"
+                                >
                                 <option value="" style="">All Classes</option>
                                 <option value="course">All Courses</option>
                                 <option value="category">All Categories</option>
@@ -111,8 +111,9 @@
             </div>
     </main>
 
+        <!-- API Clients -->
     <script>
-        // Get auth token
+// Get auth token
         const token = localStorage.getItem('auth_token');
         let currentPage = 1;
         let totalPages = 1;
@@ -138,61 +139,50 @@
         // Load users from API
         async function loadUsers(page = 1) {
             try {
-                let url = `/api/admin/users?page=${page}&per_page=20`;
+                const filters = {
+                    page: page,
+                    per_page: 20
+                };
 
                 // Add search parameter
                 if (currentSearch) {
-                    url += `&search=${encodeURIComponent(currentSearch)}`;
+                    filters.search = currentSearch;
                 }
 
                 // Add filter parameter
-                if (currentFilter) {
-                    if (currentFilter.startsWith('role-')) {
-                        url += `&role=${currentFilter.replace('role-', '')}`;
-                    }
+                if (currentFilter && currentFilter.startsWith('role-')) {
+                    filters.role = currentFilter.replace('role-', '');
                 }
 
-                // Add cache-busting parameter
-                url += `&t=${Date.now()}`;
+                const result = await AdminApiClient.getUsers(filters);
 
-                const response = await fetch(url, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Accept': 'application/json'
-                    },
-                    cache: 'no-store' // Prevent caching
-                });
-
-                if (!response.ok) {
-                    console.error('Failed to fetch users');
+                if (!result.success) {
+                    console.error('Failed to fetch users:', result.message);
                     return;
                 }
 
-                const data = await response.json();
-                if (data.success && data.data) {
-                    currentPage = page;
-                    const users = data.data.data;
-                    const pagination = data.data;
-                    totalPages = pagination.last_page;
+                currentPage = page;
+                const users = result.data.data || result.data;
+                const pagination = result.data;
+                totalPages = pagination.last_page;
 
-                    // Update table
-                    const tbody = document.getElementById('usersTableBody');
-                    tbody.innerHTML = '';
+                // Update table
+                const tbody = document.getElementById('usersTableBody');
+                tbody.innerHTML = '';
 
-                    if (users.length === 0) {
-                        tbody.innerHTML =
-                            '<tr><td colspan="8" class="text-center text-muted py-4">No users found</td></tr>';
-                    } else {
-                        users.forEach((user, index) => {
-                            const profilePhoto = user.profile_photo ?
-                                `storage/${user.profile_photo}` :
-                                'images/winner-round.png';
+                if (users.length === 0) {
+                    tbody.innerHTML =
+                        '<tr><td colspan="8" class="text-center text-muted py-4">No users found</td></tr>';
+                } else {
+                    users.forEach((user, index) => {
+                        const profilePhoto = user.profile_photo ?
+                            `storage/${user.profile_photo}` :
+                            'images/winner-round.png';
 
-                            const roleColor = user.role === 'admin' ? '#6c757d' :
-                                user.role === 'instructor' ? '#004A53' : '#FDAF22';
+                        const roleColor = user.role === 'admin' ? '#6c757d' :
+                            user.role === 'instructor' ? '#004A53' : '#FDAF22';
 
-                            const row = `
+                        const row = `
               <tr style="border-bottom: 1px solid #e8e8e8;">
                 <td style="padding: 1rem; color: #666; font-size:14px;">${String((page - 1) * 20 + index + 1).padStart(2, '0')}</td>
                 <td style="padding: 1rem;">
@@ -220,21 +210,20 @@
                 </td>
               </tr>
             `;
-                            tbody.innerHTML += row;
-                        });
-                    }
-
-                    // Update pagination info
-                    document.getElementById('currentPageNum').textContent = currentPage;
-                    document.getElementById('totalPageNum').textContent = totalPages;
-
-                    // Update pagination buttons
-                    document.getElementById('prevBtn').disabled = !pagination.prev_page_url;
-                    document.getElementById('nextBtn').disabled = !pagination.next_page_url;
-
-                    // Generate page numbers
-                    generatePageNumbers(currentPage, totalPages);
+                        tbody.innerHTML += row;
+                    });
                 }
+
+                // Update pagination info
+                document.getElementById('currentPageNum').textContent = currentPage;
+                document.getElementById('totalPageNum').textContent = totalPages;
+
+                // Update pagination buttons
+                document.getElementById('prevBtn').disabled = !pagination.prev_page_url;
+                document.getElementById('nextBtn').disabled = !pagination.next_page_url;
+
+                // Generate page numbers
+                generatePageNumbers(currentPage, totalPages);
             } catch (error) {
                 console.error('Error loading users:', error);
             }
@@ -307,25 +296,17 @@
                     const userId = btn.getAttribute('data-user-id');
 
                     // Show confirmation modal
-                    if (confirm(
-                            'Are you sure you want to delete this user? This action cannot be undone.'
-                        )) {
+                    const confirmed = await window.confirmationModal.showDeleteConfirmation('this user');
+
+                    if (confirmed) {
                         try {
                             btn.disabled = true;
                             btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
 
                             const token = localStorage.getItem('auth_token');
-                            const response = await fetch(`/api/admin/users/${userId}`, {
-                                method: 'DELETE',
-                                headers: {
-                                    'Authorization': `Bearer ${token}`,
-                                    'Accept': 'application/json'
-                                }
-                            });
+                            const result = await AdminApiClient.deleteUser(userId);
 
-                            const data = await response.json();
-
-                            if (response.ok) {
+                            if (result.success) {
                                 // Show success message
                                 showDeleteAlert('User deleted successfully!', 'success');
                                 // Reload users after 1 second
@@ -333,7 +314,7 @@
                                     loadUsers(currentPage);
                                 }, 1000);
                             } else {
-                                showDeleteAlert(data.message || 'Failed to delete user', 'error');
+                                showDeleteAlert(result.message || 'Failed to delete user', 'error');
                                 btn.disabled = false;
                                 btn.innerHTML = '<i class="fa fa-trash" style="color: #dc3545;"></i>';
                             }
@@ -381,8 +362,7 @@
             loadUsers = async function(page = 1) {
                 await originalLoadUsers(page);
                 attachDeleteListeners();
-            };
-    </script>
+            };    </script>
 
     <style>
         .users-main {
