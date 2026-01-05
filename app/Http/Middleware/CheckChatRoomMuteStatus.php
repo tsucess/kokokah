@@ -5,12 +5,13 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\ChatRoom;
 
 class CheckChatRoomMuteStatus
 {
     /**
      * Handle an incoming request.
-     * 
+     *
      * Checks if user is muted in the chat room.
      * Only applies to POST requests (sending messages).
      * Admin users are never muted.
@@ -29,8 +30,20 @@ class CheckChatRoomMuteStatus
             return $next($request);
         }
 
-        // Get the chat room from route parameter
-        $chatRoom = $request->route('chatRoom');
+        // Get the chat room parameter from route
+        $chatRoomParam = $request->route('chatRoom');
+
+        if (!$chatRoomParam) {
+            return $next($request);
+        }
+
+        // Handle both string ID and ChatRoom model object
+        if ($chatRoomParam instanceof ChatRoom) {
+            $chatRoom = $chatRoomParam;
+        } else {
+            // Fetch the ChatRoom model if we got an ID
+            $chatRoom = ChatRoom::find($chatRoomParam);
+        }
 
         if (!$chatRoom) {
             return $next($request);

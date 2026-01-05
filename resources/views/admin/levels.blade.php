@@ -453,10 +453,6 @@
             </div>
         </div>
 
-        <!-- API Clients -->
-        <script src="{{ asset('js/api/baseApiClient.js') }}"></script>
-        <script src="{{ asset('js/api/courseApiClient.js') }}"></script>
-        <script src="{{ asset('js/utils/toastNotification.js') }}"></script>
 
         <script>
             (function() {
@@ -498,7 +494,11 @@
                 // ---------- Toast helper ----------
                 function showToast(title = '', message = '', type = 'info', timeout = 3500) {
                     const toastType = (type === 'danger') ? 'error' : type;
-                    window.ToastNotification.show(title, message, toastType, timeout);
+                    if (window.ToastNotification && window.ToastNotification.show) {
+                        window.ToastNotification.show(title, message, toastType, timeout);
+                    } else {
+                        console.warn('ToastNotification not available:', { title, message, type });
+                    }
                 }
 
                 // ---------- Escaping ----------
@@ -926,6 +926,19 @@
 
                 // Initial load (categories first, then levels)
                 (async function init() {
+                    // Wait for CourseApiClient to be available
+                    let attempts = 0;
+                    while (!window.CourseApiClient && attempts < 50) {
+                        await new Promise(resolve => setTimeout(resolve, 100));
+                        attempts++;
+                    }
+
+                    if (!window.CourseApiClient) {
+                        console.error('CourseApiClient failed to load');
+                        showToast('Error', 'Failed to load API client', 'danger');
+                        return;
+                    }
+
                     await loadCategories();
                     await loadLevels();
                 })();

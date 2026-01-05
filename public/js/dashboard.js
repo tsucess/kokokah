@@ -267,6 +267,11 @@ class DashboardModule {
    */
   static async loadNotifications() {
     try {
+      // Check if NotificationApiClient is available
+      if (!window.NotificationApiClient) {
+        console.warn('NotificationApiClient not loaded yet');
+        return;
+      }
       const count = await window.NotificationApiClient.getUnreadCount();
       this.updateNotificationBadge(count);
     } catch (error) {

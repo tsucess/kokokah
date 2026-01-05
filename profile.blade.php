@@ -522,10 +522,7 @@
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 
-                <!-- API Clients -->
-                <script src="{{ asset('js/api/baseApiClient.js') }}"></script>
-                <script src="{{ asset('js/api/userApiClient.js') }}"></script>
-                <script src="{{ asset('js/utils/toastNotification.js') }}"></script>
+
 
                 <script>
                     // Load profile data on page load

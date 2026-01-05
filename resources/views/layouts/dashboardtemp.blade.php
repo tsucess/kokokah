@@ -239,6 +239,7 @@
     <script src="/js/api/paymentApiClient.js"></script>
     <script src="/js/api/topicApiClient.js"></script>
     <script src="/js/api/adminApiClient.js"></script>
+    <script src="/js/api/notificationApiClient.js"></script>
     <script src="/js/utils/uiHelpers.js"></script>
     <script src="/js/utils/toastNotification.js"></script>
 

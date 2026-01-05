@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -48,20 +49,17 @@ return new class extends Migration
             // Add indexes if they don't exist
             if (Schema::hasTable('badges')) {
                 Schema::table('badges', function (Blueprint $table) {
-                    // Check and add indexes
-                    $indexExists = DB::select("SHOW INDEX FROM badges WHERE Key_name = 'badges_category_index'");
-                    if (empty($indexExists)) {
-                        $table->index('category');
+                    // Check and add indexes using Schema::hasIndex
+                    if (!Schema::hasIndex('badges', 'badges_category_index')) {
+                        $table->index('category', 'badges_category_index');
                     }
-                    
-                    $indexExists = DB::select("SHOW INDEX FROM badges WHERE Key_name = 'badges_type_index'");
-                    if (empty($indexExists)) {
-                        $table->index('type');
+
+                    if (!Schema::hasIndex('badges', 'badges_type_index')) {
+                        $table->index('type', 'badges_type_index');
                     }
-                    
-                    $indexExists = DB::select("SHOW INDEX FROM badges WHERE Key_name = 'badges_is_active_index'");
-                    if (empty($indexExists)) {
-                        $table->index('is_active');
+
+                    if (!Schema::hasIndex('badges', 'badges_is_active_index')) {
+                        $table->index('is_active', 'badges_is_active_index');
                     }
                 });
             }

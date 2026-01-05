@@ -42,6 +42,7 @@ use App\Http\Controllers\TopicController;
 use App\Http\Controllers\TermController;
 use App\Http\Controllers\PointsAndBadgesController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\RatingController;
 
 
 
@@ -327,6 +328,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/{id}/helpful', [ReviewController::class, 'markHelpful']);
         Route::post('/{id}/approve', [ReviewController::class, 'approve']);
         Route::post('/{id}/reject', [ReviewController::class, 'reject']);
+    });
+
+    // Rating management routes (authenticated)
+    Route::prefix('ratings')->group(function () {
+        Route::get('/', [RatingController::class, 'index'])->name('admin.rating.index');
+        Route::get('/{courseId}', [RatingController::class, 'show'])->name('admin.rating.show');
     });
 
     // Forum management routes (authenticated)
