@@ -72,7 +72,6 @@
             <!-- communication dropdowns -->
             <div class="collapse ps-4" id="communication">
                 <a class="nav-item-link d-block" href="/userannouncement">Announcements</a>
-                <a class="nav-item-link d-block" href="#">Email / Messaging Center</a>
                 <a class="nav-item-link d-block" href="/userfeedback">Feedback / Surveys</a>
             </div>
 
