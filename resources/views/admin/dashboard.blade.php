@@ -3,8 +3,8 @@
 @section('content')
     <!-- Main -->
     <main>
-        <div class="container">
-            <div class = "row">
+        <div class="container-fluid px-4 pt-5">
+            <div class = "row mb-4">
                 <div class="d-flex justify-content-between">
 
                     <div>
@@ -29,68 +29,68 @@
                     <img src = "images/abc.png" class = "img-fluid" />
                     {{-- <div class="stat-orb orb-users"><i class="fa-solid fa-users"></i></div> --}}
                     <div class="stat-meta">
-                        <div class="label mt-2">Total Users</div>
+                        <div class="label mt-2 inter-font">Total Users</div>
                         <div class="mt-2">
-                            <p>
+                            <p class="inter-font">
                                 <i class="fa-solid fa-square text-success"></i> Male <span id="totalUsersMale">(0)</span>
                                 <br />
                                 <i class="fa-solid fa-square text-warning"></i> Female <span
                                     id="totalUsersFemale">(0)</span>
                             </p>
                         </div>
-                        <div class="value" id="totalUsers">0</div>
+                        <div class="value inter-font" id="totalUsers">0</div>
                     </div>
                 </div>
 
                 <div class="stat-card">
                     <img src = "images/students.png" class = "img-fluid" />
                     <div class="stat-meta">
-                        <div class="label mt-2">Students</div>
+                        <div class="label mt-2 inter-font">Students</div>
                         <div class = "mt-2">
-                            <p>
+                            <p class="inter-font">
                                 <i class="fa-solid fa-square text-success"></i> MALE <span id="totalStudentsMale">(0)</span>
                                 <br />
                                 <i class="fa-solid fa-square text-warning"></i> FEMALE <span
                                     id="totalStudentsFemale">(0)</span>
                             </p>
                         </div>
-                        <div class="value" id="totalStudents">0</div>
+                        <div class="value inter-font" id="totalStudents">0</div>
                     </div>
                 </div>
 
                 <div class="stat-card">
                     <img src = "images/instructor.png" class = "img-fluid" />
                     <div class="stat-meta">
-                        <div class="label">Instructors</div>
+                        <div class="label inter-font">Instructors</div>
                         <div class = "mt-2">
-                            <p>
+                            <p class="inter-font">
                                 <i class="fa-solid fa-square text-success"></i> MALE <span
                                     id="totalInstructorsMale">(0)</span> <br />
                                 <i class="fa-solid fa-square text-warning"></i> FEMALE <span
                                     id="totalInstructorsFemale">(0)</span>
                             </p>
                         </div>
-                        <div class="value" id="totalInstructors">0</div>
+                        <div class="value inter-font" id="totalInstructors">0</div>
                     </div>
                 </div>
 
                 <div class="stat-card">
                     <img src = "images/abc.png" class = "img-fluid " />
                     <div class="stat-meta">
-                        <div class="label">Active Courses</div>
+                        <div class="label inter-font">Active Courses</div>
                         <div class = "mt-2">
-                            <p id="coursesByCategory">
+                            <p id="coursesByCategory" class="inter-font">
                                 <i class="fa-solid fa-square text-success"></i> Loading... <br />
                             </p>
                         </div>
-                        <div class="value" id="totalCourses">0</div>
+                        <div class="value inter-font" id="totalCourses">0</div>
                     </div>
                 </div>
             </div>
 
 
             <!-- Chart -->
-            <div class = "container">
+            <div class = "container-fluid px-0">
                 <div class="chart-card">
                     <div class="chart-header">
                         <div class = "information1">
@@ -149,8 +149,8 @@
                 </div>
 
                 <!-- Pagination for Recently Registered Users -->
-                <div class="d-flex justify-content-between align-items-center mt-4 pt-3"
-                    style="border-top: 1px solid #e8e8e8;" id="recentUsersPagination">
+                <div class="d-flex justify-content-between align-items-center pt-2"
+                 id="recentUsersPagination">
 
                     <!-- Pagination Info (Left) -->
                     <small class="text-muted fw-semibold" id="recentUsersInfo">Loading...</small>

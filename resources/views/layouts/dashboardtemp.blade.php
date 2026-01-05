@@ -45,43 +45,56 @@
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar" style="height: 100vh; overflow-y: auto; overflow-x: hidden;">
         <div class="brand p-3">
-            <a href="/"><img src="{{ asset('images/Kokokah_Logo.png') }}" alt="Kokokah Logo"
+            <a href="/"><img src="{{ asset('images/logo-auth.png') }}" alt="Kokokah Logo"
                     class="img-fluid dashboard-logo"></a>
         </div>
 
         <nav class="nav-group px-2" id="sidebarNav">
-            <a class="nav-item-link" href="/dashboard" id="dashboardLink">
-                <i class="fa-solid fa-gauge pe-2"></i> Dashboard
+            <a class="nav-item-link d-flex align-items-center gap-3" href="/dashboard" id="dashboardLink">
+                <i class="fa-solid fa-gauge nav-icon"></i> <span>Dashboard</span>
             </a>
 
             <!-- Users Management -->
-            <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
-                data-bs-toggle="collapse" href="#usersMenu" role="button" aria-expanded="true"
-                aria-controls="usersMenu">
-                <span><i class="fa-solid fa-users pe-3"></i> Users Management</span>
+            <a class="nav-item-link d-flex align-items-center justify-content-between nav-parent"
+                data-bs-toggle="collapse" href="#usersMenu">
+
+                <span class="d-flex align-items-center gap-3">
+                    <i class="fa-solid fa-users nav-icon"></i>
+                    <span>Users Management</span>
+                </span>
+
                 <i class="fa-solid fa-chevron-down chevron-icon"></i>
             </a>
 
+
             <!-- Dropdown items -->
-            <div class="collapse ps-4" id="usersMenu">
+            <div class="collapse ps-5 " id="usersMenu">
+                <div class="d-flex flex-column gap-2">
                 <a class="nav-item-link d-block nav-child" href="/users">All Users</a>
                 <a class="nav-item-link d-block nav-child" href="/students">Students</a>
                 <a class="nav-item-link d-block nav-child" href="/instructors">Instructors</a>
                 <a class="nav-item-link d-block nav-child" href="/adduser">Add Users</a>
                 <a class="nav-item-link d-block nav-child" href="/useractivity">Users Activity Log</a>
+                </div>
             </div>
 
             <!-- Subject Management -->
-            <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
-                data-bs-toggle="collapse" href="#subjectsMenu" role="button" aria-expanded="true"
+            <a class="nav-item-link d-flex align-items-center justify-content-between nav-parent"
+                data-bs-toggle="collapse" href="#subjectsMenu" role="button" aria-expanded="false"
                 aria-controls="subjectsMenu">
-                <span><i class="fa-solid fa-book-open me-2 pe-2"></i> Course Management</span>
+
+                <span class="d-flex align-items-center gap-3">
+                    <i class="fa-solid fa-book-open nav-icon"></i>
+                    <span>Course Management</span>
+                </span>
+
                 <i class="fa-solid fa-chevron-down chevron-icon"></i>
             </a>
 
 
             <!-- Dropdown items -->
-            <div class="collapse ps-4" id="subjectsMenu">
+            <div class="collapse ps-5" id="subjectsMenu">
+                <div class="d-flex flex-column gap-2">
                 <a class="nav-item-link d-block nav-child" href="/subjects">All Courses</a>
                 <a class="nav-item-link d-block nav-child" href="/createsubject">Create New Course</a>
                 <a class="nav-item-link d-block nav-child" href="/categories">Course Categories</a>
@@ -89,18 +102,19 @@
                 <a class="nav-item-link d-block nav-child" href="/levels">Levels & Classes</a>
                 <a class="nav-item-link d-block nav-child" href="/terms">Academic Terms</a>
                 <a class="nav-item-link d-block nav-child" href="/rating">Course Reviews & Rating</a>
+                </div>
             </div>
 
-            <a class="nav-item-link" href="/transactions" role="button">
-                <span><i class="fa-solid fa-credit-card pe-3"></i>Transactions</span></a>
+            <a class="nav-item-link d-flex align-items-center gap-3" href="/transactions" role="button">
+                <i class="fa-solid fa-credit-card nav-icon"></i><span>Transactions</span></a>
 
             {{-- <div class="collapse ps-4" id="paymentsMenu">
                 <a class="nav-item-link d-block nav-child" href="/transactions">Transactions</a>
                 <a class="nav-item-link d-block nav-child" href="#">Payment History</a>
                 <a class="nav-item-link d-block nav-child" href="#">Invoices</a>
             </div> --}}
-            <a class="nav-item-link" href="/report">
-                <i class="fa-solid fa-chart-line pe-3"></i> Reports & Analytics
+            <a class="nav-item-link d-flex align-items-center gap-3" href="/report">
+                <i class="fa-solid fa-chart-line nav-icon"></i>  <span>Reports & Analytics</span>
             </a>
             {{-- <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
                 data-bs-toggle="collapse" href="#analyticsMenu" role="button" aria-expanded="false"
@@ -114,16 +128,24 @@
                 <a class="nav-item-link d-block nav-child" href="#">Analytics</a>
             </div> --}}
 
-            <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
+
+            <a class="nav-item-link d-flex align-items-center justify-content-between nav-parent"
                 data-bs-toggle="collapse" href="#communicationMenu" role="button" aria-expanded="false"
                 aria-controls="communicationMenu">
-                <span><i class="fa-solid fa-comments pe-3"></i> Communication</span>
-                <i class="fa-solid fa-chevron-down small chevron-icon"></i>
+
+                <span class="d-flex align-items-center gap-3">
+                    <i class="fa-solid fa-comments nav-icon"></i>
+                    <span>Communication</span>
+                </span>
+
+                <i class="fa-solid fa-chevron-down chevron-icon"></i>
             </a>
 
-            <div class="collapse ps-4" id="communicationMenu">
+            <div class="collapse ps-5 " id="communicationMenu">
+                <div class="d-flex flex-column gap-2">
                 <a class="nav-item-link d-block nav-child" href="#">Messages</a>
                 <a class="nav-item-link d-block nav-child" href="/announcement">Notifications</a>
+                </div>
             </div>
         </nav>
 
@@ -379,7 +401,7 @@
                     // Close all other collapse menus
                     document.querySelectorAll('.collapse').forEach(collapse => {
                         if (collapse.id !== targetId && collapse.classList.contains(
-                            'show')) {
+                                'show')) {
                             const bsCollapse = bootstrap.Collapse.getInstance(collapse);
                             if (bsCollapse) {
                                 bsCollapse.hide();

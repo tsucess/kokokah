@@ -19,7 +19,14 @@
 body {
     background: #f5f5f5;
 }
-h1,h2,h3,h4,h5,h6,p{
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
     margin-bottom: 0px;
 }
 
@@ -36,6 +43,10 @@ p {
     font: sitka;
     font-size: 20px;
 }
+.no-wrap {
+  white-space: nowrap;
+}
+
 
 /* Button styles moved to Tailwind - see resources/css/app.css */
 
@@ -237,7 +248,7 @@ body {
     align-items: center;
     gap: 12px;
     padding: 10px 12px;
-    color: #6b7280;
+    color: #004A53;
     text-decoration: none;
     border-radius: 8px;
     font-weight: 500;
@@ -252,8 +263,8 @@ body {
 }
 
 .nav-item-link.active {
-    background: #fff3e0;
-    color: #fdaf22;
+    background: #FDAF22;
+    color: #000F11;
     font-weight: 600;
 }
 
@@ -268,7 +279,7 @@ body {
 .nav-child {
     font-size: 13px;
     padding: 8px 12px;
-    color: #6b7280;
+    color: #004A53;
 }
 
 .nav-child:hover {
@@ -277,15 +288,15 @@ body {
 }
 
 .nav-child.active {
-    color: #fdaf22;
-    background: #fff3e0;
+    background: #FDAF22;
+    color: #000F11;
     font-weight: 600;
 }
 
 .nav-group {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 8px;
     margin-top: 4px;
 }
 
@@ -368,11 +379,11 @@ body {
     justify-content: center;
 }
 
-@media screen and (min-width:768px) {
-.icon-btn {
-    width: 42px;
-    height: 42px;
-}
+@media screen and (min-width: 768px) {
+    .icon-btn {
+        width: 42px;
+        height: 42px;
+    }
 }
 
 /* Main content */
@@ -464,6 +475,11 @@ main .container {
     font-size: 20px;
 }
 
+.inter-font {
+    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
 .stat-meta .label {
     font-size: 16px;
     color: var(--muted);
@@ -488,6 +504,21 @@ main .container {
     box-shadow: 0 6px 18px rgba(15, 28, 36, 0.04);
     overflow: hidden;
 }
+.nav-icon {
+    width: 20px; /* equal width for all icons */
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.chevron-icon {
+    transition: transform 0.2s ease;
+}
+
+.nav-parent[aria-expanded="true"] .chevron-icon {
+    transform: rotate(360deg);
+}
 
 .chart-header {
     display: flex;
@@ -510,10 +541,10 @@ main .container {
     border-radius: 50%;
     display: inline-block;
 }
-.page-footer-link{
-        font-size: 16px;
-        color: var(--muted);
-    }
+.page-footer-link {
+    font-size: 16px;
+    color: var(--muted);
+}
 
 @media screen and(max-width:320px) {
     .information1 h6,
@@ -543,7 +574,7 @@ main .container {
         text-align: left;
         margin-left: 290px;
         color: var(--muted);
-        padding: 20px 0;
+        padding: 20px 20px;
     }
 }
 
@@ -553,7 +584,7 @@ main .container {
         padding: 20px 0;
         font-size: 16px;
     }
-    .page-footer-link{
+    .page-footer-link {
         font-size: 14px;
         color: var(--muted);
     }
@@ -973,7 +1004,7 @@ main .container {
 
 .balance-header {
     /* Simulating the green gradient and shape */
-    background: linear-gradient(135deg,#2EAF4A, #8DD234);
+    background: linear-gradient(135deg, #2eaf4a, #8dd234);
     color: white;
     padding: 2rem 2.5rem;
     border-radius: 0.5rem;
@@ -996,14 +1027,13 @@ main .container {
     pointer-events: none;
 }
 
-.balance-header-title{
-    color: #FFFFFF;
+.balance-header-title {
+    color: #ffffff;
     font-size: 14px;
 }
 
-
-.balance-header-cardNo{
-    color: #FFEF60;
+.balance-header-cardNo {
+    color: #ffef60;
     font-size: 14px;
 }
 
@@ -1016,11 +1046,11 @@ main .container {
     border-bottom: 1px solid var(--bs-light-gray);
 }
 
-@media screen and (max-width:768px) {
-.transaction-item {
-    flex-direction: column;
-    align-items: start;
-}
+@media screen and (max-width: 768px) {
+    .transaction-item {
+        flex-direction: column;
+        align-items: start;
+    }
 }
 
 .transaction-details {
@@ -1059,7 +1089,7 @@ main .container {
     font-size: 2rem;
     /* Default size */
     font-weight: bold;
-    font-family: 'fredoka';
+    font-family: "fredoka";
     color: #fff;
 }
 
@@ -1194,7 +1224,7 @@ main .container {
     padding: 4rem 2rem;
     text-align: center;
     color: var(--bs-dark-teal);
-    background-color: #FDAF22;
+    background-color: #fdaf22;
 }
 
 .welcome-icon {
@@ -1400,9 +1430,9 @@ main .container {
     height: 300px;
 }
 @media (min-width: 767.98px) {
-.header-section {
-    height: 200px;
-}
+    .header-section {
+        height: 200px;
+    }
 }
 
 .header-section h3 {
@@ -1421,12 +1451,12 @@ main .container {
     right: -60px;
     z-index: 2;
 }
-.header-card-text{
+.header-card-text {
     color: #666666;
     font-size: 14px;
 }
-.userdasboard-card-img{
-   max-height: 50px;
+.userdasboard-card-img {
+    max-height: 50px;
 }
 
 /* Primary Navigation Button (Explore Kokokah) */
@@ -2156,7 +2186,7 @@ select {
     outline: none;
     border: none;
     font-size: 14px;
-    color: #004A53;
+    color: #004a53;
     padding: 0;
     font-weight: 500;
     background-color: transparent;
@@ -2178,7 +2208,8 @@ select {
     min-width: 250px;
     padding: 10px 15px;
 }
-.search-border-custom:active, .custom-select:active{
+.search-border-custom:active,
+.custom-select:active {
     border: 1.5px solid #8e8d93;
 }
 input.search-input-custom-input {
@@ -2189,15 +2220,16 @@ input.search-input-custom-input {
     outline: none;
 }
 
-.custom-select{
-    background-color: #F5F4F9;
+.custom-select {
+    background-color: #f5f4f9;
     border-radius: 6px;
     color: #777777;
     font-size: 12px;
     padding: 6px 10px;
+    border: none;;
 }
 
-.profile-details-container{
+.profile-details-container {
     box-shadow: 6px 6px 54px 0 #00000026;
     border-radius: 15px;
     background-color: #fff;
@@ -2303,6 +2335,3 @@ input.search-input-custom-input {
     margin: 0;
     font-size: 14px;
 }
-
-
-

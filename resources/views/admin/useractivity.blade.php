@@ -41,19 +41,22 @@
                                 <option value="dropped">Dropped</option>
                             </select> --}}
 
-                             <div class="d-flex gap-2 align-items-center search-border-custom">
-                                <i class="fa-solid fa-search fa-xs" style="color: #999;"></i>
+                             <div class="d-flex gap-2 align-items-center search-border-custom"
+                                >
+                                <i class="fa-solid fa-search fa-xs " style="color: #999;"></i>
                                 <input type="search" class="search-input-custom-input"
-                                    id="searchInput" placeholder="Search by Name or Date (YYYY-MM-DD)" aria-label="Search">
+                                    id="searchInput" placeholder="Search by Name or Email" aria-label="Search">
                             </div>
 
                             <!-- Filter Dropdown -->
-                            <select class="custom-select" id="filterSelect">
+                            <select class="custom-select" id="filterSelect"
+                                >
                                 <option value="">All Status</option>
                                 <option value="completed">Completed</option>
                                 <option value="pending">Pending</option>
                                 <option value="failed">Failed</option>
                             </select>
+
 
                             <!-- View Options -->
                             {{-- <button class="btn btn-light" style="border: 1px solid #ddd; padding: 0.625rem 1rem;" title="List View">
@@ -175,7 +178,7 @@
             outline: none;
         }
 
-        .search-border-custom {
+        /* .search-border-custom {
             border: 2px solid #004A53;
             border-radius: 0.75rem;
             padding: 0.5rem 1rem;
@@ -199,9 +202,9 @@
 
         .search-input-custom-input::placeholder {
             color: #999;
-        }
+        } */
 
-        .custom-select {
+        /* .custom-select {
             padding: 0.625rem 1rem;
             font-size: 0.95rem;
             border: 2px solid #004A53;
@@ -210,13 +213,13 @@
             background-color: white;
             color: #333;
             cursor: pointer;
-        }
+        } */
 
-        .custom-select:focus {
+        /* .custom-select:focus {
             border-color: #004A53;
             box-shadow: 0 0 0 0.2rem rgba(0, 74, 83, 0.15);
             outline: none;
-        }
+        } */
 
         .activity-table tbody tr:hover {
             background-color: #f5f5f5;
