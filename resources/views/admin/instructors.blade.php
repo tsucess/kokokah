@@ -2,9 +2,9 @@
 
 @section('content')
 <main class="users-main">
-  <div class="container-fluid px-5 py-4">
+  <div class="container-fluid px-5 pt-4">
     <!-- Header Section -->
-    <div class="d-flex justify-content-between align-items-start mb-2">
+    <div class="d-flex justify-content-between align-items-start mb-4">
       <div>
         <h1 class="fw-bold mb-2" >Welcome Back Samuel(Admin)</h1>
         <p class="text-muted" style="font-size: 0.95rem;">Here overview of your</p>
@@ -78,7 +78,7 @@
       </div>
 
       <!-- Pagination Section -->
-      <div class="d-flex justify-content-between align-items-center mt-5 pt-4" style="border-top: 1px solid #e8e8e8;">
+      <div class="d-flex justify-content-between align-items-center pt-4" >
         <!-- Previous Button -->
         <button class="btn px-4 py-2" id="prevBtn" onclick="loadUsers(currentPage - 1)" style="border: 1px solid #004A53; color: #004A53; font-weight: 500; border-radius: 0.5rem;" disabled>
           <i class="fa-solid fa-chevron-left me-2"></i> Previous
@@ -189,13 +189,13 @@
                 <td style="padding: 1rem; font-size:14px;">
                   <div class="d-flex align-items-center">
                     <img src="${profilePhoto}" class="rounded-circle me-3" width="32" height="32" style="object-fit: cover; background: #f0f0f0;">
-                    <span style="color: #333; font-weight: 500;">${user.first_name} ${user.last_name}</span>
+                    <span style="color: #333; font-weight: 500;" class='text-nowrap'>${user.first_name} ${user.last_name}</span>
                   </div>
                 </td>
                 <td style="padding: 1rem; color: #666; font-size:14px;">KOKOKAH-${String(user.id).padStart(4, '0')}</td>
                 <td style="padding: 1rem; color: #666; font-size:14px;">${user.email}</td>
                 <td style="padding: 1rem; font-size:14px;"><span style="color: #666;">${user.gender || 'N/A'}</span></td>
-                <td style="padding: 1rem; color: #666; font-size:14px;">${user.contact || 'N/A'}</td>
+                <td style="padding: 1rem; color: #666; font-size:14px;" class='text-nowrap' >${user.contact || 'N/A'}</td>
                 <td style="padding: 1rem; font-size:14px;">
                   <!-- <span class="badge" style="background-color: ${roleColor}; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">${user.role}</span> -->
                 </td>

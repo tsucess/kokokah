@@ -31,7 +31,7 @@
         <div class="signup-form">
           <!-- Logo -->
           <div class="mb-5  d-flex justify-content-center">
-            <img src="images/Kokokah_Logo.png" alt="Kokokah Logo" class = "img-fluid w-75">
+            <img src="images/logo-auth.png" alt="Kokokah Logo" class = "img-fluid w-50">
           </div>
 
           <!-- Alert Container -->
@@ -66,19 +66,19 @@
                 </div>
 
                <div class="auth-checkbox-row">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="rememberMe" name="rememberMe">
+                    <div class="form-check d-flex align-items-center gap-2">
+                        <input class="form-check-input checkbox-lg" type="checkbox" id="rememberMe" name="rememberMe">
                         <label class="form-check-label" for="rememberMe">
                             Keep me logged in
                         </label>
                     </div>
 
                     <div>
-                        <a href="/forgot-password">Forgot Password?</a>
+                        <a href="/forgotpassword">Forgot Password?</a>
                     </div>
                 </div>
 
-                <button type="submit" class="btn primaryButton" id="loginBtn">Sign in</button>
+                <button type="submit" class="btn primaryButton fw-bold" id="loginBtn">Sign in</button>
 
                 <p class="mt-3 text-center">
                   Don't have an account? <a href="/register" style="color: #FDAF22; text-decoration: none;">Sign up</a>

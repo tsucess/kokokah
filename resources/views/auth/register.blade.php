@@ -30,7 +30,7 @@
         <div class="signup-form">
           <!-- Logo -->
           <div class="mb-5  d-flex justify-content-center">
-            <img src="images/Kokokah_Logo.png" alt="Kokokah Logo" class = "img-fluid w-75">
+            <img src="images/logo-auth.png" alt="Kokokah Logo" class = "img-fluid w-50">
           </div>
 
           <!-- Alert Container -->

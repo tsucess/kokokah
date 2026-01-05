@@ -20,7 +20,7 @@
   margin-bottom: 40px;
 
 }
- 
+
 
 .custom-label {
   position: absolute;
@@ -40,34 +40,40 @@
 
 
 .form-control-custom {
-  /* Inherit basic form control look but override for the design */
-  display: block; /* changed from block to inline */
+  display: block;
   width: 100%;
   padding: 1rem 1.25rem;
-  /* Increased padding for the height shown */
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.5;
   color: #333;
-  /* Darker text */
   background-color: #fff;
-
-  /* Border style matching the image */
   border: 2px solid var(--input-border-color);
   border-radius: 10px;
-  /* Highly rounded corners */
-
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-
-  /* Remove default Bootstrap focus shadow/outline */
   box-shadow: none;
 }
 
 .form-control-custom:focus {
   border-color: #3d706e;
-  /* Slightly darker on focus */
   box-shadow: 0 0 0 0.25rem rgba(74, 135, 133, 0.25);
-  /* Subtle shadow on focus */
+}
+
+/* Autofill fix */
+.form-control-custom:-webkit-autofill,
+.form-control-custom:-webkit-autofill:hover,
+.form-control-custom:-webkit-autofill:focus,
+.form-control-custom:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
+  -webkit-text-fill-color: #333 !important;
+}
+
+
+.checkbox-lg {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  border: 2px solid #000000;
 }
 
 
@@ -199,8 +205,8 @@ a {
 
 /* Auth Heading */
 .auth-heading {
-  font-size: 32px;
-  font-weight: 700;
+  font-size: 40px;
+  font-weight: 800;
   color: #1C1D1D;
   font-family: 'Fredoka', sans-serif;
   margin-bottom: 8px;

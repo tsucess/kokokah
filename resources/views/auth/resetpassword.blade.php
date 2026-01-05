@@ -34,7 +34,7 @@
         <div class="signup-form">
           <!-- Logo -->
           <div class="mb-5 d-flex justify-content-center">
-            <img src="images/Kokokah_Logo.png" alt="Kokokah Logo" class = "img-fluid w-75">
+            <img src="images/logo-auth.png" alt="Kokokah Logo" class = "img-fluid w-50">
           </div>
 
           <a href = "/login" class="btn btn-link mb-4 p-0" style="color: #313131; font-weight: 500; text-decoration: none;"> <i class="fa fa-arrow-left"></i> Back to login</a>
