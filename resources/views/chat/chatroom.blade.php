@@ -132,6 +132,9 @@
                             <h4 class="fw-bold mb-1" style="color: var(--color-primary-button: #004A53);">Welcome to Chatroom</h4>
                             <p class="text-muted">Select a conversation to start chatting</p>
                         </div>
+                        <div class="chat-messages p-2" id="chat-messages">
+
+                        </div>
                     </div>
 
                     <div class="chat-input-area">
@@ -340,7 +343,7 @@
 
             if (!messages || messages.length === 0) {
                 console.log('No messages to render');
-                document.getElementById('chat-history').innerHTML = '<p class="text-muted">No messages yet</p>';
+                document.getElementById('chat-messages').innerHTML = '<p class="text-muted text-center">No messages yet</p>';
                 return;
             }
 
@@ -365,7 +368,7 @@
             }).join('');
 
             console.log('Rendered HTML length:', html.length);
-            document.getElementById('chat-history').innerHTML = html;
+            document.getElementById('chat-messages').innerHTML = html;
         }
 
         // Send message

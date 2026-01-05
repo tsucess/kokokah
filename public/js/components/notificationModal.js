@@ -62,10 +62,11 @@ class NotificationModal {
   async loadAnnouncements() {
     try {
       const response = await window.NotificationApiClient.getAnnouncements({ per_page: 5 });
-      this.announcements = response.success && response.data ? response.data : [];
+      this.announcements = this.ensureArray(response.success && response.data ? response.data : []);
       this.renderAnnouncements();
     } catch (error) {
       console.error('Error loading announcements:', error);
+      this.announcements = [];
       this.renderEmpty('announcementsList', 'No announcements');
     }
   }
@@ -76,10 +77,11 @@ class NotificationModal {
   async loadMessages() {
     try {
       const response = await window.NotificationApiClient.getMessages({ per_page: 5 });
-      this.messages = response.success && response.data ? response.data : [];
+      this.messages = this.ensureArray(response.success && response.data ? response.data : []);
       this.renderMessages();
     } catch (error) {
       console.error('Error loading messages:', error);
+      this.messages = [];
       this.renderEmpty('messagesList', 'No messages');
     }
   }
@@ -90,10 +92,11 @@ class NotificationModal {
   async loadSystemNotifications() {
     try {
       const response = await window.NotificationApiClient.getSystemNotifications({ per_page: 5 });
-      this.notifications = response.success && response.data ? response.data : [];
+      this.notifications = this.ensureArray(response.success && response.data ? response.data : []);
       this.renderNotifications();
     } catch (error) {
       console.error('Error loading notifications:', error);
+      this.notifications = [];
       this.renderEmpty('notificationsList', 'No notifications');
     }
   }
@@ -204,6 +207,16 @@ class NotificationModal {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+  }
+
+  /**
+   * Ensure value is an array
+   */
+  ensureArray(value) {
+    if (Array.isArray(value)) {
+      return value;
+    }
+    return [];
   }
 
   /**
