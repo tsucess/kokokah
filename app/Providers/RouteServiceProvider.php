@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Route;
+use App\Models\ChatRoom;
+use App\Models\ChatMessage;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -11,8 +14,13 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Routes are now configured in bootstrap/app.php
-        // This method is kept for backward compatibility but does nothing
-        // to avoid double-prefixing of routes
+        // Define route model bindings using bind() for implicit binding
+        Route::bind('chatRoom', function ($value) {
+            return ChatRoom::findOrFail($value);
+        });
+
+        Route::bind('message', function ($value) {
+            return ChatMessage::findOrFail($value);
+        });
     }
 }

@@ -22,10 +22,10 @@ class AuthorizeChatRoomAccess
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Get the chat room ID from route parameter
-        $chatRoomId = $request->route('chatRoom');
+        // Get the chat room parameter from route
+        $chatRoomParam = $request->route('chatRoom');
 
-        if (!$chatRoomId) {
+        if (!$chatRoomParam) {
             return response()->json([
                 'success' => false,
                 'message' => 'Chat room not found.',
@@ -33,8 +33,13 @@ class AuthorizeChatRoomAccess
             ], 404);
         }
 
-        // Fetch the ChatRoom model
-        $chatRoom = ChatRoom::find($chatRoomId);
+        // Handle both string ID and ChatRoom model object
+        if ($chatRoomParam instanceof ChatRoom) {
+            $chatRoom = $chatRoomParam;
+        } else {
+            // Fetch the ChatRoom model if we got an ID
+            $chatRoom = ChatRoom::find($chatRoomParam);
+        }
 
         if (!$chatRoom) {
             return response()->json([

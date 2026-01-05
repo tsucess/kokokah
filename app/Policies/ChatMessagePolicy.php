@@ -50,7 +50,7 @@ class ChatMessagePolicy
         }
 
         // Check if user can access the room
-        if (!$this->canAccessRoom($user, $message->room)) {
+        if (!$this->canAccessRoom($user, $message->chatRoom)) {
             return Response::deny('You do not have access to this chat room.');
         }
 
@@ -146,13 +146,13 @@ class ChatMessagePolicy
         }
 
         // Room creator can delete messages in their room
-        if ($message->room->created_by === $user->id) {
+        if ($message->chatRoom->created_by === $user->id) {
             return Response::allow();
         }
 
         // Course instructor can delete messages in their course room
-        if ($message->room->type === 'course' && $message->room->course_id) {
-            if ($message->room->course->instructor_id === $user->id) {
+        if ($message->chatRoom->type === 'course' && $message->chatRoom->course_id) {
+            if ($message->chatRoom->course->instructor_id === $user->id) {
                 return Response::allow();
             }
         }
@@ -209,12 +209,12 @@ class ChatMessagePolicy
     public function react(User $user, ChatMessage $message): Response
     {
         // Check if user can access the room
-        if (!$this->canAccessRoom($user, $message->room)) {
+        if (!$this->canAccessRoom($user, $message->chatRoom)) {
             return Response::deny('You do not have access to this chat room.');
         }
 
         // Check if user is muted in the room
-        $isMuted = $message->room->users()
+        $isMuted = $message->chatRoom->users()
             ->where('user_id', $user->id)
             ->where('is_muted', true)
             ->exists();
@@ -241,13 +241,13 @@ class ChatMessagePolicy
         }
 
         // Room creator can pin messages
-        if ($message->room->created_by === $user->id) {
+        if ($message->chatRoom->created_by === $user->id) {
             return Response::allow();
         }
 
         // Course instructor can pin messages in their course room
-        if ($message->room->type === 'course' && $message->room->course_id) {
-            if ($message->room->course->instructor_id === $user->id) {
+        if ($message->chatRoom->type === 'course' && $message->chatRoom->course_id) {
+            if ($message->chatRoom->course->instructor_id === $user->id) {
                 return Response::allow();
             }
         }
@@ -288,13 +288,13 @@ class ChatMessagePolicy
         }
 
         // Room creator can view deleted messages in their room
-        if ($message->room->created_by === $user->id) {
+        if ($message->chatRoom->created_by === $user->id) {
             return Response::allow();
         }
 
         // Course instructor can view deleted messages in their course room
-        if ($message->room->type === 'course' && $message->room->course_id) {
-            if ($message->room->course->instructor_id === $user->id) {
+        if ($message->chatRoom->type === 'course' && $message->chatRoom->course_id) {
+            if ($message->chatRoom->course->instructor_id === $user->id) {
                 return Response::allow();
             }
         }

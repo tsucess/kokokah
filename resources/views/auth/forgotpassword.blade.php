@@ -104,8 +104,12 @@
 
       if (result.success) {
         UIHelpers.showSuccess('Password reset link sent to your email!');
+        // Store email in sessionStorage for verification page
+        sessionStorage.setItem('resetEmail', email);
         document.getElementById('forgotForm').reset();
         UIHelpers.setButtonLoading('forgotBtn', false);
+        // Optionally redirect to verify page after 2 seconds
+        // UIHelpers.redirect('/verify?email=' + encodeURIComponent(email), 2000);
       } else {
         UIHelpers.showError(result.message || 'Failed to send reset link');
         UIHelpers.setButtonLoading('forgotBtn', false);

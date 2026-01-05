@@ -78,31 +78,50 @@ return new class extends Migration
      */
     public function down(): void
     {
+        if (!Schema::hasTable('course_reviews')) {
+            return;
+        }
+
         Schema::table('course_reviews', function (Blueprint $table) {
-            // Drop foreign key if exists
+            // Drop foreign key if exists - check using raw query
             try {
-                $table->dropForeign(['moderated_by']);
+                $connection = Schema::getConnection();
+                $foreignKeys = $connection->getDoctrineSchemaManager()->listTableForeignKeys('course_reviews');
+                foreach ($foreignKeys as $fk) {
+                    if ($fk->getLocalColumns()[0] === 'moderated_by') {
+                        $table->dropForeign(['moderated_by']);
+                        break;
+                    }
+                }
             } catch (\Exception $e) {
                 // Foreign key doesn't exist
             }
-            
+
+            // Drop indexes first (before dropping columns)
+            try {
+                if (Schema::hasIndex('course_reviews', 'idx_status')) {
+                    $table->dropIndex('idx_status');
+                }
+            } catch (\Exception $e) {
+                // Index doesn't exist
+            }
+
+            try {
+                if (Schema::hasIndex('course_reviews', 'idx_course_status')) {
+                    $table->dropIndex('idx_course_status');
+                }
+            } catch (\Exception $e) {
+                // Index doesn't exist
+            }
+
             // Drop columns if they exist
-            $columns = ['title', 'comment', 'pros', 'cons', 'status', 
+            $columns = ['title', 'comment', 'pros', 'cons', 'status',
                        'helpful_count', 'moderated_by', 'moderated_at', 'rejection_reason'];
-            
+
             foreach ($columns as $column) {
                 if (Schema::hasColumn('course_reviews', $column)) {
                     $table->dropColumn($column);
                 }
-            }
-            
-            // Drop indexes
-            if (Schema::hasIndex('course_reviews', 'idx_status')) {
-                $table->dropIndex('idx_status');
-            }
-            
-            if (Schema::hasIndex('course_reviews', 'idx_course_status')) {
-                $table->dropIndex('idx_course_status');
             }
         });
     }

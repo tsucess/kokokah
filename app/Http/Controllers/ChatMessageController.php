@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class ChatMessageController extends Controller
 {
@@ -150,6 +151,11 @@ class ChatMessageController extends Controller
                 'message' => 'Message sent successfully',
                 'data' => $message
             ], 201);
+        } catch (AuthorizationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage() ?: 'You do not have permission to send messages in this chat room.'
+            ], 403);
         } catch (ModelNotFoundException $e) {
             return response()->json([
                 'success' => false,

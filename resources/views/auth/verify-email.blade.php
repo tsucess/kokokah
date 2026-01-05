@@ -92,24 +92,29 @@
     <script src="/js/utils/uiHelpers.js"></script>
 
     <script>
-// Store original button text
+        // Store original button text
         UIHelpers.storeButtonText('verifyBtn');
 
         // Get email from URL or session
-        const email = UIHelpers.getUrlParameter('email') || sessionStorage.getItem('registerEmail');
+        let email = UIHelpers.getUrlParameter('email') || sessionStorage.getItem('registerEmail');
 
         // Display email on the form
         if (email) {
             document.getElementById('email').value = email;
+        } else {
+            // If no email found, show error
+            UIHelpers.showError('Email not found. Please register again.');
         }
 
         // Handle verify form submission
         document.getElementById('verifyForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
+            // Get email from input field (in case it was updated)
+            const currentEmail = document.getElementById('email').value.trim();
             const code = document.getElementById('verificationCode').value.trim();
 
-            if (!email) {
+            if (!currentEmail) {
                 UIHelpers.showError('Email not found. Please register again.');
                 return;
             }
@@ -127,7 +132,7 @@
             UIHelpers.setButtonLoading('verifyBtn', true);
             UIHelpers.showLoadingOverlay(true);
 
-            const result = await AuthApiClient.verifyEmailWithCode(email, code);
+            const result = await AuthApiClient.verifyEmailWithCode(currentEmail, code);
 
             UIHelpers.showLoadingOverlay(false);
 
@@ -155,19 +160,45 @@
         document.getElementById('resendLink').addEventListener('click', async (e) => {
             e.preventDefault();
 
-            if (!email) {
+            console.log('Resend button clicked');
+
+            // Get email from input field
+            const currentEmail = document.getElementById('email').value.trim();
+
+            console.log('Current email:', currentEmail);
+
+            if (!currentEmail) {
                 UIHelpers.showError('Email not found. Please register again.');
                 return;
             }
 
-            const result = await AuthApiClient.resendVerificationCode(email);
+            // Disable resend link during request
+            const resendLink = document.getElementById('resendLink');
+            const originalText = resendLink.textContent;
+            resendLink.style.pointerEvents = 'none';
+            resendLink.style.opacity = '0.5';
+            resendLink.textContent = 'Sending...';
+
+            console.log('Calling resendVerificationCode API with email:', currentEmail);
+
+            const result = await AuthApiClient.resendVerificationCode(currentEmail);
+
+            console.log('API Response:', result);
+
+            // Re-enable resend link
+            resendLink.style.pointerEvents = 'auto';
+            resendLink.style.opacity = '1';
+            resendLink.textContent = originalText;
 
             if (result.success) {
                 UIHelpers.showSuccess('Verification code resent to your email');
+                // Clear the code input field
+                document.getElementById('verificationCode').value = '';
             } else {
                 UIHelpers.showError(result.message || 'Failed to resend code');
             }
-        });    </script>
+        });
+    </script>
 </body>
 
 </html>
