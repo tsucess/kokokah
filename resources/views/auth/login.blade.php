@@ -31,7 +31,7 @@
         <div class="signup-form">
           <!-- Logo -->
           <div class="mb-5  d-flex justify-content-center">
-            <img src="images/Kokokah_Logo.png" alt="Kokokah Logo" class = "img-fluid w-75">
+            <img src="images/logo-auth.png" alt="Kokokah Logo" class = "img-fluid w-75">
           </div>
 
           <!-- Alert Container -->
@@ -74,7 +74,7 @@
                     </div>
 
                     <div>
-                        <a href="/forgot-password">Forgot Password?</a>
+                        <a href="/forgotpassword">Forgot Password?</a>
                     </div>
                 </div>
 

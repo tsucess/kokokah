@@ -224,7 +224,7 @@
     }
   </style>
    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-   
+
   {{-- @vite(['resources/css/style.css']) --}}
 </head>
 
@@ -235,7 +235,7 @@
 
         <!-- Left Section -->
         <div class="col-12 col-lg-6 col-md-6 left-panel">
-          <img src="images/Kokokah_logo.png" alt="Kokokah Logo" class="img-fluid logo">
+          <img src="images/logo-auth.png" alt="Kokokah Logo" class="img-fluid logo">
           <img src="images/steming.png" alt="STEM Illustration" class="stem-illustration">
           <div class="left-cta">Register to enjoy learning</div>
 
