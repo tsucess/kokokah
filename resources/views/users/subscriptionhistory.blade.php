@@ -120,8 +120,7 @@
                     </div>
 
                     <!-- Pagination Section -->
-                    <div class="d-flex justify-content-between align-items-center gap-2 mt-5 pt-4"
-                        style="border-top: 1px solid #e8e8e8;">
+                    <div class="d-flex justify-content-between align-items-center gap-2 pt-4">
                         <!-- Previous Button -->
                         <button class="btn px-1 py-2 d-flex align-items-center gap-1 px-md-3" id="prevBtn" onclick="loadTransactions(currentPage - 1)"
                             style="border: 1px solid #004A53; color: #004A53; font-weight: 500; border-radius: 0.5rem;"

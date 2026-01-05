@@ -4,7 +4,7 @@
     <main class="transactions-main">
         <div class="container-fluid px-5 py-4">
             <!-- Header Section -->
-            <div class="d-flex justify-content-between align-items-start mb-2">
+            <div class="d-flex justify-content-between align-items-start mb-4">
                 <div>
                     <h1 class="fw-bold mb-2"
                         style="font-size: 1.2rem; color: #004A53; font-family: 'Fredoka One', sans-serif;">Welcome Back
@@ -84,8 +84,7 @@
                     </div>
 
                     <!-- Pagination Section -->
-                    <div class="d-flex justify-content-between align-items-center mt-5 pt-4"
-                        style="border-top: 1px solid #e8e8e8;">
+                    <div class="d-flex justify-content-between align-items-center pt-4">
                         <!-- Previous Button -->
                         <button class="btn px-4 py-2" id="prevBtn" onclick="loadTransactions(currentPage - 1)"
                             style="border: 1px solid #004A53; color: #004A53; font-weight: 500; border-radius: 0.5rem;"

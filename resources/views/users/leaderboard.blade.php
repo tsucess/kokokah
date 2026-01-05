@@ -534,7 +534,7 @@
 
     </style>
     <main>
-    <section class="container-fluid py-4 px-3">
+    <section class="container-fluid py-4 px-3 px-lg-5">
         <section class="d-flex flex-column gap-4">
             <header class="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-items-start gap-3">
                 <div class="d-flex gap-1 align-items-center">

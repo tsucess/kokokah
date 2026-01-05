@@ -45,7 +45,7 @@ Route::get('/stem', function () {
 Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
- 
+
 Route::get('/forgotpassword', function () {
     return view('auth.forgotpassword');
 });
