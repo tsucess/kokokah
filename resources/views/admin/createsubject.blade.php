@@ -755,9 +755,6 @@
 
     <!-- Include the Quill library -->
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
-    <!-- API Clients -->
-    <script src="{{ asset('js/api/baseApiClient.js') }}"></script>
-    <script src="{{ asset('js/api/courseApiClient.js') }}"></script>
 
     <script>
         const quill = new Quill('#courseDescription', {

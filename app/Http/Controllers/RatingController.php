@@ -15,7 +15,7 @@ class RatingController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        
+
         // Get courses based on user role
         if ($user->hasRole('admin')) {
             $courses = Course::with(['reviews' => function ($query) {
@@ -34,7 +34,7 @@ class RatingController extends Controller
             $reviews = CourseReview::where('course_id', $course->id)
                                   ->where('status', 'approved')
                                   ->get();
-            
+
             return [
                 'id' => $course->id,
                 'title' => $course->title,
@@ -44,8 +44,9 @@ class RatingController extends Controller
             ];
         });
 
-        return view('admin.rating', [
-            'courses' => $coursesWithStats
+        return response()->json([
+            'success' => true,
+            'data' => $coursesWithStats
         ]);
     }
 
@@ -59,7 +60,10 @@ class RatingController extends Controller
 
         // Check authorization
         if (!$user->hasRole('admin') && $course->instructor_id !== $user->id) {
-            abort(403, 'Unauthorized');
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized'
+            ], 403);
         }
 
         // Get reviews with filters
@@ -81,7 +85,7 @@ class RatingController extends Controller
         // Sort
         $sortBy = $request->get('sort_by', 'created_at');
         $sortOrder = $request->get('sort_order', 'desc');
-        
+
         if ($sortBy === 'helpful') {
             $query->orderBy('helpful_count', $sortOrder);
         } else {
@@ -101,11 +105,14 @@ class RatingController extends Controller
             'rating_distribution' => $this->getRatingDistribution($courseId),
         ];
 
-        return view('admin.ratingdetails', [
-            'course' => $course,
-            'reviews' => $reviews,
-            'statistics' => $stats,
-            'currentFilter' => $request->get('status', 'approved')
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'course' => $course,
+                'reviews' => $reviews,
+                'statistics' => $stats,
+                'currentFilter' => $request->get('status', 'approved')
+            ]
         ]);
     }
 

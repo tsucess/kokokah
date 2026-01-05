@@ -4,16 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Level;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 
-class LevelController extends Controller implements HasMiddleware
+class LevelController extends Controller
 {
-    public static function middleware()
+    public function __construct()
     {
-        return [
-            new Middleware('auth:sanctum', except: ['index', 'show'])
-        ];
+        $this->middleware('auth:sanctum', ['except' => ['index', 'show']]);
     }
 
 

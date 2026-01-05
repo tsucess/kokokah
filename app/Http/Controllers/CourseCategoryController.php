@@ -3,19 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\CourseCategory;
-// use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 
-class CourseCategoryController extends Controller implements HasMiddleware
+class CourseCategoryController extends Controller
 {
-
-    public static function middleware()
+    public function __construct()
     {
-        return [
-            new Middleware('auth:sanctum', except: ['index', 'show'])
-        ];
+        $this->middleware('auth:sanctum', ['except' => ['index', 'show']]);
     }
 
     /**
