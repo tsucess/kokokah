@@ -130,7 +130,9 @@ Route::get('/report', function () {
     });
 // });
 
-
+Route::get('/feedback', function () {
+    return view('admin.feedback');
+});
 
 Route::get('/instructor', function () {
     return view('admin.instructor');
