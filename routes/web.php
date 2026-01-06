@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FeedbackController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -130,6 +131,7 @@ Route::get('/report', function () {
     });
 // });
 
+// Feedback route (Admin and Superadmin only)
 Route::get('/feedback', function () {
     return view('admin.feedback');
 });
@@ -238,10 +240,6 @@ Route::get('/wallet', function () {
 
 Route::get('/announcement', function () {
     return view('admin.announcement');
-});
-
-Route::get('/feedback', function () {
-    return view('admin.feedback');
 });
 
 Route::get('/users', function () {

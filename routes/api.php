@@ -757,10 +757,13 @@ Route::middleware('auth:sanctum')->prefix('feedback')->group(function () {
     Route::get('/my-feedback', [FeedbackController::class, 'getUserFeedback']);
 });
 
-// Superadmin Feedback Routes
-Route::middleware(['auth:sanctum', 'role:superadmin'])->prefix('feedback')->group(function () {
+// Admin and Superadmin Feedback Routes
+Route::middleware(['auth:sanctum', 'role:admin,superadmin'])->prefix('feedback')->group(function () {
     // Get all feedback
     Route::get('/', [FeedbackController::class, 'index']);
+
+    // Get feedback by type
+    Route::get('/type/{type}', [FeedbackController::class, 'getByType']);
 
     // Get single feedback
     Route::get('/{id}', [FeedbackController::class, 'show']);
