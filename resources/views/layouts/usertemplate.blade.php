@@ -33,6 +33,27 @@
     <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
 
     {{-- @vite(['resources/css/dashboard.css']) --}}
+
+    <!-- Kokokah Loader Script - Load early in head -->
+    <script src="{{ asset('js/utils/kokokahLoader.js') }}"></script>
+
+    <!-- Inline loader HTML to show immediately -->
+    <style>
+        .kokokah-loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
 </head>
 
 <body>
@@ -299,9 +320,6 @@
 
     <!-- Confirmation Modal -->
     <script src="{{ asset('js/utils/confirmationModal.js') }}"></script>
-
-    <!-- Kokokah Logo Loader -->
-    <script src="{{ asset('js/utils/kokokahLoader.js') }}"></script>
 
     <!-- Notification API Client -->
     <script src="{{ asset('js/api/notificationApiClient.js') }}"></script>

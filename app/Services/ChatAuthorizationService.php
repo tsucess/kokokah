@@ -105,8 +105,8 @@ class ChatAuthorizationService
      */
     public function canDeleteMessage(User $user, ChatMessage $message): bool
     {
-        // Admin can delete any message
-        if ($user->role === 'admin') {
+        // Superadmin and admin can delete any message
+        if (in_array($user->role, ['superadmin', 'admin'])) {
             return true;
         }
 
@@ -135,8 +135,8 @@ class ChatAuthorizationService
      */
     public function canManageMembers(User $user, ChatRoom $chatRoom): bool
     {
-        // Admin can manage members in any room
-        if ($user->role === 'admin') {
+        // Superadmin and admin can manage members in any room
+        if (in_array($user->role, ['superadmin', 'admin'])) {
             return true;
         }
 

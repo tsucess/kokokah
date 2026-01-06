@@ -145,8 +145,8 @@ class File extends Model
             return true;
         }
 
-        // Admin can access all files
-        if ($user->hasRole('admin')) {
+        // Superadmin and admin can access all files
+        if ($user->hasAnyRole(['admin', 'superadmin'])) {
             return true;
         }
 

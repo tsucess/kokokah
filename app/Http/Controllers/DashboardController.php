@@ -66,8 +66,8 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        // Ensure user is an instructor
-        if (!$user->hasRole('instructor') && !$user->hasRole('admin')) {
+        // Ensure user is an instructor or higher (admin/superadmin)
+        if (!$user->isInstructorOrHigher()) {
             return response()->json([
                 'success' => false,
                 'message' => 'Access denied. Instructor role required.'
@@ -104,8 +104,8 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        // Ensure user is an admin
-        if (!$user->hasRole('admin')) {
+        // Ensure user is an admin or superadmin
+        if (!$user->isAdminOrSuperAdmin()) {
             return response()->json([
                 'success' => false,
                 'message' => 'Access denied. Admin role required.'

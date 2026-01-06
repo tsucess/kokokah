@@ -150,6 +150,12 @@ class AdminController extends Controller
     {
         try {
             $query = User::query();
+            $currentUser = Auth::user();
+
+            // Admin cannot see or manage superadmin users
+            if ($currentUser->role === 'admin') {
+                $query->where('role', '!=', 'superadmin');
+            }
 
             // Search
             if ($request->has('search')) {
@@ -163,6 +169,13 @@ class AdminController extends Controller
 
             // Filter by role
             if ($request->has('role')) {
+                // Admin cannot filter by superadmin role
+                if ($currentUser->role === 'admin' && $request->role === 'superadmin') {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'You do not have permission to view superadmin users'
+                    ], 403);
+                }
                 $query->where('role', $request->role);
             }
 
@@ -560,6 +573,15 @@ class AdminController extends Controller
     {
         try {
             $user = User::findOrFail($userId);
+            $currentUser = Auth::user();
+
+            // Admin cannot ban superadmin users
+            if ($currentUser->role === 'admin' && $user->role === 'superadmin') {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'You do not have permission to ban this user'
+                ], 403);
+            }
 
             // Check if user is already banned
             if (!$user->is_active) {
@@ -615,6 +637,15 @@ class AdminController extends Controller
     {
         try {
             $user = User::findOrFail($userId);
+            $currentUser = Auth::user();
+
+            // Admin cannot unban superadmin users
+            if ($currentUser->role === 'admin' && $user->role === 'superadmin') {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'You do not have permission to unban this user'
+                ], 403);
+            }
 
             // Check if user is already active
             if ($user->is_active) {
@@ -1517,6 +1548,15 @@ class AdminController extends Controller
     {
         try {
             $user = User::findOrFail($userId);
+            $currentUser = Auth::user();
+
+            // Admin cannot access superadmin users
+            if ($currentUser->role === 'admin' && $user->role === 'superadmin') {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'You do not have permission to access this user'
+                ], 403);
+            }
 
             return response()->json([
                 'success' => true,
@@ -1537,6 +1577,15 @@ class AdminController extends Controller
     {
         try {
             $user = User::findOrFail($userId);
+            $currentUser = Auth::user();
+
+            // Admin cannot update superadmin users
+            if ($currentUser->role === 'admin' && $user->role === 'superadmin') {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'You do not have permission to update this user'
+                ], 403);
+            }
 
             // Validate fields
             $validator = Validator::make($request->all(), [
@@ -1544,7 +1593,7 @@ class AdminController extends Controller
                 'last_name' => 'sometimes|required|string|max:255',
                 'email' => 'sometimes|required|email|unique:users,email,' . $userId,
                 'password' => 'sometimes|string|min:8',
-                'role' => 'sometimes|required|in:student,instructor,admin',
+                'role' => 'sometimes|required|in:student,instructor,admin,superadmin',
                 'gender' => 'nullable|in:male,female',
                 'date_of_birth' => 'nullable|date',
                 'phone_number' => 'nullable|string|max:20',
@@ -1647,6 +1696,15 @@ class AdminController extends Controller
     {
         try {
             $user = User::findOrFail($userId);
+            $currentUser = Auth::user();
+
+            // Admin cannot delete superadmin users
+            if ($currentUser->role === 'admin' && $user->role === 'superadmin') {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'You do not have permission to delete this user'
+                ], 403);
+            }
 
             // Prevent deleting the last admin
             if ($user->role === 'admin') {

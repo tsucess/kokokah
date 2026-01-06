@@ -1927,6 +1927,16 @@ p {
     background-color: #fdaf22;
 }
 
+.update-btn {
+    background-color: #ffd893;
+    border: 1px solid #004a53;
+}
+
+.status-btn {
+    background-color: #fdaf22;
+    border: 1px solid #004a53;
+}
+
 .input-container {
     border: 1.5px solid #004a53;
     border-radius: 10px;

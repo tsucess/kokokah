@@ -98,101 +98,6 @@
             border-color: #004A53;
         }
 
-        /* ===== Loader Styles ===== */
-        .kokokah-loader-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.95);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .kokokah-loader-overlay.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .kokokah-loader-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .kokokah-spinner {
-            width: 60px;
-            height: 60px;
-            position: relative;
-        }
-
-        .kokokah-spinner::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border: 4px solid #f0f0f0;
-            border-top: 4px solid #004A53;
-            border-right: 4px solid #FDAF22;
-            border-radius: 50%;
-            animation: kokokah-spin 1s linear infinite;
-        }
-
-        @keyframes kokokah-spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .kokokah-loader-text {
-            font-family: 'Fredoka', sans-serif;
-            font-size: 1.1rem;
-            color: #004A53;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-        }
-
-        .kokokah-loader-dots {
-            display: inline-block;
-            width: 20px;
-            text-align: left;
-        }
-
-        .kokokah-loader-dots::after {
-            content: '';
-            animation: kokokah-dots 1.5s steps(4, end) infinite;
-        }
-
-        @keyframes kokokah-dots {
-
-            0%,
-            20% {
-                content: '';
-            }
-
-            40% {
-                content: '.';
-            }
-
-            60% {
-                content: '..';
-            }
-
-            80%,
-            100% {
-                content: '...';
-            }
-        }
-
         /* ===== Section Styles ===== */
         .content-section {
             display: block;
@@ -990,16 +895,6 @@
     </style>
 
     <main>
-        <!-- Kokokah Loader -->
-        <div class="kokokah-loader-overlay" id="kokokahLoader">
-            <div class="kokokah-loader-container">
-                <div class="kokokah-spinner"></div>
-                <div class="kokokah-loader-text">
-                    Loading<span class="kokokah-loader-dots"></span>
-                </div>
-            </div>
-        </div>
-
         <!-- Header Section -->
         <div class="container bg-white">
             <div class="subject-header">

@@ -292,8 +292,8 @@ class ChatMessageController extends Controller
      */
     private function isRoomMember($user, ChatRoom $chatRoom): bool
     {
-        // Admin can access all rooms
-        if ($user->role === 'admin') {
+        // Admin and superadmin can access all rooms
+        if (in_array($user->role, ['admin', 'superadmin'])) {
             return true;
         }
 

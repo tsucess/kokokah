@@ -126,19 +126,21 @@ class AnnouncementManager {
 
         // Validate required fields
         if (!titleInput?.value) {
-            alert('Please enter an announcement title');
+            this.showToast('Validation Error', 'Please enter an announcement title', 'warning');
             return;
         }
         if (!descInput?.value) {
-            alert('Please enter a description');
+            this.showToast('Validation Error', 'Please enter a description', 'warning');
             return;
         }
 
         // Get authentication token
         const token = this.getToken();
         if (!token) {
-            alert('Authentication required. Please log in again.');
-            window.location.href = '/login';
+            this.showToast('Authentication Error', 'Authentication required. Please log in again.', 'error');
+            setTimeout(() => {
+                window.location.href = '/login';
+            }, 1500);
             return;
         }
 
@@ -183,34 +185,39 @@ class AnnouncementManager {
             const result = await response.json();
 
             if (response.ok) {
-                alert(`Announcement ${status} successfully!`);
-                window.location.href = '/announcement';
+                this.showToast('Success', `Announcement ${status} successfully!`, 'success');
+                setTimeout(() => {
+                    window.location.href = '/announcement';
+                }, 1500);
             } else {
                 console.error('API Error:', result);
                 if (response.status === 401) {
-                    alert('Authentication failed. Please log in again.');
-                    window.location.href = '/login';
+                    this.showToast('Authentication Error', 'Authentication failed. Please log in again.', 'error');
+                    setTimeout(() => {
+                        window.location.href = '/login';
+                    }, 1500);
                 } else if (response.status === 403) {
-                    alert('You do not have permission to create announcements.');
+                    this.showToast('Permission Denied', 'You do not have permission to create announcements.', 'error');
                 } else if (response.status === 422) {
                     // Validation error - show detailed error messages
-                    let errorMessage = 'Validation failed:\n\n';
+                    let errorMessage = '';
                     if (result.errors) {
-                        for (const [field, messages] of Object.entries(result.errors)) {
-                            errorMessage += `${field}: ${messages.join(', ')}\n`;
-                        }
+                        const errorList = Object.entries(result.errors)
+                            .map(([field, messages]) => `${field}: ${messages.join(', ')}`)
+                            .join('\n');
+                        errorMessage = errorList;
                     } else {
-                        errorMessage += result.message || 'Please check your form data';
+                        errorMessage = result.message || 'Please check your form data';
                     }
                     console.error('Validation errors:', result.errors);
-                    alert(errorMessage);
+                    this.showToast('Validation Error', errorMessage, 'warning');
                 } else {
-                    alert(`Error: ${result.message || 'Failed to save announcement'}`);
+                    this.showToast('Error', result.message || 'Failed to save announcement', 'error');
                 }
             }
         } catch (error) {
             console.error('Error submitting announcement:', error);
-            alert('Error submitting announcement. Please try again.');
+            this.showToast('Error', 'Error submitting announcement. Please try again.', 'error');
         }
     }
 
@@ -284,6 +291,23 @@ class AnnouncementManager {
         console.warn('No authentication token found in localStorage or meta tags!');
         console.warn('Available localStorage keys:', Object.keys(localStorage));
         return null;
+    }
+
+    /**
+     * Show a toast notification
+     * @param {string} title - Toast title
+     * @param {string} message - Toast message
+     * @param {string} type - Toast type: 'success', 'error', 'warning', 'info'
+     * @param {number} timeout - Auto-hide timeout in milliseconds
+     */
+    showToast(title = '', message = '', type = 'info', timeout = 3500) {
+        if (window.ToastNotification && window.ToastNotification.show) {
+            window.ToastNotification.show(title, message, type, timeout);
+        } else {
+            // Fallback to alert if ToastNotification is not available
+            console.warn('ToastNotification not available, falling back to alert');
+            alert(`${title}: ${message}`);
+        }
     }
 }
 

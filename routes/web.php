@@ -67,6 +67,8 @@ Route::get('/stemregister2', function () {
     return view('auth.stemregister2');
 });
 
+// Dashboard route - Check if user is logged in via localStorage token
+// The frontend will handle the redirect if no token is found
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
 });
@@ -109,21 +111,24 @@ Route::get('/report', function () {
     return view('admin.report');
 });
 
-Route::get('/curriculum-categories', function () {
-    return view('admin.curriculum-categories');
-});
+// Admin-only routes for curriculum management
+// Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
+    Route::get('/curriculum-categories', function () {
+        return view('admin.curriculum-categories');
+    });
 
-Route::get('/subject-categories', function () {
-    return view('admin.subject-categories');
-});
+    Route::get('/subject-categories', function () {
+        return view('admin.subject-categories');
+    });
 
-Route::get('/levels', function () {
-    return view('admin.levels');
-});
+    Route::get('/levels', function () {
+        return view('admin.levels');
+    });
 
-Route::get('/terms', function () {
-    return view('admin.terms');
-});
+    Route::get('/terms', function () {
+        return view('admin.terms');
+    });
+// });
 
 
 

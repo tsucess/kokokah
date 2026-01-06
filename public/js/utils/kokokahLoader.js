@@ -96,7 +96,12 @@ class KokokahLoader {
     this.pageLoadStartTime = Date.now();
 
     if (this.loaderElement) {
+      // Remove hidden class to show the loader
       this.loaderElement.classList.remove('hidden');
+      // Ensure visibility is set
+      this.loaderElement.style.opacity = '1';
+      this.loaderElement.style.visibility = 'visible';
+      this.loaderElement.style.pointerEvents = 'auto';
     }
 
     // Clear any pending hide timeout
@@ -126,9 +131,12 @@ class KokokahLoader {
     this.hideTimeout = setTimeout(() => {
       if (this.loaderElement) {
         this.loaderElement.classList.add('hidden');
+        this.loaderElement.style.opacity = '0';
+        this.loaderElement.style.visibility = 'hidden';
+        this.loaderElement.style.pointerEvents = 'none';
         this.isVisible = false;
       }
-    }, delayBeforeHide + 300);
+    }, delayBeforeHide);
   }
 
   /**
@@ -158,12 +166,16 @@ class KokokahLoader {
   }
 }
 
-// Initialize loader when DOM is ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
+// Initialize loader when DOM is ready - only if not already initialized
+if (!window.kokokahLoader) {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!window.kokokahLoader) {
+        window.kokokahLoader = new KokokahLoader();
+      }
+    });
+  } else {
     window.kokokahLoader = new KokokahLoader();
-  });
-} else {
-  window.kokokahLoader = new KokokahLoader();
+  }
 }
 

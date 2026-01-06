@@ -430,8 +430,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/reports/{courseId}', [GradingController::class, 'reports']);
     });
 
-    // Admin management routes (superadmin only)
-    Route::prefix('admin')->middleware('role:superadmin')->group(function () {
+    // Admin management routes (admin and superadmin)
+    Route::prefix('admin')->middleware('role:admin,superadmin')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard']);
         Route::get('/users', [AdminController::class, 'users']);
         Route::get('/users/recent', [AdminController::class, 'recentlyRegisteredUsers']);
@@ -618,8 +618,8 @@ Route::middleware('auth:sanctum')->prefix('announcements')->group(function () {
     Route::get('/types', [AnnouncementController::class, 'getByType']);
     Route::get('/{id}', [AnnouncementController::class, 'show']);
 
-    // Superadmin only routes
-    Route::middleware('role:superadmin')->group(function () {
+    // Admin and Superadmin routes
+    Route::middleware('role:admin,superadmin')->group(function () {
         Route::post('/', [AnnouncementController::class, 'store']);
         Route::put('/{id}', [AnnouncementController::class, 'update']);
         Route::delete('/{id}', [AnnouncementController::class, 'destroy']);

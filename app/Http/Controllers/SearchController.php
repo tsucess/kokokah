@@ -541,10 +541,10 @@ class SearchController extends Controller
 
     private function hasAccessToCourse($user, $course)
     {
-        // Check if user is enrolled or is the instructor
+        // Check if user is enrolled or is the instructor or is admin/superadmin
         return $user->enrollments()->where('course_id', $course->id)->exists() ||
                $course->instructor_id === $user->id ||
-               $user->hasRole('admin');
+               $user->hasAnyRole(['admin', 'superadmin']);
     }
 
     private function countTotalResults($results)

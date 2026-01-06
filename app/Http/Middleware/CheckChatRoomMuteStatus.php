@@ -25,8 +25,8 @@ class CheckChatRoomMuteStatus
             return $next($request);
         }
 
-        // Admin users are never muted
-        if (auth()->user()->role === 'admin') {
+        // Admin and superadmin users are never muted
+        if (in_array(auth()->user()->role, ['admin', 'superadmin'])) {
             return $next($request);
         }
 

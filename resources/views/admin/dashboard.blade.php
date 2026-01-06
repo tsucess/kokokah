@@ -1,6 +1,25 @@
 @extends('layouts.dashboardtemp')
 
 @section('content')
+    <!-- Authentication Check Script -->
+    <script>
+        // Check if user is authenticated via localStorage token
+        (function() {
+            const token = localStorage.getItem('auth_token') || localStorage.getItem('token');
+            const user = localStorage.getItem('auth_user');
+
+            // If no token or user data, redirect to login
+            if (!token || !user) {
+                console.warn('No authentication token found. Redirecting to login...');
+                window.location.href = '/login';
+                return;
+            }
+
+            // Token exists, user can access dashboard
+            console.log('User authenticated. Token found.');
+        })();
+    </script>
+
     <!-- Main -->
     <main>
         <div class="container-fluid px-4 pt-5">
@@ -9,7 +28,7 @@
 
                     <div>
                         <h1 class ="fw-bold">Welcome back, <span id="first_name">Samuel</span> <span
-                                id="role">({{ ucfirst(auth()->user()->role) }})</span></h1>
+                                id="role">@if(auth()->check())({{ ucfirst(auth()->user()->role) }})@endif</span></h1>
                             <p class = "text-muted">Here overview of your </p>
                     </div>
 

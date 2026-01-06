@@ -229,188 +229,631 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.min.js" crossorigin="anonymous"
         referrerpolicy="no-referrer"></script>
     <script>
-        //engagement chart
+        // Get auth token from localStorage
+        const token = localStorage.getItem('auth_token');
+        const apiBaseUrl = '/api';
 
-        const engagementData = {
-            day: {
+        // Initialize charts
+        let engagementChart = null;
+        let coursePerformanceChart = null;
+
+        // Fetch dashboard stats
+        async function loadDashboardStats() {
+            try {
+                const response = await fetch(`${apiBaseUrl}/dashboard/admin`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (!response.ok) throw new Error('Failed to fetch dashboard stats');
+
+                const data = await response.json();
+                if (data.success && data.data.overview) {
+                    updateStatsBoxes(data.data.overview);
+                }
+            } catch (error) {
+                console.error('Error loading dashboard stats:', error);
+            }
+        }
+
+        // Update stats boxes with real data
+        function updateStatsBoxes(overview) {
+            const statsContainer = document.querySelector('.stats-container');
+
+            const stats = [
+                {
+                    title: 'Total Students',
+                    value: overview.total_students || 0,
+                    change: '+5.4%'
+                },
+                {
+                    title: 'Total Teachers',
+                    value: overview.total_instructors || 0,
+                    change: '+5.4%'
+                },
+                {
+                    title: 'Active Courses',
+                    value: overview.published_courses || 0,
+                    change: '+5.4%'
+                },
+                {
+                    title: 'Total Enrollments',
+                    value: overview.total_enrollments || 0,
+                    change: '+5.4%'
+                }
+            ];
+
+            statsContainer.innerHTML = stats.map(stat => `
+                <div class="d-flex flex-column gap-4 stats-box">
+                    <h4 class="stats-box-title">${stat.title}</h4>
+                    <p class="stats-box-percentage-large">${stat.value.toLocaleString()}</p>
+                    <p class="stats-box-percentage-small">↗️ ${stat.change}</p>
+                </div>
+            `).join('');
+        }
+
+        // Fetch engagement analytics
+        async function loadEngagementAnalytics() {
+            try {
+                const response = await fetch(`${apiBaseUrl}/analytics/engagement`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (!response.ok) throw new Error('Failed to fetch engagement analytics');
+
+                const data = await response.json();
+                if (data.success && data.data) {
+                    initializeEngagementChart(data.data);
+                }
+            } catch (error) {
+                console.error('Error loading engagement analytics:', error);
+                // Use fallback data if API fails
+                initializeEngagementChartWithFallback();
+            }
+        }
+
+        // Initialize engagement chart with API data
+        function initializeEngagementChart(analyticsData) {
+            const ctxEngagement = document.getElementById('engagementChart').getContext('2d');
+
+            const gradient = ctxEngagement.createLinearGradient(0, 0, 0, 300);
+            gradient.addColorStop(0, '#8979FF4D');
+            gradient.addColorStop(1, '#8979FF0D');
+
+            // Extract data from analytics response
+            const chartData = analyticsData.temporal_patterns?.daily_activity || {
                 labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
                 data: [12, 19, 8, 15, 22, 18, 25]
-            },
-            week: {
-                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-                data: [120, 150, 180, 160]
-            },
-            month: {
-                labels: [
-                    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-                ],
-                data: [500, 620, 710, 680, 740, 800, 780, 820, 860, 900, 950, 1000]
-            },
-            year: {
-                labels: ['2021', '2022', '2023', '2024', '2025'],
-                data: [3200, 3800, 4200, 4600, 5100]
-            }
-        };
+            };
 
-        const ctxEngagement = document.getElementById('engagementChart').getContext('2d');
-
-        const gradient = ctxEngagement.createLinearGradient(0, 0, 0, 300);
-        gradient.addColorStop(0, '#8979FF4D');
-        gradient.addColorStop(1, '#8979FF0D');
-
-
-        const engagementChart = new Chart(ctxEngagement, {
-            type: 'line',
-            data: {
-                labels: engagementData.day.labels,
-                datasets: [{
-                    label: 'Engagement',
-                    data: engagementData.day.data,
-                    fill: true,
-                    backgroundColor: gradient,
-                    borderColor: '#6366F1',
-                    borderWidth: 2,
-                    tension: 0.45,
-                    pointRadius: 4,
-                    pointHoverRadius: 6,
-                    pointBackgroundColor: '#6366F1',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-
-                layout: {
-                    padding: {
-                        top: 25
-                    }
+            engagementChart = new Chart(ctxEngagement, {
+                type: 'line',
+                data: {
+                    labels: chartData.labels || ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Engagement',
+                        data: chartData.data || [12, 19, 8, 15, 22, 18, 25],
+                        fill: true,
+                        backgroundColor: gradient,
+                        borderColor: '#6366F1',
+                        borderWidth: 2,
+                        tension: 0.45,
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        pointBackgroundColor: '#6366F1',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2
+                    }]
                 },
-
-                scales: {
-                    x: {
-                        grid: {
-                            color: '#E5E7EB',
-                            borderDash: [4, 4],
-                            drawBorder: false
-                        },
-                        ticks: {
-                            color: '#6B7280'
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            top: 25
                         }
                     },
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            stepSize: 20,
-                            color: '#6B7280',
+                    scales: {
+                        x: {
+                            grid: {
+                                color: '#E5E7EB',
+                                borderDash: [4, 4],
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#6B7280'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 20,
+                                color: '#6B7280',
+                                padding: 10,
+                            },
+                            grid: {
+                                color: '#E5E7EB',
+                                borderDash: [4, 4],
+                                drawBorder: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: '#111827',
                             padding: 10,
-                        },
-                        grid: {
-                            color: '#E5E7EB',
-                            borderDash: [4, 4],
-                            drawBorder: false
+                            titleColor: '#fff',
+                            bodyColor: '#fff'
                         }
                     }
                 },
+                plugins: [{
+                    id: 'valueLabels',
+                    afterDatasetsDraw(chart) {
+                        const { ctx } = chart;
+                        ctx.save();
+                        ctx.font = '12px Inter, sans-serif';
+                        ctx.fillStyle = '#6366F1';
+                        ctx.textAlign = 'center';
 
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        backgroundColor: '#111827',
-                        padding: 10,
-                        titleColor: '#fff',
-                        bodyColor: '#fff'
+                        chart.data.datasets[0].data.forEach((value, index) => {
+                            const point = chart.getDatasetMeta(0).data[index];
+                            ctx.fillText(value, point.x, point.y - 10);
+                        });
+
+                        ctx.restore();
                     }
-                }
-            },
-
-            /* Value labels on points */
-            plugins: [{
-                id: 'valueLabels',
-                afterDatasetsDraw(chart) {
-                    const {
-                        ctx
-                    } = chart;
-                    ctx.save();
-                    ctx.font = '12px Inter, sans-serif';
-                    ctx.fillStyle = '#6366F1';
-                    ctx.textAlign = 'center';
-
-                    chart.data.datasets[0].data.forEach((value, index) => {
-                        const point = chart.getDatasetMeta(0).data[index];
-                        ctx.fillText(value, point.x, point.y - 10);
-                    });
-
-                    ctx.restore();
-                }
-            }]
-        });
-
-
-        document.querySelectorAll('.chart-menu button').forEach(button => {
-            button.addEventListener('click', () => {
-                const range = button.dataset.range;
-
-                engagementChart.data.labels = engagementData[range].labels;
-                engagementChart.data.datasets[0].data = engagementData[range].data;
-
-                engagementChart.update();
-            });
-        });
-
-
-        // course performance
-        const ctx = document
-            .getElementById('coursePerformance')
-            .getContext('2d');
-
-        Chart.defaults.font.size = 12;
-        Chart.defaults.color = '#000000B2';
-
-
-        let coursePerformanceChart = new Chart(ctx, {
-            type: 'bar',
-
-            data: {
-                labels: ['English', 'Math', 'Biology', 'Com. Sc.', 'Physics', 'Chemistry', 'Futh. Math', 'Agri',
-                    'Literature'
-                ],
-                datasets: [{
-                    label: '2021',
-                    data: [35, 10, 55, 8, 30, 91, 15, 55, 70],
-                    backgroundColor: '#7086FD',
                 }]
-            },
+            });
 
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
+            // Add event listeners for range buttons
+            document.querySelectorAll('.chart-menu button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const range = button.dataset.range;
+                    loadEngagementDataByRange(range);
+                });
+            });
+        }
 
-                layout: {
-                    padding: {
-                        top: 5
+        // Fallback engagement chart initialization
+        function initializeEngagementChartWithFallback() {
+            const engagementData = {
+                day: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    data: [12, 19, 8, 15, 22, 18, 25]
+                },
+                week: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                    data: [120, 150, 180, 160]
+                },
+                month: {
+                    labels: [
+                        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+                    ],
+                    data: [500, 620, 710, 680, 740, 800, 780, 820, 860, 900, 950, 1000]
+                },
+                year: {
+                    labels: ['2021', '2022', '2023', '2024', '2025'],
+                    data: [3200, 3800, 4200, 4600, 5100]
+                }
+            };
+
+            const ctxEngagement = document.getElementById('engagementChart').getContext('2d');
+
+            const gradient = ctxEngagement.createLinearGradient(0, 0, 0, 300);
+            gradient.addColorStop(0, '#8979FF4D');
+            gradient.addColorStop(1, '#8979FF0D');
+
+            engagementChart = new Chart(ctxEngagement, {
+                type: 'line',
+                data: {
+                    labels: engagementData.day.labels,
+                    datasets: [{
+                        label: 'Engagement',
+                        data: engagementData.day.data,
+                        fill: true,
+                        backgroundColor: gradient,
+                        borderColor: '#6366F1',
+                        borderWidth: 2,
+                        tension: 0.45,
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        pointBackgroundColor: '#6366F1',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            top: 25
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: '#E5E7EB',
+                                borderDash: [4, 4],
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#6B7280'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 20,
+                                color: '#6B7280',
+                                padding: 10,
+                            },
+                            grid: {
+                                color: '#E5E7EB',
+                                borderDash: [4, 4],
+                                drawBorder: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: '#111827',
+                            padding: 10,
+                            titleColor: '#fff',
+                            bodyColor: '#fff'
+                        }
                     }
                 },
-                 scales: {
-            y: {
-                beginAtZero: true,
-                  grace: '20%',
-                ticks: {
-                    stepSize: 20
+                plugins: [{
+                    id: 'valueLabels',
+                    afterDatasetsDraw(chart) {
+                        const { ctx } = chart;
+                        ctx.save();
+                        ctx.font = '12px Inter, sans-serif';
+                        ctx.fillStyle = '#6366F1';
+                        ctx.textAlign = 'center';
+
+                        chart.data.datasets[0].data.forEach((value, index) => {
+                            const point = chart.getDatasetMeta(0).data[index];
+                            ctx.fillText(value, point.x, point.y - 10);
+                        });
+
+                        ctx.restore();
+                    }
+                }]
+            });
+
+            document.querySelectorAll('.chart-menu button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const range = button.dataset.range;
+                    engagementChart.data.labels = engagementData[range].labels;
+                    engagementChart.data.datasets[0].data = engagementData[range].data;
+                    engagementChart.update();
+                });
+            });
+        }
+
+        // Load engagement data by range
+        async function loadEngagementDataByRange(range) {
+            try {
+                const response = await fetch(`${apiBaseUrl}/analytics/engagement`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (!response.ok) throw new Error('Failed to fetch engagement data');
+
+                const data = await response.json();
+                if (data.success && engagementChart) {
+                    // Update chart with new data based on range
+                    // This would need the API to support range parameter
+                    console.log('Engagement data loaded for range:', range);
                 }
+            } catch (error) {
+                console.error('Error loading engagement data:', error);
             }
-        },
-                plugins: {
-                    legend: {
-                        position: 'bottom'
+        }
+
+        // Fetch and initialize course performance chart
+        async function loadCoursePerformance() {
+            try {
+                const response = await fetch(`${apiBaseUrl}/analytics/course-performance`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (!response.ok) throw new Error('Failed to fetch course performance');
+
+                const data = await response.json();
+                if (data.success && data.data) {
+                    initializeCoursePerformanceChart(data.data);
+                } else {
+                    initializeCoursePerformanceChartWithFallback();
+                }
+            } catch (error) {
+                console.error('Error loading course performance:', error);
+                initializeCoursePerformanceChartWithFallback();
+            }
+        }
+
+        // Initialize course performance chart with API data
+        function initializeCoursePerformanceChart(performanceData) {
+            const ctx = document.getElementById('coursePerformance').getContext('2d');
+
+            Chart.defaults.font.size = 12;
+            Chart.defaults.color = '#000000B2';
+
+            // Extract course names and performance data
+            const courses = Array.isArray(performanceData) ? performanceData : [];
+            const labels = courses.map(c => c.course?.title || c.name || 'Unknown').slice(0, 9);
+            const performanceValues = courses.map(c => c.completion_rate || c.performance || 0).slice(0, 9);
+
+            coursePerformanceChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels.length > 0 ? labels : ['English', 'Math', 'Biology', 'Com. Sc.', 'Physics', 'Chemistry', 'Futh. Math', 'Agri', 'Literature'],
+                    datasets: [{
+                        label: 'Performance',
+                        data: performanceValues.length > 0 ? performanceValues : [35, 10, 55, 8, 30, 91, 15, 55, 70],
+                        backgroundColor: '#7086FD',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            top: 5
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grace: '20%',
+                            ticks: {
+                                stepSize: 20
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
                     }
                 }
+            });
+        }
 
+        // Fallback course performance chart
+        function initializeCoursePerformanceChartWithFallback() {
+            const ctx = document.getElementById('coursePerformance').getContext('2d');
+
+            Chart.defaults.font.size = 12;
+            Chart.defaults.color = '#000000B2';
+
+            coursePerformanceChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['English', 'Math', 'Biology', 'Com. Sc.', 'Physics', 'Chemistry', 'Futh. Math', 'Agri', 'Literature'],
+                    datasets: [{
+                        label: '2021',
+                        data: [35, 10, 55, 8, 30, 91, 15, 55, 70],
+                        backgroundColor: '#7086FD',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            top: 5
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grace: '20%',
+                            ticks: {
+                                stepSize: 20
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+        // Fetch student performance data
+        let currentPage = 1;
+        let totalPages = 1;
+        let allStudentData = [];
+
+        async function loadStudentPerformance(page = 1) {
+            try {
+                const response = await fetch(`${apiBaseUrl}/analytics/student-progress?page=${page}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (!response.ok) throw new Error('Failed to fetch student performance');
+
+                const data = await response.json();
+                if (data.success && data.data) {
+                    allStudentData = Array.isArray(data.data) ? data.data : data.data.data || [];
+                    totalPages = data.data.last_page || 1;
+                    currentPage = page;
+                    renderStudentTable(allStudentData);
+                    updatePagination();
+                }
+            } catch (error) {
+                console.error('Error loading student performance:', error);
+                // Show loading error in table
+                document.getElementById('usersTableBody').innerHTML = `
+                    <tr style="border-bottom: 1px solid #e8e8e8;">
+                        <td colspan="6" class="text-center text-danger py-4">
+                            Failed to load student data. Please try again.
+                        </td>
+                    </tr>
+                `;
             }
-        })
+        }
+
+        // Render student performance table
+        function renderStudentTable(students) {
+            const tableBody = document.getElementById('usersTableBody');
+
+            if (!students || students.length === 0) {
+                tableBody.innerHTML = `
+                    <tr style="border-bottom: 1px solid #e8e8e8;">
+                        <td colspan="6" class="text-center text-muted py-4">
+                            No student data available
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tableBody.innerHTML = students.map((student, index) => `
+                <tr style="border-bottom: 1px solid #e8e8e8;">
+                    <td style="padding: 1rem; color: #666;">${student.id || index + 1}</td>
+                    <td style="padding: 1rem; color: #333; font-weight: 500;">
+                        ${student.user?.first_name || student.first_name || 'N/A'} ${student.user?.last_name || student.last_name || ''}
+                    </td>
+                    <td style="padding: 1rem; color: #666;">
+                        ${student.course?.title || student.course_name || 'N/A'}
+                    </td>
+                    <td style="padding: 1rem;">
+                        <span style="background-color: #E8F5E9; color: #2E7D32; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.875rem;">
+                            ${(student.completion_rate || student.progress || 0).toFixed(1)}%
+                        </span>
+                    </td>
+                    <td style="padding: 1rem; color: #333; font-weight: 500;">
+                        ${(student.average_score || student.score || 0).toFixed(1)}%
+                    </td>
+                    <td style="padding: 1rem; color: #999; font-size: 0.875rem;">
+                        ${formatDate(student.last_active || student.updated_at || 'N/A')}
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Format date helper
+        function formatDate(dateString) {
+            if (!dateString || dateString === 'N/A') return 'N/A';
+            try {
+                const date = new Date(dateString);
+                return date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+            } catch (e) {
+                return 'N/A';
+            }
+        }
+
+        // Update pagination controls
+        function updatePagination() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const currentPageNum = document.getElementById('currentPageNum');
+            const totalPageNum = document.getElementById('totalPageNum');
+            const pageNumbers = document.getElementById('pageNumbers');
+
+            currentPageNum.textContent = currentPage;
+            totalPageNum.textContent = totalPages;
+
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = currentPage === totalPages;
+
+            // Generate page numbers
+            let pageHTML = '';
+            const maxPages = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxPages / 2));
+            let endPage = Math.min(totalPages, startPage + maxPages - 1);
+
+            if (endPage - startPage < maxPages - 1) {
+                startPage = Math.max(1, endPage - maxPages + 1);
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                pageHTML += `
+                    <button class="btn btn-sm ${i === currentPage ? 'btn-primary' : 'btn-light'}"
+                            style="border: 1px solid #ddd; padding: 0.375rem 0.75rem; border-radius: 0.25rem;"
+                            onclick="loadStudentPerformance(${i})">
+                        ${i}
+                    </button>
+                `;
+            }
+
+            pageNumbers.innerHTML = pageHTML;
+
+            prevBtn.onclick = () => {
+                if (currentPage > 1) loadStudentPerformance(currentPage - 1);
+            };
+
+            nextBtn.onclick = () => {
+                if (currentPage < totalPages) loadStudentPerformance(currentPage + 1);
+            };
+        }
+
+        // Search and filter functionality
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filtered = allStudentData.filter(student => {
+                const name = `${student.user?.first_name || ''} ${student.user?.last_name || ''}`.toLowerCase();
+                const email = (student.user?.email || '').toLowerCase();
+                return name.includes(searchTerm) || email.includes(searchTerm);
+            });
+            renderStudentTable(filtered);
+        });
+
+        document.getElementById('filterSelect').addEventListener('change', (e) => {
+            const filterValue = e.target.value;
+            if (!filterValue) {
+                renderStudentTable(allStudentData);
+                return;
+            }
+
+            const filtered = allStudentData.filter(student => {
+                if (filterValue === 'course') return student.course_id;
+                if (filterValue === 'category') return student.category_id;
+                if (filterValue === 'role-student') return student.user?.role === 'student';
+                if (filterValue === 'role-instructor') return student.user?.role === 'instructor';
+                if (filterValue === 'role-admin') return student.user?.role === 'admin';
+                return true;
+            });
+            renderStudentTable(filtered);
+        });
+
+        // Initialize page on load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDashboardStats();
+            loadEngagementAnalytics();
+            loadCoursePerformance();
+            loadStudentPerformance(1);
+        });
     </script>
 @endsection

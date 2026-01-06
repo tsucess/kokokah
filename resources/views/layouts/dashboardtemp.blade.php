@@ -34,6 +34,26 @@
     <!-- Include stylesheet quilljs -->
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 
+    <!-- Kokokah Loader Script - Load early in head -->
+    <script src="{{ asset('js/utils/kokokahLoader.js') }}"></script>
+
+    <!-- Inline loader HTML to show immediately -->
+    <style>
+        .kokokah-loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
 
 </head>
 
@@ -50,118 +70,16 @@
         </div>
 
         <nav class="nav-group px-2" id="sidebarNav">
+            <!-- Dashboard link (always visible) -->
             <a class="nav-item-link d-flex align-items-center gap-3" href="/dashboard" id="dashboardLink">
                 <i class="fa-solid fa-gauge nav-icon"></i> <span>Dashboard</span>
             </a>
-
-            <!-- Users Management (Superadmin Only) -->
-            @if(auth()->check() && auth()->user()->isSuperAdmin())
-            <a class="nav-item-link d-flex align-items-center justify-content-between nav-parent"
-                data-bs-toggle="collapse" href="#usersMenu">
-
-                <span class="d-flex align-items-center gap-3">
-                    <i class="fa-solid fa-users nav-icon"></i>
-                    <span>Users Management</span>
-                </span>
-
-                <i class="fa-solid fa-chevron-down chevron-icon"></i>
-            </a>
-
-
-            <!-- Dropdown items -->
-            <div class="collapse ps-5 " id="usersMenu">
-                <div class="d-flex flex-column gap-2">
-                <a class="nav-item-link d-block nav-child" href="/users">All Users</a>
-                <a class="nav-item-link d-block nav-child" href="/students">Students</a>
-                <a class="nav-item-link d-block nav-child" href="/instructors">Instructors</a>
-                <a class="nav-item-link d-block nav-child" href="/adduser">Add Users</a>
-                <a class="nav-item-link d-block nav-child" href="/useractivity">Users Activity Log</a>
-                </div>
-            </div>
-            @endif
-
-            <!-- Subject Management (Instructor+) -->
-            @if(auth()->check() && auth()->user()->isInstructorOrHigher())
-            <a class="nav-item-link d-flex align-items-center justify-content-between nav-parent"
-                data-bs-toggle="collapse" href="#subjectsMenu" role="button" aria-expanded="false"
-                aria-controls="subjectsMenu">
-
-                <span class="d-flex align-items-center gap-3">
-                    <i class="fa-solid fa-book-open nav-icon"></i>
-                    <span>Course Management</span>
-                </span>
-
-                <i class="fa-solid fa-chevron-down chevron-icon"></i>
-            </a>
-
-
-            <!-- Dropdown items -->
-            <div class="collapse ps-5" id="subjectsMenu">
-                <div class="d-flex flex-column gap-2">
-                <a class="nav-item-link d-block nav-child" href="/subjects">All Courses</a>
-                <a class="nav-item-link d-block nav-child" href="/createsubject">Create New Course</a>
-                @if(auth()->user()->isSuperAdmin())
-                <a class="nav-item-link d-block nav-child" href="/categories">Course Categories</a>
-                <a class="nav-item-link d-block nav-child" href="/curriculum-categories">Curriculum Categories</a>
-                <a class="nav-item-link d-block nav-child" href="/levels">Levels & Classes</a>
-                <a class="nav-item-link d-block nav-child" href="/terms">Academic Terms</a>
-                @endif
-                <a class="nav-item-link d-block nav-child" href="/rating">Course Reviews & Rating</a>
-                </div>
-            </div>
-            @endif
-
-            <!-- Transactions (Superadmin Only) -->
-            @if(auth()->check() && auth()->user()->isSuperAdmin())
-            <a class="nav-item-link d-flex align-items-center gap-3" href="/transactions" role="button">
-                <i class="fa-solid fa-credit-card nav-icon"></i><span>Transactions</span></a>
-            @endif
-
-            <!-- Reports & Analytics (Instructor+) -->
-            @if(auth()->check() && auth()->user()->isInstructorOrHigher())
-            <a class="nav-item-link d-flex align-items-center gap-3" href="/report">
-                <i class="fa-solid fa-chart-line nav-icon"></i>  <span>Reports & Analytics</span>
-            </a>
-            @endif
-            {{-- <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
-                data-bs-toggle="collapse" href="#analyticsMenu" role="button" aria-expanded="false"
-                aria-controls="analyticsMenu">
-                <span><i class="fa-solid fa-chart-line pe-3"></i> Reports & Analytics</span>
-                <i class="fa-solid fa-chevron-down small chevron-icon"></i>
-            </a> --}}
-
-            {{-- <div class="collapse ps-4" id="analyticsMenu">
-                <a class="nav-item-link d-block nav-child" href="#">Reports</a>
-                <a class="nav-item-link d-block nav-child" href="#">Analytics</a>
-            </div> --}}
-
-
-            <!-- Communication (Superadmin Only) -->
-            @if(auth()->check() && auth()->user()->isSuperAdmin())
-            <a class="nav-item-link d-flex align-items-center justify-content-between nav-parent"
-                data-bs-toggle="collapse" href="#communicationMenu" role="button" aria-expanded="false"
-                aria-controls="communicationMenu">
-
-                <span class="d-flex align-items-center gap-3">
-                    <i class="fa-solid fa-comments nav-icon"></i>
-                    <span>Communication</span>
-                </span>
-
-                <i class="fa-solid fa-chevron-down chevron-icon"></i>
-            </a>
-
-            <div class="collapse ps-5 " id="communicationMenu">
-                <div class="d-flex flex-column gap-2">
-                <a class="nav-item-link d-block nav-child" href="/announcement">Notifications</a>
-                </div>
-            </div>
-            @endif
+            <!-- Additional menu items will be rendered by sidebarManager.js based on user role -->
         </nav>
 
         <div class="sidebar-footer mt-auto p-3">
-            @if(auth()->check() && auth()->user()->isSuperAdmin())
-            <a class="nav-item-link" href="#"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
-            @endif
+            <!-- Settings link (Superadmin only - rendered by sidebarManager.js) -->
+            <a class="nav-item-link" href="#" id="settingsLink" style="display: none;"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
 
             <div class="profile mt-3" id="profileSection">
                 <img class="avatar" id="profileImage" src="{{ asset('images/winner-round.png') }}" alt="user"
@@ -436,11 +354,11 @@
         });
     </script>
 
-    <!-- Kokokah Logo Loader -->
-    <script src="{{ asset('js/utils/kokokahLoader.js') }}"></script>
-
     <!-- Confirmation Modal -->
     <script src="{{ asset('js/utils/confirmationModal.js') }}"></script>
+
+    <!-- Sidebar Manager - Renders menu items based on user role from localStorage -->
+    <script src="{{ asset('js/sidebarManager.js') }}"></script>
 
 </body>
 

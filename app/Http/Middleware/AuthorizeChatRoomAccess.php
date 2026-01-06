@@ -51,8 +51,8 @@ class AuthorizeChatRoomAccess
 
         $user = auth()->user();
 
-        // Admin can access all rooms
-        if ($user->role === 'admin') {
+        // Superadmin and admin can access all rooms
+        if (in_array($user->role, ['superadmin', 'admin'])) {
             return $next($request);
         }
 

@@ -108,8 +108,10 @@
                 this.setupEventListeners();
             } catch (error) {
                 console.error('Error initializing edit form:', error);
-                alert('Error loading announcement. Please try again.');
-                window.location.href = '/announcement';
+                this.showToast('Error', 'Error loading announcement. Please try again.', 'error');
+                setTimeout(() => {
+                    window.location.href = '/announcement';
+                }, 1500);
             }
         }
 
@@ -191,13 +193,14 @@
 
             // Update button - only updates data, keeps current status
             document.querySelector('.update-btn').addEventListener('click', () => {
-                this.submitForm(this.currentStatus);
+                this.submitForm(this.currentStatus, 'update');
             });
 
             // Status button - toggles between publish and draft
             document.querySelector('.status-btn').addEventListener('click', () => {
                 const newStatus = this.currentStatus === 'draft' ? 'published' : 'draft';
-                this.submitForm(newStatus);
+                const actionType = newStatus === 'published' ? 'publish' : 'draft';
+                this.submitForm(newStatus, actionType);
             });
         }
 
@@ -226,7 +229,7 @@
             if (priority === 'Warning') badge.classList.add('warning-badge');
         }
 
-        async submitForm(status) {
+        async submitForm(status, actionType = 'update') {
             const title = document.getElementById('title').value.trim();
             const description = document.getElementById('description').value.trim();
             const type = document.getElementById('type').value;
@@ -241,6 +244,7 @@
             console.log('- priority:', priority);
             console.log('- audience:', audience);
             console.log('- scheduled_at_input:', scheduled_at_input);
+            console.log('- actionType:', actionType);
 
             // Validation
             if (!title) {
@@ -314,17 +318,39 @@
                 this.currentStatus = status;
                 this.updateStatusButton();
 
-                alert('Announcement updated successfully!');
-                window.location.href = '/announcement';
+                // Show different success message based on action type
+                let successMessage = 'Announcement updated successfully!';
+                if (actionType === 'publish') {
+                    successMessage = 'Announcement published successfully!';
+                } else if (actionType === 'draft') {
+                    successMessage = 'Announcement saved as draft successfully!';
+                }
+
+                this.showToast('Success', successMessage, 'success');
+                setTimeout(() => {
+                    window.location.href = '/announcement';
+                }, 1500);
             } catch (error) {
                 console.error('Error updating announcement:', error);
-                alert('Error updating announcement:\n' + error.message);
+                this.showToast('Error', 'Error updating announcement: ' + error.message, 'error');
             }
         }
 
         getToken() {
             return document.querySelector('meta[name="csrf-token"]')?.content ||
                    localStorage.getItem('auth_token') || '';
+        }
+
+        /**
+         * Show a toast notification
+         */
+        showToast(title = '', message = '', type = 'info', timeout = 3500) {
+            if (window.ToastNotification && window.ToastNotification.show) {
+                window.ToastNotification.show(title, message, type, timeout);
+            } else {
+                console.warn('ToastNotification not available, falling back to alert');
+                alert(`${title}: ${message}`);
+            }
         }
     }
 

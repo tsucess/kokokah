@@ -145,10 +145,10 @@ class ReviewController extends Controller
 
             // Check if user can view this review
             $user = Auth::user();
-            $canView = $review->status === 'approved' || 
-                      $review->user_id === $user->id || 
+            $canView = $review->status === 'approved' ||
+                      $review->user_id === $user->id ||
                       $review->course->instructor_id === $user->id ||
-                      $user->hasRole('admin');
+                      $user->hasAnyRole(['admin', 'superadmin']);
 
             if (!$canView) {
                 return response()->json([

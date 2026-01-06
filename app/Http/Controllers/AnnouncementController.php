@@ -42,7 +42,7 @@ class AnnouncementController extends Controller
             }
 
             // Get published announcements for non-admin users
-            if (!Auth::user() || Auth::user()->role !== 'admin') {
+            if (!Auth::user() || !in_array(Auth::user()->role, ['admin', 'superadmin'])) {
                 $query->published();
             }
 
@@ -200,7 +200,7 @@ class AnnouncementController extends Controller
             $announcement = Announcement::findOrFail($id);
 
             // Check authorization
-            if (Auth::id() !== $announcement->user_id && Auth::user()->role !== 'admin') {
+            if (Auth::id() !== $announcement->user_id && !in_array(Auth::user()->role, ['admin', 'superadmin'])) {
                 return response()->json([
                     'status' => 403,
                     'message' => 'Unauthorized to delete this announcement'
