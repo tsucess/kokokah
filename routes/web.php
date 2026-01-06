@@ -125,7 +125,9 @@ Route::get('/terms', function () {
     return view('admin.terms');
 });
 
-
+Route::get('/feedback', function () {
+    return view('admin.feedback');
+});
 
 Route::get('/instructor', function () {
     return view('admin.instructor');

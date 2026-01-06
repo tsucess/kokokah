@@ -206,13 +206,13 @@
                     @csrf
 
                     <div class="d-flex flex-column input-area">
-                        <label for="firstName" class="label">Enter First Name *</label>
+                        <label for="firstName" class="label">Enter Full Name *</label>
                         <input type="text" name="first_name" id="firstName" placeholder="Winner" class="input" required>
                         <span class="error-message" id="firstNameError"></span>
                     </div>
 
                     <div class="d-flex flex-column input-area">
-                        <label for="lastName" class="label">Enter Last Name *</label>
+                        <label for="lastName" class="label">Enter Email Address *</label>
                         <input type="text" name="last_name" id="lastName" placeholder="Effiong" class="input" required>
                         <span class="error-message" id="lastNameError"></span>
                     </div>
