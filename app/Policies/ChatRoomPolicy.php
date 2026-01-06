@@ -18,8 +18,8 @@ class ChatRoomPolicy
      */
     public function view(User $user, ChatRoom $chatRoom): Response
     {
-        // Admin can view all rooms
-        if ($user->role === 'admin') {
+        // Superadmin and admin can view all rooms
+        if (in_array($user->role, ['superadmin', 'admin'])) {
             return Response::allow();
         }
 
@@ -49,20 +49,21 @@ class ChatRoomPolicy
 
     /**
      * Determine if the user can create a chat room.
-     * 
+     *
      * Rules:
      * - Only authenticated users can create rooms
-     * - Admins and instructors can create course rooms
+     * - Superadmin, admin and instructors can create course rooms
+     * - Instructors have same features as students
      */
     public function create(User $user): Response
     {
         // All authenticated users can create general rooms
-        if ($user->role === 'student' || $user->role === 'parent') {
+        if (in_array($user->role, ['student', 'parent', 'instructor'])) {
             return Response::allow();
         }
 
-        // Admins and instructors can create any type of room
-        if (in_array($user->role, ['admin', 'instructor'])) {
+        // Superadmin and admin can create any type of room
+        if (in_array($user->role, ['superadmin', 'admin'])) {
             return Response::allow();
         }
 
@@ -71,16 +72,16 @@ class ChatRoomPolicy
 
     /**
      * Determine if the user can update the chat room.
-     * 
+     *
      * Rules:
-     * - Admin can update any room
+     * - Superadmin and admin can update any room
      * - Room creator can update their own room
      * - Course instructors can update course rooms
      */
     public function update(User $user, ChatRoom $chatRoom): Response
     {
-        // Admin can update any room
-        if ($user->role === 'admin') {
+        // Superadmin and admin can update any room
+        if (in_array($user->role, ['superadmin', 'admin'])) {
             return Response::allow();
         }
 
@@ -101,16 +102,16 @@ class ChatRoomPolicy
 
     /**
      * Determine if the user can delete the chat room.
-     * 
+     *
      * Rules:
-     * - Admin can delete any room
+     * - Superadmin and admin can delete any room
      * - Room creator can delete their own room
      * - Course instructors can delete course rooms
      */
     public function delete(User $user, ChatRoom $chatRoom): Response
     {
-        // Admin can delete any room
-        if ($user->role === 'admin') {
+        // Superadmin and admin can delete any room
+        if (in_array($user->role, ['superadmin', 'admin'])) {
             return Response::allow();
         }
 
@@ -131,16 +132,16 @@ class ChatRoomPolicy
 
     /**
      * Determine if the user can manage members in the chat room.
-     * 
+     *
      * Rules:
-     * - Admin can manage members in any room
+     * - Superadmin and admin can manage members in any room
      * - Room creator can manage members
      * - Course instructors can manage members in course rooms
      */
     public function manageMember(User $user, ChatRoom $chatRoom): Response
     {
-        // Admin can manage members in any room
-        if ($user->role === 'admin') {
+        // Superadmin and admin can manage members in any room
+        if (in_array($user->role, ['superadmin', 'admin'])) {
             return Response::allow();
         }
 
@@ -189,11 +190,11 @@ class ChatRoomPolicy
      * Determine if the user can force delete the chat room.
      *
      * Rules:
-     * - Only admin can force delete
+     * - Only superadmin and admin can force delete
      */
     public function forceDelete(User $user, ChatRoom $chatRoom): Response
     {
-        if ($user->role === 'admin') {
+        if (in_array($user->role, ['superadmin', 'admin'])) {
             return Response::allow();
         }
 
@@ -204,14 +205,14 @@ class ChatRoomPolicy
      * Determine if the user can mute another user in the chat room.
      *
      * Rules:
-     * - Admin can mute any user
+     * - Superadmin and admin can mute any user
      * - Room creator can mute users
      * - Course instructors can mute users in their course room
      */
     public function muteUser(User $user, ChatRoom $chatRoom): Response
     {
-        // Admin can mute any user
-        if ($user->role === 'admin') {
+        // Superadmin and admin can mute any user
+        if (in_array($user->role, ['superadmin', 'admin'])) {
             return Response::allow();
         }
 
@@ -234,14 +235,14 @@ class ChatRoomPolicy
      * Determine if the user can remove another user from the chat room.
      *
      * Rules:
-     * - Admin can remove any user
+     * - Superadmin and admin can remove any user
      * - Room creator can remove users
      * - Course instructors can remove users from their course room
      */
     public function removeUser(User $user, ChatRoom $chatRoom): Response
     {
-        // Admin can remove any user
-        if ($user->role === 'admin') {
+        // Superadmin and admin can remove any user
+        if (in_array($user->role, ['superadmin', 'admin'])) {
             return Response::allow();
         }
 
@@ -264,14 +265,14 @@ class ChatRoomPolicy
      * Determine if the user can add members to the chat room.
      *
      * Rules:
-     * - Admin can add members to any room
+     * - Superadmin and admin can add members to any room
      * - Room creator can add members
      * - Course instructors can add members to their course room
      */
     public function addMember(User $user, ChatRoom $chatRoom): Response
     {
-        // Admin can add members to any room
-        if ($user->role === 'admin') {
+        // Superadmin and admin can add members to any room
+        if (in_array($user->role, ['superadmin', 'admin'])) {
             return Response::allow();
         }
 

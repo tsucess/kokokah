@@ -58,7 +58,7 @@ class CourseController extends Controller
 
     private function userCanModify(Course $course)
     {
-        return $course->instructor_id == Auth::id() || Auth::user()->hasRole('admin');
+        return $course->instructor_id == Auth::id() || Auth::user()->hasAnyRole(['admin', 'superadmin']);
     }
 
     private function uploadThumbnail(Request $request, $existing = null)

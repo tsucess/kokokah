@@ -319,6 +319,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $query->where('role', 'admin');
     }
 
+    public function scopeSuperAdmins($query)
+    {
+        return $query->where('role', 'superadmin');
+    }
+
     public function scopeByLevel($query, $levelId)
     {
         return $query->where('level_id', $levelId);
@@ -338,6 +343,27 @@ class User extends Authenticatable implements MustVerifyEmail
     public function isAdmin()
     {
         return $this->role === 'admin';
+    }
+
+    public function isSuperAdmin()
+    {
+        return $this->role === 'superadmin';
+    }
+
+    /**
+     * Check if user is a superadmin or admin
+     */
+    public function isAdminOrSuperAdmin()
+    {
+        return in_array($this->role, ['admin', 'superadmin']);
+    }
+
+    /**
+     * Check if user is an instructor or higher
+     */
+    public function isInstructorOrHigher()
+    {
+        return in_array($this->role, ['instructor', 'admin', 'superadmin']);
     }
 
     public function getFullNameAttribute()
@@ -388,8 +414,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function canAccessCourse(Course $course)
     {
-        // Admin and instructors can access any course
-        if (in_array($this->role, ['admin', 'instructor'])) {
+        // Superadmin, admin and instructors can access any course
+        if (in_array($this->role, ['superadmin', 'admin', 'instructor'])) {
             return true;
         }
 

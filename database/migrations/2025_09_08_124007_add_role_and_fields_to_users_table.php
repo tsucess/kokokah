@@ -12,7 +12,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->default('student')->after('email'); // student, instructor, admin
+            $table->string('role')->default('student')->after('email'); // student, instructor, admin, superadmin
             $table->boolean('is_active')->default(true)->after('role');
             $table->string('identifier')->nullable()->unique()->after('id');
             // add other fields you need like contact, gender

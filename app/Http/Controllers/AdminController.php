@@ -24,7 +24,8 @@ use Illuminate\Support\Facades\Hash;
 class AdminController extends Controller
 {
     // Middleware is applied at route level in routes/api.php
-    // Route::prefix('admin')->middleware('role:admin')->group(function () {
+    // Route::prefix('admin')->middleware('role:superadmin')->group(function () {
+    // This controller is for superadmin only features
 
     /**
      * Get admin dashboard overview

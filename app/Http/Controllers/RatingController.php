@@ -17,7 +17,7 @@ class RatingController extends Controller
         $user = Auth::user();
 
         // Get courses based on user role
-        if ($user->hasRole('admin')) {
+        if ($user->hasAnyRole(['admin', 'superadmin'])) {
             $courses = Course::with(['reviews' => function ($query) {
                 $query->where('status', 'approved');
             }])->get();
@@ -59,7 +59,7 @@ class RatingController extends Controller
         $course = Course::findOrFail($courseId);
 
         // Check authorization
-        if (!$user->hasRole('admin') && $course->instructor_id !== $user->id) {
+        if (!$user->hasAnyRole(['admin', 'superadmin']) && $course->instructor_id !== $user->id) {
             return response()->json([
                 'success' => false,
                 'message' => 'Unauthorized'

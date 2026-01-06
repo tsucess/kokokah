@@ -28,7 +28,7 @@ class AssignmentController extends Controller
             // Check if user has access to this course
             $isEnrolled = $course->enrollments()->where('user_id', $user->id)->exists();
             $isInstructor = $course->instructor_id === $user->id;
-            $isAdmin = $user->hasRole('admin');
+            $isAdmin = $user->hasAnyRole(['admin', 'superadmin']);
 
             if (!$isEnrolled && !$isInstructor && !$isAdmin) {
                 return response()->json([
@@ -193,7 +193,7 @@ class AssignmentController extends Controller
             // Check access
             $isEnrolled = $assignment->course->enrollments()->where('user_id', $user->id)->exists();
             $isInstructor = $assignment->course->instructor_id === $user->id;
-            $isAdmin = $user->hasRole('admin');
+            $isAdmin = $user->hasAnyRole(['admin', 'superadmin']);
 
             if (!$isEnrolled && !$isInstructor && !$isAdmin) {
                 return response()->json([

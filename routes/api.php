@@ -430,8 +430,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/reports/{courseId}', [GradingController::class, 'reports']);
     });
 
-    // Admin management routes (admin only)
-    Route::prefix('admin')->middleware('role:admin')->group(function () {
+    // Admin management routes (superadmin only)
+    Route::prefix('admin')->middleware('role:superadmin')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard']);
         Route::get('/users', [AdminController::class, 'users']);
         Route::get('/users/recent', [AdminController::class, 'recentlyRegisteredUsers']);
@@ -456,17 +456,17 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/database-stats', [AdminController::class, 'databaseStats']);
     });
 
-    // Analytics routes (instructor/admin)
-    Route::prefix('analytics')->middleware('role:instructor,admin')->group(function () {
+    // Analytics routes (instructor/admin/superadmin)
+    Route::prefix('analytics')->middleware('role:instructor,admin,superadmin')->group(function () {
         Route::get('/learning', [AnalyticsController::class, 'learningAnalytics']);
         Route::get('/course-performance', [AnalyticsController::class, 'coursePerformance']);
         Route::get('/student-progress', [AnalyticsController::class, 'studentProgress']);
-        Route::get('/revenue', [AnalyticsController::class, 'revenueAnalytics'])->middleware('role:admin');
+        Route::get('/revenue', [AnalyticsController::class, 'revenueAnalytics'])->middleware('role:admin,superadmin');
         Route::get('/engagement', [AnalyticsController::class, 'engagementAnalytics']);
         Route::post('/comparative', [AnalyticsController::class, 'comparativeAnalytics']);
         Route::post('/export', [AnalyticsController::class, 'exportAnalytics']);
         Route::get('/real-time', [AnalyticsController::class, 'realTimeAnalytics']);
-        Route::get('/predictive', [AnalyticsController::class, 'predictiveAnalytics'])->middleware('role:admin');
+        Route::get('/predictive', [AnalyticsController::class, 'predictiveAnalytics'])->middleware('role:admin,superadmin');
     });
 
     // Learning paths routes (authenticated)
@@ -493,7 +493,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/sessions', [ChatController::class, 'getUserSessions']);
         Route::post('/sessions/{sessionId}/end', [ChatController::class, 'endSession']);
         Route::post('/sessions/{sessionId}/rate', [ChatController::class, 'rateSession']);
-        Route::get('/analytics', [ChatController::class, 'analytics'])->middleware('role:admin');
+        Route::get('/analytics', [ChatController::class, 'analytics'])->middleware('role:admin,superadmin');
         Route::post('/suggestions', [ChatController::class, 'getSuggestedResponses']);
     });
 
@@ -517,8 +517,8 @@ Route::middleware('auth:sanctum')->group(function () {
         });
 });
 
-// Admin-only route
-Route::middleware(['auth:sanctum', 'role:admin'])->get('/admin/reports', function () {
+// Superadmin-only route
+Route::middleware(['auth:sanctum', 'role:superadmin'])->get('/admin/reports', function () {
     return "Admin Reports";
 });
 
@@ -545,7 +545,7 @@ Route::middleware('auth:sanctum')->prefix('recommendations')->group(function () 
     Route::get('/instructors', [RecommendationController::class, 'getInstructorRecommendations']);
     Route::get('/content', [RecommendationController::class, 'getContentRecommendations']);
     Route::put('/preferences', [RecommendationController::class, 'updatePreferences']);
-    Route::get('/analytics', [RecommendationController::class, 'getAnalytics'])->middleware('role:admin');
+    Route::get('/analytics', [RecommendationController::class, 'getAnalytics'])->middleware('role:admin,superadmin');
 });
 
 // Coupon management routes
@@ -558,24 +558,24 @@ Route::middleware('auth:sanctum')->prefix('coupons')->group(function () {
     Route::post('/validate', [CouponController::class, 'validateCoupon']);
     Route::post('/apply', [CouponController::class, 'applyCoupon']);
     Route::get('/user/available', [CouponController::class, 'getUserCoupons']);
-    Route::get('/admin/analytics', [CouponController::class, 'analytics']);
+    Route::get('/admin/analytics', [CouponController::class, 'analytics'])->middleware('role:admin,superadmin');
     Route::post('/bulk-action', [CouponController::class, 'bulkAction']);
 });
 
-// Report generation routes (instructor/admin)
-Route::middleware(['auth:sanctum', 'role:instructor,admin'])->prefix('reports')->group(function () {
+// Report generation routes (instructor/admin/superadmin)
+Route::middleware(['auth:sanctum', 'role:instructor,admin,superadmin'])->prefix('reports')->group(function () {
     Route::get('/types', [ReportController::class, 'getReportTypes']);
     Route::post('/financial', [ReportController::class, 'generateFinancialReport']);
     Route::post('/academic', [ReportController::class, 'generateAcademicReport']);
-    Route::post('/user', [ReportController::class, 'generateUserReport'])->middleware('role:admin');
+    Route::post('/user', [ReportController::class, 'generateUserReport'])->middleware('role:admin,superadmin');
     Route::post('/content', [ReportController::class, 'generateContentReport']);
     Route::get('/scheduled', [ReportController::class, 'getScheduledReports']);
-    Route::post('/schedule', [ReportController::class, 'scheduleReport'])->middleware('role:admin');
+    Route::post('/schedule', [ReportController::class, 'scheduleReport'])->middleware('role:admin,superadmin');
     Route::get('/history', [ReportController::class, 'getReportHistory']);
 });
 
-// System settings routes (admin only)
-Route::middleware(['auth:sanctum', 'role:admin'])->prefix('settings')->group(function () {
+// System settings routes (superadmin only)
+Route::middleware(['auth:sanctum', 'role:superadmin'])->prefix('settings')->group(function () {
     Route::get('/', [SettingController::class, 'index']);
     Route::get('/{key}', [SettingController::class, 'show']);
     Route::put('/{key}', [SettingController::class, 'update']);
@@ -589,8 +589,8 @@ Route::middleware(['auth:sanctum', 'role:admin'])->prefix('settings')->group(fun
 // Public settings (no auth required)
 Route::get('/settings/public', [SettingController::class, 'getPublicSettings']);
 
-// Audit and security routes (admin only)
-Route::middleware(['auth:sanctum', 'role:admin'])->prefix('audit')->group(function () {
+// Audit and security routes (superadmin only)
+Route::middleware(['auth:sanctum', 'role:superadmin'])->prefix('audit')->group(function () {
     Route::get('/logs', [AuditController::class, 'index']);
     Route::get('/logs/{id}', [AuditController::class, 'show']);
     Route::get('/users/{userId}/activity', [AuditController::class, 'getUserActivity']);
@@ -607,9 +607,9 @@ Route::middleware('auth:sanctum')->prefix('notifications')->group(function () {
     Route::delete('/{id}', [NotificationController::class, 'delete']);
     Route::get('/preferences', [NotificationController::class, 'getPreferences']);
     Route::put('/preferences', [NotificationController::class, 'updatePreferences']);
-    Route::post('/send', [NotificationController::class, 'sendNotification'])->middleware('role:admin');
-    Route::post('/broadcast', [NotificationController::class, 'broadcastNotification'])->middleware('role:admin');
-    Route::get('/analytics', [NotificationController::class, 'getAnalytics'])->middleware('role:admin');
+    Route::post('/send', [NotificationController::class, 'sendNotification'])->middleware('role:admin,superadmin');
+    Route::post('/broadcast', [NotificationController::class, 'broadcastNotification'])->middleware('role:admin,superadmin');
+    Route::get('/analytics', [NotificationController::class, 'getAnalytics'])->middleware('role:admin,superadmin');
 });
 
 // Announcement routes
@@ -618,8 +618,8 @@ Route::middleware('auth:sanctum')->prefix('announcements')->group(function () {
     Route::get('/types', [AnnouncementController::class, 'getByType']);
     Route::get('/{id}', [AnnouncementController::class, 'show']);
 
-    // Admin only routes
-    Route::middleware('role:admin')->group(function () {
+    // Superadmin only routes
+    Route::middleware('role:superadmin')->group(function () {
         Route::post('/', [AnnouncementController::class, 'store']);
         Route::put('/{id}', [AnnouncementController::class, 'update']);
         Route::delete('/{id}', [AnnouncementController::class, 'destroy']);
@@ -653,18 +653,18 @@ Route::middleware('auth:sanctum')->prefix('files')->group(function () {
 Route::middleware('auth:sanctum')->prefix('analytics/advanced')->group(function () {
     // Student predictions
     Route::get('/predictions/student/{studentId}', 'App\Http\Controllers\AdvancedAnalyticsController@getStudentPredictions');
-    Route::post('/predictions/student/{studentId}/calculate', 'App\Http\Controllers\AdvancedAnalyticsController@calculateStudentPredictions')->middleware('role:admin');
+    Route::post('/predictions/student/{studentId}/calculate', 'App\Http\Controllers\AdvancedAnalyticsController@calculateStudentPredictions')->middleware('role:admin,superadmin');
 
     // Cohort analysis
     Route::get('/cohorts', 'App\Http\Controllers\AdvancedAnalyticsController@listCohorts');
-    Route::post('/cohorts', 'App\Http\Controllers\AdvancedAnalyticsController@createCohort')->middleware('role:admin');
+    Route::post('/cohorts', 'App\Http\Controllers\AdvancedAnalyticsController@createCohort')->middleware('role:admin,superadmin');
     Route::get('/cohorts/{cohortId}', 'App\Http\Controllers\AdvancedAnalyticsController@getCohortAnalysis');
     Route::post('/cohorts/{cohortId1}/compare/{cohortId2}', 'App\Http\Controllers\AdvancedAnalyticsController@compareCohorts');
 
     // Engagement scores
     Route::get('/engagement/course/{courseId}', 'App\Http\Controllers\AdvancedAnalyticsController@getCourseEngagement');
     Route::get('/engagement/student/{studentId}/course/{courseId}', 'App\Http\Controllers\AdvancedAnalyticsController@getStudentEngagement');
-    Route::post('/engagement/course/{courseId}/calculate', 'App\Http\Controllers\AdvancedAnalyticsController@calculateCourseEngagement')->middleware('role:admin');
+    Route::post('/engagement/course/{courseId}/calculate', 'App\Http\Controllers\AdvancedAnalyticsController@calculateCourseEngagement')->middleware('role:admin,superadmin');
 
     // At-risk and high-performing students
     Route::get('/at-risk/course/{courseId}', 'App\Http\Controllers\AdvancedAnalyticsController@getAtRiskStudents');
@@ -688,13 +688,13 @@ Route::middleware('auth:sanctum')->prefix('localization')->group(function () {
 
 // Video Streaming routes
 Route::middleware('auth:sanctum')->prefix('videos')->group(function () {
-    Route::post('/', 'App\Http\Controllers\VideoStreamingController@createVideoStream')->middleware('role:instructor,admin');
-    Route::post('/{videoStreamId}/process', 'App\Http\Controllers\VideoStreamingController@processVideoStream')->middleware('role:admin');
+    Route::post('/', 'App\Http\Controllers\VideoStreamingController@createVideoStream')->middleware('role:instructor,admin,superadmin');
+    Route::post('/{videoStreamId}/process', 'App\Http\Controllers\VideoStreamingController@processVideoStream')->middleware('role:admin,superadmin');
     Route::get('/{videoStreamId}', 'App\Http\Controllers\VideoStreamingController@getVideoStream');
     Route::post('/{videoStreamId}/view', 'App\Http\Controllers\VideoStreamingController@recordVideoView');
     Route::post('/{videoStreamId}/watch-time', 'App\Http\Controllers\VideoStreamingController@updateWatchTime');
     Route::post('/{videoStreamId}/download', 'App\Http\Controllers\VideoStreamingController@createDownloadRequest');
-    Route::get('/{videoStreamId}/analytics', 'App\Http\Controllers\VideoStreamingController@getVideoAnalytics')->middleware('role:instructor,admin');
+    Route::get('/{videoStreamId}/analytics', 'App\Http\Controllers\VideoStreamingController@getVideoAnalytics')->middleware('role:instructor,admin,superadmin');
     Route::get('/top/videos', 'App\Http\Controllers\VideoStreamingController@getTopVideos');
     Route::get('/user/downloads', 'App\Http\Controllers\VideoStreamingController@getUserDownloads');
 });
@@ -757,8 +757,8 @@ Route::middleware('auth:sanctum')->prefix('feedback')->group(function () {
     Route::get('/my-feedback', [FeedbackController::class, 'getUserFeedback']);
 });
 
-// Admin Feedback Routes
-Route::middleware(['auth:sanctum', 'role:admin'])->prefix('feedback')->group(function () {
+// Superadmin Feedback Routes
+Route::middleware(['auth:sanctum', 'role:superadmin'])->prefix('feedback')->group(function () {
     // Get all feedback
     Route::get('/', [FeedbackController::class, 'index']);
 

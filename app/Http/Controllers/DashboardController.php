@@ -21,16 +21,17 @@ class DashboardController extends Controller
 
     /**
      * Get student dashboard
+     * Instructors have the same features as students
      */
     public function studentDashboard()
     {
         $user = Auth::user();
 
-        // Ensure user is a student
-        if (!$user->hasRole('student')) {
+        // Ensure user is a student or instructor (instructors have student features)
+        if (!$user->hasAnyRole(['student', 'instructor'])) {
             return response()->json([
                 'success' => false,
-                'message' => 'Access denied. Student role required.'
+                'message' => 'Access denied. Student or instructor role required.'
             ], 403);
         }
 

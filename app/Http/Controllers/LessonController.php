@@ -25,10 +25,10 @@ class LessonController extends Controller
             $course = Course::findOrFail($courseId);
             $user = Auth::user();
 
-            // Check if user is enrolled or is instructor/admin
+            // Check if user is enrolled or is instructor/admin/superadmin
             $isEnrolled = $course->enrollments()->where('user_id', $user->id)->exists();
             $isInstructor = $course->instructor_id === $user->id;
-            $isAdmin = $user->hasRole('admin');
+            $isAdmin = $user->hasAnyRole(['admin', 'superadmin']);
 
             if (!$isEnrolled && !$isInstructor && !$isAdmin) {
                 return response()->json([

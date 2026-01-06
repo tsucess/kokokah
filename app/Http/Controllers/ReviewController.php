@@ -317,14 +317,14 @@ class ReviewController extends Controller
     }
 
     /**
-     * Get reviews for moderation (admin/instructor)
+     * Get reviews for moderation (admin/superadmin/instructor)
      */
     public function moderate(Request $request)
     {
         $user = Auth::user();
 
-        // Check if user is admin or instructor
-        if (!$user->hasRole('admin') && !$user->hasRole('instructor')) {
+        // Check if user is admin, superadmin or instructor
+        if (!$user->hasAnyRole(['admin', 'superadmin', 'instructor'])) {
             return response()->json([
                 'success' => false,
                 'message' => 'Unauthorized access'

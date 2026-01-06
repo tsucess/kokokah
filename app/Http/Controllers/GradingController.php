@@ -337,7 +337,7 @@ class GradingController extends Controller
             $course = Course::findOrFail($request->course_id);
 
             // Check permissions
-            if ($course->instructor_id !== $user->id && !$user->hasRole('admin')) {
+            if ($course->instructor_id !== $user->id && !$user->hasAnyRole(['admin', 'superadmin'])) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Unauthorized to grade this course'

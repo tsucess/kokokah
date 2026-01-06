@@ -54,7 +54,8 @@
                 <i class="fa-solid fa-gauge nav-icon"></i> <span>Dashboard</span>
             </a>
 
-            <!-- Users Management -->
+            <!-- Users Management (Superadmin Only) -->
+            @if(auth()->check() && auth()->user()->isSuperAdmin())
             <a class="nav-item-link d-flex align-items-center justify-content-between nav-parent"
                 data-bs-toggle="collapse" href="#usersMenu">
 
@@ -77,8 +78,10 @@
                 <a class="nav-item-link d-block nav-child" href="/useractivity">Users Activity Log</a>
                 </div>
             </div>
+            @endif
 
-            <!-- Subject Management -->
+            <!-- Subject Management (Instructor+) -->
+            @if(auth()->check() && auth()->user()->isInstructorOrHigher())
             <a class="nav-item-link d-flex align-items-center justify-content-between nav-parent"
                 data-bs-toggle="collapse" href="#subjectsMenu" role="button" aria-expanded="false"
                 aria-controls="subjectsMenu">
@@ -97,25 +100,29 @@
                 <div class="d-flex flex-column gap-2">
                 <a class="nav-item-link d-block nav-child" href="/subjects">All Courses</a>
                 <a class="nav-item-link d-block nav-child" href="/createsubject">Create New Course</a>
+                @if(auth()->user()->isSuperAdmin())
                 <a class="nav-item-link d-block nav-child" href="/categories">Course Categories</a>
                 <a class="nav-item-link d-block nav-child" href="/curriculum-categories">Curriculum Categories</a>
                 <a class="nav-item-link d-block nav-child" href="/levels">Levels & Classes</a>
                 <a class="nav-item-link d-block nav-child" href="/terms">Academic Terms</a>
+                @endif
                 <a class="nav-item-link d-block nav-child" href="/rating">Course Reviews & Rating</a>
                 </div>
             </div>
+            @endif
 
+            <!-- Transactions (Superadmin Only) -->
+            @if(auth()->check() && auth()->user()->isSuperAdmin())
             <a class="nav-item-link d-flex align-items-center gap-3" href="/transactions" role="button">
                 <i class="fa-solid fa-credit-card nav-icon"></i><span>Transactions</span></a>
+            @endif
 
-            {{-- <div class="collapse ps-4" id="paymentsMenu">
-                <a class="nav-item-link d-block nav-child" href="/transactions">Transactions</a>
-                <a class="nav-item-link d-block nav-child" href="#">Payment History</a>
-                <a class="nav-item-link d-block nav-child" href="#">Invoices</a>
-            </div> --}}
+            <!-- Reports & Analytics (Instructor+) -->
+            @if(auth()->check() && auth()->user()->isInstructorOrHigher())
             <a class="nav-item-link d-flex align-items-center gap-3" href="/report">
                 <i class="fa-solid fa-chart-line nav-icon"></i>  <span>Reports & Analytics</span>
             </a>
+            @endif
             {{-- <a class="nav-item-link d-flex justify-content-between align-items-center nav-parent"
                 data-bs-toggle="collapse" href="#analyticsMenu" role="button" aria-expanded="false"
                 aria-controls="analyticsMenu">
@@ -129,6 +136,8 @@
             </div> --}}
 
 
+            <!-- Communication (Superadmin Only) -->
+            @if(auth()->check() && auth()->user()->isSuperAdmin())
             <a class="nav-item-link d-flex align-items-center justify-content-between nav-parent"
                 data-bs-toggle="collapse" href="#communicationMenu" role="button" aria-expanded="false"
                 aria-controls="communicationMenu">
@@ -146,10 +155,13 @@
                 <a class="nav-item-link d-block nav-child" href="/announcement">Notifications</a>
                 </div>
             </div>
+            @endif
         </nav>
 
         <div class="sidebar-footer mt-auto p-3">
+            @if(auth()->check() && auth()->user()->isSuperAdmin())
             <a class="nav-item-link" href="#"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
+            @endif
 
             <div class="profile mt-3" id="profileSection">
                 <img class="avatar" id="profileImage" src="{{ asset('images/winner-round.png') }}" alt="user"

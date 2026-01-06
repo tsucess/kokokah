@@ -532,7 +532,8 @@ class FileController extends Controller
         $quotas = [
             'student' => 1024 * 1024 * 1024, // 1GB
             'instructor' => 5 * 1024 * 1024 * 1024, // 5GB
-            'admin' => 10 * 1024 * 1024 * 1024 // 10GB
+            'admin' => 10 * 1024 * 1024 * 1024, // 10GB
+            'superadmin' => 50 * 1024 * 1024 * 1024 // 50GB
         ];
 
         return $quotas[$user->role] ?? $quotas['student'];
@@ -540,15 +541,15 @@ class FileController extends Controller
 
     private function canAccessFile($user, $file)
     {
-        return $file->user_id === $user->id || 
-               $file->is_public || 
-               $user->hasRole('admin') ||
+        return $file->user_id === $user->id ||
+               $file->is_public ||
+               $user->hasAnyRole(['admin', 'superadmin']) ||
                ($file->course_id && $user->enrollments()->where('course_id', $file->course_id)->exists());
     }
 
     private function canDeleteFile($user, $file)
     {
-        return $file->user_id === $user->id || $user->hasRole('admin');
+        return $file->user_id === $user->id || $user->hasAnyRole(['admin', 'superadmin']);
     }
 
     private function canShareFile($user, $file)

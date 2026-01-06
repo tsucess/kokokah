@@ -35,8 +35,8 @@ class AuthServiceProvider extends ServiceProvider
          * Check if user can access a specific chat room
          */
         Gate::define('access-chat-room', function ($user, ChatRoom $chatRoom) {
-            // Admin can access all rooms
-            if ($user->role === 'admin') {
+            // Superadmin and admin can access all rooms
+            if (in_array($user->role, ['superadmin', 'admin'])) {
                 return true;
             }
 
@@ -97,8 +97,8 @@ class AuthServiceProvider extends ServiceProvider
          * Check if user can manage a chat room (edit, delete, manage members)
          */
         Gate::define('manage-chat-room', function ($user, ChatRoom $chatRoom) {
-            // Admin can manage all rooms
-            if ($user->role === 'admin') {
+            // Superadmin and admin can manage all rooms
+            if (in_array($user->role, ['superadmin', 'admin'])) {
                 return true;
             }
 
@@ -122,8 +122,8 @@ class AuthServiceProvider extends ServiceProvider
          * Check if user can moderate a chat room (delete messages, mute users)
          */
         Gate::define('moderate-chat-room', function ($user, ChatRoom $chatRoom) {
-            // Admin can moderate all rooms
-            if ($user->role === 'admin') {
+            // Superadmin and admin can moderate all rooms
+            if (in_array($user->role, ['superadmin', 'admin'])) {
                 return true;
             }
 

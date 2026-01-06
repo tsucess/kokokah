@@ -52,7 +52,7 @@ class TopicController extends Controller
             // Check if user has access to this topic's course
             $isEnrolled = $topic->course->enrollments()->where('user_id', $user->id)->exists();
             $isInstructor = $topic->course->instructor_id === $user->id;
-            $isAdmin = $user->hasRole('admin');
+            $isAdmin = $user->hasAnyRole(['admin', 'superadmin']);
 
             if (!$isEnrolled && !$isInstructor && !$isAdmin) {
                 return response()->json([

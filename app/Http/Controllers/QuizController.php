@@ -203,7 +203,7 @@ class QuizController extends Controller
             // Check if user has access to this topic's course
             $isEnrolled = $topic->course->enrollments()->where('user_id', $user->id)->exists();
             $isInstructor = $topic->course->instructor_id === $user->id;
-            $isAdmin = $user->hasRole('admin');
+            $isAdmin = $user->hasAnyRole(['admin', 'superadmin']);
 
             if (!$isEnrolled && !$isInstructor && !$isAdmin) {
                 return response()->json([
@@ -462,7 +462,7 @@ class QuizController extends Controller
                 $course = $quiz->topic->course;
             }
 
-            if (!$course || ($course->instructor_id !== Auth::id() && !Auth::user()->hasRole('admin'))) {
+            if (!$course || ($course->instructor_id !== Auth::id() && !Auth::user()->hasAnyRole(['admin', 'superadmin']))) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Unauthorized to update this quiz'
