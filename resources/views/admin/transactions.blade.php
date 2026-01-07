@@ -183,7 +183,7 @@ const token = localStorage.getItem('auth_token');
                 <td style="padding: 1rem; color: #666; font-size:14px;">0${index + 1}</td>
                 <td style="padding: 1rem; font-size:14px;">
                   <div class="d-flex align-items-center">
-                    <img src="images/winner-round.png" class="rounded-circle me-3" width="32" height="32" style="object-fit: cover; background: #f0f0f0;">
+                    <img src="images/default-avatar.png" class="rounded-circle me-3" width="32" height="32" style="object-fit: cover; background: #f0f0f0;">
                     <span style="color: #333; font-weight: 500;">${transaction.user_name || 'N/A'}</span>
                   </div>
                 </td>

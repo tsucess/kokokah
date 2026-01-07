@@ -184,7 +184,7 @@
                         users.forEach((user, index) => {
                             const profilePhoto = user.profile_photo ?
                                 `storage/${user.profile_photo}` :
-                                'images/winner-round.png';
+                                'images/default-avatar.png';
 
                             const roleColor = user.role === 'admin' ? '#6c757d' :
                                 user.role === 'instructor' ? '#004A53' : '#FDAF22';
