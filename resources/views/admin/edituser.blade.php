@@ -860,8 +860,18 @@
         const isEditMode = !!userId;
 
         // Load user data if in edit mode
+        // Wait for AdminApiClient to be available
         if (isEditMode) {
-            loadUserData(userId);
+            if (typeof AdminApiClient !== 'undefined') {
+                loadUserData(userId);
+            } else {
+                // If AdminApiClient is not yet loaded, wait for it
+                document.addEventListener('DOMContentLoaded', () => {
+                    if (typeof AdminApiClient !== 'undefined') {
+                        loadUserData(userId);
+                    }
+                });
+            }
         }
 
         async function loadUserData(userId) {

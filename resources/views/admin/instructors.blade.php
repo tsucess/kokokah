@@ -36,14 +36,14 @@
                             </div>
 
                             <!-- Filter Dropdown -->
-                            <select class="custom-select" id="filterSelect">
+                            {{-- <select class="custom-select" id="filterSelect">
                                 <option value="" style="">All Classes</option>
                                 <option value="course">All Courses</option>
                                 <option value="category">All Categories</option>
                                 <option value="role-student">Students</option>
                                 <option value="role-instructor">Instructors</option>
                                 <option value="role-admin">Admins</option>
-                            </select>
+                            </select> --}}
 
                             <!-- View Options -->
                             {{-- <button class="btn btn-light" style="border: 1px solid #ddd; padding: 0.625rem 1rem;" title="List View">
@@ -131,10 +131,6 @@
                 loadUsers(1);
             });
 
-            document.getElementById('filterSelect').addEventListener('change', function(e) {
-                currentFilter = e.target.value;
-                loadUsers(1);
-            });
         });
 
         // Load users from API
