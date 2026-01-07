@@ -68,12 +68,12 @@
                     <h1>Report & Analytics</h1>
                     <p>Here overview of your </p>
                 </div>
-                <div class="d-flex gap-3 align-items-center">
+                {{-- <div class="d-flex gap-3 align-items-center">
                     <a href="http://" class="btn-yellow-action d-flex gap-1 align-items-center"
                         style="text-decoration: none;"><i class="fa-solid fa-plus"></i>Add Category</a>
                     <a href="http://" class="btn-secondary-action d-flex gap-1 align-items-center"
                         style="text-decoration: none;"><i class="fa-solid fa-plus"></i> Add Term</a>
-                </div>
+                </div> --}}
             </header>
             <section class="d-flex flex-column gap-4">
                 <div class="stats-container">
