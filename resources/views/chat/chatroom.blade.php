@@ -90,6 +90,24 @@
             background-color: rgba(255, 255, 255, 0.3) !important;
         }
 
+        /* Message actions styling */
+        .message-actions {
+            display: flex;
+            gap: 5px;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .message-actions .btn {
+            padding: 4px 8px;
+            font-size: 0.75rem;
+        }
+
+        .chat-message:hover .message-actions {
+            display: flex !important;
+        }
+
         .loading-spinner {
             display: none;
             text-align: center;
@@ -373,18 +391,20 @@
         function renderMessages(messages) {
             console.log('renderMessages called with:', messages);
 
-            // Get current user ID from localStorage
+            // Get current user ID and role from localStorage
             let currentUserId = null;
+            let userRole = null;
             const authUserStr = localStorage.getItem('auth_user');
             if (authUserStr) {
                 try {
                     const authUser = JSON.parse(authUserStr);
                     currentUserId = authUser?.id;
+                    userRole = authUser?.role;
                 } catch (e) {
                     console.error('Failed to parse auth_user:', e);
                 }
             }
-            console.log('Current user ID:', currentUserId);
+            console.log('Current user ID:', currentUserId, 'Role:', userRole);
 
             if (!messages || messages.length === 0) {
                 console.log('No messages to render');
@@ -394,19 +414,52 @@
 
             const html = messages.map(msg => {
                 const isCurrentUser = msg.user_id === currentUserId || msg.user_id == currentUserId;
+                const isAdmin = ['admin', 'superadmin'].includes(userRole);
+                const canEditDelete = isCurrentUser || isAdmin;
                 const userFirstName = msg.user?.first_name || 'Unknown';
                 const userLastName = msg.user?.last_name || 'User';
                 const profilePhoto = msg.user?.profile_photo || '/images/default-avatar.png';
                 const messageTime = new Date(msg.created_at).toLocaleTimeString();
                 const messageContent = msg.content || '';
+                const isDeleted = msg.is_deleted;
+
+                // Show deleted message indicator
+                if (isDeleted) {
+                    return `
+                        <div class="chat-message ${isCurrentUser ? 'current-user-message' : ''}">
+                            ${!isCurrentUser ? `<img src="${profilePhoto}" alt="Avatar" class="message-avatar" onerror="this.src='/images/default-avatar.png'">` : ''}
+                            <div class="message-content">
+                                ${!isCurrentUser ? `<span class="message-user">${userFirstName} ${userLastName}</span>` : ''}
+                                <span class="message-timestamp">${messageTime}</span>
+                                <p class="mb-1 text-muted fst-italic">This message has been deleted</p>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Build action buttons for admin/owner
+                let actionButtons = '';
+                if (canEditDelete) {
+                    actionButtons = `
+                        <div class="message-actions" style="display: none; gap: 5px; margin-top: 5px;">
+                            <button class="btn btn-sm btn-outline-primary" onclick="editMessage(${msg.id}, '${currentChatroomId}', '${messageContent.replace(/'/g, "\\'")}')">
+                                <i class="fa-solid fa-edit"></i> Edit
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger" onclick="deleteMessage(${msg.id}, '${currentChatroomId}')">
+                                <i class="fa-solid fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    `;
+                }
 
                 return `
-                    <div class="chat-message ${isCurrentUser ? 'current-user-message' : ''}">
+                    <div class="chat-message ${isCurrentUser ? 'current-user-message' : ''}" data-message-id="${msg.id}" onmouseover="showMessageActions(${msg.id})" onmouseout="hideMessageActions(${msg.id})">
                         ${!isCurrentUser ? `<img src="${profilePhoto}" alt="Avatar" class="message-avatar" onerror="this.src='/images/default-avatar.png'">` : ''}
                         <div class="message-content">
                             ${!isCurrentUser ? `<span class="message-user">${userFirstName} ${userLastName}</span>` : ''}
                             <span class="message-timestamp">${messageTime}</span>
                             <p class="mb-1">${messageContent}</p>
+                            ${actionButtons}
                         </div>
                     </div>
                 `;
@@ -414,6 +467,89 @@
 
             console.log('Rendered HTML length:', html.length);
             document.getElementById('chat-messages').innerHTML = html;
+        }
+
+        // Show message action buttons on hover
+        function showMessageActions(messageId) {
+            const messageEl = document.querySelector(`[data-message-id="${messageId}"]`);
+            if (messageEl) {
+                const actions = messageEl.querySelector('.message-actions');
+                if (actions) {
+                    actions.style.display = 'flex';
+                }
+            }
+        }
+
+        // Hide message action buttons
+        function hideMessageActions(messageId) {
+            const messageEl = document.querySelector(`[data-message-id="${messageId}"]`);
+            if (messageEl) {
+                const actions = messageEl.querySelector('.message-actions');
+                if (actions) {
+                    actions.style.display = 'none';
+                }
+            }
+        }
+
+        // Edit message
+        async function editMessage(messageId, roomId, currentContent) {
+            const newContent = prompt('Edit message:', currentContent);
+            if (newContent === null || newContent.trim() === '') return;
+
+            try {
+                const token = localStorage.getItem('auth_token');
+                const response = await fetch(`${API_BASE_URL}/chatrooms/${roomId}/messages/${messageId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ content: newContent.trim() })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    alert('Failed to edit message: ' + (errorData.message || 'Unknown error'));
+                    return;
+                }
+
+                // Reload messages to show the update
+                await loadMessages(roomId);
+                console.log('Message edited successfully');
+            } catch (error) {
+                console.error('Error editing message:', error);
+                alert('Failed to edit message: ' + error.message);
+            }
+        }
+
+        // Delete message
+        async function deleteMessage(messageId, roomId) {
+            if (!confirm('Are you sure you want to delete this message?')) return;
+
+            try {
+                const token = localStorage.getItem('auth_token');
+                const response = await fetch(`${API_BASE_URL}/chatrooms/${roomId}/messages/${messageId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    alert('Failed to delete message: ' + (errorData.message || 'Unknown error'));
+                    return;
+                }
+
+                // Reload messages to show the deletion
+                await loadMessages(roomId);
+                console.log('Message deleted successfully');
+            } catch (error) {
+                console.error('Error deleting message:', error);
+                alert('Failed to delete message: ' + error.message);
+            }
         }
 
         // Send message
@@ -481,6 +617,32 @@
 
         toggleBtn?.addEventListener('click', openSidebar);
         overlayMobile.addEventListener('click', closeSidebar);
+
+        // ===== ADMIN/SUPERADMIN SIDEBAR MANAGER =====
+        // Check if user is admin or superadmin and load the admin sidebar manager
+        document.addEventListener('DOMContentLoaded', function() {
+            const userStr = localStorage.getItem('auth_user');
+            if (userStr) {
+                try {
+                    const user = JSON.parse(userStr);
+                    // If user is admin or superadmin, load the admin sidebar manager
+                    if (['admin', 'superadmin'].includes(user.role)) {
+                        // Load the admin sidebar manager script
+                        const script = document.createElement('script');
+                        script.src = "{{ asset('js/sidebarManager.js') }}";
+                        script.onload = function() {
+                            // Initialize the sidebar manager for admin users
+                            if (typeof SidebarManager !== 'undefined') {
+                                SidebarManager.init();
+                            }
+                        };
+                        document.body.appendChild(script);
+                    }
+                } catch (e) {
+                    console.error('Failed to parse user data:', e);
+                }
+            }
+        });
     </script>
 @endsection
 

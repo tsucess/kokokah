@@ -20,25 +20,35 @@ class ChatroomController extends Controller
         try {
             $user = Auth::user();
 
-            // Get General chatroom (available to all users)
-            $generalChatrooms = ChatRoom::where('type', 'general')
-                ->with(['creator:id,first_name,last_name'])
-                ->get();
+            // Admin and superadmin can see ALL chatrooms
+            if (in_array($user->role, ['admin', 'superadmin'])) {
+                $allChatrooms = ChatRoom::with(['creator:id,first_name,last_name'])
+                    ->where('is_active', true)
+                    ->get()
+                    ->sortByDesc('updated_at')
+                    ->values();
+            } else {
+                // Regular users see only general and enrolled course chatrooms
+                // Get General chatroom (available to all users)
+                $generalChatrooms = ChatRoom::where('type', 'general')
+                    ->with(['creator:id,first_name,last_name'])
+                    ->get();
 
-            // Get course-specific chatrooms for courses user is enrolled in
-            $enrolledCourseIds = $user->enrolledCourses()
-                ->pluck('courses.id')
-                ->toArray();
+                // Get course-specific chatrooms for courses user is enrolled in
+                $enrolledCourseIds = $user->enrolledCourses()
+                    ->pluck('courses.id')
+                    ->toArray();
 
-            $courseChatrooms = ChatRoom::where('type', 'course')
-                ->whereIn('course_id', $enrolledCourseIds)
-                ->with(['creator:id,first_name,last_name'])
-                ->get();
+                $courseChatrooms = ChatRoom::where('type', 'course')
+                    ->whereIn('course_id', $enrolledCourseIds)
+                    ->with(['creator:id,first_name,last_name'])
+                    ->get();
 
-            // Combine both types of chatrooms
-            $allChatrooms = $generalChatrooms->concat($courseChatrooms)
-                ->sortByDesc('updated_at')
-                ->values();
+                // Combine both types of chatrooms
+                $allChatrooms = $generalChatrooms->concat($courseChatrooms)
+                    ->sortByDesc('updated_at')
+                    ->values();
+            }
 
             // Format the response
             $chatrooms = $allChatrooms->map(function ($room) use ($user) {
@@ -185,12 +195,12 @@ class ChatroomController extends Controller
     }
 
     /**
-     * Update the specified chatroom (admin only).
+     * Update the specified chatroom (admin/superadmin only).
      */
     public function update(Request $request, ChatRoom $chatroom)
     {
         try {
-            if (Auth::user()->role !== 'admin') {
+            if (!in_array(Auth::user()->role, ['admin', 'superadmin'])) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Only admins can update chatrooms'

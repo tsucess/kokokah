@@ -19,8 +19,8 @@ class ChatAuthorizationService
      */
     public function canViewRoom(User $user, ChatRoom $chatRoom): bool
     {
-        // Admin can view all rooms
-        if ($user->role === 'admin') {
+        // Admin and superadmin can view all rooms
+        if (in_array($user->role, ['admin', 'superadmin'])) {
             return true;
         }
 

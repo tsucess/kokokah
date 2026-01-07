@@ -14,7 +14,7 @@ class ChatMessagePolicy
      *
      * Rules:
      * - User must have access to the chat room
-     * - Admin can view all messages
+     * - Admin and superadmin can view all messages
      *
      * @param User $user
      * @param ChatRoom $chatRoom
@@ -22,8 +22,8 @@ class ChatMessagePolicy
      */
     public function viewAny(User $user, ChatRoom $chatRoom): Response
     {
-        // Admin can view all messages
-        if ($user->role === 'admin') {
+        // Admin and superadmin can view all messages
+        if (in_array($user->role, ['admin', 'superadmin'])) {
             return Response::allow();
         }
 
@@ -44,8 +44,8 @@ class ChatMessagePolicy
      */
     public function view(User $user, ChatMessage $message): Response
     {
-        // Admin can view all messages
-        if ($user->role === 'admin') {
+        // Admin and superadmin can view all messages
+        if (in_array($user->role, ['admin', 'superadmin'])) {
             return Response::allow();
         }
 
@@ -71,6 +71,11 @@ class ChatMessagePolicy
      */
     public function create(User $user, ChatRoom $chatRoom): Response
     {
+        // Admin and superadmin can send messages in all rooms without restrictions
+        if (in_array($user->role, ['admin', 'superadmin'])) {
+            return Response::allow();
+        }
+
         // Check if user can access the room
         if (!$this->canAccessRoom($user, $chatRoom)) {
             return Response::deny('You do not have access to this chat room.');
@@ -108,8 +113,8 @@ class ChatMessagePolicy
      */
     public function update(User $user, ChatMessage $message): Response
     {
-        // Admin can update any message
-        if ($user->role === 'admin') {
+        // Admin and superadmin can update any message
+        if (in_array($user->role, ['admin', 'superadmin'])) {
             return Response::allow();
         }
 
@@ -135,8 +140,8 @@ class ChatMessagePolicy
      */
     public function delete(User $user, ChatMessage $message): Response
     {
-        // Admin can delete any message
-        if ($user->role === 'admin') {
+        // Admin and superadmin can delete any message
+        if (in_array($user->role, ['admin', 'superadmin'])) {
             return Response::allow();
         }
 
@@ -169,8 +174,8 @@ class ChatMessagePolicy
      */
     public function restore(User $user, ChatMessage $message): Response
     {
-        // Admin can restore any message
-        if ($user->role === 'admin') {
+        // Admin and superadmin can restore any message
+        if (in_array($user->role, ['admin', 'superadmin'])) {
             return Response::allow();
         }
 
@@ -191,8 +196,8 @@ class ChatMessagePolicy
      */
     public function forceDelete(User $user, ChatMessage $message): Response
     {
-        // Only admin can permanently delete
-        if ($user->role === 'admin') {
+        // Admin and superadmin can permanently delete
+        if (in_array($user->role, ['admin', 'superadmin'])) {
             return Response::allow();
         }
 
@@ -208,6 +213,11 @@ class ChatMessagePolicy
      */
     public function react(User $user, ChatMessage $message): Response
     {
+        // Admin and superadmin can react without restrictions
+        if (in_array($user->role, ['admin', 'superadmin'])) {
+            return Response::allow();
+        }
+
         // Check if user can access the room
         if (!$this->canAccessRoom($user, $message->chatRoom)) {
             return Response::deny('You do not have access to this chat room.');
@@ -235,8 +245,8 @@ class ChatMessagePolicy
      */
     public function pin(User $user, ChatMessage $message): Response
     {
-        // Admin can pin any message
-        if ($user->role === 'admin') {
+        // Admin and superadmin can pin any message
+        if (in_array($user->role, ['admin', 'superadmin'])) {
             return Response::allow();
         }
 
@@ -277,8 +287,8 @@ class ChatMessagePolicy
      */
     public function viewDeleted(User $user, ChatMessage $message): Response
     {
-        // Admin can view all deleted messages
-        if ($user->role === 'admin') {
+        // Admin and superadmin can view all deleted messages
+        if (in_array($user->role, ['admin', 'superadmin'])) {
             return Response::allow();
         }
 
@@ -317,8 +327,8 @@ class ChatMessagePolicy
      */
     private function canAccessRoom(User $user, ChatRoom $chatRoom): bool
     {
-        // Admin can access all rooms
-        if ($user->role === 'admin') {
+        // Admin and superadmin can access all rooms
+        if (in_array($user->role, ['admin', 'superadmin'])) {
             return true;
         }
 

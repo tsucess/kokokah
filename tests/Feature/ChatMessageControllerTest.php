@@ -259,5 +259,105 @@ class ChatMessageControllerTest extends TestCase
 
         $response->assertStatus(401);
     }
+
+    /**
+     * Test admin can edit other user's message.
+     */
+    public function test_admin_can_edit_others_message(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+        // Add admin to chatroom so they can access it
+        $this->chatRoom->users()->attach($admin->id, ['role' => 'admin', 'is_active' => true]);
+
+        $message = ChatMessage::factory()->create([
+            'chat_room_id' => $this->chatRoom->id,
+            'user_id' => $this->otherUser->id,
+        ]);
+
+        $response = $this->actingAs($admin)
+            ->putJson("/api/chatrooms/{$this->chatRoom->id}/messages/{$message->id}", [
+                'content' => 'Admin edited content',
+            ]);
+
+        $response->assertStatus(200)
+            ->assertJsonPath('success', true)
+            ->assertJsonPath('data.edited_content', 'Admin edited content');
+    }
+
+    /**
+     * Test superadmin can edit other user's message.
+     */
+    public function test_superadmin_can_edit_others_message(): void
+    {
+        $superadmin = User::factory()->create(['role' => 'superadmin']);
+        // Add superadmin to chatroom so they can access it
+        $this->chatRoom->users()->attach($superadmin->id, ['role' => 'admin', 'is_active' => true]);
+
+        $message = ChatMessage::factory()->create([
+            'chat_room_id' => $this->chatRoom->id,
+            'user_id' => $this->otherUser->id,
+        ]);
+
+        $response = $this->actingAs($superadmin)
+            ->putJson("/api/chatrooms/{$this->chatRoom->id}/messages/{$message->id}", [
+                'content' => 'Superadmin edited content',
+            ]);
+
+        $response->assertStatus(200)
+            ->assertJsonPath('success', true)
+            ->assertJsonPath('data.edited_content', 'Superadmin edited content');
+    }
+
+    /**
+     * Test admin can delete other user's message.
+     */
+    public function test_admin_can_delete_others_message(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+        // Add admin to chatroom so they can access it
+        $this->chatRoom->users()->attach($admin->id, ['role' => 'admin', 'is_active' => true]);
+
+        $message = ChatMessage::factory()->create([
+            'chat_room_id' => $this->chatRoom->id,
+            'user_id' => $this->otherUser->id,
+        ]);
+
+        $response = $this->actingAs($admin)
+            ->deleteJson("/api/chatrooms/{$this->chatRoom->id}/messages/{$message->id}");
+
+        $response->assertStatus(200)
+            ->assertJsonPath('success', true);
+
+        $this->assertDatabaseHas('chat_messages', [
+            'id' => $message->id,
+            'is_deleted' => true,
+        ]);
+    }
+
+    /**
+     * Test superadmin can delete other user's message.
+     */
+    public function test_superadmin_can_delete_others_message(): void
+    {
+        $superadmin = User::factory()->create(['role' => 'superadmin']);
+        // Add superadmin to chatroom so they can access it
+        $this->chatRoom->users()->attach($superadmin->id, ['role' => 'admin', 'is_active' => true]);
+
+        $message = ChatMessage::factory()->create([
+            'chat_room_id' => $this->chatRoom->id,
+            'user_id' => $this->otherUser->id,
+        ]);
+
+        $response = $this->actingAs($superadmin)
+            ->deleteJson("/api/chatrooms/{$this->chatRoom->id}/messages/{$message->id}");
+
+        $response->assertStatus(200)
+            ->assertJsonPath('success', true);
+
+        $this->assertDatabaseHas('chat_messages', [
+            'id' => $message->id,
+            'is_deleted' => true,
+        ]);
+    }
 }
 

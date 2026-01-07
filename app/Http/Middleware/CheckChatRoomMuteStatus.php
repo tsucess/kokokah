@@ -49,6 +49,9 @@ class CheckChatRoomMuteStatus
             return $next($request);
         }
 
+        // Store the resolved ChatRoom model in the request so the controller can access it
+        $request->route()->setParameter('chatRoom', $chatRoom);
+
         // Check if user is muted in the room
         $isMuted = $chatRoom->users()
             ->where('user_id', auth()->id())

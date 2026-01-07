@@ -74,7 +74,7 @@ class AuthServiceProvider extends ServiceProvider
          * Check if user can send a message in a chat room
          */
         Gate::define('send-message', function ($user, ChatRoom $chatRoom) {
-            // Admin can send messages in all rooms
+            // Admin and superadmin can send messages in all rooms
             if (in_array($user->role, ['superadmin', 'admin'])) {
                 return true;
             }

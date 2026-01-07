@@ -14,13 +14,10 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Define route model bindings using bind() for implicit binding
-        Route::bind('chatRoom', function ($value) {
-            return ChatRoom::findOrFail($value);
-        });
+        // Use implicit route model binding for ChatRoom
+        Route::model('chatRoom', ChatRoom::class);
 
-        Route::bind('message', function ($value) {
-            return ChatMessage::findOrFail($value);
-        });
+        // Use implicit route model binding for ChatMessage
+        Route::model('message', ChatMessage::class);
     }
 }

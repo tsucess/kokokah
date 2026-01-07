@@ -49,6 +49,9 @@ class AuthorizeChatRoomAccess
             ], 404);
         }
 
+        // Store the resolved ChatRoom model in the request so the controller can access it
+        $request->route()->setParameter('chatRoom', $chatRoom);
+
         $user = auth()->user();
 
         // Superadmin and admin can access all rooms

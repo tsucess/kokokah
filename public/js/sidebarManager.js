@@ -21,9 +21,23 @@ class SidebarManager {
 
     // Clear existing menu items (keep dashboard)
     const dashboardLink = sidebarNav.querySelector('#dashboardLink');
+
+    // For usertemplate layout, look for the first dashboard link
+    let dashboardElement = dashboardLink;
+    if (!dashboardElement) {
+      const allLinks = sidebarNav.querySelectorAll('a');
+      for (let link of allLinks) {
+        if (link.textContent.includes('Dashboard') || link.href.includes('dashboard')) {
+          dashboardElement = link.cloneNode(true);
+          dashboardElement.id = 'dashboardLink';
+          break;
+        }
+      }
+    }
+
     sidebarNav.innerHTML = '';
-    if (dashboardLink) {
-      sidebarNav.appendChild(dashboardLink);
+    if (dashboardElement) {
+      sidebarNav.appendChild(dashboardElement);
     }
 
     // Add menu items based on role
@@ -64,6 +78,15 @@ class SidebarManager {
       html += `
         <a class="nav-item-link d-flex align-items-center gap-3" href="/report">
           <i class="fa-solid fa-chart-line nav-icon"></i><span>Reports & Analytics</span>
+        </a>
+      `;
+    }
+
+    // Chatroom (Admin+)
+    if (['admin', 'superadmin'].includes(role)) {
+      html += `
+        <a class="nav-item-link d-flex align-items-center gap-3" href="/chatroom">
+          <i class="fa-solid fa-comments nav-icon"></i><span>Chatroom</span>
         </a>
       `;
     }
@@ -144,7 +167,7 @@ class SidebarManager {
       <a class="nav-item-link d-flex align-items-center justify-content-between nav-parent"
         data-bs-toggle="collapse" href="#communicationMenu" role="button">
         <span class="d-flex align-items-center gap-3">
-          <i class="fa-solid fa-comments nav-icon"></i>
+          <i class="fa-solid fa-envelope nav-icon"></i>
           <span>Communication</span>
         </span>
         <i class="fa-solid fa-chevron-down chevron-icon"></i>
