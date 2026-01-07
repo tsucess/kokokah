@@ -45,8 +45,8 @@ class SidebarManager {
       html += this.getUsersManagementMenu(role);
     }
 
-    // Subject Management (Instructor+)
-    if (['instructor', 'admin', 'superadmin'].includes(role)) {
+    // Course Management (Admin+ only, NOT instructor)
+    if (['admin', 'superadmin'].includes(role)) {
       html += this.getCourseManagementMenu(role);
     }
 
@@ -59,8 +59,8 @@ class SidebarManager {
       `;
     }
 
-    // Reports & Analytics (Instructor+)
-    if (['instructor', 'admin', 'superadmin'].includes(role)) {
+    // Reports & Analytics (Admin+ only, NOT instructor)
+    if (['admin', 'superadmin'].includes(role)) {
       html += `
         <a class="nav-item-link d-flex align-items-center gap-3" href="/report">
           <i class="fa-solid fa-chart-line nav-icon"></i><span>Reports & Analytics</span>
@@ -71,6 +71,12 @@ class SidebarManager {
     // Communication (Admin+)
     if (['admin', 'superadmin'].includes(role)) {
       html += this.getCommunicationMenu();
+    }
+
+    // Student-level items (Student + Instructor)
+    // Instructor role should ONLY have access to student features
+    if (['student', 'instructor'].includes(role)) {
+      html += this.getStudentMenu();
     }
 
     return html;
@@ -149,6 +155,38 @@ class SidebarManager {
           <a class="nav-item-link d-block nav-child" href="/feedback" title="View and manage user feedback">Feedback</a>
         </div>
       </div>
+    `;
+  }
+
+  static getStudentMenu() {
+    return `
+      <a class="nav-item-link d-flex align-items-center gap-3" href="/userprofile">
+        <i class="fa-solid fa-user nav-icon"></i><span>Profile</span>
+      </a>
+      <a class="nav-item-link d-flex align-items-center gap-3" href="/userclass">
+        <i class="fa-solid fa-chalkboard nav-icon"></i><span>Classes</span>
+      </a>
+      <a class="nav-item-link d-flex align-items-center gap-3" href="/usersubject">
+        <i class="fa-solid fa-book nav-icon"></i><span>Subjects</span>
+      </a>
+      <a class="nav-item-link d-flex align-items-center gap-3" href="/userresult">
+        <i class="fa-solid fa-chart-bar nav-icon"></i><span>Results</span>
+      </a>
+      <a class="nav-item-link d-flex align-items-center gap-3" href="/userenroll">
+        <i class="fa-solid fa-pen-to-square nav-icon"></i><span>Enrollment</span>
+      </a>
+      <a class="nav-item-link d-flex align-items-center gap-3" href="/userannouncement">
+        <i class="fa-solid fa-bell nav-icon"></i><span>Announcements</span>
+      </a>
+      <a class="nav-item-link d-flex align-items-center gap-3" href="/userfeedback">
+        <i class="fa-solid fa-comment-dots nav-icon"></i><span>Feedback</span>
+      </a>
+      <a class="nav-item-link d-flex align-items-center gap-3" href="/userleaderboard">
+        <i class="fa-solid fa-trophy nav-icon"></i><span>Leaderboard</span>
+      </a>
+      <a class="nav-item-link d-flex align-items-center gap-3" href="/userkoodies">
+        <i class="fa-solid fa-coins nav-icon"></i><span>Koodies</span>
+      </a>
     `;
   }
 

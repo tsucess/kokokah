@@ -155,12 +155,13 @@
         window.UIHelpers.showSuccess('Login successful! Redirecting...');
 
         // Determine redirect URL based on user role
-        let redirectUrl = '/dashboard'; // Default for admin/instructor
+        let redirectUrl = '/dashboard'; // Default for admin/superadmin
 
         // Get user from result.data.user or result.user
         const user = result.data?.user || result.user;
 
-        if (user && user.role === 'student') {
+        // Students and instructors go to user dashboard
+        if (user && ['student', 'instructor'].includes(user.role)) {
           redirectUrl = '/usersdashboard';
         }
 

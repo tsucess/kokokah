@@ -456,8 +456,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/database-stats', [AdminController::class, 'databaseStats']);
     });
 
-    // Analytics routes (instructor/admin/superadmin)
-    Route::prefix('analytics')->middleware('role:instructor,admin,superadmin')->group(function () {
+    // Analytics routes (admin/superadmin only - NOT instructor)
+    Route::prefix('analytics')->middleware('role:admin,superadmin')->group(function () {
         Route::get('/learning', [AnalyticsController::class, 'learningAnalytics']);
         Route::get('/course-performance', [AnalyticsController::class, 'coursePerformance']);
         Route::get('/student-progress', [AnalyticsController::class, 'studentProgress']);
@@ -522,11 +522,6 @@ Route::middleware(['auth:sanctum', 'role:superadmin'])->get('/admin/reports', fu
     return "Admin Reports";
 });
 
-// Instructor-only route
-Route::middleware(['auth:sanctum', 'role:instructor'])->get('/instructor/courses', function () {
-    return "Instructor Courses";
-});
-
 
 
 
@@ -562,8 +557,8 @@ Route::middleware('auth:sanctum')->prefix('coupons')->group(function () {
     Route::post('/bulk-action', [CouponController::class, 'bulkAction']);
 });
 
-// Report generation routes (instructor/admin/superadmin)
-Route::middleware(['auth:sanctum', 'role:instructor,admin,superadmin'])->prefix('reports')->group(function () {
+// Report generation routes (admin/superadmin only - NOT instructor)
+Route::middleware(['auth:sanctum', 'role:admin,superadmin'])->prefix('reports')->group(function () {
     Route::get('/types', [ReportController::class, 'getReportTypes']);
     Route::post('/financial', [ReportController::class, 'generateFinancialReport']);
     Route::post('/academic', [ReportController::class, 'generateAcademicReport']);
