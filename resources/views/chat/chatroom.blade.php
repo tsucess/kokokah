@@ -17,9 +17,70 @@
             margin-left: auto;
         }
 
+        .chat-message.current-user-message .message-content .message-user {
+            color: white;
+        }
+
+        .chat-message.current-user-message .message-content p {
+            color: white;
+        }
+
         .chat-message.current-user-message .message-timestamp {
-            color: #999;
+            color: rgba(255, 255, 255, 0.8);
             font-size: 0.85rem;
+        }
+
+        /* Other users message styling */
+        .chat-message:not(.current-user-message) .message-content {
+            background-color: #e8e8e8;
+            color: #333;
+            border-radius: 12px;
+            padding: 10px 15px;
+            max-width: 70%;
+        }
+
+        .chat-message:not(.current-user-message) .message-timestamp {
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        /* Date separator styling */
+        .message-date-separator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0 15px 0;
+            gap: 10px;
+        }
+
+        .message-date-separator::before,
+        .message-date-separator::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: #ddd;
+        }
+
+        .message-date-separator span {
+            color: #999;
+            font-size: 0.9rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        /* Administrator badge styling */
+        .admin-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #333;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 4px rgba(255, 165, 0, 0.3);
         }
 
         /* Mobile sidebar hidden by default */
@@ -412,10 +473,45 @@
                 return;
             }
 
-            const html = messages.map(msg => {
+            // Sort messages by created_at date (oldest first, so newest appears at bottom)
+            const sortedMessages = [...messages].sort((a, b) => {
+                return new Date(a.created_at) - new Date(b.created_at);
+            });
+
+            // Build HTML with date separators
+            let html = '';
+            let lastDate = null;
+
+            sortedMessages.forEach(msg => {
+                // Get the date of the message
+                const messageDate = new Date(msg.created_at);
+                const messageDateString = messageDate.toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+
+                // Add date separator if this is a new day
+                if (lastDate !== messageDateString) {
+                    html += `<div class="message-date-separator"><span>${messageDateString}</span></div>`;
+                    lastDate = messageDateString;
+                }
+
+                // Now render the message
+                const messageHtml = renderSingleMessage(msg, currentUserId, userRole, currentChatroomId);
+                html += messageHtml;
+            });
+
+            console.log('Rendered HTML length:', html.length);
+            document.getElementById('chat-messages').innerHTML = html;
+        }
+
+        // Render a single message
+        function renderSingleMessage(msg, currentUserId, userRole, currentChatroomId) {
                 const isCurrentUser = msg.user_id === currentUserId || msg.user_id == currentUserId;
-                const isAdmin = ['admin', 'superadmin'].includes(userRole);
-                const canEditDelete = isCurrentUser || isAdmin;
+                const isCurrentUserAdmin = ['admin', 'superadmin'].includes(userRole);
+                const canEditDelete = isCurrentUser || isCurrentUserAdmin;
                 const userFirstName = msg.user?.first_name || 'Unknown';
                 const userLastName = msg.user?.last_name || 'User';
                 const profilePhoto = msg.user?.profile_photo || '/images/default-avatar.png';
@@ -423,13 +519,18 @@
                 const messageContent = msg.content || '';
                 const isDeleted = msg.is_deleted;
 
+                // Check if the message sender is an admin or superadmin
+                const senderRole = msg.user?.role || null;
+                const isSenderAdmin = ['admin', 'superadmin'].includes(senderRole);
+                const adminBadge = isSenderAdmin ? '<span class="admin-badge">Administrator</span>' : '';
+
                 // Show deleted message indicator
                 if (isDeleted) {
                     return `
                         <div class="chat-message ${isCurrentUser ? 'current-user-message' : ''}">
                             ${!isCurrentUser ? `<img src="${profilePhoto}" alt="Avatar" class="message-avatar" onerror="this.src='/images/default-avatar.png'">` : ''}
                             <div class="message-content">
-                                ${!isCurrentUser ? `<span class="message-user">${userFirstName} ${userLastName}</span>` : ''}
+                                ${!isCurrentUser ? `<span class="message-user">${userFirstName} ${userLastName}${adminBadge}</span>` : ''}
                                 <span class="message-timestamp">${messageTime}</span>
                                 <p class="mb-1 text-muted fst-italic">This message has been deleted</p>
                             </div>
@@ -456,17 +557,13 @@
                     <div class="chat-message ${isCurrentUser ? 'current-user-message' : ''}" data-message-id="${msg.id}" onmouseover="showMessageActions(${msg.id})" onmouseout="hideMessageActions(${msg.id})">
                         ${!isCurrentUser ? `<img src="${profilePhoto}" alt="Avatar" class="message-avatar" onerror="this.src='/images/default-avatar.png'">` : ''}
                         <div class="message-content">
-                            ${!isCurrentUser ? `<span class="message-user">${userFirstName} ${userLastName}</span>` : ''}
+                            ${!isCurrentUser ? `<span class="message-user">${userFirstName} ${userLastName}${adminBadge}</span>` : ''}
                             <span class="message-timestamp">${messageTime}</span>
                             <p class="mb-1">${messageContent}</p>
                             ${actionButtons}
                         </div>
                     </div>
                 `;
-            }).join('');
-
-            console.log('Rendered HTML length:', html.length);
-            document.getElementById('chat-messages').innerHTML = html;
         }
 
         // Show message action buttons on hover
