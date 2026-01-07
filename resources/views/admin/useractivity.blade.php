@@ -76,7 +76,7 @@
                                     <th class="useractivity-table-title">No</th>
                                     <th class="useractivity-table-title">Users</th>
                                     <th class="useractivity-table-title">Action</th>
-                                    <th class="useractivity-table-title">Timestamp</th>
+                                    <th class="useractivity-table-title">Date</th>
                                     <th class="useractivity-table-title">Status</th>
                                 </tr>
                             </thead>
