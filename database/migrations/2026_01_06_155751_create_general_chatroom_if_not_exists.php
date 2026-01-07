@@ -20,20 +20,19 @@ return new class extends Migration
             ->exists();
 
         if (!$generalExists) {
-            // Get an admin user to set as creator
+            // Get an admin user to set as creator, or use null if no admin exists yet
             $admin = User::where('role', 'admin')->first();
+            $createdBy = $admin ? $admin->id : null;
 
-            if ($admin) {
-                ChatRoom::create([
-                    'name' => 'General',
-                    'description' => 'General discussion for all users',
-                    'type' => 'general',
-                    'icon' => 'bi-hash',
-                    'color' => '#004A53',
-                    'created_by' => $admin->id,
-                    'is_active' => true,
-                ]);
-            }
+            ChatRoom::create([
+                'name' => 'General',
+                'description' => 'General discussion for all users',
+                'type' => 'general',
+                'icon' => 'bi-hash',
+                'color' => '#004A53',
+                'created_by' => $createdBy,
+                'is_active' => true,
+            ]);
         }
     }
 
