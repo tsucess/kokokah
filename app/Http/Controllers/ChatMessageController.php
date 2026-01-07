@@ -107,8 +107,13 @@ class ChatMessageController extends Controller
         try {
             $user = Auth::user();
 
-            // Authorize using policy
-            $this->authorize('create', [ChatMessage::class, $chatRoom]);
+            // Authorize using Gate instead of policy
+            if (!Gate::forUser($user)->allows('send-message', $chatRoom)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'You do not have permission to send messages in this chat room.'
+                ], 403);
+            }
 
             // Validate message
             $validator = Validator::make($request->all(), [

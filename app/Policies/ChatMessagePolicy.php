@@ -307,6 +307,7 @@ class ChatMessagePolicy
      *
      * Rules:
      * - Admin can access all rooms
+     * - General chatrooms are accessible to all authenticated users
      * - User must be a member of the room
      * - For course rooms: user must be enrolled or instructor
      *
@@ -318,6 +319,11 @@ class ChatMessagePolicy
     {
         // Admin can access all rooms
         if ($user->role === 'admin') {
+            return true;
+        }
+
+        // General chatrooms are accessible to all authenticated users
+        if ($chatRoom->type === 'general') {
             return true;
         }
 

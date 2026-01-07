@@ -186,8 +186,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Course management routes (authenticated)
     Route::prefix('courses')->group(function () {
-        // Instructor/Admin only routes
-        Route::middleware('role:instructor,admin')->group(function () {
+        // Admin/Superadmin only routes
+        Route::middleware('role:admin,superadmin')->group(function () {
             Route::post('/', [CourseController::class, 'store']);
             Route::put('/{id}', [CourseController::class, 'update']);
             Route::delete('/{id}', [CourseController::class, 'destroy']);

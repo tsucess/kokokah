@@ -171,6 +171,7 @@
     <script src="/js/api/notificationApiClient.js"></script>
     <script src="/js/utils/uiHelpers.js"></script>
     <script src="/js/utils/toastNotification.js"></script>
+    <script src="/js/utils/notificationHelper.js"></script>
 
     <!-- Dashboard Module -->
     <script src="/js/dashboard.js"></script>

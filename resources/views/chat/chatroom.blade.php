@@ -77,9 +77,17 @@
             background-color: #f5f5f5;
         }
 
+        /* Active state for chatroom items - override sidebar-item styles */
         .chatroom-item.active {
-            background-color: #e8f4f8;
+            background-color: var(--bs-dark-teal) !important;
+            color: white !important;
             border-left: 3px solid var(--bs-dark-teal);
+            font-weight: 600;
+        }
+
+        /* Ensure badge icon is visible on active state */
+        .chatroom-item.active .badge {
+            background-color: rgba(255, 255, 255, 0.3) !important;
         }
 
         .loading-spinner {
@@ -232,23 +240,32 @@
                 let chatroomToLoad = null;
 
                 if (lastChatroomId) {
-                    // Check if last selected chatroom still exists
-                    chatroomToLoad = chatrooms.find(room => room.id == lastChatroomId);
+                    // Check if last selected chatroom still exists (convert to string for comparison)
+                    chatroomToLoad = chatrooms.find(room => String(room.id) === String(lastChatroomId));
                 }
 
                 // If no last chatroom or it doesn't exist, find "General" chatroom
                 if (!chatroomToLoad) {
                     chatroomToLoad = chatrooms.find(room => room.name.toLowerCase() === 'general');
+                    console.log('No last chatroom, found General:', chatroomToLoad ? chatroomToLoad.name : 'NOT FOUND');
                 }
 
                 // If still no chatroom found, use the first one
                 if (!chatroomToLoad && chatrooms.length > 0) {
                     chatroomToLoad = chatrooms[0];
+                    console.log('No General chatroom, using first:', chatroomToLoad.name);
                 }
 
                 // Load the selected chatroom
                 if (chatroomToLoad) {
-                    await selectChatroom(chatroomToLoad.id, chatroomToLoad.name);
+                    console.log('About to load chatroom:', chatroomToLoad.id, chatroomToLoad.name, 'Type of ID:', typeof chatroomToLoad.id);
+                    // Use setTimeout to ensure DOM is fully updated before applying active state
+                    setTimeout(() => {
+                        console.log('Timeout fired, calling selectChatroom');
+                        selectChatroom(chatroomToLoad.id, chatroomToLoad.name);
+                    }, 200);
+                } else {
+                    console.warn('No chatroom to load!');
                 }
             } catch (error) {
                 console.error('Error loading chatrooms:', error);
@@ -257,8 +274,10 @@
 
         // Render chatrooms in sidebar
         function renderChatrooms(chatrooms) {
-            const html = chatrooms.map(room => `
-                <a href="#" class="sidebar-item chatroom-item" data-room-id="${room.id}" onclick="selectChatroom(${room.id}, '${room.name}'); return false;">
+            const html = chatrooms.map(room => {
+                const roomId = String(room.id); // Ensure ID is a string
+                return `
+                <a href="#" class="sidebar-item chatroom-item" data-room-id="${roomId}" data-room-name="${room.name}" onclick="selectChatroom('${roomId}', '${room.name}'); return false;">
                     <div class="d-flex align-items-center">
                         <span class="badge me-2 d-flex justify-content-center align-items-center"
                             style="background: #114243; border-radius:20px; width: 25px;">
@@ -268,25 +287,51 @@
                     </div>
                     ${room.unread_count ? `<span class="new-message-badge">${room.unread_count}</span>` : ''}
                 </a>
-            `).join('');
+            `;
+            }).join('');
 
             document.getElementById('chatrooms-list-desktop').innerHTML = html;
             document.getElementById('chatrooms-list-mobile').innerHTML = html;
+            console.log('Chatrooms rendered:', chatrooms.length, 'rooms');
         }
 
         // Select chatroom
         async function selectChatroom(roomId, roomName) {
+            // Ensure roomId is a string for consistent selector matching
+            roomId = String(roomId);
+            console.log('selectChatroom called with ID:', roomId, 'Name:', roomName, 'Type:', typeof roomId);
+
             currentChatroomId = roomId;
             document.getElementById('current-room-name').textContent = `#${roomName}`;
 
             // Save selected chatroom to localStorage for persistence
             localStorage.setItem(LAST_CHATROOM_KEY, roomId);
 
-            // Update active state
-            document.querySelectorAll('.chatroom-item').forEach(item => {
+            // Update active state - remove from all
+            const allItems = document.querySelectorAll('.chatroom-item');
+            console.log('Total chatroom items found:', allItems.length);
+
+            allItems.forEach(item => {
                 item.classList.remove('active');
             });
-            document.querySelector(`[data-room-id="${roomId}"]`)?.classList.add('active');
+
+            // Add active to the selected one(s) - there may be multiple (desktop and mobile)
+            const selector = `[data-room-id="${roomId}"]`;
+            console.log('Looking for elements with selector:', selector);
+
+            const activeElements = document.querySelectorAll(selector);
+            console.log('Elements found:', activeElements.length);
+
+            if (activeElements.length > 0) {
+                activeElements.forEach(element => {
+                    element.classList.add('active');
+                    console.log('✓ Active class added to chatroom element');
+                });
+                console.log('✓ Active class added to', activeElements.length, 'chatroom element(s) for:', roomName, 'ID:', roomId);
+            } else {
+                console.warn('✗ Could not find chatroom element with ID:', roomId);
+                console.log('Available data-room-ids:', Array.from(allItems).map(item => item.getAttribute('data-room-id')));
+            }
 
             await loadMessages(roomId);
             closeSidebar();
@@ -384,23 +429,36 @@
             if (!content) return;
 
             try {
+                const token = localStorage.getItem('auth_token');
+                console.log('Sending message to room:', currentChatroomId);
+                console.log('Token present:', token ? 'YES' : 'NO');
+
                 const response = await fetch(`${API_BASE_URL}/chatrooms/${currentChatroomId}/messages`, {
                     method: 'POST',
                     headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`,
+                        'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json',
                         'Accept': 'application/json'
                     },
                     body: JSON.stringify({ content })
                 });
 
-                if (!response.ok) throw new Error('Failed to send message');
+                console.log('Send message response status:', response.status);
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error('Server error response:', errorData);
+                    throw new Error(errorData.message || 'Failed to send message');
+                }
+
+                const responseData = await response.json();
+                console.log('Message sent successfully:', responseData);
 
                 messageInput.value = '';
                 await loadMessages(currentChatroomId);
             } catch (error) {
                 console.error('Error sending message:', error);
-                alert('Failed to send message');
+                alert('Failed to send message: ' + error.message);
             }
         });
 

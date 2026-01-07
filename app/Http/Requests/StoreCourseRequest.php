@@ -11,7 +11,7 @@ class StoreCourseRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user() && $this->user()->hasAnyRole(['instructor', 'admin']);
+        return $this->user() && $this->user()->hasAnyRole(['instructor', 'admin', 'superadmin']);
     }
 
     /**

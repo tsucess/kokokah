@@ -194,6 +194,7 @@
     <script src="{{ asset('js/api/pointsAndBadgesApiClient.js') }}"></script>
     <script src="{{ asset('js/utils/toastNotification.js') }}"></script>
     <script src="{{ asset('js/utils/uiHelpers.js') }}"></script>
+    <script src="{{ asset('js/utils/notificationHelper.js') }}"></script>
 
     <!-- Dashboard Module -->
     <script src="{{ asset('js/dashboard.js') }}"></script>

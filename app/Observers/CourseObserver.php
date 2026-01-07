@@ -15,43 +15,50 @@ class CourseObserver
      */
     public function created(Course $course): void
     {
-        // Create a chat room for this course
-        $chatRoom = ChatRoom::create([
-            'name' => $course->title . ' Discussion',
-            'description' => 'Discussion room for ' . $course->title,
-            'type' => 'course',
-            'course_id' => $course->id,
-            'created_by' => $course->instructor_id,
-            'background_image' => 'images/default-course-chat-bg.jpg',
-            'color' => '#007bff',
-            'is_active' => true,
-        ]);
-
-        // Attach the instructor as admin
-        if ($course->instructor_id) {
-            $chatRoom->users()->attach($course->instructor_id, [
-                'role' => 'admin',
+        try {
+            // Create a chat room for this course
+            $chatRoom = ChatRoom::create([
+                'name' => $course->title . ' Discussion',
+                'description' => 'Discussion room for ' . $course->title,
+                'type' => 'course',
+                'course_id' => $course->id,
+                'created_by' => $course->instructor_id,
+                'background_image' => 'images/default-course-chat-bg.jpg',
+                'color' => '#007bff',
                 'is_active' => true,
-                'joined_at' => now(),
             ]);
-        }
 
-        // Attach all enrolled students as members
-        $enrolledStudents = $course->enrollments()
-            ->where('status', 'active')
-            ->pluck('user_id')
-            ->toArray();
-
-        if (!empty($enrolledStudents)) {
-            $attachData = [];
-            foreach ($enrolledStudents as $studentId) {
-                $attachData[$studentId] = [
-                    'role' => 'member',
+            // Attach the instructor as admin
+            if ($course->instructor_id) {
+                $chatRoom->users()->attach($course->instructor_id, [
+                    'role' => 'admin',
                     'is_active' => true,
                     'joined_at' => now(),
-                ];
+                ]);
             }
-            $chatRoom->users()->attach($attachData);
+
+            // Attach all enrolled students as members
+            $enrolledStudents = $course->enrollments()
+                ->where('status', 'active')
+                ->pluck('user_id')
+                ->toArray();
+
+            if (!empty($enrolledStudents)) {
+                $attachData = [];
+                foreach ($enrolledStudents as $studentId) {
+                    $attachData[$studentId] = [
+                        'role' => 'member',
+                        'is_active' => true,
+                        'joined_at' => now(),
+                    ];
+                }
+                $chatRoom->users()->attach($attachData);
+            }
+        } catch (\Exception $e) {
+            \Log::error('Failed to create chatroom for course: ' . $e->getMessage(), [
+                'course_id' => $course->id,
+                'course_title' => $course->title,
+            ]);
         }
     }
 
