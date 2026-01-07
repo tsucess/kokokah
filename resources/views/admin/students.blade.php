@@ -6,7 +6,7 @@
             <!-- Header Section -->
             <div class="d-flex justify-content-between align-items-start mb-4">
                 <div>
-                    <h1 class="fw-bold mb-2">Welcome Back <span class="first_name">Samuel</span><span class="role">
+                    <h1 class="fw-bold mb-2">Welcome Back <span class="first_name" style="text-transform: capitalize">Samuel</span><span class="role" style="text-transform: capitalize">
                             @if (auth()->check())
                                 ({{ ucfirst(auth()->user()->role) }})
                             @endif
@@ -198,10 +198,10 @@
                     <span style="color: #333; font-weight: 500;" class='text-nowrap'>${user.first_name} ${user.last_name}</span>
                   </div>
                 </td>
-                <td style="padding: 1rem; color: #666; font-size:14px;">KOKOKAH-${String(user.id).padStart(4, '0')}</td>
+                <td style="padding: 1rem; color: #666; font-size:14px;" class='text-nowrap'>KOKOKAH-${String(user.id).padStart(4, '0')}</td>
                 <td style="padding: 1rem; color: #666; font-size:14px;">${user.email}</td>
                 <td style="padding: 1rem; font-size:14px;"><span style="color: #666;">${user.gender || 'N/A'}</span></td>
-                <td style="padding: 1rem; color: #666; font-size:14px;">${user.contact || 'N/A'}</td>
+                <td style="padding: 1rem; color: #666; font-size:14px;" class='text-nowrap'>${user.contact || 'N/A'}</td>
                 <td style="padding: 1rem; font-size:14px;">
                   <!-- <span class="badge" style="background-color: ${roleColor}; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">${user.role}</span> -->
                 </td>

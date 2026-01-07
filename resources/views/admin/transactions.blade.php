@@ -46,12 +46,9 @@
 
                             <!-- Filter Dropdown -->
                             <select class="custom-select" id="filterSelect">
-                                <option value="" style="">All Classes</option>
-                                <option value="course">All Courses</option>
-                                <option value="category">All Categories</option>
-                                <option value="role-student">Students</option>
-                                <option value="role-instructor">Instructors</option>
-                                <option value="role-admin">Admins</option>
+                                <option value="role-all">All Transaction</option>
+                                <option value="role-pending">Pending</option>
+                                <option value="role-completed">Completed</option>
                             </select>
 
 
