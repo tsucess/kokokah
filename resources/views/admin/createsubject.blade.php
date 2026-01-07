@@ -728,7 +728,7 @@
                     </div>
                 </div>
 
-                <img id="publishCourseImage" src="images/publish.png" alt="Course Preview" class="course-image">
+                <img id="publishCourseImage" src="{{ asset('images/publish.png') }}" alt="Course Preview" class="course-image">
 
                 <div class="course-description-section">
                     <h6>Subject Description</h6>
@@ -1067,18 +1067,18 @@
 
                         const result = await window.CourseApiClient.createCourse(formData);
                         if (result.success) {
-                            alert('Course published successfully!');
+                            ToastNotification.success('Success', 'Course published successfully!');
                             // Get the course ID from the response
                             const courseId = result.data?.id || result.id;
                             setTimeout(() => {
                                 window.location.href = `/editsubject/${courseId}`;
                             }, 1500);
                         } else {
-                            alert('Error: ' + (result.message || 'Failed to publish course'));
+                            ToastNotification.error('Error', result.message || 'Failed to publish course');
                         }
                     } catch (error) {
                         console.error('Publish error:', error);
-                        alert('Error publishing course: ' + error.message);
+                        ToastNotification.error('Error', 'Error publishing course: ' + error.message);
                     }
                 });
             }
@@ -1094,7 +1094,7 @@
                     const term = document.getElementById('subjectTerm').value;
 
                     if (!title || !category || !level || !description) {
-                        alert('Please fill in all required fields');
+                        ToastNotification.warning('Warning', 'Please fill in all required fields');
                         return;
                     }
 
@@ -1132,18 +1132,18 @@
 
                         const result = await window.CourseApiClient.createCourse(formData);
                         if (result.success) {
-                            alert('Course saved successfully!');
+                            ToastNotification.success('Success', 'Course saved successfully!');
                             // Get the course ID from the response
                             const courseId = result.data?.id || result.id;
                             setTimeout(() => {
                                 window.location.href = `/editsubject/${courseId}`;
                             }, 1500);
                         } else {
-                            alert('Error: ' + (result.message || 'Failed to save course'));
+                            ToastNotification.error('Error', result.message || 'Failed to save course');
                         }
                     } catch (error) {
                         console.error('Save error:', error);
-                        alert('Error saving course: ' + error.message);
+                        ToastNotification.error('Error', 'Error saving course: ' + error.message);
                     }
                 });
             }
@@ -1159,7 +1159,7 @@
 
                     console.log(title, category, description)
                     if (!title || !category || !description) {
-                        alert('Please fill in all required fields');
+                        ToastNotification.warning('Warning', 'Please fill in all required fields');
                         return;
                     }
 
@@ -1201,18 +1201,18 @@
 
                         const result = await window.CourseApiClient.createCourse(formData);
                         if (result.success) {
-                            alert('Course saved as draft!');
+                            ToastNotification.success('Success', 'Course saved as draft!');
                             // Get the course ID from the response
                             const courseId = result.data?.id || result.id;
                             setTimeout(() => {
                                 window.location.href = `/editsubject/${courseId}`;
                             }, 1500);
                         } else {
-                            alert('Error: ' + (result.message || 'Failed to save draft'));
+                            ToastNotification.error('Error', result.message || 'Failed to save draft');
                         }
                     } catch (error) {
                         console.error('Save draft error:', error);
-                        alert('Error saving draft: ' + error.message);
+                        ToastNotification.error('Error', 'Error saving draft: ' + error.message);
                     }
                 });
             }
