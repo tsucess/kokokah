@@ -100,7 +100,7 @@ class AuthApiClient extends BaseApiClient {
    * Get current user
    */
   static async getCurrentUser() {
-    const response = await this.get('/user');
+    const response = await this.get('/users/profile');
     if (response.success) {
       this.setUser(response.data);
     }
@@ -127,7 +127,7 @@ class AuthApiClient extends BaseApiClient {
    * Update user profile
    */
   static async updateProfile(userData) {
-    const response = await this.put('/user/profile', userData);
+    const response = await this.put('/users/profile', userData);
     if (response.success) {
       this.setUser(response.data);
     }
@@ -138,7 +138,7 @@ class AuthApiClient extends BaseApiClient {
    * Change password
    */
   static async changePassword(currentPassword, newPassword, newPasswordConfirmation) {
-    return this.post('/user/change-password', {
+    return this.post('/users/change-password', {
       current_password: currentPassword,
       password: newPassword,
       password_confirmation: newPasswordConfirmation
