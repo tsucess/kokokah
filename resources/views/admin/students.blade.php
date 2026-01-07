@@ -207,7 +207,7 @@
                 </td>
                 <td style="padding: 1rem; font-size:14px;">
                   <div class="d-flex gap-2">
-                    <a href="/edituser?id=${user.id}" class="btn btn-sm btn-light" style="border: 1px solid #ddd; padding: 0.2rem 0.5rem;" title="Edit">
+                    <a href="/edituser?id=${user.id}&referrer=students" class="btn btn-sm btn-light" style="border: 1px solid #ddd; padding: 0.2rem 0.5rem;" title="Edit">
                       <i class="fa fa-edit" style="color: #004A53;"></i>
                     </a>
                     <button class="btn btn-sm btn-light delete-btn" data-user-id="${user.id}" style="border: 1px solid #ddd; padding: 0.2rem 0.5rem;" title="Delete">

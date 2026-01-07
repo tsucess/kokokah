@@ -854,9 +854,10 @@
         const cancelBtn = document.getElementById('cancelBtn');
         const resetBtn = document.getElementById('resetBtn');
 
-        // Get user ID from URL query parameter
+        // Get user ID and referrer from URL query parameters
         const urlParams = new URLSearchParams(window.location.search);
         const userId = urlParams.get('id');
+        const referrer = urlParams.get('referrer') || 'users'; // Default to 'users' if not specified
         const isEditMode = !!userId;
 
         // Load user data if in edit mode
@@ -1050,8 +1051,11 @@
 
                         // Add a small delay to ensure database is fully committed
                         setTimeout(() => {
-                            // Force reload to get fresh data from server
-                            window.location.href = '/users?t=' + Date.now();
+                            // Redirect to the referrer page (students, instructors, or users)
+                            const redirectUrl = referrer === 'students' ? '/students' :
+                                               referrer === 'instructors' ? '/instructors' :
+                                               '/users';
+                            window.location.href = redirectUrl + '?t=' + Date.now();
                         }, 1500);
                     } else {
                         // Handle error response
