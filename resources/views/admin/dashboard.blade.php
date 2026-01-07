@@ -27,8 +27,8 @@
                 <div class="d-flex justify-content-between">
 
                     <div>
-                        <h1 class ="fw-bold">Welcome back, <span id="first_name">Samuel</span> <span
-                                id="role">@if(auth()->check())({{ ucfirst(auth()->user()->role) }})@endif</span></h1>
+                        <h1 class ="fw-bold">Welcome back, <span class="first_name">Samuel</span> <span
+                                class="role">@if(auth()->check())({{ ucfirst(auth()->user()->role) }})@endif</span></h1>
                             <p class = "text-muted">Here overview of your </p>
                     </div>
 

@@ -6,8 +6,7 @@
             <!-- Header Section -->
             <div class="d-flex justify-content-between align-items-start mb-4">
                 <div>
-                    <h1 class="fw-bold mb-2">Welcome Back
-                        Samuel(Admin)</h1>
+                    <h1 class="fw-bold mb-2">Welcome Back <span class="first_name">Samuel</span><span class="role">@if(auth()->check())({{ ucfirst(auth()->user()->role) }})@endif</span></h1>
                     <p class="text-muted" style="font-size: 0.95rem;">Here overview of your</p>
                 </div>
                 <div>
