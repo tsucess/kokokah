@@ -81,7 +81,7 @@
             <!-- Settings link (Superadmin only - rendered by sidebarManager.js) -->
             <a class="nav-item-link" href="#" id="settingsLink" style="display: none;"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
 
-            <div class="profile mt-3" id="profileSection">
+            <div class="profile mt-3 d-flex align-items-center" id="profileSection">
                 <img class="avatar" id="profileImage" src="{{ asset('images/default-avatar.png') }}" alt="user"
                     style="cursor: pointer; width: 40px; height: 40px; object-fit: cover; border-radius: 50%; border: 2px solid #ff00;"
                     data-bs-toggle="tooltip" data-bs-placement="top" title="Profile">
