@@ -51,7 +51,7 @@ Route::get('/forgotpassword', function () {
     return view('auth.forgotpassword');
 });
 
-Route::get('/resetpassword', function () {
+Route::get('/reset-password', function () {
     return view('auth.resetpassword');
 });
 
