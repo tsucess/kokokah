@@ -1973,8 +1973,21 @@
                 const publishImageEl = document.getElementById('publishCourseImage');
 
                 if (publishTitleEl) publishTitleEl.textContent = title;
-                if (publishTopicsEl) publishTopicsEl.textContent = '0 Topics';
-                if (publishLessonsEl) publishLessonsEl.textContent = '0 Lessons';
+
+                // Calculate topic and lesson counts
+                let topicCount = 0;
+                let totalLessonCount = 0;
+                if (window.courseTopics && window.courseTopics.length > 0) {
+                    topicCount = window.courseTopics.length;
+                    window.courseTopics.forEach(topic => {
+                        if (topic.lessons) {
+                            totalLessonCount += topic.lessons.length;
+                        }
+                    });
+                }
+
+                if (publishTopicsEl) publishTopicsEl.textContent = topicCount + ' ' + (topicCount === 1 ? 'Topic' : 'Topics');
+                if (publishLessonsEl) publishLessonsEl.textContent = totalLessonCount + ' ' + (totalLessonCount === 1 ? 'Lesson' : 'Lessons');
                 if (publishTimeEl) publishTimeEl.textContent = time;
                 if (publishLevelEl) publishLevelEl.textContent = level;
                 if (publishDescriptionEl) publishDescriptionEl.textContent = description;
@@ -2477,6 +2490,8 @@
                 const result = await TopicApiClient.deleteTopic(topicId);
                 ToastNotification.success('Success', 'Topic deleted successfully');
                 await loadTopics();
+                // Update publish section to reflect new topic count
+                populatePublishSection();
             } catch (error) {
                 console.error('Error deleting topic:', error);
                 ToastNotification.error('Error', 'Failed to delete topic');
@@ -2537,6 +2552,8 @@
 
                 // Reload topics
                 await loadTopics();
+                // Update publish section to reflect new topic count
+                populatePublishSection();
             } catch (error) {
                 console.error('Error saving topic:', error);
                 ToastNotification.error('Error', 'Failed to save topic');
@@ -2983,6 +3000,8 @@
 
                 // Reload topics to refresh lessons
                 await loadTopics();
+                // Update publish section to reflect new lesson count
+                populatePublishSection();
             } catch (error) {
                 console.error('Error saving lesson:', error);
                 ToastNotification.error('Error', 'Failed to save lesson');
@@ -3057,6 +3076,8 @@
                 await LessonApiClient.deleteLesson(lessonId);
                 ToastNotification.success('Success', 'Lesson deleted successfully');
                 await loadTopics();
+                // Update publish section to reflect new lesson count
+                populatePublishSection();
             } catch (error) {
                 console.error('Error deleting lesson:', error);
                 ToastNotification.error('Error', 'Failed to delete lesson');
