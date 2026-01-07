@@ -27,8 +27,7 @@
                 <div class="d-flex justify-content-between">
 
                     <div>
-                        <h1 class ="fw-bold">Welcome back, <span class="first_name" style="text-transform: capitalize">Samuel</span> <span
-                                class="role" style="text-transform: capitalize">@if(auth()->check())({{ ucfirst(auth()->user()->role) }})@endif</span></h1>
+                        <h1 class ="fw-bold">Welcome back, <span id="welcomeUserName" style="text-transform: capitalize">Admin</span></h1>
                             <p class = "text-muted">Here overview of your </p>
                     </div>
 
@@ -620,5 +619,23 @@
                 plugins: [calloutPlugin]
             });
         }
+
+        // Load and display user name in welcome message
+        function loadWelcomeMessage() {
+            try {
+                const userStr = localStorage.getItem('auth_user');
+                if (userStr) {
+                    const user = JSON.parse(userStr);
+                    const userName = user.name || user.first_name || 'Admin';
+                    const userRole = user.role ? `(${user.role.charAt(0).toUpperCase() + user.role.slice(1)})` : '(Admin)';
+                    document.getElementById('welcomeUserName').textContent = `${userName} ${userRole}`;
+                }
+            } catch (error) {
+                console.error('Error loading welcome message:', error);
+            }
+        }
+
+        // Call on page load
+        document.addEventListener('DOMContentLoaded', loadWelcomeMessage);
     </script>
 @endsection

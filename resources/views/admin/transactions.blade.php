@@ -8,7 +8,7 @@
                 <div>
                     <h1 class="fw-bold mb-2"
                         style="font-size: 1.2rem; color: #004A53; font-family: 'Fredoka One', sans-serif;">Welcome Back
-                        Samuel(Admin)</h1>
+                        <span id="welcomeUserName">Admin</span></h1>
                     <p class="text-muted" style="font-size: 0.95rem;">Here overview of your</p>
                 </div>
             </div>
@@ -49,6 +49,7 @@
                                 <option value="role-all">All Transaction</option>
                                 <option value="role-pending">Pending</option>
                                 <option value="role-completed">Completed</option>
+                                <option value="role-failed">Failed</option>
                             </select>
 
 
@@ -120,6 +121,8 @@ const token = localStorage.getItem('auth_token');
         let currentFilter = '';
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Load and display user name in welcome message
+            loadWelcomeMessage();
             loadTransactions(1);
 
             document.getElementById('searchInput').addEventListener('input', function(e) {
@@ -134,6 +137,20 @@ const token = localStorage.getItem('auth_token');
         });
 
 
+
+        function loadWelcomeMessage() {
+            try {
+                const userStr = localStorage.getItem('auth_user');
+                if (userStr) {
+                    const user = JSON.parse(userStr);
+                    const userName = user.name || user.first_name || 'Admin';
+                    const userRole = user.role ? `(${user.role.charAt(0).toUpperCase() + user.role.slice(1)})` : '(Admin)';
+                    document.getElementById('welcomeUserName').textContent = `${userName} ${userRole}`;
+                }
+            } catch (error) {
+                console.error('Error loading welcome message:', error);
+            }
+        }
 
         async function loadTransactions(page = 1) {
             try {

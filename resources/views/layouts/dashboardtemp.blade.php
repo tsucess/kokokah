@@ -88,7 +88,7 @@
                 <div class="d-flex justify-content-between mt-4 p-2 w-100 align-items-center">
                     <div id="profileInfo" style="cursor: pointer;" data-bs-toggle="tooltip" data-bs-placement="top"
                         title="Profile" class="w-50">
-                        <h6 class="fw-semibold text-truncate" id="userName">Culacino_</h6>
+                        <h6 class="fw-semibold text-truncate" id="userName" style='text-transform: capitalize;'>Culacino_</h6>
                         <p class="small text-muted" id="userRole">UX Designer</p>
                     </div>
                     <div class="logout">

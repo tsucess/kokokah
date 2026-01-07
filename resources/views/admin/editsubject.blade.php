@@ -986,7 +986,7 @@
                 <div class="form-row-two">
                     <div class="form-group-custom">
                         <label for="courseTime">Duration</label>
-                        <input type="text" class="form-control" id="courseTime" name="courseTime"
+                        <input type="number" class="form-control" id="courseTime" name="courseTime"
                             placeholder="e.g., 2 hours" required>
                     </div>
 
@@ -2189,14 +2189,20 @@
                     // Show success message based on action
                     if (newStatus === 'published') {
                         ToastNotification.success('Success', 'Course published successfully!');
+                        // Redirect to all courses page after 2 seconds
+                        setTimeout(() => {
+                            window.location.href = '/subjects';
+                        }, 2000);
                     } else if (newStatus === 'draft') {
                         ToastNotification.success('Success', 'Course saved as draft!');
                     } else {
                         ToastNotification.success('Success', 'Course updated successfully!');
                     }
 
-                    // Reload course data to reflect changes
-                    await loadCourseData();
+                    // Reload course data to reflect changes (only if not redirecting)
+                    if (newStatus !== 'published') {
+                        await loadCourseData();
+                    }
                 } catch (error) {
                     console.error('Error updating course:', error);
                     ToastNotification.error('Error', 'An error occurred while updating the course');

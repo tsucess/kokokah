@@ -386,7 +386,7 @@
                 <div class="form-row-two">
                     <div class="form-group-custom">
                         <label for="courseTime">Duration</label>
-                        <input type="text" class="form-control" id="courseTime" name="courseTime"
+                        <input type="number" class="form-control" id="courseTime" name="courseTime"
                             placeholder="e.g., 2 hours" required>
                     </div>
 

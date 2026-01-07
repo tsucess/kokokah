@@ -343,7 +343,7 @@
                         <div class="modal-form">
                             <div class="modal-form-input-border">
                                 <label for="" class="modal-label">Curriculum Name</label>
-                                <input class="modal-input" type="text" placeholder="Art" id="category_title" />
+                                <input class="modal-input" type="text" placeholder="WAEC" id="category_title" />
                             </div>
                             <div class="modal-form-input-border">
                                 <label for="" class="modal-label">Curriculum Description</label>

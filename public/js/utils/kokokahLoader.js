@@ -19,8 +19,7 @@ class KokokahLoader {
   init() {
     this.createLoaderHTML();
     this.setupEventListeners();
-    // Show loader immediately on page load
-    this.show();
+    // Don't show loader on initial page load - only on navigation/actions
   }
 
   /**

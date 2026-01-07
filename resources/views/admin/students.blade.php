@@ -6,11 +6,7 @@
             <!-- Header Section -->
             <div class="d-flex justify-content-between align-items-start mb-4">
                 <div>
-                    <h1 class="fw-bold mb-2">Welcome Back <span class="first_name" style="text-transform: capitalize">Samuel</span><span class="role" style="text-transform: capitalize">
-                            @if (auth()->check())
-                                ({{ ucfirst(auth()->user()->role) }})
-                            @endif
-                        </span></h1>
+                    <h1 class="fw-bold mb-2">Welcome Back <span id="welcomeUserName" style="text-transform: capitalize">Admin</span></h1>
 
                     <p class="text-muted" style="font-size: 0.95rem;">Here overview of your</p>
                 </div>
@@ -122,6 +118,7 @@
 
         // Load users on page load
         document.addEventListener('DOMContentLoaded', function() {
+            loadWelcomeMessage();
             loadUsers(1);
 
             // Add event listeners for search and filter
@@ -131,6 +128,21 @@
             });
 
         });
+
+        // Load and display user name in welcome message
+        function loadWelcomeMessage() {
+            try {
+                const userStr = localStorage.getItem('auth_user');
+                if (userStr) {
+                    const user = JSON.parse(userStr);
+                    const userName = user.name || user.first_name || 'Admin';
+                    const userRole = user.role ? `(${user.role.charAt(0).toUpperCase() + user.role.slice(1)})` : '(Admin)';
+                    document.getElementById('welcomeUserName').textContent = `${userName} ${userRole}`;
+                }
+            } catch (error) {
+                console.error('Error loading welcome message:', error);
+            }
+        }
 
         // Load users from API
         async function loadUsers(page = 1) {

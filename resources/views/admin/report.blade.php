@@ -146,14 +146,7 @@
                                 </div>
 
                                 <!-- Filter Dropdown -->
-                                <select class="custom-select" id="filterSelect">
-                                    <option value="" style="">All Classes</option>
-                                    <option value="course">All Courses</option>
-                                    <option value="category">All Categories</option>
-                                    <option value="role-student">Students</option>
-                                    <option value="role-instructor">Instructors</option>
-                                    <option value="role-admin">Admins</option>
-                                </select>
+
 
                                 <!-- View Options -->
                                 {{-- <button class="btn btn-light" style="border: 1px solid #ddd; padding: 0.625rem 1rem;" title="List View">
@@ -830,23 +823,23 @@
             renderStudentTable(filtered);
         });
 
-        document.getElementById('filterSelect').addEventListener('change', (e) => {
-            const filterValue = e.target.value;
-            if (!filterValue) {
-                renderStudentTable(allStudentData);
-                return;
-            }
+        // document.getElementById('filterSelect').addEventListener('change', (e) => {
+        //     const filterValue = e.target.value;
+        //     if (!filterValue) {
+        //         renderStudentTable(allStudentData);
+        //         return;
+        //     }
 
-            const filtered = allStudentData.filter(student => {
-                if (filterValue === 'course') return student.course_id;
-                if (filterValue === 'category') return student.category_id;
-                if (filterValue === 'role-student') return student.user?.role === 'student';
-                if (filterValue === 'role-instructor') return student.user?.role === 'instructor';
-                if (filterValue === 'role-admin') return student.user?.role === 'admin';
-                return true;
-            });
-            renderStudentTable(filtered);
-        });
+        //     const filtered = allStudentData.filter(student => {
+        //         if (filterValue === 'course') return student.course_id;
+        //         if (filterValue === 'category') return student.category_id;
+        //         if (filterValue === 'role-student') return student.user?.role === 'student';
+        //         if (filterValue === 'role-instructor') return student.user?.role === 'instructor';
+        //         if (filterValue === 'role-admin') return student.user?.role === 'admin';
+        //         return true;
+        //     });
+        //     renderStudentTable(filtered);
+        // });
 
         // Initialize page on load
         document.addEventListener('DOMContentLoaded', () => {
