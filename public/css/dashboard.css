@@ -53,6 +53,7 @@ p {
 .mysubject {
     width: 30%;
     z-index: -1;
+    max-width: 400px;
 }
 
 @media screen and (max-width: 320px) {
@@ -788,7 +789,7 @@ main .container {
     border-radius: 0.5rem;
     margin-bottom: 1rem;
     padding: 1.25rem;
-    background-color: #e5e6e7;
+    /* background-color: #e5e6e7; */
     box-shadow: 5px 5px white;
 }
 
@@ -2245,10 +2246,6 @@ input.search-input-custom-input {
     background-color: #fff;
 }
 
-.ql-editor {
-    height: 300px;
-    overflow-y: auto;
-}
 
 /* Notification Badge */
 .notification-badge {

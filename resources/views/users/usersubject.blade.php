@@ -85,7 +85,7 @@ let userCourses = [];
                 if (response.success && response.data) {
                     const user = response.data;
                     const firstName = user.first_name || 'User';
-                    document.getElementById('userGreeting').textContent = `Hello ${firstName} `;
+                    document.getElementById('userGreeting').textContent = `Hello ${firstName.charAt(0).toUpperCase() + firstName.slice(1)} `;
                     const icon = document.createElement('i');
                     icon.className = 'fa-solid fa-hands-clapping text-warning';
                     document.getElementById('userGreeting').appendChild(icon);
