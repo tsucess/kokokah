@@ -178,6 +178,170 @@
         .loading-spinner.show {
             display: block;
         }
+
+        /* Message Context Menu Modal Styles */
+        .message-context-menu {
+            position: fixed;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
+            z-index: 1050;
+            min-width: 200px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .message-context-menu.show {
+            display: block;
+        }
+
+        .message-context-menu-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            font-size: 0.95rem;
+            color: #333;
+            transition: background-color 0.2s ease;
+        }
+
+        .message-context-menu-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .message-context-menu-item.danger {
+            color: #dc3545;
+        }
+
+        .message-context-menu-item.danger:hover {
+            background-color: #ffe5e5;
+        }
+
+        .message-context-menu-item i {
+            width: 18px;
+            text-align: center;
+        }
+
+        /* Edit Message Modal */
+        .edit-message-modal {
+            display: none;
+            position: fixed;
+            z-index: 1051;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.2s ease;
+        }
+
+        .edit-message-modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .edit-message-modal-content {
+            background-color: white;
+            padding: 24px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
+            animation: slideUp 0.3s ease;
+        }
+
+        .edit-message-modal-header {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #333;
+        }
+
+        .edit-message-modal-body {
+            margin-bottom: 20px;
+        }
+
+        .edit-message-modal-body textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .edit-message-modal-body textarea:focus {
+            outline: none;
+            border-color: var(--bs-dark-teal, #004A53);
+            box-shadow: 0 0 0 3px rgba(0, 74, 83, 0.1);
+        }
+
+        .edit-message-modal-footer {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .edit-message-modal-footer button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .edit-message-modal-footer .btn-cancel {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .edit-message-modal-footer .btn-cancel:hover {
+            background-color: #e0e0e0;
+        }
+
+        .edit-message-modal-footer .btn-save {
+            background-color: var(--bs-dark-teal, #004A53);
+            color: white;
+        }
+
+        .edit-message-modal-footer .btn-save:hover {
+            background-color: #003339;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Long press indicator for mobile */
+        .message-long-press-active {
+            background-color: rgba(0, 74, 83, 0.1);
+            border-radius: 12px;
+        }
     </style>
     <main>
         <div class="container-fluid py-4">
@@ -247,6 +411,46 @@
             </div>
         </div>
     </main>
+
+    <!-- Message Context Menu -->
+    <div class="message-context-menu" id="messageContextMenu">
+        <button class="message-context-menu-item" id="contextEditBtn" onclick="openEditModal()">
+            <i class="fa-solid fa-edit"></i>
+            <span>Edit</span>
+        </button>
+        <button class="message-context-menu-item danger" id="contextDeleteBtn" onclick="openDeleteConfirmModal()">
+            <i class="fa-solid fa-trash"></i>
+            <span>Delete</span>
+        </button>
+    </div>
+
+    <!-- Edit Message Modal -->
+    <div class="edit-message-modal" id="editMessageModal">
+        <div class="edit-message-modal-content">
+            <div class="edit-message-modal-header">Edit Message</div>
+            <div class="edit-message-modal-body">
+                <textarea id="editMessageInput" placeholder="Enter your message..."></textarea>
+            </div>
+            <div class="edit-message-modal-footer">
+                <button class="btn-cancel" onclick="closeEditModal()">Cancel</button>
+                <button class="btn-save" onclick="saveEditMessage()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="edit-message-modal" id="deleteConfirmModal">
+        <div class="edit-message-modal-content">
+            <div class="edit-message-modal-header">Delete Message</div>
+            <div class="edit-message-modal-body">
+                <p style="color: #666; margin: 0;">Are you sure you want to delete this message? This action cannot be undone.</p>
+            </div>
+            <div class="edit-message-modal-footer">
+                <button class="btn-cancel" onclick="closeDeleteConfirmModal()">Cancel</button>
+                <button class="btn-save" style="background-color: #dc3545;" onclick="confirmDeleteMessage()">Delete</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         let currentChatroomId = null;
@@ -420,6 +624,7 @@
         async function loadMessages(roomId) {
             try {
                 const token = localStorage.getItem('auth_token');
+                console.log('=== LOAD MESSAGES START ===');
                 console.log('Loading messages for room', roomId, 'with token:', token ? 'present' : 'missing');
 
                 const response = await fetch(`${API_BASE_URL}/chatrooms/${roomId}/messages`, {
@@ -440,17 +645,25 @@
                 const data = await response.json();
                 console.log('API Response:', data);
                 const messages = data.data || data;
-                console.log('Messages to render:', messages);
+                console.log('Messages to render:', messages.length, 'messages');
+
+                // Log the first message to see if edited_content is present
+                if (messages.length > 0) {
+                    console.log('First message:', messages[0]);
+                }
 
                 renderMessages(messages);
+                console.log('=== LOAD MESSAGES COMPLETE ===');
             } catch (error) {
+                console.error('=== LOAD MESSAGES ERROR ===');
                 console.error('Error loading messages:', error);
             }
         }
 
         // Render messages
         function renderMessages(messages) {
-            console.log('renderMessages called with:', messages);
+            console.log('=== RENDER MESSAGES START ===');
+            console.log('renderMessages called with:', messages.length, 'messages');
 
             // Get current user ID and role from localStorage
             let currentUserId = null;
@@ -482,7 +695,7 @@
             let html = '';
             let lastDate = null;
 
-            sortedMessages.forEach(msg => {
+            sortedMessages.forEach((msg, index) => {
                 // Get the date of the message
                 const messageDate = new Date(msg.created_at);
                 const messageDateString = messageDate.toLocaleDateString('en-US', {
@@ -501,10 +714,21 @@
                 // Now render the message
                 const messageHtml = renderSingleMessage(msg, currentUserId, userRole, currentChatroomId);
                 html += messageHtml;
+
+                // Log edited messages
+                if (msg.edited_content) {
+                    console.log('Message', index, 'is edited:', {
+                        id: msg.id,
+                        content: msg.content,
+                        edited_content: msg.edited_content,
+                        edited_at: msg.edited_at
+                    });
+                }
             });
 
             console.log('Rendered HTML length:', html.length);
             document.getElementById('chat-messages').innerHTML = html;
+            console.log('=== RENDER MESSAGES COMPLETE ===');
         }
 
         // Render a single message
@@ -516,8 +740,20 @@
                 const userLastName = msg.user?.last_name || 'User';
                 const profilePhoto = msg.user?.profile_photo || '/images/default-avatar.png';
                 const messageTime = new Date(msg.created_at).toLocaleTimeString();
-                const messageContent = msg.content || '';
+                // Display edited_content if it exists, otherwise display original content
+                const messageContent = msg.edited_content || msg.content || '';
                 const isDeleted = msg.is_deleted;
+                const isEdited = msg.edited_content && msg.edited_at;
+
+                // Debug logging for edited messages
+                if (msg.edited_content) {
+                    console.log('Rendering edited message:', {
+                        id: msg.id,
+                        original: msg.content,
+                        edited: msg.edited_content,
+                        displaying: messageContent
+                    });
+                }
 
                 // Check if the message sender is an admin or superadmin
                 const senderRole = msg.user?.role || null;
@@ -538,95 +774,229 @@
                     `;
                 }
 
-                // Build action buttons for admin/owner
-                let actionButtons = '';
+                // Build context menu attributes for messages that can be edited/deleted
+                let contextMenuAttrs = '';
                 if (canEditDelete) {
-                    actionButtons = `
-                        <div class="message-actions" style="display: none; gap: 5px; margin-top: 5px;">
-                            <button class="btn btn-sm btn-outline-primary" onclick="editMessage(${msg.id}, '${currentChatroomId}', '${messageContent.replace(/'/g, "\\'")}')">
-                                <i class="fa-solid fa-edit"></i> Edit
-                            </button>
-                            <button class="btn btn-sm btn-outline-danger" onclick="deleteMessage(${msg.id}, '${currentChatroomId}')">
-                                <i class="fa-solid fa-trash"></i> Delete
-                            </button>
-                        </div>
+                    contextMenuAttrs = `
+                        oncontextmenu="showMessageContextMenu(event, ${msg.id}, '${currentChatroomId}', '${messageContent.replace(/'/g, "\\'")}')"
+                        ontouchstart="startLongPress(event, ${msg.id}, '${currentChatroomId}', '${messageContent.replace(/'/g, "\\'")}')"
+                        ontouchend="endLongPress()"
+                        style="cursor: context-menu;"
                     `;
                 }
 
+                // Build edited indicator
+                const editedIndicator = isEdited ? '<span class="message-edited-indicator" style="font-size: 0.75rem; color: #999; margin-left: 4px;">(edited)</span>' : '';
+
                 return `
-                    <div class="chat-message ${isCurrentUser ? 'current-user-message' : ''}" data-message-id="${msg.id}" onmouseover="showMessageActions(${msg.id})" onmouseout="hideMessageActions(${msg.id})">
+                    <div class="chat-message ${isCurrentUser ? 'current-user-message' : ''}" data-message-id="${msg.id}" ${contextMenuAttrs}>
                         ${!isCurrentUser ? `<img src="${profilePhoto}" alt="Avatar" class="message-avatar" onerror="this.src='/images/default-avatar.png'">` : ''}
                         <div class="message-content">
                             ${!isCurrentUser ? `<span class="message-user">${userFirstName} ${userLastName}${adminBadge}</span>` : ''}
                             <span class="message-timestamp">${messageTime}</span>
-                            <p class="mb-1">${messageContent}</p>
-                            ${actionButtons}
+                            <p class="mb-1">${messageContent}${editedIndicator}</p>
                         </div>
                     </div>
                 `;
         }
 
-        // Show message action buttons on hover
-        function showMessageActions(messageId) {
-            const messageEl = document.querySelector(`[data-message-id="${messageId}"]`);
-            if (messageEl) {
-                const actions = messageEl.querySelector('.message-actions');
-                if (actions) {
-                    actions.style.display = 'flex';
+        // Context menu state
+        let currentContextMessage = {
+            id: null,
+            roomId: null,
+            content: null
+        };
+
+        let longPressTimer = null;
+        const LONG_PRESS_DURATION = 500; // milliseconds
+
+        // Show message context menu on right-click
+        function showMessageContextMenu(event, messageId, roomId, messageContent) {
+            event.preventDefault();
+
+            console.log('Context menu triggered:', {
+                messageId: messageId,
+                roomId: roomId,
+                contentLength: messageContent.length
+            });
+
+            // Store current message info
+            currentContextMessage = {
+                id: messageId,
+                roomId: roomId,
+                content: messageContent
+            };
+
+            const contextMenu = document.getElementById('messageContextMenu');
+            contextMenu.classList.add('show');
+
+            // Position the menu at cursor
+            contextMenu.style.left = event.clientX + 'px';
+            contextMenu.style.top = event.clientY + 'px';
+
+            console.log('Context menu positioned at:', event.clientX, event.clientY);
+
+            // Close menu when clicking elsewhere
+            document.addEventListener('click', closeContextMenu);
+        }
+
+        // Long press handler for mobile
+        function startLongPress(event, messageId, roomId, messageContent) {
+            longPressTimer = setTimeout(() => {
+                // Store current message info
+                currentContextMessage = {
+                    id: messageId,
+                    roomId: roomId,
+                    content: messageContent
+                };
+
+                const contextMenu = document.getElementById('messageContextMenu');
+                contextMenu.classList.add('show');
+
+                // Position the menu at touch point
+                const touch = event.touches[0];
+                contextMenu.style.left = touch.clientX + 'px';
+                contextMenu.style.top = touch.clientY + 'px';
+
+                // Highlight the message
+                const messageEl = document.querySelector(`[data-message-id="${messageId}"]`);
+                if (messageEl) {
+                    messageEl.classList.add('message-long-press-active');
                 }
+
+                // Close menu when clicking elsewhere
+                document.addEventListener('click', closeContextMenu);
+            }, LONG_PRESS_DURATION);
+        }
+
+        // End long press
+        function endLongPress() {
+            if (longPressTimer) {
+                clearTimeout(longPressTimer);
+                longPressTimer = null;
             }
         }
 
-        // Hide message action buttons
-        function hideMessageActions(messageId) {
-            const messageEl = document.querySelector(`[data-message-id="${messageId}"]`);
+        // Close context menu
+        function closeContextMenu() {
+            const contextMenu = document.getElementById('messageContextMenu');
+            contextMenu.classList.remove('show');
+
+            // Remove highlight from message
+            const messageEl = document.querySelector(`[data-message-id="${currentContextMessage.id}"]`);
             if (messageEl) {
-                const actions = messageEl.querySelector('.message-actions');
-                if (actions) {
-                    actions.style.display = 'none';
-                }
+                messageEl.classList.remove('message-long-press-active');
             }
+
+            document.removeEventListener('click', closeContextMenu);
         }
 
-        // Edit message
-        async function editMessage(messageId, roomId, currentContent) {
-            const newContent = prompt('Edit message:', currentContent);
-            if (newContent === null || newContent.trim() === '') return;
+        // Open edit modal
+        function openEditModal() {
+            console.log('Opening edit modal for message:', currentContextMessage.id);
+            closeContextMenu();
+            const editInput = document.getElementById('editMessageInput');
+            editInput.value = currentContextMessage.content;
+            editInput.focus();
+            editInput.select();
+
+            const modal = document.getElementById('editMessageModal');
+            modal.classList.add('show');
+            console.log('Edit modal opened');
+        }
+
+        // Close edit modal
+        function closeEditModal() {
+            const modal = document.getElementById('editMessageModal');
+            modal.classList.remove('show');
+            console.log('Edit modal closed');
+        }
+
+        // Save edited message
+        async function saveEditMessage() {
+            const newContent = document.getElementById('editMessageInput').value.trim();
+
+            if (!newContent) {
+                alert('Message cannot be empty');
+                return;
+            }
 
             try {
                 const token = localStorage.getItem('auth_token');
-                const response = await fetch(`${API_BASE_URL}/chatrooms/${roomId}/messages/${messageId}`, {
+                const url = `${API_BASE_URL}/chatrooms/${currentContextMessage.roomId}/messages/${currentContextMessage.id}`;
+
+                console.log('=== EDIT MESSAGE START ===');
+                console.log('Editing message:', {
+                    messageId: currentContextMessage.id,
+                    roomId: currentContextMessage.roomId,
+                    url: url,
+                    newContent: newContent,
+                    tokenPresent: !!token
+                });
+
+                const response = await fetch(url, {
                     method: 'PUT',
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json',
                         'Accept': 'application/json'
                     },
-                    body: JSON.stringify({ content: newContent.trim() })
+                    body: JSON.stringify({ content: newContent })
                 });
 
+                console.log('Edit response status:', response.status);
+                const responseData = await response.json();
+                console.log('Edit response data:', responseData);
+
                 if (!response.ok) {
-                    const errorData = await response.json();
-                    alert('Failed to edit message: ' + (errorData.message || 'Unknown error'));
+                    console.error('Edit failed with status:', response.status);
+                    alert('Failed to edit message: ' + (responseData.message || 'Unknown error'));
                     return;
                 }
 
-                // Reload messages to show the update
-                await loadMessages(roomId);
-                console.log('Message edited successfully');
+                console.log('Edit successful, closing modal and reloading messages...');
+                closeEditModal();
+
+                console.log('About to load messages for room:', currentContextMessage.roomId);
+                await loadMessages(currentContextMessage.roomId);
+                console.log('=== EDIT MESSAGE SUCCESS ===');
             } catch (error) {
+                console.error('=== EDIT MESSAGE ERROR ===');
                 console.error('Error editing message:', error);
                 alert('Failed to edit message: ' + error.message);
             }
         }
 
-        // Delete message
-        async function deleteMessage(messageId, roomId) {
-            if (!confirm('Are you sure you want to delete this message?')) return;
+        // Open delete confirmation modal
+        function openDeleteConfirmModal() {
+            console.log('Opening delete confirmation modal for message:', currentContextMessage.id);
+            closeContextMenu();
+            const modal = document.getElementById('deleteConfirmModal');
+            modal.classList.add('show');
+            console.log('Delete confirmation modal opened');
+        }
 
+        // Close delete confirmation modal
+        function closeDeleteConfirmModal() {
+            const modal = document.getElementById('deleteConfirmModal');
+            modal.classList.remove('show');
+            console.log('Delete confirmation modal closed');
+        }
+
+        // Confirm delete message
+        async function confirmDeleteMessage() {
             try {
                 const token = localStorage.getItem('auth_token');
-                const response = await fetch(`${API_BASE_URL}/chatrooms/${roomId}/messages/${messageId}`, {
+                const url = `${API_BASE_URL}/chatrooms/${currentContextMessage.roomId}/messages/${currentContextMessage.id}`;
+
+                console.log('Deleting message:', {
+                    messageId: currentContextMessage.id,
+                    roomId: currentContextMessage.roomId,
+                    url: url,
+                    tokenPresent: !!token
+                });
+
+                const response = await fetch(url, {
                     method: 'DELETE',
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -634,20 +1004,45 @@
                     }
                 });
 
+                console.log('Delete response status:', response.status);
+                const responseData = await response.json();
+                console.log('Delete response data:', responseData);
+
                 if (!response.ok) {
-                    const errorData = await response.json();
-                    alert('Failed to delete message: ' + (errorData.message || 'Unknown error'));
+                    alert('Failed to delete message: ' + (responseData.message || 'Unknown error'));
                     return;
                 }
 
-                // Reload messages to show the deletion
-                await loadMessages(roomId);
+                closeDeleteConfirmModal();
+                await loadMessages(currentContextMessage.roomId);
                 console.log('Message deleted successfully');
             } catch (error) {
                 console.error('Error deleting message:', error);
                 alert('Failed to delete message: ' + error.message);
             }
         }
+
+        // Close modals when clicking outside
+        document.addEventListener('click', function(event) {
+            const editModal = document.getElementById('editMessageModal');
+            const deleteModal = document.getElementById('deleteConfirmModal');
+
+            if (event.target === editModal) {
+                closeEditModal();
+            }
+            if (event.target === deleteModal) {
+                closeDeleteConfirmModal();
+            }
+        });
+
+        // Close modals with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeEditModal();
+                closeDeleteConfirmModal();
+                closeContextMenu();
+            }
+        });
 
         // Send message
         document.getElementById('sendBtn')?.addEventListener('click', async () => {
