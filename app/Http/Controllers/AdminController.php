@@ -28,6 +28,32 @@ class AdminController extends Controller
     // This controller is for superadmin only features
 
     /**
+     * Get chart data for deposits and subscriptions (monthly/yearly)
+     */
+    public function chartData(Request $request)
+    {
+        try {
+            $period = $request->get('period', 'yearly'); // yearly or monthly
+
+            if ($period === 'monthly') {
+                $data = $this->getMonthlyChartData();
+            } else {
+                $data = $this->getYearlyChartData();
+            }
+
+            return response()->json([
+                'success' => true,
+                'data' => $data
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch chart data: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
      * Get admin dashboard overview
      */
     public function dashboard(Request $request)
@@ -979,6 +1005,87 @@ class AdminController extends Controller
                 'message' => 'Failed to fetch database stats: ' . $e->getMessage()
             ], 500);
         }
+    }
+
+    /**
+     * Get monthly chart data (last 30 days)
+     */
+    private function getMonthlyChartData()
+    {
+        $deposits = [];
+        $subscriptions = [];
+        $labels = [];
+
+        // Get data for last 30 days
+        for ($i = 29; $i >= 0; $i--) {
+            $date = now()->subDays($i);
+            $dateStr = $date->format('Y-m-d');
+            $dayLabel = $date->format('M d');
+
+            // Get deposits (wallet deposits) for this day
+            $depositAmount = Payment::where('status', 'completed')
+                                    ->where('type', 'wallet_deposit')
+                                    ->whereDate('created_at', $dateStr)
+                                    ->sum('amount');
+
+            // Get subscriptions (course purchases) for this day
+            $subscriptionAmount = Payment::where('status', 'completed')
+                                         ->where('type', 'course_purchase')
+                                         ->whereDate('created_at', $dateStr)
+                                         ->sum('amount');
+
+            $deposits[] = (float) $depositAmount;
+            $subscriptions[] = (float) $subscriptionAmount;
+            $labels[] = $dayLabel;
+        }
+
+        return [
+            'labels' => $labels,
+            'deposits' => $deposits,
+            'subscriptions' => $subscriptions,
+            'period' => 'monthly'
+        ];
+    }
+
+    /**
+     * Get yearly chart data (12 months)
+     */
+    private function getYearlyChartData()
+    {
+        $deposits = [];
+        $subscriptions = [];
+        $labels = [];
+
+        // Get data for last 12 months
+        for ($i = 11; $i >= 0; $i--) {
+            $date = now()->subMonths($i);
+            $monthLabel = $date->format('M');
+            $startOfMonth = $date->startOfMonth();
+            $endOfMonth = $date->endOfMonth();
+
+            // Get deposits (wallet deposits) for this month
+            $depositAmount = Payment::where('status', 'completed')
+                                    ->where('type', 'wallet_deposit')
+                                    ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
+                                    ->sum('amount');
+
+            // Get subscriptions (course purchases) for this month
+            $subscriptionAmount = Payment::where('status', 'completed')
+                                         ->where('type', 'course_purchase')
+                                         ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
+                                         ->sum('amount');
+
+            $deposits[] = (float) $depositAmount;
+            $subscriptions[] = (float) $subscriptionAmount;
+            $labels[] = $monthLabel;
+        }
+
+        return [
+            'labels' => $labels,
+            'deposits' => $deposits,
+            'subscriptions' => $subscriptions,
+            'period' => 'yearly'
+        ];
     }
 
     /**

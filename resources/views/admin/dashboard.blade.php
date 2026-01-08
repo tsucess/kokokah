@@ -112,17 +112,19 @@
                 <div class="chart-card">
                     <div class="chart-header">
                         <div class = "information1">
-                            <h6 class="fw-bold m-0">Income & Expense</h6>
+                            <h6 class="fw-bold m-0">Deposits & Subscriptions</h6>
                             <p class="small text-muted">Performance overview</p>
                         </div>
                         <div class="d-flex align-items-center gap-3 information2">
                             <div class="legend-dot"><span class="dot" style="background:var(--brand-green)"></span>
-                                <p>Income</p></div>
+                                <p>Deposits</p></div>
                             <div class="legend-dot"><span class="dot" style="background:var(--brand-yellow)"></span>
-                               <p>Profit</p> </div>
-                            <select class="form-select form-select-sm w-auto ms-2" style="border-radius:12px;">
-                                <option selected>Yearly</option>
-                                <option>Monthly</option>
+                               <p>Subscriptions</p> </div>
+                            <select class="form-select form-select-sm w-auto ms-2" style="border-radius:12px;" id="chartPeriodSelector">
+                                <option value="daily">Daily</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="monthly" selected>Monthly</option>
+                                <option value="yearly">Yearly</option>
                             </select>
                         </div>
                     </div>
@@ -440,52 +442,226 @@
     <script>
         // Chart (with callout bubble plugin)
         let chartInstance = null;
-        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        let incomeData = [68, 64, 80, 86, 92, 88, 70, 78, 82, 90, 84, 72];
-        let profitData = [32, 40, 34, 30, 44, 52, 60, 58, 62, 60, 66, 22];
-        let julyIndex = months.indexOf('Jul');
+        let chartLabels = [];
+        let depositsData = [];
+        let subscriptionsData = [];
+        let currentChartPeriod = 'monthly';
+        let chartDataCache = {};
 
         // Initialize chart with dynamic data
         async function initializeChart() {
             try {
-                const result = await AdminApiClient.getDashboardStats();
-                if (result.success && result.data && result.data.statistics) {
-                    const stats = result.data.statistics;
+                // Setup period selector listener
+                setupChartPeriodSelector();
 
-                    // Generate dynamic data based on revenue and enrollments
-                    if (stats.revenue && stats.enrollments) {
-                        // Use revenue data for income
-                        const monthlyRevenue = stats.revenue.this_month || 0;
-                        const weeklyRevenue = stats.revenue.this_week || 0;
-
-                        // Use enrollment data for profit
-                        const monthlyEnrollments = stats.enrollments.this_month || 0;
-                        const completedEnrollments = stats.enrollments.completed || 0;
-
-                        // Create normalized data for chart (0-100 scale)
-                        incomeData = generateChartData(monthlyRevenue, 100);
-                        profitData = generateChartData(completedEnrollments, 100);
-                    }
-                }
+                // Load initial chart data
+                await updateChartData();
             } catch (error) {
                 console.error('Error initializing chart:', error);
-                // Use default data if API fails
+                // Create chart with sample data if API fails
+                const { labels } = generateChartDataForPeriod(currentChartPeriod);
+                chartLabels = labels;
+                // Add sample data for testing
+                depositsData = labels.map(() => Math.floor(Math.random() * 100000) + 10000);
+                subscriptionsData = labels.map(() => Math.floor(Math.random() * 80000) + 5000);
+                createChart();
             }
-
-            // Initialize the chart
-            createChart();
         }
 
-        // Generate chart data with some variation
-        function generateChartData(baseValue, maxValue) {
-            const data = [];
-            for (let i = 0; i < 12; i++) {
-                // Add some variation to make it look realistic
-                const variation = Math.sin(i / 2) * 20;
-                const value = Math.max(10, Math.min(maxValue, baseValue * (0.5 + Math.random()) + variation));
-                data.push(Math.round(value));
+        // Fetch wallet deposits history
+        async function fetchDepositsHistory(period) {
+            try {
+                const token = localStorage.getItem('auth_token') || localStorage.getItem('token');
+                console.log('Fetching deposits with token:', token ? 'Present' : 'Missing');
+
+                const response = await fetch('/api/wallet/transactions?type=deposit&limit=1000', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/json'
+                    }
+                });
+
+                console.log('Response status:', response.status, response.statusText);
+
+                if (!response.ok) {
+                    console.error('API Error:', response.status, response.statusText);
+                    const errorData = await response.json();
+                    console.error('Error details:', errorData);
+                    return [];
+                }
+
+                const data = await response.json();
+                console.log('Deposits API Response:', data);
+
+                if (data.success && data.data) {
+                    const deposits = Array.isArray(data.data) ? data.data : [];
+                    console.log('Deposits count:', deposits.length);
+                    console.log('Deposits:', deposits);
+                    return deposits;
+                } else {
+                    console.warn('API response not successful or no data:', data);
+                }
+                return [];
+            } catch (error) {
+                console.error('Error fetching deposits history:', error);
+                return [];
             }
-            return data;
+        }
+
+        // Fetch wallet course purchases (subscriptions)
+        async function fetchSubscriptionHistory(period) {
+            try {
+                const token = localStorage.getItem('auth_token') || localStorage.getItem('token');
+                console.log('Fetching subscriptions with token:', token ? 'Present' : 'Missing');
+
+                const response = await fetch('/api/wallet/transactions?type=purchase&limit=1000', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/json'
+                    }
+                });
+
+                console.log('Response status:', response.status, response.statusText);
+
+                if (!response.ok) {
+                    console.error('API Error:', response.status, response.statusText);
+                    const errorData = await response.json();
+                    console.error('Error details:', errorData);
+                    return [];
+                }
+
+                const data = await response.json();
+                console.log('Subscriptions API Response:', data);
+
+                if (data.success && data.data) {
+                    const subscriptions = Array.isArray(data.data) ? data.data : [];
+                    console.log('Subscriptions count:', subscriptions.length);
+                    console.log('Subscriptions:', subscriptions);
+                    return subscriptions;
+                } else {
+                    console.warn('API response not successful or no data:', data);
+                }
+                return [];
+            } catch (error) {
+                console.error('Error fetching subscription history:', error);
+                return [];
+            }
+        }
+
+        // Aggregate data by period
+        function aggregateDataByPeriod(transactions, period) {
+            const aggregated = {};
+            const now = new Date();
+
+            if (!Array.isArray(transactions)) {
+                console.warn('Transactions is not an array:', transactions);
+                return aggregated;
+            }
+
+            transactions.forEach(transaction => {
+                try {
+                    // Handle different date field names
+                    let dateStr = transaction.date || transaction.created_at || transaction.enrolled_at;
+                    if (!dateStr) {
+                        console.warn('No date field found in transaction:', transaction);
+                        return;
+                    }
+
+                    const date = new Date(dateStr);
+                    if (isNaN(date.getTime())) {
+                        console.warn('Invalid date:', dateStr);
+                        return;
+                    }
+
+                    let key;
+
+                    switch(period) {
+                        case 'daily':
+                            // Last 30 days
+                            if (now - date > 30 * 24 * 60 * 60 * 1000) return;
+                            key = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                            break;
+                        case 'weekly':
+                            // Last 12 weeks
+                            if (now - date > 12 * 7 * 24 * 60 * 60 * 1000) return;
+                            const weekNum = Math.ceil((now - date) / (7 * 24 * 60 * 60 * 1000));
+                            key = `Week ${weekNum}`;
+                            break;
+                        case 'monthly':
+                            // Last 12 months
+                            if (now - date > 12 * 30 * 24 * 60 * 60 * 1000) return;
+                            key = date.toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
+                            break;
+                        case 'yearly':
+                            // All years
+                            key = date.getFullYear().toString();
+                            break;
+                    }
+
+                    if (!aggregated[key]) {
+                        aggregated[key] = 0;
+                    }
+
+                    // Handle different amount field names
+                    const amount = parseFloat(transaction.amount || transaction.price || 0);
+                    aggregated[key] += amount;
+
+                    console.log(`Aggregated ${transaction.type || 'transaction'}: ${amount} for ${key}`);
+                } catch (error) {
+                    console.error('Error processing transaction:', transaction, error);
+                }
+            });
+
+            console.log('Final aggregated data:', aggregated);
+            return aggregated;
+        }
+
+        // Generate chart labels and data for period
+        function generateChartDataForPeriod(period) {
+            const now = new Date();
+            const labels = [];
+            const dateMap = {};
+
+            switch(period) {
+                case 'daily':
+                    // Last 30 days
+                    for (let i = 29; i >= 0; i--) {
+                        const date = new Date(now);
+                        date.setDate(date.getDate() - i);
+                        const label = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                        labels.push(label);
+                        dateMap[label] = 0;
+                    }
+                    break;
+                case 'weekly':
+                    // Last 12 weeks
+                    for (let i = 11; i >= 0; i--) {
+                        const label = `Week ${i + 1}`;
+                        labels.push(label);
+                        dateMap[label] = 0;
+                    }
+                    break;
+                case 'monthly':
+                    // Last 12 months
+                    for (let i = 11; i >= 0; i--) {
+                        const date = new Date(now);
+                        date.setMonth(date.getMonth() - i);
+                        const label = date.toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
+                        labels.push(label);
+                        dateMap[label] = 0;
+                    }
+                    break;
+                case 'yearly':
+                    // Last 5 years
+                    for (let i = 4; i >= 0; i--) {
+                        const year = now.getFullYear() - i;
+                        labels.push(year.toString());
+                        dateMap[year.toString()] = 0;
+                    }
+                    break;
+            }
+
+            return { labels, dateMap };
         }
 
         // Create the chart
@@ -495,72 +671,19 @@
                 chartInstance.destroy();
             }
 
-        const calloutPlugin = {
-            id: 'callout',
-            afterDatasetsDraw(chart) {
-                const {
-                    ctx,
-                    chartArea: {
-                        top,
-                        left,
-                        right
-                    }
-                } = chart;
-                const meta = chart.getDatasetMeta(0);
-                const point = meta.data[julyIndex];
-                if (!point) return;
-
-                const x = point.x;
-                const y = point.y - 24;
-                const text1 = '$77,000';
-                const text2 = '09 Projects';
-
-                ctx.save();
-                ctx.font = '600 12px Inter, sans-serif';
-                const w = Math.max(ctx.measureText(text1).width, ctx.measureText(text2).width) + 16;
-                const h = 38;
-                const r = 8;
-
-                const bx = Math.min(Math.max(x - w / 2, left + 6), right - w - 6);
-                const by = Math.max(y - h, top + 6);
-
-                ctx.fillStyle = '#FFFFFF';
-                ctx.strokeStyle = '#E5EAF0';
-                ctx.lineWidth = 1;
-                ctx.beginPath();
-                ctx.moveTo(bx + r, by);
-                ctx.arcTo(bx + w, by, bx + w, by + r, r);
-                ctx.arcTo(bx + w, by + h, bx + w - r, by + h, r);
-                ctx.arcTo(bx, by + h, bx, by + h - r, r);
-                ctx.arcTo(bx, by, bx + r, by, r);
-                ctx.closePath();
-                ctx.fill();
-                ctx.stroke();
-
-                ctx.beginPath();
-                ctx.moveTo(x - 6, by + h);
-                ctx.lineTo(x, by + h + 8);
-                ctx.lineTo(x + 6, by + h);
-                ctx.closePath();
-                ctx.fill();
-                ctx.stroke();
-
-                ctx.fillStyle = '#0F1C24';
-                ctx.fillText(text1, bx + 8, by + 16);
-                ctx.fillStyle = '#6B737A';
-                ctx.fillText(text2, bx + 8, by + 30);
-                ctx.restore();
-            }
-        };
+            console.log('Creating chart with:');
+            console.log('Labels:', chartLabels);
+            console.log('Deposits Data:', depositsData);
+            console.log('Subscriptions Data:', subscriptionsData);
 
             const ctx = document.getElementById('ieChart').getContext('2d');
             chartInstance = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: months,
+                    labels: chartLabels,
                     datasets: [{
-                            label: 'Income',
-                            data: incomeData,
+                            label: 'Deposits',
+                            data: depositsData,
                             borderColor: getComputedStyle(document.documentElement).getPropertyValue(
                                 '--brand-green').trim(),
                             pointRadius: 3,
@@ -569,8 +692,8 @@
                             tension: 0.45
                         },
                         {
-                            label: 'Profit',
-                            data: profitData,
+                            label: 'Subscriptions',
+                            data: subscriptionsData,
                             borderColor: getComputedStyle(document.documentElement).getPropertyValue(
                                 '--brand-yellow').trim(),
                             pointRadius: 3,
@@ -589,16 +712,35 @@
                         },
                         tooltip: {
                             intersect: false,
-                            mode: 'index'
+                            mode: 'index',
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += new Intl.NumberFormat('en-US', {
+                                            minimumFractionDigits: 0,
+                                            maximumFractionDigits: 0
+                                        }).format(context.parsed.y);
+                                    }
+                                    return label;
+                                }
+                            }
                         }
                     },
                     scales: {
                         y: {
-                            min: 0,
-                            max: 100,
+                            beginAtZero: true,
                             ticks: {
-                                stepSize: 10,
-                                callback: v => v + '%'
+                                stepSize: 10000,
+                                callback: function(value) {
+                                    return new Intl.NumberFormat('en-US', {
+                                        minimumFractionDigits: 0,
+                                        maximumFractionDigits: 0
+                                    }).format(value);
+                                }
                             },
                             grid: {
                                 color: '#EFF3F6'
@@ -615,9 +757,91 @@
                             borderWidth: 2
                         }
                     }
-                },
-                plugins: [calloutPlugin]
+                }
             });
+        }
+
+        // Setup chart period selector
+        function setupChartPeriodSelector() {
+            const selector = document.getElementById('chartPeriodSelector');
+            if (selector) {
+                selector.addEventListener('change', function(e) {
+                    currentChartPeriod = e.target.value;
+                    updateChartData();
+                });
+            }
+        }
+
+        // Update chart data based on selected period
+        async function updateChartData() {
+            try {
+                console.log('updateChartData called for period:', currentChartPeriod);
+
+                // Check cache first
+                if (chartDataCache[currentChartPeriod]) {
+                    console.log('Using cached data for period:', currentChartPeriod);
+                    const cached = chartDataCache[currentChartPeriod];
+                    chartLabels = cached.labels;
+                    depositsData = cached.deposits;
+                    subscriptionsData = cached.subscriptions;
+                    createChart();
+                    return;
+                }
+
+                console.log('Fetching fresh data for period:', currentChartPeriod);
+
+                // Fetch fresh data
+                const [depositsHistory, subscriptionHistory] = await Promise.all([
+                    fetchDepositsHistory(currentChartPeriod),
+                    fetchSubscriptionHistory(currentChartPeriod)
+                ]);
+
+                console.log('Fetched deposits:', depositsHistory);
+                console.log('Fetched subscriptions:', subscriptionHistory);
+
+                // Generate labels and date map
+                const { labels, dateMap: depositsMap } = generateChartDataForPeriod(currentChartPeriod);
+                const { dateMap: subscriptionsMap } = generateChartDataForPeriod(currentChartPeriod);
+
+                // Aggregate deposits data
+                const aggregatedDeposits = aggregateDataByPeriod(depositsHistory, currentChartPeriod);
+                Object.keys(aggregatedDeposits).forEach(key => {
+                    if (depositsMap.hasOwnProperty(key)) {
+                        depositsMap[key] = aggregatedDeposits[key];
+                    }
+                });
+
+                // Aggregate subscriptions data
+                const aggregatedSubscriptions = aggregateDataByPeriod(subscriptionHistory, currentChartPeriod);
+                Object.keys(aggregatedSubscriptions).forEach(key => {
+                    if (subscriptionsMap.hasOwnProperty(key)) {
+                        subscriptionsMap[key] = aggregatedSubscriptions[key];
+                    }
+                });
+
+                // Convert maps to arrays in label order
+                chartLabels = labels;
+                depositsData = labels.map(label => depositsMap[label] || 0);
+                subscriptionsData = labels.map(label => subscriptionsMap[label] || 0);
+
+                // Cache the data
+                chartDataCache[currentChartPeriod] = {
+                    labels: chartLabels,
+                    deposits: depositsData,
+                    subscriptions: subscriptionsData
+                };
+
+                // Recreate the chart with new data
+                createChart();
+            } catch (error) {
+                console.error('Error updating chart data:', error);
+                // Create chart with sample data on error
+                const { labels } = generateChartDataForPeriod(currentChartPeriod);
+                chartLabels = labels;
+                depositsData = labels.map(() => Math.floor(Math.random() * 100000) + 10000);
+                subscriptionsData = labels.map(() => Math.floor(Math.random() * 80000) + 5000);
+                createChart();
+            }
         }
 
         // Load and display user name in welcome message
@@ -636,6 +860,9 @@
         }
 
         // Call on page load
-        document.addEventListener('DOMContentLoaded', loadWelcomeMessage);
+        document.addEventListener('DOMContentLoaded', function() {
+            loadWelcomeMessage();
+            initializeChart();
+        });
     </script>
 @endsection

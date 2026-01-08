@@ -155,6 +155,8 @@ class WalletController extends Controller
 
     /**
      * Get transaction history
+     * For admins: returns all transactions in the system
+     * For regular users: returns only their own transactions
      */
     public function transactions(Request $request)
     {
@@ -162,7 +164,29 @@ class WalletController extends Controller
         $limit = $request->get('limit', 50);
         $type = $request->get('type'); // deposit, transfer, purchase, reward, withdrawal
 
-        $transactions = $this->walletService->getTransactionHistory($user, $limit);
+        // Check if user is admin
+        $isAdmin = $user && in_array($user->role, ['admin', 'super_admin', 'superadmin']);
+
+        \Log::info('WalletController::transactions', [
+            'user_id' => $user?->id,
+            'user_role' => $user?->role,
+            'is_admin' => $isAdmin,
+            'type' => $type,
+            'limit' => $limit
+        ]);
+
+        if ($isAdmin) {
+            // For admins, get all transactions
+            $transactions = \App\Models\WalletTransaction::with(['wallet.user', 'course'])
+                ->orderBy('created_at', 'desc')
+                ->limit($limit)
+                ->get();
+            \Log::info('Admin transactions fetched', ['count' => count($transactions)]);
+        } else {
+            // For regular users, get only their transactions
+            $transactions = $this->walletService->getTransactionHistory($user, $limit);
+            \Log::info('User transactions fetched', ['count' => count($transactions)]);
+        }
 
         if ($type) {
             $transactions = $transactions->filter(function ($transaction) use ($type) {
