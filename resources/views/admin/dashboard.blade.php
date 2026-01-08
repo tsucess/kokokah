@@ -472,7 +472,6 @@
         async function fetchDepositsHistory(period) {
             try {
                 const token = localStorage.getItem('auth_token') || localStorage.getItem('token');
-                console.log('Fetching deposits with token:', token ? 'Present' : 'Missing');
 
                 const response = await fetch('/api/wallet/transactions?type=deposit&limit=1000', {
                     headers: {
@@ -481,29 +480,18 @@
                     }
                 });
 
-                console.log('Response status:', response.status, response.statusText);
-
                 if (!response.ok) {
-                    console.error('API Error:', response.status, response.statusText);
-                    const errorData = await response.json();
-                    console.error('Error details:', errorData);
                     return [];
                 }
 
                 const data = await response.json();
-                console.log('Deposits API Response:', data);
 
                 if (data.success && data.data) {
                     const deposits = Array.isArray(data.data) ? data.data : [];
-                    console.log('Deposits count:', deposits.length);
-                    console.log('Deposits:', deposits);
                     return deposits;
-                } else {
-                    console.warn('API response not successful or no data:', data);
                 }
                 return [];
             } catch (error) {
-                console.error('Error fetching deposits history:', error);
                 return [];
             }
         }
@@ -512,7 +500,6 @@
         async function fetchSubscriptionHistory(period) {
             try {
                 const token = localStorage.getItem('auth_token') || localStorage.getItem('token');
-                console.log('Fetching subscriptions with token:', token ? 'Present' : 'Missing');
 
                 const response = await fetch('/api/wallet/transactions?type=purchase&limit=1000', {
                     headers: {
@@ -521,29 +508,18 @@
                     }
                 });
 
-                console.log('Response status:', response.status, response.statusText);
-
                 if (!response.ok) {
-                    console.error('API Error:', response.status, response.statusText);
-                    const errorData = await response.json();
-                    console.error('Error details:', errorData);
                     return [];
                 }
 
                 const data = await response.json();
-                console.log('Subscriptions API Response:', data);
 
                 if (data.success && data.data) {
                     const subscriptions = Array.isArray(data.data) ? data.data : [];
-                    console.log('Subscriptions count:', subscriptions.length);
-                    console.log('Subscriptions:', subscriptions);
                     return subscriptions;
-                } else {
-                    console.warn('API response not successful or no data:', data);
                 }
                 return [];
             } catch (error) {
-                console.error('Error fetching subscription history:', error);
                 return [];
             }
         }
@@ -554,7 +530,6 @@
             const now = new Date();
 
             if (!Array.isArray(transactions)) {
-                console.warn('Transactions is not an array:', transactions);
                 return aggregated;
             }
 
@@ -563,13 +538,11 @@
                     // Handle different date field names
                     let dateStr = transaction.date || transaction.created_at || transaction.enrolled_at;
                     if (!dateStr) {
-                        console.warn('No date field found in transaction:', transaction);
                         return;
                     }
 
                     const date = new Date(dateStr);
                     if (isNaN(date.getTime())) {
-                        console.warn('Invalid date:', dateStr);
                         return;
                     }
 
@@ -605,14 +578,11 @@
                     // Handle different amount field names
                     const amount = parseFloat(transaction.amount || transaction.price || 0);
                     aggregated[key] += amount;
-
-                    console.log(`Aggregated ${transaction.type || 'transaction'}: ${amount} for ${key}`);
                 } catch (error) {
-                    console.error('Error processing transaction:', transaction, error);
+                    // Silently skip errors
                 }
             });
 
-            console.log('Final aggregated data:', aggregated);
             return aggregated;
         }
 
@@ -670,11 +640,6 @@
             if (chartInstance) {
                 chartInstance.destroy();
             }
-
-            console.log('Creating chart with:');
-            console.log('Labels:', chartLabels);
-            console.log('Deposits Data:', depositsData);
-            console.log('Subscriptions Data:', subscriptionsData);
 
             const ctx = document.getElementById('ieChart').getContext('2d');
             chartInstance = new Chart(ctx, {
@@ -775,11 +740,8 @@
         // Update chart data based on selected period
         async function updateChartData() {
             try {
-                console.log('updateChartData called for period:', currentChartPeriod);
-
                 // Check cache first
                 if (chartDataCache[currentChartPeriod]) {
-                    console.log('Using cached data for period:', currentChartPeriod);
                     const cached = chartDataCache[currentChartPeriod];
                     chartLabels = cached.labels;
                     depositsData = cached.deposits;
@@ -788,16 +750,11 @@
                     return;
                 }
 
-                console.log('Fetching fresh data for period:', currentChartPeriod);
-
                 // Fetch fresh data
                 const [depositsHistory, subscriptionHistory] = await Promise.all([
                     fetchDepositsHistory(currentChartPeriod),
                     fetchSubscriptionHistory(currentChartPeriod)
                 ]);
-
-                console.log('Fetched deposits:', depositsHistory);
-                console.log('Fetched subscriptions:', subscriptionHistory);
 
                 // Generate labels and date map
                 const { labels, dateMap: depositsMap } = generateChartDataForPeriod(currentChartPeriod);
@@ -834,7 +791,6 @@
                 // Recreate the chart with new data
                 createChart();
             } catch (error) {
-                console.error('Error updating chart data:', error);
                 // Create chart with sample data on error
                 const { labels } = generateChartDataForPeriod(currentChartPeriod);
                 chartLabels = labels;
