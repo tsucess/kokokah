@@ -1,6 +1,11 @@
 @extends('layouts.template')
 
 @section('content')
+<style>
+        .impact {
+            font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+        }
+    </style>
     <section>
         <section class="container-fluid sms-hero">
             <div class="row py-5 px-3 px-lg-5 g-5">
@@ -19,7 +24,7 @@
                                     <p class="sms-hero-label">4.8 ( form 1243+ reviews)</p>
                                 </div>
                                 <div class="d-flex flex-column gap-2 align-items-center">
-                                    <h1 class="text-center text-white">The All-in-one Platform for Modern Education</h1>
+                                    <h1 class="text-center text-white impact">The All-in-one Platform for Modern Education</h1>
                                     <p class="text-white text-center">Streamline school administration, enhance
                                         communication and
                                         empower educators with a single, intuitive system.</p>
@@ -44,7 +49,7 @@
             </div>
         </section>
         <section class="container-fluid px-3 px-lg-5 py-5 d-flex flex-column gap-3">
-            <h2 class="text-center sms-feature-title section-title">Everything you need to manage your school</h2>
+            <h2 class="text-center sms-feature-title section-title impact">Everything you need to manage your school</h2>
             <div class="row g-3 features">
                 <div class="col-12 col-md-6 col-lg-3 feature-item">
                     <div class="d-flex flex-column sms-feature-card sms-feature-card-accent h-100 ">
@@ -110,7 +115,7 @@
                 </div>
                 <div class="col col-12 col-lg-7 d-flex flex-column gap-3 align-items-center">
                     <div class="d-flex flex-column gap-2">
-                        <h3 class="sms-feature-title text-center section-title">Why schools choose our system</h3>
+                        <h3 class="sms-feature-title text-center section-title impact">Why schools choose our system</h3>
                         <p class="text-center">Our platform is designed to stramline workflows, enhance parent-teacher
                             collaboration and provide data-driven insights for better decision-making.</p>
                     </div>
@@ -166,6 +171,10 @@
 
         </section>
         <!-- Swiper Container -->
+        <section class="d-flex flex-column gap-4">
+             <h3 class="sms-feature-title text-center section-title impact">Trusted by Educators and Administrators</h3>
+
+
         <div class="swiper mySwiper py-5" style="width: 100%;">
             <div class="swiper-wrapper">
                 <div class="swiper-slide d-flex flex-column gap-5 flex-lg-row">
@@ -253,7 +262,7 @@
             <div class="swiper-button-next"></div>
             <div class="swiper-button-prev"></div>
         </div>
-
+</section>
 
 
     </section>
