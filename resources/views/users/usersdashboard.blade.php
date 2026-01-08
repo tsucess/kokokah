@@ -163,7 +163,7 @@ font-size: 12px;
             </div>
 
         </div>
-    </div> --}} 
+    </div> --}}
 
  <!-- Header -->
   <div class="header-section position-relative container-fluid">
@@ -284,7 +284,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Load user data
     const user = AuthApiClient.getUser();
     if (user) {
-        document.getElementById('userGreeting').textContent = `Hello ${user.first_name} 👋`;
+        document.getElementById('userGreeting').textContent = `Hello ${user.first_name[0].toUpperCase() + user.first_name.slice(1)} 👋`;
     }
 
     // Load user's enrolled courses

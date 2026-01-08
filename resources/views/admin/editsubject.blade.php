@@ -897,6 +897,11 @@
             color: #004a53;
             font-size: 14px;
         }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #999;
+        }
     </style>
 
     <main>
