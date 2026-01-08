@@ -43,6 +43,7 @@ class VerificationCodeNotification extends Notification implements ShouldQueue
 
         return (new MailMessage)
             ->subject('Email Verification Code - Kokokah LMS')
+            ->logo('https://kokokah.com/images/Kokokah_Logo.png')
             ->greeting('Hello ' . $notifiable->first_name . '!')
             ->line('Your email verification code is:')
             ->line('')

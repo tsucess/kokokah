@@ -171,7 +171,7 @@
           instructors.forEach((instructor, index) => {
             const profilePhoto = instructor.profile_photo
               ? `storage/${instructor.profile_photo}`
-              : 'images/winner-round.png';
+              : 'images/default-avatar.png';
 
             const row = `
               <tr style="border-bottom: 1px solid #e8e8e8;">

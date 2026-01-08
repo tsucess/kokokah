@@ -8,7 +8,7 @@
                 <div>
                     <h1 class="fw-bold mb-2"
                         style="font-size: 1.2rem; color: #004A53; font-family: 'Fredoka One', sans-serif;">Welcome Back
-                        Samuel(Admin)</h1>
+                        <span id="welcomeUserName">Admin</span></h1>
                     <p class="text-muted" style="font-size: 0.95rem;">Here overview of your</p>
                 </div>
             </div>
@@ -46,12 +46,10 @@
 
                             <!-- Filter Dropdown -->
                             <select class="custom-select" id="filterSelect">
-                                <option value="" style="">All Classes</option>
-                                <option value="course">All Courses</option>
-                                <option value="category">All Categories</option>
-                                <option value="role-student">Students</option>
-                                <option value="role-instructor">Instructors</option>
-                                <option value="role-admin">Admins</option>
+                                <option value="role-all">All Transaction</option>
+                                <option value="role-pending">Pending</option>
+                                <option value="role-completed">Completed</option>
+                                <option value="role-failed">Failed</option>
                             </select>
 
 
@@ -123,6 +121,8 @@ const token = localStorage.getItem('auth_token');
         let currentFilter = '';
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Load and display user name in welcome message
+            loadWelcomeMessage();
             loadTransactions(1);
 
             document.getElementById('searchInput').addEventListener('input', function(e) {
@@ -137,6 +137,20 @@ const token = localStorage.getItem('auth_token');
         });
 
 
+
+        function loadWelcomeMessage() {
+            try {
+                const userStr = localStorage.getItem('auth_user');
+                if (userStr) {
+                    const user = JSON.parse(userStr);
+                    const userName = user.name || user.first_name || 'Admin';
+                    const userRole = user.role ? `(${user.role.charAt(0).toUpperCase() + user.role.slice(1)})` : '(Admin)';
+                    document.getElementById('welcomeUserName').textContent = `${userName} ${userRole}`;
+                }
+            } catch (error) {
+                console.error('Error loading welcome message:', error);
+            }
+        }
 
         async function loadTransactions(page = 1) {
             try {
@@ -183,7 +197,7 @@ const token = localStorage.getItem('auth_token');
                 <td style="padding: 1rem; color: #666; font-size:14px;">0${index + 1}</td>
                 <td style="padding: 1rem; font-size:14px;">
                   <div class="d-flex align-items-center">
-                    <img src="images/winner-round.png" class="rounded-circle me-3" width="32" height="32" style="object-fit: cover; background: #f0f0f0;">
+                    <img src="images/default-avatar.png" class="rounded-circle me-3" width="32" height="32" style="object-fit: cover; background: #f0f0f0;">
                     <span style="color: #333; font-weight: 500;">${transaction.user_name || 'N/A'}</span>
                   </div>
                 </td>

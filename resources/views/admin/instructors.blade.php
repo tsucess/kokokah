@@ -6,11 +6,7 @@
             <!-- Header Section -->
             <div class="d-flex justify-content-between align-items-start mb-4">
                 <div>
-                    <h1 class="fw-bold mb-2">Welcome Back <span class="first_name">Samuel</span><span class="role">
-                            @if (auth()->check())
-                                ({{ ucfirst(auth()->user()->role) }})
-                            @endif
-                        </span></h1>
+                    <h1 class="fw-bold mb-2">Welcome Back <span id="welcomeUserName" style="text-transform: capitalize">Admin</span></h1>
 
                     <p class="text-muted" style="font-size: 0.95rem;">Here overview of your</p>
                 </div>
@@ -123,6 +119,7 @@
 
         // Load users on page load
         document.addEventListener('DOMContentLoaded', function() {
+            loadWelcomeMessage();
             loadUsers(1);
 
             // Add event listeners for search and filter
@@ -132,6 +129,21 @@
             });
 
         });
+
+        // Load and display user name in welcome message
+        function loadWelcomeMessage() {
+            try {
+                const userStr = localStorage.getItem('auth_user');
+                if (userStr) {
+                    const user = JSON.parse(userStr);
+                    const userName = user.name || user.first_name || 'Admin';
+                    const userRole = user.role ? `(${user.role.charAt(0).toUpperCase() + user.role.slice(1)})` : '(Admin)';
+                    document.getElementById('welcomeUserName').textContent = `${userName} ${userRole}`;
+                }
+            } catch (error) {
+                console.error('Error loading welcome message:', error);
+            }
+        }
 
         // Load users from API
         async function loadUsers(page = 1) {
@@ -185,7 +197,7 @@
                         users.forEach((user, index) => {
                             const profilePhoto = user.profile_photo ?
                                 `storage/${user.profile_photo}` :
-                                'images/winner-round.png';
+                                'images/default-avatar.png';
 
                             const roleColor = user.role === 'admin' ? '#6c757d' :
                                 user.role === 'instructor' ? '#004A53' : '#FDAF22';
@@ -199,7 +211,7 @@
                     <span style="color: #333; font-weight: 500;" class='text-nowrap'>${user.first_name} ${user.last_name}</span>
                   </div>
                 </td>
-                <td style="padding: 1rem; color: #666; font-size:14px;">KOKOKAH-${String(user.id).padStart(4, '0')}</td>
+                <td style="padding: 1rem; color: #666; font-size:14px;" class='text-nowrap'>KOKOKAH-${String(user.id).padStart(4, '0')}</td>
                 <td style="padding: 1rem; color: #666; font-size:14px;">${user.email}</td>
                 <td style="padding: 1rem; font-size:14px;"><span style="color: #666;">${user.gender || 'N/A'}</span></td>
                 <td style="padding: 1rem; color: #666; font-size:14px;" class='text-nowrap' >${user.contact || 'N/A'}</td>

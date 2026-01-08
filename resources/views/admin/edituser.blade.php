@@ -545,7 +545,7 @@
                         <div class="card-body p-4">
                             <div class="text-center">
                                 <div class="mb-4">
-                                    <img id="profilePreview" src="images/winner-round.png" alt="Profile"
+                                    <img id="profilePreview" src="images/default-avatar.png" alt="Profile"
                                         class="rounded-4"
                                         style="width: 100%; max-width: 280px; height: auto; object-fit: cover;">
                                 </div>
@@ -1096,7 +1096,7 @@
         if (resetBtn) {
             resetBtn.addEventListener('click', () => {
                 createUserForm.reset();
-                profilePreview.src = 'images/winner-round.png';
+                profilePreview.src = 'images/default-avatar.png';
             });
         }
 

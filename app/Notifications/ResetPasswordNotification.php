@@ -41,8 +41,8 @@ class ResetPasswordNotification extends Notification
         //     ->action('Notification Action', url('/'))
         //     ->line('Thank you for using our application!');
 
-        $frontend = config('app.frontend_url') ?? config('app.url');
-        $resetUrl = rtrim($frontend, '/') . '/reset-password?token=' . $this->token . '&email=' . urlencode($notifiable->email);
+        $appUrl = config('app.url');
+        $resetUrl = rtrim($appUrl, '/') . '/reset-password?token=' . $this->token . '&email=' . urlencode($notifiable->email);
 
         return (new MailMessage)
             ->subject('Reset your Kokokah password')

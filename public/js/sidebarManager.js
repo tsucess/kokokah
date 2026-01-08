@@ -174,7 +174,7 @@ class SidebarManager {
       </a>
       <div class="collapse ps-5" id="communicationMenu">
         <div class="d-flex flex-column gap-2">
-          <a class="nav-item-link d-block nav-child" href="/announcement">Announcements & Notifications</a>
+          <a class="nav-item-link d-block nav-child" href="/announcement">Announcements</a>
           <a class="nav-item-link d-block nav-child" href="/feedback" title="View and manage user feedback">Feedback</a>
         </div>
       </div>

@@ -9,7 +9,7 @@
 
     <title>Kokokah</title>
 
-    <link rel="icon" type="image/x-icon" href="images/kokokah_favicon.png" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/kokokah_favicon.png') }}" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
