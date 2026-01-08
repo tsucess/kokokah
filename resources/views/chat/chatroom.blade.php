@@ -729,6 +729,14 @@
             console.log('Rendered HTML length:', html.length);
             document.getElementById('chat-messages').innerHTML = html;
             console.log('=== RENDER MESSAGES COMPLETE ===');
+
+            // Auto-scroll to bottom to show latest messages
+            const chatHistory = document.getElementById('chat-history');
+            if (chatHistory) {
+                setTimeout(() => {
+                    chatHistory.scrollTop = chatHistory.scrollHeight;
+                }, 0);
+            }
         }
 
         // Render a single message

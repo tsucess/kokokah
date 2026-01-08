@@ -1175,6 +1175,18 @@ main .container {
     padding: 0rem 0px 1.5rem;
     overflow-y: auto;
     /* Allows scrolling of messages */
+    max-height: calc(100vh - 150px);
+    /* Increased height to show more messages */
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .chat-message {
