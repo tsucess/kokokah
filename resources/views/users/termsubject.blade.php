@@ -305,7 +305,7 @@ let currentCourseId = null;
 
                 topicEl.innerHTML = `
                     <div class="d-flex justify-content-between align-items-start mb-2">
-                        <div>
+                        <div class='w-100'>
                             <h5 class="${index > 0 ? 'text-dark' : ''}">Topic ${index + 1}. ${topic.title}
                             </h5>
                             <p class="${index > 0 ? 'text-dark' : ''}">

@@ -247,6 +247,10 @@
             display: none;
         }
 
+        .ql-editor{
+            height: 200px;
+        }
+
         /* ===== Mobile Responsiveness ===== */
         @media (max-width: 768px) {
             .subject-header {

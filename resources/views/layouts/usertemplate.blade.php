@@ -92,7 +92,7 @@
 
             <!-- communication dropdowns -->
             <div class="collapse ps-4" id="communication">
-                <a class="nav-item-link d-block" href="/userannouncement">Announcements</a>
+                <a class="nav-item-link d-block" href="/userannouncement">Notifications</a>
                 <a class="nav-item-link d-block" href="/userfeedback">Feedback / Surveys</a>
             </div>
 
@@ -103,15 +103,15 @@
 
         <div class="sidebar-footer mt-auto p-3">
             <a class="nav-item-link" href="#"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
-            <div class="profile mt-3" id="profileSection">
-                <img class="avatar" id="profileImage" src="{{ asset('images/default-avatar.png') }}" alt="user"
+            <div class="profile mt-5" id="profileSection">
+                <img class="avatar" id="profileImage" src="{{ asset('images/winner-round.png') }}" alt="user"
                     style="cursor: pointer; width: 40px; height: 40px; object-fit: cover; border-radius: 50%; border: 2px solid #ff00;"
                     data-bs-toggle="tooltip" data-bs-placement="top" title="Profile">
-                <div class="d-flex justify-content-between mt-4 p-2 w-100 align-items-center">
+                <div class="d-flex justify-content-between p-2 w-100 align-items-center">
                     <div id="profileInfo" style="cursor: pointer;" data-bs-toggle="tooltip" data-bs-placement="top"
                         title="Profile" class="w-50">
-                        <h6 class="fw-semibold text-truncate" id="userName">Culacino_</h6>
-                        <p class="small text-muted" id="userRole">UX Designer</p>
+                        <h6 class="fw-semibold text-truncate" id="userName" style="text-transform: capitalize">Culacino_</h6>
+                        <p class="small text-muted" id="userRole" style="text-transform: capitalize">UX Designer</p>
                     </div>
                     <div class="logout">
                         <a href="#" id="logoutBtn" title="Logout">

@@ -69,6 +69,10 @@
             flex-wrap: wrap;
         }
 
+        .ql-editor {
+            height: 200px;
+        }
+
         .coursebtn {
             display: flex;
             justify-content: center;
@@ -888,9 +892,15 @@
         .select-quiz-children {
             display: none;
         }
-        .lesson-label{
+
+        .lesson-label {
             color: #004a53;
-    font-size: 14px;
+            font-size: 14px;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #999;
         }
     </style>
 
@@ -1364,9 +1374,9 @@
         </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
-        <!-- API Clients -->
+    <!-- API Clients -->
     <script>
-// Get course ID from URL
+        // Get course ID from URL
         const courseId = '{{ $courseId }}';
 
         const quillCourseDescription = new Quill('#courseDescription', {
@@ -2710,7 +2720,7 @@
             try {
                 // Use noembed.com service which provides duration for YouTube videos
                 const response = await fetch(
-                `https://noembed.com/embed?url=https://www.youtube.com/watch?v=${videoId}`);
+                    `https://noembed.com/embed?url=https://www.youtube.com/watch?v=${videoId}`);
                 if (response.ok) {
                     const data = await response.json();
                     console.log('YouTube noembed data:', data);
@@ -3488,5 +3498,6 @@
                 console.error('Error deleting quiz:', error);
                 ToastNotification.error('Error', 'Failed to delete quiz');
             }
-        };    </script>
+        };
+    </script>
 @endsection

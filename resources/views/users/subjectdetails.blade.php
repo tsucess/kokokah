@@ -464,7 +464,7 @@
         function updateLessonUI() {
             // Update title
             document.getElementById('lessonTitle').textContent =
-                `${currentTopic?.title || 'Topic'}: ${currentLesson.title}`;
+                `${currentTopic?.title[0].toUpperCase()+ currentTopic?.title.slice(1)|| 'Topic'}: ${currentLesson.title[0].toUpperCase()+ currentTopic?.title.slice(1)}`;
 
             // Clear and update video
             const videoContainer = document.getElementById('videoContainer');
