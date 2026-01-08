@@ -113,12 +113,12 @@ class ReviewController extends Controller
                 'user_id' => $user->id,
                 'rating' => $request->rating,
                 'comment' => $request->comment,
-                'status' => 'pending' // Reviews need approval
+                'status' => 'approved' // Auto-approve reviews
             ]);
 
             return response()->json([
                 'success' => true,
-                'message' => 'Review submitted successfully and is pending approval',
+                'message' => 'Review submitted successfully',
                 'data' => $review
             ], 201);
         } catch (\Exception $e) {
@@ -202,11 +202,9 @@ class ReviewController extends Controller
             }
 
             $updateData = $request->only(['rating', 'comment']);
-            
-            // If review was approved and is being updated, set back to pending
-            if ($review->status === 'approved') {
-                $updateData['status'] = 'pending';
-            }
+
+            // Keep review approved when updated (no approval needed)
+            // $updateData['status'] remains unchanged
 
             $review->update($updateData);
 
@@ -491,22 +489,45 @@ class ReviewController extends Controller
      */
     public function userReviews(Request $request)
     {
-        $user = Auth::user();
+        try {
+            $user = Auth::user();
 
-        $query = CourseReview::with(['course.category'])
-                             ->where('user_id', $user->id);
+            if (!$user) {
+                \Log::warning('userReviews: User not authenticated');
+                return response()->json([
+                    'success' => false,
+                    'message' => 'User not authenticated'
+                ], 401);
+            }
 
-        // Filter by course_id if provided
-        if ($request->has('course_id')) {
-            $query->where('course_id', $request->course_id);
+            \Log::info('userReviews: Fetching reviews for user', ['user_id' => $user->id, 'course_id' => $request->course_id]);
+
+            $query = CourseReview::where('user_id', $user->id);
+
+            // Filter by course_id if provided
+            if ($request->has('course_id')) {
+                $query->where('course_id', $request->course_id);
+            }
+
+            $reviews = $query->orderBy('created_at', 'desc')->get();
+
+            \Log::info('userReviews: Found reviews', ['count' => count($reviews)]);
+
+            return response()->json([
+                'success' => true,
+                'data' => $reviews
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('userReviews: Exception occurred', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch user reviews: ' . $e->getMessage()
+            ], 500);
         }
-
-        $reviews = $query->orderBy('created_at', 'desc')->get();
-
-        return response()->json([
-            'success' => true,
-            'data' => $reviews
-        ]);
     }
 
     /**

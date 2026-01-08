@@ -103,7 +103,7 @@
 
                             <!-- Reviews List -->
                             <div id="reviewsContainer" class="d-flex flex-column gap-3">
-                                <p class="text-muted text-center">Loading reviews...</p>
+                                {{-- <p class="text-muted text-center">Loading reviews...</p> --}}
                             </div>
                         </div>
                     </div>
@@ -131,6 +131,8 @@
                         .rating-selector {
                             display: flex;
                             gap: 12px;
+                            flex-direction: row;
+                            justify-content: flex-start;
                         }
 
                         .rating-input {
@@ -142,11 +144,6 @@
                             font-size: 24px;
                             color: #e5e6e7;
                             transition: color 0.2s;
-                        }
-
-                        .rating-input:checked ~ .rating-label,
-                        .rating-label:hover {
-                            color: #fdaf22;
                         }
 
                         .form-control {
@@ -338,6 +335,28 @@ let currentCourseId = null;
         let allTerms = [];
         let allTopics = [];
         let topicsByTerm = {};
+
+        /**
+         * Show success notification
+         */
+        window.showSuccess = function(message) {
+            if (window.ToastNotification) {
+                window.ToastNotification.success('Success', message);
+            } else {
+                alert('Success: ' + message);
+            }
+        };
+
+        /**
+         * Show error notification
+         */
+        window.showError = function(message) {
+            if (window.ToastNotification) {
+                window.ToastNotification.error('Error', message);
+            } else {
+                alert('Error: ' + message);
+            }
+        };
 
         // Initialize page
         document.addEventListener('DOMContentLoaded', async () => {
@@ -728,8 +747,32 @@ let currentCourseId = null;
          */
         async function checkUserReview() {
             try {
+                const token = localStorage.getItem('auth_token');
                 const container = document.getElementById('reviewFormContainer');
-                const response = await fetch(`/api/reviews/my-reviews?course_id=${currentCourseId}`);
+
+                // If no token, don't make the API call
+                if (!token) {
+                    console.warn('No auth token found, skipping user review check');
+                    loadReviewForm();
+                    return;
+                }
+
+                const response = await fetch(`/api/reviews/my-reviews?course_id=${currentCourseId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                // Handle non-200 responses
+                if (!response.ok) {
+                    console.warn('Failed to fetch user reviews:', response.status, response.statusText);
+                    loadReviewForm();
+                    return;
+                }
+
                 const result = await response.json();
 
                 if (result.success && result.data && result.data.length > 0) {
@@ -754,7 +797,7 @@ let currentCourseId = null;
             const container = document.getElementById('reviewFormContainer');
             container.innerHTML = `
                 <div class="review-form-container">
-                    <form id="reviewForm" class="d-flex flex-column gap-3">
+                    <form id="reviewForm" class="d-flex flex-column gap-3" data-ajax data-no-loader>
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                         <!-- Rating Selection -->
@@ -796,13 +839,51 @@ let currentCourseId = null;
                 </div>
             `;
 
-            // Attach form submission handler
+            // Attach form submission handler and rating selection handler
             setTimeout(() => {
                 const form = document.getElementById('reviewForm');
                 if (form) {
                     form.addEventListener('submit', handleReviewFormSubmit);
+
+                    // Add rating selection handlers
+                    const ratingInputs = form.querySelectorAll('.rating-input');
+                    const ratingLabels = form.querySelectorAll('.rating-label');
+
+                    ratingLabels.forEach((label, index) => {
+                        label.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            const rating = index + 1;
+                            ratingInputs[index].checked = true;
+                            updateRatingVisuals(ratingInputs, rating);
+                        });
+
+                        label.addEventListener('mouseenter', () => {
+                            const rating = index + 1;
+                            updateRatingVisuals(ratingInputs, rating, true);
+                        });
+                    });
+
+                    form.addEventListener('mouseleave', () => {
+                        const checkedInput = form.querySelector('.rating-input:checked');
+                        if (checkedInput) {
+                            const rating = Array.from(ratingInputs).indexOf(checkedInput) + 1;
+                            updateRatingVisuals(ratingInputs, rating);
+                        } else {
+                            ratingLabels.forEach(label => label.style.color = '#e5e6e7');
+                        }
+                    });
                 }
             }, 100);
+        }
+
+        /**
+         * Update rating visuals
+         */
+        function updateRatingVisuals(ratingInputs, rating, isHover = false) {
+            const ratingLabels = Array.from(ratingInputs).map(input => input.nextElementSibling);
+            ratingLabels.forEach((label, index) => {
+                label.style.color = index < rating ? '#fdaf22' : '#e5e6e7';
+            });
         }
 
         /**
@@ -823,7 +904,7 @@ let currentCourseId = null;
                         <div class="review-card-header">
                             <div class="review-card-user">
                                 <span class="review-card-name">Your Review</span>
-                                <span class="status-badge ${statusClass}">${statusText}</span>
+                              
                             </div>
                             <p class="review-card-date">${formatDate(review.created_at)}</p>
                         </div>
@@ -859,19 +940,27 @@ let currentCourseId = null;
                 comment: formData.get('comment')
             };
 
+            const token = localStorage.getItem('auth_token');
+
             try {
                 const response = await fetch(`/api/courses/${courseId}/reviews`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('[name="_token"]').value
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/json'
                     },
                     body: JSON.stringify(data)
                 });
 
                 const result = await response.json();
                 if (result.success) {
-                    showSuccess('Review submitted successfully! It will be reviewed before appearing.');
+                    showSuccess('Review submitted successfully!');
+
+                    // Force hide the loader since this is an AJAX request
+                    if (window.kokokahLoader) {
+                        window.kokokahLoader.forceHide();
+                    }
 
                     // Reload the review form/display after a short delay
                     setTimeout(() => {
@@ -882,12 +971,22 @@ let currentCourseId = null;
                     showError(result.message || 'Failed to submit review');
                     submitBtn.disabled = false;
                     submitBtn.textContent = originalText;
+
+                    // Force hide the loader on error
+                    if (window.kokokahLoader) {
+                        window.kokokahLoader.forceHide();
+                    }
                 }
             } catch (error) {
                 console.error('Error:', error);
                 showError('Failed to submit review');
                 submitBtn.disabled = false;
                 submitBtn.textContent = originalText;
+
+                // Force hide the loader on error
+                if (window.kokokahLoader) {
+                    window.kokokahLoader.forceHide();
+                }
             }
         }
 
@@ -901,26 +1000,55 @@ let currentCourseId = null;
                     return;
                 }
 
+                const token = localStorage.getItem('auth_token');
+                const headers = {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                };
+
+                // Only add Authorization header if token exists
+                if (token) {
+                    headers['Authorization'] = `Bearer ${token}`;
+                }
+
                 // Fetch reviews
-                const response = await fetch(`/api/courses/${currentCourseId}/reviews`);
+                const response = await fetch(`/api/courses/${currentCourseId}/reviews`, {
+                    method: 'GET',
+                    headers: headers
+                });
+
+                // Handle non-200 responses
+                if (!response.ok) {
+                    console.warn('Failed to load reviews:', response.status, response.statusText);
+                    // Still try to display empty reviews
+                    updateRatingDisplay({});
+                    // displayReviews([]);
+                    return;
+                }
+
                 const result = await response.json();
 
                 if (!result.success) {
                     console.error('Failed to load reviews:', result.message);
+                    updateRatingDisplay({});
+                    // displayReviews([]);
                     return;
                 }
 
                 const data = result.data;
                 const reviews = data.reviews.data || [];
-                const stats = data.stats || {};
+                const stats = data.statistics || {};
 
                 // Update rating display
                 updateRatingDisplay(stats);
 
                 // Display reviews
-                displayReviews(reviews);
+                // displayReviews(reviews);
             } catch (error) {
                 console.error('Error loading reviews:', error);
+                // Show empty state on error
+                updateRatingDisplay({});
+                // displayReviews([]);
             }
         }
 
@@ -928,7 +1056,7 @@ let currentCourseId = null;
          * Update rating statistics display
          */
         function updateRatingDisplay(stats) {
-            const avgRating = stats.average_rating || 0;
+            const avgRating = stats.average_rating !== null && stats.average_rating !== undefined ? parseFloat(stats.average_rating) : 0;
             const totalReviews = stats.total_reviews || 0;
 
             // Update average rating
@@ -957,13 +1085,17 @@ let currentCourseId = null;
                 return;
             }
 
-            container.innerHTML = reviews.map(review => `
+            container.innerHTML = reviews.map(review => {
+                const userName = review.user?.name || 'Anonymous';
+                const userAvatar = review.user?.avatar || 'https://via.placeholder.com/32';
+
+                return `
                 <article class="review-card">
                     <div class="review-card-header">
                         <div class="review-card-user">
-                            <img src="${review.user.avatar || 'https://via.placeholder.com/32'}" alt="${escapeHtml(review.user.name)}" class="review-card-avatar">
-                            <span class="review-card-name">${escapeHtml(review.user.name)}</span>
-                            ${review.status ? `<span class="status-badge status-${review.status}">${review.status.charAt(0).toUpperCase() + review.status.slice(1)}</span>` : ''}
+                            <img src="${userAvatar}" alt="${escapeHtml(userName)}" class="review-card-avatar">
+                            <span class="review-card-name">${escapeHtml(userName)}</span>
+
                         </div>
                         <p class="review-card-date">${formatDate(review.created_at)}</p>
                     </div>
@@ -997,13 +1129,17 @@ let currentCourseId = null;
                         </button>
                     </div>
                 </article>
-            `).join('');
+            `;
+            }).join('');
         }
 
         /**
          * Escape HTML to prevent XSS
          */
         function escapeHtml(text) {
+            if (!text || typeof text !== 'string') {
+                return '';
+            }
             const map = {
                 '&': '&amp;',
                 '<': '&lt;',
@@ -1039,11 +1175,14 @@ let currentCourseId = null;
          */
         async function markReviewHelpful(reviewId) {
             try {
+                const token = localStorage.getItem('auth_token');
+
                 const response = await fetch(`/api/reviews/${reviewId}/helpful`, {
                     method: 'POST',
                     headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').value,
-                        'Content-Type': 'application/json'
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
                     }
                 });
 

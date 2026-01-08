@@ -82,6 +82,18 @@ class KokokahLoader {
     window.addEventListener('popstate', () => {
       this.hide();
     });
+
+    // Auto-hide loader after 10 seconds if it's still visible (safety mechanism)
+    setInterval(() => {
+      if (this.isVisible) {
+        const elapsedTime = Date.now() - this.pageLoadStartTime;
+        // If loader has been visible for more than 10 seconds, force hide it
+        if (elapsedTime > 10000) {
+          console.warn('Loader visible for too long, force hiding');
+          this.forceHide();
+        }
+      }
+    }, 5000);
   }
 
   /**

@@ -1,6 +1,6 @@
 <div class="review-form-container">
     <h3 class="review-form-title">Share Your Review</h3>
-    <form id="reviewForm" class="d-flex flex-column gap-3">
+    <form id="reviewForm" class="d-flex flex-column gap-3" data-ajax data-no-loader>
         @csrf
         
         <!-- Rating Selection -->
@@ -224,6 +224,11 @@
                 showSuccess('Review submitted successfully! It will be reviewed before appearing.');
                 e.target.reset();
 
+                // Force hide the loader since this is an AJAX request
+                if (window.kokokahLoader) {
+                    window.kokokahLoader.forceHide();
+                }
+
                 // Dispatch custom event to reload reviews
                 window.dispatchEvent(new Event('reviewSubmitted'));
 
@@ -235,6 +240,11 @@
                 }, 1000);
             } else {
                 showError(result.message || 'Failed to submit review');
+
+                // Force hide the loader on error
+                if (window.kokokahLoader) {
+                    window.kokokahLoader.forceHide();
+                }
             }
         } catch (error) {
             console.error('Error:', error);
