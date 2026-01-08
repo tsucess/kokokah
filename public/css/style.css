@@ -402,10 +402,10 @@ a.nav-link.active {
     padding: 50px;
 }
 
-span {
+/* span {
     font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
         "Lucida Sans", Arial, sans-serif;
-}
+} */
 
 /* Media queries moved to responsiveness.css */
 
@@ -1136,7 +1136,7 @@ footer p {
 
 .bgLms {
     background: url("../images/bg-lms.png");
-   
+
 }
 
 .hero-section-orange {
@@ -2164,7 +2164,9 @@ div.contact-container a {
 .paper-plane{
     position: absolute;
     bottom: 20px;
-    left: 45%;
+    left: 40%;
+    width:150px;
+    height:150px;
 }
 
 

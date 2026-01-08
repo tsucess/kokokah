@@ -1,17 +1,25 @@
 @extends('layouts.template')
 
 @section('content')
+    <style>
+        .impact {
+            font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+        }
+    </style>
     <div class = "container-fluid py-5 banner" style="background-color : #FDAF22;  position:relative;">
         <div class="row align-items-lg-center">
             <div class="col-12 col-lg-6 mb-5 mb-lg-0">
-                <h2 class = "hero_header  typewriter">
+                <div class="ps-lg-4">
+                    <h2 class = "hero_header typewriter impact">
                     Kokokah is Africa’s Leading Digital Learning and Management Platform for Secondary Schools
                 </h2>
+                </div>
+
             </div>
             <div class="col-12 col-lg-6 px-lg-0"><img src="./images/about-hero-img.jpg" alt=""
                     class="w-100 img-fluid about-hero-img " style="max-height: 400px"></div>
         </div>
-        <img src="./images/paper-plane.png" alt="" class="paper-plane" style="width:80px; height:80px;">
+        <img src="./images/paper-plane.png" alt="" class="paper-plane">
     </div>
 
     <div class = "container-fluid px-3 px-lg-5 d-flex align-items-center">
@@ -23,7 +31,7 @@
 
 
             <div class = "col-12 col-md-6 col-lg-6 d-flex flex-column gap-3 justify-content-center fade-section">
-                <h3 style="color:#004A53;">
+                <h3 style="color:#004A53;" class="impact">
                     Kokokah for All.
                 </h3>
                 <p>
@@ -47,7 +55,7 @@
         <div class = "row">
 
             <div class = "col-12 col-md-6 col-lg-6 my-auto fade-section-left d-flex flex-column gap-3">
-                <h4 class = "" style="color:#004A53;">
+                <h4 class = "impact" style="color:#004A53;">
                     Our Mission & Vision
                 </h4>
 
@@ -97,7 +105,7 @@
             <div class = "row mt-4 ">
 
                 <div class ="mb-5 justify-content-center">
-                    <h3 class = "fw-bold text-center text-white section-title">Our Story</h3>
+                    <h3 class = "fw-bold text-center text-white section-title impact">Our Story</h3>
                 </div>
             </div>
             <div class="row">
@@ -153,7 +161,7 @@
 
 
         <div class="d-flex flex-column justify-content-center gap-3">
-            <h3 class = "text-center section-title" style="color:#004A53;">Our Core Values</h3>
+            <h3 class = "text-center section-title impact" style="color:#004A53;">Our Core Values</h3>
             <p class = "text-center ">
                 Learning should be accessible, engaging, and
                 empowering for every student. These values guide
@@ -399,10 +407,22 @@
                 const span = document.createElement("span");
                 span.textContent = letter;
                 span.style.opacity = 0; // hide initially
+
                 el.appendChild(span);
             });
 
             const spans = el.querySelectorAll("span");
+
+            // spans.forEach(span => {
+            //     span.style.setProperty(
+            //         "font-family",
+            //         'Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif',
+            //         "important"
+            //     );
+            // });
+            spans.forEach(span => {
+                span.style.fontFamily = "inherit";
+            })
 
             gsap.fromTo(spans, {
                 opacity: 0

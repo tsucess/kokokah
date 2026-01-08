@@ -1,11 +1,16 @@
 @extends('layouts.template')
 
 @section('content')
+<style>
+        .impact {
+            font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+        }
+    </style>
     <!-- Hero Section - Yellow Background -->
     <div class="container-fluid bgLms px-3 px-lg-5">
         <div class="row align-items-center">
             <div class="col-12 col-md-6 col-lg-6 d-flex flex-column gap-3">
-                <h1 class="fw-bold hero-title typewriter">
+                <h1 class="fw-bold hero-title typewriter impact">
                     Your Complete Ecosystem for Learning and Growth
                 </h1>
                 <p>
@@ -28,7 +33,7 @@
                 <img src="images/llm-hero-img.jpg" class="img-fluid" alt="Kokokah LMS" style="max-width:752px; width:100%; height:382px; border-radius : 15px; object-fit:cover;">
             </div>
             <div class="col-12 col-md-6 col-lg-6 d-flex flex-column gap-3 fade-section">
-                <h2 class="fw-bold section-heading">
+                <h2 class="fw-bold section-heading impact">
                     Kokokah LMS
                 </h2>
                 <p class="hero-subtitle">
@@ -47,7 +52,7 @@
     <div class="container-fluid section-light-gray section-py px-3 px-lg-5">
 
         <div class="text-center mb-4 mb-md-5">
-            <h2 class="fw-bold section-heading section-title">
+            <h2 class="fw-bold section-heading section-title impact">
                 Achievements/Statistics Section
             </h2>
         </div>
@@ -120,7 +125,7 @@
             style="width:100px; height:100px; position:absolute; left:30px; top:20px; " />
         <div class="container-fluid">
             <div class="text-center mb-4 mb-md-5">
-                <h4 class="fw-bold text-white section-title">
+                <h4 class="fw-bold text-white section-title impact">
                     Our Features
                 </h4>
             </div>
@@ -268,7 +273,7 @@
                     <img src="images/koodies.png" class="img-fluid slide-up-image" alt="Why Choose Kokokah">
                 </div>
                 <div class="col-lg-6 ps-lg-4 ps-0">
-                    <h2 class="fw-bold mb-4 text-center section-heading section-title">
+                    <h2 class="fw-bold mb-4 text-center section-heading section-title impact">
                         Why Choose Kokokah LMS
                     </h2>
                     <div class="row g-3 reasons">

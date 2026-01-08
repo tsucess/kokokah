@@ -1,9 +1,12 @@
 @extends('layouts.template')
 
 @section('content')
+<style>
+    .impact{
+        font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    }
+</style>
     {{-- mascot  --}}
-
-
     <img src="./images/book-icon.png" class="kokokah-logo" />
 
     <!-- Modal Section -->
@@ -447,7 +450,7 @@
                 {{-- <div class="hero-title-container">
   <span class="hero-title" id="typing-text"></span>
 </div> --}}
-                <h1 class="hero_header">Welcome!</h1>
+                <h1 class="hero_header impact">Welcome!</h1>
                 <p class="mb-4 hero-subtitle">
                     LOW DATA USAGE + OFFLINE ACCESS + SCHOOL MANAGEMENT SYSTEM
                 </p>
@@ -475,7 +478,7 @@
                         style="max-width:752px; width:100%; height:382px; border-radius : 15px; object-fit:cover;">
                 </div>
                 <div class="col-12 col-md-6 col-lg-6 ps-md-4 fade-section">
-                    <h2 class="fw-bold mb-4 section-heading text-white">
+                    <h2 class="fw-bold mb-4 section-heading text-white impact">
                         Kokokah for All
                     </h2>
                     <p class="mb-4 hero-subtitle text-white">
@@ -494,7 +497,7 @@
     <div class="container-fluid section-light-gray section-py">
         <div class="container">
             <div class="text-center mb-4 mb-md-5">
-                <h2 class="fw-bold mb-3 section-heading section-title">
+                <h2 class="fw-bold mb-3 section-heading section-title impact">
                     Why Kokokah Is the Best
                 </h2>
                 <p class="section-description">
@@ -679,7 +682,7 @@
                             style="border:3px solid #F56824; border-radius:30px;">
                     </div>
                     <div class="col-12 col-lg-7 d-flex flex-column gap-3 justify-content-lg-center">
-                        <h4 class="text-white">School Management System (SMS)</h4>
+                        <h4 class="text-white impact">School Management System (SMS)</h4>
                         <p class = " text-white">
                             Simplify school administration with fee
                             tracking, digital report cards, attendance, and student
@@ -726,7 +729,7 @@
                                 class="object-cover" />
                         </div>
 
-                        <h4 class="text-white">Learning Management System</h4>
+                        <h4 class="text-white impact">Learning Management System</h4>
 
                         <p class="text-white">
                             Your all-in-one digital classroom — structured lessons, AI-powered
@@ -783,7 +786,7 @@
                     <div class="col-12 col-lg-7 d-flex flex-column gap-3 justify-content-lg-center ">
 
 
-                        <h4 class="text-white">
+                        <h4 class="text-white impact">
                             The Marketplace
                         </h4>
                         <p class="text-white">
@@ -865,7 +868,7 @@
                 <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section-left py-lg-3">
 
                     <div class="col-12 col-lg-7 d-flex flex-column gap-3 justify-content-lg-center mb-5 mb-lg-0">
-                        <h4 class="text-white">Kudikah</h4>
+                        <h4 class="text-white impact">Kudikah</h4>
                         <p class="text-white">
                             Get hands-on STEM bootcamps, summer schools,
                             and practical learning experiences to prepare
@@ -948,7 +951,7 @@
                     </div>
 
                     <div class="col-12 col-lg-7 d-flex flex-column gap-3 justify-content-lg-center">
-                        <h4>
+                        <h4 class="impact text-white">
                         AI Chatbot
                     </h4>
                     <p>
@@ -1007,7 +1010,7 @@
             <div class="col-12 col-lg-6">
                 <div class="content-card rounded-4 p-4 d-flex flex-column gap-3 mb-5 mb-lg-0 slide-up-image"
                      style="background-color:#003E45;">
-                    <h3 class="text-white">Kokoplay</h3>
+                    <h3 class="text-white impact">Kokoplay</h3>
                     <p class="text-white">
                         Kokokah combines School Management, Exam Prep, and a Learning Management System (LMS)—helping schools automate admin tasks, boost student performance, and deliver modern digital learning in one seamless platform. Kokokah combines School Management, Exam Prep, and a Learning Management System (LMS)—helping schools automate admin tasks, boost student performance, and deliver modern digital learning in one seamless platform.
                     </p>
