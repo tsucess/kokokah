@@ -208,7 +208,7 @@
                 <td style="padding: 1rem; font-size:14px;">
                   <div class="d-flex align-items-center">
                     <img src="${profilePhoto}" class="rounded-circle me-3" width="32" height="32" style="object-fit: cover; background: #f0f0f0;">
-                    <span style="color: #333; font-weight: 500;" class='text-nowrap'>${user.first_name} ${user.last_name}</span>
+                    <span style="color: #333; font-weight: 500; text-transform: capitalize;" class='text-nowrap'>${user.first_name} ${user.last_name}</span>
                   </div>
                 </td>
                 <td style="padding: 1rem; color: #666; font-size:14px;" class='text-nowrap'>KOKOKAH-${String(user.id).padStart(4, '0')}</td>

@@ -70,7 +70,7 @@
                         </div>
                     </div>
 
-                    <div class="card shadow-sm border-0">
+                    <div class="card shadow-sm border-0 mb-4">
                         <div class="card-body">
                             <h6 class="fw-bold mb-3">This Subject Includes</h6>
 
@@ -79,6 +79,245 @@
                             </ul>
                         </div>
                     </div>
+
+                    <!-- Course Reviews Section -->
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <h6 class="fw-bold mb-3">Course Reviews</h6>
+
+                            <!-- Review Statistics -->
+                            <div class="d-flex align-items-center gap-3 mb-4">
+                                <div class="d-flex align-items-center gap-2">
+                                    <div id="ratingStars" class="d-flex gap-1">
+                                        <!-- Stars will be populated here -->
+                                    </div>
+                                    <span id="averageRating" class="fw-bold" style="font-size: 18px;">0.0</span>
+                                </div>
+                                <span id="totalReviews" class="text-muted">0 reviews</span>
+                            </div>
+
+                            <!-- Review Form -->
+                            <div id="reviewFormContainer" class="mb-4" data-course-id="{{ request()->query('course_id') }}">
+                                <!-- Will be populated by JavaScript after checking token -->
+                            </div>
+
+                            <!-- Reviews List -->
+                            <div id="reviewsContainer" class="d-flex flex-column gap-3">
+                                <p class="text-muted text-center">Loading reviews...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <style>
+                        /* Review Form Styles */
+                        .review-form-container {
+                            background: #f9f9f9;
+                            padding: 16px;
+                            border-radius: 10px;
+                        }
+
+                        .form-group {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 8px;
+                        }
+
+                        .form-label {
+                            font-weight: 600;
+                            color: #333;
+                            font-size: 14px;
+                        }
+
+                        .rating-selector {
+                            display: flex;
+                            gap: 12px;
+                        }
+
+                        .rating-input {
+                            display: none;
+                        }
+
+                        .rating-label {
+                            cursor: pointer;
+                            font-size: 24px;
+                            color: #e5e6e7;
+                            transition: color 0.2s;
+                        }
+
+                        .rating-input:checked ~ .rating-label,
+                        .rating-label:hover {
+                            color: #fdaf22;
+                        }
+
+                        .form-control {
+                            padding: 10px 12px;
+                            border: 1px solid #ddd;
+                            border-radius: 6px;
+                            font-size: 14px;
+                            font-family: inherit;
+                        }
+
+                        .form-control:focus {
+                            outline: none;
+                            border-color: #004A53;
+                            box-shadow: 0 0 0 3px rgba(0, 74, 83, 0.1);
+                        }
+
+                        .btn {
+                            padding: 10px 16px;
+                            border-radius: 6px;
+                            font-weight: 500;
+                            cursor: pointer;
+                            border: none;
+                            transition: all 0.2s;
+                        }
+
+                        .btn-primary {
+                            background-color: #004A53;
+                            color: white;
+                        }
+
+                        .btn-primary:hover {
+                            background-color: #003a41;
+                        }
+
+                        /* Review Card Styles */
+                        .review-card {
+                            border: 1px solid #CCDBDD;
+                            border-radius: 10px;
+                            padding: 16px;
+                            background-color: #FAFAFA;
+                            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+                        }
+
+                        .review-card-header {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: flex-start;
+                            margin-bottom: 12px;
+                        }
+
+                        .review-card-user {
+                            display: flex;
+                            align-items: center;
+                            gap: 8px;
+                        }
+
+                        .review-card-avatar {
+                            width: 32px;
+                            height: 32px;
+                            border-radius: 50%;
+                            object-fit: cover;
+                        }
+
+                        .review-card-name {
+                            font-size: 14px;
+                            color: #333333;
+                            font-weight: 700;
+                        }
+
+                        .review-card-date {
+                            color: #999999;
+                            font-size: 12px;
+                        }
+
+                        .review-card-title {
+                            margin: 8px 0;
+                            color: #000F11;
+                            font-weight: 600;
+                        }
+
+                        .review-card-comment {
+                            color: #475569;
+                            margin: 8px 0;
+                            line-height: 1.5;
+                            font-size: 14px;
+                        }
+
+                        .review-pros {
+                            margin: 12px 0;
+                            padding: 8px;
+                            background-color: #E8F5E9;
+                            border-radius: 4px;
+                        }
+
+                        .review-pros strong {
+                            color: #2E7D32;
+                            font-size: 14px;
+                        }
+
+                        .review-pros ul {
+                            margin: 4px 0 0 20px;
+                            padding: 0;
+                            color: #2E7D32;
+                            font-size: 14px;
+                        }
+
+                        .review-cons {
+                            margin: 12px 0;
+                            padding: 8px;
+                            background-color: #FFEBEE;
+                            border-radius: 4px;
+                        }
+
+                        .review-cons strong {
+                            color: #C62828;
+                            font-size: 14px;
+                        }
+
+                        .review-cons ul {
+                            margin: 4px 0 0 20px;
+                            padding: 0;
+                            color: #C62828;
+                            font-size: 14px;
+                        }
+
+                        .review-card-footer {
+                            display: flex;
+                            align-items: center;
+                            gap: 12px;
+                            margin-top: 12px;
+                            padding-top: 12px;
+                            border-top: 1px solid #CCDBDD;
+                        }
+
+                        .review-helpful-btn {
+                            background: none;
+                            border: none;
+                            cursor: pointer;
+                            color: #3BA0AC;
+                            font-size: 14px;
+                            padding: 0;
+                            transition: color 0.2s;
+                        }
+
+                        .review-helpful-btn:hover {
+                            color: #004A53;
+                        }
+
+                        .status-badge {
+                            padding: 4px 8px;
+                            border-radius: 4px;
+                            font-size: 11px;
+                            font-weight: 600;
+                            margin-left: 8px;
+                        }
+
+                        .status-pending {
+                            background-color: #fff3cd;
+                            color: #856404;
+                        }
+
+                        .status-approved {
+                            background-color: #d4edda;
+                            color: #155724;
+                        }
+
+                        .status-rejected {
+                            background-color: #f8d7da;
+                            color: #721c24;
+                        }
+                    </style>
 
                 </div>
 
@@ -447,7 +686,6 @@ let currentCourseId = null;
                 { icon: 'images/celebrate.png', text: `${course.total_lessons || 0} lessons` },
                 { icon: 'images/celebrate.png', text: 'Access on mobile and laptop' },
                 { icon: 'images/celebrate.png', text: `${course.total_students || 0} students enrolled` },
-                { icon: 'images/celebrate.png', text: 'Certification of completion' }
             ];
 
             includes.forEach(item => {
@@ -456,5 +694,376 @@ let currentCourseId = null;
                 li.innerHTML = `<img src="${item.icon}" class="img-fluid" style="width:15px; height:15px;"> ${item.text}`;
                 list.appendChild(li);
             });
-        }    </script>
+
+            // Load reviews after course data is loaded
+            loadCourseReviews();
+
+            // Check authentication and load review form
+            checkAuthAndLoadReviewForm();
+        }
+
+        /**
+         * Check if user is authenticated and load review form accordingly
+         */
+        function checkAuthAndLoadReviewForm() {
+            const token = localStorage.getItem('auth_token');
+            const container = document.getElementById('reviewFormContainer');
+
+            if (token) {
+                // User is authenticated, check if they have already reviewed
+                checkUserReview();
+            } else {
+                // User is not authenticated
+                container.innerHTML = `
+                    <div class="alert alert-info mb-4">
+                        <i class="fa-solid fa-info-circle"></i>
+                        Please <a href="{{ route('login') }}">login</a> to leave a review.
+                    </div>
+                `;
+            }
+        }
+
+        /**
+         * Check if user has already reviewed this course
+         */
+        async function checkUserReview() {
+            try {
+                const container = document.getElementById('reviewFormContainer');
+                const response = await fetch(`/api/reviews/my-reviews?course_id=${currentCourseId}`);
+                const result = await response.json();
+
+                if (result.success && result.data && result.data.length > 0) {
+                    // User has already reviewed this course
+                    const userReview = result.data[0];
+                    displayUserReview(userReview);
+                } else {
+                    // User hasn't reviewed yet, show the form
+                    loadReviewForm();
+                }
+            } catch (error) {
+                console.error('Error checking user review:', error);
+                // If error, show the form anyway
+                loadReviewForm();
+            }
+        }
+
+        /**
+         * Load and display the review form
+         */
+        function loadReviewForm() {
+            const container = document.getElementById('reviewFormContainer');
+            container.innerHTML = `
+                <div class="review-form-container">
+                    <form id="reviewForm" class="d-flex flex-column gap-3">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+                        <!-- Rating Selection -->
+                        <div class="form-group">
+                            <label class="form-label">Rating</label>
+                            <div class="rating-selector">
+                                <input type="radio" name="rating" value="1" id="rating1" class="rating-input" required>
+                                <label for="rating1" class="rating-label">
+                                    <i class="fa-solid fa-star"></i>
+                                </label>
+                                <input type="radio" name="rating" value="2" id="rating2" class="rating-input" required>
+                                <label for="rating2" class="rating-label">
+                                    <i class="fa-solid fa-star"></i>
+                                </label>
+                                <input type="radio" name="rating" value="3" id="rating3" class="rating-input" required>
+                                <label for="rating3" class="rating-label">
+                                    <i class="fa-solid fa-star"></i>
+                                </label>
+                                <input type="radio" name="rating" value="4" id="rating4" class="rating-input" required>
+                                <label for="rating4" class="rating-label">
+                                    <i class="fa-solid fa-star"></i>
+                                </label>
+                                <input type="radio" name="rating" value="5" id="rating5" class="rating-input" required>
+                                <label for="rating5" class="rating-label">
+                                    <i class="fa-solid fa-star"></i>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Review Comment -->
+                        <div class="form-group">
+                            <label for="reviewComment" class="form-label">Your Review</label>
+                            <textarea id="reviewComment" name="comment" class="form-control" placeholder="Share your thoughts about this course..." rows="4" maxlength="1000" required></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                    </form>
+                </div>
+            `;
+
+            // Attach form submission handler
+            setTimeout(() => {
+                const form = document.getElementById('reviewForm');
+                if (form) {
+                    form.addEventListener('submit', handleReviewFormSubmit);
+                }
+            }, 100);
+        }
+
+        /**
+         * Display user's existing review
+         */
+        function displayUserReview(review) {
+            const container = document.getElementById('reviewFormContainer');
+            const statusClass = `status-${review.status}`;
+            const statusText = review.status.charAt(0).toUpperCase() + review.status.slice(1);
+
+            container.innerHTML = `
+                <div class="review-form-container">
+                    <div class="alert alert-info mb-3">
+                        <i class="fa-solid fa-check-circle"></i>
+                        You have already reviewed this course
+                    </div>
+                    <div class="review-card">
+                        <div class="review-card-header">
+                            <div class="review-card-user">
+                                <span class="review-card-name">Your Review</span>
+                                <span class="status-badge ${statusClass}">${statusText}</span>
+                            </div>
+                            <p class="review-card-date">${formatDate(review.created_at)}</p>
+                        </div>
+                        <div class="d-flex align-items-center gap-1 mb-2">
+                            ${renderStars(review.rating)}
+                        </div>
+                        <p class="review-card-comment">${escapeHtml(review.comment || review.review)}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        /**
+         * Handle review form submission
+         */
+        async function handleReviewFormSubmit(e) {
+            e.preventDefault();
+
+            const courseId = document.querySelector('[data-course-id]')?.getAttribute('data-course-id');
+            if (!courseId) {
+                showError('Course ID not found');
+                return;
+            }
+
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+
+            const formData = new FormData(e.target);
+            const data = {
+                rating: formData.get('rating'),
+                comment: formData.get('comment')
+            };
+
+            try {
+                const response = await fetch(`/api/courses/${courseId}/reviews`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('[name="_token"]').value
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    showSuccess('Review submitted successfully! It will be reviewed before appearing.');
+
+                    // Reload the review form/display after a short delay
+                    setTimeout(() => {
+                        checkUserReview();
+                        loadCourseReviews();
+                    }, 1000);
+                } else {
+                    showError(result.message || 'Failed to submit review');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showError('Failed to submit review');
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        }
+
+        /**
+         * Load and display course reviews
+         */
+        async function loadCourseReviews() {
+            try {
+                if (!currentCourseId) {
+                    console.warn('Course ID not found');
+                    return;
+                }
+
+                // Fetch reviews
+                const response = await fetch(`/api/courses/${currentCourseId}/reviews`);
+                const result = await response.json();
+
+                if (!result.success) {
+                    console.error('Failed to load reviews:', result.message);
+                    return;
+                }
+
+                const data = result.data;
+                const reviews = data.reviews.data || [];
+                const stats = data.stats || {};
+
+                // Update rating display
+                updateRatingDisplay(stats);
+
+                // Display reviews
+                displayReviews(reviews);
+            } catch (error) {
+                console.error('Error loading reviews:', error);
+            }
+        }
+
+        /**
+         * Update rating statistics display
+         */
+        function updateRatingDisplay(stats) {
+            const avgRating = stats.average_rating || 0;
+            const totalReviews = stats.total_reviews || 0;
+
+            // Update average rating
+            document.getElementById('averageRating').textContent = avgRating.toFixed(1);
+            document.getElementById('totalReviews').textContent = `${totalReviews} review${totalReviews !== 1 ? 's' : ''}`;
+
+            // Update stars
+            const starsContainer = document.getElementById('ratingStars');
+            starsContainer.innerHTML = '';
+            for (let i = 1; i <= 5; i++) {
+                const star = document.createElement('i');
+                star.className = i <= Math.round(avgRating) ? 'fa-solid fa-star' : 'fa-regular fa-star';
+                star.style.color = i <= Math.round(avgRating) ? '#FFC107' : '#DDD';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        /**
+         * Display reviews in the container
+         */
+        function displayReviews(reviews) {
+            const container = document.getElementById('reviewsContainer');
+
+            if (reviews.length === 0) {
+                container.innerHTML = '<p class="text-muted text-center">No reviews yet. Be the first to review!</p>';
+                return;
+            }
+
+            container.innerHTML = reviews.map(review => `
+                <article class="review-card">
+                    <div class="review-card-header">
+                        <div class="review-card-user">
+                            <img src="${review.user.avatar || 'https://via.placeholder.com/32'}" alt="${escapeHtml(review.user.name)}" class="review-card-avatar">
+                            <span class="review-card-name">${escapeHtml(review.user.name)}</span>
+                            ${review.status ? `<span class="status-badge status-${review.status}">${review.status.charAt(0).toUpperCase() + review.status.slice(1)}</span>` : ''}
+                        </div>
+                        <p class="review-card-date">${formatDate(review.created_at)}</p>
+                    </div>
+                    <div class="d-flex align-items-center gap-1 mb-2">
+                        ${renderStars(review.rating)}
+                    </div>
+                    ${review.title ? `<h6 class="review-card-title">${escapeHtml(review.title)}</h6>` : ''}
+                    <p class="review-card-comment">${escapeHtml(review.comment || review.review)}</p>
+
+                    ${review.pros && review.pros.length > 0 ? `
+                        <div class="review-pros">
+                            <strong>✓ Pros:</strong>
+                            <ul>
+                                ${review.pros.map(pro => `<li>${escapeHtml(pro)}</li>`).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+
+                    ${review.cons && review.cons.length > 0 ? `
+                        <div class="review-cons">
+                            <strong>✗ Cons:</strong>
+                            <ul>
+                                ${review.cons.map(con => `<li>${escapeHtml(con)}</li>`).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+
+                    <div class="review-card-footer">
+                        <button class="review-helpful-btn" onclick="markReviewHelpful(${review.id})">
+                            👍 Helpful (${review.helpful_count || 0})
+                        </button>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        /**
+         * Escape HTML to prevent XSS
+         */
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        /**
+         * Render stars for a rating
+         */
+        function renderStars(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                const color = i <= rating ? '#fdaf22' : '#e5e6e7';
+                stars += `<i class="fa-solid fa-star" style="color: ${color}; font-size: 14px;"></i>`;
+            }
+            return stars;
+        }
+
+        /**
+         * Format date to readable format
+         */
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        }
+
+        /**
+         * Mark a review as helpful
+         */
+        async function markReviewHelpful(reviewId) {
+            try {
+                const response = await fetch(`/api/reviews/${reviewId}/helpful`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').value,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showSuccess('Thank you for marking this review as helpful!');
+                    loadCourseReviews(); // Reload reviews
+                } else {
+                    showError(result.message || 'Failed to mark review as helpful');
+                }
+            } catch (error) {
+                console.error('Error marking review as helpful:', error);
+                showError('Error marking review as helpful');
+            }
+        }
+
+        // Reload reviews when a new review is submitted
+        window.addEventListener('reviewSubmitted', () => {
+            loadCourseReviews();
+        });
+    </script>
 @endsection

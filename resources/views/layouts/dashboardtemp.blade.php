@@ -85,7 +85,7 @@
                 <img class="avatar" id="profileImage" src="{{ asset('images/default-avatar.png') }}" alt="user"
                     style="cursor: pointer; width: 40px; height: 40px; object-fit: cover; border-radius: 50%; border: 2px solid #ff00;"
                     data-bs-toggle="tooltip" data-bs-placement="top" title="Profile">
-                <div class="d-flex justify-content-between p-2 w-100 align-items-center">
+                <div class="d-flex justify-content-between p-2 w-75 align-items-center">
                     <div id="profileInfo" style="cursor: pointer;" data-bs-toggle="tooltip" data-bs-placement="top"
                         title="Profile" class="w-50">
                         <h6 class="fw-semibold text-truncate" id="userName" style='text-transform: capitalize;'>Culacino_</h6>

@@ -55,6 +55,7 @@ class ChatMessage extends Model
         'is_edited',
         'is_text',
         'is_image',
+        'is_audio',
         'is_file',
         'is_system',
     ];
@@ -207,6 +208,14 @@ class ChatMessage extends Model
     public function getIsImageAttribute(): bool
     {
         return $this->type === 'image';
+    }
+
+    /**
+     * Check if this is an audio message.
+     */
+    public function getIsAudioAttribute(): bool
+    {
+        return $this->type === 'audio';
     }
 
     /**

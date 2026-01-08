@@ -1941,115 +1941,6 @@
                 });
             }
 
-            function populatePublishSection() {
-                // Get data from form fields with correct IDs
-                const titleElement = document.getElementById('courseTitle');
-                const categoryElement = document.getElementById('courseCategory');
-                const levelElement = document.getElementById('courseLevel');
-                const timeElement = document.getElementById('courseTime');
-                const descriptionElement = quillCourseDescription;
-                const fileInput = document.getElementById('fileInput');
-
-                const title = titleElement ? titleElement.value : 'English Language';
-
-                // Get category name from selected option
-                let category = 'Language';
-                if (categoryElement && categoryElement.selectedOptions && categoryElement.selectedOptions[0]) {
-                    category = categoryElement.selectedOptions[0].text;
-                } else if (window.courseData && window.courseData.course_category && window.courseData
-                    .course_category.title) {
-                    category = window.courseData.course_category.title;
-                }
-
-                // Get level name from selected option
-                let level = 'JSS 1';
-                if (levelElement && levelElement.selectedOptions && levelElement.selectedOptions[0]) {
-                    level = levelElement.selectedOptions[0].text;
-                } else if (window.courseData && window.courseData.level && window.courseData.level.name) {
-                    level = window.courseData.level.name;
-                }
-
-                const time = timeElement ? timeElement.value : '0 Hours';
-                const description = descriptionElement ? descriptionElement.getText() :
-                    'This comprehensive course covers essential concepts and skills.';
-
-                // Update publish section
-                const publishTitleEl = document.getElementById('publishSubjectTitle');
-                const publishTopicsEl = document.getElementById('publishTopics');
-                const publishLessonsEl = document.getElementById('publishLessons');
-                const publishTimeEl = document.getElementById('publishTime');
-                const publishLevelEl = document.getElementById('publishLevel');
-                const publishDescriptionEl = document.getElementById('publishDescription');
-                const publishImageEl = document.getElementById('publishCourseImage');
-
-                if (publishTitleEl) publishTitleEl.textContent = title;
-
-                // Calculate topic and lesson counts
-                let topicCount = 0;
-                let totalLessonCount = 0;
-                if (window.courseTopics && window.courseTopics.length > 0) {
-                    topicCount = window.courseTopics.length;
-                    window.courseTopics.forEach(topic => {
-                        if (topic.lessons) {
-                            totalLessonCount += topic.lessons.length;
-                        }
-                    });
-                }
-
-                if (publishTopicsEl) publishTopicsEl.textContent = topicCount + ' ' + (topicCount === 1 ? 'Topic' : 'Topics');
-                if (publishLessonsEl) publishLessonsEl.textContent = totalLessonCount + ' ' + (totalLessonCount === 1 ? 'Lesson' : 'Lessons');
-                if (publishTimeEl) publishTimeEl.textContent = time;
-                if (publishLevelEl) publishLevelEl.textContent = level;
-                if (publishDescriptionEl) publishDescriptionEl.textContent = description;
-
-                // Update course image
-                if (publishImageEl) {
-                    // If a new file is selected, use the file preview
-                    if (fileInput && fileInput.files && fileInput.files[0]) {
-                        const reader = new FileReader();
-                        reader.onload = (e) => {
-                            publishImageEl.src = e.target.result;
-                        };
-                        reader.readAsDataURL(fileInput.files[0]);
-                    }
-                    // Otherwise, use the initial thumbnail from the database
-                    else if (window.courseData && window.courseData.thumbnail_url) {
-                        publishImageEl.src = window.courseData.thumbnail_url;
-                    }
-                }
-
-                // Populate curriculum preview with all topics
-                const curriculumContainer = document.getElementById('curriculumPreviewContainer');
-                if (curriculumContainer && window.courseTopics && window.courseTopics.length > 0) {
-                    curriculumContainer.innerHTML = '';
-
-                    window.courseTopics.forEach(topic => {
-                        // Count lessons and quizzes in this topic
-                        const lessonCount = topic.lessons ? topic.lessons.length : 0;
-                        const quizCount = topic.quizzes ? topic.quizzes.length : 0;
-
-                        const curriculumItem = document.createElement('div');
-                        curriculumItem.className = 'curriculum-item';
-                        curriculumItem.innerHTML = `
-                            <div class="curriculum-item-content">
-                                <div class="curriculum-item-icon"><i class="fa-solid fa-book-open"></i></div>
-                                <div class="curriculum-item-text">
-                                    <h6>${topic.title || 'Untitled Topic'}</h6>
-                                </div>
-                            </div>
-                            <div class="curriculum-item-meta">
-                                <span><i class="fa-solid fa-graduation-cap"></i>${lessonCount} ${lessonCount === 1 ? 'Lesson' : 'Lessons'}</span>
-                                <span><i class="fa-solid fa-quiz"></i>${quizCount} ${quizCount === 1 ? 'Quiz' : 'Quizzes'}</span>
-                            </div>
-                            <div class="curriculum-item-check"><i class="fa-solid fa-check-circle"></i></div>
-                        `;
-                        curriculumContainer.appendChild(curriculumItem);
-                    });
-                } else if (curriculumContainer) {
-                    curriculumContainer.innerHTML = '<p style="color: #999; padding: 1rem;">No topics added yet</p>';
-                }
-            }
-
             navButtons.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const section = btn.getAttribute('data-section');
@@ -2284,6 +2175,116 @@
                 }
             }, 500);
         });
+
+        // ===== populatePublishSection Function (Global Scope) =====
+        function populatePublishSection() {
+            // Get data from form fields with correct IDs
+            const titleElement = document.getElementById('courseTitle');
+            const categoryElement = document.getElementById('courseCategory');
+            const levelElement = document.getElementById('courseLevel');
+            const timeElement = document.getElementById('courseTime');
+            const descriptionElement = quillCourseDescription;
+            const fileInput = document.getElementById('fileInput');
+
+            const title = titleElement ? titleElement.value : 'English Language';
+
+            // Get category name from selected option
+            let category = 'Language';
+            if (categoryElement && categoryElement.selectedOptions && categoryElement.selectedOptions[0]) {
+                category = categoryElement.selectedOptions[0].text;
+            } else if (window.courseData && window.courseData.course_category && window.courseData
+                .course_category.title) {
+                category = window.courseData.course_category.title;
+            }
+
+            // Get level name from selected option
+            let level = 'JSS 1';
+            if (levelElement && levelElement.selectedOptions && levelElement.selectedOptions[0]) {
+                level = levelElement.selectedOptions[0].text;
+            } else if (window.courseData && window.courseData.level && window.courseData.level.name) {
+                level = window.courseData.level.name;
+            }
+
+            const time = timeElement ? timeElement.value : '0 Hours';
+            const description = descriptionElement ? descriptionElement.getText() :
+                'This comprehensive course covers essential concepts and skills.';
+
+            // Update publish section
+            const publishTitleEl = document.getElementById('publishSubjectTitle');
+            const publishTopicsEl = document.getElementById('publishTopics');
+            const publishLessonsEl = document.getElementById('publishLessons');
+            const publishTimeEl = document.getElementById('publishTime');
+            const publishLevelEl = document.getElementById('publishLevel');
+            const publishDescriptionEl = document.getElementById('publishDescription');
+            const publishImageEl = document.getElementById('publishCourseImage');
+
+            if (publishTitleEl) publishTitleEl.textContent = title;
+
+            // Calculate topic and lesson counts
+            let topicCount = 0;
+            let totalLessonCount = 0;
+            if (window.courseTopics && window.courseTopics.length > 0) {
+                topicCount = window.courseTopics.length;
+                window.courseTopics.forEach(topic => {
+                    if (topic.lessons) {
+                        totalLessonCount += topic.lessons.length;
+                    }
+                });
+            }
+
+            if (publishTopicsEl) publishTopicsEl.textContent = topicCount + ' ' + (topicCount === 1 ? 'Topic' : 'Topics');
+            if (publishLessonsEl) publishLessonsEl.textContent = totalLessonCount + ' ' + (totalLessonCount === 1 ? 'Lesson' : 'Lessons');
+            if (publishTimeEl) publishTimeEl.textContent = time;
+            if (publishLevelEl) publishLevelEl.textContent = level;
+            if (publishDescriptionEl) publishDescriptionEl.textContent = description;
+
+            // Update course image
+            if (publishImageEl) {
+                // If a new file is selected, use the file preview
+                if (fileInput && fileInput.files && fileInput.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        publishImageEl.src = e.target.result;
+                    };
+                    reader.readAsDataURL(fileInput.files[0]);
+                }
+                // Otherwise, use the initial thumbnail from the database
+                else if (window.courseData && window.courseData.thumbnail_url) {
+                    publishImageEl.src = window.courseData.thumbnail_url;
+                }
+            }
+
+            // Populate curriculum preview with all topics
+            const curriculumContainer = document.getElementById('curriculumPreviewContainer');
+            if (curriculumContainer && window.courseTopics && window.courseTopics.length > 0) {
+                curriculumContainer.innerHTML = '';
+
+                window.courseTopics.forEach(topic => {
+                    // Count lessons and quizzes in this topic
+                    const lessonCount = topic.lessons ? topic.lessons.length : 0;
+                    const quizCount = topic.quizzes ? topic.quizzes.length : 0;
+
+                    const curriculumItem = document.createElement('div');
+                    curriculumItem.className = 'curriculum-item';
+                    curriculumItem.innerHTML = `
+                        <div class="curriculum-item-content">
+                            <div class="curriculum-item-icon"><i class="fa-solid fa-book-open"></i></div>
+                            <div class="curriculum-item-text">
+                                <h6>${topic.title || 'Untitled Topic'}</h6>
+                            </div>
+                        </div>
+                        <div class="curriculum-item-meta">
+                            <span><i class="fa-solid fa-graduation-cap"></i>${lessonCount} ${lessonCount === 1 ? 'Lesson' : 'Lessons'}</span>
+                            <span><i class="fa-solid fa-quiz"></i>${quizCount} ${quizCount === 1 ? 'Quiz' : 'Quizzes'}</span>
+                        </div>
+                        <div class="curriculum-item-check"><i class="fa-solid fa-check-circle"></i></div>
+                    `;
+                    curriculumContainer.appendChild(curriculumItem);
+                });
+            } else if (curriculumContainer) {
+                curriculumContainer.innerHTML = '<p style="color: #999; padding: 1rem;">No topics added yet</p>';
+            }
+        }
 
         // ===== Drag and Drop Handlers for Topics =====
         let draggedTopic = null;

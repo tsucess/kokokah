@@ -66,7 +66,7 @@
                                     <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Date</th>
                                     <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Amount</th>
                                     <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Plan</th>
-                                    <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Payment Method
+                                    <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;" class="no-wrap">Payment Method
                                     </th>
                                     <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Status</th>
                                 </tr>
@@ -198,7 +198,7 @@ const token = localStorage.getItem('auth_token');
                 <td style="padding: 1rem; font-size:14px;">
                   <div class="d-flex align-items-center">
                     <img src="images/default-avatar.png" class="rounded-circle me-3" width="32" height="32" style="object-fit: cover; background: #f0f0f0;">
-                    <span style="color: #333; font-weight: 500;">${transaction.user_name || 'N/A'}</span>
+                    <span style="color: #333; font-weight: 500; text-transform: capitalize;">${transaction.user_name || 'N/A'}</span>
                   </div>
                 </td>
                 <td style="padding: 1rem; color: #666; font-size:14px;">${new Date(transaction.created_at).toLocaleDateString()}</td>

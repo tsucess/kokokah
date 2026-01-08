@@ -55,7 +55,7 @@
                     <div class="d-flex flex-column gap-5">
                         <div class="d-flex flex-column input-container">
                             <label for="audience" class="label">Audience</label>
-                            <select name="audience" id="audience">
+                            <select name="audience" id="audience" class="input-text">
                                 <option value="All students">All students</option>
                                 <option value="Specific class">Specific class</option>
                                 <option value="Specific level">Specific level</option>

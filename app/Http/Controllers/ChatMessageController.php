@@ -35,7 +35,7 @@ class ChatMessageController extends Controller
                 'per_page' => 'nullable|integer|min:1|max:100',
                 'page' => 'nullable|integer|min:1',
                 'sort' => 'nullable|in:asc,desc',
-                'type' => 'nullable|in:text,image,file,system',
+                'type' => 'nullable|in:text,image,audio,file,system',
             ]);
 
             if ($validator->fails()) {
@@ -118,9 +118,10 @@ class ChatMessageController extends Controller
             // Validate message
             $validator = Validator::make($request->all(), [
                 'content' => 'required|string|max:5000',
-                'type' => 'nullable|in:text,image,file,system',
+                'type' => 'nullable|in:text,image,audio,file,system',
                 'reply_to_id' => 'nullable|exists:chat_messages,id',
                 'metadata' => 'nullable|array',
+                'file' => 'nullable|file|max:51200', // 50MB max
             ]);
 
             if ($validator->fails()) {
@@ -131,14 +132,30 @@ class ChatMessageController extends Controller
                 ], 422);
             }
 
+            $messageType = $request->get('type', 'text');
+            $metadata = $request->get('metadata', []);
+
+            // Handle file upload
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $fileName = $file->getClientOriginalName();
+                $filePath = $file->store('chat-messages', 'public');
+
+                $metadata['file_name'] = $fileName;
+                $metadata['file_path'] = $filePath;
+                $metadata['file_url'] = asset('storage/' . $filePath);
+                $metadata['file_size'] = $file->getSize();
+                $metadata['mime_type'] = $file->getMimeType();
+            }
+
             // Create message
             $message = ChatMessage::create([
                 'chat_room_id' => $chatRoom->id,
                 'user_id' => $user->id,
                 'content' => $request->content,
-                'type' => $request->get('type', 'text'),
+                'type' => $messageType,
                 'reply_to_id' => $request->get('reply_to_id'),
-                'metadata' => $request->get('metadata'),
+                'metadata' => $metadata,
             ]);
 
             // Load relationships

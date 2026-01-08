@@ -97,10 +97,7 @@ class ReviewController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'rating' => 'required|integer|min:1|max:5',
-                'title' => 'required|string|max:255',
-                'comment' => 'required|string|max:1000',
-                'pros' => 'nullable|array',
-                'cons' => 'nullable|array'
+                'comment' => 'required|string|max:1000'
             ]);
 
             if ($validator->fails()) {
@@ -115,10 +112,7 @@ class ReviewController extends Controller
                 'course_id' => $courseId,
                 'user_id' => $user->id,
                 'rating' => $request->rating,
-                'title' => $request->title,
                 'comment' => $request->comment,
-                'pros' => $request->pros,
-                'cons' => $request->cons,
                 'status' => 'pending' // Reviews need approval
             ]);
 
@@ -196,10 +190,7 @@ class ReviewController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'rating' => 'sometimes|integer|min:1|max:5',
-                'title' => 'sometimes|string|max:255',
-                'comment' => 'sometimes|string|max:1000',
-                'pros' => 'nullable|array',
-                'cons' => 'nullable|array'
+                'comment' => 'sometimes|string|max:1000'
             ]);
 
             if ($validator->fails()) {
@@ -210,7 +201,7 @@ class ReviewController extends Controller
                 ], 422);
             }
 
-            $updateData = $request->only(['rating', 'title', 'comment', 'pros', 'cons']);
+            $updateData = $request->only(['rating', 'comment']);
             
             // If review was approved and is being updated, set back to pending
             if ($review->status === 'approved') {
@@ -498,14 +489,19 @@ class ReviewController extends Controller
     /**
      * Get user's reviews
      */
-    public function userReviews()
+    public function userReviews(Request $request)
     {
         $user = Auth::user();
 
-        $reviews = CourseReview::with(['course.category'])
-                             ->where('user_id', $user->id)
-                             ->orderBy('created_at', 'desc')
-                             ->get();
+        $query = CourseReview::with(['course.category'])
+                             ->where('user_id', $user->id);
+
+        // Filter by course_id if provided
+        if ($request->has('course_id')) {
+            $query->where('course_id', $request->course_id);
+        }
+
+        $reviews = $query->orderBy('created_at', 'desc')->get();
 
         return response()->json([
             'success' => true,

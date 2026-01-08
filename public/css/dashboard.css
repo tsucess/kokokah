@@ -1970,7 +1970,7 @@ p {
     position: relative;
     top: -14px;
     color: #004a53;
-    background-color: #fff;
+    background-color: inherit;
     font-size: 14px;
     padding: 0 4px;
     font-weight: 500;
@@ -1982,6 +1982,7 @@ p {
     color: #8e8e93;
     border: none;
     outline: none;
+    background-color: transparent;
 }
 
 .textarea-text {
@@ -1990,6 +1991,7 @@ p {
     border: none;
     outline: none;
     height: auto;
+    background-color: transparent;
 }
 
 .priority-container {
