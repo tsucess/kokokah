@@ -853,7 +853,7 @@
                         </div>
                     </div>
                     <div class="col-12 col-lg-5">
-                        <img src="./images/stemges-section-img.jpg" alt=""
+                        <img src="./images/stemges-section.jpg" alt=""
                             class="img-fluid product-images w-100 overflow-img"
                             style="border:3px solid #F56824; border-radius:30px;">
                     </div>

@@ -156,18 +156,18 @@
     @yield('content')
 
     <!-- Footer -->
-    <div class="d-flex  page-footer flex-column align-items-center gap-2 gap-md-0 flex-md-row justify-content-between">
-        <div class="small text-muted">© Copyright Kokokah 2025. All rights reserved.</div>
+    <footer class="d-flex  page-footer flex-column align-items-center gap-2 gap-md-0 flex-md-row justify-content-between" style="background-color: transparent;">
+        <p class="">© Copyright Kokokah 2025. All rights reserved.</p>
 
-        <div class = "small text-muted">
-            <a href="#" class = "text-decoration-none text-muted">License</a>&nbsp;
-            <a href="#" class = "text-decoration-none text-muted">More Themes</a>&nbsp;
-            <a href="#" class = "text-decoration-none text-muted">Documentation</a>&nbsp;
-            <a href="#" class = "text-decoration-none text-muted">Support</a>
+        <div class ="d-flex flex-column gap-1 align-items-center flex-md-row">
+            <a href="#" class = "text-decoration-none  footer-link">License</a>
+            <a href="#" class = "text-decoration-none  footer-link">More Themes</a>
+            <a href="#" class = "text-decoration-none footer-link">Documentation</a>
+            <a href="#" class = "text-decoration-none footer-link">Support</a>
         </div>
 
 
-    </div>
+    </footer>
     </div>
     </main>
 
