@@ -132,9 +132,9 @@
 
 
         <div class="d-flex gap-2 shadow-sm rounded-pill align-items-center py-2 px-3  mx-1 mx-lg-3">
-            <div><img src="./images/leaderboard-award-icon.png" alt=""> <span data-badges>0</span></div>
-            <div></div>
-            <div class="ps-2" style="border-left: 1px solid #000000;"><img src="./images/point-icon.png"
+            <div class="d-flex align-items-center gap-1"><img src="./images/leaderboard-award-icon.png" alt=""> <span data-badges>0</span></div>
+
+            <div class="ps-2 d-flex align-items-center gap-1" style="border-left: 1px solid #000000;"><img src="./images/point-icon.png"
                     alt=""> <span data-points>0</span></div>
 
         </div>
@@ -142,13 +142,13 @@
         <div class="top-icons">
             <button class="icon-btn round-2 icon-btn-light" title="Notifications"
                     id="notificationBellBtn" style="position: relative;">
-                <i class="fa-regular fa-bell fa-xs"></i>
+                <i class="fa-regular fa-bell fa-2xs"></i>
             </button>
             <button class="icon-btn round-2 icon-btn-light" title="message"><i
-                    class="fa-regular fa-envelope fa-xs"></i></button>
+                    class="fa-regular fa-envelope fa-2xs"></i></button>
             <button class="icon-btn round-2 icon-btn-light" title="Help & FAQ"
                     onclick="window.location.href='/help'">
-                <i class="fa-solid fa-question fa-xs"></i>
+                <i class="fa-solid fa-question fa-2xs"></i>
             </button>
         </div>
     </header>
@@ -156,14 +156,14 @@
     @yield('content')
 
     <!-- Footer -->
-    <footer class="d-flex  page-footer flex-column align-items-center gap-2 gap-md-0 flex-md-row justify-content-between" style="background-color: transparent;">
-        <p class="">© Copyright Kokokah 2025. All rights reserved.</p>
+    <footer class="d-flex page-footer flex-column align-items-center gap-2 gap-md-0 flex-md-row justify-content-between mt-auto" style="background-color: inherit;">
+        <p class="footer-link-text text-center">© Copyright Kokokah 2025. All rights reserved.</p>
 
-        <div class ="d-flex flex-column gap-1 align-items-center flex-md-row">
-            <a href="#" class = "text-decoration-none  footer-link">License</a>
-            <a href="#" class = "text-decoration-none  footer-link">More Themes</a>
-            <a href="#" class = "text-decoration-none footer-link">Documentation</a>
-            <a href="#" class = "text-decoration-none footer-link">Support</a>
+        <div class ="d-flex flex-column gap-1 gap-md-3 align-items-center flex-md-row">
+            <a href="#" class = "text-decoration-none  footer-link-text">License</a>
+            <a href="#" class = "text-decoration-none  footer-link-text">More Themes</a>
+            <a href="#" class = "text-decoration-none footer-link-text">Documentation</a>
+            <a href="#" class = "text-decoration-none footer-link-text">Support</a>
         </div>
 
 

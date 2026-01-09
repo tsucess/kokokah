@@ -574,14 +574,14 @@ main .container {
         text-align: left;
         margin-left: 290px;
         color: var(--muted);
-        padding: 20px 20px;
+        padding: 20px 30px;
     }
 }
 
 @media screen and (max-width: 320px) {
     .page-footer {
         color: var(--muted);
-        padding: 20px 0;
+        padding: 20px 20px;
         font-size: 16px;
     }
     .page-footer-link {
@@ -1439,7 +1439,7 @@ main .container {
     color: #fff;
     position: relative;
     overflow: hidden;
-    height: 300px;
+    height: 200px;
 }
 @media (min-width: 767.98px) {
     .header-section {
@@ -2356,7 +2356,7 @@ input.search-input-custom-input {
     font-size: 14px;
 }
 
-.footer-link{
-    font-size: 12px;
+.footer-link-text{
+    font-size: 14px;
     color: #667797;
 }
