@@ -12,7 +12,7 @@
 
         .header-banner {
             background-color: #FDAF22;
-            height: 250px;
+            height: 200px;
             width: 100%;
             border-bottom-left-radius: 100px;
             border-bottom-right-radius: 100px;

@@ -1011,6 +1011,7 @@ main .container {
     margin-bottom: 1.5rem;
     position: relative;
     overflow: hidden;
+    min-height: 225px;
 }
 
 .balance-header::after {
@@ -2158,7 +2159,8 @@ select {
 }
 
 .modal-header {
-    padding: 10px 10px 40px;
+    padding: 10px 10px 30px;
+    border-bottom: none;
 }
 
 .modal-title {

@@ -2,7 +2,7 @@
 
 @section('content')
     <main>
-         <style>
+        <style>
             .addmoney-btn {
                 border: 2px solid #004A53;
                 padding: 16px 20px;
@@ -65,12 +65,14 @@
                 color: #000000;
                 font-size: 16px;
             }
-            .form-header-text{
+
+            .form-header-text {
                 color: #311507;
-                font-size:12px;
+                font-size: 12px;
                 font-weight: 600;
             }
-            .toggle-btn{
+
+            .toggle-btn {
                 background-color: #CCDBDD;
                 width: 24px;
                 height: 15px;
@@ -206,6 +208,7 @@
                 from {
                     opacity: 0;
                 }
+
                 to {
                     opacity: 1;
                 }
@@ -216,6 +219,7 @@
                     transform: translateY(30px);
                     opacity: 0;
                 }
+
                 to {
                     transform: translateY(0);
                     opacity: 1;
@@ -251,6 +255,7 @@
                     transform: translateX(400px);
                     opacity: 0;
                 }
+
                 to {
                     transform: translateX(0);
                     opacity: 1;
@@ -262,6 +267,7 @@
                     transform: translateX(0);
                     opacity: 1;
                 }
+
                 to {
                     transform: translateX(400px);
                     opacity: 0;
@@ -339,11 +345,83 @@
                 font-size: 14px;
                 text-align: center;
             }
+
+            .call-to-action-container {
+                border: 1px solid #C4C4C4;
+                padding: 14px;
+                border-radius: 15px;
+                max-width: 130px;
+            }
+
+            .icon-container {
+                background-color: #CCDBDD;
+                width: 50px;
+                height: 50px;
+                border-radius: 15px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .call-action-text {
+                color: #004A53;
+                font-size: 12px;
+            }
+
+            @media screen and (min-width:768px) {
+                .call-to-action-container {
+                    padding: 14px 20px;
+                }
+            }
         </style>
         <!-- Toast Notification -->
         <div id="toastNotification" class="toast-notification" style="display: none;">
             <div class="toast-content">
                 <span id="toastMessage"></span>
+            </div>
+        </div>
+
+        <div class="modal fade" id="addCard" data-bs-keyboard="false" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header d-flex justify-content-between align-items-center">
+                        <h1 class="modal-title" id="modalTitle">Add New Card</h1>
+                        <button type="button" class="modal-header-btn" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </button>
+                    </div>
+                    <form class="modal-form-container" id="addCard">
+                        <div class="modal-form">
+                            <div class="modal-form-input-border">
+                                <label for="levelName" class="modal-label">Enter Card holder Name</label>
+                                <input class="modal-input" type="text" id="levelName" placeholder="e.g., JS1" required />
+                            </div>
+                            <div class="modal-form-input-border">
+                                <label for="levelName" class="modal-label">Card Number</label>
+                                <input class="modal-input" type="text" id="levelName" placeholder="e.g., JS1" required />
+                            </div>
+                            <div class="modal-form-input-border">
+                                <label for="levelName" class="modal-label">Expired Date</label>
+                                <input class="modal-input" type="text" id="levelName" placeholder="e.g., JS1" required />
+                            </div>
+                            <div class="modal-form-input-border">
+                                <label for="levelName" class="modal-label">CVV</label>
+                                <input class="modal-input" type="text" id="levelName" placeholder="e.g., JS1" required />
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="checkChecked" checked>
+                                <label class="form-check-label" for="checkChecked">
+                                    Secure this card.  <a href=''>Why is it important?</a>
+                                </label>
+                            </div>
+
+
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="button" class="btn primaryButton">Save New Card</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
 
@@ -354,11 +432,11 @@
             <div class="loader-subtext">Please wait while we redirect you to the payment gateway...</div>
         </div>
 
-        <section class="container-fluid p-4">
-            <div class="row g-4">
+        <section class="container-fluid px-2 py-4 px-lg-4">
+            <div class="row g-4 mb-4">
 
 
-                <div class="col-12 col-lg-7 ">
+                <div class="col-12 col-lg-7">
 
                     <div class="balance-header d-flex flex-column ">
                         <div>
@@ -372,60 +450,24 @@
                             style="bottom:20px; right:60px;" />
                     </div>
 
-                    <div class="row g-3 mb-5">
-                        <div class="col-12">
-                            <button class="addmoney-btn d-flex gap-1 align-items-center justify-content-center" id="addMoneyBtn">
-                                <i class="bi bi-plus me-2"></i> Add Money
-                            </button>
-                        </div>
-                        <div class="col-12">
-                            <button class="enroll-btn" id="enrollClassBtn">
-                                Enroll a class
-                            </button>
-                        </div>
+                    <div class="d-flex align-items-center gap-3 justify-content-center">
+                        <button class="call-to-action-container d-flex flex-column gap-2 align-items-center w-100 h-100">
+                            <div class="icon-container"><i class="fa-solid fa-money-bill" style="color: #004A53;"></i></div>
+                            <p class="call-action-text">Add Money</p>
+                        </button>
+                        <button class="call-to-action-container d-flex flex-column gap-2 align-items-center w-100 h-100">
+                            <div class="icon-container"><i class="fa-solid fa-money-bill-transfer"
+                                    style="color: #004A53;"></i></div>
+                            <p class="call-action-text">Transfer Money</p>
+                        </button>
+                        <button class="call-to-action-container d-flex flex-column gap-2 align-items-center w-100 h-100">
+                            <div class="icon-container"><i class="fa-solid fa-clipboard-list" style="color: #004A53;"></i>
+                            </div>
+                            <p class="call-action-text">Enroll Subject</p>
+                        </button>
+
                     </div>
 
-                    <div class="bg-white rounded-3 shadow-sm">
-                        <div class="d-flex flex-column flex-md-row gap-3 align-items-start align-items-md-center justify-content-between p-3">
-                            <h5 class="fw-bold">Transaction History</h5>
-
-                            <div class="d-flex gap-2">
-                                <div class="dropdown">
-                                    <button class="btn filter-btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                        aria-expanded="false" id="categoryFilter">
-                                        All Categories
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#" onclick="filterTransactions('all')">All</a></li>
-                                        <li><a class="dropdown-item" href="#" onclick="filterTransactions('transfer')">Transfers</a></li>
-                                        <li><a class="dropdown-item" href="#" onclick="filterTransactions('deposit')">Deposits</a></li>
-                                        <li><a class="dropdown-item" href="#" onclick="filterTransactions('purchase')">Purchases</a></li>
-                                    </ul>
-                                </div>
-                                <div class="dropdown">
-                                    <button class="btn filter-btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                        aria-expanded="false" id="statusFilter">
-                                        All Status
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#" onclick="filterTransactions('all', 'all')">All</a></li>
-                                        <li><a class="dropdown-item" href="#" onclick="filterTransactions('all', 'completed')">Completed</a></li>
-                                        <li><a class="dropdown-item" href="#" onclick="filterTransactions('all', 'pending')">Pending</a></li>
-                                        <li><a class="dropdown-item" href="#" onclick="filterTransactions('all', 'failed')">Failed</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="transaction-list p-3" id="transactionList">
-                            <div style="text-align: center; padding: 40px;">
-                                <div class="spinner-border text-primary" role="status">
-                                    <span class="visually-hidden">Loading...</span>
-                                </div>
-                                <p class="mt-3">Loading transactions...</p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="col-12 col-lg-5 d-flex flex-column gap-5">
                     <div class="d-flex flex-column gap-4">
@@ -447,9 +489,30 @@
                                 <p style="font-size: 24px; color:#fff;" id="cardHolderName">Card Holder Name</p>
                             </div>
                         </div>
-                        <button class="addmoney-btn" id="editCardBtn">Edit</button>
+                        <div class="d-flex align-items-center gap-3">
+                            <button data-bs-toggle="modal" data-bs-target="#addCard"
+                                class="call-to-action-container d-flex flex-column gap-2 align-items-center w-100 h-100">
+                                <div class="icon-container"><i class="fa-solid fa-plus" style="color: #004A53;"></i>
+                                </div>
+                                <p class="call-action-text">Add Card</p>
+                            </button>
+                            <button
+                                class="call-to-action-container d-flex flex-column gap-2 align-items-center w-100 h-100">
+                                <div class="icon-container"><i class="fa-solid fa-pen-to-square"
+                                        style="color: #004A53;"></i></div>
+                                <p class="call-action-text">Edit Card</p>
+                            </button>
+                            <button
+                                class="call-to-action-container d-flex flex-column gap-2 align-items-center w-100 h-100">
+                                <div class="icon-container" style="background-color: #FFE6E6;"><i
+                                        class="fa-solid fa-xmark" style="color: #FF383C;"></i></div>
+                                <p class="call-action-text">Delete Card</p>
+                            </button>
+
+                        </div>
+                        {{-- <button class="addmoney-btn" id="editCardBtn">Edit</button> --}}
                     </div>
-                    <form id="cardDetailsForm" class="rounded-2 overflow-hidden shadow-sm">
+                    {{-- <form id="cardDetailsForm" class="rounded-2 overflow-hidden shadow-sm">
                         <div class="p-3 d-flex justify-content-between" style="background-color: #F89A6D;">
                             <p class="form-header-text">Add a new payment method</p>
                             <button type="button" class="toggle-btn d-flex justify-content-center align-items-center"><i class="fa-solid fa-chevron-down fa-sm"></i></button>
@@ -499,8 +562,61 @@
                             <button type="submit" class="enroll-btn" id="saveCardBtn">Save Card</button>
                         </div>
 
-                    </form>
+                    </form> --}}
                 </div>
+            </div>
+            <div>
+                <div class="bg-white rounded-3 shadow-sm">
+                    <div
+                        class="d-flex flex-column flex-md-row gap-3 align-items-start align-items-md-center justify-content-between p-3">
+                        <h5 class="fw-bold">Transaction History</h5>
+
+                        <div class="d-flex gap-2">
+                            <div class="dropdown">
+                                <button class="btn filter-btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false" id="categoryFilter">
+                                    All Categories
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#"
+                                            onclick="filterTransactions('all')">All</a></li>
+                                    <li><a class="dropdown-item" href="#"
+                                            onclick="filterTransactions('transfer')">Transfers</a></li>
+                                    <li><a class="dropdown-item" href="#"
+                                            onclick="filterTransactions('deposit')">Deposits</a></li>
+                                    <li><a class="dropdown-item" href="#"
+                                            onclick="filterTransactions('purchase')">Purchases</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn filter-btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false" id="statusFilter">
+                                    All Status
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#"
+                                            onclick="filterTransactions('all', 'all')">All</a></li>
+                                    <li><a class="dropdown-item" href="#"
+                                            onclick="filterTransactions('all', 'completed')">Completed</a></li>
+                                    <li><a class="dropdown-item" href="#"
+                                            onclick="filterTransactions('all', 'pending')">Pending</a></li>
+                                    <li><a class="dropdown-item" href="#"
+                                            onclick="filterTransactions('all', 'failed')">Failed</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="transaction-list p-3" id="transactionList">
+                        <div style="text-align: center; padding: 40px;">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-3">Loading transactions...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
             </div>
         </section>
 
@@ -514,17 +630,21 @@
                 <div style="padding: 20px 0;">
                     <div class="input-border">
                         <label for="depositAmount" class="form-label">Amount (₦)</label>
-                        <input type="number" class="form-input" id="depositAmount" placeholder="Enter amount" min="100" step="100" required>
+                        <input type="number" class="form-input" id="depositAmount" placeholder="Enter amount"
+                            min="100" step="100" required>
                         <small class="text-danger d-none" id="amountErrorMsg"></small>
                     </div>
-                    <div style="margin-top: 15px; padding: 12px; background-color: #f0f8f9; border-radius: 8px; border-left: 4px solid #004A53;">
+                    <div
+                        style="margin-top: 15px; padding: 12px; background-color: #f0f8f9; border-radius: 8px; border-left: 4px solid #004A53;">
                         <small style="color: #666;">Minimum amount: ₦100</small>
                     </div>
                 </div>
 
                 <div style="display: flex; gap: 12px; margin-top: 20px;">
-                    <button type="button" class="addmoney-btn" style="flex: 1; background: white;" onclick="closeAmountModal()">Cancel</button>
-                    <button type="button" class="enroll-btn" style="flex: 1;" onclick="proceedToGatewaySelection()">Continue</button>
+                    <button type="button" class="addmoney-btn" style="flex: 1; background: white;"
+                        onclick="closeAmountModal()">Cancel</button>
+                    <button type="button" class="enroll-btn" style="flex: 1;"
+                        onclick="proceedToGatewaySelection()">Continue</button>
                 </div>
             </div>
         </div>
@@ -540,7 +660,8 @@
                     <!-- Paystack -->
                     <div class="payment-method-item" onclick="selectPaymentGateway('paystack')">
                         <div class="payment-method-icon">
-                            <img src="./images/paystack.png" alt="Paystack" style="height: 40px; width: auto; object-fit: contain;">
+                            <img src="./images/paystack.png" alt="Paystack"
+                                style="height: 40px; width: auto; object-fit: contain;">
                         </div>
                         <div class="payment-method-info">
                             <div class="payment-method-name">Paystack</div>
@@ -551,7 +672,8 @@
                     <!-- Flutterwave -->
                     <div class="payment-method-item" onclick="selectPaymentGateway('flutterwave')">
                         <div class="payment-method-icon">
-                            <img src="./images/Flutterwave.png" alt="Flutterwave" style="height: 40px; max-width: 40px; width: auto; object-fit: contain;">
+                            <img src="./images/Flutterwave.png" alt="Flutterwave"
+                                style="height: 40px; max-width: 40px; width: auto; object-fit: contain;">
                         </div>
                         <div class="payment-method-info">
                             <div class="payment-method-name">Flutterwave</div>
@@ -562,7 +684,8 @@
                     <!-- Stripe -->
                     <div class="payment-method-item" onclick="selectPaymentGateway('stripe')">
                         <div class="payment-method-icon">
-                            <img src="./images/stripe.webp" alt="Stripe" style="height: 40px; width: auto; object-fit: contain;">
+                            <img src="./images/stripe.webp" alt="Stripe"
+                                style="height: 40px; width: auto; object-fit: contain;">
                         </div>
                         <div class="payment-method-info">
                             <div class="payment-method-name">Stripe</div>
@@ -573,7 +696,8 @@
                     <!-- PayPal -->
                     <div class="payment-method-item" onclick="selectPaymentGateway('paypal')">
                         <div class="payment-method-icon">
-                            <img src="./images/paypal.png" alt="PayPal" style="height: 40px; width: auto; object-fit: contain;">
+                            <img src="./images/paypal.png" alt="PayPal"
+                                style="height: 40px; width: auto; object-fit: contain;">
                         </div>
                         <div class="payment-method-info">
                             <div class="payment-method-name">PayPal</div>
@@ -583,8 +707,10 @@
                 </div>
 
                 <div style="display: flex; gap: 12px; margin-top: 20px;">
-                    <button type="button" class="addmoney-btn" style="flex: 1; background: white;" onclick="closePaymentGatewayModal()">Cancel</button>
-                    <button type="button" class="enroll-btn" style="flex: 1;" onclick="proceedWithGateway()">Continue</button>
+                    <button type="button" class="addmoney-btn" style="flex: 1; background: white;"
+                        onclick="closePaymentGatewayModal()">Cancel</button>
+                    <button type="button" class="enroll-btn" style="flex: 1;"
+                        onclick="proceedWithGateway()">Continue</button>
                 </div>
             </div>
         </div>
@@ -592,9 +718,9 @@
 
     <!-- JS: Bootstrap + API integration -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- API Clients -->
+    <!-- API Clients -->
     <script>
-let currentTypeFilter = 'all';
+        let currentTypeFilter = 'all';
         let currentStatusFilter = 'all';
         let currentCard = null; // Store current displayed card for editing
 
@@ -830,7 +956,9 @@ let currentTypeFilter = 'all';
                 if (currentCard) {
                     populateCardForm(currentCard);
                     // Scroll to form
-                    document.getElementById('cardDetailsForm').scrollIntoView({ behavior: 'smooth' });
+                    document.getElementById('cardDetailsForm').scrollIntoView({
+                        behavior: 'smooth'
+                    });
                 } else {
                     showToast('No card to edit. Please save a card first.', 'warning');
                 }
