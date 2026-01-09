@@ -23,10 +23,11 @@ class StoreChatMessageRequest extends FormRequest
     {
         return [
             'content' => 'required|string|max:5000|min:1',
-            'type' => 'nullable|in:text,image,file,system',
+            'type' => 'nullable|in:text,image,audio,file,system',
             'reply_to_id' => 'nullable|integer|exists:chat_messages,id',
             'metadata' => 'nullable|array',
             'metadata.*' => 'nullable|string',
+            'file' => 'nullable|file|max:51200',
         ];
     }
 

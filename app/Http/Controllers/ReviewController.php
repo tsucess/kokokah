@@ -97,10 +97,7 @@ class ReviewController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'rating' => 'required|integer|min:1|max:5',
-                'title' => 'required|string|max:255',
-                'comment' => 'required|string|max:1000',
-                'pros' => 'nullable|array',
-                'cons' => 'nullable|array'
+                'comment' => 'required|string|max:1000'
             ]);
 
             if ($validator->fails()) {
@@ -115,16 +112,13 @@ class ReviewController extends Controller
                 'course_id' => $courseId,
                 'user_id' => $user->id,
                 'rating' => $request->rating,
-                'title' => $request->title,
                 'comment' => $request->comment,
-                'pros' => $request->pros,
-                'cons' => $request->cons,
-                'status' => 'pending' // Reviews need approval
+                'status' => 'approved' // Auto-approve reviews
             ]);
 
             return response()->json([
                 'success' => true,
-                'message' => 'Review submitted successfully and is pending approval',
+                'message' => 'Review submitted successfully',
                 'data' => $review
             ], 201);
         } catch (\Exception $e) {
@@ -196,10 +190,7 @@ class ReviewController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'rating' => 'sometimes|integer|min:1|max:5',
-                'title' => 'sometimes|string|max:255',
-                'comment' => 'sometimes|string|max:1000',
-                'pros' => 'nullable|array',
-                'cons' => 'nullable|array'
+                'comment' => 'sometimes|string|max:1000'
             ]);
 
             if ($validator->fails()) {
@@ -210,12 +201,10 @@ class ReviewController extends Controller
                 ], 422);
             }
 
-            $updateData = $request->only(['rating', 'title', 'comment', 'pros', 'cons']);
-            
-            // If review was approved and is being updated, set back to pending
-            if ($review->status === 'approved') {
-                $updateData['status'] = 'pending';
-            }
+            $updateData = $request->only(['rating', 'comment']);
+
+            // Keep review approved when updated (no approval needed)
+            // $updateData['status'] remains unchanged
 
             $review->update($updateData);
 
@@ -498,19 +487,47 @@ class ReviewController extends Controller
     /**
      * Get user's reviews
      */
-    public function userReviews()
+    public function userReviews(Request $request)
     {
-        $user = Auth::user();
+        try {
+            $user = Auth::user();
 
-        $reviews = CourseReview::with(['course.category'])
-                             ->where('user_id', $user->id)
-                             ->orderBy('created_at', 'desc')
-                             ->get();
+            if (!$user) {
+                \Log::warning('userReviews: User not authenticated');
+                return response()->json([
+                    'success' => false,
+                    'message' => 'User not authenticated'
+                ], 401);
+            }
 
-        return response()->json([
-            'success' => true,
-            'data' => $reviews
-        ]);
+            \Log::info('userReviews: Fetching reviews for user', ['user_id' => $user->id, 'course_id' => $request->course_id]);
+
+            $query = CourseReview::where('user_id', $user->id);
+
+            // Filter by course_id if provided
+            if ($request->has('course_id')) {
+                $query->where('course_id', $request->course_id);
+            }
+
+            $reviews = $query->orderBy('created_at', 'desc')->get();
+
+            \Log::info('userReviews: Found reviews', ['count' => count($reviews)]);
+
+            return response()->json([
+                'success' => true,
+                'data' => $reviews
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('userReviews: Exception occurred', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch user reviews: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     /**

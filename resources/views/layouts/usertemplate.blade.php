@@ -74,7 +74,7 @@
 
             <a class="nav-item-link" href="/usersubject"><i class="fa-solid fa-user me-2  pe-2"></i> Subject</a>
 
-            <a class="nav-item-link" href="/userresult"><i class="fa-solid fa-user me-2  pe-2"></i> Results &
+            <a class="nav-item-link" href="/userresult"><i class="fa-solid fa-chart-line me-2  pe-2"></i> Results &
                 Scoring</a>
 
             <a class="nav-item-link" href="/userkudikah"><i class="fa-solid fa-wallet me-2 pe-2"></i>Kudikah</a>
@@ -104,10 +104,10 @@
         <div class="sidebar-footer mt-auto p-3">
             <a class="nav-item-link" href="#"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
             <div class="profile mt-5" id="profileSection">
-                <img class="avatar" id="profileImage" src="{{ asset('images/winner-round.png') }}" alt="user"
+                <img class="avatar" id="profileImage" src="{{ asset('images/default-avatar.png') }}" alt="user"
                     style="cursor: pointer; width: 40px; height: 40px; object-fit: cover; border-radius: 50%; border: 2px solid #ff00;"
                     data-bs-toggle="tooltip" data-bs-placement="top" title="Profile">
-                <div class="d-flex justify-content-between p-2 w-100 align-items-center">
+                <div class="d-flex justify-content-between p-2 w-75 align-items-center">
                     <div id="profileInfo" style="cursor: pointer;" data-bs-toggle="tooltip" data-bs-placement="top"
                         title="Profile" class="w-50">
                         <h6 class="fw-semibold text-truncate" id="userName" style="text-transform: capitalize">Culacino_</h6>

@@ -16,8 +16,5 @@ class RouteServiceProvider extends ServiceProvider
     {
         // Use implicit route model binding for ChatRoom
         Route::model('chatRoom', ChatRoom::class);
-
-        // Use implicit route model binding for ChatMessage
-        Route::model('message', ChatMessage::class);
     }
 }

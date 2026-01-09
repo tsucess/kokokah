@@ -71,6 +71,32 @@ class WalletTransaction extends Model
         return $this->belongsTo(Course::class);
     }
 
+    // Wallet-specific methods
+    public function isDeposit()
+    {
+        return $this->type === 'credit' && !$this->related_user_id && !$this->course_id && !$this->reward_type;
+    }
+
+    public function isTransfer()
+    {
+        return $this->related_user_id !== null;
+    }
+
+    public function isPurchase()
+    {
+        return $this->type === 'debit' && $this->course_id !== null;
+    }
+
+    public function isReward()
+    {
+        return $this->type === 'credit' && $this->reward_type !== null;
+    }
+
+    public function isWithdrawal()
+    {
+        return $this->type === 'debit' && !$this->course_id && !$this->related_user_id;
+    }
+
     // Scopes
     public function scopeByWallet($query, $walletId)
     {

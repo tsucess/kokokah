@@ -85,7 +85,7 @@
 
         container.innerHTML = `
             <header class="d-flex gap-1 flex-column">
-                <h2 class="review-header-title">${escapeHtml(course.title)}</h2>
+                <h2 class="review-header-title mb-3">${escapeHtml(course.title)}</h2>
                 <div class="d-flex gap-1 align-items-center">
                     <div class="d-flex gap-1">
                         ${starsHtml}
@@ -95,7 +95,7 @@
                 <p class="rating-header-subtitle">Based on ${statistics.total_reviews} reviews</p>
             </header>
             <section class="rating-distribution-container">
-                <h4 class="d-flex flex-column rating-distribution-title">Rating Distribution</h4>
+                <h4 class="d-flex flex-column rating-distribution-title mb-3">Rating Distribution</h4>
                 <div class="d-flex flex-column rating-distribution-rating-container">
                     ${distributionHtml}
                 </div>
@@ -103,14 +103,6 @@
             <section class="d-flex flex-column reviews-container">
                 <header class="d-flex gap-4 align-items-center justify-content-between">
                     <h4 class="reviews-header-title">Reviews (${statistics.total_reviews})</h4>
-                    <div class="d-flex gap-1 align-items-center">
-                        <button class="reviews-btn">Filter by</button>
-                        <select class="most-recent-container" onchange="filterByStatus(this.value)">
-                            <option value="approved" ${currentFilter === 'approved' ? 'selected' : ''}>Approved</option>
-                            <option value="pending" ${currentFilter === 'pending' ? 'selected' : ''}>Pending</option>
-                            <option value="rejected" ${currentFilter === 'rejected' ? 'selected' : ''}>Rejected</option>
-                        </select>
-                    </div>
                 </header>
                 ${reviewsHtml}
             </section>
@@ -158,31 +150,44 @@
             return '<div class="alert alert-info">No reviews found.</div>';
         }
 
-        return reviews.map(review => `
+        return reviews.map(review => {
+            // Safely access nested properties
+            const userName = review.user?.name || 'Anonymous';
+            const userAvatar = review.user?.avatar || 'https://via.placeholder.com/32';
+            const status = review.status || 'pending';
+            const rating = review.rating || 0;
+            const createdAt = review.created_at || new Date().toISOString();
+            const title = review.title || '';
+            const comment = review.comment || review.review || '';
+            const helpfulCount = review.helpful_count || 0;
+            const reviewId = review.id || 0;
+
+            return `
             <article class="d-flex flex-column reviews-card">
                 <div class="d-flex gap-3 justify-content-between">
                     <div class="d-flex flex-column gap-2">
                         <div class="d-flex gap-1 align-items-center">
-                            <img src="${review.user.avatar || 'https://via.placeholder.com/32'}" alt="${escapeHtml(review.user.name)}" class="reviews-card-img">
-                            <h5 class="reviews-card-name">${escapeHtml(review.user.name)}</h5>
-                            <span class="status-badge status-${review.status}">${review.status.charAt(0).toUpperCase() + review.status.slice(1)}</span>
+                            <img src="${userAvatar}" alt="${escapeHtml(userName)}" class="reviews-card-img">
+                            <h5 class="reviews-card-name">${escapeHtml(userName)}</h5>
+                            <span class="status-badge status-${status}">${status.charAt(0).toUpperCase() + status.slice(1)}</span>
                         </div>
                         <div class="d-flex align-items-center gap">
-                            ${renderStars(review.rating)}
+                            ${renderStars(rating)}
                         </div>
                     </div>
-                    <p class="align-self-end reviews-card-date mb-0">${formatDate(review.created_at)}</p>
+                    <p class="align-self-end reviews-card-date mb-0">${formatDate(createdAt)}</p>
                 </div>
                 <div class="d-flex flex-column gap-3">
-                    ${review.title ? `<h6 style="color: #333; font-weight: 600;">${escapeHtml(review.title)}</h6>` : ''}
-                    <p class="reviews-card-review">${escapeHtml(review.comment || review.review)}</p>
+                    ${title ? `<h6 style="color: #333; font-weight: 600;">${escapeHtml(title)}</h6>` : ''}
+                    <p class="reviews-card-review">${escapeHtml(comment)}</p>
                     <div class="d-flex gap-3 align-self-end align-items-center">
-                        <span class="reviews-card-helpful">${review.helpful_count} helpful</span>
-                        <button onclick="markHelpful(${review.id})"><i class="fa-solid fa-thumbs-up" style="color: #999999;"></i></button>
+                        <span class="reviews-card-helpful">${helpfulCount} helpful</span>
+                        <button onclick="markHelpful(${reviewId})"><i class="fa-solid fa-thumbs-up" style="color: #999999;"></i></button>
                     </div>
                 </div>
             </article>
-        `).join('');
+        `;
+        }).join('');
     }
 
     function formatDate(dateString) {
@@ -191,6 +196,10 @@
     }
 
     function escapeHtml(text) {
+        // Handle null, undefined, or non-string values
+        if (!text || typeof text !== 'string') {
+            return '';
+        }
         const map = {
             '&': '&amp;',
             '<': '&lt;',

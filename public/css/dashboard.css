@@ -1174,6 +1174,18 @@ main .container {
     padding: 0rem 0px 1.5rem;
     overflow-y: auto;
     /* Allows scrolling of messages */
+    max-height: calc(100vh - 150px);
+    /* Increased height to show more messages */
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .chat-message {
@@ -1957,7 +1969,7 @@ p {
     position: relative;
     top: -14px;
     color: #004a53;
-    background-color: #fff;
+    background-color: inherit;
     font-size: 14px;
     padding: 0 4px;
     font-weight: 500;
@@ -1969,6 +1981,7 @@ p {
     color: #8e8e93;
     border: none;
     outline: none;
+    background-color: transparent;
 }
 
 .textarea-text {
@@ -1977,6 +1990,7 @@ p {
     border: none;
     outline: none;
     height: auto;
+    background-color: transparent;
 }
 
 .priority-container {

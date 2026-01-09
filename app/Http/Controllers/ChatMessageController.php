@@ -35,7 +35,7 @@ class ChatMessageController extends Controller
                 'per_page' => 'nullable|integer|min:1|max:100',
                 'page' => 'nullable|integer|min:1',
                 'sort' => 'nullable|in:asc,desc',
-                'type' => 'nullable|in:text,image,file,system',
+                'type' => 'nullable|in:text,image,audio,file,system',
             ]);
 
             if ($validator->fails()) {
@@ -52,7 +52,7 @@ class ChatMessageController extends Controller
 
             // Build query
             $query = $chatRoom->messages()
-                ->with(['user:id,first_name,last_name,profile_photo', 'reactions', 'replyTo.user:id,first_name,last_name'])
+                ->with(['user:id,first_name,last_name,profile_photo,role', 'reactions', 'replyTo.user:id,first_name,last_name'])
                 ->where(function($q) {
                     $q->where('is_deleted', false)
                       ->orWhereNull('is_deleted');
@@ -118,9 +118,10 @@ class ChatMessageController extends Controller
             // Validate message
             $validator = Validator::make($request->all(), [
                 'content' => 'required|string|max:5000',
-                'type' => 'nullable|in:text,image,file,system',
+                'type' => 'nullable|in:text,image,audio,file,system',
                 'reply_to_id' => 'nullable|exists:chat_messages,id',
                 'metadata' => 'nullable|array',
+                'file' => 'nullable|file|max:51200', // 50MB max
             ]);
 
             if ($validator->fails()) {
@@ -131,14 +132,30 @@ class ChatMessageController extends Controller
                 ], 422);
             }
 
+            $messageType = $request->get('type', 'text');
+            $metadata = $request->get('metadata', []);
+
+            // Handle file upload
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $fileName = $file->getClientOriginalName();
+                $filePath = $file->store('chat-messages', 'public');
+
+                $metadata['file_name'] = $fileName;
+                $metadata['file_path'] = $filePath;
+                $metadata['file_url'] = asset('storage/' . $filePath);
+                $metadata['file_size'] = $file->getSize();
+                $metadata['mime_type'] = $file->getMimeType();
+            }
+
             // Create message
             $message = ChatMessage::create([
                 'chat_room_id' => $chatRoom->id,
                 'user_id' => $user->id,
                 'content' => $request->content,
-                'type' => $request->get('type', 'text'),
+                'type' => $messageType,
                 'reply_to_id' => $request->get('reply_to_id'),
-                'metadata' => $request->get('metadata'),
+                'metadata' => $metadata,
             ]);
 
             // Load relationships
@@ -180,9 +197,13 @@ class ChatMessageController extends Controller
      * @param ChatMessage $message
      * @return JsonResponse
      */
-    public function show(ChatMessage $message): JsonResponse
+    public function show(Request $request): JsonResponse
     {
         try {
+            // Get message ID from route parameter
+            $messageId = $request->route('message');
+            $message = ChatMessage::findOrFail($messageId);
+
             $user = Auth::user();
 
             // Check if user is a member of the chat room
@@ -214,9 +235,15 @@ class ChatMessageController extends Controller
      * @param ChatMessage $message
      * @return JsonResponse
      */
-    public function update(Request $request, ChatMessage $message): JsonResponse
+    public function update(Request $request): JsonResponse
     {
         try {
+            // Get message ID from route parameter
+            $messageId = $request->route('message');
+
+            // Resolve message manually
+            $message = ChatMessage::findOrFail($messageId);
+
             // Authorize using policy
             $this->authorize('update', $message);
 
@@ -239,17 +266,30 @@ class ChatMessageController extends Controller
                 'edited_at' => now(),
             ]);
 
-            $message->load(['user:id,first_name,last_name,profile_photo', 'reactions']);
+            // Load relationships
+            $message->load(['user:id,first_name,last_name,profile_photo,role', 'reactions', 'chatRoom']);
 
             // Broadcast update event
-            broadcast(new MessageSent($message, $message->chatRoom))->toOthers();
+            if ($message->chatRoom) {
+                broadcast(new MessageSent($message, $message->chatRoom))->toOthers();
+            }
 
             return response()->json([
                 'success' => true,
                 'message' => 'Message updated successfully',
                 'data' => $message
             ]);
+        } catch (AuthorizationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage() ?: 'You do not have permission to edit this message.'
+            ], 403);
         } catch (\Exception $e) {
+            \Log::error('Error updating message:', [
+                'message_id' => $message->id,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to update message: ' . $e->getMessage()
@@ -263,23 +303,42 @@ class ChatMessageController extends Controller
      * @param ChatMessage $message
      * @return JsonResponse
      */
-    public function destroy(ChatMessage $message): JsonResponse
+    public function destroy(Request $request): JsonResponse
     {
         try {
+            // Get message ID from route parameter
+            $messageId = $request->route('message');
+            $message = ChatMessage::findOrFail($messageId);
+
             // Authorize using policy
             $this->authorize('delete', $message);
 
             // Soft delete message
             $message->update(['is_deleted' => true]);
 
+            // Load chatRoom relationship before broadcasting
+            $message->load(['user:id,first_name,last_name,profile_photo,role', 'chatRoom']);
+
             // Broadcast delete event
-            broadcast(new MessageSent($message, $message->chatRoom))->toOthers();
+            if ($message->chatRoom) {
+                broadcast(new MessageSent($message, $message->chatRoom))->toOthers();
+            }
 
             return response()->json([
                 'success' => true,
                 'message' => 'Message deleted successfully'
             ]);
+        } catch (AuthorizationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage() ?: 'You do not have permission to delete this message.'
+            ], 403);
         } catch (\Exception $e) {
+            \Log::error('Error deleting message:', [
+                'message_id' => $message->id,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to delete message: ' . $e->getMessage()

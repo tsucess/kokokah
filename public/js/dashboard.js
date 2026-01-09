@@ -73,7 +73,6 @@ class DashboardModule {
 
       if (!token || !user) {
         // No token, redirect to login
-        console.log('No authentication token found, redirecting to login...');
         window.location.href = '/login';
       } else {
         // Token exists, make API call to get user data with token
@@ -179,16 +178,13 @@ class DashboardModule {
         // Check if profile_photo is already a full URL (starts with /)
         if (user.profile_photo.startsWith('/')) {
           profileImage.src = user.profile_photo;
-          console.log('Profile photo is a full URL:', user.profile_photo);
         } else {
           // Otherwise, add /storage/ prefix
           profileImage.src = `/storage/${user.profile_photo}`;
-          console.log('Profile photo is a relative path, added /storage/ prefix:', profileImage.src);
         }
       } else {
         // Use default avatar if no profile photo
         profileImage.src = '/images/default-avatar.png';
-        console.log('No profile photo, using default avatar');
       }
     }
   }

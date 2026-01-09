@@ -25,7 +25,7 @@ return new class extends Migration
             
             // Message content
             $table->longText('content');
-            $table->enum('type', ['text', 'image', 'file', 'system'])->default('text');
+            $table->enum('type', ['text', 'image', 'audio', 'file', 'system'])->default('text');
             
             // Reply to another message (threading)
             $table->foreignId('reply_to_id')

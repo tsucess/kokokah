@@ -399,9 +399,9 @@
                         <td style="padding: 1rem; color: #666; font-size:14px;">${rowNumber}</td>
                         <td style="padding: 1rem; font-size:14px;">
                             <div class="d-flex align-items-center">
-                                <img src="${userPhoto}" class="rounded-circle me-3" alt="User"
+                                <img src="${userPhoto ? userPhoto : 'images/avatar.png'}" class="rounded-circle me-3" alt="User"
                                     width="40" height="40" style="object-fit: cover;">
-                                <span style="color: #333; font-weight: 500;">${userName}</span>
+                                <span style="color: #333; font-weight: 500; text-transform: capitalize;" >${userName}</span>
                             </div>
                         </td>
                         <td style="padding: 1rem; color: #666; font-size:14px;">${actionDescription}</td>

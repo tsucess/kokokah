@@ -511,9 +511,12 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('/', [ChatMessageController::class, 'index']);
             Route::post('/', [ChatMessageController::class, 'store'])
                 ->middleware('check.chat.room.mute.status');
-            Route::get('/{message}', [ChatMessageController::class, 'show']);
-            Route::put('/{message}', [ChatMessageController::class, 'update']);
-            Route::delete('/{message}', [ChatMessageController::class, 'destroy']);
+            Route::get('/{message}', [ChatMessageController::class, 'show'])
+                ->whereNumber('message');
+            Route::put('/{message}', [ChatMessageController::class, 'update'])
+                ->whereNumber('message');
+            Route::delete('/{message}', [ChatMessageController::class, 'destroy'])
+                ->whereNumber('message');
         });
 });
 
