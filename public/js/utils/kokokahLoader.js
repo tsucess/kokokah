@@ -10,6 +10,7 @@ class KokokahLoader {
     this.isVisible = false;
     this.hideTimeout = null;
     this.pageLoadStartTime = Date.now();
+    this.safetyCheckInterval = null;
     this.init();
   }
 
@@ -33,7 +34,7 @@ class KokokahLoader {
     }
 
     const loaderHTML = `
-      <div class="kokokah-loader-overlay" id="kokokahLoader">
+      <div class="kokokah-loader-overlay hidden" id="kokokahLoader">
         <div class="kokokah-loader-container">
           <div class="kokokah-spinner"></div>
           <div class="kokokah-loader-text">
@@ -45,7 +46,7 @@ class KokokahLoader {
 
     document.body.insertAdjacentHTML('afterbegin', loaderHTML);
     this.loaderElement = document.getElementById('kokokahLoader');
-    this.isVisible = true;
+    this.isVisible = false;
   }
 
   /**
@@ -84,7 +85,7 @@ class KokokahLoader {
     });
 
     // Auto-hide loader after 10 seconds if it's still visible (safety mechanism)
-    setInterval(() => {
+    this.safetyCheckInterval = setInterval(() => {
       if (this.isVisible) {
         const elapsedTime = Date.now() - this.pageLoadStartTime;
         // If loader has been visible for more than 10 seconds, force hide it
@@ -151,6 +152,22 @@ class KokokahLoader {
   }
 
   /**
+   * Destroy the loader and clean up resources
+   */
+  destroy() {
+    // Clear all timeouts and intervals
+    if (this.hideTimeout) {
+      clearTimeout(this.hideTimeout);
+      this.hideTimeout = null;
+    }
+    if (this.safetyCheckInterval) {
+      clearInterval(this.safetyCheckInterval);
+      this.safetyCheckInterval = null;
+    }
+    this.isVisible = false;
+  }
+
+  /**
    * Force hide the loader immediately
    */
   forceHide() {
@@ -189,4 +206,11 @@ if (!window.kokokahLoader) {
     window.kokokahLoader = new KokokahLoader();
   }
 }
+
+// Clean up loader on page unload to prevent memory leaks
+window.addEventListener('beforeunload', () => {
+  if (window.kokokahLoader && window.kokokahLoader.destroy) {
+    window.kokokahLoader.destroy();
+  }
+});
 
