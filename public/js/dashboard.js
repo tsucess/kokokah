@@ -77,7 +77,7 @@ class DashboardModule {
       } else {
         // Token exists, make API call to get user data with token
         const userData = JSON.parse(user);
-        if (userData.role === 'student') {
+        if (userData.role === 'student' || userData.role === 'instructor') {
           window.location.href = '/userprofile';
         } else {
           window.location.href = '/adminprofile';
