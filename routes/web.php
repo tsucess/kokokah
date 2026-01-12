@@ -145,7 +145,7 @@ Route::get('/student', function () {
 });
 
 Route::get('/subscription', function () {
-    return view('admin.subscriptionplan');
+    return view('admin.subscription');
 });
 
 Route::get('/register', function () {
