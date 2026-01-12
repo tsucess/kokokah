@@ -407,6 +407,8 @@
             border-radius: 20px;
         }
 
+
+
         .leaderboard-second-platform {
             background-color: #F56824;
             height: 152px;
@@ -445,16 +447,19 @@
 
         @media screen and (max-width:768px){
             .leaderboard-second-img {
-            width: 50px;
-            height: 50px;
-        }
-            .leaderboard-first-img {
-            width: 80px;
-            height: 80px;
-        }
-            .leaderboard-third-img {
             width: 40px;
             height: 40px;
+        }
+            .leaderboard-first-img {
+            width: 60px;
+            height: 60px;
+        }
+            .leaderboard-third-img {
+            width: 30px;
+            height: 30px;
+        }
+        .leaderboard-winner-track{
+            height: 14px;
         }
         }
 
