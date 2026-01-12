@@ -47,13 +47,22 @@ p {
   white-space: nowrap;
 }
 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
 
 /* Button styles moved to Tailwind - see resources/css/app.css */
 
 .mysubject {
     width: 30%;
     z-index: -1;
-    max-width: 400px;
 }
 
 @media screen and (max-width: 320px) {
@@ -575,14 +584,14 @@ main .container {
         text-align: left;
         margin-left: 290px;
         color: var(--muted);
-        padding: 20px 20px;
+        padding: 20px 30px;
     }
 }
 
 @media screen and (max-width: 320px) {
     .page-footer {
         color: var(--muted);
-        padding: 20px 0;
+        padding: 20px 20px;
         font-size: 16px;
     }
     .page-footer-link {
@@ -1012,6 +1021,7 @@ main .container {
     margin-bottom: 1.5rem;
     position: relative;
     overflow: hidden;
+    min-height: 225px;
 }
 
 .balance-header::after {
@@ -1440,7 +1450,7 @@ main .container {
     color: #fff;
     position: relative;
     overflow: hidden;
-    height: 300px;
+    height: 200px;
 }
 @media (min-width: 767.98px) {
     .header-section {
@@ -2159,7 +2169,8 @@ select {
 }
 
 .modal-header {
-    padding: 10px 10px 40px;
+    padding: 10px 10px 30px;
+    border-bottom: none;
 }
 
 .modal-title {
@@ -2355,4 +2366,9 @@ input.search-input-custom-input {
 .notification-empty p {
     margin: 0;
     font-size: 14px;
+}
+
+.footer-link-text{
+    font-size: 14px;
+    color: #667797;
 }

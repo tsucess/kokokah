@@ -35,7 +35,7 @@ font-size: 12px;
 
 
     <!-- Header -->
-  <div class="header-section container-fluid align-items-center d-flex justify-content-center justify-content-lg-start" style="height:200px;">
+  <div class="header-section container-fluid align-items-center d-flex justify-content-center justify-content-lg-start">
         <div class="d-flex flex-column gap-2 align-items-center align-items-lg-start">
           <h3>Class</h3>
           <p>Let’s learn something new today!</p>
@@ -43,7 +43,7 @@ font-size: 12px;
 
   </div>
 
-    <div class  = "container position-relative " style="margin-top: -70px;">
+    <div class  = "container position-relative " style="margin-top: -70px; min-height:200px;">
         <div class = "card-container" id="coursesContainer">
             <!-- Classes will be loaded here dynamically -->
             <div class="text-center w-100" id="loadingMessage">

@@ -67,7 +67,10 @@ class SidebarManager {
     // Transactions (Admin+)
     if (['admin', 'superadmin'].includes(role)) {
       html += `
-        <a class="nav-item-link d-flex align-items-center gap-3" href="/transactions" role="button">
+        <a class="nav-item-link d-flex align-items-center gap-3" href="/subscription" role="button">
+          <i class="fa-solid fa-money-bill-1-wave"></i><span>Subscription Plans</span>
+        </a>
+         <a class="nav-item-link d-flex align-items-center gap-3" href="/transactions" role="button">
           <i class="fa-solid fa-credit-card nav-icon"></i><span>Transactions</span>
         </a>
       `;
