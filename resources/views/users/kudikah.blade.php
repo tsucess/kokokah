@@ -373,6 +373,52 @@
                     padding: 14px 20px;
                 }
             }
+
+            .secure-label {
+                font-size: 16px;
+                color: #000000;
+            }
+
+            .secure-label a {
+                text-decoration: none;
+                color: #000000;
+            }
+
+            .primaryBtn {
+                background-color: #FDAF22;
+                padding: 16px 20px;
+                border-radius: 4px;
+                color: #000F11;
+                font-size: 16px;
+                font-weight: 600;
+                width: 100%;
+            }
+            .delete-title{
+                font-size: 16px;
+                color: #000000;
+            }
+            .delete-text{
+                color: #8E8E8E;
+                font-size: 12px;
+            }
+            .delete-cancel-btn{
+                border: 1px solid #FF383C;
+                font-size: 16px;
+                color: #FF383C;
+                background-color: transparent;
+                padding: 10px 20px;
+                border-radius: 4px;
+                font-weight: 600;
+            }
+            .delete-delete-btn{
+                border: 1px solid #FF383C;
+                font-size: 16px;
+                color: #FFf;
+                background-color: #FF383C;
+                padding: 10px 20px;
+                border-radius: 4px;
+                font-weight: 600;
+            }
         </style>
         <!-- Toast Notification -->
         <div id="toastNotification" class="toast-notification" style="display: none;">
@@ -381,49 +427,88 @@
             </div>
         </div>
 
+        {{-- add and edit modal --}}
         <div class="modal fade" id="addCard" data-bs-keyboard="false" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header d-flex justify-content-between align-items-center">
                         <h1 class="modal-title" id="modalTitle">Add New Card</h1>
                         <button type="button" class="modal-header-btn" data-bs-dismiss="modal" aria-label="Close">
-                            <i class="fa-solid fa-circle-xmark"></i>
+                            <i class="fa-regular fa-circle-xmark"></i>
                         </button>
                     </div>
                     <form class="modal-form-container" id="addCard">
                         <div class="modal-form">
                             <div class="modal-form-input-border">
                                 <label for="levelName" class="modal-label">Enter Card holder Name</label>
-                                <input class="modal-input" type="text" id="levelName" placeholder="e.g., JS1" required />
+                                <input class="modal-input" type="text" id="" placeholder="Jane Applseed"
+                                    required />
+
+
                             </div>
                             <div class="modal-form-input-border">
                                 <label for="levelName" class="modal-label">Card Number</label>
-                                <input class="modal-input" type="text" id="levelName" placeholder="e.g., JS1" required />
+                                <div class="d-flex gap-2 justify-content-between align-items-center">
+                                    <input class="modal-input" type="number" id=""
+                                        placeholder="**** **** **** ****" required />
+                                    <button><i class="fa-regular fa-eye fa-xs" style="color:#AAC3C6;"></i></button>
+                                </div>
                             </div>
                             <div class="modal-form-input-border">
                                 <label for="levelName" class="modal-label">Expired Date</label>
-                                <input class="modal-input" type="text" id="levelName" placeholder="e.g., JS1" required />
+                                <div class="d-flex gap-2 justify-content-between align-items-center">
+                                    <input class="modal-input" type="number" id="" placeholder="MM/YY" required />
+                                    <button><i class="fa-regular fa-eye fa-xs" style="color:#AAC3C6;"></i></button>
+                                </div>
                             </div>
                             <div class="modal-form-input-border">
                                 <label for="levelName" class="modal-label">CVV</label>
-                                <input class="modal-input" type="text" id="levelName" placeholder="e.g., JS1" required />
+                                <div class="d-flex gap-2 justify-content-between align-items-center">
+                                    <input class="modal-input" type="number" id="" placeholder="234" required />
+                                    <button><i class="fa-regular fa-eye fa-xs" style="color:#AAC3C6;"></i></button>
+                                </div>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="checkChecked" checked>
-                                <label class="form-check-label" for="checkChecked">
-                                    Secure this card.  <a href=''>Why is it important?</a>
+                                <label class="form-check-label secure-label" for="checkChecked">
+                                    Secure this card. <a href='#' class="fw-bold">Why is it important?</a>
                                 </label>
                             </div>
 
 
                         </div>
                         <div class="d-flex gap-2">
-                            <button type="button" class="btn primaryButton">Save New Card</button>
+                            <button type="button" class="btn primaryBtn">Save New Card</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+
+        {{-- delete modal --}}
+
+        <div class="modal fade" id="deleteCard" data-bs-keyboard="false" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered" style="max-width: 370px;">
+                <div class="modal-content " >
+                    <div class="d-flex flex-column gap-4 align-items-center mb-5">
+                        <img src="images/trash-bin-outline.png" alt="trash-bin-icon" />
+                        <div class="d-flex flex-column gap-3 align-items-center">
+                            <h2 class="delete-title text-center">Delete Existing Card</h2>
+                            <p class="text-center delete-text">Your existing card will be permanently deleted from our system</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-5 justify-content-between align-items-center">
+                        <button type="button" class="delete-cancel-btn w-100" data-bs-dismiss="modal" aria-label="Close">
+                            Cancel
+                        </button>
+                        <button class="delete-delete-btn w-100">Delete</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
 
         <!-- Page Loader -->
         <div id="pageLoader" class="page-loader">
@@ -452,7 +537,8 @@
 
                     <div class="d-flex align-items-center gap-3 justify-content-center">
                         <button class="call-to-action-container d-flex flex-column gap-2 align-items-center w-100 h-100">
-                            <div class="icon-container"><i class="fa-solid fa-money-bill" style="color: #004A53;"></i></div>
+                            <div class="icon-container"><i class="fa-solid fa-money-bill" style="color: #004A53;"></i>
+                            </div>
                             <p class="call-action-text">Add Money</p>
                         </button>
                         <button class="call-to-action-container d-flex flex-column gap-2 align-items-center w-100 h-100">
@@ -461,7 +547,8 @@
                             <p class="call-action-text">Transfer Money</p>
                         </button>
                         <button class="call-to-action-container d-flex flex-column gap-2 align-items-center w-100 h-100">
-                            <div class="icon-container"><i class="fa-solid fa-clipboard-list" style="color: #004A53;"></i>
+                            <div class="icon-container"><i class="fa-solid fa-clipboard-list"
+                                    style="color: #004A53;"></i>
                             </div>
                             <p class="call-action-text">Enroll Subject</p>
                         </button>
@@ -502,7 +589,7 @@
                                         style="color: #004A53;"></i></div>
                                 <p class="call-action-text">Edit Card</p>
                             </button>
-                            <button
+                            <button data-bs-toggle="modal" data-bs-target="#deleteCard"
                                 class="call-to-action-container d-flex flex-column gap-2 align-items-center w-100 h-100">
                                 <div class="icon-container" style="background-color: #FFE6E6;"><i
                                         class="fa-solid fa-xmark" style="color: #FF383C;"></i></div>
