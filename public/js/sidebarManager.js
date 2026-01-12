@@ -36,9 +36,9 @@ class SidebarManager {
     }
 
     sidebarNav.innerHTML = '';
-    if (dashboardElement) {
-      sidebarNav.appendChild(dashboardElement);
-    }
+    // if (dashboardElement) {
+    //   sidebarNav.appendChild(dashboardElement);
+    // }
 
     // Add menu items based on role
     const menuHTML = this.getMenuItemsForRole(user.role);
@@ -183,9 +183,6 @@ class SidebarManager {
 
   static getStudentMenu() {
     return `
-      <a class="nav-item-link d-flex align-items-center gap-3" href="/userprofile">
-        <i class="fa-solid fa-user nav-icon"></i><span>Profile</span>
-      </a>
       <a class="nav-item-link d-flex align-items-center gap-3" href="/userclass">
         <i class="fa-solid fa-chalkboard nav-icon"></i><span>Classes</span>
       </a>
