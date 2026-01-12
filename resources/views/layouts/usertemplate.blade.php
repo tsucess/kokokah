@@ -30,6 +30,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
     <link rel="stylesheet" href="{{ asset('css/style_theme.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/responsiveness.css') }}">
     <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
 
     {{-- @vite(['resources/css/dashboard.css']) --}}
@@ -52,6 +53,11 @@
             z-index: 9999;
             opacity: 1;
             visibility: visible;
+        }
+        .img{
+            width: 15px;
+            height: 15px;
+            object-fit: fill;
         }
     </style>
 </head>
@@ -132,10 +138,10 @@
 
 
         <div class="d-flex gap-2 shadow-sm rounded-pill align-items-center py-2 px-3  mx-1 mx-lg-3">
-            <div class="d-flex align-items-center gap-1"><img src="./images/leaderboard-award-icon.png" alt=""> <span data-badges>0</span></div>
+            <div class="d-flex align-items-center gap-1"><img src="./images/leaderboard-award-icon.png" alt="" class="img"> <span data-badges>0</span></div>
 
             <div class="ps-2 d-flex align-items-center gap-1" style="border-left: 1px solid #000000;"><img src="./images/point-icon.png"
-                    alt=""> <span data-points>0</span></div>
+                    alt="" class="img"> <span data-points>0</span></div>
 
         </div>
 
