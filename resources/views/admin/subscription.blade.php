@@ -2,9 +2,10 @@
 
 @section('content')
     <style>
-        p{
+        p {
             margin-bottom: 0;
         }
+
         .stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
@@ -29,19 +30,26 @@
             font-size: 32px;
             font-family: 'fredoka one';
         }
-        .plan-container{
+
+        .plan-container {
             display: grid;
-             grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
-             gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+            gap: 30px;
         }
-        .plan-card{
+
+        .plan-card {
             border: 1px solid #CCDBDD;
             border-radius: 20px;
             padding: 30px;
             background-color: transparent;
             gap: 35px;
         }
-        .badge{
+
+        .plan-card.accent {
+            background-color: #004A53;
+        }
+
+        .badge {
             background-color: #CCDBDD;
             width: 51px;
             height: 51px;
@@ -52,42 +60,74 @@
             color: #004A53;
             font-size: 32px;
         }
-        .plan-card-title{
-color: #004A53;
-font-size: 18px;
-font-weight: 700;
+
+        .plan-card.accent .badge {
+            color: #004A53;
+            background-color: #fff;
         }
-        .plan-card-text{
-color: #004A53;
-font-size: 18px;
+
+        .plan-card-title {
+            color: #004A53;
+            font-size: 18px;
+            font-weight: 700;
         }
-        .plan-card-price{
+
+        .plan-card-text {
+            color: #004A53;
+            font-size: 18px;
+        }
+
+        .plan-card-price {
             font-family: 'fredoka one';
             color: #004A53;
             font-weight: 500;
         }
-        .plan-card-priceL{
+
+        .plan-card-priceL {
             font-size: 32px;
         }
-        .plan-card-priceS{
+
+        .plan-card-priceS {
             font-size: 16px;
         }
-        .list-divider{
+        .list-divider {
             background-color: #000000;
             height: 1px;
             width: 100%;
         }
-        .list-title{
+
+        .list-title {
             font-size: 20px;
             color: #000F11;
             font-family: 'fredoka one';
             font-weight: 300;
         }
-        .list-item{
+
+        .list-item {
             font-size: 15px;
             color: #000F11;
             font-family: 'fredoka one';
             font-weight: 300;
+        }
+
+        .plan-card.accent .plan-card-title,
+        .plan-card.accent .plan-card-text,
+        .plan-card.accent .plan-card-price,
+        .plan-card.accent .list-item,
+        .plan-card.accent .list-title {
+            color: #fff;
+        }
+
+        .plan-card-btn {
+            border: 1px solid #CCDBDD;
+            padding: 10px 20px;
+            border-radius: 52px;
+            color: #000000;
+            font-size: 12px;
+        }
+        .plan-card.accent .list-divider,
+        .plan-card.accent .plan-card-btn{
+            background-color: #fff;
         }
     </style>
     <main>
@@ -131,7 +171,7 @@ font-size: 18px;
                     <p>↗️ +2% this month</p>
                 </div>
             </section>
-            <section>
+            <section class="plan-container">
                 <article class="plan-card d-flex flex-column">
                     <div class="d-flex gap-2 align-items-start justify-content-between">
                         <div class="d-flex align-items-center gap-3">
@@ -140,7 +180,8 @@ font-size: 18px;
                                 <h3 class="plan-card-title">Daily Plan</h3>
                                 <p class="plan-card-text">Access to class note, anytime, anywhere</p>
                                 <div class="d-flex align-items-center gap-1 ">
-                                    <p class="d-flex align-items-center plan-card-price plan-card-priceL"><i class="fa-solid fa-naira-sign"></i>300</p>
+                                    <p class="d-flex align-items-center plan-card-price plan-card-priceL"><i
+                                            class="fa-solid fa-naira-sign"></i>300</p>
                                     <p class="plan-card-price plan-card-priceS">/per day</p>
                                 </div>
                             </div>
@@ -150,13 +191,73 @@ font-size: 18px;
                     <div class="d-flex flex-column gap-3">
                         <p class="list-title">What’s Included?</p>
                         <ul class="d-flex flex-column gap-2 ps-0" style="list-style: none;">
-                            <li class="list-item d-flex align-items-center gap-2"><i class="fa-solid fa-children"></i> Valid for 24hrs</li>
-                            <li class="list-item d-flex align-items-center gap-2"><i class="fa-solid fa-children"></i> Access to the subject note</li>
+                            <li class="list-item d-flex align-items-center gap-2"><i class="fa-solid fa-children"></i> Valid
+                                for 24hrs</li>
+                            <li class="list-item d-flex align-items-center gap-2"><i class="fa-solid fa-children"></i>
+                                Access to the subject note</li>
                         </ul>
                         <div class="list-divider"></div>
                     </div>
+                    <button class="plan-card-btn align-self-center">Revenue: ₦100,000/mo </button>
+                </article>
+                <article class="plan-card accent d-flex flex-column">
+                    <div class="d-flex gap-2 align-items-start justify-content-between">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="badge">W</div>
+                            <div class="d-flex flex-column gap-3">
+                                <h3 class="plan-card-title">Daily Plan</h3>
+                                <p class="plan-card-text">Access to class note, anytime, anywhere</p>
+                                <div class="d-flex align-items-center gap-1 ">
+                                    <p class="d-flex align-items-center plan-card-price plan-card-priceL"><i
+                                            class="fa-solid fa-naira-sign"></i>300</p>
+                                    <p class="plan-card-price plan-card-priceS">/per day</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                    </div>
+                    <div class="d-flex flex-column gap-3">
+                        <p class="list-title">What’s Included?</p>
+                        <ul class="d-flex flex-column gap-2 ps-0" style="list-style: none;">
+                            <li class="list-item d-flex align-items-center gap-2"><i class="fa-solid fa-children"></i> Valid
+                                for 24hrs</li>
+                            <li class="list-item d-flex align-items-center gap-2"><i class="fa-solid fa-children"></i>
+                                Access to the subject note</li>
+                        </ul>
+                        <div class="list-divider"></div>
+                    </div>
+                    <button class="plan-card-btn align-self-center">Revenue: ₦100,000/mo </button>
+                </article>
+                <article class="plan-card d-flex flex-column">
+                    <div class="d-flex gap-2 align-items-start justify-content-between">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="badge">M</div>
+                            <div class="d-flex flex-column gap-3">
+                                <h3 class="plan-card-title">Daily Plan</h3>
+                                <p class="plan-card-text">Access to class note, anytime, anywhere</p>
+                                <div class="d-flex align-items-center gap-1 ">
+                                    <p class="d-flex align-items-center plan-card-price plan-card-priceL"><i
+                                            class="fa-solid fa-naira-sign"></i>300</p>
+                                    <p class="plan-card-price plan-card-priceS">/per day</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                    </div>
+                    <div class="d-flex flex-column gap-3">
+                        <p class="list-title">What’s Included?</p>
+                        <ul class="d-flex flex-column gap-2 ps-0" style="list-style: none;">
+                            <li class="list-item d-flex align-items-center gap-2"><i class="fa-solid fa-children"></i> Valid
+                                for 24hrs</li>
+                            <li class="list-item d-flex align-items-center gap-2"><i class="fa-solid fa-children"></i>
+                                Access to the subject note</li>
+                        </ul>
+                        <div class="list-divider"></div>
+                    </div>
+                    <button class="plan-card-btn align-self-center">Revenue: ₦100,000/mo </button>
                 </article>
             </section>
+
         </div>
     </main>
 @endsection
