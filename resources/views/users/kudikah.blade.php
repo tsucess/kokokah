@@ -348,15 +348,16 @@
 
             .call-to-action-container {
                 border: 1px solid #C4C4C4;
-                padding: 14px;
+                padding: 8px 8px;
                 border-radius: 15px;
                 max-width: 130px;
+                width: 100%;
             }
 
             .icon-container {
                 background-color: #CCDBDD;
-                width: 50px;
-                height: 50px;
+                width: 35px;
+                height: 35px;
                 border-radius: 15px;
                 display: flex;
                 align-items: center;
@@ -365,12 +366,21 @@
 
             .call-action-text {
                 color: #004A53;
-                font-size: 12px;
+                font-size: 8px;
             }
 
             @media screen and (min-width:768px) {
                 .call-to-action-container {
                     padding: 14px 20px;
+                }
+
+                .call-action-text {
+                    font-size: 12px;
+                }
+
+                .icon-container {
+                    width: 50px;
+                    height: 50px;
                 }
             }
 
@@ -393,15 +403,18 @@
                 font-weight: 600;
                 width: 100%;
             }
-            .delete-title{
+
+            .delete-title {
                 font-size: 16px;
                 color: #000000;
             }
-            .delete-text{
+
+            .delete-text {
                 color: #8E8E8E;
                 font-size: 12px;
             }
-            .delete-cancel-btn{
+
+            .delete-cancel-btn {
                 border: 1px solid #FF383C;
                 font-size: 16px;
                 color: #FF383C;
@@ -410,7 +423,8 @@
                 border-radius: 4px;
                 font-weight: 600;
             }
-            .delete-delete-btn{
+
+            .delete-delete-btn {
                 border: 1px solid #FF383C;
                 font-size: 16px;
                 color: #FFf;
@@ -489,12 +503,13 @@
 
         <div class="modal fade" id="deleteCard" data-bs-keyboard="false" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered" style="max-width: 370px;">
-                <div class="modal-content " >
+                <div class="modal-content ">
                     <div class="d-flex flex-column gap-4 align-items-center mb-5">
                         <img src="images/trash-bin-outline.png" alt="trash-bin-icon" />
                         <div class="d-flex flex-column gap-3 align-items-center">
                             <h2 class="delete-title text-center">Delete Existing Card</h2>
-                            <p class="text-center delete-text">Your existing card will be permanently deleted from our system</p>
+                            <p class="text-center delete-text">Your existing card will be permanently deleted from our
+                                system</p>
                         </div>
                     </div>
 
@@ -517,7 +532,7 @@
             <div class="loader-subtext">Please wait while we redirect you to the payment gateway...</div>
         </div>
 
-        <section class="container-fluid px-2 py-4 px-lg-4">
+        <section class="container-fluid px-3 py-4 px-lg-4">
             <div class="row g-4 mb-4">
 
 
@@ -536,18 +551,19 @@
                     </div>
 
                     <div class="d-flex align-items-center gap-3 justify-content-center">
-                        <button class="call-to-action-container d-flex flex-column gap-2 align-items-center w-100 h-100">
-                            <div class="icon-container"><i class="fa-solid fa-money-bill" style="color: #004A53;"></i>
+                        <button class="call-to-action-container d-flex flex-column gap-2 align-items-center">
+                            <div class="icon-container"><i class="fa-solid fa-money-bill fa-xs"
+                                    style="color: #004A53;"></i>
                             </div>
                             <p class="call-action-text">Add Money</p>
                         </button>
-                        <button class="call-to-action-container d-flex flex-column gap-2 align-items-center w-100 h-100">
-                            <div class="icon-container"><i class="fa-solid fa-money-bill-transfer"
+                        <button class="call-to-action-container d-flex flex-column gap-2 align-items-center">
+                            <div class="icon-container"><i class="fa-solid fa-money-bill-transfer fa-xs"
                                     style="color: #004A53;"></i></div>
                             <p class="call-action-text">Transfer Money</p>
                         </button>
-                        <button class="call-to-action-container d-flex flex-column gap-2 align-items-center w-100 h-100">
-                            <div class="icon-container"><i class="fa-solid fa-clipboard-list"
+                        <button class="call-to-action-container d-flex flex-column gap-2 align-items-center ">
+                            <div class="icon-container"><i class="fa-solid fa-clipboard-list fa-xs"
                                     style="color: #004A53;"></i>
                             </div>
                             <p class="call-action-text">Enroll Subject</p>
@@ -576,23 +592,24 @@
                                 <p style="font-size: 24px; color:#fff;" id="cardHolderName">Card Holder Name</p>
                             </div>
                         </div>
-                        <div class="d-flex align-items-center gap-3">
+                        <div class="d-flex align-items-center gap-3 justify-content-center">
                             <button data-bs-toggle="modal" data-bs-target="#addCard"
-                                class="call-to-action-container d-flex flex-column gap-2 align-items-center w-100 h-100">
-                                <div class="icon-container"><i class="fa-solid fa-plus" style="color: #004A53;"></i>
+                                class="call-to-action-container d-flex flex-column gap-2 align-items-center ">
+                                <div class="icon-container"><i class="fa-solid fa-plus fa-xs"
+                                        style="color: #004A53;"></i>
                                 </div>
                                 <p class="call-action-text">Add Card</p>
                             </button>
                             <button
-                                class="call-to-action-container d-flex flex-column gap-2 align-items-center w-100 h-100">
-                                <div class="icon-container"><i class="fa-solid fa-pen-to-square"
+                                class="call-to-action-container d-flex flex-column gap-2 align-items-center ">
+                                <div class="icon-container"><i class="fa-solid fa-pen-to-square fa-xs"
                                         style="color: #004A53;"></i></div>
                                 <p class="call-action-text">Edit Card</p>
                             </button>
                             <button data-bs-toggle="modal" data-bs-target="#deleteCard"
-                                class="call-to-action-container d-flex flex-column gap-2 align-items-center w-100 h-100">
+                                class="call-to-action-container d-flex flex-column gap-2 align-items-center ">
                                 <div class="icon-container" style="background-color: #FFE6E6;"><i
-                                        class="fa-solid fa-xmark" style="color: #FF383C;"></i></div>
+                                        class="fa-solid fa-xmark fa-xs" style="color: #FF383C;"></i></div>
                                 <p class="call-action-text">Delete Card</p>
                             </button>
 
