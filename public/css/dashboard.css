@@ -57,6 +57,11 @@ input[type="number"] {
     -moz-appearance: textfield;
 }
 
+textarea {
+    resize: none;
+}
+
+
 
 /* Button styles moved to Tailwind - see resources/css/app.css */
 
@@ -1824,7 +1829,8 @@ p {
 .tab {
     background-color: #ccdbdd;
     height: auto;
-    gap: 24px;
+    gap: 14px;
+    padding: 15px;
 }
 
 .notification-container {

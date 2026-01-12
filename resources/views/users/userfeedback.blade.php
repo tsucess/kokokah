@@ -51,7 +51,8 @@
             background-color: #FDAF22;
             color: #000F11;
             font-size: 16px;
-            width: 341px;
+            width: 100%;
+            max-width: 341px;
             height: 60px;
             border: none;
             font-weight: 600;
@@ -143,6 +144,14 @@
 
         .loading-spinner.show {
             display: block;
+        }
+        @media screen and (max-width:768px){
+            .header-title{
+                font-size: 22px;
+            }
+            .header-subtitle{
+                font-size: 16px;
+            }
         }
     </style>
 
@@ -249,7 +258,7 @@
 
                     <div class="d-flex flex-column textarea-area">
                         <label for="message" class="label">Message *</label>
-                        <textarea name="message" id="message" class="input" placeholder="Please provide detailed information about your feedback......" required></textarea>
+                        <textarea name="message" id="message" class="input h-100" placeholder="Please provide detailed information about your feedback......" required></textarea>
                         <span class="error-message" id="messageError"></span>
                     </div>
                 </form>

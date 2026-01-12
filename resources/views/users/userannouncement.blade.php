@@ -1,9 +1,21 @@
 @extends('layouts.usertemplate')
 
 @section('content')
+<style>
+    .tabs{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px,1fr))
+    }
+    @media screen and (max-width:768px){
+        .tabs{
+            border-radius: 30px;
+            padding: 20px;
+        }
+    }
+</style>
 <main class="subjects-main">
 
-        <section class="d-flex gap-5 flex-column py-4 container px-5">
+        <section class="d-flex gap-5 flex-column py-4 container px-3 px-lg-4">
 
 
             <section class=" d-flex flex-column" style="gap: 30px;">
@@ -15,7 +27,7 @@
                 </div>
 
                 <div class="d-flex flex-column " style="gap: 75px;">
-                    <div class="row rounded-pill p-2 tab" id="announcementTabs">
+                    <div class="tab tabs" id="announcementTabs">
                         <div class=" rounded-pill d-flex justify-content-center gap-1 py-lg-2 align-items-center col tab-text bg-light" data-filter="all">
                             <i class="fa-solid fa-bell"></i> All (<span class="count">0</span>)
                         </div>

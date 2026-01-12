@@ -46,13 +46,13 @@
             .sidebar-mobile {
                 position: fixed;
                 left: -100%;
-                top: 100px;
-                height: calc(100vh - 100px);
+                top: 0;
+                height: 100vh;
                 width: 80%;
                 max-width: 320px;
                 background: #fff;
                 z-index: 950;
-                padding: 1rem;
+                padding: 6rem 1rem 1rem;
                 overflow-y: auto;
                 transition: left 0.3s ease-in-out;
                 box-shadow: 2px 0 15px rgba(0, 0, 0, 0.15);
