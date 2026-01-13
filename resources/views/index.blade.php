@@ -1027,7 +1027,7 @@
                 </div>
 
                 <div class="col-12 col-lg-6 ">
-                    <img src="./images/kokoplay-section-img.jpg " class="img-fluid w-100 fade-section" alt=""
+                    <img src="./images/kokoplay-section-img.jpg " class="img-fluid w-100 h-auto fade-section" alt=""
                         style="max-height: 450px;">
                 </div>
 
