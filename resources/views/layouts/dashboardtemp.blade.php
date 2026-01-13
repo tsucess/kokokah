@@ -27,6 +27,7 @@
 
     <link rel="stylesheet" href="{{ asset('css/style_theme.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/responsiveness.css') }}">
     <link rel="stylesheet" href="{{ asset('css/access.css') }}">
     <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
     {{-- @vite(['resources/css/dashboard.css','resources/css/access.css']) --}}
@@ -65,7 +66,7 @@
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar" style="height: 100vh; overflow-y: auto; overflow-x: hidden;">
         <div class="brand p-3">
-            <a href="/"><img src="{{ asset('images/logo-auth.png') }}" alt="Kokokah Logo"
+            <a href="/"><img src="{{ asset('images/KOKOKAH Logo 2.svg') }}" alt="Kokokah Logo"
                     class="img-fluid dashboard-logo"></a>
         </div>
 

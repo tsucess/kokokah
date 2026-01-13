@@ -4,7 +4,7 @@
 <style>
     .tabs{
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(100px,1fr))
+        grid-template-columns: repeat(auto-fit, minmax(120px,1fr))
     }
     @media screen and (max-width:768px){
         .tabs{

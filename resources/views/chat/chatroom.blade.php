@@ -13,12 +13,14 @@
             color: white;
             border-radius: 12px;
             padding: 10px 15px;
-            max-width: 70%;
+            max-width: 500px;
             margin-left: auto;
+
         }
 
         .chat-message.current-user-message .message-content .message-user {
             color: white;
+            font-size: 0.9rem;
         }
 
         .chat-message.current-user-message .message-content p {
@@ -36,7 +38,7 @@
             color: #333;
             border-radius: 12px;
             padding: 10px 15px;
-            max-width: 70%;
+            max-width: 500px;
         }
 
         .chat-message:not(.current-user-message) .message-timestamp {
@@ -106,7 +108,7 @@
 
             .sidebar-mobile {
                 position: fixed;
-                top: 0;
+                top: 70px;
                 left: -100%;
                 height: 100vh;
                 width: 80%;
@@ -475,8 +477,11 @@
                     <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
                     <input type="text" class="form-control border-start-0 ps-0" placeholder="Find a Conversation" id="searchChatrooms">
                 </div>
+                 <div class="d-flex align-items-center gap-2 justify-content-between">
+                    <h6 class="text-muted text-uppercase small mb-2">Conversations</h6>
+                    <button id='closeBtn'><i class="fa-regular fa-circle-xmark"></i></button>
+                 </div>
 
-                <h6 class="text-muted text-uppercase small mb-2">Conversations</h6>
                 <div id="chatrooms-list-mobile" class="chatrooms-list"></div>
             </div>
 
@@ -1303,6 +1308,7 @@
         const overlayMobile = document.getElementById('sidebarOverlay');
         const sidebarMobile = document.getElementById('sidebar-mobile');
         const toggleBtn = document.getElementById('toggleSidebar');
+        const closeBtn = document.getElementById('closeBtn');
 
         function openSidebar() {
             sidebarMobile.classList.add('show');
@@ -1315,7 +1321,7 @@
             overlayMobile.classList.remove('show');
             document.body.style.overflow = '';
         }
-
+        closeBtn?.addEventListener('click', closeSidebar)
         toggleBtn?.addEventListener('click', openSidebar);
         overlayMobile.addEventListener('click', closeSidebar);
 

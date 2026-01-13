@@ -1,13 +1,13 @@
 @extends('layouts.template')
 
 @section('content')
-<style>
-    .impact{
-        font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-    }
-</style>
+    <style>
+        .impact {
+            font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+        }
+    </style>
     {{-- mascot  --}}
-    <img src="./images/book-icon.png" class="kokokah-logo" />
+    <img src="./images/KOKOKAH Logo Portrait.png" class="kokokah-logo" />
 
     <!-- Modal Section -->
 
@@ -445,25 +445,28 @@
 
     <!-- Hero Section - Yellow Background -->
     <div class="container-fluid hero-section-yellow">
-        <div class="row align-items-center">
-            <div class="col-12 col-md-6 col-lg-6">
-                {{-- <div class="hero-title-container">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 col-md-6 col-lg-6">
+                    {{-- <div class="hero-title-container">
   <span class="hero-title" id="typing-text"></span>
 </div> --}}
-                <h1 class="hero_header impact">Welcome!</h1>
-                <p class="mb-4 hero-subtitle">
-                    LOW DATA USAGE + OFFLINE ACCESS + SCHOOL MANAGEMENT SYSTEM
-                </p>
-                <div class="d-flex flex-column flex-sm-row gap-3">
-                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary-action">Start Using
-                        Kokokah</a>
-                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class=" btn btn-secondary-action">Signup
-                        Now</a>
+                    <h1 class="hero_header impact">Welcome!</h1>
+                    <p class="mb-4 hero-subtitle">
+                        LOW DATA USAGE + OFFLINE ACCESS + SCHOOL MANAGEMENT SYSTEM
+                    </p>
+                    <div class="d-flex flex-column flex-sm-row gap-3">
+                        <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary-action">Start
+                            Using
+                            Kokokah</a>
+                        <a data-bs-toggle="modal" data-bs-target="#exampleModal" class=" btn btn-secondary-action">Signup
+                            Now</a>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6 mt-5  mt-md-0 hero_img_container  text-center">
-                <img src="images/LMS.png" class="img-fluid animate__animated animate__pulse hero-img"
-                    alt="LMS Illustration">
+                <div class="col-12 col-md-6 col-lg-6 mt-5  mt-md-0 hero_img_container  text-center">
+                    <img src="images/LMS.png" class="img-fluid animate__animated animate__pulse hero-img"
+                        alt="LMS Illustration">
+                </div>
             </div>
         </div>
     </div>
@@ -507,7 +510,7 @@
                 </p>
             </div>
 
-            <div class="row g-4 features">
+            <div class="row g-4 features pb-4">
                 <!-- Feature 1 -->
                 <div class="col-12 col-md-6 col-lg-4 feature-item">
                     <div class="feature-card " style="background-color: #ff6b35;">
@@ -619,26 +622,27 @@
             </div>
         </div> --}}
 
-        <div style="background-color: #004A53;" class="p-5">
-            <div class="container-fluid px-0">
-                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section py-lg-3">
+        <div style="background-color: #004A53;" class="p-4">
+            <div class="container ">
+                <div class="row ourproduct2 product-section-orange px-2 px-lg-4 py-4 add-margin fade-section py-lg-3">
                     <div class="col-12 col-lg-7 mb-5 mb-lg-0">
                         <div class="d-flex flex-column gap-3">
-                        <div class="bg-white p-1 rounded-3 align-self-start"><img src="images/Group 1171274797.png"
-                                alt="" class="" style="width:100%; height:auto; max-width:150px;" /></div>
+                            <div class="bg-white p-1 rounded-3 align-self-start"><img src="images/Group 1171274797.png"
+                                    alt="" class="" style="width:100%; height:auto; max-width:150px;" />
+                            </div>
 
-                        <p class="text-white">
-                            Kokokah houses an exam preparatory platform
-                            where African students can prepare adequately
-                            for both local and international examinations.
-                        </p>
-                        <p class="text-white">
-                            WAEC - NECO - JAMB - GCE - GMAT - SAT - TOEFL - IELTS - GRE - ACT
-                        </p>
+                            <p class="text-white">
+                                Kokokah houses an exam preparatory platform
+                                where African students can prepare adequately
+                                for both local and international examinations.
+                            </p>
+                            <p class="text-white">
+                                WAEC - NECO - JAMB - GCE - GMAT - SAT - TOEFL - IELTS - GRE - ACT
+                            </p>
 
-                        <div class="d-flex justify-content-center justify-content-md-start">
-                            <button class = "primaryButton" type = "button">Coming soon</button>
-                        </div>
+                            <div class="d-flex justify-content-center justify-content-md-start">
+                                <button class = "primaryButton" type = "button">Coming soon</button>
+                            </div>
                         </div>
                     </div>
                     <div class="col-12 col-lg-5">
@@ -673,9 +677,9 @@
             </div>
         </div> --}}
 
-        <div style="background-color: #F6F6F6;" class="p-5">
-            <div class="container-fluid px-0">
-                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section-left py-lg-3">
+        <div style="background-color: #F6F6F6;" class="p-4">
+            <div class="container">
+                <div class="row ourproduct2 product-section-orange px-2 px-lg-4 py-4 add-margin fade-section-left py-lg-3">
                     <div class="col-12 col-lg-5 mb-5 mb-lg-0">
                         <img src="./images/sms-section-img.png" alt=""
                             class="img-fluid product-images w-100 overflow-img"
@@ -720,9 +724,9 @@
             </div>
         </div> --}}
 
-        <div style="background-color: #FDAF22;" class="p-5">
-            <div class="container-fluid px-0">
-                <div class="row ourproduct2 product-section-teal p-4 add-margin fade-section py-lg-3">
+        <div style="background-color: #FDAF22;" class="p-4">
+            <div class="container">
+                <div class="row ourproduct2 product-section-teal px-2 px-lg-4 py-4 add-margin fade-section py-lg-3">
                     <div class="col-12 col-lg-7 d-flex flex-column gap-3 justify-content-lg-center mb-5 mb-lg-0">
                         <div class="bg-white px-3 py-2 rounded-3 align-self-start">
                             <img src="./images/Kokokah_Logo.png" alt="" style="width:200px; height:auto;"
@@ -775,9 +779,9 @@
         </div>
     </div> --}}
 
-        <div style="background-color: #A34518;" class="p-5">
-            <div class="container-fluid px-0">
-                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section-left py-lg-3">
+        <div style="background-color: #A34518;" class="p-4">
+            <div class="container">
+                <div class="row ourproduct2 product-section-orange px-2 px-lg-4 py-4 add-margin fade-section-left py-lg-3">
                     <div class="col-12 col-lg-5 mb-5 mb-lg-0">
                         <img src="./images/marketplace-section-img.jpg" alt=""
                             class="img-fluid product-images w-100 overflow-img"
@@ -832,9 +836,9 @@
         </div>
     </div> --}}
 
-        <div style="background-color: #004A53;" class="p-5">
-            <div class="container-fluid px-0">
-                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section py-lg-3">
+        <div style="background-color: #004A53;" class="p-4">
+            <div class="container">
+                <div class="row ourproduct2 product-section-orange px-2 px-lg-4 py-4 add-margin fade-section py-lg-3">
 
                     <div class="col-12 col-lg-7 d-flex flex-column gap-3 justify-content-lg-center mb-5 mb-lg-0">
                         <div class="bg-white px-3 py-2 rounded-3 align-self-start">
@@ -853,7 +857,7 @@
                         </div>
                     </div>
                     <div class="col-12 col-lg-5">
-                        <img src="./images/stemges-section.jpg" alt=""
+                        <img src="./images/stemgee-section.jpg" alt=""
                             class="img-fluid product-images w-100 overflow-img"
                             style="border:3px solid #F56824; border-radius:30px;">
                     </div>
@@ -863,9 +867,9 @@
             </div>
         </div>
 
-        <div style="background-color: #52230C;" class="p-5">
-            <div class="container-fluid px-0">
-                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section-left py-lg-3">
+        <div style="background-color: #52230C;" class="p-4">
+            <div class="container">
+                <div class="row ourproduct2 product-section-orange px-2 px-lg-4 py-4 add-margin fade-section-left py-lg-3">
 
                     <div class="col-12 col-lg-7 d-flex flex-column gap-3 justify-content-lg-center mb-5 mb-lg-0">
                         <h4 class="text-white impact">Kudikah</h4>
@@ -941,9 +945,9 @@
             </div>
         </div> --}}
 
-         <div style="background-color: #F6F6F6;" class="p-5">
-            <div class="container-fluid px-0">
-                <div class="row ourproduct2 product-section-orange p-4 add-margin fade-section py-lg-3">
+        <div style="background-color: #F6F6F6;" class="p-4">
+            <div class="container">
+                <div class="row ourproduct2 product-section-orange px-2 px-lg-4 py-4 add-margin fade-section py-lg-3">
                     <div class="col-12 col-lg-5 mb-5 mb-lg-0">
                         <img src="./images/ai-chat-section-img.jpg" alt=""
                             class="img-fluid product-images w-100 overflow-img"
@@ -952,12 +956,12 @@
 
                     <div class="col-12 col-lg-7 d-flex flex-column gap-3 justify-content-lg-center">
                         <h4 class="impact text-white">
-                        AI Chatbot
-                    </h4>
-                    <p>
-                        Your personal academic assistant — ask questions, get explanations,
-                        and enjoy instant feedback tailored to your study needs.
-                    </p>
+                            AI Chatbot
+                        </h4>
+                        <p>
+                            Your personal academic assistant — ask questions, get explanations,
+                            and enjoy instant feedback tailored to your study needs.
+                        </p>
                         <div class="d-flex justify-content-center justify-content-md-start">
                             <button class = "primaryButton" type = "button">Coming Soon</button>
 
@@ -1004,29 +1008,32 @@
         </div>
     </div> --}}
 
-   <div style="background-color: #004A53;" class="p-5">
-    <div class="container-fluid px-0">
-        <div class="row  align-items-lg-center">
-            <div class="col-12 col-lg-6">
-                <div class="content-card rounded-4 p-4 d-flex flex-column gap-3 mb-5 mb-lg-0 slide-up-image"
-                     style="background-color:#003E45;">
-                    <h3 class="text-white impact">Kokoplay</h3>
-                    <p class="text-white">
-                        Kokokah combines School Management, Exam Prep, and a Learning Management System (LMS)—helping schools automate admin tasks, boost student performance, and deliver modern digital learning in one seamless platform. Kokokah combines School Management, Exam Prep, and a Learning Management System (LMS)—helping schools automate admin tasks, boost student performance, and deliver modern digital learning in one seamless platform.
-                    </p>
-                    <button class="primaryButton">Coming Soon</button>
+    <div style="background-color: #004A53;" class="p-4">
+        <div class="container-fluid px-0">
+            <div class="row  align-items-lg-center">
+                <div class="col-12 col-lg-6">
+                    <div class="content-card rounded-4 p-4 d-flex flex-column gap-3 mb-5 mb-lg-0 slide-up-image"
+                        style="background-color:#003E45;">
+                        <h3 class="text-white impact">Kokoplay</h3>
+                        <p class="text-white">
+                            Kokokah combines School Management, Exam Prep, and a Learning Management System (LMS)—helping
+                            schools automate admin tasks, boost student performance, and deliver modern digital learning in
+                            one seamless platform. Kokokah combines School Management, Exam Prep, and a Learning Management
+                            System (LMS)—helping schools automate admin tasks, boost student performance, and deliver modern
+                            digital learning in one seamless platform.
+                        </p>
+                        <button class="primaryButton">Coming Soon</button>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-12 col-lg-6 ">
-                <img src="./images/kokoplay-section-img.jpg "
-                     class="img-fluid w-100 fade-section"
-                     alt="" style="max-height: 450px;">
-            </div>
+                <div class="col-12 col-lg-6 ">
+                    <img src="./images/kokoplay-section-img.jpg " class="img-fluid w-100 fade-section" alt=""
+                        style="max-height: 450px;">
+                </div>
 
+            </div>
         </div>
     </div>
-</div>
 
 
 

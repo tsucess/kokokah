@@ -50,9 +50,9 @@
                 height: 100vh;
                 width: 80%;
                 max-width: 320px;
-                background: #fff;
+                background: #ba1c1c;
                 z-index: 950;
-                padding: 6rem 1rem 1rem;
+                padding: 6rem;
                 overflow-y: auto;
                 transition: left 0.3s ease-in-out;
                 box-shadow: 2px 0 15px rgba(0, 0, 0, 0.15);
@@ -72,7 +72,7 @@
 
         <div class="container-fluid py-4">
             <div class="overlay" id="sidebarOverlay"></div>
-            <div id="sidebar-mobile" class="sidebar-mobile d-lg-none">
+            <div id="sidebar-mobile" class="sidebar-mobile d-lg-none" style="padding: 6rem; background: red;">
 
                 <div class="input-group mb-4 py-5">
                     <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
