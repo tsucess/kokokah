@@ -73,9 +73,9 @@
 
     <!-- Navigation Bar - Fixed/Sticky with Overlay -->
     <nav class="navbar navbar-expand-lg sticky-top px-md-3 px-lg-2 px-xl-5" aria-label="Fifth navbar example">
-        <div class="container-fluid">
+        <div class="container">
             <a class="navbar-brand" href="/">
-                <img src="{{ asset('images/Kokokah_Logo.png') }}" alt="Kokokah Logo"
+                <img src="{{ asset('images/KOKOKAH Logo.svg') }}" alt="Kokokah Logo"
                     class="animate__animated animate__pulse hero-img w-100">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample05"

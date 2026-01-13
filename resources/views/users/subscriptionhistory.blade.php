@@ -58,13 +58,13 @@
 </style>
 
  <main class="transactions-main">
-        <div class="container-fluid px-5 py-4">
+        <div class="container-fluid px-2 py-4 px-lg-4">
             <!-- Header Section -->
-            <div class="d-flex justify-content-between align-items-start mb-2">
+            <div class="d-flex justify-content-between align-items-start mb-4">
                 <div>
-                    <h1 class="fw-bold mb-2"
-                        style="font-size: 1.2rem; color: #004A53; font-family: 'Fredoka One', sans-serif;" id="welcomeMessage">Welcome Back</h1>
-                    <p class="text-muted" style="font-size: 0.95rem;">Here's an overview of your subscription and payment history</p>
+                    <h1 class=""
+                       id="welcomeMessage">Welcome Back</h1>
+                    <p class="text-muted" >Here's an overview of your subscription and payment history</p>
                 </div>
             </div>
 
@@ -104,7 +104,7 @@
                                     <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">ID</th>
                                     <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Course</th>
                                     <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Amount</th>
-                                    <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Enrollment Date</th>
+                                    <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;" class="text-nowrap">Enrollment Date</th>
                                     <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Status</th>
                                     <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Progress</th>
                                 </tr>
@@ -172,7 +172,7 @@
                 if (response.success && response.data) {
                     const user = response.data;
                     const welcomeMessage = document.getElementById('welcomeMessage');
-                    welcomeMessage.textContent = `Welcome Back ${user.first_name} ${user.last_name}`;
+                    welcomeMessage.textContent = `Welcome Back ${user.first_name[0]+user.first_name.slice(1)} ${user.last_name[0]+user.last_name.slice(1)}`;
                 }
             } catch (error) {
                 console.error('Error loading user profile:', error);

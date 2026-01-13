@@ -14,7 +14,7 @@
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
- 
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,7 +39,7 @@
   <!-- Sidebar -->
   <aside class="sidebar" id="sidebar">
     <div class="brand">
-      <img src="{{ asset('images/Kokokah_Logo.png') }}" alt="Kokokah Logo" class="img-fluid dashboard-logo">
+      <img src="{{ asset('images/KOKOKAH Logo.svg') }}" alt="Kokokah Logo" class="img-fluid dashboard-logo">
     </div>
 
     <nav class="nav-group" id="sidebarNav">
@@ -58,7 +58,7 @@
       <button class="hamburger" id="hamburger">
         <i class="fa-solid fa-bars"></i>
       </button>
-      
+
       <div class="topbar-right">
         @yield('topbar-content')
       </div>

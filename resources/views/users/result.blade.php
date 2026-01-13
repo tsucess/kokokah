@@ -14,8 +14,8 @@
             background-color: #FDAF22;
             height: 200px;
             width: 100%;
-            border-bottom-left-radius: 100px;
-            border-bottom-right-radius: 100px;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
             position: relative;
         }
 
@@ -23,9 +23,10 @@
             position: absolute;
             right: -60px;
             bottom: -90px;
-            width: 450px;
+            width: 400px;
             height: auto;
             display: block;
+            z-index: 30;
         }
 
         .result-container {
@@ -171,7 +172,7 @@
         </div>
 
         <!-- Error State -->
-        <div id="errorState" class="d-none">
+        <div id="errorState" class="d-none" style="margin-top:60px;">
             <div class="error-message" id="errorMessage"></div>
         </div>
 

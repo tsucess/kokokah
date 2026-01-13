@@ -36,7 +36,7 @@ font-size: 12px;
 
     <!-- Header -->
   <div class="header-section container-fluid align-items-center d-flex justify-content-center justify-content-lg-start">
-        <div class="d-flex flex-column gap-2 align-items-center align-items-lg-start">
+        <div class="d-flex flex-column gap-2 align-items-center align-items-lg-start ">
           <h3>Class</h3>
           <p>Let’s learn something new today!</p>
         </div>

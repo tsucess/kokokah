@@ -57,6 +57,11 @@ input[type="number"] {
     -moz-appearance: textfield;
 }
 
+textarea {
+    resize: none;
+}
+
+
 
 /* Button styles moved to Tailwind - see resources/css/app.css */
 
@@ -1450,7 +1455,7 @@ main .container {
     color: #fff;
     position: relative;
     overflow: hidden;
-    height: 200px;
+    height: 250px;
 }
 @media (min-width: 767.98px) {
     .header-section {
@@ -1469,8 +1474,8 @@ main .container {
 }
 
 .header-image {
-    max-width: 350px;
-    bottom: -10px;
+    max-width: 300px;
+    bottom: -20px;
     right: -60px;
     z-index: 2;
 }
@@ -1824,7 +1829,8 @@ p {
 .tab {
     background-color: #ccdbdd;
     height: auto;
-    gap: 24px;
+    gap: 14px;
+    padding: 15px;
 }
 
 .notification-container {

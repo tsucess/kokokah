@@ -228,7 +228,7 @@ font-size: 12px;
     </div>
   </div>
 
-    <div class  = "container d-flex flex-column gap-3">
+    <div class  = "container d-flex flex-column gap-3" style="min-height: 200px;">
         <div class ="d-flex justify-content-between align-items-center">
             <div>
             <p class = "usersparagraph">
