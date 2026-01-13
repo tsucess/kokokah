@@ -950,7 +950,7 @@
                 <div class="row ourproduct2 product-section-orange px-2 px-lg-4 py-4 add-margin fade-section py-lg-3">
                     <div class="col-12 col-lg-5 mb-5 mb-lg-0">
                         <img src="./images/ai-chat-section-img.jpg" alt=""
-                            class="img-fluid product-images w-100 overflow-img"
+                            class="img-fluid product-images overflow-img"
                             style="border:3px solid #F56824; border-radius:30px;">
                     </div>
 
@@ -1009,7 +1009,7 @@
     </div> --}}
 
     <div style="background-color: #004A53;" class="p-4">
-        <div class="container-fluid px-0">
+        <div class="container">
             <div class="row  align-items-lg-center">
                 <div class="col-12 col-lg-6">
                     <div class="content-card rounded-4 p-4 d-flex flex-column gap-3 mb-5 mb-lg-0 slide-up-image"
@@ -1086,7 +1086,7 @@
 
 
     <div class = "container-fluid founder-section">
-        <div class = "row justify-content-center px-2 py-4 text-white">
+        <div class = "row justify-content-center px-2 py-5 text-white">
 
             <div class = "col-12 col-lg-12 col-md-12 text-center">
                 <h5 class = "mb-3 section-title" style="color:#004A53;">Message from the founder</h5>

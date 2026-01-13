@@ -379,9 +379,13 @@
         margin-top: -150px;
     }
     .achievement-section {
-        min-height: 700px;
-        padding-top: 100px;
-    }
+    min-height: 700px;
+    padding-top: 100px;
+    background-position: top center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
 }
 
 /* ===== DESKTOP BREAKPOINTS (min-width: 992px) ===== */
@@ -567,21 +571,21 @@
         margin-block: 60px;
     }
     .overflow-img {
-        margin-top: -50px;
+        margin-top: -55px;
         margin-bottom: -70px;
         height: auto;
-        max-width: 100%;
-        
+        max-width: 100%;  
+        aspect-ratio: 1/1;
     }
     .content-card {
         position: relative;
         z-index: 5;
+        margin-right: -180px;
+            border-radius: 1.5rem;
+    }
+    .margin-top {
+        margin-top: 100px !important; 
     }
 
-    @media (min-width: 992px) {
-        .content-card {
-            margin-right: -180px;
-            border-radius: 1.5rem;
-        }
-    }
+    
 }
