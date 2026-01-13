@@ -729,7 +729,7 @@
                 <div class="row ourproduct2 product-section-teal px-2 px-lg-4 py-4 add-margin fade-section py-lg-3">
                     <div class="col-12 col-lg-7 d-flex flex-column gap-3 justify-content-lg-center mb-5 mb-lg-0">
                         <div class="bg-white px-3 py-2 rounded-3 align-self-start">
-                            <img src="./images/Kokokah_Logo.png" alt="" style="width:200px; height:auto;"
+                            <img src="./images/KOKOKAH Logo.svg" alt="" style="width:200px; height:auto;"
                                 class="object-cover" />
                         </div>
 

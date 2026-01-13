@@ -235,7 +235,7 @@
 
         <!-- Left Section -->
         <div class="col-12 col-lg-6 col-md-6 left-panel">
-          <img src="images/logo-auth.png" alt="Kokokah Logo" class="img-fluid logo">
+          <img src="images/KOKOKAH Logo.svg" alt="Kokokah Logo" class="img-fluid logo">
           <img src="images/steming.png" alt="STEM Illustration" class="stem-illustration">
           <div class="left-cta">Register to enjoy learning</div>
 
