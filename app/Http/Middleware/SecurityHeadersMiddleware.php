@@ -42,7 +42,7 @@ class SecurityHeadersMiddleware
                 "style-src 'self' 'unsafe-inline' https: http:",
                 "font-src 'self' https: http: data:",
                 "img-src 'self' data: https: http:",
-                "media-src 'self' https: http:",
+                "media-src 'self' blob: https: http:",
                 "connect-src 'self' https: http: ws: wss:",
                 "frame-src 'self' https://www.youtube.com https://player.vimeo.com",
             ];
@@ -54,7 +54,7 @@ class SecurityHeadersMiddleware
                 "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com",
                 "font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com",
                 "img-src 'self' data: https:",
-                "media-src 'self' https:",
+                "media-src 'self' blob: https:",
                 "connect-src 'self' https:",
                 "frame-src 'self' https://www.youtube.com https://player.vimeo.com",
             ];
@@ -66,8 +66,8 @@ class SecurityHeadersMiddleware
 
         // Permissions Policy (formerly Feature Policy)
         $permissions = [
-            'camera=()',
-            'microphone=()',
+            'camera=(self)',
+            'microphone=(self)',
             'geolocation=()',
             'payment=(self)',
             'usb=()',

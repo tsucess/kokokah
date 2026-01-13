@@ -419,6 +419,23 @@
                 border-radius: 4px;
                 font-weight: 600;
             }
+
+            .btn-eye {
+                background: none;
+                border: none;
+                cursor: pointer;
+                padding: 0;
+                color: #AAC3C6;
+                transition: color 0.3s ease;
+            }
+
+            .btn-eye:hover {
+                color: #004A53;
+            }
+
+            .btn-eye:focus {
+                outline: none;
+            }
         </style>
         <!-- Toast Notification -->
         <div id="toastNotification" class="toast-notification" style="display: none;">
@@ -432,53 +449,55 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header d-flex justify-content-between align-items-center">
-                        <h1 class="modal-title" id="modalTitle">Add New Card</h1>
+                        <h1 class="modal-title" id="cardModalTitle">Add New Card</h1>
                         <button type="button" class="modal-header-btn" data-bs-dismiss="modal" aria-label="Close">
                             <i class="fa-regular fa-circle-xmark"></i>
                         </button>
                     </div>
-                    <form class="modal-form-container" id="addCard">
+                    <form class="modal-form-container" id="cardForm">
                         <div class="modal-form">
                             <div class="modal-form-input-border">
-                                <label for="levelName" class="modal-label">Enter Card holder Name</label>
-                                <input class="modal-input" type="text" id="" placeholder="Jane Applseed"
+                                <label for="modalCardHolderName" class="modal-label">Enter Card holder Name</label>
+                                <input class="modal-input" type="text" id="modalCardHolderName" placeholder="Jane Appleseed"
                                     required />
-
-
                             </div>
                             <div class="modal-form-input-border">
-                                <label for="levelName" class="modal-label">Card Number</label>
+                                <label for="modalCardNumber" class="modal-label">Card Number</label>
                                 <div class="d-flex gap-2 justify-content-between align-items-center">
-                                    <input class="modal-input" type="number" id=""
-                                        placeholder="**** **** **** ****" required />
-                                    <button><i class="fa-regular fa-eye fa-xs" style="color:#AAC3C6;"></i></button>
+                                    <input class="modal-input" type="text" id="modalCardNumber"
+                                        placeholder="**** **** **** ****" inputmode="numeric" required />
+                                    <button type="button" class="btn-eye" id="toggleCardNumber">
+                                        <i class="fa-regular fa-eye fa-xs" style="color:#AAC3C6;"></i>
+                                    </button>
                                 </div>
                             </div>
                             <div class="modal-form-input-border">
-                                <label for="levelName" class="modal-label">Expired Date</label>
+                                <label for="modalExpiryDate" class="modal-label">Expiry Date</label>
                                 <div class="d-flex gap-2 justify-content-between align-items-center">
-                                    <input class="modal-input" type="number" id="" placeholder="MM/YY" required />
-                                    <button><i class="fa-regular fa-eye fa-xs" style="color:#AAC3C6;"></i></button>
+                                    <input class="modal-input" type="text" id="modalExpiryDate" placeholder="MM/YY" inputmode="numeric" required />
+                                    <button type="button" class="btn-eye" id="toggleExpiryDate">
+                                        <i class="fa-regular fa-eye fa-xs" style="color:#AAC3C6;"></i>
+                                    </button>
                                 </div>
                             </div>
                             <div class="modal-form-input-border">
-                                <label for="levelName" class="modal-label">CVV</label>
+                                <label for="modalCvv" class="modal-label">CVV</label>
                                 <div class="d-flex gap-2 justify-content-between align-items-center">
-                                    <input class="modal-input" type="number" id="" placeholder="234" required />
-                                    <button><i class="fa-regular fa-eye fa-xs" style="color:#AAC3C6;"></i></button>
+                                    <input class="modal-input" type="password" id="modalCvv" placeholder="234" inputmode="numeric" maxlength="4" required />
+                                    <button type="button" class="btn-eye" id="toggleCvv">
+                                        <i class="fa-regular fa-eye fa-xs" style="color:#AAC3C6;"></i>
+                                    </button>
                                 </div>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="checkChecked" checked>
-                                <label class="form-check-label secure-label" for="checkChecked">
-                                    Secure this card. <a href='#' class="fw-bold">Why is it important?</a>
+                                <input class="form-check-input" type="checkbox" value="" id="modalIsDefault" checked>
+                                <label class="form-check-label secure-label" for="modalIsDefault">
+                                    Set as default card. <a href='#' class="fw-bold">Why is it important?</a>
                                 </label>
                             </div>
-
-
                         </div>
                         <div class="d-flex gap-2">
-                            <button type="button" class="btn primaryBtn">Save New Card</button>
+                            <button type="submit" class="btn primaryBtn" id="cardSubmitBtn">Save New Card</button>
                         </div>
                     </form>
                 </div>
@@ -502,13 +521,46 @@
                         <button type="button" class="delete-cancel-btn w-100" data-bs-dismiss="modal" aria-label="Close">
                             Cancel
                         </button>
-                        <button class="delete-delete-btn w-100">Delete</button>
+                        <button type="button" class="delete-delete-btn w-100" id="confirmDeleteCardBtn">Delete</button>
                     </div>
 
                 </div>
             </div>
         </div>
 
+        {{-- Transfer Money Modal --}}
+        <div class="modal fade" id="transferMoneyModal" data-bs-keyboard="false" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header d-flex justify-content-between align-items-center">
+                        <h1 class="modal-title">Transfer Money</h1>
+                        <button type="button" class="modal-header-btn" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="fa-regular fa-circle-xmark"></i>
+                        </button>
+                    </div>
+                    <form class="modal-form-container" id="transferForm">
+                        <div class="modal-form">
+                            <div class="modal-form-input-border">
+                                <label for="recipientEmail" class="modal-label">Recipient Email</label>
+                                <input class="modal-input" type="email" id="recipientEmail" placeholder="recipient@example.com" required />
+                            </div>
+                            <div class="modal-form-input-border">
+                                <label for="transferAmount" class="modal-label">Amount (₦)</label>
+                                <input class="modal-input" type="number" id="transferAmount" placeholder="Enter amount" min="1" step="1" required />
+                            </div>
+                            <div class="modal-form-input-border">
+                                <label for="transferDescription" class="modal-label">Description (Optional)</label>
+                                <input class="modal-input" type="text" id="transferDescription" placeholder="Transfer description" />
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="button" class="btn addmoney-btn" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn primaryBtn" id="transferSubmitBtn">Transfer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
         <!-- Page Loader -->
         <div id="pageLoader" class="page-loader">
@@ -536,17 +588,17 @@
                     </div>
 
                     <div class="d-flex align-items-center gap-3 justify-content-center">
-                        <button class="call-to-action-container d-flex flex-column gap-2 align-items-center w-100 h-100">
+                        <button type="button" id="addMoneyBtn" class="call-to-action-container d-flex flex-column gap-2 align-items-center w-100 h-100">
                             <div class="icon-container"><i class="fa-solid fa-money-bill" style="color: #004A53;"></i>
                             </div>
                             <p class="call-action-text">Add Money</p>
                         </button>
-                        <button class="call-to-action-container d-flex flex-column gap-2 align-items-center w-100 h-100">
+                        <button type="button" id="transferMoneyBtn" class="call-to-action-container d-flex flex-column gap-2 align-items-center w-100 h-100">
                             <div class="icon-container"><i class="fa-solid fa-money-bill-transfer"
                                     style="color: #004A53;"></i></div>
                             <p class="call-action-text">Transfer Money</p>
                         </button>
-                        <button class="call-to-action-container d-flex flex-column gap-2 align-items-center w-100 h-100">
+                        <button type="button" id="enrollSubjectBtn" class="call-to-action-container d-flex flex-column gap-2 align-items-center w-100 h-100">
                             <div class="icon-container"><i class="fa-solid fa-clipboard-list"
                                     style="color: #004A53;"></i>
                             </div>
@@ -577,19 +629,19 @@
                             </div>
                         </div>
                         <div class="d-flex align-items-center gap-3">
-                            <button data-bs-toggle="modal" data-bs-target="#addCard"
+                            <button type="button" id="addCardBtn" data-bs-toggle="modal" data-bs-target="#addCard"
                                 class="call-to-action-container d-flex flex-column gap-2 align-items-center w-100 h-100">
                                 <div class="icon-container"><i class="fa-solid fa-plus" style="color: #004A53;"></i>
                                 </div>
                                 <p class="call-action-text">Add Card</p>
                             </button>
-                            <button
+                            <button type="button" id="editCardBtn"
                                 class="call-to-action-container d-flex flex-column gap-2 align-items-center w-100 h-100">
                                 <div class="icon-container"><i class="fa-solid fa-pen-to-square"
                                         style="color: #004A53;"></i></div>
                                 <p class="call-action-text">Edit Card</p>
                             </button>
-                            <button data-bs-toggle="modal" data-bs-target="#deleteCard"
+                            <button type="button" id="deleteCardBtn" data-bs-toggle="modal" data-bs-target="#deleteCard"
                                 class="call-to-action-container d-flex flex-column gap-2 align-items-center w-100 h-100">
                                 <div class="icon-container" style="background-color: #FFE6E6;"><i
                                         class="fa-solid fa-xmark" style="color: #FF383C;"></i></div>
@@ -1029,54 +1081,130 @@
          */
         function setupEventListeners() {
             // Add Money button - Show amount input modal first
-            document.getElementById('addMoneyBtn').addEventListener('click', () => {
-                openAmountModal();
-            });
+            const addMoneyBtn = document.getElementById('addMoneyBtn');
+            if (addMoneyBtn) {
+                addMoneyBtn.addEventListener('click', () => {
+                    openAmountModal();
+                });
+            }
 
-            // Enroll Class button
-            document.getElementById('enrollClassBtn').addEventListener('click', () => {
-                window.location.href = '/userclass';
-            });
+            // Transfer Money button
+            const transferMoneyBtn = document.getElementById('transferMoneyBtn');
+            if (transferMoneyBtn) {
+                transferMoneyBtn.addEventListener('click', () => {
+                    const transferModal = new bootstrap.Modal(document.getElementById('transferMoneyModal'));
+                    transferModal.show();
+                });
+            }
+
+            // Enroll Subject button
+            const enrollSubjectBtn = document.getElementById('enrollSubjectBtn');
+            if (enrollSubjectBtn) {
+                enrollSubjectBtn.addEventListener('click', () => {
+                    window.location.href = '/userclass';
+                });
+            }
 
             // Edit Card button
-            document.getElementById('editCardBtn').addEventListener('click', () => {
-                if (currentCard) {
-                    populateCardForm(currentCard);
-                    // Scroll to form
-                    document.getElementById('cardDetailsForm').scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                } else {
-                    showToast('No card to edit. Please save a card first.', 'warning');
-                }
-            });
+            const editCardBtn = document.getElementById('editCardBtn');
+            if (editCardBtn) {
+                editCardBtn.addEventListener('click', () => {
+                    if (currentCard) {
+                        populateCardFormModal(currentCard);
+                        const cardModal = new bootstrap.Modal(document.getElementById('addCard'));
+                        cardModal.show();
+                    } else {
+                        showToast('No card to edit. Please save a card first.', 'warning');
+                    }
+                });
+            }
+
+            // Delete Card button
+            const deleteCardBtn = document.getElementById('deleteCardBtn');
+            if (deleteCardBtn) {
+                deleteCardBtn.addEventListener('click', () => {
+                    if (!currentCard) {
+                        showToast('No card to delete. Please save a card first.', 'warning');
+                    }
+                });
+            }
 
             // Toggle balance visibility
-            document.getElementById('toggleBalance').addEventListener('click', () => {
-                const balance = document.getElementById('walletBalance');
-                if (balance.textContent === '₦0.00') {
-                    balance.textContent = '••••••';
-                } else {
-                    loadWalletData();
-                }
-            });
+            const toggleBalance = document.getElementById('toggleBalance');
+            if (toggleBalance) {
+                toggleBalance.addEventListener('click', () => {
+                    const balance = document.getElementById('walletBalance');
+                    if (balance.textContent === '₦0.00') {
+                        balance.textContent = '••••••';
+                    } else {
+                        loadWalletData();
+                    }
+                });
+            }
 
-            // Card Details Form submission
-            const cardForm = document.getElementById('cardDetailsForm');
+            // Card Form submission
+            const cardForm = document.getElementById('cardForm');
             if (cardForm) {
                 cardForm.addEventListener('submit', handleSaveCard);
             }
 
+            // Transfer Form submission
+            const transferForm = document.getElementById('transferForm');
+            if (transferForm) {
+                transferForm.addEventListener('submit', handleTransferMoney);
+            }
+
             // Format card number input
-            const cardNumberInput = document.getElementById('formCardNumber');
-            if (cardNumberInput) {
-                cardNumberInput.addEventListener('input', formatCardNumber);
+            const modalCardNumber = document.getElementById('modalCardNumber');
+            if (modalCardNumber) {
+                modalCardNumber.addEventListener('input', formatCardNumber);
             }
 
             // Format expiry date input
-            const expiryInput = document.getElementById('formExpiryDate');
-            if (expiryInput) {
-                expiryInput.addEventListener('input', formatExpiryDate);
+            const modalExpiryDate = document.getElementById('modalExpiryDate');
+            if (modalExpiryDate) {
+                modalExpiryDate.addEventListener('input', formatExpiryDate);
+            }
+
+            // Toggle card number visibility
+            const toggleCardNumber = document.getElementById('toggleCardNumber');
+            if (toggleCardNumber) {
+                toggleCardNumber.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    togglePasswordVisibility('modalCardNumber', 'toggleCardNumber');
+                });
+            }
+
+            // Toggle expiry date visibility
+            const toggleExpiryDate = document.getElementById('toggleExpiryDate');
+            if (toggleExpiryDate) {
+                toggleExpiryDate.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    togglePasswordVisibility('modalExpiryDate', 'toggleExpiryDate');
+                });
+            }
+
+            // Toggle CVV visibility
+            const toggleCvv = document.getElementById('toggleCvv');
+            if (toggleCvv) {
+                toggleCvv.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    togglePasswordVisibility('modalCvv', 'toggleCvv');
+                });
+            }
+
+            // Confirm delete card
+            const confirmDeleteBtn = document.getElementById('confirmDeleteCardBtn');
+            if (confirmDeleteBtn) {
+                confirmDeleteBtn.addEventListener('click', handleDeleteCard);
+            }
+
+            // Reset card form when modal is closed
+            const cardModal = document.getElementById('addCard');
+            if (cardModal) {
+                cardModal.addEventListener('hidden.bs.modal', () => {
+                    resetCardFormModal();
+                });
             }
         }
 
@@ -1245,6 +1373,148 @@
         }
 
         /**
+         * Handle transfer money form submission
+         */
+        async function handleTransferMoney(e) {
+            e.preventDefault();
+
+            const recipientEmail = document.getElementById('recipientEmail').value.trim();
+            const transferAmount = parseFloat(document.getElementById('transferAmount').value);
+            const transferDescription = document.getElementById('transferDescription').value.trim();
+            const submitBtn = document.getElementById('transferSubmitBtn');
+
+            // Validate inputs
+            if (!recipientEmail || !transferAmount || transferAmount < 1) {
+                showToast('Please fill in all required fields with valid values', 'error');
+                return;
+            }
+
+            try {
+                submitBtn.disabled = true;
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Processing...';
+
+                const result = await WalletApiClient.transferFunds(recipientEmail, transferAmount, transferDescription);
+
+                if (result.success) {
+                    showToast('Transfer successful!', 'success');
+                    document.getElementById('transferForm').reset();
+
+                    // Close modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('transferMoneyModal'));
+                    if (modal) modal.hide();
+
+                    // Reload wallet data
+                    await loadWalletData();
+                    await loadTransactions();
+                } else {
+                    showToast(result.message || 'Transfer failed', 'error');
+                }
+            } catch (error) {
+                console.error('Transfer error:', error);
+                showToast('Error processing transfer: ' + error.message, 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        }
+
+        /**
+         * Handle delete card
+         */
+        async function handleDeleteCard() {
+            if (!currentCard) {
+                showToast('No card selected for deletion', 'error');
+                return;
+            }
+
+            const deleteBtn = document.getElementById('confirmDeleteCardBtn');
+
+            try {
+                deleteBtn.disabled = true;
+                const originalText = deleteBtn.textContent;
+                deleteBtn.textContent = 'Deleting...';
+
+                const result = await WalletApiClient.deletePaymentMethod(currentCard.id);
+
+                if (result.success) {
+                    showToast('Card deleted successfully!', 'success');
+
+                    // Close modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('deleteCard'));
+                    if (modal) modal.hide();
+
+                    // Reset current card
+                    currentCard = null;
+                    displayCardPlaceholder();
+
+                    // Reload wallet data
+                    await loadWalletData();
+                } else {
+                    showToast(result.message || 'Failed to delete card', 'error');
+                }
+            } catch (error) {
+                console.error('Delete card error:', error);
+                showToast('Error deleting card: ' + error.message, 'error');
+            } finally {
+                deleteBtn.disabled = false;
+                deleteBtn.textContent = originalText;
+            }
+        }
+
+        /**
+         * Toggle password visibility for input fields
+         */
+        function togglePasswordVisibility(inputId, buttonId) {
+            const input = document.getElementById(inputId);
+            const button = document.getElementById(buttonId);
+
+            if (!input || !button) return;
+
+            const icon = button.querySelector('i');
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        /**
+         * Populate card form modal with current card details for editing
+         */
+        function populateCardFormModal(card) {
+            document.getElementById('cardModalTitle').textContent = 'Edit Card';
+            document.getElementById('cardSubmitBtn').textContent = 'Update Card';
+            document.getElementById('cardSubmitBtn').dataset.cardId = card.id;
+
+            document.getElementById('modalCardHolderName').value = card.card_holder_name || '';
+            document.getElementById('modalCardNumber').value = '';
+            document.getElementById('modalCardNumber').placeholder = 'Enter full card number to update';
+            document.getElementById('modalExpiryDate').value = card.expiry_date || '';
+            document.getElementById('modalCvv').value = '';
+            document.getElementById('modalCvv').placeholder = 'Enter CVV to update';
+            document.getElementById('modalIsDefault').checked = card.is_default || false;
+        }
+
+        /**
+         * Reset card form modal to initial state
+         */
+        function resetCardFormModal() {
+            document.getElementById('cardForm').reset();
+            document.getElementById('cardModalTitle').textContent = 'Add New Card';
+            document.getElementById('cardSubmitBtn').textContent = 'Save New Card';
+            delete document.getElementById('cardSubmitBtn').dataset.cardId;
+
+            document.getElementById('modalCardNumber').placeholder = '**** **** **** ****';
+            document.getElementById('modalCvv').placeholder = '234';
+        }
+
+        /**
          * Format card number with spaces (1234 5678 9012 3456)
          */
         function formatCardNumber(e) {
@@ -1308,14 +1578,14 @@
         async function handleSaveCard(e) {
             e.preventDefault();
 
-            // Get form values
-            const cardHolderName = document.getElementById('formCardHolderName').value.trim();
-            const cardNumber = document.getElementById('formCardNumber').value.replace(/\s/g, '');
-            const expiryDate = document.getElementById('formExpiryDate').value.trim();
-            const cvv = document.getElementById('formCvv').value.trim();
-            const isDefault = document.getElementById('isDefault').checked;
-            const saveBtn = document.getElementById('saveCardBtn');
-            const cardId = saveBtn.dataset.cardId;
+            // Get form values from modal
+            const cardHolderName = document.getElementById('modalCardHolderName').value.trim();
+            const cardNumber = document.getElementById('modalCardNumber').value.replace(/\s/g, '');
+            const expiryDate = document.getElementById('modalExpiryDate').value.trim();
+            const cvv = document.getElementById('modalCvv').value.trim();
+            const isDefault = document.getElementById('modalIsDefault').checked;
+            const submitBtn = document.getElementById('cardSubmitBtn');
+            const cardId = submitBtn.dataset.cardId;
 
             // Check if this is an update or add
             const isUpdate = cardId && cardId !== '';
@@ -1336,9 +1606,9 @@
 
             try {
                 // Show loading state
-                const originalText = saveBtn.textContent;
-                saveBtn.disabled = true;
-                saveBtn.textContent = isUpdate ? 'Updating...' : 'Saving...';
+                const originalText = submitBtn.textContent;
+                submitBtn.disabled = true;
+                submitBtn.textContent = isUpdate ? 'Updating...' : 'Saving...';
 
                 // Prepare payload
                 const payload = {
@@ -1362,14 +1632,15 @@
                     const message = isUpdate ? 'Card updated successfully!' : 'Card saved successfully!';
                     showToast(message, 'success');
 
+                    // Close modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('addCard'));
+                    if (modal) modal.hide();
+
                     // Reset form and clear edit mode
-                    resetCardForm();
+                    resetCardFormModal();
 
                     // Reload wallet data to show updated card info
                     await loadWalletData();
-
-                    // Optionally reload payment methods list
-                    // await loadPaymentMethods();
                 } else {
                     showToast(result.message || 'Failed to save card', 'error');
                 }
@@ -1378,32 +1649,12 @@
                 showToast('Error saving card: ' + error.message, 'error');
             } finally {
                 // Restore button state
-                const saveBtn = document.getElementById('saveCardBtn');
-                saveBtn.disabled = false;
-                saveBtn.textContent = 'Save Card';
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
             }
         }
 
-        /**
-         * Reset card form to initial state
-         */
-        function resetCardForm() {
-            // Reset form fields
-            document.getElementById('cardDetailsForm').reset();
 
-            // Reset form header and button text
-            document.querySelector('.form-header-text').textContent = 'Add a new payment method';
-            const saveBtn = document.getElementById('saveCardBtn');
-            saveBtn.textContent = 'Save Card';
-            delete saveBtn.dataset.cardId;
-
-            // Reset placeholders
-            document.getElementById('formCardNumber').placeholder = '1234 5678 9012 3456';
-            document.getElementById('formCvv').placeholder = '123';
-
-            // Clear current card
-            currentCard = null;
-        }
 
         /**
          * Validate card form inputs

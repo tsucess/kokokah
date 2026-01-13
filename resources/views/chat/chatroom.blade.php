@@ -447,8 +447,70 @@
 
         .message-audio {
             margin-top: 8px;
-            width: 100%;
-            max-width: 300px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background-color: rgba(0, 74, 83, 0.1);
+            border-radius: 20px;
+            max-width: 250px;
+        }
+
+        .message-audio-play-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: var(--bs-dark-teal, #004A53);
+            padding: 0;
+            min-width: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+
+        .message-audio-play-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .message-audio-play-btn.playing {
+            color: #dc3545;
+        }
+
+        .message-audio-waveform {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            flex: 1;
+            height: 24px;
+        }
+
+        .message-audio-bar {
+            width: 3px;
+            height: 100%;
+            background-color: var(--bs-dark-teal, #004A53);
+            border-radius: 2px;
+            opacity: 0.6;
+            animation: audioWave 0.6s ease-in-out infinite;
+        }
+
+        .message-audio-bar:nth-child(1) { animation-delay: 0s; }
+        .message-audio-bar:nth-child(2) { animation-delay: 0.1s; }
+        .message-audio-bar:nth-child(3) { animation-delay: 0.2s; }
+        .message-audio-bar:nth-child(4) { animation-delay: 0.3s; }
+        .message-audio-bar:nth-child(5) { animation-delay: 0.4s; }
+
+        @keyframes audioWave {
+            0%, 100% { height: 8px; }
+            50% { height: 20px; }
+        }
+
+        .message-audio-duration {
+            font-size: 12px;
+            color: #666;
+            min-width: 35px;
+            text-align: right;
         }
 
         .message-file {
@@ -968,13 +1030,14 @@
                 }
 
                 // Build context menu attributes for messages that can be edited/deleted
+                // Only text messages can be edited
+                // Audio, image, and file messages can only be deleted
                 let contextMenuAttrs = '';
                 if (canEditDelete) {
                     contextMenuAttrs = `
-                        oncontextmenu="showMessageContextMenu(event, ${msg.id}, '${currentChatroomId}', '${messageContent.replace(/'/g, "\\'")}')"
-                        ontouchstart="startLongPress(event, ${msg.id}, '${currentChatroomId}', '${messageContent.replace(/'/g, "\\'")}')"
-                        ontouchend="endLongPress()"
-                        style="cursor: context-menu;"
+                        onclick="showMessageContextMenu(event, ${msg.id}, '${currentChatroomId}', '${messageContent.replace(/'/g, "\\'")}')"
+                        data-message-type="${messageType}"
+                        style="cursor: pointer; position: relative;"
                     `;
                 }
 
@@ -988,7 +1051,25 @@
                     messageBody = `<img src="${fileUrl}" alt="Image" class="message-image" onerror="this.src='/images/default-avatar.png'">`;
                 } else if (messageType === 'audio') {
                     const fileUrl = msg.metadata?.file_url || `/storage/${msg.metadata?.file_path || ''}`;
-                    messageBody = `<audio controls class="message-audio"><source src="${fileUrl}" type="audio/webm">Your browser does not support the audio element.</audio>`;
+                    const audioId = `audio-${msg.id}`;
+                    messageBody = `
+                        <div class="message-audio" data-audio-id="${audioId}">
+                            <button class="message-audio-play-btn" onclick="toggleAudioPlayback('${audioId}', '${fileUrl}')">
+                                <i class="bi bi-play-fill"></i>
+                            </button>
+                            <div class="message-audio-waveform">
+                                <div class="message-audio-bar"></div>
+                                <div class="message-audio-bar"></div>
+                                <div class="message-audio-bar"></div>
+                                <div class="message-audio-bar"></div>
+                                <div class="message-audio-bar"></div>
+                            </div>
+                            <span class="message-audio-duration" id="duration-${audioId}">0:00</span>
+                            <audio id="${audioId}" style="display: none;" onended="onAudioEnded('${audioId}')">
+                                <source src="${fileUrl}" type="audio/webm">
+                            </audio>
+                        </div>
+                    `;
                 } else if (messageType === 'file') {
                     const fileUrl = msg.metadata?.file_url || `/storage/${msg.metadata?.file_path || ''}`;
                     const fileName = msg.metadata?.file_name || 'Download File';
@@ -1016,12 +1097,9 @@
             content: null
         };
 
-        let longPressTimer = null;
-        const LONG_PRESS_DURATION = 500; // milliseconds
-
-        // Show message context menu on right-click
+        // Show message context menu on click
         function showMessageContextMenu(event, messageId, roomId, messageContent) {
-            event.preventDefault();
+            event.stopPropagation();
 
             console.log('Context menu triggered:', {
                 messageId: messageId,
@@ -1029,74 +1107,49 @@
                 contentLength: messageContent.length
             });
 
+            // Get message type from the clicked element
+            const messageEl = event.currentTarget;
+            const messageType = messageEl.getAttribute('data-message-type') || 'text';
+
             // Store current message info
             currentContextMessage = {
                 id: messageId,
                 roomId: roomId,
-                content: messageContent
+                content: messageContent,
+                type: messageType
             };
 
             const contextMenu = document.getElementById('messageContextMenu');
+            const editBtn = document.getElementById('contextEditBtn');
+
+            // Only show edit button for text messages
+            if (messageType === 'text') {
+                editBtn.style.display = 'block';
+            } else {
+                editBtn.style.display = 'none';
+            }
+
             contextMenu.classList.add('show');
 
-            // Position the menu at cursor
-            contextMenu.style.left = event.clientX + 'px';
-            contextMenu.style.top = event.clientY + 'px';
+            // Position the menu below the message
+            const rect = messageEl.getBoundingClientRect();
+            contextMenu.style.left = rect.left + 'px';
+            contextMenu.style.top = (rect.bottom + 5) + 'px';
 
-            console.log('Context menu positioned at:', event.clientX, event.clientY);
+            console.log('Context menu positioned at:', rect.left, rect.bottom + 5);
 
             // Close menu when clicking elsewhere
-            document.addEventListener('click', closeContextMenu);
-        }
-
-        // Long press handler for mobile
-        function startLongPress(event, messageId, roomId, messageContent) {
-            longPressTimer = setTimeout(() => {
-                // Store current message info
-                currentContextMessage = {
-                    id: messageId,
-                    roomId: roomId,
-                    content: messageContent
-                };
-
-                const contextMenu = document.getElementById('messageContextMenu');
-                contextMenu.classList.add('show');
-
-                // Position the menu at touch point
-                const touch = event.touches[0];
-                contextMenu.style.left = touch.clientX + 'px';
-                contextMenu.style.top = touch.clientY + 'px';
-
-                // Highlight the message
-                const messageEl = document.querySelector(`[data-message-id="${messageId}"]`);
-                if (messageEl) {
-                    messageEl.classList.add('message-long-press-active');
-                }
-
-                // Close menu when clicking elsewhere
+            setTimeout(() => {
                 document.addEventListener('click', closeContextMenu);
-            }, LONG_PRESS_DURATION);
+            }, 0);
         }
 
-        // End long press
-        function endLongPress() {
-            if (longPressTimer) {
-                clearTimeout(longPressTimer);
-                longPressTimer = null;
-            }
-        }
+
 
         // Close context menu
         function closeContextMenu() {
             const contextMenu = document.getElementById('messageContextMenu');
             contextMenu.classList.remove('show');
-
-            // Remove highlight from message
-            const messageEl = document.querySelector(`[data-message-id="${currentContextMessage.id}"]`);
-            if (messageEl) {
-                messageEl.classList.remove('message-long-press-active');
-            }
-
             document.removeEventListener('click', closeContextMenu);
         }
 
@@ -1717,6 +1770,49 @@
                 closeImageModalBtn.click();
             }
         });
+
+        // ============ AUDIO PLAYBACK FUNCTIONALITY ============
+        let currentPlayingAudioId = null;
+
+        function toggleAudioPlayback(audioId, audioUrl) {
+            const audioElement = document.getElementById(audioId);
+            const playBtn = document.querySelector(`[onclick*="${audioId}"]`);
+
+            // Stop any currently playing audio
+            if (currentPlayingAudioId && currentPlayingAudioId !== audioId) {
+                const previousAudio = document.getElementById(currentPlayingAudioId);
+                const previousBtn = document.querySelector(`[onclick*="${currentPlayingAudioId}"]`);
+                if (previousAudio) {
+                    previousAudio.pause();
+                    previousAudio.currentTime = 0;
+                }
+                if (previousBtn) {
+                    previousBtn.classList.remove('playing');
+                    previousBtn.innerHTML = '<i class="bi bi-play-fill"></i>';
+                }
+            }
+
+            if (audioElement.paused) {
+                audioElement.play();
+                playBtn.classList.add('playing');
+                playBtn.innerHTML = '<i class="bi bi-pause-fill"></i>';
+                currentPlayingAudioId = audioId;
+            } else {
+                audioElement.pause();
+                playBtn.classList.remove('playing');
+                playBtn.innerHTML = '<i class="bi bi-play-fill"></i>';
+                currentPlayingAudioId = null;
+            }
+        }
+
+        function onAudioEnded(audioId) {
+            const playBtn = document.querySelector(`[onclick*="${audioId}"]`);
+            if (playBtn) {
+                playBtn.classList.remove('playing');
+                playBtn.innerHTML = '<i class="bi bi-play-fill"></i>';
+            }
+            currentPlayingAudioId = null;
+        }
     </script>
 @endsection
 

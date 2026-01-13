@@ -76,10 +76,10 @@
 
                 <div class="input-group mb-4">
                     <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
-                    <input type="text" class="form-control border-start-0 ps-0" placeholder="Find a Conversation">
+                    <input type="text" class="form-control border-start-0 ps-0" placeholder="Find a Conversation HELLO">
                 </div>
 
-                <h6 class="text-muted text-uppercase small mb-2">Conservation</h6>
+                <h6 class="text-muted text-uppercase small mb-2"> Conservation</h6>
 
                 <a href="#" class="sidebar-item active">
                     <div class="d-flex align-items-center">
