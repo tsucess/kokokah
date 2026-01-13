@@ -14,8 +14,33 @@
     --color-bg-jumbotron: #ccdbdd;
 }
 
+@font-face {
+  font-family: "Sohne";
+  src: url("./font/sohne/TestSohneBreit-Dreiviertelfett.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sohne";
+  src: url("./font/sohne/TestSohneBreit-Buch.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sohne";
+  src: url("./font/sohne/TestSohneBreit-BuchKursiv.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+
 * {
-    font-family: "Quicksand", sans-serif;
+    font-family: "Sitka Text", Georgia, "Times New Roman", serif;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -462,7 +487,6 @@ li {
     font-size: 2rem;
     color: #f15a29;
 }
-
 
 .feature-number {
     font-weight: bold;
@@ -1136,7 +1160,6 @@ footer p {
 
 .bgLms {
     background: url("../images/bg-lms.png");
-
 }
 
 .hero-section-orange {
@@ -1336,6 +1359,10 @@ footer p {
     color: #004a53;
     font-weight: 700;
     margin-bottom: 12px;
+
+  font-family: "Sohne", -apple-system, BlinkMacSystemFont, "Segoe UI",
+               Roboto, Helvetica, Arial, sans-serif;
+
 }
 
 .feature-card-text {
@@ -1725,19 +1752,23 @@ p {
 }
 
 label {
-    color: #94a3b8;
+    color: #BCC6D6;
     font-size: 13px;
 }
 
 .form-input {
     border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.4);
     height: 56px;
     outline: none;
     background-color: transparent;
     font-size: 16px;
-    color: #757575;
+    color: #B5B5B5;
     padding-inline: 17px;
+}
+
+.form-input::placeholder{
+    color: #8A8A8A;
 }
 
 .form-btn {
@@ -1867,6 +1898,8 @@ div.contact-container a {
     font-weight: 500 !important;
     background-color: transparent !important;
     box-shadow: none !important;
+    font-family: "Sohne", -apple-system, BlinkMacSystemFont, "Segoe UI",
+               Roboto, Helvetica, Arial, sans-serif !important;
 }
 
 /* Accordion body */
@@ -2155,21 +2188,16 @@ div.contact-container a {
     white-space: nowrap;
 }
 
-.product-images{
-   height: auto;
-   max-height: 400px;
-   object-fit: fill;
+.product-images {
+    height: auto;
+    max-height: 400px;
+    object-fit: fill;
 }
 
-.paper-plane{
+.paper-plane {
     position: absolute;
     bottom: 20px;
     left: 40%;
-    width:150px;
-    height:150px;
+    width: 150px;
+    height: 150px;
 }
-
-
-
-
-

@@ -3,13 +3,14 @@
 @section('content')
     <style>
         .impact {
-            font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+            font-family: "Sohne", -apple-system, BlinkMacSystemFont, "Segoe UI",
+               Roboto, Helvetica, Arial, sans-serif;
         }
     </style>
     <div class = "container-fluid py-5 banner" style="background-color : #FDAF22;  position:relative;">
         <div class="row align-items-lg-center">
             <div class="col-12 col-lg-6 mb-5 mb-lg-0">
-                <div class="ps-lg-4">
+                <div class="ps-lg-5">
                     <h2 class = "hero_header typewriter impact">
                     Kokokah is Africa’s Leading Digital Learning and Management Platform for Secondary Schools
                 </h2>

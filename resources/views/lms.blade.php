@@ -3,14 +3,15 @@
 @section('content')
 <style>
         .impact {
-            font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+            font-family: "Sohne", -apple-system, BlinkMacSystemFont, "Segoe UI",
+               Roboto, Helvetica, Arial, sans-serif;
         }
     </style>
     <!-- Hero Section - Yellow Background -->
-    <div class="container-fluid bgLms px-3 px-lg-5">
+    <div class="container-fluid bgLms px-3 px-lg-5 py-4 py-lg-5 position-relative">
         <div class="row align-items-center">
             <div class="col-12 col-md-6 col-lg-6 d-flex flex-column gap-3">
-                <h1 class="fw-bold hero-title typewriter impact">
+                <h1 class="fw-bold hero-title impact">
                     Your Complete Ecosystem for Learning and Growth
                 </h1>
                 <p>
@@ -20,7 +21,7 @@
                 <button class="btn btn-primary-action align-self-start">Create a free account</button>
             </div>
             <div class="col-12 col-md-6 col-lg-6 text-center mt-4 mt-md-0">
-                <img src="images/lms-hero-img.png" class="img-fluid" alt="LMS Illustration">
+                <img src="images/lms-hero-img.png" class="img-fluid img-bottom" alt="LMS Illustration">
             </div>
         </div>
     </div>
