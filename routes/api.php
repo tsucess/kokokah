@@ -43,6 +43,8 @@ use App\Http\Controllers\TermController;
 use App\Http\Controllers\PointsAndBadgesController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\UserSubscriptionController;
 
 
 
@@ -765,4 +767,43 @@ Route::middleware(['auth:sanctum', 'role:admin,superadmin'])->prefix('feedback')
 
     // Get single feedback
     Route::get('/{id}', [FeedbackController::class, 'show']);
+});
+
+// Subscription Plans Routes (Public)
+Route::prefix('subscriptions')->group(function () {
+    // Get all subscription plans
+    Route::get('/plans', [SubscriptionController::class, 'index']);
+
+    // Get specific subscription plan
+    Route::get('/plans/{id}', [SubscriptionController::class, 'show']);
+});
+
+// User Subscription Routes (Authenticated)
+Route::middleware('auth:sanctum')->prefix('subscriptions')->group(function () {
+    // Get user's subscriptions
+    Route::get('/my-subscriptions', [UserSubscriptionController::class, 'getUserSubscriptions']);
+
+    // Subscribe to a plan
+    Route::post('/subscribe', [UserSubscriptionController::class, 'subscribe']);
+
+    // Cancel subscription
+    Route::post('/{id}/cancel', [UserSubscriptionController::class, 'cancelSubscription']);
+
+    // Pause subscription
+    Route::post('/{id}/pause', [UserSubscriptionController::class, 'pauseSubscription']);
+
+    // Resume subscription
+    Route::post('/{id}/resume', [UserSubscriptionController::class, 'resumeSubscription']);
+});
+
+// Admin Subscription Management Routes
+Route::middleware(['auth:sanctum', 'role:admin,superadmin'])->prefix('subscriptions')->group(function () {
+    // Create subscription plan
+    Route::post('/plans', [SubscriptionController::class, 'store']);
+
+    // Update subscription plan
+    Route::put('/plans/{id}', [SubscriptionController::class, 'update']);
+
+    // Delete subscription plan
+    Route::delete('/plans/{id}', [SubscriptionController::class, 'destroy']);
 });

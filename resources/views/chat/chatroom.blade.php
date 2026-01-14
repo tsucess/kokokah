@@ -450,12 +450,18 @@
         .message-audio {
             margin-top: 8px;
             display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 12px;
+            background-color: rgba(0, 74, 83, 0.1);
+            border-radius: 12px;
+            max-width: 300px;
+        }
+
+        .message-audio-controls {
+            display: flex;
             align-items: center;
             gap: 10px;
-            padding: 8px 12px;
-            background-color: rgba(0, 74, 83, 0.1);
-            border-radius: 20px;
-            max-width: 250px;
         }
 
         .message-audio-play-btn {
@@ -463,13 +469,14 @@
             border: none;
             cursor: pointer;
             font-size: 20px;
-            color: var(--bs-dark-teal, #004A53);
+            color: #333;
             padding: 0;
             min-width: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: transform 0.2s ease;
+            flex-shrink: 0;
         }
 
         .message-audio-play-btn:hover {
@@ -478,6 +485,15 @@
 
         .message-audio-play-btn.playing {
             color: #dc3545;
+        }
+
+        /* Play button white on teal background (current user messages) */
+        .chat-message.current-user-message .message-audio-play-btn {
+            color: white;
+        }
+
+        .chat-message.current-user-message .message-audio-play-btn.playing {
+            color: #ff6b7a;
         }
 
         .message-audio-waveform {
@@ -491,7 +507,7 @@
         .message-audio-bar {
             width: 3px;
             height: 100%;
-            background-color: var(--bs-dark-teal, #004A53);
+            background-color: white;
             border-radius: 2px;
             opacity: 0.6;
             animation: audioWave 0.6s ease-in-out infinite;
@@ -508,11 +524,56 @@
             50% { height: 20px; }
         }
 
-        .message-audio-duration {
+        .message-audio-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             font-size: 12px;
+            color: #666;
+        }
+
+        .message-audio-progress-container {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            width: 100%;
+        }
+
+        .message-audio-progress {
+            flex: 1;
+            height: 4px;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 2px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .chat-message.current-user-message .message-audio-progress {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .message-audio-progress-bar {
+            height: 100%;
+            background-color: #333;
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        .chat-message.current-user-message .message-audio-progress-bar {
+            background-color: white;
+        }
+
+        .message-audio-time {
+            font-size: 11px;
             color: #666;
             min-width: 35px;
             text-align: right;
+            font-weight: 500;
+        }
+
+        .chat-message.current-user-message .message-audio-time {
+            color: rgba(255, 255, 255, 0.8);
         }
 
         .message-file {
@@ -529,6 +590,104 @@
 
         .message-file:hover {
             background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        /* Audio Recording UI Styles */
+        #audioRecordingUI {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #004A53 0%, #003339 100%);
+            padding: 16px 20px;
+            z-index: 1000;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #audioRecordingUI.active {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .recording-time {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff4444;
+            min-width: 50px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .recording-waveform {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            flex: 1;
+            height: 32px;
+        }
+
+        .recording-bar {
+            width: 3px;
+            height: 8px;
+            background: linear-gradient(180deg, #ffffff 0%, #e0e0e0 100%);
+            border-radius: 2px;
+            opacity: 1;
+            transition: height 0.05s ease-out;
+            box-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
+        }
+
+        .recording-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .recording-delete-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: white;
+            font-size: 20px;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+
+        .recording-delete-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .recording-send-btn {
+            background: white;
+            border: none;
+            cursor: pointer;
+            color: #004A53;
+            font-size: 20px;
+            padding: 8px 12px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .recording-send-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Mic icon active state */
+        #audioBtn.recording {
+            color: #ff4444;
+            animation: micPulse 1s ease-in-out infinite;
+        }
+
+        @keyframes micPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
         }
     </style>
     <main>
@@ -608,6 +767,29 @@
                         <div id="emojiPicker"></div>
                     </div>
 
+                    <!-- Audio Recording UI (WhatsApp style) -->
+                    <div id="audioRecordingUI">
+                        <span class="recording-time" id="recordingTime">0:00</span>
+                        <div class="recording-waveform" id="recordingWaveform">
+                            <div class="recording-bar"></div>
+                            <div class="recording-bar"></div>
+                            <div class="recording-bar"></div>
+                            <div class="recording-bar"></div>
+                            <div class="recording-bar"></div>
+                            <div class="recording-bar"></div>
+                            <div class="recording-bar"></div>
+                            <div class="recording-bar"></div>
+                        </div>
+                        <div class="recording-actions">
+                            <button class="recording-delete-btn" id="deleteRecordingBtn" title="Delete recording">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                            <button class="recording-send-btn" id="sendRecordingBtn" title="Send recording">
+                                <i class="bi bi-send-fill"></i>
+                            </button>
+                        </div>
+                    </div>
+
                     <!-- Audio Recording Modal -->
                     <div id="audioRecordingModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; border: 1px solid #ddd; border-radius: 8px; padding: 20px; z-index: 2000; box-shadow: 0 4px 20px rgba(0,0,0,0.2); min-width: 300px;">
                         <h5 class="mb-3">Record Audio Message</h5>
@@ -626,21 +808,34 @@
                         </div>
                     </div>
 
-                    <!-- Camera Capture Modal -->
-                    <div id="cameraModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; border: 1px solid #ddd; border-radius: 8px; padding: 20px; z-index: 2000; box-shadow: 0 4px 20px rgba(0,0,0,0.2); max-width: 500px;">
-                        <h5 class="mb-3">Take Picture</h5>
-                        <div id="cameraStreamContainer" style="display: none; margin-bottom: 15px;">
-                            <video id="cameraPreview" style="width: 100%; max-height: 400px; border-radius: 4px; background: #000;"></video>
-                        </div>
-                        <div id="capturedPhotoContainer" style="display: none; margin-bottom: 15px;">
-                            <img id="capturedPhoto" src="" alt="Captured" style="width: 100%; max-height: 400px; object-fit: contain; border-radius: 4px;">
-                        </div>
-                        <div class="d-flex gap-2">
-                            <button id="startCameraBtn" class="btn btn-primary btn-sm">Start Camera</button>
-                            <button id="capturePhotoBtn" class="btn btn-warning btn-sm" style="display: none;">Capture Photo</button>
-                            <button id="retakeCameraBtn" class="btn btn-info btn-sm" style="display: none;">Retake</button>
-                            <button id="sendPhotoBtn" class="btn btn-success btn-sm" style="display: none;">Send Photo</button>
-                            <button id="closeCameraModalBtn" class="btn btn-secondary btn-sm">Close</button>
+                    <!-- Camera Capture Overlay -->
+                    <div id="cameraOverlay" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 2000; padding: 20px; flex-direction: column; align-items: center; justify-content: center;">
+                        <div style="position: relative; width: 100%; max-width: 600px; background: #000; border-radius: 12px; overflow: hidden;">
+                            <!-- Camera Stream -->
+                            <div id="cameraStreamContainer" style="display: none; position: relative; width: 100%; padding-bottom: 133.33%; background: #000;">
+                                <video id="cameraPreview" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; background: #000;"></video>
+                            </div>
+
+                            <!-- Captured Photo -->
+                            <div id="capturedPhotoContainer" style="display: none; position: relative; width: 100%; padding-bottom: 133.33%; background: #000;">
+                                <img id="capturedPhoto" src="" alt="Captured" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; background: #000;">
+                            </div>
+
+                            <!-- Controls -->
+                            <div style="position: absolute; bottom: 20px; left: 20px; right: 20px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                                <button id="capturePhotoBtn" class="btn btn-warning btn-sm" style="display: none;">
+                                    <i class="bi bi-camera-fill"></i> Capture
+                                </button>
+                                <button id="retakeCameraBtn" class="btn btn-info btn-sm" style="display: none;">
+                                    <i class="bi bi-arrow-counterclockwise"></i> Retake
+                                </button>
+                                <button id="sendPhotoBtn" class="btn btn-success btn-sm" style="display: none;">
+                                    <i class="bi bi-check-circle-fill"></i> Send
+                                </button>
+                                <button id="closeCameraBtn" class="btn btn-danger btn-sm">
+                                    <i class="bi bi-x-circle-fill"></i> Close
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -981,6 +1176,11 @@
             document.getElementById('chat-messages').innerHTML = html;
             console.log('=== RENDER MESSAGES COMPLETE ===');
 
+            // Load audio durations after rendering
+            setTimeout(() => {
+                loadAudioDurations();
+            }, 100);
+
             // Auto-scroll to bottom to show latest messages
             const chatHistory = document.getElementById('chat-history');
             if (chatHistory) {
@@ -1059,17 +1259,17 @@
                     const audioId = `audio-${msg.id}`;
                     messageBody = `
                         <div class="message-audio" data-audio-id="${audioId}">
-                            <button class="message-audio-play-btn" onclick="toggleAudioPlayback('${audioId}', '${fileUrl}')">
-                                <i class="bi bi-play-fill"></i>
-                            </button>
-                            <div class="message-audio-waveform">
-                                <div class="message-audio-bar"></div>
-                                <div class="message-audio-bar"></div>
-                                <div class="message-audio-bar"></div>
-                                <div class="message-audio-bar"></div>
-                                <div class="message-audio-bar"></div>
+                            <div class="message-audio-controls">
+                                <button class="message-audio-play-btn" onclick="toggleAudioPlayback('${audioId}', '${fileUrl}')">
+                                    <i class="bi bi-play-fill"></i>
+                                </button>
+                                <div class="message-audio-progress-container">
+                                    <div class="message-audio-progress" onclick="seekAudio(event, '${audioId}')">
+                                        <div class="message-audio-progress-bar" id="progress-${audioId}"></div>
+                                    </div>
+                                    <span class="message-audio-time" id="time-${audioId}">0:00</span>
+                                </div>
                             </div>
-                            <span class="message-audio-duration" id="duration-${audioId}">0:00</span>
                             <audio id="${audioId}" style="display: none;" onended="onAudioEnded('${audioId}')">
                                 <source src="${fileUrl}" type="audio/webm">
                             </audio>
@@ -1084,9 +1284,9 @@
                 }
 
                 return `
-                    <div class="chat-message ${isCurrentUser ? 'current-user-message' : ''}" data-message-id="${msg.id}" ${contextMenuAttrs}>
+                    <div class="chat-message ${isCurrentUser ? 'current-user-message' : ''}" data-message-id="${msg.id}">
                         ${!isCurrentUser ? `<img src="${profilePhoto}" alt="Avatar" class="message-avatar" onerror="this.src='/images/default-avatar.png'">` : ''}
-                        <div class="message-content">
+                        <div class="message-content" ${contextMenuAttrs}>
                             ${!isCurrentUser ? `<span class="message-user">${userFirstName} ${userLastName}${adminBadge}</span>` : ''}
                             <span class="message-timestamp">${messageTime}</span>
                             ${messageBody}
@@ -1448,60 +1648,91 @@
 
         // ============ CAMERA FUNCTIONALITY (Take Pictures) ============
         const cameraBtn = document.getElementById('cameraBtn');
-        const cameraModal = document.getElementById('cameraModal');
+        const cameraOverlay = document.getElementById('cameraOverlay');
         const cameraPreview = document.getElementById('cameraPreview');
         const cameraStreamContainer = document.getElementById('cameraStreamContainer');
         const capturedPhotoContainer = document.getElementById('capturedPhotoContainer');
         const capturedPhoto = document.getElementById('capturedPhoto');
-        const startCameraBtn = document.getElementById('startCameraBtn');
         const capturePhotoBtn = document.getElementById('capturePhotoBtn');
         const retakeCameraBtn = document.getElementById('retakeCameraBtn');
         const sendPhotoBtn = document.getElementById('sendPhotoBtn');
-        const closeCameraModalBtn = document.getElementById('closeCameraModalBtn');
-        const modalOverlay = document.getElementById('modalOverlay');
+        const closeCameraBtn = document.getElementById('closeCameraBtn');
         let cameraStream = null;
         let capturedPhotoBlob = null;
 
-        cameraBtn.addEventListener('click', () => {
-            cameraModal.style.display = 'block';
-            modalOverlay.style.display = 'block';
-        });
-
-        startCameraBtn.addEventListener('click', async () => {
+        // Start camera immediately when button is clicked
+        cameraBtn.addEventListener('click', async () => {
             try {
+                console.log('Starting camera...');
+                cameraOverlay.style.display = 'flex';
+
+                // Request camera access
                 cameraStream = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: 'user' },
+                    video: {
+                        facingMode: 'user',
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    },
                     audio: false
                 });
+
+                console.log('Camera stream obtained:', cameraStream);
+
+                // Set video source and ensure it plays
                 cameraPreview.srcObject = cameraStream;
+                cameraPreview.onloadedmetadata = () => {
+                    console.log('Video metadata loaded');
+                    cameraPreview.play().catch(err => console.error('Play error:', err));
+                };
+
                 cameraStreamContainer.style.display = 'block';
-                startCameraBtn.style.display = 'none';
+                capturedPhotoContainer.style.display = 'none';
                 capturePhotoBtn.style.display = 'inline-block';
+                retakeCameraBtn.style.display = 'none';
+                sendPhotoBtn.style.display = 'none';
+
+                console.log('Camera ready for capture');
             } catch (error) {
                 console.error('Error accessing camera:', error);
-                alert('Unable to access camera. Please check permissions.');
+                cameraOverlay.style.display = 'none';
+                alert('Unable to access camera. Please check permissions and try again.');
             }
         });
 
         capturePhotoBtn.addEventListener('click', () => {
-            const canvas = document.createElement('canvas');
-            canvas.width = cameraPreview.videoWidth;
-            canvas.height = cameraPreview.videoHeight;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(cameraPreview, 0, 0);
+            try {
+                console.log('Capturing photo...');
+                const canvas = document.createElement('canvas');
+                canvas.width = cameraPreview.videoWidth;
+                canvas.height = cameraPreview.videoHeight;
 
-            canvas.toBlob((blob) => {
-                capturedPhotoBlob = blob;
-                capturedPhoto.src = canvas.toDataURL();
-                capturedPhotoContainer.style.display = 'block';
-                cameraStreamContainer.style.display = 'none';
-                capturePhotoBtn.style.display = 'none';
-                retakeCameraBtn.style.display = 'inline-block';
-                sendPhotoBtn.style.display = 'inline-block';
-            }, 'image/jpeg', 0.95);
+                if (canvas.width === 0 || canvas.height === 0) {
+                    console.error('Video dimensions not available');
+                    alert('Camera not ready. Please wait a moment and try again.');
+                    return;
+                }
+
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(cameraPreview, 0, 0);
+
+                canvas.toBlob((blob) => {
+                    capturedPhotoBlob = blob;
+                    capturedPhoto.src = canvas.toDataURL();
+                    capturedPhotoContainer.style.display = 'block';
+                    cameraStreamContainer.style.display = 'none';
+                    capturePhotoBtn.style.display = 'none';
+                    retakeCameraBtn.style.display = 'inline-block';
+                    sendPhotoBtn.style.display = 'inline-block';
+                    console.log('Photo captured successfully');
+                }, 'image/jpeg', 0.95);
+            } catch (error) {
+                console.error('Error capturing photo:', error);
+                alert('Failed to capture photo. Please try again.');
+            }
         });
 
         retakeCameraBtn.addEventListener('click', () => {
+            console.log('Retaking photo...');
             capturedPhotoContainer.style.display = 'none';
             cameraStreamContainer.style.display = 'block';
             capturePhotoBtn.style.display = 'inline-block';
@@ -1514,6 +1745,7 @@
             if (!capturedPhotoBlob || !currentChatroomId) return;
 
             try {
+                console.log('Sending photo...');
                 const formData = new FormData();
                 formData.append('content', 'Sent a picture');
                 formData.append('type', 'image');
@@ -1534,18 +1766,19 @@
                     throw new Error(errorData.message || 'Failed to send photo');
                 }
 
+                console.log('Photo sent successfully');
+
                 // Stop camera stream
                 if (cameraStream) {
                     cameraStream.getTracks().forEach(track => track.stop());
+                    cameraStream = null;
                 }
 
-                cameraModal.style.display = 'none';
-                modalOverlay.style.display = 'none';
+                cameraOverlay.style.display = 'none';
                 capturedPhotoBlob = null;
                 cameraStreamContainer.style.display = 'none';
                 capturedPhotoContainer.style.display = 'none';
-                startCameraBtn.style.display = 'inline-block';
-                capturePhotoBtn.style.display = 'none';
+                capturePhotoBtn.style.display = 'inline-block';
                 retakeCameraBtn.style.display = 'none';
                 sendPhotoBtn.style.display = 'none';
                 await loadMessages(currentChatroomId);
@@ -1555,17 +1788,17 @@
             }
         });
 
-        closeCameraModalBtn.addEventListener('click', () => {
+        closeCameraBtn.addEventListener('click', () => {
+            console.log('Closing camera...');
             if (cameraStream) {
                 cameraStream.getTracks().forEach(track => track.stop());
+                cameraStream = null;
             }
-            cameraModal.style.display = 'none';
-            modalOverlay.style.display = 'none';
+            cameraOverlay.style.display = 'none';
             capturedPhotoBlob = null;
             cameraStreamContainer.style.display = 'none';
             capturedPhotoContainer.style.display = 'none';
-            startCameraBtn.style.display = 'inline-block';
-            capturePhotoBtn.style.display = 'none';
+            capturePhotoBtn.style.display = 'inline-block';
             retakeCameraBtn.style.display = 'none';
             sendPhotoBtn.style.display = 'none';
         });
@@ -1643,50 +1876,51 @@
             }
         });
 
-        // ============ AUDIO RECORDING FUNCTIONALITY ============
+        // ============ AUDIO RECORDING FUNCTIONALITY (WhatsApp Style) ============
         const audioBtn = document.getElementById('audioBtn');
-        const audioRecordingModal = document.getElementById('audioRecordingModal');
-        const startRecordingBtn = document.getElementById('startRecordingBtn');
-        const stopRecordingBtn = document.getElementById('stopRecordingBtn');
-        const sendAudioBtn = document.getElementById('sendAudioBtn');
-        const closeAudioModalBtn = document.getElementById('closeAudioModalBtn');
-        const audioPlayback = document.getElementById('audioPlayback');
-        const audioPlaybackContainer = document.getElementById('audioPlaybackContainer');
-        const recordingTime = document.getElementById('recordingTime');
-        const recordingDuration = document.getElementById('recordingDuration');
+        const audioRecordingUI = document.getElementById('audioRecordingUI');
+        const recordingTimeDisplay = document.getElementById('recordingTime');
+        const deleteRecordingBtn = document.getElementById('deleteRecordingBtn');
+        const sendRecordingBtn = document.getElementById('sendRecordingBtn');
+        const recordingWaveform = document.getElementById('recordingWaveform');
 
         let mediaRecorder;
         let audioChunks = [];
         let recordingStartTime;
         let recordingInterval;
         let audioBlob;
+        let isRecording = false;
+        let audioContext;
+        let analyser;
+        let dataArray;
+        let animationId;
+        let audioStream;
 
-        audioBtn.addEventListener('click', () => {
-            audioRecordingModal.style.display = 'block';
-            modalOverlay.style.display = 'block';
-        });
-
-        closeAudioModalBtn.addEventListener('click', () => {
-            if (mediaRecorder && mediaRecorder.state === 'recording') {
-                mediaRecorder.stop();
+        audioBtn.addEventListener('click', async () => {
+            if (isRecording) {
+                // Stop recording
+                stopRecording();
+            } else {
+                // Start recording
+                startRecording();
             }
-            audioRecordingModal.style.display = 'none';
-            modalOverlay.style.display = 'none';
-            audioChunks = [];
-            audioBlob = null;
-            clearInterval(recordingInterval);
-            recordingTime.style.display = 'none';
-            stopRecordingBtn.style.display = 'none';
-            startRecordingBtn.style.display = 'block';
-            audioPlaybackContainer.style.display = 'none';
-            sendAudioBtn.style.display = 'none';
         });
 
-        startRecordingBtn.addEventListener('click', async () => {
+        async function startRecording() {
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                mediaRecorder = new MediaRecorder(stream);
+                audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(audioStream);
                 audioChunks = [];
+
+                // Setup audio context for waveform visualization
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                analyser = audioContext.createAnalyser();
+                analyser.fftSize = 256;
+                const source = audioContext.createMediaStreamSource(audioStream);
+                source.connect(analyser);
+
+                const bufferLength = analyser.frequencyBinCount;
+                dataArray = new Uint8Array(bufferLength);
 
                 mediaRecorder.ondataavailable = (event) => {
                     audioChunks.push(event.data);
@@ -1694,43 +1928,94 @@
 
                 mediaRecorder.onstop = () => {
                     audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-                    const audioUrl = URL.createObjectURL(audioBlob);
-                    audioPlayback.src = audioUrl;
-                    audioPlaybackContainer.style.display = 'block';
-                    sendAudioBtn.style.display = 'inline-block';
                     clearInterval(recordingInterval);
-                    recordingTime.style.display = 'none';
+                    cancelAnimationFrame(animationId);
+                    // Stop all audio tracks
+                    audioStream.getTracks().forEach(track => track.stop());
                 };
 
                 mediaRecorder.start();
-                startRecordingBtn.style.display = 'none';
-                stopRecordingBtn.style.display = 'inline-block';
-                recordingTime.style.display = 'block';
+                isRecording = true;
+                audioBtn.classList.add('recording');
+                audioRecordingUI.classList.add('active');
                 recordingStartTime = Date.now();
+
+                // Start waveform animation
+                animateWaveform();
 
                 recordingInterval = setInterval(() => {
                     const elapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
                     const minutes = Math.floor(elapsed / 60);
                     const seconds = elapsed % 60;
-                    recordingDuration.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                    recordingTimeDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
                 }, 100);
             } catch (error) {
                 console.error('Error accessing microphone:', error);
                 alert('Unable to access microphone. Please check permissions.');
             }
-        });
+        }
 
-        stopRecordingBtn.addEventListener('click', () => {
+        function animateWaveform() {
+            analyser.getByteFrequencyData(dataArray);
+
+            // Get the bars
+            const bars = recordingWaveform.querySelectorAll('.recording-bar');
+
+            // Update each bar height based on frequency data
+            for (let i = 0; i < bars.length; i++) {
+                const index = Math.floor((i / bars.length) * dataArray.length);
+                const value = dataArray[index];
+                // Map frequency value (0-255) to height (8px-28px)
+                const height = 8 + (value / 255) * 20;
+                bars[i].style.height = height + 'px';
+            }
+
+            animationId = requestAnimationFrame(animateWaveform);
+        }
+
+        function stopRecording() {
             if (mediaRecorder && mediaRecorder.state === 'recording') {
                 mediaRecorder.stop();
-                stopRecordingBtn.style.display = 'none';
+                isRecording = false;
+                audioBtn.classList.remove('recording');
+                clearInterval(recordingInterval);
+                cancelAnimationFrame(animationId);
             }
+        }
+
+        deleteRecordingBtn.addEventListener('click', () => {
+            stopRecording();
+            audioChunks = [];
+            audioBlob = null;
+            audioRecordingUI.classList.remove('active');
+            recordingTimeDisplay.textContent = '0:00';
+            // Reset waveform bars
+            const bars = recordingWaveform.querySelectorAll('.recording-bar');
+            bars.forEach(bar => bar.style.height = '8px');
         });
 
-        sendAudioBtn.addEventListener('click', async () => {
-            if (!audioBlob || !currentChatroomId) return;
+        sendRecordingBtn.addEventListener('click', async () => {
+            if (!currentChatroomId) return;
 
             try {
+                // Stop recording first to finalize the blob
+                if (isRecording) {
+                    await new Promise((resolve) => {
+                        const checkBlob = setInterval(() => {
+                            if (audioBlob) {
+                                clearInterval(checkBlob);
+                                resolve();
+                            }
+                        }, 10);
+                        stopRecording();
+                    });
+                }
+
+                if (!audioBlob) {
+                    alert('No audio recorded');
+                    return;
+                }
+
                 const formData = new FormData();
                 formData.append('content', 'Sent an audio message');
                 formData.append('type', 'audio');
@@ -1751,16 +2036,13 @@
                     throw new Error(errorData.message || 'Failed to send audio');
                 }
 
-                audioRecordingModal.style.display = 'none';
-                modalOverlay.style.display = 'none';
+                audioRecordingUI.classList.remove('active');
                 audioChunks = [];
                 audioBlob = null;
-                clearInterval(recordingInterval);
-                recordingTime.style.display = 'none';
-                stopRecordingBtn.style.display = 'none';
-                startRecordingBtn.style.display = 'block';
-                audioPlaybackContainer.style.display = 'none';
-                sendAudioBtn.style.display = 'none';
+                recordingTimeDisplay.textContent = '0:00';
+                // Reset waveform bars
+                const bars = recordingWaveform.querySelectorAll('.recording-bar');
+                bars.forEach(bar => bar.style.height = '8px');
                 await loadMessages(currentChatroomId);
             } catch (error) {
                 console.error('Error sending audio:', error);
@@ -1770,27 +2052,74 @@
 
         // Close modals when clicking overlay
         modalOverlay.addEventListener('click', () => {
-            if (audioRecordingModal.style.display === 'block') {
-                closeAudioModalBtn.click();
-            } else if (imagePreviewModal.style.display === 'block') {
+            if (imagePreviewModal.style.display === 'block') {
                 closeImageModalBtn.click();
             }
         });
 
         // ============ AUDIO PLAYBACK FUNCTIONALITY ============
         let currentPlayingAudioId = null;
+        let audioTimeUpdateListeners = {};
+
+        function formatTime(seconds) {
+            if (isNaN(seconds) || !isFinite(seconds)) return '0:00';
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function updateAudioProgress(audioId) {
+            const audioElement = document.getElementById(audioId);
+            const progressBar = document.getElementById(`progress-${audioId}`);
+            const timeDisplay = document.getElementById(`time-${audioId}`);
+
+            if (audioElement && progressBar && timeDisplay) {
+                const duration = audioElement.duration || 0;
+                const currentTime = audioElement.currentTime || 0;
+                const percentage = duration > 0 ? (currentTime / duration) * 100 : 0;
+
+                progressBar.style.width = percentage + '%';
+                // Show current time / total duration
+                timeDisplay.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
+            }
+        }
+
+        // Load audio duration when messages are rendered
+        function loadAudioDurations() {
+            const audioElements = document.querySelectorAll('audio[id^="audio-"]');
+            audioElements.forEach(audioElement => {
+                const audioId = audioElement.id;
+                const timeDisplay = document.getElementById(`time-${audioId}`);
+
+                // Function to update duration display
+                const updateDuration = () => {
+                    if (timeDisplay && audioElement.duration) {
+                        const duration = audioElement.duration || 0;
+                        timeDisplay.textContent = `0:00 / ${formatTime(duration)}`;
+                    }
+                };
+
+                // If metadata is already loaded
+                if (audioElement.readyState >= 1) {
+                    updateDuration();
+                } else {
+                    // Wait for metadata to load
+                    audioElement.addEventListener('loadedmetadata', updateDuration, { once: true });
+                }
+            });
+        }
 
         function toggleAudioPlayback(audioId, audioUrl) {
             const audioElement = document.getElementById(audioId);
-            const playBtn = document.querySelector(`[onclick*="${audioId}"]`);
+            const playBtn = document.querySelector(`[onclick*="toggleAudioPlayback('${audioId}"]`);
+            const timeDisplay = document.getElementById(`time-${audioId}`);
 
             // Stop any currently playing audio
             if (currentPlayingAudioId && currentPlayingAudioId !== audioId) {
                 const previousAudio = document.getElementById(currentPlayingAudioId);
-                const previousBtn = document.querySelector(`[onclick*="${currentPlayingAudioId}"]`);
+                const previousBtn = document.querySelector(`[onclick*="toggleAudioPlayback('${currentPlayingAudioId}"]`);
                 if (previousAudio) {
                     previousAudio.pause();
-                    previousAudio.currentTime = 0;
                 }
                 if (previousBtn) {
                     previousBtn.classList.remove('playing');
@@ -1799,11 +2128,31 @@
             }
 
             if (audioElement.paused) {
+                // Play audio
                 audioElement.play();
                 playBtn.classList.add('playing');
                 playBtn.innerHTML = '<i class="bi bi-pause-fill"></i>';
                 currentPlayingAudioId = audioId;
+
+                // Add time update listener if not already added
+                if (!audioTimeUpdateListeners[audioId]) {
+                    const updateProgress = () => {
+                        updateAudioProgress(audioId);
+                    };
+                    audioElement.addEventListener('timeupdate', updateProgress);
+                    audioTimeUpdateListeners[audioId] = updateProgress;
+                }
+
+                // Load metadata and display duration
+                if (audioElement.readyState >= 1) {
+                    updateAudioProgress(audioId);
+                } else {
+                    audioElement.addEventListener('loadedmetadata', () => {
+                        updateAudioProgress(audioId);
+                    }, { once: true });
+                }
             } else {
+                // Pause audio
                 audioElement.pause();
                 playBtn.classList.remove('playing');
                 playBtn.innerHTML = '<i class="bi bi-play-fill"></i>';
@@ -1811,12 +2160,45 @@
             }
         }
 
+        function seekAudio(event, audioId) {
+            const audioElement = document.getElementById(audioId);
+            if (!audioElement) return;
+
+            const progressContainer = event.currentTarget;
+            const rect = progressContainer.getBoundingClientRect();
+            const clickX = event.clientX - rect.left;
+            const percentage = Math.max(0, Math.min(clickX / rect.width, 1));
+
+            // Wait for metadata to be loaded if needed
+            if (audioElement.readyState >= 1) {
+                const newTime = percentage * audioElement.duration;
+                audioElement.currentTime = Math.max(0, Math.min(newTime, audioElement.duration));
+                updateAudioProgress(audioId);
+            } else {
+                // If metadata not loaded yet, wait for it
+                audioElement.addEventListener('loadedmetadata', () => {
+                    const newTime = percentage * audioElement.duration;
+                    audioElement.currentTime = Math.max(0, Math.min(newTime, audioElement.duration));
+                    updateAudioProgress(audioId);
+                }, { once: true });
+            }
+        }
+
         function onAudioEnded(audioId) {
-            const playBtn = document.querySelector(`[onclick*="${audioId}"]`);
+            const playBtn = document.querySelector(`[onclick*="toggleAudioPlayback('${audioId}"]`);
+            const audioElement = document.getElementById(audioId);
+
             if (playBtn) {
                 playBtn.classList.remove('playing');
                 playBtn.innerHTML = '<i class="bi bi-play-fill"></i>';
             }
+
+            // Reset to beginning
+            if (audioElement) {
+                audioElement.currentTime = 0;
+                updateAudioProgress(audioId);
+            }
+
             currentPlayingAudioId = null;
         }
     </script>

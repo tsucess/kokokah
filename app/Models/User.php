@@ -248,6 +248,18 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(ForumTopic::class);
     }
 
+    public function subscriptions()
+    {
+        return $this->hasMany(UserSubscription::class);
+    }
+
+    public function activeSubscriptions()
+    {
+        return $this->hasMany(UserSubscription::class)
+                    ->where('status', 'active')
+                    ->where('expires_at', '>', now());
+    }
+
     public function forumReplies()
     {
         return $this->hasMany(ForumReply::class);

@@ -10,6 +10,7 @@ class KokokahLoader {
     this.isVisible = false;
     this.hideTimeout = null;
     this.pageLoadStartTime = Date.now();
+    this.visibilityStartTime = null; // Track when loader became visible
     this.safetyCheckInterval = null;
     this.init();
   }
@@ -86,8 +87,8 @@ class KokokahLoader {
 
     // Auto-hide loader after 10 seconds if it's still visible (safety mechanism)
     this.safetyCheckInterval = setInterval(() => {
-      if (this.isVisible) {
-        const elapsedTime = Date.now() - this.pageLoadStartTime;
+      if (this.isVisible && this.visibilityStartTime) {
+        const elapsedTime = Date.now() - this.visibilityStartTime;
         // If loader has been visible for more than 10 seconds, force hide it
         if (elapsedTime > 10000) {
           console.warn('Loader visible for too long, force hiding');
@@ -105,6 +106,7 @@ class KokokahLoader {
     if (this.isVisible) return;
 
     this.isVisible = true;
+    this.visibilityStartTime = Date.now(); // Track when loader became visible
     this.pageLoadStartTime = Date.now();
 
     if (this.loaderElement) {
@@ -147,6 +149,7 @@ class KokokahLoader {
         this.loaderElement.style.visibility = 'hidden';
         this.loaderElement.style.pointerEvents = 'none';
         this.isVisible = false;
+        this.visibilityStartTime = null; // Reset visibility start time
       }
     }, delayBeforeHide);
   }
@@ -179,6 +182,7 @@ class KokokahLoader {
     if (this.loaderElement) {
       this.loaderElement.classList.add('hidden');
       this.isVisible = false;
+      this.visibilityStartTime = null; // Reset visibility start time
     }
   }
 

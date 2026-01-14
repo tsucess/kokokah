@@ -152,6 +152,15 @@ Route::get('/subscription', function () {
     return view('admin.subscription');
 });
 
+// User subscription routes
+Route::get('/subscriptions/plans', function () {
+    return view('subscriptions.plans');
+})->name('subscriptions.plans');
+
+Route::get('/subscriptions/my-subscriptions', function () {
+    return view('subscriptions.my-subscriptions');
+})->name('subscriptions.my-subscriptions');
+
 Route::get('/register', function () {
     return view('auth.register');
 });
