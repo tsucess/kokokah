@@ -5,7 +5,7 @@
     <style>
         .card-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 100%));
+            grid-template-columns: repeat(auto-fit, minmax(300px, min(100%, 400px)));
             gap: 1rem;
             position: relative;
             z-index: 10;
