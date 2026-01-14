@@ -440,9 +440,17 @@
                 } else {
                     showError('Failed to load subscription plans');
                 }
+                // Hide loader after loading plans
+                if (window.kokokahLoader) {
+                    window.kokokahLoader.hide();
+                }
             } catch (error) {
                 console.error('Error loading plans:', error);
                 showError('Error loading subscription plans');
+                // Hide loader on error
+                if (window.kokokahLoader) {
+                    window.kokokahLoader.hide();
+                }
             }
         }
 
@@ -573,6 +581,11 @@
             };
 
             try {
+                // Show loader
+                if (window.kokokahLoader) {
+                    window.kokokahLoader.show();
+                }
+
                 let response;
                 const headers = {
                     'Content-Type': 'application/json',
@@ -600,6 +613,10 @@
                     const errorData = await response.json();
                     showError(errorData.message || `Error: ${response.status} ${response.statusText}`);
                     console.error('API Error:', response.status, errorData);
+                    // Hide loader on error
+                    if (window.kokokahLoader) {
+                        window.kokokahLoader.hide();
+                    }
                     return;
                 }
 
@@ -609,19 +626,36 @@
                     showSuccess(editingPlanId ? 'Plan updated successfully' : 'Plan created successfully');
                     resetForm();
                     bootstrap.Modal.getInstance(document.getElementById('addSubscription')).hide();
+                    // Hide loader before reloading plans
+                    if (window.kokokahLoader) {
+                        window.kokokahLoader.hide();
+                    }
                     loadSubscriptionPlans();
                 } else {
                     showError(data.message || 'Failed to save plan');
+                    // Hide loader on error
+                    if (window.kokokahLoader) {
+                        window.kokokahLoader.hide();
+                    }
                 }
             } catch (error) {
                 console.error('Error saving plan:', error);
                 showError('Error saving subscription plan: ' + error.message);
+                // Hide loader on error
+                if (window.kokokahLoader) {
+                    window.kokokahLoader.hide();
+                }
             }
         }
 
         // Edit plan
         async function editPlan(planId) {
             try {
+                // Show loader
+                if (window.kokokahLoader) {
+                    window.kokokahLoader.show();
+                }
+
                 const response = await fetch(`${SUBSCRIPTION_API_URL}/plans/${planId}`, {
                     headers: {
                         'Authorization': `Bearer ${getAuthToken()}`,
@@ -633,6 +667,10 @@
                     const errorData = await response.json();
                     showError(errorData.message || `Error: ${response.status} ${response.statusText}`);
                     console.error('API Error:', response.status, errorData);
+                    // Hide loader on error
+                    if (window.kokokahLoader) {
+                        window.kokokahLoader.hide();
+                    }
                     return;
                 }
 
@@ -657,14 +695,27 @@
                     // Update modal title
                     document.getElementById('modalTitle').textContent = 'Edit Subscription Plan';
 
+                    // Hide loader before showing modal
+                    if (window.kokokahLoader) {
+                        window.kokokahLoader.hide();
+                    }
+
                     // Show modal
                     new bootstrap.Modal(document.getElementById('addSubscription')).show();
                 } else {
                     showError('Failed to load plan details');
+                    // Hide loader on error
+                    if (window.kokokahLoader) {
+                        window.kokokahLoader.hide();
+                    }
                 }
             } catch (error) {
                 console.error('Error loading plan:', error);
                 showError('Error loading plan details');
+                // Hide loader on error
+                if (window.kokokahLoader) {
+                    window.kokokahLoader.hide();
+                }
             }
         }
 
@@ -676,6 +727,11 @@
             }
 
             try {
+                // Show loader
+                if (window.kokokahLoader) {
+                    window.kokokahLoader.show();
+                }
+
                 const response = await fetch(`${SUBSCRIPTION_API_URL}/plans/${planId}`, {
                     method: 'DELETE',
                     headers: {
@@ -688,6 +744,10 @@
                     const errorData = await response.json();
                     showError(errorData.message || `Error: ${response.status} ${response.statusText}`);
                     console.error('API Error:', response.status, errorData);
+                    // Hide loader on error
+                    if (window.kokokahLoader) {
+                        window.kokokahLoader.hide();
+                    }
                     return;
                 }
 
@@ -695,13 +755,25 @@
 
                 if (data.success) {
                     showSuccess('Plan deleted successfully');
+                    // Hide loader before reloading plans
+                    if (window.kokokahLoader) {
+                        window.kokokahLoader.hide();
+                    }
                     loadSubscriptionPlans();
                 } else {
                     showError(data.message || 'Failed to delete plan');
+                    // Hide loader on error
+                    if (window.kokokahLoader) {
+                        window.kokokahLoader.hide();
+                    }
                 }
             } catch (error) {
                 console.error('Error deleting plan:', error);
                 showError('Error deleting subscription plan: ' + error.message);
+                // Hide loader on error
+                if (window.kokokahLoader) {
+                    window.kokokahLoader.hide();
+                }
             }
         }
 
