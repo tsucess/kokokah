@@ -1,483 +1,536 @@
 @extends('layouts.usertemplate')
 
 @section('content')
-<style>
-    /* Global font & background */
-    body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background: #ffffff;
-        color: #222;
-        padding: 28px 12px;
-    }
-    .enroll-btn{
-        background-color: #FDAF22;
-        padding: 16px 20px;
-        color: #000F11;
-        font-size: 16px;
-        font-weight: 600;
-        border-radius: 4px;
-    }
-
-    /* Outer card/container */
-    .txn-card {
-        max-width: 1120px;
-        /* wide like screenshot */
-        margin: 0 auto;
-        border-radius: 6px;
-        border: 1px solid #e9e9e9;
-        /* subtle border */
-        overflow: hidden;
-        background: #fff;
-        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
-    }
-
-    /* Header row */
-    .txn-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 14px 22px;
-        border-bottom: 1px solid #eee;
-        font-size: 14px;
-        color: #333;
-        background: #fff;
-    }
-
-    /* small right controls */
-    .txn-controls .form-select {
-        min-height: calc(1.5em + .75rem + 2px);
-        padding-top: .25rem;
-        padding-bottom: .25rem;
-        font-size: 13px;
-        border-radius: 6px;
-        /* border: 1px solid #e6e6e6;
-      background: #f8f9fa; */
-    }
-
-    .txn-controls .btn-filter {
-        padding: .25rem .5rem;
-        font-size: 13px;
-    }
-
-    /* List area */
-    .txn-list {
-        min-height: 420px;
-        /* tall list like screenshot */
-        background: #fff;
-    }
-
-    .txn-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 12px;
-        padding: 14px 22px;
-        border-bottom: 1px solid #f2f2f2;
-        font-size: 14px;
-    }
-
-    /* Left column contains checkbox + label */
-    .txn-left {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        flex: 1 1 auto;
-        white-space: nowrap;
-        overflow: hidden;
-    }
-
-    /* Make checkbox small and vertically centered */
-    .txn-left .form-check-input {
-        width: 16px;
-        height: 16px;
-        margin-top: 0;
-    }
-
-    /* Subject text */
-    .subject {
-        font-size: 14px;
-        color: #222;
-        /* dark text similar to screenshot */
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    /* Price on the right */
-    .txn-price {
-        min-width: 110px;
-        text-align: right;
-        font-weight: 600;
-        color: #0b0b0b;
-        font-size: 14px;
-    }
-
-    /* Last row (no border) */
-    .txn-row:last-child {
-        border-bottom: none;
-    }
-
-    /* Payment footer */
-    .txn-footer {
-        padding: 18px 22px;
-        border-top: 1px solid #eee;
-        background: #fff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .proceed-payment-btn{
-        border: 1px solid #004A53;
-        border-radius: 4px;
-        padding: 16px 20px;
-        color: #004A53;
-        font-size: 16px;
-        font-weight: 600;
-        background-color: transparent;
-    }
-
-
-
-    /* Subtotal text style inside button */
-    .subtotal {
-        font-weight: 700;
-        margin-left: 8px;
-    }
-
-    /* Payment Gateway Selection */
-    .payment-gateway-section {
-        padding: 20px 22px;
-        border-top: 1px solid #eee;
-        background: #f9f9f9;
-    }
-
-    .payment-gateway-title {
-        font-size: 14px;
-        font-weight: 600;
-        color: #333;
-        margin-bottom: 16px;
-    }
-
-    .payment-gateways {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-        gap: 12px;
-    }
-
-    .gateway-option {
-        position: relative;
-    }
-
-    .gateway-option input[type="radio"] {
-        display: none;
-    }
-
-    .gateway-label {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 16px 12px;
-        border: 2px solid #e0e0e0;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        background: #fff;
-        min-height: 100px;
-    }
-
-    .gateway-option input[type="radio"]:checked + .gateway-label {
-        border-color: #004A53;
-        background-color: #f0f8f9;
-    }
-
-    .gateway-icon {
-        font-size: 32px;
-        margin-bottom: 8px;
-    }
-
-    .gateway-name {
-        font-size: 13px;
-        font-weight: 600;
-        color: #333;
-        text-align: center;
-    }
-
-    /* Small screens — stack price under label */
-    @media (max-width: 576px) {
-        .txn-row {
-            flex-direction: column;
-            align-items: flex-start;
+    <style>
+        /* Global font & background */
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            color: #222;
+            padding: 28px 12px;
         }
 
-        .txn-price {
-            text-align: left;
-            margin-top: 8px;
+        .enroll-btn {
+            background-color: #FDAF22;
+            padding: 16px 20px;
+            color: #000F11;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 4px;
         }
 
+        .subject-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, min(100%, 300px)));
+            gap: 20px;
+        }
+
+        .subject-card {
+            border: 1px solid #CCDBDD;
+            padding: 25px;
+            border-radius: 20px;
+        }
+        .custom-select-plan{
+            border: 1px solid #000000;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: #000000;
+            font-size: 12px;
+        }
+
+        .custom-switch .form-check-input {
+            width: 3.5rem;
+            /* default is ~2.5rem */
+            height: 1.75rem;
+            /* default is ~1.25rem */
+            cursor: pointer;
+        }
+
+        /* make the knob bigger */
+        .custom-switch .form-check-input::before {
+            width: 1.4rem;
+            height: 1.4rem;
+        }
+
+        /* OFF state */
+        .custom-switch .form-check-input {
+            background-color: #cbd5e1;
+            border-color: #cbd5e1;
+        }
+
+        /* ON state */
+        .custom-switch .form-check-input:checked {
+            background-color: #22c55e;
+            /* green */
+            border-color: #22c55e;
+        }
+
+        /* focus ring */
+        .custom-switch .form-check-input:focus {
+            box-shadow: 0 0 0 0.25rem rgba(34, 197, 94, 0.25);
+        }
+
+        /* Outer card/container */
+        .txn-card {
+            max-width: 1120px;
+            /* wide like screenshot */
+            margin: 0 auto;
+            border-radius: 6px;
+            border: 1px solid #e9e9e9;
+            /* subtle border */
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
+        }
+
+        /* Header row */
         .txn-header {
-            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 22px;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+            color: #333;
+            background: #fff;
+        }
+
+        /* small right controls */
+        .txn-controls .form-select {
+            min-height: calc(1.5em + .75rem + 2px);
+            padding-top: .25rem;
+            padding-bottom: .25rem;
+            font-size: 13px;
+            border-radius: 6px;
+            /* border: 1px solid #e6e6e6;
+          background: #f8f9fa; */
+        }
+
+        .txn-controls .btn-filter {
+            padding: .25rem .5rem;
+            font-size: 13px;
+        }
+
+        /* List area */
+        .txn-list {
+            min-height: 420px;
+            /* tall list like screenshot */
+            background: #fff;
         }
 
         .txn-row {
-            padding: 12px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 22px;
+            border-bottom: 1px solid #f2f2f2;
+            font-size: 14px;
         }
 
+        /* Left column contains checkbox + label */
+        .txn-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1 1 auto;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        /* Make checkbox small and vertically centered */
+        .txn-left .form-check-input {
+            width: 16px;
+            height: 16px;
+            margin-top: 0;
+        }
+
+        /* Subject text */
+        .subject {
+            font-size: 14px;
+            color: #222;
+            /* dark text similar to screenshot */
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Price on the right */
+        .txn-price {
+            min-width: 110px;
+            text-align: right;
+            font-weight: 600;
+            color: #0b0b0b;
+            font-size: 14px;
+        }
+
+        /* Last row (no border) */
+        .txn-row:last-child {
+            border-bottom: none;
+        }
+
+        /* Payment footer */
         .txn-footer {
-            padding: 16px 14px;
-        }
-    }
-
-    /* Back button styling */
-    .back-btn {
-        background: none;
-        border: none;
-        padding: 8px 12px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #004A53;
-        font-size: 24px;
-        transition: opacity 0.2s ease;
-        margin-right: 12px;
-    }
-
-    .back-btn:hover {
-        opacity: 0.7;
-    }
-
-    .back-btn:active {
-        opacity: 0.5;
-    }
-
-    .header-with-back {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    /* Payment Modal Styles */
-    .payment-modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000;
-    }
-
-    .payment-modal {
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-        max-width: 600px;
-        width: 90%;
-        max-height: 90vh;
-        overflow-y: auto;
-        animation: slideUp 0.3s ease-out;
-    }
-
-    @keyframes slideUp {
-        from {
-            transform: translateY(30px);
-            opacity: 0;
-        }
-        to {
-            transform: translateY(0);
-            opacity: 1;
-        }
-    }
-
-    .payment-modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 24px;
-        border-bottom: 1px solid #e0e0e0;
-    }
-
-    .payment-modal-header h2 {
-        margin: 0;
-        font-size: 20px;
-        font-weight: 600;
-        color: #333;
-    }
-
-    .payment-modal-close {
-        background: none;
-        border: none;
-        font-size: 24px;
-        color: #666;
-        cursor: pointer;
-        padding: 0;
-        width: 32px;
-        height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: color 0.2s ease;
-    }
-
-    .payment-modal-close:hover {
-        color: #333;
-    }
-
-    .payment-modal-body {
-        padding: 24px;
-    }
-
-    .payment-modal-footer {
-        display: flex;
-        gap: 12px;
-        padding: 24px;
-        border-top: 1px solid #e0e0e0;
-        justify-content: flex-end;
-    }
-
-    .payment-modal-cancel {
-        padding: 12px 24px;
-        border: 1px solid #e0e0e0;
-        background: white;
-        color: #333;
-        border-radius: 6px;
-        font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
-
-    .payment-modal-cancel:hover {
-        background: #f5f5f5;
-        border-color: #ccc;
-    }
-
-    .payment-modal-confirm {
-        padding: 12px 24px;
-        border: none;
-        background: #004A53;
-        color: white;
-        border-radius: 6px;
-        font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
-
-    .payment-modal-confirm:hover {
-        background: #003a41;
-    }
-
-    .payment-modal-confirm:active {
-        transform: scale(0.98);
-    }
-
-    /* Payment Gateway Options */
-    .payment-gateways {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-        gap: 12px;
-    }
-
-    .gateway-option {
-        position: relative;
-    }
-
-    .gateway-option input[type="radio"] {
-        display: none;
-    }
-
-    .gateway-label {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 16px 12px;
-        border: 2px solid #e0e0e0;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        background: #fff;
-        min-height: 120px;
-    }
-
-    .gateway-option input[type="radio"]:checked + .gateway-label {
-        border-color: #004A53;
-        background-color: #f0f8f9;
-    }
-
-    .gateway-icon {
-        width: 60px;
-        height: 60px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 8px;
-        background: #f5f5f5;
-        border-radius: 6px;
-    }
-
-    .gateway-icon img {
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: contain;
-    }
-
-    .gateway-name {
-        font-size: 13px;
-        font-weight: 600;
-        color: #333;
-        text-align: center;
-    }
-
-    /* Responsive modal */
-    @media (max-width: 576px) {
-        .payment-modal {
-            width: 95%;
-            max-height: 85vh;
+            padding: 18px 22px;
+            border-top: 1px solid #eee;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .payment-modal-header {
-            padding: 16px;
+        .proceed-payment-btn {
+            border: 1px solid #004A53;
+            border-radius: 4px;
+            padding: 16px 20px;
+            color: #004A53;
+            font-size: 16px;
+            font-weight: 600;
+            background-color: transparent;
         }
 
-        .payment-modal-body {
-            padding: 16px;
+
+
+        /* Subtotal text style inside button */
+        .subtotal {
+            font-weight: 700;
+            margin-left: 8px;
         }
 
-        .payment-modal-footer {
-            padding: 16px;
-            flex-direction: column;
+        /* Payment Gateway Selection */
+        .payment-gateway-section {
+            padding: 20px 22px;
+            border-top: 1px solid #eee;
+            background: #f9f9f9;
         }
 
-        .payment-modal-cancel,
-        .payment-modal-confirm {
-            width: 100%;
+        .payment-gateway-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 16px;
         }
 
         .payment-gateways {
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+        }
+
+        .gateway-option {
+            position: relative;
+        }
+
+        .gateway-option input[type="radio"] {
+            display: none;
         }
 
         .gateway-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #fff;
             min-height: 100px;
-            padding: 12px 8px;
+        }
+
+        .gateway-option input[type="radio"]:checked+.gateway-label {
+            border-color: #004A53;
+            background-color: #f0f8f9;
         }
 
         .gateway-icon {
-            width: 50px;
-            height: 50px;
+            font-size: 32px;
+            margin-bottom: 8px;
         }
 
         .gateway-name {
-            font-size: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            text-align: center;
         }
-    }
-</style>
+
+        /* Small screens — stack price under label */
+        @media (max-width: 576px) {
+            .txn-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .txn-price {
+                text-align: left;
+                margin-top: 8px;
+            }
+
+            .txn-header {
+                padding: 12px 14px;
+            }
+
+            .txn-row {
+                padding: 12px 14px;
+            }
+
+            .txn-footer {
+                padding: 16px 14px;
+            }
+        }
+
+        /* Back button styling */
+        .back-btn {
+            background: none;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #004A53;
+            font-size: 24px;
+            transition: opacity 0.2s ease;
+            margin-right: 12px;
+        }
+
+        .back-btn:hover {
+            opacity: 0.7;
+        }
+
+        .back-btn:active {
+            opacity: 0.5;
+        }
+
+        .header-with-back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Payment Modal Styles */
+        .payment-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .payment-modal {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .payment-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .payment-modal-header h2 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .payment-modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #666;
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s ease;
+        }
+
+        .payment-modal-close:hover {
+            color: #333;
+        }
+
+        .payment-modal-body {
+            padding: 24px;
+        }
+
+        .payment-modal-footer {
+            display: flex;
+            gap: 12px;
+            padding: 24px;
+            border-top: 1px solid #e0e0e0;
+            justify-content: flex-end;
+        }
+
+        .payment-modal-cancel {
+            padding: 12px 24px;
+            border: 1px solid #e0e0e0;
+            background: white;
+            color: #333;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .payment-modal-cancel:hover {
+            background: #f5f5f5;
+            border-color: #ccc;
+        }
+
+        .payment-modal-confirm {
+            padding: 12px 24px;
+            border: none;
+            background: #004A53;
+            color: white;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .payment-modal-confirm:hover {
+            background: #003a41;
+        }
+
+        .payment-modal-confirm:active {
+            transform: scale(0.98);
+        }
+
+        /* Payment Gateway Options */
+        .payment-gateways {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+        }
+
+        .gateway-option {
+            position: relative;
+        }
+
+        .gateway-option input[type="radio"] {
+            display: none;
+        }
+
+        .gateway-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #fff;
+            min-height: 120px;
+        }
+
+        .gateway-option input[type="radio"]:checked+.gateway-label {
+            border-color: #004A53;
+            background-color: #f0f8f9;
+        }
+
+        .gateway-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            background: #f5f5f5;
+            border-radius: 6px;
+        }
+
+        .gateway-icon img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .gateway-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            text-align: center;
+        }
+
+        /* Responsive modal */
+        @media (max-width: 576px) {
+            .payment-modal {
+                width: 95%;
+                max-height: 85vh;
+            }
+
+            .payment-modal-header {
+                padding: 16px;
+            }
+
+            .payment-modal-body {
+                padding: 16px;
+            }
+
+            .payment-modal-footer {
+                padding: 16px;
+                flex-direction: column;
+            }
+
+            .payment-modal-cancel,
+            .payment-modal-confirm {
+                width: 100%;
+            }
+
+            .payment-gateways {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+
+            .gateway-label {
+                min-height: 100px;
+                padding: 12px 8px;
+            }
+
+            .gateway-icon {
+                width: 50px;
+                height: 50px;
+            }
+
+            .gateway-name {
+                font-size: 12px;
+            }
+        }
+    </style>
 @section('content')
     <main>
         <section class="container-fluid p-4 d-flex flex-column gap-4">
@@ -490,7 +543,52 @@
                 </div>
                 <button class = "enroll-btn" type = "button" id="enrollAllBtn">Enroll in All Subjects - ₦0.00</button>
             </div>
-            <div class="txn-card w-100">
+            <section class="d-flex flex-column gap-4">
+                <div class="d-flex align-items-center gap-3">
+                    <select name="" id="" class="custom-select-plan">
+                        <option value="">Select Plan</option>
+                        <option value="">Daily Plan</option>
+                        <option value="">Weekly Plan</option>
+                        <option value="">Monthly Plan</option>
+                        <option value="">Yearly Plan</option>
+                    </select>
+                    <p>100 per Subject</p>
+
+                </div>
+                <div class="subject-container">
+                    <div class="subject-card d-flex align-items-center gap-2 justify-content-between">
+                        <h5>Mathematics</h5>
+                        <div class="form-check form-switch custom-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" checked>
+                        </div>
+                    </div>
+                    <div class="subject-card d-flex align-items-center gap-2 justify-content-between">
+                        <h5>Mathematics</h5>
+                        <div class="form-check form-switch custom-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" checked>
+                        </div>
+                    </div>
+                    <div class="subject-card d-flex align-items-center gap-2 justify-content-between">
+                        <h5>Mathematics</h5>
+                        <div class="form-check form-switch custom-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" checked>
+                        </div>
+                    </div>
+                    <div class="subject-card d-flex align-items-center gap-2 justify-content-between">
+                        <h5>Mathematics</h5>
+                        <div class="form-check form-switch custom-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" checked>
+                        </div>
+                    </div>
+                    <div class="subject-card d-flex align-items-center gap-2 justify-content-between">
+                        <h5>Mathematics</h5>
+                        <div class="form-check form-switch custom-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" checked>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {{-- <div class="txn-card w-100">
 
                 <!-- Header -->
                 <div class="txn-header ">
@@ -522,7 +620,7 @@
                     </div>
                 </div>
 
-            </div>
+            </div> --}}
 
             <!-- Footer with proceed button -->
             <div style="padding: 20px 22px; display: flex; justify-content: center;">
@@ -570,7 +668,8 @@
                                 <input type="radio" id="gateway-flutterwave" name="payment_gateway" value="flutterwave">
                                 <label for="gateway-flutterwave" class="gateway-label">
                                     <div class="gateway-icon">
-                                        <img src="{{ asset('images/Flutterwave.png') }}" alt="Flutterwave" style="max-width: 50px; max-height: 50px;">
+                                        <img src="{{ asset('images/Flutterwave.png') }}" alt="Flutterwave"
+                                            style="max-width: 50px; max-height: 50px;">
                                     </div>
                                     <div class="gateway-name">Flutterwave</div>
                                 </label>
@@ -602,7 +701,8 @@
 
                     <div class="payment-modal-footer">
                         <button type="button" class="payment-modal-cancel" id="cancelPaymentModal">Cancel</button>
-                        <button type="button" class="payment-modal-confirm" id="confirmPaymentModal">Proceed with Payment</button>
+                        <button type="button" class="payment-modal-confirm" id="confirmPaymentModal">Proceed with
+                            Payment</button>
                     </div>
                 </div>
             </div>
@@ -612,9 +712,9 @@
 
     <!-- JS: bootstrap + API integration -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- API Clients -->
+    <!-- API Clients -->
     <script>
-let allCourses = [];
+        let allCourses = [];
 
         document.addEventListener("DOMContentLoaded", async () => {
             await loadCourses();
@@ -668,10 +768,16 @@ let allCourses = [];
                 }
 
                 console.log('Loading courses for level_id:', levelId);
-                console.log('API call parameters:', { level_id: levelId, per_page: 50 });
+                console.log('API call parameters:', {
+                    level_id: levelId,
+                    per_page: 50
+                });
 
                 // Fetch courses for this level
-                const result = await CourseApiClient.getCourses({ level_id: levelId, per_page: 50 });
+                const result = await CourseApiClient.getCourses({
+                    level_id: levelId,
+                    per_page: 50
+                });
 
                 console.log('API Response:', result);
                 console.log('API Response data.courses.data:', result.data?.courses?.data);
@@ -728,7 +834,8 @@ let allCourses = [];
 
             const coursesHtml = courses.map((course, index) => {
                 // Check if course is free
-                const isFree = course.free === true || course.free === 1 || course.price === 0 || course.price === '0';
+                const isFree = course.free === true || course.free === 1 || course.price === 0 || course.price ===
+                    '0';
                 const priceDisplay = isFree ? 'Free Course' : formatNGN(course.price || 0);
 
                 return `
@@ -794,7 +901,8 @@ let allCourses = [];
          */
         function showError(message) {
             const coursesList = document.getElementById('coursesList');
-            coursesList.innerHTML = `<div class="txn-row"><div class="txn-left"><p class="text-danger">${message}</p></div></div>`;
+            coursesList.innerHTML =
+                `<div class="txn-row"><div class="txn-left"><p class="text-danger">${message}</p></div></div>`;
         }
 
         /**
@@ -941,7 +1049,7 @@ let allCourses = [];
          * Route to appropriate payment gateway
          */
         function routeToPaymentGateway(gateway, paymentData) {
-            switch(gateway) {
+            switch (gateway) {
                 case 'kudikah':
                     processKudikahPayment(paymentData);
                     break;
@@ -1165,5 +1273,6 @@ let allCourses = [];
                     <button type="button" class="btn btn-primary mt-3" onclick="location.reload()">Try Again</button>
                 </div>
             `;
-        }    </script>
+        }
+    </script>
 @endsection
