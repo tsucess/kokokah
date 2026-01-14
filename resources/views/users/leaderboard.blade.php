@@ -98,17 +98,22 @@
     function displayTopWinners() {
         const topWinners = allLeaderboardData.slice(0, 3);
 
-        // Second place (index 1)
+        // Map rankings to DOM positions:
+        // DOM position 0 (left) = 2nd place (index 1)
+        // DOM position 1 (middle) = 1st place (index 0)
+        // DOM position 2 (right) = 3rd place (index 2)
+
+        // Second place (index 1) -> DOM position 0
         if (topWinners[1]) {
-            updateWinnerDisplay(1, topWinners[1]);
+            updateWinnerDisplay(0, topWinners[1]);
         }
 
-        // First place (index 0)
+        // First place (index 0) -> DOM position 1
         if (topWinners[0]) {
-            updateWinnerDisplay(0, topWinners[0]);
+            updateWinnerDisplay(1, topWinners[0]);
         }
 
-        // Third place (index 2)
+        // Third place (index 2) -> DOM position 2
         if (topWinners[2]) {
             updateWinnerDisplay(2, topWinners[2]);
         }
@@ -117,21 +122,12 @@
     /**
      * Update winner display
      */
-    function updateWinnerDisplay(position, winner) {
-        const positions = {
-            0: { containerClass: 'leaderboard-first-platform', nameSelector: 'leaderboard-winner-name' },
-            1: { containerClass: 'leaderboard-second-platform', nameSelector: 'leaderboard-winner-name' },
-            2: { containerClass: 'leaderboard-third-platform', nameSelector: 'leaderboard-winner-name' }
-        };
-
-        const posConfig = positions[position];
-        if (!posConfig) return;
-
-        // Find the winner container for this position
+    function updateWinnerDisplay(domPosition, winner) {
+        // Find the winner container for this DOM position
         const containers = document.querySelectorAll('.leaderboard-stats-container > div');
-        if (containers[position]) {
-            const nameElement = containers[position].querySelector('.leaderboard-winner-name');
-            const imgElement = containers[position].querySelector('.leaderboard-winner-img');
+        if (containers[domPosition]) {
+            const nameElement = containers[domPosition].querySelector('.leaderboard-winner-name');
+            const imgElement = containers[domPosition].querySelector('.leaderboard-winner-img');
 
             if (nameElement) {
                 nameElement.textContent = `${winner.first_name} ${winner.last_name}`;
