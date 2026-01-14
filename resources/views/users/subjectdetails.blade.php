@@ -461,9 +461,11 @@
             const ext = fileName.split('.').pop().toLowerCase();
             const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp'];
             const pdfExtensions = ['pdf'];
+            const officeExtensions = ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
 
             if (imageExtensions.includes(ext)) return 'image';
             if (pdfExtensions.includes(ext)) return 'pdf';
+            if (officeExtensions.includes(ext)) return 'office';
             return 'document';
         }
 
@@ -570,6 +572,31 @@
                 };
                 fileViewerBody.appendChild(iframe);
                 fileViewerLabel.textContent = `PDF: ${fileName}`;
+            } else if (fileType === 'office') {
+                // For Office documents, provide download option
+                // Office Online viewer requires public URLs, so we provide download instead
+                fileViewerBody.innerHTML = `
+                    <div class="alert alert-info">
+                        <div class="d-flex flex-column gap-3">
+                            <div>
+                                <i class="fa-solid ${getFileIcon(fileName)} fa-3x" style="color: #004A53;"></i>
+                            </div>
+                            <div>
+                                <h5>${fileName}</h5>
+                                <p class="text-muted mb-3">Office documents cannot be previewed in the browser. Please download the file to view it with Microsoft Office or a compatible application.</p>
+                                <div class="d-flex gap-2">
+                                    <a href="${filePath}" download class="btn btn-primary">
+                                        <i class="fa-solid fa-download"></i> Download File
+                                    </a>
+                                    <a href="${filePath}" target="_blank" class="btn btn-outline-primary">
+                                        <i class="fa-solid fa-external-link"></i> Open in New Tab
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                fileViewerLabel.textContent = `Document: ${fileName}`;
             } else {
                 // Display document (fallback for other document types)
                 const docContainer = document.createElement('div');
@@ -581,7 +608,10 @@
                         </div>
                         <div>
                             <h5>${fileName}</h5>
-                            <p class="text-muted mb-0">This document type cannot be previewed in the browser.</p>
+                            <p class="text-muted mb-2">This document type cannot be previewed in the browser.</p>
+                            <a href="${filePath}" download class="btn btn-sm btn-primary">
+                                <i class="fa-solid fa-download"></i> Download File
+                            </a>
                         </div>
                     </div>
                 `;
