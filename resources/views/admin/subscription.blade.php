@@ -56,7 +56,7 @@
 
         .plan-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, min(100%, 400px)));
             gap: 30px;
         }
 
@@ -98,6 +98,14 @@
         .plan-card-text {
             color: #004A53;
             font-size: 18px;
+        }
+
+        .ellipsisBtn{
+            color: #000000;
+        }
+
+        .plan-card.accent .ellipsisBtn{
+            color: #fff;
         }
 
         .status-pill {
@@ -305,7 +313,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                        <button><i class="fa-solid fa-ellipsis-vertical ellipsisBtn"></i></button>
                     </div>
                     <div class="d-flex flex-column gap-3">
                         <p class="list-title">What’s Included?</p>
@@ -481,7 +489,7 @@
                         </div>
                         <div class="dropdown">
                             <button class="btn btn-sm" type="button" data-bs-toggle="dropdown">
-                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                                <i class="fa-solid fa-ellipsis-vertical ellipsisBtn"></i>
                             </button>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#" onclick="editPlan(${plan.id}); return false;">Edit</a></li>

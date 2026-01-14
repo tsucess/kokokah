@@ -458,7 +458,7 @@ li {
 .hero_header {
     font-family: "Fredoka One", sans-serif;
     font-weight: bolder;
-    /* font-size: 43px; */
+    font-size: 2.2rem;
     line-height: 120%;
     min-height: 100px;
     vertical-align: middle;

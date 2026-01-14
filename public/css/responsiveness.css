@@ -245,6 +245,9 @@
     .top_header {
         padding: 2rem;
     }
+    .hero_header{
+        font-size: 2.5rem;
+    }
 }
 
 /* ===== MOBILE/TABLET BREAKPOINTS (max-width: 991px) ===== */
@@ -335,44 +338,44 @@
 
 @media (min-width: 1201px) {
     h1 {
-        font-size: 3.5rem;
+        font-size: 1.9rem;
         color: #004a53;
     }
 
     h2 {
-        font-size: 2rem;
+        font-size: 1.7rem;
         color: #004a53;
     }
 
     h3 {
-        font-size: 1.75rem;
-        color: #004a53;
-    }
-
-    h4 {
         font-size: 1.55rem;
         color: #004a53;
     }
 
-    h5 {
+    h4 {
         font-size: 1.35rem;
         color: #004a53;
     }
 
-    h6 {
+    h5 {
         font-size: 1.15rem;
         color: #004a53;
     }
 
+    h6 {
+        font-size: 1.0rem;
+        color: #004a53;
+    }
+
     p {
-        font-size: 1rem;
+        font-size: 0.9rem;
         line-height: 1.8;
         color: #004a53;
     }
     p.feature,
     ul,
     li {
-        font-size: 1rem;
+        font-size: 0.9rem;
         line-height: 1.5;
         color: #004a53;
     }
@@ -466,6 +469,9 @@
     .product-button-yellow {
         width: 60%;
     }
+    .hero_header{
+        font-size: 3.2rem;
+    }
 }
 
 /* ===== EXTRA LARGE DESKTOP BREAKPOINTS (min-width: 1440px) ===== */
@@ -492,6 +498,7 @@
     } */
     .hero_header {
         min-height: 140px;
+        font-size: 3rem;
     }
 
     /* h1 {
