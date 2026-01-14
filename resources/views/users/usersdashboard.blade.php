@@ -315,7 +315,7 @@ async function loadUserCourses() {
             return;
         }
 
-        const courses = response.courses || [];
+        const courses = response.data?.courses || [];
         const container = document.getElementById('coursesContainer');
         const template = document.getElementById('courseCardTemplate');
 
@@ -341,7 +341,7 @@ async function loadUserCourses() {
             const card = template.content.cloneNode(true);
 
             // Update course data
-            card.querySelector('.course-name').textContent = course.name || 'Untitled Course';
+            card.querySelector('.course-name').textContent = course.title || 'Untitled Course';
             card.querySelector('.course-level').textContent = course.level?.name || 'Level';
 
             // Calculate progress

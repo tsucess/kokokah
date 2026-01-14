@@ -129,6 +129,12 @@
             font-size: 16px;
             border-radius: 4px;
         }
+
+        #lessonTitle {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
+        }
     </style>
     <main class="py-4 px-3">
         <!-- Button trigger modal -->
@@ -149,9 +155,6 @@
                         <!-- Content will be dynamically loaded here -->
                     </div>
                     <div class="modal-footer">
-                        <a id="downloadFileBtn" href="#" download class="btn btn-primary">
-                            <i class="fa-solid fa-download"></i> Download
-                        </a>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -337,6 +340,8 @@
             if (currentLessonIndex >= 0 && currentLessonIndex < allLessons.length) {
                 currentLesson = allLessons[currentLessonIndex];
                 currentTopic = currentLesson.topic;
+                console.log('Loaded lesson:', currentLesson);
+                console.log('Loaded topic:', currentTopic);
                 updateLessonUI();
                 await loadLessonProgress();
             }
@@ -349,8 +354,12 @@
          */
         function updateLessonUI() {
             // Update title
-            document.getElementById('lessonTitle').textContent =
-                `${currentTopic?.title[0].toUpperCase()+ currentTopic?.title.slice(1)|| 'Topic'}: ${currentLesson.title[0].toUpperCase()+ currentTopic?.title.slice(1)}`;
+            const topicTitle = currentTopic?.title ? currentTopic.title[0].toUpperCase() + currentTopic.title.slice(1) : 'Topic';
+            const lessonTitle = currentLesson?.title ? currentLesson.title[0].toUpperCase() + currentLesson.title.slice(1) : 'Lesson';
+            console.log('Topic data:', currentTopic);
+            console.log('Topic title:', currentTopic?.title);
+            console.log('Formatted topic title:', topicTitle);
+            document.getElementById('lessonTitle').textContent = `${topicTitle}: ${lessonTitle}`;
 
             // Clear and update video
             const videoContainer = document.getElementById('videoContainer');
@@ -428,6 +437,7 @@
          * Get file type icon based on file extension
          */
         function getFileIcon(fileName) {
+            if (!fileName || typeof fileName !== 'string') return 'fa-file';
             const ext = fileName.split('.').pop().toLowerCase();
             const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp'];
             const pdfExtensions = ['pdf'];
@@ -447,6 +457,7 @@
          * Get file type category
          */
         function getFileType(fileName) {
+            if (!fileName || typeof fileName !== 'string') return 'document';
             const ext = fileName.split('.').pop().toLowerCase();
             const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp'];
             const pdfExtensions = ['pdf'];
@@ -480,7 +491,10 @@
                             ${attachment.file_name || 'Attachment'}
                             <i class="fa-solid fa-eye"></i>
                         `;
-                        btn.onclick = () => viewFile(attachment.file_path, attachment.file_name);
+                        btn.onclick = () => {
+                            console.log('Opening file:', attachment.file_name, 'Path:', attachment.file_path);
+                            viewFile(attachment.file_path, attachment.file_name);
+                        };
                         attachmentsContainer.appendChild(btn);
                     });
                 }
@@ -526,11 +540,6 @@
             const fileType = getFileType(fileName);
             const fileViewerBody = document.getElementById('fileViewerBody');
             const fileViewerLabel = document.getElementById('fileViewerLabel');
-            const downloadBtn = document.getElementById('downloadFileBtn');
-
-            // Set download button
-            downloadBtn.href = filePath;
-            downloadBtn.download = fileName;
 
             // Clear previous content
             fileViewerBody.innerHTML = '';
@@ -544,15 +553,21 @@
                 img.style.height = 'auto';
                 img.style.borderRadius = '8px';
                 img.alt = fileName;
+                img.onerror = () => {
+                    fileViewerBody.innerHTML = '<div class="alert alert-danger">Error loading image</div>';
+                };
                 fileViewerBody.appendChild(img);
                 fileViewerLabel.textContent = `Image: ${fileName}`;
             } else if (fileType === 'pdf') {
-                // Display PDF using iframe
+                // Display PDF using iframe directly
                 const iframe = document.createElement('iframe');
                 iframe.src = filePath;
                 iframe.style.width = '100%';
                 iframe.style.height = '600px';
                 iframe.style.border = 'none';
+                iframe.onerror = () => {
+                    fileViewerBody.innerHTML = '<div class="alert alert-danger">Error loading PDF</div>';
+                };
                 fileViewerBody.appendChild(iframe);
                 fileViewerLabel.textContent = `PDF: ${fileName}`;
             } else {
@@ -567,9 +582,6 @@
                         <div>
                             <h5>${fileName}</h5>
                             <p class="text-muted mb-0">This document type cannot be previewed in the browser.</p>
-                        </div>
-                        <div>
-                            <p class="text-muted small mb-0">Click the "Download" button below to download and view this file.</p>
                         </div>
                     </div>
                 `;

@@ -44,7 +44,7 @@ class SecurityHeadersMiddleware
                 "img-src 'self' data: https: http:",
                 "media-src 'self' blob: https: http:",
                 "connect-src 'self' https: http: ws: wss:",
-                "frame-src 'self' https://www.youtube.com https://player.vimeo.com",
+                "frame-src 'self' blob: data: https://www.youtube.com https://player.vimeo.com",
             ];
         } else {
             // Production: Strict CSP
@@ -56,7 +56,7 @@ class SecurityHeadersMiddleware
                 "img-src 'self' data: https:",
                 "media-src 'self' blob: https:",
                 "connect-src 'self' https:",
-                "frame-src 'self' https://www.youtube.com https://player.vimeo.com",
+                "frame-src 'self' blob: data: https://www.youtube.com https://player.vimeo.com",
             ];
         }
         $response->headers->set('Content-Security-Policy', implode('; ', $csp));

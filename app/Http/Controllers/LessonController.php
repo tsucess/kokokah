@@ -487,10 +487,16 @@ class LessonController extends Controller
 
             $attachments = [];
             if ($lesson->attachment) {
+                try {
+                    $fileSize = Storage::disk('public')->size($lesson->attachment);
+                } catch (\Exception $e) {
+                    $fileSize = 0;
+                }
+
                 $attachments[] = [
-                    'name' => basename($lesson->attachment),
-                    'url' => Storage::disk('public')->url($lesson->attachment),
-                    'size' => Storage::disk('public')->size($lesson->attachment)
+                    'file_name' => basename($lesson->attachment),
+                    'file_path' => url('/storage/' . $lesson->attachment),
+                    'size' => $fileSize
                 ];
             }
 
@@ -499,6 +505,10 @@ class LessonController extends Controller
                 'data' => $attachments
             ]);
         } catch (\Exception $e) {
+            \Log::error('Lesson attachments error: ' . $e->getMessage(), [
+                'lesson_id' => $id,
+                'trace' => $e->getTraceAsString()
+            ]);
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to fetch attachments: ' . $e->getMessage()

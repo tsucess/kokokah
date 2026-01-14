@@ -341,3 +341,40 @@ Route::get('/userkoodies', function () {
 Route::get('/userkoodiesaudio', function () {
     return view('users.userkoodiesaudio');
 });
+
+// File serving route for lesson attachments
+Route::get('/storage/{path}', function ($path) {
+    $fullPath = storage_path('app/public/' . $path);
+
+    if (!file_exists($fullPath)) {
+        abort(404);
+    }
+
+    $mimeType = 'application/octet-stream';
+    $ext = strtolower(pathinfo($fullPath, PATHINFO_EXTENSION));
+
+    $mimeTypes = [
+        'pdf' => 'application/pdf',
+        'doc' => 'application/msword',
+        'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'xls' => 'application/vnd.ms-excel',
+        'xlsx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'ppt' => 'application/vnd.ms-powerpoint',
+        'pptx' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        'txt' => 'text/plain',
+        'jpg' => 'image/jpeg',
+        'jpeg' => 'image/jpeg',
+        'png' => 'image/png',
+        'gif' => 'image/gif',
+        'webp' => 'image/webp',
+    ];
+
+    if (isset($mimeTypes[$ext])) {
+        $mimeType = $mimeTypes[$ext];
+    }
+
+    return response()->file($fullPath, [
+        'Content-Type' => $mimeType,
+        'Content-Disposition' => 'inline; filename="' . basename($fullPath) . '"',
+    ]);
+})->where('path', '.*')->name('storage.serve');
