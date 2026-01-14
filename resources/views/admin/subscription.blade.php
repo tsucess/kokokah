@@ -481,7 +481,7 @@
                         </div>
                         <div class="dropdown">
                             <button class="btn btn-sm" type="button" data-bs-toggle="dropdown">
-                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                                <i class="fa-solid fa-ellipsis-vertical ellipsisBtn"></i>
                             </button>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#" onclick="editPlan(${plan.id}); return false;">Edit</a></li>

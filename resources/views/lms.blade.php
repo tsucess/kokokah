@@ -11,7 +11,7 @@
     <div class="container-fluid bgLms px-3 px-lg-5 py-4 py-lg-5 position-relative">
         <div class="row align-items-center">
             <div class="col-12 col-md-6 col-lg-6 d-flex flex-column gap-3">
-                <h1 class="fw-bold hero-title impact">
+                <h1 class="fw-bold hero-title hero_header impact">
                     Your Complete Ecosystem for Learning and Growth
                 </h1>
                 <p>

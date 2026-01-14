@@ -245,6 +245,9 @@
     .top_header {
         padding: 2rem;
     }
+    .hero_header{
+        font-size: 2.5rem;
+    }
 }
 
 /* ===== MOBILE/TABLET BREAKPOINTS (max-width: 991px) ===== */
@@ -466,6 +469,9 @@
     .product-button-yellow {
         width: 60%;
     }
+    .hero_header{
+        font-size: 3.2rem;
+    }
 }
 
 /* ===== EXTRA LARGE DESKTOP BREAKPOINTS (min-width: 1440px) ===== */
@@ -492,6 +498,7 @@
     } */
     .hero_header {
         min-height: 140px;
+        font-size: 3rem;
     }
 
     /* h1 {
