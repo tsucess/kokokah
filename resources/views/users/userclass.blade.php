@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const classesHtml = result.data.map((classItem, index) => `
                     <div class="p-3 rounded-4 bg-white mysubject d-flex flex-column gap-3 w-100">
                         <div class="border border-dark p-2 text-center" style="border-radius: 10px;">
-                            <img src="images/Kokokah_Logo.png"
+                            <img src="images/KOKOKAH Logo.svg"
                                  class="img-fluid userdasboard-card-img"
                                  alt="${classItem.name}"
                                  style="max-height: 150px; object-fit: cover;" />

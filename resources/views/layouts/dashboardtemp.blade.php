@@ -67,7 +67,7 @@
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar" style="height: 100vh; overflow-y: auto; overflow-x: hidden;">
         <div class="brand p-3">
-            <a href="/"><img src="{{ asset('images/KOKOKAH Logo 2.svg') }}" alt="Kokokah Logo"
+            <a href="/"><img src="{{ asset('images/KOKOKAH Logo.svg') }}" alt="Kokokah Logo"
                     class="img-fluid dashboard-logo"></a>
         </div>
 

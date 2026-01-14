@@ -1,15 +1,21 @@
 @extends('layouts.template')
 
 @section('content')
+<style>
+        .impact {
+            font-family: "Sohne", -apple-system, BlinkMacSystemFont, "Segoe UI",
+               Roboto, Helvetica, Arial, sans-serif;
+        }
+    </style>
     <section class="container-fluid px-2 px-lg-5 d-flex flex-column gap-1 justify-content-center align-items-center hero-banner">
-        <h2>Get in <span style="font-family: inherit">Touch</span></h2>
+        <h2 class="impact">Get in <span style="font-family: inherit">Touch</span></h2>
         <p>Have questions about Kokokah? Our team is here to help you with anything you need.</p>
     </section>
     <section class="" style="background-color: #F18338;">
         <div class="container-fluid py-5 px-5">
             <div class="row g-5 ">
                 <div class="col col-12 col-lg-6 d-flex flex-column gap-3 form-container">
-                    <h2 class="form-title">Send us a <span style="color : #FDAF22;">Message</span></h2>
+                    <h2 class="form-title impact">Send us a <span style="color : #FDAF22; font-family:inherit;">Message</span></h2>
                     <div class="d-flex gap-1 flex-column">
                         <label for="">Full Name</label>
                         <input type="text" name="" id="" placeholder="Enter your full name"
@@ -36,7 +42,7 @@
 
                         <div class="row mb-4">
                             <div class="col d-flex flex-column gap-3 contact-container">
-                                <h3><span style="color: #FDAF22;">Contact</span> Information</h3>
+                                <h3 class="impact"><span style="color: #FDAF22; font-family:inherit;">Contact</span> Information</h3>
                                 <p>Our team is available Monday through Friday, 9am to 5pm EST. We strive to
                                     respond to all inquiries within 24 hours.</p>
                                 <div class="d-flex gap-1 flex-column">
@@ -56,7 +62,7 @@
                         </div>
                         <div class="row">
                             <div class="col d-flex flex-column gap-3 contact-container">
-                                <h3><span style="color: #FDAF22;">Support</span> Hours</h3>
+                                <h3 class="impact"><span style="color: #FDAF22; font-family:inherit;">Support</span> Hours</h3>
                                 <p>Our customer support team is available during the following hours:</p>
                                 <div class="d-flex flex-column gap-1">
                                     <p class="d-flex justify-content-between align-items-center gap-1 day">Monday -
@@ -81,7 +87,7 @@
 
     </section>
     <section class=" faq-container py-5">
-        <h4 class="faq-title mb-5 text-center">Frequently Asked <span style="color: #FDAF22;">Questions</span></h4>
+        <h4 class="faq-title mb-5 text-center impact">Frequently Asked <span style="color: #FDAF22; font-family:inherit;">Questions</span></h4>
 
         <div class="accordion d-flex flex-column  mx-auto g-5" id="accordionExample" style="max-width: 800px;">
             <div class="accordion-item faq-item-container g-5">

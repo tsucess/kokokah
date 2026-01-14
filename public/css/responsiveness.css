@@ -56,7 +56,7 @@
     }
 
     h1 {
-        font-size: 1.60rem;
+        font-size: 1.6rem;
         color: #004a53;
     }
 
@@ -126,8 +126,8 @@
     }
 
     .feature-card {
-    padding: 20px;
-}
+        padding: 20px;
+    }
 }
 
 /* ===== TABLET BREAKPOINTS (768px - 991px) ===== */
@@ -212,6 +212,7 @@
     .swiper-button-next {
         --swiper-navigation-sides-offset: 20%;
     }
+
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -349,7 +350,7 @@
     }
 
     h4 {
-        font-size: 1.5rem;
+        font-size: 1.55rem;
         color: #004a53;
     }
 
@@ -359,12 +360,12 @@
     }
 
     h6 {
-        font-size: 1.2rem;
+        font-size: 1.15rem;
         color: #004a53;
     }
 
     p {
-        font-size: 1.1rem;
+        font-size: 1rem;
         line-height: 1.8;
         color: #004a53;
     }
@@ -379,12 +380,12 @@
         margin-top: -150px;
     }
     .achievement-section {
-    min-height: 700px;
-    padding-top: 100px;
-    background-position: top center;
-    background-size: cover;
-    background-repeat: no-repeat;
-}
+        min-height: 700px;
+        padding-top: 100px;
+        background-position: top center;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
 
 }
 
@@ -573,19 +574,17 @@
     .overflow-img {
         margin-top: -55px;
         margin-bottom: -70px;
+        width: 100%;
         height: auto;
-        max-width: 100%;  
         aspect-ratio: 1/1;
     }
     .content-card {
         position: relative;
         z-index: 5;
         margin-right: -180px;
-            border-radius: 1.5rem;
+        border-radius: 1.5rem;
     }
     .margin-top {
-        margin-top: 100px !important; 
+        margin-top: 100px !important;
     }
-
-    
 }

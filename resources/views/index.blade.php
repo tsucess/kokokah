@@ -3,7 +3,11 @@
 @section('content')
     <style>
         .impact {
-            font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+
+            font-family: "Sohne", -apple-system, BlinkMacSystemFont, "Segoe UI",
+                Roboto, Helvetica, Arial, sans-serif;
+
+
         }
     </style>
     {{-- mascot  --}}
@@ -577,7 +581,7 @@
     <div class="container-fluid section-white section-py">
         <div class="container">
             <div class="text-center mb-4 mb-md-5">
-                <h2 class="fw-bold mb-3 section-heading section-title">
+                <h2 class="fw-bold mb-3 section-heading section-title impact">
                     Our Products
                 </h2>
                 <p class="section-description">
@@ -729,7 +733,7 @@
                 <div class="row ourproduct2 product-section-teal px-2 px-lg-4 py-4 add-margin fade-section py-lg-3">
                     <div class="col-12 col-lg-7 d-flex flex-column gap-3 justify-content-lg-center mb-5 mb-lg-0">
                         <div class="bg-white px-3 py-2 rounded-3 align-self-start">
-                            <img src="./images/Kokokah_Logo.png" alt="" style="width:200px; height:auto;"
+                            <img src="./images/KOKOKAH Logo.svg" alt="" style="width:200px; height:auto;"
                                 class="object-cover" />
                         </div>
 
@@ -1027,8 +1031,8 @@
                 </div>
 
                 <div class="col-12 col-lg-6 ">
-                    <img src="./images/kokoplay-section-img.jpg " class="img-fluid w-100 h-auto fade-section" alt=""
-                        style="max-height: 450px;">
+                    <img src="./images/kokoplay-section-img.jpg " class="img-fluid w-100 h-auto fade-section"
+                        alt="" style="max-height: 450px;">
                 </div>
 
             </div>
@@ -1038,12 +1042,12 @@
 
 
     <div class="container-fluid text-center mt-5 px-3 px-lg-5 py-5 h-100 achievement-section">
-        <p class="achievement-label">Kokokah has industry-leading renewals of above 80%
+        <p class="achievement-label ">Kokokah has industry-leading renewals of above 80%
         </p>
         <!-- Section Title -->
         <div class="row justify-content-center mb-5">
             <div class="col-12 mt-5">
-                <h5 class="fw-bold achievement-title section-title">Why People Love Kokokah</h5>
+                <h5 class="fw-bold achievement-title section-title impact">Why People Love Kokokah</h5>
             </div>
         </div>
 
@@ -1089,7 +1093,7 @@
         <div class = "row justify-content-center px-2 py-5 text-white">
 
             <div class = "col-12 col-lg-12 col-md-12 text-center">
-                <h5 class = "mb-3 section-title" style="color:#004A53;">Message from the founder</h5>
+                <h5 class = "mb-3 section-title impact" style="color:#004A53;">Message from the founder</h5>
                 <img src = "images/youtube.png" class="img-fluid founder-video">
             </div>
 

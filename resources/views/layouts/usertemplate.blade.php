@@ -71,7 +71,7 @@
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
         <div class="brand">
-            <img src="{{ asset('images/Kokokah_Logo.png') }}" alt="Kokokah Logo" class="img-fluid dashboard-logo">
+            <img src="{{ asset('images/KOKOKAH Logo.svg') }}" alt="Kokokah Logo" class="img-fluid dashboard-logo">
         </div>
 
         <nav class="nav-group" id="sidebarNav">
