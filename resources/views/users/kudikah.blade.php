@@ -450,6 +450,11 @@
             .btn-eye:focus {
                 outline: none;
             }
+
+            .error-message {
+                font-size: 12px;
+                font-family: 'sitka'
+            }
         </style>
         <!-- Toast Notification -->
         <div id="toastNotification" class="toast-notification" style="display: none;">
@@ -472,8 +477,8 @@
                         <div class="modal-form">
                             <div class="modal-form-input-border">
                                 <label for="modalCardHolderName" class="modal-label">Enter Card holder Name</label>
-                                <input class="modal-input" type="text" id="modalCardHolderName" placeholder="Jane Appleseed"
-                                    required />
+                                <input class="modal-input" type="text" id="modalCardHolderName"
+                                    placeholder="Jane Appleseed" required />
                                 <small class="text-danger d-none" id="cardHolderNameError"></small>
                             </div>
                             <div class="modal-form-input-border">
@@ -490,7 +495,8 @@
                             <div class="modal-form-input-border">
                                 <label for="modalExpiryDate" class="modal-label">Expiry Date</label>
                                 <div class="d-flex gap-2 justify-content-between align-items-center">
-                                    <input class="modal-input" type="text" id="modalExpiryDate" placeholder="MM/YY" inputmode="numeric" required />
+                                    <input class="modal-input" type="text" id="modalExpiryDate" placeholder="MM/YY"
+                                        inputmode="numeric" required />
                                     <button type="button" class="btn-eye" id="toggleExpiryDate">
                                         <i class="fa-regular fa-eye fa-xs" style="color:#AAC3C6;"></i>
                                     </button>
@@ -500,7 +506,8 @@
                             <div class="modal-form-input-border">
                                 <label for="modalCvv" class="modal-label">CVV</label>
                                 <div class="d-flex gap-2 justify-content-between align-items-center">
-                                    <input class="modal-input" type="password" id="modalCvv" placeholder="123" inputmode="numeric" maxlength="3" required />
+                                    <input class="modal-input" type="password" id="modalCvv" placeholder="123"
+                                        inputmode="numeric" maxlength="3" required />
                                     <button type="button" class="btn-eye" id="toggleCvv">
                                         <i class="fa-regular fa-eye fa-xs" style="color:#AAC3C6;"></i>
                                     </button>
@@ -537,7 +544,8 @@
                     </div>
 
                     <div class="d-flex gap-5 justify-content-between align-items-center">
-                        <button type="button" class="delete-cancel-btn w-100" data-bs-dismiss="modal" aria-label="Close">
+                        <button type="button" class="delete-cancel-btn w-100" data-bs-dismiss="modal"
+                            aria-label="Close">
                             Cancel
                         </button>
                         <button type="button" class="delete-delete-btn w-100" id="confirmDeleteCardBtn">Delete</button>
@@ -561,20 +569,27 @@
                         <div class="modal-form">
                             <div class="modal-form-input-border">
                                 <label for="recipientEmail" class="modal-label">Recipient Email</label>
-                                <input class="modal-input" type="email" id="recipientEmail" placeholder="recipient@example.com" required />
-                                <small id="recipientEmailError" class="text-danger d-none"></small>
+                                <div class="d-flex justify-content-between gap-1 align-items-center w-100">
+                                    <input class="modal-input" type="email" id="recipientEmail"
+                                    placeholder="recipient@example.com" required />
+                                <small id="recipientEmailError" class="text-danger d-none error-message flex-shrink-0"></small>
+                                </div>
+
                             </div>
                             <div class="modal-form-input-border" id="recipientNameContainer" style="display: none;">
                                 <label for="recipientName" class="modal-label">Recipient Name</label>
-                                <input class="modal-input" type="text" id="recipientName" placeholder="Recipient name" readonly style="background-color: #f5f5f5; cursor: not-allowed;" />
+                                <input class="modal-input" type="text" id="recipientName"
+                                    placeholder="Recipient name" readonly style="text-align:left; cursor: not-allowed;" />
                             </div>
                             <div class="modal-form-input-border">
                                 <label for="transferAmount" class="modal-label">Amount (₦)</label>
-                                <input class="modal-input" type="number" id="transferAmount" placeholder="Enter amount" min="1" step="1" required />
+                                <input class="modal-input" type="number" id="transferAmount" placeholder="Enter amount"
+                                    min="1" step="1" required />
                             </div>
                             <div class="modal-form-input-border">
                                 <label for="transferDescription" class="modal-label">Description (Optional)</label>
-                                <input class="modal-input" type="text" id="transferDescription" placeholder="Transfer description" />
+                                <input class="modal-input" type="text" id="transferDescription"
+                                    placeholder="Transfer description" />
                             </div>
                         </div>
                         <div class="d-flex gap-2">
@@ -612,18 +627,21 @@
                     </div>
 
                     <div class="d-flex align-items-center gap-3 justify-content-center">
-                        <button id="addMoneyBtn" class="call-to-action-container d-flex flex-column gap-2 align-items-center">
+                        <button id="addMoneyBtn"
+                            class="call-to-action-container d-flex flex-column gap-2 align-items-center">
                             <div class="icon-container"><i class="fa-solid fa-money-bill fa-xs"
                                     style="color: #004A53;"></i>
                             </div>
                             <p class="call-action-text">Deposit Money</p>
                         </button>
-                        <button id="transferMoneyBtn" class="call-to-action-container d-flex flex-column gap-2 align-items-center">
+                        <button id="transferMoneyBtn"
+                            class="call-to-action-container d-flex flex-column gap-2 align-items-center">
                             <div class="icon-container"><i class="fa-solid fa-money-bill-transfer fa-xs"
                                     style="color: #004A53;"></i></div>
                             <p class="call-action-text">Transfer Money</p>
                         </button>
-                        <button id="enrollSubjectBtn" class="call-to-action-container d-flex flex-column gap-2 align-items-center ">
+                        <button id="enrollSubjectBtn"
+                            class="call-to-action-container d-flex flex-column gap-2 align-items-center ">
                             <div class="icon-container"><i class="fa-solid fa-clipboard-list fa-xs"
                                     style="color: #004A53;"></i>
                             </div>
@@ -1554,7 +1572,7 @@
                 if (result.success && result.data) {
                     // Recipient found - display their name
                     nameInput.value = result.data.name;
-                    nameContainer.style.display = 'block';
+                    nameContainer.style.display = 'flex';
                     console.log('Recipient found:', result.data.name);
                 } else {
                     // Recipient not found
@@ -1733,7 +1751,9 @@
 
                             // Remove this listener after it fires
                             modalElement.removeEventListener('hidden.bs.modal', cleanupBackdrop);
-                        }, { once: true });
+                        }, {
+                            once: true
+                        });
 
                         modal.hide();
                     }
@@ -2048,7 +2068,8 @@
                 showError('cardHolderNameError', 'Cardholder name must be at least 3 characters');
                 isValid = false;
             } else if (!/^[a-zA-Z\s'-]+$/.test(cardHolderName)) {
-                showError('cardHolderNameError', 'Cardholder name can only contain letters, spaces, hyphens, and apostrophes');
+                showError('cardHolderNameError',
+                    'Cardholder name can only contain letters, spaces, hyphens, and apostrophes');
                 isValid = false;
             }
 

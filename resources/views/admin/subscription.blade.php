@@ -5,7 +5,8 @@
         p {
             margin-bottom: 0;
         }
-        .modal-subtitle{
+
+        .modal-subtitle {
             color: #004A53;
             font-size: 20px;
             font-family: "Fredoka", sans-serif;
@@ -19,7 +20,8 @@
             font-size: 16px;
             font-weight: 600;
         }
-        .cancel-btn{
+
+        .cancel-btn {
             background-color: transparent;
             padding: 10px 40px;
             border-radius: 4px;
@@ -100,11 +102,11 @@
             font-size: 18px;
         }
 
-        .ellipsisBtn{
+        .ellipsisBtn {
             color: #000000;
         }
 
-        .plan-card.accent .ellipsisBtn{
+        .plan-card.accent .ellipsisBtn {
             color: #fff;
         }
 
@@ -220,8 +222,8 @@
                             </div>
                             <div class="modal-form-input-border">
                                 <label for="subscriptionDurationValue" class="modal-label">Duration Value</label>
-                                <input type="number" class="modal-input" id="subscriptionDurationValue" placeholder="e.g., 30"
-                                    min="1" required>
+                                <input type="number" class="modal-input" id="subscriptionDurationValue"
+                                    placeholder="e.g., 30" min="1" required>
                             </div>
                             <div class="modal-form-input-border">
                                 <label for="subscriptionDurationType" class="modal-label">Duration Type</label>
@@ -237,7 +239,8 @@
                                 </select>
                             </div>
                             <div class="modal-form-input-border">
-                                <label for="subscriptionFeatures" class="modal-label">Features (separate each item with a comma)</label>
+                                <label for="subscriptionFeatures" class="modal-label">Features (separate each item with a
+                                    comma)</label>
                                 <textarea class="modal-input" id="subscriptionFeatures" placeholder="Up to 500 students, Basic reporting....."></textarea>
                             </div>
                             <div class="modal-form-input-border">
@@ -245,9 +248,12 @@
                                 <input type="number" class="modal-input" id="subscriptionMaxUsers" placeholder="e.g., 500"
                                     min="1">
                             </div>
-                            <div class="modal-form-input-border">
-                                <label for="subscriptionIsActive" class="modal-label">
-                                    <input type="checkbox" id="subscriptionIsActive" checked> Active
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="subscriptionIsActive"
+                                    checked>
+                                <label class="modal-label " for="subscriptionIsActive">
+                                    Active
                                 </label>
                             </div>
                         </div>
@@ -321,7 +327,8 @@
                     <div class="d-flex flex-column gap-3">
                         <p class="list-title">What’s Included?</p>
                         <ul class="d-flex flex-column gap-2 ps-0" style="list-style: none;">
-                            <li class="list-item d-flex align-items-center gap-2"><i class="fa-solid fa-children"></i> Valid
+                            <li class="list-item d-flex align-items-center gap-2"><i class="fa-solid fa-children"></i>
+                                Valid
                                 for 24hrs</li>
                             <li class="list-item d-flex align-items-center gap-2"><i class="fa-solid fa-children"></i>
                                 Access to the subject note</li>
@@ -470,7 +477,8 @@
             const container = document.getElementById('plansContainer');
 
             if (allPlans.length === 0) {
-                container.innerHTML = '<div class="text-center w-100"><p>No subscription plans found. Create one to get started!</p></div>';
+                container.innerHTML =
+                    '<div class="text-center w-100"><p>No subscription plans found. Create one to get started!</p></div>';
                 return;
             }
 
@@ -556,7 +564,8 @@
             // Update active plans change text
             const activePlansChangeEl = document.getElementById('activePlansChange');
             if (activePlansChangeEl) {
-                activePlansChangeEl.textContent = `✓ ${totalPlans > 0 ? Math.round((activePlans/totalPlans)*100) : 0}% active`;
+                activePlansChangeEl.textContent =
+                    `✓ ${totalPlans > 0 ? Math.round((activePlans/totalPlans)*100) : 0}% active`;
             }
         }
 
@@ -732,7 +741,9 @@
 
         // Delete plan
         async function deletePlan(planId) {
-            const confirmed = await showConfirmation('Delete Plan', 'Are you sure you want to delete this subscription plan? This action cannot be undone.', 'Delete', 'Cancel');
+            const confirmed = await showConfirmation('Delete Plan',
+                'Are you sure you want to delete this subscription plan? This action cannot be undone.', 'Delete',
+                'Cancel');
             if (!confirmed) {
                 return;
             }

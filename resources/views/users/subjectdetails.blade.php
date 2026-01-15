@@ -408,8 +408,6 @@
             if (currentLessonIndex >= 0 && currentLessonIndex < allLessons.length) {
                 currentLesson = allLessons[currentLessonIndex];
                 currentTopic = currentLesson.topic;
-                console.log('Loaded lesson:', currentLesson);
-                console.log('Loaded topic:', currentTopic);
                 updateLessonUI();
                 await loadLessonProgress();
             }
@@ -424,9 +422,6 @@
             // Update title
             const topicTitle = currentTopic?.title ? currentTopic.title[0].toUpperCase() + currentTopic.title.slice(1) : 'Topic';
             const lessonTitle = currentLesson?.title ? currentLesson.title[0].toUpperCase() + currentLesson.title.slice(1) : 'Lesson';
-            console.log('Topic data:', currentTopic);
-            console.log('Topic title:', currentTopic?.title);
-            console.log('Formatted topic title:', topicTitle);
             document.getElementById('lessonTitle').textContent = `${topicTitle}: ${lessonTitle}`;
 
             // Clear and update video
@@ -587,7 +582,6 @@
                             <i class="fa-solid fa-eye"></i>
                         `;
                         btn.onclick = () => {
-                            console.log('Opening file:', fileName, 'Path:', filePath);
                             viewFile(filePath, fileName);
                         };
                         attachmentsContainer.appendChild(btn);
@@ -655,8 +649,6 @@
                 fileViewerLabel.textContent = `Image: ${fileName}`;
             } else if (fileType === 'video') {
                 // Display video player
-                console.log('Loading video:', fileName, 'Path:', filePath);
-
                 const videoContainer = document.createElement('div');
                 videoContainer.style.width = '100%';
                 videoContainer.style.borderRadius = '8px';
@@ -688,7 +680,6 @@
                 };
 
                 source.type = videoTypes[ext] || 'video/mp4';
-                console.log('Video type:', source.type);
                 video.appendChild(source);
 
                 const fallbackText = document.createElement('p');
@@ -731,7 +722,6 @@
                 videoContainer.appendChild(video);
                 fileViewerBody.appendChild(videoContainer);
                 fileViewerLabel.textContent = `Video: ${fileName}`;
-                console.log('Video player created successfully');
             } else if (fileType === 'pdf') {
                 // Display PDF using PDF.js viewer
                 fileViewerBody.innerHTML = '<div class="text-center py-5"><div class="spinner-border" role="status"><span class="sr-only">Loading PDF...</span></div></div>';
@@ -748,18 +738,14 @@
 
                 fetch(filePath)
                     .then(response => {
-                        console.log('PDF fetch response:', response.status, response.ok);
                         if (!response.ok) throw new Error(`Failed to load PDF: ${response.status}`);
                         return response.arrayBuffer();
                     })
                     .then(arrayBuffer => {
-                        console.log('PDF array buffer created:', arrayBuffer.byteLength);
-
                         // Load PDF with PDF.js
                         const pdf = pdfjsLib.getDocument({ data: arrayBuffer });
 
                         pdf.promise.then(pdfDoc => {
-                            console.log('PDF loaded, pages:', pdfDoc.numPages);
 
                             // Clear loading message
                             fileViewerBody.innerHTML = '';
@@ -855,8 +841,6 @@
                     });
             } else if (fileType === 'audio') {
                 // Display audio player
-                console.log('Loading audio:', fileName, 'Path:', filePath);
-
                 // Determine audio type based on extension
                 const ext = fileName.split('.').pop().toLowerCase();
                 const audioTypes = {
@@ -869,7 +853,6 @@
                 };
 
                 const mimeType = audioTypes[ext] || 'audio/mpeg';
-                console.log('Audio type:', mimeType);
 
                 // Create HTML for audio player
                 fileViewerBody.innerHTML = `
@@ -889,7 +872,6 @@
                 `;
 
                 fileViewerLabel.textContent = `Audio: ${fileName}`;
-                console.log('Audio player created successfully');
             } else {
                 // Display unsupported file type
                 const unsupportedContainer = document.createElement('div');
@@ -918,7 +900,6 @@
 
             // Stop video/audio playback when modal closes
             fileViewerModalElement.addEventListener('hidden.bs.modal', function() {
-                console.log('Modal closed, stopping playback');
                 // Stop all video and audio elements
                 const videos = fileViewerBody.querySelectorAll('video');
                 const audios = fileViewerBody.querySelectorAll('audio');
@@ -1234,16 +1215,12 @@
                         // Get the answer value
                         if (input.type === 'radio' && input.checked) {
                             answerValue = input.value;
-                            console.log('Found checked radio for question', questionId, ':',
-                                answerValue);
                         } else if (input.tagName === 'TEXTAREA' && input.value.trim()) {
                             answerValue = input.value;
                         }
                     });
 
                     if (questionId && answerValue) {
-                        console.log('Adding answer - questionId:', questionId, 'answerValue:', answerValue,
-                            'type:', typeof answerValue);
                         answers.push({
                             question_id: questionId,
                             answer: answerValue
@@ -1266,30 +1243,18 @@
                 // Get quiz title
                 const quizTitle = quizDiv ? quizDiv.querySelector('h4')?.textContent || 'Quiz' : 'Quiz';
 
-                console.log('=== QUIZ SUBMISSION INFO ===');
-                console.log('quizId:', quizId, 'attemptNumber:', attemptNumber, 'currentAttempts:', currentAttempts,
-                    'maxAttempts:', maxAttempts);
-
                 // Submit quiz with the current attempt number
-                console.log('=== SUBMITTING QUIZ ===');
-                console.log('quizId:', quizId, 'attemptNumber:', attemptNumber, 'answers:', answers);
                 const response = await window.LessonApiClient.submitQuiz(quizId, {
                     attempt_number: attemptNumber,
                     answers: answers
                 });
 
-                console.log('=== QUIZ SUBMISSION RESPONSE ===');
-                console.log('response:', response);
-                console.log('response.success:', response.success);
-
                 if (response.success) {
                     showSuccess('Quiz submitted successfully!');
-                    console.log('Quiz submitted - quizId:', quizId, 'response.data:', response.data);
 
                     // Redirect to result page after a short delay
                     setTimeout(() => {
                         const resultUrl = `/userresult?quiz_id=${quizId}`;
-                        console.log('Redirecting to:', resultUrl);
                         window.location.href = resultUrl;
                     }, 1500);
                 } else {
@@ -1327,8 +1292,6 @@
                     showError(`You have reached the maximum number of attempts (${maxAttempts})`);
                     return;
                 }
-
-                console.log('Retaking quiz:', quizId, 'Attempt:', nextAttemptNumber, 'of', maxAttempts);
 
                 // Clear the results and reload the quiz
                 quizDiv.innerHTML =
@@ -1582,28 +1545,20 @@
          */
         window.showAllQuizzesResultsModal = async function() {
             try {
-                console.log('=== SHOWING ALL QUIZZES RESULTS MODAL ===');
-                console.log('currentLesson:', currentLesson);
-
                 // Get all quizzes for the current lesson
                 if (!currentLesson || !currentLesson.id) {
-                    console.error('No lesson selected. currentLesson:', currentLesson);
                     showError('No lesson selected');
                     return;
                 }
 
-                console.log('Fetching quizzes for lesson:', currentLesson.id);
                 const quizzesResponse = await window.LessonApiClient.getQuizzesByLesson(currentLesson.id);
-                console.log('Quizzes response:', quizzesResponse);
 
                 if (!quizzesResponse.success || !quizzesResponse.data) {
-                    console.error('Failed to load quizzes:', quizzesResponse);
                     showError('Failed to load quizzes');
                     return;
                 }
 
                 const quizzes = quizzesResponse.data;
-                console.log('Loaded quizzes:', quizzes);
 
                 // Fetch results for each quiz
                 let allQuizResults = [];

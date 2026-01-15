@@ -87,7 +87,7 @@ class SidebarManager {
       html += this.getCommunicationMenu();
     }
 
-  
+
 
     return html;
   }
@@ -120,20 +120,20 @@ class SidebarManager {
         data-bs-toggle="collapse" href="#subjectsMenu" role="button">
         <span class="d-flex align-items-center gap-3">
           <i class="fa-solid fa-book-open nav-icon"></i>
-          <span>Course Management</span>
+          <span>Subject Management</span>
         </span>
         <i class="fa-solid fa-chevron-down chevron-icon"></i>
       </a>
       <div class="collapse ps-5" id="subjectsMenu">
         <div class="d-flex flex-column gap-2">
-          <a class="nav-item-link d-block nav-child" href="/subjects">All Courses</a>
-          <a class="nav-item-link d-block nav-child" href="/createsubject">Create New Course</a>
+          <a class="nav-item-link d-block nav-child" href="/subjects">All Subject</a>
+          <a class="nav-item-link d-block nav-child" href="/createsubject">Create New Subject</a>
     `;
 
     // Admin and Superadmin items
     if (['admin', 'superadmin'].includes(role)) {
       html += `
-          <a class="nav-item-link d-block nav-child" href="/categories">Course Categories</a>
+          <a class="nav-item-link d-block nav-child" href="/categories">Subject Categories</a>
           <a class="nav-item-link d-block nav-child" href="/curriculum-categories">Curriculum Categories</a>
           <a class="nav-item-link d-block nav-child" href="/levels">Levels & Classes</a>
           <a class="nav-item-link d-block nav-child" href="/terms">Academic Terms</a>

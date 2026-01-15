@@ -3,12 +3,12 @@
 @section('content')
     <style>
         /* Global font & background */
-        body {
+        /* body {
             font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
             background: #ffffff;
             color: #222;
             padding: 28px 12px;
-        }
+        } */
 
         .enroll-btn {
             background-color: #FDAF22;
@@ -286,6 +286,10 @@
 
         /* Small screens — stack price under label */
         @media (max-width: 576px) {
+            .proceed-payment-btn, .enroll-btn {
+                font-size: 12px;
+                padding: 12px 14px;
+            }
             .txn-row {
                 flex-direction: column;
                 align-items: flex-start;
@@ -958,8 +962,8 @@
     </style>
 @section('content')
     <main>
-        <section class="container-fluid p-4 d-flex flex-column gap-4">
-            <div class ="d-flex  justify-content-between align-items-center">
+        <section class="container-fluid p-4 d-flex flex-column gap-5">
+            <div class ="d-flex flex-column gap-3 flex-md-row justify-content-between align-items-md-center">
                 <div class="header-with-back">
                     <button class="back-btn" type="button" id="backBtn" title="Go back">
                         <i class="fas fa-chevron-left"></i>
@@ -969,7 +973,7 @@
                 <button class = "enroll-btn" type = "button" id="enrollAllBtn">Subscribe to All Subjects</button>
             </div>
             <section class="d-flex flex-column gap-4">
-                <div class="d-flex align-items-center gap-3">
+                <div class="d-flex flex-column flex-md-row  align-items-md-center gap-3">
                     <select name="plan" id="planSelector" class="custom-select-plan">
                         <option value="">Loading plans...</option>
                     </select>
@@ -1017,7 +1021,7 @@
             </div> --}}
 
             <!-- Footer with proceed button -->
-            <div style="padding: 20px 22px; display: flex; justify-content: center;">
+            <div style=" display: flex; justify-content:center;">
                 <button id="proceedBtn" class="proceed-payment-btn">
                     Proceed to Payment
                 </button>
