@@ -237,42 +237,46 @@
                 link.classList.remove('active');
             });
 
-            // Loop each nav link
-            document.querySelectorAll('.nav-item-link, .nav-child').forEach(link => {
-                const href = link.getAttribute('href');
-
-                // Skip non-URL links (e.g., parent toggles with href="#subjectsMenu")
-                if (!href || href.startsWith('#')) return;
-
-                // Exact match only
-                if (href === currentPath) {
-                    link.classList.add('active');
-
-                    // If it's a child link, open parent dropdown & activate parent
-                    if (link.classList.contains('nav-child')) {
-                        const parentMenu = link.closest('.collapse');
-                        if (parentMenu && parentMenu.id) {
-                            // Safely escape the ID for querySelector
-                            const escapedId = CSS.escape(parentMenu.id);
-                            const parentToggle = document.querySelector(`[href="#${escapedId}"]`);
-
-                            const bsCollapse = new bootstrap.Collapse(parentMenu, {
-                                toggle: false
-                            });
-                            bsCollapse.show();
-                        }
-                    }
-                }
-            });
-
             // Dashboard special case
             if (currentPath === '/dashboard' || currentPath === '/') {
                 document.getElementById('dashboardLink')?.classList.add('active');
+            } else {
+                // Loop each nav link for other pages
+                document.querySelectorAll('.nav-item-link, .nav-child').forEach(link => {
+                    const href = link.getAttribute('href');
+
+                    // Skip non-URL links (e.g., parent toggles with href="#subjectsMenu")
+                    if (!href || href.startsWith('#')) return;
+
+                    // Exact match only
+                    if (href === currentPath) {
+                        link.classList.add('active');
+
+                        // If it's a child link, open parent dropdown
+                        if (link.classList.contains('nav-child')) {
+                            const parentMenu = link.closest('.collapse');
+                            if (parentMenu && parentMenu.id) {
+                                // Safely escape the ID for querySelector
+                                const escapedId = CSS.escape(parentMenu.id);
+                                const parentToggle = document.querySelector(`[href="#${escapedId}"]`);
+
+                                // Open the parent dropdown without activating it
+                                const bsCollapse = new bootstrap.Collapse(parentMenu, {
+                                    toggle: false
+                                });
+                                bsCollapse.show();
+                            }
+                        }
+                    }
+                });
             }
         }
 
-        // Call on page load
-        document.addEventListener('DOMContentLoaded', setActiveNavigation);
+        // Call on page load with a slight delay to ensure sidebar is rendered
+        document.addEventListener('DOMContentLoaded', () => {
+            // Use setTimeout to ensure sidebar menu is fully rendered
+            setTimeout(setActiveNavigation, 100);
+        });
 
         // Also call when page changes (for SPAs)
         window.addEventListener('popstate', setActiveNavigation);
