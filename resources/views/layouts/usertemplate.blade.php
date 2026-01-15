@@ -55,7 +55,8 @@
             opacity: 1;
             visibility: visible;
         }
-        .img{
+
+        .img {
             width: 15px;
             height: 15px;
             object-fit: fill;
@@ -85,8 +86,10 @@
                 Scoring</a>
 
             <a class="nav-item-link" href="/userkudikah"><i class="fa-solid fa-wallet me-2 pe-2"></i>Kudikah</a>
-            <a class="nav-item-link" href="/usersubscriptionhistory"><i class="fa-solid fa-money-bill-transfer me-2 pe-2"></i></i>Subscription History</a>
-            <a class="nav-item-link" href="/userleaderboard"><i class="fa-solid fa-trophy me-2 pe-2"></i></i>Leaderboard</a>
+            <a class="nav-item-link" href="/usersubscriptionhistory"><i
+                    class="fa-solid fa-money-bill-transfer me-2 pe-2"></i></i>Subscription History</a>
+            <a class="nav-item-link" href="/userleaderboard"><i
+                    class="fa-solid fa-trophy me-2 pe-2"></i></i>Leaderboard</a>
             <a class="nav-item-link" href="/userkoodies"><i class="fa-solid fa-robot me-2 pe-2"></i>Ai</a>
             <a class="nav-item-link" href="/chatroom"><i class="fa-solid fa-comment me-2 pe-2"></i>Chatroom</a>
 
@@ -117,7 +120,8 @@
                 <div class="d-flex justify-content-between p-2 w-75 align-items-center">
                     <div id="profileInfo" style="cursor: pointer;" data-bs-toggle="tooltip" data-bs-placement="top"
                         title="Profile" class="w-50">
-                        <h6 class="fw-semibold text-truncate" id="userName" style="text-transform: capitalize">Culacino_</h6>
+                        <h6 class="fw-semibold text-truncate" id="userName" style="text-transform: capitalize">
+                            Culacino_</h6>
                         <p class="small text-muted" id="userRole" style="text-transform: capitalize">UX Designer</p>
                     </div>
                     <div class="logout">
@@ -139,22 +143,23 @@
 
 
         <div class="d-flex gap-2 shadow-sm rounded-pill align-items-center py-2 px-3  mx-1 mx-lg-3">
-            <div class="d-flex align-items-center gap-1"><img src="./images/leaderboard-award-icon.png" alt="" class="img"> <span data-badges>0</span></div>
+            <div class="d-flex align-items-center gap-1"><img src="./images/leaderboard-award-icon.png"
+                    alt="" class="img"> <span data-badges>0</span></div>
 
-            <div class="ps-2 d-flex align-items-center gap-1" style="border-left: 1px solid #000000;"><img src="./images/point-icon.png"
-                    alt="" class="img"> <span data-points>0</span></div>
+            <div class="ps-2 d-flex align-items-center gap-1" style="border-left: 1px solid #000000;"><img
+                    src="./images/point-icon.png" alt="" class="img"> <span data-points>0</span></div>
 
         </div>
 
         <div class="top-icons">
-            <button class="icon-btn round-2 icon-btn-light" title="Notifications"
-                    id="notificationBellBtn" style="position: relative;">
+            <button class="icon-btn round-2 icon-btn-light" title="Notifications" id="notificationBellBtn"
+                style="position: relative;">
                 <i class="fa-regular fa-bell fa-2xs"></i>
             </button>
             <button class="icon-btn round-2 icon-btn-light" title="message"><i
                     class="fa-regular fa-envelope fa-2xs"></i></button>
             <button class="icon-btn round-2 icon-btn-light" title="Help & FAQ"
-                    onclick="window.location.href='/help'">
+                onclick="window.location.href='/help'">
                 <i class="fa-solid fa-question fa-2xs"></i>
             </button>
         </div>
@@ -163,7 +168,9 @@
     @yield('content')
 
     <!-- Footer -->
-    <footer class="d-flex page-footer flex-column align-items-center gap-2 gap-md-0 flex-md-row justify-content-between mt-auto" style="background-color: inherit;">
+    <footer
+        class="d-flex page-footer flex-column align-items-center gap-2 gap-md-0 flex-md-row justify-content-between mt-auto"
+        style="background-color: inherit;">
         <p class="footer-link-text text-center">© Copyright Kokokah 2025. All rights reserved.</p>
 
         <div class ="d-flex flex-column gap-1 gap-md-3 align-items-center flex-md-row">
@@ -243,6 +250,8 @@
         // Close sidebar when clicking any sidebar nav link on mobile
         document.querySelectorAll('.nav-item-link').forEach(link => {
             link.addEventListener('click', () => {
+                // If this link toggles a collapse (dropdown), don't close sidebar
+                if (link.hasAttribute('data-bs-toggle')) return;
                 if (window.innerWidth < 992) closeSidebar();
             });
         });
@@ -259,7 +268,8 @@
     </script>
 
     <!-- Notification Modal -->
-    <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
+    <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -272,19 +282,20 @@
                     <ul class="nav nav-tabs mb-3" role="tablist">
                         <li class="nav-item" role="presentation">
                             <a class="nav-link active" id="announcements-tab" data-bs-toggle="tab"
-                               href="#announcements" role="tab" aria-controls="announcements" aria-selected="true">
+                                href="#announcements" role="tab" aria-controls="announcements"
+                                aria-selected="true">
                                 Announcements
                             </a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="messages-tab" data-bs-toggle="tab"
-                               href="#messages" role="tab" aria-controls="messages" aria-selected="false">
+                            <a class="nav-link" id="messages-tab" data-bs-toggle="tab" href="#messages"
+                                role="tab" aria-controls="messages" aria-selected="false">
                                 Messages
                             </a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="notifications-tab" data-bs-toggle="tab"
-                               href="#notifications" role="tab" aria-controls="notifications" aria-selected="false">
+                            <a class="nav-link" id="notifications-tab" data-bs-toggle="tab" href="#notifications"
+                                role="tab" aria-controls="notifications" aria-selected="false">
                                 Notifications
                             </a>
                         </li>
@@ -293,7 +304,8 @@
                     <!-- Tab Content -->
                     <div class="tab-content">
                         <!-- Announcements Tab -->
-                        <div id="announcements" class="tab-pane fade show active" role="tabpanel" aria-labelledby="announcements-tab">
+                        <div id="announcements" class="tab-pane fade show active" role="tabpanel"
+                            aria-labelledby="announcements-tab">
                             <div id="announcementsList" class="notification-list">
                                 <p class="text-muted text-center py-4">Loading announcements...</p>
                             </div>
@@ -307,7 +319,8 @@
                         </div>
 
                         <!-- Notifications Tab -->
-                        <div id="notifications" class="tab-pane fade" role="tabpanel" aria-labelledby="notifications-tab">
+                        <div id="notifications" class="tab-pane fade" role="tabpanel"
+                            aria-labelledby="notifications-tab">
                             <div id="notificationsList" class="notification-list">
                                 <p class="text-muted text-center py-4">Loading notifications...</p>
                             </div>

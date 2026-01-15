@@ -353,7 +353,7 @@
         <!-- Course Details Section -->
         <div class="container bg-white content-section" id="details">
             <div class="section-header">
-                <h5>Course Details</h5>
+                <h5>Subject Details</h5>
             </div>
 
             <form id="courseDetailsForm">
@@ -362,7 +362,7 @@
                 <input type="hidden" class="form-control" id="curriculumCategoryId" name="curriculumCategoryId" required>
                 <div class="form-row-two">
                     <div class="form-group-custom">
-                        <label for="courseTitle">Course Title</label>
+                        <label for="courseTitle">Subject Title</label>
                         <input type="text" class="form-control" id="courseTitle" name="courseTitle"
                             placeholder="Enter Subject Title" required>
                     </div>
@@ -375,14 +375,14 @@
 
                 <div class="form-row-two">
                     <div class="form-group-custom">
-                        <label for="courseCategory">Course Category</label>
+                        <label for="courseCategory">Subject Category</label>
                         <select class="form-control" id="courseCategory" name="courseCategory" required>
 
                         </select>
                     </div>
 
                     <div class="form-group-custom">
-                        <label for="courseLevel">Course Level</label>
+                        <label for="courseLevel">Subject Level</label>
                         <select class="form-control" id="courseLevel" name="courseLevel" required></select>
                     </div>
                 </div>
@@ -400,7 +400,7 @@
                             <div class="form-check d-flex gap-1 align-items-center ">
                                 <input class="form-check-input small-check" type="checkbox" value="" id="free-course">
                                 <label class="form-check-label" for="checkChecked">
-                                    Free Course
+                                    Free Subject
                                 </label>
                             </div>
                         </div>
