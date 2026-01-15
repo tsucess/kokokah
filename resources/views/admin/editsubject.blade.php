@@ -1131,7 +1131,8 @@
                                         Type</label><select name="" id="addContent" class="modal-input">
                                         {{-- <option value="image">Image</option> --}}
                                         <option value="youtube">Youtube Url</option>
-                                        {{-- <option value="audio">Audio</option> --}}
+                                        <option value="video">Video File</option>
+                                        <option value="audio">Audio</option>
                                         <option value="content">Content</option>
                                         <option value="document">Document</option>
                                     </select>
@@ -1172,6 +1173,21 @@
                                         {{-- <small class="text-muted d-block mt-2">Duration will be automatically extracted from the video URL</small> --}}
                                     </div>
                                 </div>
+                                {{-- video container --}}
+                                <div class="flex-column gap-3 hide select-children" id="video-container">
+                                    <div class="upload-file-container">
+                                        <label for="" class="upload-label">Upload Video File (MP4, WebM, MOV, AVI, MKV - Max 10GB)</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control upload-input p-3"
+                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
+                                                placeholder="Upload video file" aria-label="Video file"
+                                                aria-describedby="basic-addon2" />
+                                            <button class="upload-btn" type="button" data-upload-type="video">Upload
+                                                File </button>
+                                        </div>
+                                    </div>
+                                    <input type="file" id="videoFileInput" style="display: none;" accept="video/*" />
+                                </div>
                                 {{-- content container  --}}
                                 <div class="flex-column gap-3 hide select-children" id="content-container">
                                     <div class="d-flex flex-column gap-1">
@@ -1204,11 +1220,7 @@
                                     <div class="modal-form-input-border">
                                         <label for="" class="modal-label">File Type</label>
                                         <select name="" id="" class="modal-input">
-                                            <option value="image">Image</option>
-                                            <option value="audio">Audio</option>
-                                            <option value="video">Video</option>
                                             <option value="pdf">PDF</option>
-                                            <option value="docx">Docx</option>
                                         </select>
                                     </div>
                                     <div class="upload-file-container"><label for="" class="upload-label">Upload
@@ -1889,6 +1901,9 @@
                 }
                 if (contentType === "youtube") {
                     document.getElementById("youtube-container").style.display = "flex";
+                }
+                if (contentType === "video") {
+                    document.getElementById("video-container").style.display = "flex";
                 }
                 if (contentType === "audio") {
                     document.getElementById("audio-container").style.display = "flex";
@@ -2613,6 +2628,12 @@
                     case 'image':
                         document.getElementById('image-container').style.display = 'flex';
                         break;
+                    case 'audio':
+                        document.getElementById('audio-container').classList.remove('hide');
+                        break;
+                    case 'video':
+                        document.getElementById('video-container').classList.remove('hide');
+                        break;
                     default:
                         break;
                 }
@@ -2638,6 +2659,7 @@
         const uploadedFiles = {
             image: null,
             audio: null,
+            video: null,
             document: null
         };
 
@@ -2653,6 +2675,13 @@
         if (audioFileInput) {
             audioFileInput.addEventListener('change', function(e) {
                 handleFileUpload(e, 'audio');
+            });
+        }
+
+        const videoFileInput = document.getElementById('videoFileInput');
+        if (videoFileInput) {
+            videoFileInput.addEventListener('change', function(e) {
+                handleFileUpload(e, 'video');
             });
         }
 
@@ -2678,6 +2707,9 @@
                     break;
                 case 'audio':
                     inputField = modal.querySelector('#audio-container input[type="text"]');
+                    break;
+                case 'video':
+                    inputField = modal.querySelector('#video-container input[type="text"]');
                     break;
                 case 'document':
                     inputField = modal.querySelector('#document-container input[type="text"]');
@@ -2949,6 +2981,15 @@
                         formData.append('attachment', documentFile);
                         break;
 
+                    case 'video':
+                        const videoFile = uploadedFiles.video;
+                        if (!videoFile) {
+                            ToastNotification.warning('Validation', 'Please upload a video file');
+                            return;
+                        }
+                        formData.append('attachment', videoFile);
+                        break;
+
                     case 'image':
                         const imageFile = uploadedFiles.image;
                         if (!imageFile) {
@@ -2957,6 +2998,15 @@
                         }
                         formData.append('attachment', imageFile);
                         break;
+
+                    case 'audio':
+                        const audioFile = uploadedFiles.audio;
+                        if (!audioFile) {
+                            ToastNotification.warning('Validation', 'Please upload an audio file');
+                            return;
+                        }
+                        formData.append('attachment', audioFile);
+                        break;
                 }
 
                 let result;
@@ -2964,10 +3014,32 @@
                     // Update existing lesson
                     formData.append('_method', 'PUT');
                     result = await LessonApiClient.updateLesson(window.editingLessonId, formData);
-                    ToastNotification.success('Success', 'Lesson updated successfully');
                 } else {
                     // Create new lesson
                     result = await LessonApiClient.createLesson(courseId, formData);
+                }
+
+                // Check if the request was successful
+                if (!result.success) {
+                    console.error('Lesson save failed:', result);
+                    let errorMessage = result.message || 'Failed to save lesson';
+
+                    // If there are validation errors, show them
+                    if (result.errors && Object.keys(result.errors).length > 0) {
+                        const errorList = Object.entries(result.errors)
+                            .map(([field, messages]) => `${field}: ${Array.isArray(messages) ? messages.join(', ') : messages}`)
+                            .join('\n');
+                        errorMessage = `Validation errors:\n${errorList}`;
+                        console.error('Validation errors:', result.errors);
+                    }
+
+                    ToastNotification.error('Error', errorMessage);
+                    return;
+                }
+
+                if (window.editingLessonId) {
+                    ToastNotification.success('Success', 'Lesson updated successfully');
+                } else {
                     ToastNotification.success('Success', 'Lesson created successfully');
                 }
 
@@ -2975,6 +3047,7 @@
                 uploadedFiles.image = null;
                 uploadedFiles.audio = null;
                 uploadedFiles.document = null;
+                uploadedFiles.video = null;
 
                 // Close modal with proper cleanup
                 const modalInstance = bootstrap.Modal.getInstance(modal);
@@ -3047,6 +3120,8 @@
                         break;
                     case 'document':
                     case 'image':
+                    case 'audio':
+                    case 'video':
                         const attachmentInput = modal.querySelector(`#${lessonType}-container input[type="text"]`);
                         if (attachmentInput) attachmentInput.value = lesson.attachment || '';
                         break;

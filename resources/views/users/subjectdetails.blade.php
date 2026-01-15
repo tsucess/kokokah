@@ -5,6 +5,13 @@
         $topicId = request()->route('topicId') ?? request()->query('topic_id');
     @endphp
 
+    <!-- PDF.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        // Set up PDF.js worker
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
+
     <style>
         .box {
             border: 1px solid #CCDBDD;
@@ -153,19 +160,19 @@
             Leave Review and Rating
         </button> --}}
 
-        <!-- File Viewer Modal (handles PDFs, Images, and Documents) -->
+        <!-- File Viewer Modal (handles PDFs, Images, Videos, and Documents) -->
         <div class="modal fade" id="fileViewerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="fileViewerLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 80vw;">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header bg-light">
                         <h5 class="modal-title" id="fileViewerLabel">File Viewer</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body" id="fileViewerBody" style="max-height: 70vh; overflow-y: auto;">
+                    <div class="modal-body" id="fileViewerBody" style="max-height: 80vh; overflow-y: auto; padding: 2rem;">
                         <!-- Content will be dynamically loaded here -->
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer bg-light">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -357,12 +364,14 @@
 
             if (topicId) {
                 await loadTopicLessons();
+
                 if (allLessons.length > 0) {
                     currentLessonIndex = 0;
                     await loadCurrentLesson();
                     await loadQuizzes();
                     setupTabNavigation();
                 } else {
+                    console.error('No lessons found for topic:', topicId);
                     showError('No lessons found for this topic');
                 }
             } else {
@@ -380,11 +389,15 @@
                 if (response.success && response.data) {
                     allLessons = Array.isArray(response.data) ? response.data : [response.data];
                 } else {
-                    showError(response.message || 'Failed to load lessons');
+                    const errorMsg = response.message || 'Failed to load lessons';
+                    console.error('API returned error:', errorMsg);
+                    console.error('Full response:', JSON.stringify(response, null, 2));
+                    showError(errorMsg);
                 }
             } catch (error) {
                 console.error('Error loading topic lessons:', error);
-                showError('Error loading lessons');
+                console.error('Error stack:', error.stack);
+                showError('Error loading lessons: ' + error.message);
             }
         }
 
@@ -518,16 +531,14 @@
             if (!fileName || typeof fileName !== 'string') return 'fa-file';
             const ext = fileName.split('.').pop().toLowerCase();
             const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp'];
+            const videoExtensions = ['mp4', 'webm', 'ogg', 'mov', 'avi', 'mkv', 'flv', 'wmv', 'm4v'];
+            const audioExtensions = ['mp3', 'wav', 'ogg', 'aac', 'flac', 'm4a'];
             const pdfExtensions = ['pdf'];
-            const docExtensions = ['doc', 'docx', 'txt', 'rtf'];
-            const sheetExtensions = ['xls', 'xlsx', 'csv'];
-            const presentationExtensions = ['ppt', 'pptx'];
 
             if (imageExtensions.includes(ext)) return 'fa-image';
+            if (videoExtensions.includes(ext)) return 'fa-video';
+            if (audioExtensions.includes(ext)) return 'fa-music';
             if (pdfExtensions.includes(ext)) return 'fa-file-pdf';
-            if (docExtensions.includes(ext)) return 'fa-file-word';
-            if (sheetExtensions.includes(ext)) return 'fa-file-excel';
-            if (presentationExtensions.includes(ext)) return 'fa-file-powerpoint';
             return 'fa-file';
         }
 
@@ -535,16 +546,18 @@
          * Get file type category
          */
         function getFileType(fileName) {
-            if (!fileName || typeof fileName !== 'string') return 'document';
+            if (!fileName || typeof fileName !== 'string') return 'unsupported';
             const ext = fileName.split('.').pop().toLowerCase();
             const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp'];
+            const videoExtensions = ['mp4', 'webm', 'ogg', 'mov', 'avi', 'mkv', 'flv', 'wmv', 'm4v'];
+            const audioExtensions = ['mp3', 'wav', 'ogg', 'aac', 'flac', 'm4a'];
             const pdfExtensions = ['pdf'];
-            const officeExtensions = ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
 
             if (imageExtensions.includes(ext)) return 'image';
+            if (videoExtensions.includes(ext)) return 'video';
+            if (audioExtensions.includes(ext)) return 'audio';
             if (pdfExtensions.includes(ext)) return 'pdf';
-            if (officeExtensions.includes(ext)) return 'office';
-            return 'document';
+            return 'unsupported';
         }
 
         /**
@@ -565,15 +578,17 @@
                         const btn = document.createElement('button');
                         btn.className = 'd-flex gap-3 align-items-center align-self-start lecture-download-btn';
                         btn.type = 'button';
-                        const fileIcon = getFileIcon(attachment.file_name);
+                        const fileName = attachment.name || attachment.file_name || 'Attachment';
+                        const filePath = attachment.url || attachment.file_path;
+                        const fileIcon = getFileIcon(fileName);
                         btn.innerHTML = `
                             <i class="fa-solid ${fileIcon}"></i>
-                            ${attachment.file_name || 'Attachment'}
+                            ${fileName}
                             <i class="fa-solid fa-eye"></i>
                         `;
                         btn.onclick = () => {
-                            console.log('Opening file:', attachment.file_name, 'Path:', attachment.file_path);
-                            viewFile(attachment.file_path, attachment.file_name);
+                            console.log('Opening file:', fileName, 'Path:', filePath);
+                            viewFile(filePath, fileName);
                         };
                         attachmentsContainer.appendChild(btn);
                     });
@@ -614,7 +629,7 @@
         }
 
         /**
-         * View file in modal (handles PDFs, Images, and Documents)
+         * View file in modal (handles PDFs, Images, Videos, and Documents)
          */
         function viewFile(filePath, fileName) {
             const fileType = getFileType(fileName);
@@ -638,67 +653,287 @@
                 };
                 fileViewerBody.appendChild(img);
                 fileViewerLabel.textContent = `Image: ${fileName}`;
-            } else if (fileType === 'pdf') {
-                // Display PDF using iframe directly
-                const iframe = document.createElement('iframe');
-                iframe.src = filePath;
-                iframe.style.width = '100%';
-                iframe.style.height = '600px';
-                iframe.style.border = 'none';
-                iframe.onerror = () => {
-                    fileViewerBody.innerHTML = '<div class="alert alert-danger">Error loading PDF</div>';
+            } else if (fileType === 'video') {
+                // Display video player
+                console.log('Loading video:', fileName, 'Path:', filePath);
+
+                const videoContainer = document.createElement('div');
+                videoContainer.style.width = '100%';
+                videoContainer.style.borderRadius = '8px';
+                videoContainer.style.overflow = 'hidden';
+                videoContainer.style.backgroundColor = '#000';
+
+                const video = document.createElement('video');
+                video.controls = true;
+                video.style.width = '100%';
+                video.style.height = 'auto';
+                video.style.maxHeight = '70vh';
+                video.style.display = 'block';
+
+                const source = document.createElement('source');
+                source.src = filePath;
+
+                // Determine video type based on extension
+                const ext = fileName.split('.').pop().toLowerCase();
+                const videoTypes = {
+                    'mp4': 'video/mp4',
+                    'webm': 'video/webm',
+                    'ogg': 'video/ogg',
+                    'mov': 'video/quicktime',
+                    'avi': 'video/x-msvideo',
+                    'mkv': 'video/x-matroska',
+                    'flv': 'video/x-flv',
+                    'wmv': 'video/x-ms-wmv',
+                    'm4v': 'video/x-m4v'
                 };
-                fileViewerBody.appendChild(iframe);
-                fileViewerLabel.textContent = `PDF: ${fileName}`;
-            } else if (fileType === 'office') {
-                // For Office documents, provide download option
-                // Office Online viewer requires public URLs, so we provide download instead
-                fileViewerBody.innerHTML = `
-                    <div class="alert alert-info">
-                        <div class="d-flex flex-column gap-3">
-                            <div>
-                                <i class="fa-solid ${getFileIcon(fileName)} fa-3x" style="color: #004A53;"></i>
-                            </div>
-                            <div>
-                                <h5>${fileName}</h5>
-                                <p class="text-muted mb-3">Office documents cannot be previewed in the browser. Please download the file to view it with Microsoft Office or a compatible application.</p>
-                                <div class="d-flex gap-2">
-                                    <a href="${filePath}" download class="btn btn-primary">
-                                        <i class="fa-solid fa-download"></i> Download File
-                                    </a>
-                                    <a href="${filePath}" target="_blank" class="btn btn-outline-primary">
-                                        <i class="fa-solid fa-external-link"></i> Open in New Tab
-                                    </a>
+
+                source.type = videoTypes[ext] || 'video/mp4';
+                console.log('Video type:', source.type);
+                video.appendChild(source);
+
+                const fallbackText = document.createElement('p');
+                fallbackText.textContent = 'Your browser does not support the video tag.';
+                video.appendChild(fallbackText);
+
+                video.onerror = (error) => {
+                    console.error('Video error:', error);
+                    fileViewerBody.innerHTML = `
+                        <div class="alert alert-danger">
+                            <div class="d-flex flex-column gap-3">
+                                <div>
+                                    <i class="fa-solid fa-video fa-3x" style="color: #dc3545;"></i>
+                                </div>
+                                <div>
+                                    <h5>${fileName}</h5>
+                                    <p class="text-muted mb-3">Error loading video. Please download the file to view it.</p>
+                                    <div class="d-flex gap-2">
+                                        <a href="${filePath}" download class="btn btn-primary">
+                                            <i class="fa-solid fa-download"></i> Download Video
+                                        </a>
+                                        <a href="${filePath}" target="_blank" class="btn btn-outline-primary">
+                                            <i class="fa-solid fa-external-link"></i> Open in New Tab
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    `;
+                };
+
+                video.onloadstart = () => {
+                    console.log('Video loading started');
+                };
+
+                video.oncanplay = () => {
+                    console.log('Video can play');
+                };
+
+                videoContainer.appendChild(video);
+                fileViewerBody.appendChild(videoContainer);
+                fileViewerLabel.textContent = `Video: ${fileName}`;
+                console.log('Video player created successfully');
+            } else if (fileType === 'pdf') {
+                // Display PDF using PDF.js viewer
+                fileViewerBody.innerHTML = '<div class="text-center py-5"><div class="spinner-border" role="status"><span class="sr-only">Loading PDF...</span></div></div>';
+                fileViewerLabel.textContent = `PDF: ${fileName}`;
+
+                // Create PDF viewer container
+                const pdfContainer = document.createElement('div');
+                pdfContainer.style.width = '100%';
+                pdfContainer.style.height = '70vh';
+                pdfContainer.style.backgroundColor = '#f5f5f5';
+                pdfContainer.style.borderRadius = '8px';
+                pdfContainer.style.overflow = 'auto';
+                pdfContainer.id = 'pdfContainer_' + Date.now();
+
+                fetch(filePath)
+                    .then(response => {
+                        console.log('PDF fetch response:', response.status, response.ok);
+                        if (!response.ok) throw new Error(`Failed to load PDF: ${response.status}`);
+                        return response.arrayBuffer();
+                    })
+                    .then(arrayBuffer => {
+                        console.log('PDF array buffer created:', arrayBuffer.byteLength);
+
+                        // Load PDF with PDF.js
+                        const pdf = pdfjsLib.getDocument({ data: arrayBuffer });
+
+                        pdf.promise.then(pdfDoc => {
+                            console.log('PDF loaded, pages:', pdfDoc.numPages);
+
+                            // Clear loading message
+                            fileViewerBody.innerHTML = '';
+                            fileViewerBody.appendChild(pdfContainer);
+
+                            const container = document.getElementById(pdfContainer.id);
+
+                            // Render all pages
+                            const renderPages = async () => {
+                                for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
+                                    const page = await pdfDoc.getPage(pageNum);
+
+                                    // Create canvas for each page
+                                    const canvas = document.createElement('canvas');
+                                    const context = canvas.getContext('2d');
+
+                                    const viewport = page.getViewport({ scale: 1.5 });
+                                    canvas.width = viewport.width;
+                                    canvas.height = viewport.height;
+                                    canvas.style.display = 'block';
+                                    canvas.style.margin = '10px auto';
+                                    canvas.style.border = '1px solid #ddd';
+                                    canvas.style.borderRadius = '4px';
+
+                                    const renderContext = {
+                                        canvasContext: context,
+                                        viewport: viewport
+                                    };
+
+                                    await page.render(renderContext).promise;
+                                    container.appendChild(canvas);
+                                }
+                            };
+
+                            renderPages().catch(error => {
+                                console.error('Error rendering PDF pages:', error);
+                                container.innerHTML = `
+                                    <div class="alert alert-danger m-3">
+                                        <p>Error rendering PDF pages</p>
+                                    </div>
+                                `;
+                            });
+                        }).catch(error => {
+                            console.error('Error loading PDF document:', error);
+                            fileViewerBody.innerHTML = `
+                                <div class="alert alert-danger">
+                                    <div class="d-flex flex-column gap-3">
+                                        <div>
+                                            <i class="fa-solid fa-file-pdf fa-3x" style="color: #dc3545;"></i>
+                                        </div>
+                                        <div>
+                                            <h5>${fileName}</h5>
+                                            <p class="text-muted mb-3">Error: ${error.message}</p>
+                                            <p class="text-muted mb-3">The PDF viewer encountered an issue. Please download the file to view it.</p>
+                                            <div class="d-flex gap-2">
+                                                <a href="${filePath}" download class="btn btn-primary">
+                                                    <i class="fa-solid fa-download"></i> Download PDF
+                                                </a>
+                                                <a href="${filePath}" target="_blank" class="btn btn-outline-primary">
+                                                    <i class="fa-solid fa-external-link"></i> Open in New Tab
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching PDF:', error);
+                        fileViewerBody.innerHTML = `
+                            <div class="alert alert-danger">
+                                <div class="d-flex flex-column gap-3">
+                                    <div>
+                                        <i class="fa-solid fa-file-pdf fa-3x" style="color: #dc3545;"></i>
+                                    </div>
+                                    <div>
+                                        <h5>${fileName}</h5>
+                                        <p class="text-muted mb-3">Error: ${error.message}</p>
+                                        <p class="text-muted mb-3">Failed to fetch the PDF file. Please download the file to view it.</p>
+                                        <div class="d-flex gap-2">
+                                            <a href="${filePath}" download class="btn btn-primary">
+                                                <i class="fa-solid fa-download"></i> Download PDF
+                                            </a>
+                                            <a href="${filePath}" target="_blank" class="btn btn-outline-primary">
+                                                <i class="fa-solid fa-external-link"></i> Open in New Tab
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+            } else if (fileType === 'audio') {
+                // Display audio player
+                console.log('Loading audio:', fileName, 'Path:', filePath);
+
+                // Determine audio type based on extension
+                const ext = fileName.split('.').pop().toLowerCase();
+                const audioTypes = {
+                    'mp3': 'audio/mpeg',
+                    'wav': 'audio/wav',
+                    'ogg': 'audio/ogg',
+                    'aac': 'audio/aac',
+                    'flac': 'audio/flac',
+                    'm4a': 'audio/mp4'
+                };
+
+                const mimeType = audioTypes[ext] || 'audio/mpeg';
+                console.log('Audio type:', mimeType);
+
+                // Create HTML for audio player
+                fileViewerBody.innerHTML = `
+                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; padding: 30px 20px; background-color: #f5f5f5; border-radius: 8px; min-height: 150px;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 48px; color: #004A53; margin-bottom: 10px;">
+                                <i class="fa-solid fa-music"></i>
+                            </div>
+                            <div style="font-weight: 600; color: #333; margin-bottom: 5px;">${fileName}</div>
+                            <div style="font-size: 12px; color: #666;">Audio File</div>
+                        </div>
+                        <audio controls style="width: 100%; min-width: 300px; height: 40px;" crossorigin="anonymous">
+                            <source src="${filePath}" type="${mimeType}">
+                            Your browser does not support the audio tag.
+                        </audio>
                     </div>
                 `;
-                fileViewerLabel.textContent = `Document: ${fileName}`;
+
+                fileViewerLabel.textContent = `Audio: ${fileName}`;
+                console.log('Audio player created successfully');
             } else {
-                // Display document (fallback for other document types)
-                const docContainer = document.createElement('div');
-                docContainer.className = 'alert alert-info';
-                docContainer.innerHTML = `
+                // Display unsupported file type
+                const unsupportedContainer = document.createElement('div');
+                unsupportedContainer.className = 'alert alert-warning';
+                unsupportedContainer.innerHTML = `
                     <div class="d-flex flex-column gap-3">
                         <div>
-                            <i class="fa-solid ${getFileIcon(fileName)} fa-3x" style="color: #004A53;"></i>
+                            <i class="fa-solid ${getFileIcon(fileName)} fa-3x" style="color: #ff9800;"></i>
                         </div>
                         <div>
                             <h5>${fileName}</h5>
-                            <p class="text-muted mb-2">This document type cannot be previewed in the browser.</p>
+                            <p class="text-muted mb-2">This file type is not supported for preview. Supported types: Image, Video, Audio, and PDF.</p>
                             <a href="${filePath}" download class="btn btn-sm btn-primary">
                                 <i class="fa-solid fa-download"></i> Download File
                             </a>
                         </div>
                     </div>
                 `;
-                fileViewerBody.appendChild(docContainer);
-                fileViewerLabel.textContent = `Document: ${fileName}`;
+                fileViewerBody.appendChild(unsupportedContainer);
+                fileViewerLabel.textContent = `File: ${fileName}`;
             }
 
             // Show modal
-            const modal = new bootstrap.Modal(document.getElementById('fileViewerModal'));
+            const fileViewerModalElement = document.getElementById('fileViewerModal');
+            const modal = new bootstrap.Modal(fileViewerModalElement);
+
+            // Stop video/audio playback when modal closes
+            fileViewerModalElement.addEventListener('hidden.bs.modal', function() {
+                console.log('Modal closed, stopping playback');
+                // Stop all video and audio elements
+                const videos = fileViewerBody.querySelectorAll('video');
+                const audios = fileViewerBody.querySelectorAll('audio');
+
+                videos.forEach(video => {
+                    video.pause();
+                    video.currentTime = 0;
+                });
+
+                audios.forEach(audio => {
+                    audio.pause();
+                    audio.currentTime = 0;
+                });
+            }, { once: true });
+
             modal.show();
         }
 

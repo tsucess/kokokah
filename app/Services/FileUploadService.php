@@ -12,10 +12,9 @@ class FileUploadService
 {
     protected $allowedTypes = [
         'image' => ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp'],
-        'video' => ['mp4', 'avi', 'mov', 'wmv', 'flv', 'webm', 'mkv'],
-        'audio' => ['mp3', 'wav', 'ogg', 'aac', 'flac'],
-        'document' => ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'rtf'],
-        'archive' => ['zip', 'rar', '7z', 'tar', 'gz']
+        'video' => ['mp4', 'avi', 'mov', 'wmv', 'flv', 'webm', 'mkv', 'm4v'],
+        'audio' => ['mp3', 'wav', 'ogg', 'aac', 'flac', 'm4a'],
+        'document' => ['pdf']
     ];
 
     protected $maxFileSizes = [

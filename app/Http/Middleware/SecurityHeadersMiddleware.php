@@ -45,6 +45,7 @@ class SecurityHeadersMiddleware
                 "media-src 'self' blob: https: http:",
                 "connect-src 'self' https: http: ws: wss:",
                 "frame-src 'self' blob: data: https://www.youtube.com https://player.vimeo.com",
+                "worker-src 'self' blob:",
             ];
         } else {
             // Production: Strict CSP
@@ -57,6 +58,7 @@ class SecurityHeadersMiddleware
                 "media-src 'self' blob: https:",
                 "connect-src 'self' https:",
                 "frame-src 'self' blob: data: https://www.youtube.com https://player.vimeo.com",
+                "worker-src 'self' blob:",
             ];
         }
         $response->headers->set('Content-Security-Policy', implode('; ', $csp));
