@@ -257,9 +257,9 @@
 
         /* Small screens — stack price under label */
         @media (max-width: 576px) {
-            .proceed-payment-btn{
+            .proceed-payment-btn, .enroll-btn {
                 font-size: 12px;
-                padding: 15px 15px;
+                padding: 12px 14px;
             }
             .txn-row {
                 flex-direction: column;
@@ -545,7 +545,7 @@
                     </button>
                     <h1 id="levelTitle">Loading...</h1>
                 </div>
-                <button class = "enroll-btn" type = "button" id="enrollAllBtn">Enroll in All Subjects - ₦0.00</button>
+                <button class = "enroll-btn align-self-start" type = "button" id="enrollAllBtn">Enroll in All Subjects - ₦0.00</button>
             </div>
             <section class="d-flex flex-column gap-4">
                 <div class="d-flex flex-column flex-md-row  align-items-md-center gap-3">
@@ -593,7 +593,7 @@
             </div> --}}
 
             <!-- Footer with proceed button -->
-            <div style="padding: 20px 22px; display: flex; justify-content: center;">
+            <div style=" display: flex; justify-content:center;">
                 <button id="proceedBtn" class="proceed-payment-btn">
                     Proceed to Payment - Subtotal: <span id="subtotal" class="subtotal">₦0.00</span>
                 </button>
