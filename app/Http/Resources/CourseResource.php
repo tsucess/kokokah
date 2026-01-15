@@ -19,8 +19,6 @@ class CourseResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'slug' => $this->slug,
-            'price' => $this->price,
-            'formatted_price' => 'NGN ' . number_format($this->price, 2),
             'status' => $this->status,
             'difficulty' => $this->difficulty,
             'duration_hours' => $this->duration_hours,

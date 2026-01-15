@@ -1165,29 +1165,102 @@ class AdminController extends Controller
         $activities = [];
 
         // Recent user registrations
-        $recentUsers = User::latest()->limit(15)->get();
+        $recentUsers = User::latest()->limit(20)->get();
         foreach ($recentUsers as $user) {
             $activities[] = [
                 'type' => 'user_registered',
                 'description' => "New user registered: {$user->first_name} {$user->last_name}",
                 'timestamp' => $user->created_at,
-                'user' => $user
+                'user' => $user,
+                'status' => 'completed'
             ];
         }
 
         // Recent course creations
-        $recentCourses = Course::with('instructor')->latest()->limit(15)->get();
+        $recentCourses = Course::with('instructor')->latest()->limit(20)->get();
         foreach ($recentCourses as $course) {
             $activities[] = [
                 'type' => 'course_created',
                 'description' => "New course created: {$course->title}",
                 'timestamp' => $course->created_at,
-                'course' => $course
+                'course' => $course,
+                'user' => $course->instructor,
+                'status' => 'completed'
+            ];
+        }
+
+        // Recent course enrollments
+        $recentEnrollments = \App\Models\Enrollment::with(['user', 'course'])->latest()->limit(20)->get();
+        foreach ($recentEnrollments as $enrollment) {
+            $activities[] = [
+                'type' => 'course_enrolled',
+                'description' => "Enrolled in course: {$enrollment->course->title}",
+                'timestamp' => $enrollment->enrolled_at ?? $enrollment->created_at,
+                'user' => $enrollment->user,
+                'course' => $enrollment->course,
+                'status' => $enrollment->status
+            ];
+        }
+
+        // Recent lesson completions
+        $recentLessons = \App\Models\LessonCompletion::with(['user', 'lesson.course'])->latest()->limit(20)->get();
+        foreach ($recentLessons as $completion) {
+            $activities[] = [
+                'type' => 'lesson_completed',
+                'description' => "Completed lesson: {$completion->lesson->title} in {$completion->lesson->course->title}",
+                'timestamp' => $completion->completed_at ?? $completion->created_at,
+                'user' => $completion->user,
+                'course' => $completion->lesson->course,
+                'status' => 'completed'
+            ];
+        }
+
+        // Recent quiz attempts
+        $recentQuizzes = \App\Models\QuizAttempt::with(['user', 'quiz.course'])->latest()->limit(20)->get();
+        foreach ($recentQuizzes as $attempt) {
+            $score = $attempt->score . '/' . $attempt->max_score;
+            $activities[] = [
+                'type' => 'quiz_attempted',
+                'description' => "Attempted quiz: {$attempt->quiz->title} - Score: {$score}",
+                'timestamp' => $attempt->completed_at ?? $attempt->submitted_at ?? $attempt->created_at,
+                'user' => $attempt->user,
+                'course' => $attempt->quiz->course,
+                'status' => $attempt->passed ? 'completed' : 'pending'
+            ];
+        }
+
+        // Recent course reviews
+        $recentReviews = \App\Models\CourseReview::with(['user', 'course'])->latest()->limit(20)->get();
+        foreach ($recentReviews as $review) {
+            $activities[] = [
+                'type' => 'course_reviewed',
+                'description' => "Left a review on: {$review->course->title} - Rating: {$review->rating}/5",
+                'timestamp' => $review->created_at,
+                'user' => $review->user,
+                'course' => $review->course,
+                'status' => $review->status ?? 'completed'
+            ];
+        }
+
+        // Recent course completions
+        $recentCompletions = \App\Models\Enrollment::with(['user', 'course'])
+            ->where('status', 'completed')
+            ->latest('completed_at')
+            ->limit(20)
+            ->get();
+        foreach ($recentCompletions as $enrollment) {
+            $activities[] = [
+                'type' => 'course_completed',
+                'description' => "Completed course: {$enrollment->course->title}",
+                'timestamp' => $enrollment->completed_at,
+                'user' => $enrollment->user,
+                'course' => $enrollment->course,
+                'status' => 'completed'
             ];
         }
 
         // Recent payments
-        $recentPayments = Payment::with(['user', 'course'])->latest()->limit(15)->get();
+        $recentPayments = Payment::with(['user', 'course'])->latest()->limit(20)->get();
         foreach ($recentPayments as $payment) {
             if ($payment->type === 'wallet_deposit') {
                 $description = "Deposited Money to Wallet: {$payment->amount}";
@@ -1205,7 +1278,166 @@ class AdminController extends Controller
             ];
         }
 
-        // Sort by timestamp
+        // Recent learning path enrollments
+        $recentPathEnrollments = \App\Models\LearningPathEnrollment::with(['user'])->latest()->limit(20)->get();
+        foreach ($recentPathEnrollments as $pathEnrollment) {
+            $activities[] = [
+                'type' => 'learning_path_enrolled',
+                'description' => "Enrolled in learning path",
+                'timestamp' => $pathEnrollment->enrolled_at ?? $pathEnrollment->created_at,
+                'user' => $pathEnrollment->user,
+                'status' => $pathEnrollment->status ?? 'completed'
+            ];
+        }
+
+        // Recent certificates issued
+        $recentCertificates = \App\Models\Certificate::with(['user', 'course'])->latest()->limit(20)->get();
+        foreach ($recentCertificates as $certificate) {
+            $activities[] = [
+                'type' => 'certificate_issued',
+                'description' => "Certificate issued for: {$certificate->course->title}",
+                'timestamp' => $certificate->issued_at ?? $certificate->created_at,
+                'user' => $certificate->user,
+                'course' => $certificate->course,
+                'status' => 'completed'
+            ];
+        }
+
+        // Recent wallet deposits
+        $recentDeposits = \App\Models\Transaction::where('type', 'credit')
+            ->whereNull('related_user_id')
+            ->whereNull('course_id')
+            ->whereNull('reward_type')
+            ->with('wallet.user')
+            ->latest()
+            ->limit(20)
+            ->get();
+        foreach ($recentDeposits as $deposit) {
+            $currencySymbol = $deposit->wallet->currency === 'NGN' ? '₦' : $deposit->wallet->currency;
+            $activities[] = [
+                'type' => 'wallet_deposit',
+                'description' => "Deposited {$currencySymbol}" . number_format($deposit->amount, 2) . " to wallet",
+                'timestamp' => $deposit->created_at,
+                'user' => $deposit->wallet->user,
+                'amount' => $deposit->amount,
+                'currency' => $deposit->wallet->currency,
+                'currency_symbol' => $currencySymbol,
+                'status' => $deposit->status
+            ];
+        }
+
+        // Recent money transfers
+        $recentTransfers = \App\Models\Transaction::whereNotNull('related_user_id')
+            ->with(['wallet.user', 'relatedUser'])
+            ->latest()
+            ->limit(20)
+            ->get();
+        foreach ($recentTransfers as $transfer) {
+            $isCredit = $transfer->type === 'credit';
+            $currencySymbol = $transfer->wallet->currency === 'NGN' ? '₦' : $transfer->wallet->currency;
+            $activities[] = [
+                'type' => 'money_transfer',
+                'description' => $isCredit
+                    ? "Received {$currencySymbol}" . number_format($transfer->amount, 2) . " from {$transfer->relatedUser->first_name} {$transfer->relatedUser->last_name}"
+                    : "Sent {$currencySymbol}" . number_format($transfer->amount, 2) . " to {$transfer->relatedUser->first_name} {$transfer->relatedUser->last_name}",
+                'timestamp' => $transfer->created_at,
+                'user' => $transfer->wallet->user,
+                'related_user' => $transfer->relatedUser,
+                'amount' => $transfer->amount,
+                'currency' => $transfer->wallet->currency,
+                'currency_symbol' => $currencySymbol,
+                'direction' => $isCredit ? 'received' : 'sent',
+                'status' => $transfer->status
+            ];
+        }
+
+        // Recent rewards earned
+        $recentRewards = \App\Models\Transaction::where('type', 'credit')
+            ->whereNotNull('reward_type')
+            ->with('wallet.user')
+            ->latest()
+            ->limit(20)
+            ->get();
+        foreach ($recentRewards as $reward) {
+            $rewardLabel = match($reward->reward_type) {
+                'daily_login' => 'Daily Login Reward',
+                'study_time' => 'Study Time Reward',
+                'course_completion' => 'Course Completion Bonus',
+                'quiz_perfect' => 'Perfect Quiz Score Bonus',
+                'streak_bonus' => 'Study Streak Bonus',
+                'referral' => 'Referral Bonus',
+                default => 'Reward'
+            };
+            $currencySymbol = $reward->wallet->currency === 'NGN' ? '₦' : $reward->wallet->currency;
+            $activities[] = [
+                'type' => 'reward_earned',
+                'description' => "{$rewardLabel}: Earned {$currencySymbol}" . number_format($reward->amount, 2),
+                'timestamp' => $reward->created_at,
+                'user' => $reward->wallet->user,
+                'amount' => $reward->amount,
+                'currency' => $reward->wallet->currency,
+                'currency_symbol' => $currencySymbol,
+                'reward_type' => $reward->reward_type,
+                'status' => 'completed'
+            ];
+        }
+
+        // Recent badges earned
+        $recentBadges = \App\Models\UserBadge::with(['user', 'badge'])
+            ->whereNull('revoked_at')
+            ->latest('earned_at')
+            ->limit(20)
+            ->get();
+        foreach ($recentBadges as $userBadge) {
+            $activities[] = [
+                'type' => 'badge_earned',
+                'description' => "Earned badge: {$userBadge->badge->name}",
+                'timestamp' => $userBadge->earned_at ?? $userBadge->created_at,
+                'user' => $userBadge->user,
+                'badge' => $userBadge->badge,
+                'status' => 'completed'
+            ];
+        }
+
+        // Recent refunds
+        $recentRefunds = \App\Models\Transaction::where('type', 'refund')
+            ->with('wallet.user')
+            ->latest()
+            ->limit(20)
+            ->get();
+        foreach ($recentRefunds as $refund) {
+            $currencySymbol = $refund->wallet->currency === 'NGN' ? '₦' : $refund->wallet->currency;
+            $activities[] = [
+                'type' => 'refund_processed',
+                'description' => "Refund processed: {$currencySymbol}" . number_format($refund->amount, 2),
+                'timestamp' => $refund->created_at,
+                'user' => $refund->wallet->user,
+                'amount' => $refund->amount,
+                'currency' => $refund->wallet->currency,
+                'currency_symbol' => $currencySymbol,
+                'status' => $refund->status
+            ];
+        }
+
+        // Recent points earned
+        $recentPoints = \App\Models\UserPointsHistory::with('user')
+            ->where('points_change', '>', 0)
+            ->latest()
+            ->limit(20)
+            ->get();
+        foreach ($recentPoints as $pointsHistory) {
+            $activities[] = [
+                'type' => 'points_earned',
+                'description' => "Earned {$pointsHistory->points_change} points - {$pointsHistory->reason}",
+                'timestamp' => $pointsHistory->created_at,
+                'user' => $pointsHistory->user,
+                'points' => $pointsHistory->points_change,
+                'reason' => $pointsHistory->reason,
+                'status' => 'completed'
+            ];
+        }
+
+        // Sort by timestamp (most recent first)
         usort($activities, function($a, $b) {
             return $b['timestamp'] <=> $a['timestamp'];
         });

@@ -19,8 +19,8 @@ class Course extends Model
         'instructor_id',
         'term_id',
         'level_id',
-        'price',
         'free',
+        'free_subscription',
         'status',
         'thumbnail',
         'url',
@@ -29,7 +29,6 @@ class Course extends Model
     ];
 
     protected $casts = [
-        'price' => 'decimal:2',
         'published_at' => 'datetime',
         'duration_hours' => 'integer',
         'free' => 'boolean',
@@ -95,6 +94,12 @@ class Course extends Model
     public function reviews()
     {
         return $this->hasMany(CourseReview::class);
+    }
+
+    public function subscriptionPlans()
+    {
+        return $this->belongsToMany(SubscriptionPlan::class, 'course_subscription_plan')
+                    ->withTimestamps();
     }
 
     public function certificates()

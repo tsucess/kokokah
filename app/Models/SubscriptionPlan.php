@@ -47,6 +47,12 @@ class SubscriptionPlan extends Model
                     ->where('status', 'active');
     }
 
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'course_subscription_plan')
+                    ->withTimestamps();
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Scopes

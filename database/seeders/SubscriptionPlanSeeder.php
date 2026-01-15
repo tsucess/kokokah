@@ -15,6 +15,19 @@ class SubscriptionPlanSeeder extends Seeder
     {
         $plans = [
             [
+                'title' => 'Free Plan',
+                'description' => 'Access to free courses',
+                'price' => 0,
+                'duration' => 1,
+                'duration_type' => 'free',
+                'features' => [
+                    'Access to free courses',
+                    'Basic support'
+                ],
+                'is_active' => true,
+                'max_users' => null
+            ],
+            [
                 'title' => 'Daily Plan',
                 'description' => 'Access to class notes, anytime, anywhere',
                 'price' => 300,

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->decimal('price', 10, 2);
             $table->integer('duration'); // e.g., 1, 7, 30, 365
-            $table->enum('duration_type', ['daily', 'weekly', 'monthly', 'yearly'])->default('monthly');
+            $table->enum('duration_type', ['free', 'daily', 'weekly', 'monthly', 'yearly'])->default('monthly');
             $table->json('features')->nullable(); // Store features as JSON array
             $table->boolean('is_active')->default(true);
             $table->integer('max_users')->nullable(); // Limit number of users for this plan

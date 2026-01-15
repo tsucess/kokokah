@@ -34,6 +34,17 @@
         .video-box {
             border: 1px solid #CFD0D1;
             border-radius: 16px;
+            pointer-events: auto;
+        }
+
+        .video-box iframe {
+            pointer-events: auto;
+            display: block;
+        }
+
+        .video-box video {
+            pointer-events: auto;
+            display: block;
         }
 
         .lecture-box {
@@ -173,7 +184,7 @@
                             <div class="progress-track" id="progressTrack"></div>
                         </div>
                     </div>
-                    <div class="video-box mb-3" id="videoContainer">
+                    <div class="video-box mb-3" id="videoContainer" data-no-loader>
                         <div class="d-flex justify-content-center align-items-center"
                             style="height: 400px; background-color: #f0f0f0;">
                             <p>Loading video...</p>
@@ -291,6 +302,50 @@
             @endif ;
         let allLessons = [];
         let currentLessonIndex = 0;
+        let isMarkingComplete = false; // Prevent double-click on mark complete button
+        let isNavigating = false; // Prevent double-click on navigation buttons
+
+        /**
+         * Check if a URL is a YouTube URL
+         */
+        function isYouTubeUrl(url) {
+            if (!url || typeof url !== 'string') return false;
+            return /^(https?:\/\/)?(www\.)?(youtube|youtu|youtube-nocookie)\.(com|be)\//.test(url);
+        }
+
+        /**
+         * Extract YouTube video ID from various YouTube URL formats
+         */
+        function extractYouTubeId(url) {
+            if (!url || typeof url !== 'string') return null;
+
+            // Handle different YouTube URL formats
+            let videoId = null;
+
+            // Format: https://www.youtube.com/watch?v=VIDEO_ID
+            let match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/);
+            if (match && match[1]) {
+                videoId = match[1];
+            }
+
+            // Format: https://www.youtube.com/embed/VIDEO_ID
+            if (!videoId) {
+                match = url.match(/youtube\.com\/embed\/([^&\n?#]+)/);
+                if (match && match[1]) {
+                    videoId = match[1];
+                }
+            }
+
+            // Format: https://youtu.be/VIDEO_ID
+            if (!videoId) {
+                match = url.match(/youtu\.be\/([^&\n?#]+)/);
+                if (match && match[1]) {
+                    videoId = match[1];
+                }
+            }
+
+            return videoId;
+        }
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', async () => {
@@ -364,12 +419,35 @@
             // Clear and update video
             const videoContainer = document.getElementById('videoContainer');
             if (currentLesson.video_url) {
-                videoContainer.innerHTML = `
-                    <video width="100%" height="400" controls style="border-radius: 16px;">
-                        <source src="${currentLesson.video_url}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                `;
+                const videoUrl = currentLesson.video_url;
+                let embedHtml = '';
+
+                // Check if it's a YouTube URL
+                if (isYouTubeUrl(videoUrl)) {
+                    const youtubeId = extractYouTubeId(videoUrl);
+                    if (youtubeId) {
+                        embedHtml = `
+                            <iframe width="100%" height="400"
+                                src="https://www.youtube.com/embed/${youtubeId}"
+                                title="YouTube video player"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen
+                                style="border-radius: 16px;">
+                            </iframe>
+                        `;
+                    }
+                } else {
+                    // Treat as direct video file (MP4, WebM, etc.)
+                    embedHtml = `
+                        <video width="100%" height="400" controls style="border-radius: 16px;">
+                            <source src="${videoUrl}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    `;
+                }
+
+                videoContainer.innerHTML = embedHtml;
                 videoContainer.style.display = 'block';
             } else {
                 videoContainer.style.display = 'none';
@@ -1101,11 +1179,22 @@
          * Mark lesson as complete
          */
         window.markLessonComplete = async function() {
+            // Prevent double-click
+            if (isMarkingComplete) {
+                console.warn('Already marking lesson as complete, please wait...');
+                return;
+            }
+
             try {
                 if (!currentLesson || !currentLesson.id) {
                     showError('Lesson data not loaded');
                     return;
                 }
+
+                // Set flag to prevent double-click
+                isMarkingComplete = true;
+                const markCompleteBtn = document.getElementById('markCompleteBtn');
+                markCompleteBtn.disabled = true;
 
                 const response = await window.LessonApiClient.markLessonComplete(currentLesson.id);
 
@@ -1119,8 +1208,6 @@
                     // Update current lesson
                     currentLesson.is_completed = true;
 
-                    const markCompleteBtn = document.getElementById('markCompleteBtn');
-                    markCompleteBtn.disabled = true;
                     markCompleteBtn.textContent = 'Lesson Completed ✓';
                     markCompleteBtn.style.opacity = '0.6';
 
@@ -1133,10 +1220,20 @@
                     showSuccess('Lesson marked as complete!');
                 } else {
                     showError(response.message || 'Failed to mark lesson complete');
+                    // Re-enable button on error
+                    markCompleteBtn.disabled = false;
                 }
             } catch (error) {
                 console.error('Error marking lesson complete:', error);
                 showError('Error marking lesson complete');
+                // Re-enable button on error
+                const markCompleteBtn = document.getElementById('markCompleteBtn');
+                markCompleteBtn.disabled = false;
+            } finally {
+                // Reset flag after a short delay to allow for any UI updates
+                setTimeout(() => {
+                    isMarkingComplete = false;
+                }, 500);
             }
         };
 
@@ -1144,11 +1241,32 @@
          * Navigate to previous lesson
          */
         window.navigateToPreviousLesson = async function() {
+            // Prevent double-click
+            if (isNavigating) {
+                console.warn('Already navigating, please wait...');
+                return;
+            }
+
             if (currentLessonIndex > 0) {
-                currentLessonIndex--;
-                await loadCurrentLesson();
-                await loadQuizzes();
-                window.scrollTo(0, 0);
+                try {
+                    isNavigating = true;
+                    const prevBtn = document.getElementById('prevBtn');
+                    prevBtn.disabled = true;
+
+                    currentLessonIndex--;
+                    await loadCurrentLesson();
+                    await loadQuizzes();
+                    window.scrollTo(0, 0);
+                } catch (error) {
+                    console.error('Error navigating to previous lesson:', error);
+                    showError('Error loading previous lesson');
+                    currentLessonIndex++; // Revert index on error
+                } finally {
+                    isNavigating = false;
+                    const prevBtn = document.getElementById('prevBtn');
+                    prevBtn.disabled = false;
+                    updateButtonStates();
+                }
             }
         };
 
@@ -1156,11 +1274,32 @@
          * Navigate to next lesson
          */
         window.navigateToNextLesson = async function() {
+            // Prevent double-click
+            if (isNavigating) {
+                console.warn('Already navigating, please wait...');
+                return;
+            }
+
             if (currentLessonIndex < allLessons.length - 1) {
-                currentLessonIndex++;
-                await loadCurrentLesson();
-                await loadQuizzes();
-                window.scrollTo(0, 0);
+                try {
+                    isNavigating = true;
+                    const nextBtn = document.getElementById('nextBtn');
+                    nextBtn.disabled = true;
+
+                    currentLessonIndex++;
+                    await loadCurrentLesson();
+                    await loadQuizzes();
+                    window.scrollTo(0, 0);
+                } catch (error) {
+                    console.error('Error navigating to next lesson:', error);
+                    showError('Error loading next lesson');
+                    currentLessonIndex--; // Revert index on error
+                } finally {
+                    isNavigating = false;
+                    const nextBtn = document.getElementById('nextBtn');
+                    nextBtn.disabled = false;
+                    updateButtonStates();
+                }
             }
         };
 

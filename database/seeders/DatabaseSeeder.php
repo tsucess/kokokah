@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             TagSeeder::class,
             BadgeSeeder::class,
             SettingSeeder::class,
+            SubscriptionPlanSeeder::class,
         ]);
 
         // Seed users with proper roles and data
