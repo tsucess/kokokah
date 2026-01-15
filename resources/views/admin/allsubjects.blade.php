@@ -283,20 +283,12 @@
                         <!-- Pagination Info -->
                         <div class="d-flex align-items-center gap-3">
                             <span class="text-muted fw-semibold" style="font-size: 0.9rem;">Page <strong
-                                    style="color: #004A53;">1</strong> of <strong
-                                    style="color: #004A53;">12</strong></span>
+                                    style="color: #004A53;" id="currentPageDisplay">1</strong> of <strong
+                                    style="color: #004A53;" id="totalPagesDisplay">1</strong></span>
 
                             <!-- Page Numbers -->
-                            <div class="d-flex gap-2">
-                                <button class="btn btn-sm"
-                                    style="background-color: #004A53; color: white; border: none; width: 2.5rem; height: 2.5rem; border-radius: 0.5rem; font-weight: 600;">1</button>
-                                <button class="btn btn-sm"
-                                    style="border: 1px solid #ddd; color: #333; width: 2.5rem; height: 2.5rem; border-radius: 0.5rem;">2</button>
-                                <button class="btn btn-sm"
-                                    style="border: 1px solid #ddd; color: #333; width: 2.5rem; height: 2.5rem; border-radius: 0.5rem;">3</button>
-                                <span style="color: #999;">...</span>
-                                <button class="btn btn-sm"
-                                    style="border: 1px solid #ddd; color: #333; width: 2.5rem; height: 2.5rem; border-radius: 0.5rem;">12</button>
+                            <div class="d-flex gap-2" id="paginationNumbers">
+                                <!-- Dynamically generated page buttons -->
                             </div>
                         </div>
 
@@ -490,11 +482,11 @@
         ---------------------------- */
         function updatePaginationUI() {
             // Update page info
-            const currentPageSpan = document.querySelector('span.text-muted strong');
-            const totalPageSpan = document.querySelectorAll('span.text-muted strong')[1];
+            const currentPageDisplay = document.getElementById('currentPageDisplay');
+            const totalPagesDisplay = document.getElementById('totalPagesDisplay');
 
-            if (currentPageSpan) currentPageSpan.textContent = currentPage;
-            if (totalPageSpan) totalPageSpan.textContent = totalPages;
+            if (currentPageDisplay) currentPageDisplay.textContent = currentPage;
+            if (totalPagesDisplay) totalPagesDisplay.textContent = totalPages;
 
             // Update Previous button
             const prevBtn = document.querySelector('button:has(i.fa-chevron-left)');
@@ -511,6 +503,90 @@
                 nextBtn.style.opacity = currentPage >= totalPages ? '0.5' : '1';
                 nextBtn.style.cursor = currentPage >= totalPages ? 'not-allowed' : 'pointer';
             }
+
+            // Generate page number buttons
+            generatePageNumbers();
+        }
+
+        /* -------------------------
+           Generate Page Number Buttons
+        ---------------------------- */
+        function generatePageNumbers() {
+            const paginationContainer = document.getElementById('paginationNumbers');
+            paginationContainer.innerHTML = '';
+
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+            // Adjust start page if we're near the end
+            if (endPage - startPage + 1 < maxVisiblePages) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+
+            // Add first page button if not visible
+            if (startPage > 1) {
+                const firstBtn = createPageButton(1);
+                paginationContainer.appendChild(firstBtn);
+
+                if (startPage > 2) {
+                    const dots = document.createElement('span');
+                    dots.textContent = '...';
+                    dots.style.color = '#999';
+                    paginationContainer.appendChild(dots);
+                }
+            }
+
+            // Add page number buttons
+            for (let i = startPage; i <= endPage; i++) {
+                const btn = createPageButton(i);
+                paginationContainer.appendChild(btn);
+            }
+
+            // Add last page button if not visible
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    const dots = document.createElement('span');
+                    dots.textContent = '...';
+                    dots.style.color = '#999';
+                    paginationContainer.appendChild(dots);
+                }
+
+                const lastBtn = createPageButton(totalPages);
+                paginationContainer.appendChild(lastBtn);
+            }
+        }
+
+        /* -------------------------
+           Create Page Button
+        ---------------------------- */
+        function createPageButton(pageNum) {
+            const btn = document.createElement('button');
+            btn.className = 'btn btn-sm';
+            btn.textContent = pageNum;
+            btn.type = 'button';
+
+            if (pageNum === currentPage) {
+                btn.style.backgroundColor = '#004A53';
+                btn.style.color = 'white';
+                btn.style.border = 'none';
+                btn.style.width = '2.5rem';
+                btn.style.height = '2.5rem';
+                btn.style.borderRadius = '0.5rem';
+                btn.style.fontWeight = '600';
+            } else {
+                btn.style.border = '1px solid #ddd';
+                btn.style.color = '#333';
+                btn.style.width = '2.5rem';
+                btn.style.height = '2.5rem';
+                btn.style.borderRadius = '0.5rem';
+            }
+
+            btn.addEventListener('click', () => {
+                loadCourses(pageNum);
+            });
+
+            return btn;
         }
 
         /* -------------------------
