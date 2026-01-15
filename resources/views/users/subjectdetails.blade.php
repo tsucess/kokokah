@@ -712,11 +712,11 @@
                 };
 
                 video.onloadstart = () => {
-                    console.log('Video loading started');
+                    // Video loading started
                 };
 
                 video.oncanplay = () => {
-                    console.log('Video can play');
+                    // Video can play
                 };
 
                 videoContainer.appendChild(video);
@@ -1564,9 +1564,7 @@
                 let allQuizResults = [];
                 for (const quiz of quizzes) {
                     try {
-                        console.log('Fetching results for quiz:', quiz.id);
                         const resultsResponse = await window.QuizApiClient.getQuizResults(quiz.id);
-                        console.log('Results response for quiz ' + quiz.id + ':', resultsResponse);
 
                         if (resultsResponse.success && resultsResponse.data && resultsResponse.data.results) {
                             allQuizResults.push({
@@ -1576,14 +1574,11 @@
                             });
                         }
                     } catch (error) {
-                        console.error('Error fetching results for quiz ' + quiz.id + ':', error);
+                        // Error fetching results for quiz
                     }
                 }
 
-                console.log('All quiz results:', allQuizResults);
-
                 if (allQuizResults.length === 0) {
-                    console.error('=== NO QUIZ RESULTS FOUND ===');
                     showError('No quiz results found. Please submit all quizzes first.');
                     return;
                 }
@@ -1625,10 +1620,8 @@
 
                 const modalBody = document.getElementById('quizResultsModalBody');
                 const resultsModalElement = document.getElementById('quizResultsModal');
-                console.log('Modal body element:', modalBody);
 
                 if (!modalBody) {
-                    console.error('Modal body element not found');
                     showError('Error: Modal body not found');
                     return;
                 }
