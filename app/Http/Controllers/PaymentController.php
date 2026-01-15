@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Course;
 use App\Models\Payment;
+use App\Models\SubscriptionPlan;
 use App\Services\PaymentGatewayService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -126,6 +127,55 @@ class PaymentController extends Controller
         } catch (\Exception $e) {
             Log::error('Course payment initialization failed: ' . $e->getMessage());
             
+            return response()->json([
+                'success' => false,
+                'message' => 'Payment initialization failed: ' . $e->getMessage()
+            ], 400);
+        }
+    }
+
+    /**
+     * Initialize subscription payment
+     */
+    public function initializeSubscriptionPayment(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'subscription_plan_id' => 'required|exists:subscription_plans,id',
+            'gateway' => 'required|string|in:paystack,flutterwave,stripe,paypal',
+            'course_ids' => 'nullable|array',
+            'course_ids.*' => 'exists:courses,id',
+            'currency' => 'nullable|string|size:3'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        try {
+            $user = Auth::user();
+            $plan = SubscriptionPlan::findOrFail($request->subscription_plan_id);
+            $courseIds = $request->course_ids ?? [];
+
+            $result = $this->paymentService->initializeSubscriptionPayment(
+                $user,
+                $plan,
+                $request->gateway,
+                $courseIds
+            );
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Payment initialized successfully',
+                'data' => $result
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Subscription payment initialization failed: ' . $e->getMessage());
+
             return response()->json([
                 'success' => false,
                 'message' => 'Payment initialization failed: ' . $e->getMessage()

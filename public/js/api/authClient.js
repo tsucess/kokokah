@@ -38,11 +38,23 @@ class AuthApiClient extends BaseApiClient {
     });
 
     if (response.success) {
-      const token = response.data.token || response.data.data?.token;
-      const user = response.data.user || response.data.data?.user;
-      this.setToken(token);
-      this.setUser(user);
-      return { success: true, data: { token, user } };
+      // Handle different response structures
+      // API returns: { success: true, user: {...}, token: "..." }
+      // BaseApiClient wraps it as: { success: true, data: {...}, ... }
+      const data = response.data || response;
+      const token = data.token || response.token;
+      const user = data.user || response.user;
+
+      console.log('Login response:', { response, data, token, user });
+
+      if (token && user) {
+        this.setToken(token);
+        this.setUser(user);
+        return { success: true, data: { token, user } };
+      } else {
+        console.error('Missing token or user in login response', { token, user });
+        return { success: false, message: 'Invalid login response' };
+      }
     }
     return response;
   }

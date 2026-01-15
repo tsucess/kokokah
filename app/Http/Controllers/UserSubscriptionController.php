@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\UserSubscription;
 use App\Models\SubscriptionPlan;
+use App\Models\Enrollment;
+use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class UserSubscriptionController extends Controller
@@ -52,7 +55,9 @@ class UserSubscriptionController extends Controller
             $validator = Validator::make($request->all(), [
                 'subscription_plan_id' => 'required|exists:subscription_plans,id',
                 'amount_paid' => 'required|numeric|min:0',
-                'payment_reference' => 'nullable|string'
+                'payment_reference' => 'nullable|string',
+                'course_ids' => 'nullable|array',
+                'course_ids.*' => 'exists:courses,id'
             ]);
 
             if ($validator->fails()) {
@@ -95,20 +100,45 @@ class UserSubscriptionController extends Controller
                     break;
             }
 
-            $subscription = UserSubscription::create([
-                'user_id' => $user->id,
-                'subscription_plan_id' => $plan->id,
-                'started_at' => Carbon::now(),
-                'expires_at' => $expiresAt,
-                'status' => 'active',
-                'amount_paid' => $request->amount_paid,
-                'payment_reference' => $request->payment_reference
-            ]);
+            // Use transaction to ensure both subscription and enrollments are created together
+            $subscription = DB::transaction(function () use ($user, $plan, $request, $expiresAt) {
+                $subscription = UserSubscription::create([
+                    'user_id' => $user->id,
+                    'subscription_plan_id' => $plan->id,
+                    'started_at' => Carbon::now(),
+                    'expires_at' => $expiresAt,
+                    'status' => 'active',
+                    'amount_paid' => $request->amount_paid,
+                    'payment_reference' => $request->payment_reference
+                ]);
+
+                // Enroll user in selected courses if course_ids provided
+                if ($request->has('course_ids') && is_array($request->course_ids)) {
+                    foreach ($request->course_ids as $courseId) {
+                        // Check if already enrolled
+                        $existingEnrollment = Enrollment::where('user_id', $user->id)
+                                                       ->where('course_id', $courseId)
+                                                       ->first();
+
+                        if (!$existingEnrollment) {
+                            Enrollment::create([
+                                'user_id' => $user->id,
+                                'course_id' => $courseId,
+                                'status' => 'active',
+                                'enrolled_at' => Carbon::now(),
+                                'amount_paid' => $request->amount_paid
+                            ]);
+                        }
+                    }
+                }
+
+                return $subscription;
+            });
 
             return response()->json([
                 'success' => true,
                 'data' => $subscription->load('subscriptionPlan'),
-                'message' => 'Successfully subscribed to plan'
+                'message' => 'Successfully subscribed to plan and enrolled in courses'
             ], 201);
         } catch (\Exception $e) {
             return response()->json([

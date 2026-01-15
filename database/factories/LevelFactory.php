@@ -18,7 +18,6 @@ class LevelFactory extends Factory
     {
         return [
             'name' => $this->faker->randomElement(['JSS 1', 'JSS 2', 'JSS 3', 'SS 1', 'SS 2', 'SS 3', '100 Level', '200 Level', 'Grade 6']),
-            'type' => $this->faker->randomElement(['secondary', 'university', 'grade']),
         ];
     }
 }

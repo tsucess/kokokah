@@ -47,6 +47,83 @@ class WalletController extends Controller
 
 
     /**
+     * Validate recipient email and return recipient info
+     */
+    public function validateRecipient(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid email format',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        try {
+            $sender = Auth::user();
+            $email = $request->email;
+
+            // Check if recipient exists
+            $recipient = User::where('email', $email)->first();
+
+            if (!$recipient) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Recipient not found',
+                    'exists' => false
+                ], 404);
+            }
+
+            // Check if trying to transfer to self
+            if ($sender->id === $recipient->id) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Cannot transfer to yourself',
+                    'exists' => true,
+                    'data' => [
+                        'name' => $recipient->first_name . ' ' . $recipient->last_name,
+                        'email' => $recipient->email
+                    ]
+                ], 400);
+            }
+
+            // Check if recipient account is active
+            if (!$recipient->is_active) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Recipient account is not active',
+                    'exists' => true,
+                    'data' => [
+                        'name' => $recipient->first_name . ' ' . $recipient->last_name,
+                        'email' => $recipient->email
+                    ]
+                ], 400);
+            }
+
+            // Recipient is valid
+            return response()->json([
+                'success' => true,
+                'message' => 'Recipient found',
+                'exists' => true,
+                'data' => [
+                    'name' => $recipient->first_name . ' ' . $recipient->last_name,
+                    'email' => $recipient->email,
+                    'is_active' => $recipient->is_active
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error validating recipient: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
      * Transfer money to another user
      */
     public function transfer(Request $request)

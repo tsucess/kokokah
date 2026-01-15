@@ -474,6 +474,7 @@
                                 <label for="modalCardHolderName" class="modal-label">Enter Card holder Name</label>
                                 <input class="modal-input" type="text" id="modalCardHolderName" placeholder="Jane Appleseed"
                                     required />
+                                <small class="text-danger d-none" id="cardHolderNameError"></small>
                             </div>
                             <div class="modal-form-input-border">
                                 <label for="modalCardNumber" class="modal-label">Card Number</label>
@@ -484,6 +485,7 @@
                                         <i class="fa-regular fa-eye fa-xs" style="color:#AAC3C6;"></i>
                                     </button>
                                 </div>
+                                <small class="text-danger d-none" id="cardNumberError"></small>
                             </div>
                             <div class="modal-form-input-border">
                                 <label for="modalExpiryDate" class="modal-label">Expiry Date</label>
@@ -493,15 +495,17 @@
                                         <i class="fa-regular fa-eye fa-xs" style="color:#AAC3C6;"></i>
                                     </button>
                                 </div>
+                                <small class="text-danger d-none" id="expiryDateError"></small>
                             </div>
                             <div class="modal-form-input-border">
                                 <label for="modalCvv" class="modal-label">CVV</label>
                                 <div class="d-flex gap-2 justify-content-between align-items-center">
-                                    <input class="modal-input" type="password" id="modalCvv" placeholder="234" inputmode="numeric" maxlength="4" required />
+                                    <input class="modal-input" type="password" id="modalCvv" placeholder="123" inputmode="numeric" maxlength="3" required />
                                     <button type="button" class="btn-eye" id="toggleCvv">
                                         <i class="fa-regular fa-eye fa-xs" style="color:#AAC3C6;"></i>
                                     </button>
                                 </div>
+                                <small class="text-danger d-none" id="cvvError"></small>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="modalIsDefault" checked>
@@ -558,6 +562,11 @@
                             <div class="modal-form-input-border">
                                 <label for="recipientEmail" class="modal-label">Recipient Email</label>
                                 <input class="modal-input" type="email" id="recipientEmail" placeholder="recipient@example.com" required />
+                                <small id="recipientEmailError" class="text-danger d-none"></small>
+                            </div>
+                            <div class="modal-form-input-border" id="recipientNameContainer" style="display: none;">
+                                <label for="recipientName" class="modal-label">Recipient Name</label>
+                                <input class="modal-input" type="text" id="recipientName" placeholder="Recipient name" readonly style="background-color: #f5f5f5; cursor: not-allowed;" />
                             </div>
                             <div class="modal-form-input-border">
                                 <label for="transferAmount" class="modal-label">Amount (₦)</label>
@@ -603,18 +612,18 @@
                     </div>
 
                     <div class="d-flex align-items-center gap-3 justify-content-center">
-                        <button class="call-to-action-container d-flex flex-column gap-2 align-items-center">
+                        <button id="addMoneyBtn" class="call-to-action-container d-flex flex-column gap-2 align-items-center">
                             <div class="icon-container"><i class="fa-solid fa-money-bill fa-xs"
                                     style="color: #004A53;"></i>
                             </div>
-                            <p class="call-action-text">Add Money</p>
+                            <p class="call-action-text">Deposit Money</p>
                         </button>
-                        <button class="call-to-action-container d-flex flex-column gap-2 align-items-center">
+                        <button id="transferMoneyBtn" class="call-to-action-container d-flex flex-column gap-2 align-items-center">
                             <div class="icon-container"><i class="fa-solid fa-money-bill-transfer fa-xs"
                                     style="color: #004A53;"></i></div>
                             <p class="call-action-text">Transfer Money</p>
                         </button>
-                        <button class="call-to-action-container d-flex flex-column gap-2 align-items-center ">
+                        <button id="enrollSubjectBtn" class="call-to-action-container d-flex flex-column gap-2 align-items-center ">
                             <div class="icon-container"><i class="fa-solid fa-clipboard-list fa-xs"
                                     style="color: #004A53;"></i>
                             </div>
@@ -645,20 +654,20 @@
                             </div>
                         </div>
                         <div class="d-flex align-items-center gap-3 justify-content-center">
-                            <button data-bs-toggle="modal" data-bs-target="#addCard"
+                            <button id="addCardBtn" data-bs-toggle="modal" data-bs-target="#addCard"
                                 class="call-to-action-container d-flex flex-column gap-2 align-items-center ">
                                 <div class="icon-container"><i class="fa-solid fa-plus fa-xs"
                                         style="color: #004A53;"></i>
                                 </div>
                                 <p class="call-action-text">Add Card</p>
                             </button>
-                            <button
+                            <button id="editCardBtn"
                                 class="call-to-action-container d-flex flex-column gap-2 align-items-center ">
                                 <div class="icon-container"><i class="fa-solid fa-pen-to-square fa-xs"
                                         style="color: #004A53;"></i></div>
                                 <p class="call-action-text">Edit Card</p>
                             </button>
-                            <button data-bs-toggle="modal" data-bs-target="#deleteCard"
+                            <button id="deleteCardBtn" data-bs-toggle="modal" data-bs-target="#deleteCard"
                                 class="call-to-action-container d-flex flex-column gap-2 align-items-center ">
                                 <div class="icon-container" style="background-color: #FFE6E6;"><i
                                         class="fa-solid fa-xmark fa-xs" style="color: #FF383C;"></i></div>
@@ -765,10 +774,7 @@
 
                     <div class="transaction-list p-3" id="transactionList">
                         <div style="text-align: center; padding: 40px;">
-                            <div class="spinner-border text-primary" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                            <p class="mt-3">Loading transactions...</p>
+                            <p style="color: #004A53; font-weight: 500;">Loading transactions...</p>
                         </div>
                     </div>
                 </div>
@@ -780,7 +786,7 @@
         <div id="amountModal" class="payment-method-modal">
             <div class="payment-method-content">
                 <button class="payment-method-close" onclick="closeAmountModal()">&times;</button>
-                <h2 class="payment-method-header">Add Money to Wallet</h2>
+                <h2 class="payment-method-header">Deposit Money to Wallet</h2>
                 <p class="payment-method-subtitle">Enter the amount you want to add</p>
 
                 <div style="padding: 20px 0;">
@@ -902,7 +908,23 @@
 
                     // Update balance
                     const balance = data.balance || 0;
-                    document.getElementById('walletBalance').textContent = formatNGN(balance);
+                    const balanceElement = document.getElementById('walletBalance');
+                    const formattedBalance = formatNGN(balance);
+
+                    // Only update balance if it's not currently hidden
+                    if (!balanceElement.textContent.includes('*')) {
+                        balanceElement.textContent = formattedBalance;
+                    } else {
+                        // Store the balance for when user toggles to show it
+                        storedBalance = formattedBalance;
+                    }
+
+                    // Update eye icon to show visible state only if balance is not hidden
+                    const eyeIcon = document.getElementById('toggleBalance');
+                    if (eyeIcon && !balanceElement.textContent.includes('*')) {
+                        eyeIcon.classList.remove('fa-eye-slash');
+                        eyeIcon.classList.add('fa-eye');
+                    }
                 } else {
                     showToast('Failed to load wallet data', 'error');
                 }
@@ -934,13 +956,20 @@
                         // If no default, display the first card
                         displayCardDetails(result.data[0]);
                     }
+
+                    // Disable Add Card button and enable Edit/Delete buttons
+                    updateCardButtonStates(true);
                 } else {
                     // No saved cards, show placeholder
                     displayCardPlaceholder();
+
+                    // Enable Add Card button and disable Edit/Delete buttons
+                    updateCardButtonStates(false);
                 }
             } catch (error) {
                 console.error('Error loading payment methods:', error);
                 displayCardPlaceholder();
+                updateCardButtonStates(false);
             }
         }
 
@@ -973,6 +1002,59 @@
             document.getElementById('cardNumber').textContent = '**** **** **** ****';
             document.getElementById('cardHolderName').textContent = 'User Name';
             document.getElementById('cardExpiry').textContent = 'MM/YY';
+        }
+
+        /**
+         * Update card button states based on whether a card exists
+         */
+        function updateCardButtonStates(hasCard) {
+            const addCardBtn = document.getElementById('addCardBtn');
+            const editCardBtn = document.getElementById('editCardBtn');
+            const deleteCardBtn = document.getElementById('deleteCardBtn');
+
+            if (hasCard) {
+                // Disable Add Card button
+                if (addCardBtn) {
+                    addCardBtn.disabled = true;
+                    addCardBtn.style.opacity = '0.5';
+                    addCardBtn.style.cursor = 'not-allowed';
+                    addCardBtn.title = 'You already have a card saved';
+                }
+                // Enable Edit and Delete buttons
+                if (editCardBtn) {
+                    editCardBtn.disabled = false;
+                    editCardBtn.style.opacity = '1';
+                    editCardBtn.style.cursor = 'pointer';
+                    editCardBtn.title = '';
+                }
+                if (deleteCardBtn) {
+                    deleteCardBtn.disabled = false;
+                    deleteCardBtn.style.opacity = '1';
+                    deleteCardBtn.style.cursor = 'pointer';
+                    deleteCardBtn.title = '';
+                }
+            } else {
+                // Enable Add Card button
+                if (addCardBtn) {
+                    addCardBtn.disabled = false;
+                    addCardBtn.style.opacity = '1';
+                    addCardBtn.style.cursor = 'pointer';
+                    addCardBtn.title = '';
+                }
+                // Disable Edit and Delete buttons
+                if (editCardBtn) {
+                    editCardBtn.disabled = true;
+                    editCardBtn.style.opacity = '0.5';
+                    editCardBtn.style.cursor = 'not-allowed';
+                    editCardBtn.title = 'No card to edit';
+                }
+                if (deleteCardBtn) {
+                    deleteCardBtn.disabled = true;
+                    deleteCardBtn.style.opacity = '0.5';
+                    deleteCardBtn.style.cursor = 'not-allowed';
+                    deleteCardBtn.title = 'No card to delete';
+                }
+            }
         }
 
         /**
@@ -1097,7 +1179,7 @@
          * Setup event listeners
          */
         function setupEventListeners() {
-            // Add Money button - Show amount input modal first
+            // Deposit Money button - Show amount input modal first
             const addMoneyBtn = document.getElementById('addMoneyBtn');
             if (addMoneyBtn) {
                 addMoneyBtn.addEventListener('click', () => {
@@ -1109,6 +1191,15 @@
             const transferMoneyBtn = document.getElementById('transferMoneyBtn');
             if (transferMoneyBtn) {
                 transferMoneyBtn.addEventListener('click', () => {
+                    // Reset form when opening modal
+                    const transferForm = document.getElementById('transferForm');
+                    if (transferForm) {
+                        transferForm.reset();
+                    }
+                    // Clear validation state
+                    document.getElementById('recipientEmailError').classList.add('d-none');
+                    document.getElementById('recipientNameContainer').style.display = 'none';
+
                     const transferModal = new bootstrap.Modal(document.getElementById('transferMoneyModal'));
                     transferModal.show();
                 });
@@ -1140,21 +1231,41 @@
             const deleteCardBtn = document.getElementById('deleteCardBtn');
             if (deleteCardBtn) {
                 deleteCardBtn.addEventListener('click', () => {
-                    if (!currentCard) {
+                    if (currentCard) {
+                        const deleteModal = new bootstrap.Modal(document.getElementById('deleteCard'));
+                        deleteModal.show();
+                    } else {
                         showToast('No card to delete. Please save a card first.', 'warning');
                     }
                 });
             }
 
             // Toggle balance visibility
+            let storedBalance = null; // Store the actual balance when hidden
             const toggleBalance = document.getElementById('toggleBalance');
             if (toggleBalance) {
                 toggleBalance.addEventListener('click', () => {
                     const balance = document.getElementById('walletBalance');
-                    if (balance.textContent === '₦0.00') {
-                        balance.textContent = '••••••';
+                    const eyeIcon = document.getElementById('toggleBalance');
+
+                    // Check if balance is currently hidden (showing asterisks)
+                    if (balance.textContent.includes('*')) {
+                        // Balance is hidden, show it (no loader, just display stored balance)
+                        console.log('Showing balance...');
+                        if (storedBalance) {
+                            balance.textContent = storedBalance;
+                        }
+                        // Change icon to open eye (visible state)
+                        eyeIcon.classList.remove('fa-eye-slash');
+                        eyeIcon.classList.add('fa-eye');
                     } else {
-                        loadWalletData();
+                        // Balance is visible, hide it
+                        console.log('Hiding balance...');
+                        storedBalance = balance.textContent; // Store the balance before hiding
+                        balance.textContent = '******';
+                        // Change icon to closed eye (hidden state)
+                        eyeIcon.classList.remove('fa-eye');
+                        eyeIcon.classList.add('fa-eye-slash');
                     }
                 });
             }
@@ -1171,6 +1282,17 @@
                 transferForm.addEventListener('submit', handleTransferMoney);
             }
 
+            // Recipient email validation
+            const recipientEmailInput = document.getElementById('recipientEmail');
+            if (recipientEmailInput) {
+                recipientEmailInput.addEventListener('blur', validateRecipientEmail);
+                recipientEmailInput.addEventListener('input', () => {
+                    // Clear error and recipient name when user starts typing
+                    document.getElementById('recipientEmailError').classList.add('d-none');
+                    document.getElementById('recipientNameContainer').style.display = 'none';
+                });
+            }
+
             // Format card number input
             const modalCardNumber = document.getElementById('modalCardNumber');
             if (modalCardNumber) {
@@ -1181,6 +1303,12 @@
             const modalExpiryDate = document.getElementById('modalExpiryDate');
             if (modalExpiryDate) {
                 modalExpiryDate.addEventListener('input', formatExpiryDate);
+            }
+
+            // Format CVV input
+            const modalCvv = document.getElementById('modalCvv');
+            if (modalCvv) {
+                modalCvv.addEventListener('input', formatCVV);
             }
 
             // Toggle card number visibility
@@ -1213,7 +1341,11 @@
             // Confirm delete card
             const confirmDeleteBtn = document.getElementById('confirmDeleteCardBtn');
             if (confirmDeleteBtn) {
-                confirmDeleteBtn.addEventListener('click', handleDeleteCard);
+                confirmDeleteBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    console.log('Delete button clicked');
+                    handleDeleteCard();
+                });
             }
 
             // Reset card form when modal is closed
@@ -1319,7 +1451,7 @@
         }
 
         /**
-         * Proceed with selected payment gateway to add money
+         * Proceed with selected payment gateway to deposit money
          */
         async function proceedWithGateway() {
             const modal = document.getElementById('paymentGatewayModal');
@@ -1390,6 +1522,63 @@
         }
 
         /**
+         * Validate recipient email and display recipient name
+         */
+        async function validateRecipientEmail() {
+            const emailInput = document.getElementById('recipientEmail');
+            const email = emailInput.value.trim();
+            const errorElement = document.getElementById('recipientEmailError');
+            const nameContainer = document.getElementById('recipientNameContainer');
+            const nameInput = document.getElementById('recipientName');
+
+            // Clear previous error
+            errorElement.classList.add('d-none');
+            nameContainer.style.display = 'none';
+
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email) {
+                return; // Empty is ok on blur, will be caught on submit
+            }
+
+            if (!emailRegex.test(email)) {
+                errorElement.textContent = 'Please enter a valid email address';
+                errorElement.classList.remove('d-none');
+                return;
+            }
+
+            try {
+                console.log('Validating recipient email:', email);
+                const result = await WalletApiClient.validateRecipient(email);
+
+                if (result.success && result.data) {
+                    // Recipient found - display their name
+                    nameInput.value = result.data.name;
+                    nameContainer.style.display = 'block';
+                    console.log('Recipient found:', result.data.name);
+                } else {
+                    // Recipient not found
+                    let errorMsg = result.message || 'Recipient not found';
+
+                    // Handle specific error cases
+                    if (result.message === 'Cannot transfer to yourself') {
+                        errorMsg = 'You cannot transfer money to yourself';
+                    } else if (result.message === 'Recipient account is not active') {
+                        errorMsg = 'This recipient account is not active';
+                    }
+
+                    errorElement.textContent = errorMsg;
+                    errorElement.classList.remove('d-none');
+                    console.log('Recipient validation failed:', result.message);
+                }
+            } catch (error) {
+                console.error('Error validating recipient:', error);
+                errorElement.textContent = 'Error validating recipient email';
+                errorElement.classList.remove('d-none');
+            }
+        }
+
+        /**
          * Handle transfer money form submission
          */
         async function handleTransferMoney(e) {
@@ -1399,33 +1588,87 @@
             const transferAmount = parseFloat(document.getElementById('transferAmount').value);
             const transferDescription = document.getElementById('transferDescription').value.trim();
             const submitBtn = document.getElementById('transferSubmitBtn');
+            const errorElement = document.getElementById('recipientEmailError');
+            const nameContainer = document.getElementById('recipientNameContainer');
 
             // Validate inputs
-            if (!recipientEmail || !transferAmount || transferAmount < 1) {
-                showToast('Please fill in all required fields with valid values', 'error');
+            if (!recipientEmail) {
+                showToast('Please enter recipient email address', 'error');
                 return;
             }
 
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(recipientEmail)) {
+                showToast('Please enter a valid email address', 'error');
+                return;
+            }
+
+            // Check if recipient was validated (name should be displayed)
+            if (nameContainer.style.display === 'none') {
+                showToast('Please validate recipient email first', 'error');
+                return;
+            }
+
+            // Check if there are any validation errors
+            if (!errorElement.classList.contains('d-none')) {
+                showToast('Please fix the recipient email error', 'error');
+                return;
+            }
+
+            if (!transferAmount || transferAmount < 1) {
+                showToast('Please enter a valid transfer amount (minimum ₦1)', 'error');
+                return;
+            }
+
+            // Store original button text before try block
+            const originalText = submitBtn.textContent;
+
             try {
                 submitBtn.disabled = true;
-                const originalText = submitBtn.textContent;
                 submitBtn.textContent = 'Processing...';
 
+                console.log('Transferring ₦' + transferAmount + ' to ' + recipientEmail);
                 const result = await WalletApiClient.transferFunds(recipientEmail, transferAmount, transferDescription);
+
+                console.log('Transfer result:', result);
 
                 if (result.success) {
                     showToast('Transfer successful!', 'success');
                     document.getElementById('transferForm').reset();
 
-                    // Close modal
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('transferMoneyModal'));
-                    if (modal) modal.hide();
+                    // Close modal and remove backdrop
+                    const modalElement = document.getElementById('transferMoneyModal');
+                    const modal = bootstrap.Modal.getInstance(modalElement);
+                    if (modal) {
+                        modal.hide();
+                    }
+
+                    // Remove modal backdrop if it still exists
+                    setTimeout(() => {
+                        const backdrop = document.querySelector('.modal-backdrop');
+                        if (backdrop) {
+                            backdrop.remove();
+                        }
+                        // Remove modal-open class from body
+                        document.body.classList.remove('modal-open');
+                    }, 300);
 
                     // Reload wallet data
                     await loadWalletData();
                     await loadTransactions();
                 } else {
-                    showToast(result.message || 'Transfer failed', 'error');
+                    // Show detailed error message
+                    let errorMsg = result.message || 'Transfer failed';
+                    if (result.errors) {
+                        // If there are validation errors, show them
+                        const errorKeys = Object.keys(result.errors);
+                        if (errorKeys.length > 0) {
+                            const firstError = result.errors[errorKeys[0]];
+                            errorMsg = Array.isArray(firstError) ? firstError[0] : firstError;
+                        }
+                    }
+                    showToast(errorMsg, 'error');
                 }
             } catch (error) {
                 console.error('Transfer error:', error);
@@ -1446,29 +1689,60 @@
             }
 
             const deleteBtn = document.getElementById('confirmDeleteCardBtn');
+            const originalText = deleteBtn.textContent;
+            const modalElement = document.getElementById('deleteCard');
 
             try {
                 deleteBtn.disabled = true;
-                const originalText = deleteBtn.textContent;
                 deleteBtn.textContent = 'Deleting...';
 
+                console.log('Deleting card with ID:', currentCard.id);
                 const result = await WalletApiClient.deletePaymentMethod(currentCard.id);
+
+                console.log('Delete result:', result);
 
                 if (result.success) {
                     showToast('Card deleted successfully!', 'success');
 
-                    // Close modal
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('deleteCard'));
-                    if (modal) modal.hide();
-
-                    // Reset current card
+                    // Reset current card first
                     currentCard = null;
                     displayCardPlaceholder();
+
+                    // Close modal and wait for it to fully hide
+                    const modal = bootstrap.Modal.getInstance(modalElement);
+                    if (modal) {
+                        // Listen for the hidden event
+                        modalElement.addEventListener('hidden.bs.modal', function cleanupBackdrop() {
+                            // Remove all modal backdrops
+                            document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
+                                backdrop.remove();
+                            });
+
+                            // Remove modal-open class from body
+                            document.body.classList.remove('modal-open');
+
+                            // Reset body overflow
+                            document.body.style.overflow = '';
+
+                            // Remove any show class from modals
+                            document.querySelectorAll('.modal').forEach(m => {
+                                m.classList.remove('show');
+                            });
+
+                            console.log('Backdrop cleanup completed');
+
+                            // Remove this listener after it fires
+                            modalElement.removeEventListener('hidden.bs.modal', cleanupBackdrop);
+                        }, { once: true });
+
+                        modal.hide();
+                    }
 
                     // Reload wallet data
                     await loadWalletData();
                 } else {
                     showToast(result.message || 'Failed to delete card', 'error');
+                    console.error('Delete failed:', result);
                 }
             } catch (error) {
                 console.error('Delete card error:', error);
@@ -1533,11 +1807,17 @@
 
         /**
          * Format card number with spaces (1234 5678 9012 3456)
+         * Enforces exactly 16 digits
          */
         function formatCardNumber(e) {
-            let value = e.target.value.replace(/\s/g, '');
-            let formattedValue = '';
+            let value = e.target.value.replace(/\s/g, '').replace(/\D/g, '');
 
+            // Limit to 16 digits
+            if (value.length > 16) {
+                value = value.substring(0, 16);
+            }
+
+            let formattedValue = '';
             for (let i = 0; i < value.length; i++) {
                 if (i > 0 && i % 4 === 0) {
                     formattedValue += ' ';
@@ -1546,10 +1826,25 @@
             }
 
             e.target.value = formattedValue;
+
+            // Real-time validation feedback
+            const errorElement = document.getElementById('cardNumberError');
+            if (value.length === 16) {
+                if (luhnCheck(value)) {
+                    errorElement.classList.add('d-none');
+                } else {
+                    showError('cardNumberError', 'Invalid card number (failed validation check)');
+                }
+            } else if (value.length > 0) {
+                showError('cardNumberError', `Card number must be 16 digits (${value.length}/16)`);
+            } else {
+                errorElement.classList.add('d-none');
+            }
         }
 
         /**
          * Format expiry date (MM/YY)
+         * Validates month and checks for expired cards
          */
         function formatExpiryDate(e) {
             let value = e.target.value.replace(/\D/g, '');
@@ -1559,6 +1854,54 @@
             }
 
             e.target.value = value;
+
+            // Real-time validation feedback
+            const errorElement = document.getElementById('expiryDateError');
+            if (value.length === 5) {
+                const [month, year] = value.split('/');
+                const monthNum = parseInt(month);
+
+                if (monthNum < 1 || monthNum > 12) {
+                    showError('expiryDateError', 'Invalid month (01-12)');
+                } else {
+                    const currentDate = new Date();
+                    const currentYear = currentDate.getFullYear() % 100;
+                    const currentMonth = currentDate.getMonth() + 1;
+                    const expiryYear = parseInt(year);
+
+                    if (expiryYear < currentYear || (expiryYear === currentYear && monthNum < currentMonth)) {
+                        showError('expiryDateError', 'Card has expired');
+                    } else {
+                        errorElement.classList.add('d-none');
+                    }
+                }
+            } else if (value.length > 0) {
+                errorElement.classList.add('d-none');
+            }
+        }
+
+        /**
+         * Format CVV input (exactly 3 digits)
+         */
+        function formatCVV(e) {
+            let value = e.target.value.replace(/\D/g, '');
+
+            // Limit to 3 digits
+            if (value.length > 3) {
+                value = value.substring(0, 3);
+            }
+
+            e.target.value = value;
+
+            // Real-time validation feedback
+            const errorElement = document.getElementById('cvvError');
+            if (value.length === 3) {
+                errorElement.classList.add('d-none');
+            } else if (value.length > 0) {
+                showError('cvvError', `CVV must be 3 digits (${value.length}/3)`);
+            } else {
+                errorElement.classList.add('d-none');
+            }
         }
 
         /**
@@ -1621,9 +1964,11 @@
                 }
             }
 
+            // Store original button text before try block
+            const originalText = submitBtn.textContent;
+
             try {
                 // Show loading state
-                const originalText = submitBtn.textContent;
                 submitBtn.disabled = true;
                 submitBtn.textContent = isUpdate ? 'Updating...' : 'Saving...';
 
@@ -1649,9 +1994,22 @@
                     const message = isUpdate ? 'Card updated successfully!' : 'Card saved successfully!';
                     showToast(message, 'success');
 
-                    // Close modal
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('addCard'));
-                    if (modal) modal.hide();
+                    // Close modal and remove backdrop
+                    const modalElement = document.getElementById('addCard');
+                    const modal = bootstrap.Modal.getInstance(modalElement);
+                    if (modal) {
+                        modal.hide();
+                    }
+
+                    // Remove modal backdrop if it still exists
+                    setTimeout(() => {
+                        const backdrop = document.querySelector('.modal-backdrop');
+                        if (backdrop) {
+                            backdrop.remove();
+                        }
+                        // Remove modal-open class from body
+                        document.body.classList.remove('modal-open');
+                    }, 300);
 
                     // Reset form and clear edit mode
                     resetCardFormModal();
@@ -1686,14 +2044,23 @@
             document.getElementById('cvvError').classList.add('d-none');
 
             // Validate cardholder name
-            if (!cardHolderName || cardHolderName.length < 3) {
+            if (!cardHolderName || cardHolderName.trim().length < 3) {
                 showError('cardHolderNameError', 'Cardholder name must be at least 3 characters');
+                isValid = false;
+            } else if (!/^[a-zA-Z\s'-]+$/.test(cardHolderName)) {
+                showError('cardHolderNameError', 'Cardholder name can only contain letters, spaces, hyphens, and apostrophes');
                 isValid = false;
             }
 
-            // Validate card number (13-19 digits)
-            if (!cardNumber || !/^\d{13,19}$/.test(cardNumber)) {
-                showError('cardNumberError', 'Card number must be 13-19 digits');
+            // Validate card number (exactly 16 digits)
+            if (!cardNumber) {
+                showError('cardNumberError', 'Card number is required');
+                isValid = false;
+            } else if (!/^\d{16}$/.test(cardNumber)) {
+                showError('cardNumberError', 'Card number must be exactly 16 digits');
+                isValid = false;
+            } else if (!luhnCheck(cardNumber)) {
+                showError('cardNumberError', 'Invalid card number (failed validation check)');
                 isValid = false;
             }
 
@@ -1708,16 +2075,54 @@
                 if (monthNum < 1 || monthNum > 12) {
                     showError('expiryDateError', 'Invalid month (01-12)');
                     isValid = false;
+                } else {
+                    // Check if card is not expired
+                    const currentDate = new Date();
+                    const currentYear = currentDate.getFullYear() % 100;
+                    const currentMonth = currentDate.getMonth() + 1;
+                    const expiryYear = parseInt(year);
+
+                    if (expiryYear < currentYear || (expiryYear === currentYear && monthNum < currentMonth)) {
+                        showError('expiryDateError', 'Card has expired');
+                        isValid = false;
+                    }
                 }
             }
 
-            // Validate CVV (3-4 digits)
-            if (!cvv || !/^\d{3,4}$/.test(cvv)) {
-                showError('cvvError', 'CVV must be 3-4 digits');
+            // Validate CVV (exactly 3 digits)
+            if (!cvv) {
+                showError('cvvError', 'CVV is required');
+                isValid = false;
+            } else if (!/^\d{3}$/.test(cvv)) {
+                showError('cvvError', 'CVV must be exactly 3 digits');
                 isValid = false;
             }
 
             return isValid;
+        }
+
+        /**
+         * Luhn algorithm to validate card number
+         */
+        function luhnCheck(cardNumber) {
+            let sum = 0;
+            let isEven = false;
+
+            for (let i = cardNumber.length - 1; i >= 0; i--) {
+                let digit = parseInt(cardNumber.charAt(i), 10);
+
+                if (isEven) {
+                    digit *= 2;
+                    if (digit > 9) {
+                        digit -= 9;
+                    }
+                }
+
+                sum += digit;
+                isEven = !isEven;
+            }
+
+            return sum % 10 === 0;
         }
 
         /**

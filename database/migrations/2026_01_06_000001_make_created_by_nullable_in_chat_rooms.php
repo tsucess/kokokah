@@ -33,9 +33,13 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('chat_rooms', function (Blueprint $table) {
-            // Drop the existing foreign key constraint
-            $table->dropForeign(['created_by']);
-            
+            // Drop the existing foreign key constraint if it exists
+            try {
+                $table->dropForeign(['created_by']);
+            } catch (\Exception $e) {
+                // Foreign key might not exist
+            }
+
             // Revert to non-nullable with cascade delete
             $table->foreignId('created_by')
                   ->change()

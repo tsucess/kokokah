@@ -25,6 +25,17 @@ class PaymentApiClient extends BaseApiClient {
   }
 
   /**
+   * Initialize subscription payment
+   * @param {object} paymentData - Payment data
+   * @param {number} paymentData.subscription_plan_id - Subscription plan ID
+   * @param {array} paymentData.course_ids - Array of course IDs to enroll in
+   * @param {string} paymentData.gateway - Payment gateway (paystack, flutterwave, stripe, paypal)
+   */
+  static async initializeSubscriptionPayment(paymentData) {
+    return this.post('/payments/purchase-subscription', paymentData);
+  }
+
+  /**
    * Initialize wallet deposit
    * @param {object} depositData - Deposit data
    * @param {number} depositData.amount - Amount to deposit

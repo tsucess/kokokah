@@ -46,11 +46,6 @@
         <div class="container">
             <div class="card-container" id="coursesContainer">
                 <!-- Courses will be loaded dynamically -->
-                <div class="text-center py-5">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                </div>
             </div>
 
         </div>

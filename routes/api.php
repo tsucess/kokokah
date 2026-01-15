@@ -163,6 +163,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Wallet routes
     Route::prefix('wallet')->group(function () {
         Route::get('/', [WalletController::class, 'index']);
+        Route::post('/validate-recipient', [WalletController::class, 'validateRecipient']);
         Route::post('/transfer', [WalletController::class, 'transfer']);
         Route::post('/purchase-course', [WalletController::class, 'purchaseCourse']);
         Route::get('/transactions', [WalletController::class, 'transactions']);
@@ -182,6 +183,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/gateways', [PaymentController::class, 'gateways']);
         Route::post('/deposit', [PaymentController::class, 'initializeWalletDeposit']);
         Route::post('/purchase-course', [PaymentController::class, 'initializeCoursePayment']);
+        Route::post('/purchase-subscription', [PaymentController::class, 'initializeSubscriptionPayment']);
         Route::get('/history', [PaymentController::class, 'history']);
         Route::get('/{id}', [PaymentController::class, 'show']);
     });

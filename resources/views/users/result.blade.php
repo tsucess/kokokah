@@ -166,9 +166,7 @@
 
         <!-- Loading State -->
         <div id="loadingState" class="loading-spinner">
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
+            <p style="text-align: center; padding: 40px; color: #004A53; font-weight: 500;">Loading results...</p>
         </div>
 
         <!-- Error State -->

@@ -1,6 +1,41 @@
 @extends('layouts.usertemplate')
 @section('content')
 <main>
+    <!-- Authentication and Role Check Script -->
+    <script>
+        // Check if user is authenticated via localStorage token and has correct role
+        (function() {
+            const token = localStorage.getItem('auth_token') || localStorage.getItem('token');
+            const userStr = localStorage.getItem('auth_user');
+
+            // If no token or user data, redirect to login
+            if (!token || !userStr) {
+                console.warn('No authentication token found. Redirecting to login...');
+                window.location.href = '/login';
+                return;
+            }
+
+            // Parse user data
+            let user = null;
+            try {
+                user = JSON.parse(userStr);
+            } catch (e) {
+                console.error('Failed to parse user data:', e);
+                window.location.href = '/login';
+                return;
+            }
+
+            // Check user role - only students and instructors should access user dashboard
+            if (user && !['student', 'instructor'].includes(user.role)) {
+                console.warn('User role is ' + user.role + '. Redirecting to admin dashboard...');
+                window.location.href = '/dashboard';
+                return;
+            }
+
+            // Token exists and user has student/instructor role, can access dashboard
+            console.log('User authenticated. Token found. Role:', user?.role);
+        })();
+    </script>
  <style>
     .stats-card {
       border: none;

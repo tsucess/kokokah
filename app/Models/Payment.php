@@ -12,6 +12,7 @@ class Payment extends Model
     protected $fillable = [
         'user_id',
         'course_id',
+        'subscription_plan_id',
         'amount',
         'currency',
         'gateway',
@@ -41,6 +42,11 @@ class Payment extends Model
     public function course()
     {
         return $this->belongsTo(Course::class);
+    }
+
+    public function subscriptionPlan()
+    {
+        return $this->belongsTo(\App\Models\SubscriptionPlan::class);
     }
 
     // Scopes
@@ -113,6 +119,11 @@ class Payment extends Model
     public function isCoursePurchase()
     {
         return $this->type === 'course_purchase';
+    }
+
+    public function isSubscriptionPurchase()
+    {
+        return $this->type === 'subscription_purchase';
     }
 
     public function getFormattedAmount()

@@ -37,7 +37,7 @@ class WalletPaymentEndpointsTest extends TestCase
         $this->course = Course::create([
             'title' => 'Test Course',
             'description' => 'Test',
-            'category_id' => $category->id,
+            'curriculum_category_id' => $category->id,
             'instructor_id' => User::factory()->create(['role' => 'instructor'])->id,
             'term_id' => $term->id,
             'level_id' => $level->id,
@@ -214,6 +214,67 @@ class WalletPaymentEndpointsTest extends TestCase
         $response = $this->getJson('/api/wallet');
 
         $response->assertStatus(401);
+    }
+
+    /**
+     * Test initialize subscription payment endpoint
+     */
+    public function test_initialize_subscription_payment()
+    {
+        // Create a subscription plan
+        $plan = \App\Models\SubscriptionPlan::factory()->create([
+            'price' => 500.00,
+            'duration' => 1,
+            'duration_type' => 'monthly'
+        ]);
+
+        $response = $this->withHeader('Authorization', "Bearer $this->token")
+                        ->postJson('/api/payments/purchase-subscription', [
+                            'subscription_plan_id' => $plan->id,
+                            'course_ids' => [$this->course->id],
+                            'gateway' => 'paystack'
+                        ]);
+
+        // Should return 200 with payment data
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'success',
+            'message',
+            'data' => [
+                'payment_id',
+                'gateway_data'
+            ]
+        ]);
+    }
+
+    /**
+     * Test subscription payment with invalid plan
+     */
+    public function test_subscription_payment_invalid_plan()
+    {
+        $response = $this->withHeader('Authorization', "Bearer $this->token")
+                        ->postJson('/api/payments/purchase-subscription', [
+                            'subscription_plan_id' => 99999,
+                            'gateway' => 'paystack'
+                        ]);
+
+        $response->assertStatus(422);
+    }
+
+    /**
+     * Test subscription payment with invalid gateway
+     */
+    public function test_subscription_payment_invalid_gateway()
+    {
+        $plan = \App\Models\SubscriptionPlan::factory()->create();
+
+        $response = $this->withHeader('Authorization', "Bearer $this->token")
+                        ->postJson('/api/payments/purchase-subscription', [
+                            'subscription_plan_id' => $plan->id,
+                            'gateway' => 'invalid_gateway'
+                        ]);
+
+        $response->assertStatus(422);
     }
 }
 

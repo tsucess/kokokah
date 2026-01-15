@@ -5,8 +5,13 @@ namespace App\Services;
 use App\Models\User;
 use App\Models\Course;
 use App\Models\Payment;
+use App\Models\SubscriptionPlan;
+use App\Models\UserSubscription;
+use App\Models\Enrollment;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class PaymentGatewayService
 {
@@ -72,6 +77,44 @@ class PaymentGatewayService
 
             throw $e;
         }
+    }
+
+    /**
+     * Initialize payment for subscription purchase
+     */
+    public function initializeSubscriptionPayment(User $user, SubscriptionPlan $plan, string $gateway, array $courseIds = [])
+    {
+        $amount = $plan->price;
+
+        $payment = Payment::create([
+            'user_id' => $user->id,
+            'subscription_plan_id' => $plan->id,
+            'amount' => $amount,
+            'currency' => config('app.currency', 'NGN'),
+            'gateway' => $gateway,
+            'type' => 'subscription_purchase',
+            'status' => 'pending',
+            'metadata' => [
+                'user_email' => $user->email,
+                'user_name' => $user->full_name,
+                'plan_title' => $plan->title,
+                'course_ids' => $courseIds
+            ]
+        ]);
+
+        $gatewayService = $this->getGatewayService($gateway);
+        $response = $gatewayService->initializePayment($payment);
+
+        $payment->update([
+            'gateway_reference' => $response['reference'] ?? null,
+            'gateway_response' => $response
+        ]);
+
+        return [
+            'payment_id' => $payment->id,
+            'gateway_data' => $response,
+            'payment' => $payment
+        ];
     }
 
     /**
@@ -208,7 +251,83 @@ class PaymentGatewayService
             ];
         }
 
+        if ($payment->type === 'subscription_purchase') {
+            // Create subscription and enroll in courses
+            return $this->processSubscriptionPayment($payment);
+        }
+
         return ['success' => true, 'payment' => $payment];
+    }
+
+    /**
+     * Process subscription payment
+     */
+    protected function processSubscriptionPayment(Payment $payment)
+    {
+        return DB::transaction(function () use ($payment) {
+            $user = $payment->user;
+            $plan = $payment->subscriptionPlan;
+            $courseIds = $payment->metadata['course_ids'] ?? [];
+
+            // Calculate expiration date based on duration type
+            $expiresAt = Carbon::now();
+            switch ($plan->duration_type) {
+                case 'daily':
+                    $expiresAt->addDays($plan->duration);
+                    break;
+                case 'weekly':
+                    $expiresAt->addWeeks($plan->duration);
+                    break;
+                case 'monthly':
+                    $expiresAt->addMonths($plan->duration);
+                    break;
+                case 'yearly':
+                    $expiresAt->addYears($plan->duration);
+                    break;
+            }
+
+            // Create subscription
+            $subscription = UserSubscription::create([
+                'user_id' => $user->id,
+                'subscription_plan_id' => $plan->id,
+                'started_at' => Carbon::now(),
+                'expires_at' => $expiresAt,
+                'status' => 'active',
+                'amount_paid' => $payment->amount,
+                'payment_reference' => $payment->gateway_reference
+            ]);
+
+            // Enroll user in selected courses
+            $enrollments = [];
+            if (is_array($courseIds) && count($courseIds) > 0) {
+                foreach ($courseIds as $courseId) {
+                    // Check if already enrolled
+                    $existingEnrollment = Enrollment::where('user_id', $user->id)
+                                                   ->where('course_id', $courseId)
+                                                   ->first();
+
+                    if (!$existingEnrollment) {
+                        $enrollment = Enrollment::create([
+                            'user_id' => $user->id,
+                            'course_id' => $courseId,
+                            'status' => 'active',
+                            'enrolled_at' => Carbon::now(),
+                            'amount_paid' => $payment->amount
+                        ]);
+                        $enrollments[] = $enrollment;
+                    }
+                }
+            }
+
+            return [
+                'success' => true,
+                'type' => 'subscription_purchase',
+                'payment' => $payment,
+                'subscription' => $subscription,
+                'enrollments' => $enrollments,
+                'plan' => $plan
+            ];
+        });
     }
 
     /**

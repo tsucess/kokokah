@@ -545,47 +545,13 @@
             </div>
             <section class="d-flex flex-column gap-4">
                 <div class="d-flex align-items-center gap-3">
-                    <select name="" id="" class="custom-select-plan">
-                        <option value="">Select Plan</option>
-                        <option value="">Daily Plan</option>
-                        <option value="">Weekly Plan</option>
-                        <option value="">Monthly Plan</option>
-                        <option value="">Yearly Plan</option>
+                    <select name="plan" id="planSelector" class="custom-select-plan">
+                        <option value="">Loading plans...</option>
                     </select>
-                    <p>100 per Subject</p>
-
+                    <p id="planPriceInfo">Select a plan to see pricing</p>
                 </div>
-                <div class="subject-container">
-                    <div class="subject-card d-flex align-items-center gap-2 justify-content-between">
-                        <h5>Mathematics</h5>
-                        <div class="form-check form-switch custom-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" checked>
-                        </div>
-                    </div>
-                    <div class="subject-card d-flex align-items-center gap-2 justify-content-between">
-                        <h5>Mathematics</h5>
-                        <div class="form-check form-switch custom-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" checked>
-                        </div>
-                    </div>
-                    <div class="subject-card d-flex align-items-center gap-2 justify-content-between">
-                        <h5>Mathematics</h5>
-                        <div class="form-check form-switch custom-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" checked>
-                        </div>
-                    </div>
-                    <div class="subject-card d-flex align-items-center gap-2 justify-content-between">
-                        <h5>Mathematics</h5>
-                        <div class="form-check form-switch custom-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" checked>
-                        </div>
-                    </div>
-                    <div class="subject-card d-flex align-items-center gap-2 justify-content-between">
-                        <h5>Mathematics</h5>
-                        <div class="form-check form-switch custom-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" checked>
-                        </div>
-                    </div>
+                <div class="subject-container" id="subjectContainer">
+                    <!-- Subjects will be loaded dynamically here -->
                 </div>
             </section>
             {{-- <div class="txn-card w-100">
@@ -715,10 +681,16 @@
     <!-- API Clients -->
     <script>
         let allCourses = [];
+        let allSubscriptionPlans = [];
+        let userSubscriptions = [];
+        let selectedPlanId = null;
 
         document.addEventListener("DOMContentLoaded", async () => {
+            await loadSubscriptionPlans();
+            await loadUserSubscriptions();
             await loadCourses();
             setupBackButton();
+            setupPlanSelector();
         });
 
         /**
@@ -731,6 +703,159 @@
                     window.history.back();
                 });
             }
+        }
+
+        /**
+         * Load subscription plans from API
+         */
+        async function loadSubscriptionPlans() {
+            try {
+                const result = await SubscriptionApiClient.getPlans({ active: true });
+                if (result.success && result.data) {
+                    // Handle paginated response
+                    const plans = result.data.data || result.data;
+                    allSubscriptionPlans = Array.isArray(plans) ? plans : [];
+                    populatePlanSelector();
+                }
+            } catch (error) {
+                console.error('Error loading subscription plans:', error);
+                showError('Failed to load subscription plans.');
+            }
+        }
+
+        /**
+         * Load user's active subscriptions
+         */
+        async function loadUserSubscriptions() {
+            try {
+                const result = await SubscriptionApiClient.getMySubscriptions({ status: 'active' });
+                if (result.success && result.data) {
+                    // Handle paginated response
+                    const subscriptions = result.data.data || result.data;
+                    userSubscriptions = Array.isArray(subscriptions) ? subscriptions : [];
+                    console.log('User subscriptions:', userSubscriptions);
+                }
+            } catch (error) {
+                console.error('Error loading user subscriptions:', error);
+                // Don't show error - subscriptions are optional
+            }
+        }
+
+        /**
+         * Populate plan selector with subscription plans
+         */
+        function populatePlanSelector() {
+            const planSelector = document.getElementById('planSelector');
+            if (!planSelector) return;
+
+            if (allSubscriptionPlans.length === 0) {
+                planSelector.innerHTML = '<option value="">No plans available</option>';
+                return;
+            }
+
+            let html = '<option value="">Select a plan</option>';
+            allSubscriptionPlans.forEach(plan => {
+                html += `<option value="${plan.id}" data-price="${plan.price}" data-duration="${plan.duration}" data-duration-type="${plan.duration_type}">
+                    ${plan.title} - ${formatNGN(plan.price)}
+                </option>`;
+            });
+            planSelector.innerHTML = html;
+        }
+
+        /**
+         * Setup plan selector functionality
+         */
+        function setupPlanSelector() {
+            const planSelector = document.getElementById('planSelector');
+            if (planSelector) {
+                planSelector.addEventListener('change', (e) => {
+                    const selectedOption = e.target.options[e.target.selectedIndex];
+                    const planId = e.target.value;
+                    if (planId) {
+                        selectedPlanId = planId;
+                        updatePlanPricing(planId, selectedOption);
+                    }
+                });
+            }
+        }
+
+        /**
+         * Update pricing display based on selected plan
+         */
+        function updatePlanPricing(planId, selectedOption) {
+            const planPriceInfo = document.getElementById('planPriceInfo');
+
+            if (!planId) {
+                planPriceInfo.textContent = 'Select a plan to see pricing';
+                return;
+            }
+
+            // Find the selected plan
+            const selectedPlan = allSubscriptionPlans.find(p => p.id == planId);
+            if (!selectedPlan) {
+                planPriceInfo.textContent = 'Plan not found';
+                return;
+            }
+
+            // Display plan info
+            planPriceInfo.innerHTML = `
+                <strong>${selectedPlan.title}</strong> - ${formatNGN(selectedPlan.price)} <small style="color: #666;">per subject</small>
+            `;
+
+            // Update course prices and toggle states based on plan
+            updateCoursePricesForPlan(planId, selectedPlan);
+        }
+
+        /**
+         * Update toggle states based on selected plan
+         *
+         * Pricing is purely based on the selected plan (per-subject)
+         * No individual course prices are used
+         */
+        function updateCoursePricesForPlan(planId, selectedPlan) {
+            const courseCards = document.querySelectorAll('.subject-card');
+            courseCards.forEach((card, index) => {
+                const checkbox = card.querySelector('.check-subject');
+                if (checkbox) {
+                    // Store selected plan ID for reference
+                    checkbox.dataset.selectedPlanId = planId;
+
+                    // Check if user has active subscription for this plan
+                    const hasActiveSubscription = userSubscriptions.some(sub =>
+                        sub.subscription_plan_id == planId && sub.status === 'active'
+                    );
+
+                    if (hasActiveSubscription) {
+                        // Disable checkbox and mark as checked
+                        checkbox.disabled = true;
+                        checkbox.checked = true;
+                        card.style.opacity = '0.7';
+
+                        // Add badge
+                        let badge = card.querySelector('.subscription-badge');
+                        if (!badge) {
+                            badge = document.createElement('span');
+                            badge.className = 'subscription-badge';
+                            badge.style.cssText = 'position: absolute; top: 10px; right: 10px; background: #22c55e; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;';
+                            badge.textContent = 'Active';
+                            card.style.position = 'relative';
+                            card.appendChild(badge);
+                        }
+                    } else {
+                        // Enable checkbox
+                        checkbox.disabled = false;
+                        checkbox.checked = false;
+                        card.style.opacity = '1';
+
+                        // Remove badge
+                        const badge = card.querySelector('.subscription-badge');
+                        if (badge) badge.remove();
+                    }
+                }
+            });
+
+            // Recalculate subtotal
+            updateSubtotal();
         }
 
         /**
@@ -827,32 +952,32 @@
         }
 
         /**
-         * Display courses as checkboxes
+         * Display courses as subject cards with toggle switches
+         *
+         * Pricing is based on the selected subscription plan only
+         * Individual course prices are NOT used
          */
         function displayCourses(courses) {
-            const coursesList = document.getElementById('coursesList');
+            const subjectContainer = document.getElementById('subjectContainer');
 
             const coursesHtml = courses.map((course, index) => {
-                // Check if course is free
-                const isFree = course.free === true || course.free === 1 || course.price === 0 || course.price ===
-                    '0';
-                const priceDisplay = isFree ? 'Free Course' : formatNGN(course.price || 0);
-
                 return `
-                    <div class="txn-row">
-                        <div class="txn-left">
-                            <input class="form-check-input check-subject" type="checkbox"
-                                   data-price="${course.price || 0}"
+                    <div class="subject-card d-flex align-items-center gap-2 justify-content-between">
+                        <div>
+                            <h5 style="margin: 0 0 4px 0;">${course.title}</h5>
+                        </div>
+                        <div class="form-check form-switch custom-switch">
+                            <input class="form-check-input check-subject"
+                                   type="checkbox"
+                                   role="switch"
                                    data-course-id="${course.id}"
                                    id="cb${index}">
-                            <label for="cb${index}" class="subject">${course.title}</label>
                         </div>
-                        <div class="txn-price">${priceDisplay}</div>
                     </div>
                 `;
             }).join('');
 
-            coursesList.innerHTML = coursesHtml;
+            subjectContainer.innerHTML = coursesHtml;
             attachCheckboxListeners();
         }
 
@@ -868,41 +993,78 @@
 
         /**
          * Calculate and update subtotal
+         *
+         * For subscription-based enrollment:
+         * - Plan price is PER SUBJECT
+         * - Subtotal = Plan price × Number of selected subjects
+         * - Example: Plan ₦400/subject × 10 subjects = ₦4,000
+         *
+         * Individual course prices are NOT used
+         * All pricing is based on the selected subscription plan
          */
         function updateSubtotal() {
             const checks = document.querySelectorAll('.check-subject:checked');
             let total = 0;
-            checks.forEach(cb => {
-                const p = Number(cb.dataset.price) || 0;
-                total += p;
-            });
+
+            // Calculate subtotal based on selected plan and number of subjects
+            if (selectedPlanId) {
+                const selectedPlan = allSubscriptionPlans.find(p => p.id == selectedPlanId);
+                if (selectedPlan) {
+                    // Plan price is per subject, multiply by number of selected subjects
+                    const numSelectedSubjects = checks.length;
+                    total = selectedPlan.price * numSelectedSubjects;
+                }
+            }
+
             document.getElementById('subtotal').textContent = formatNGN(total);
             updateEnrollAllButton();
         }
 
         /**
          * Update "Enroll in All" button text with 10% discount
+         *
+         * When user subscribes to ALL subjects:
+         * - Regular price = Plan price × Number of subjects
+         * - Discount = 10% off total
+         * - Final price = Regular price - (Regular price × 10%)
          */
         function updateEnrollAllButton() {
-            // Calculate total price of all courses
-            const totalPrice = allCourses.reduce((sum, course) => sum + (Number(course.price) || 0), 0);
-
-            // Apply 10% discount
-            const discountAmount = totalPrice * 0.10;
-            const discountedPrice = totalPrice - discountAmount;
-
             const courseCount = allCourses.length;
-            document.getElementById('enrollAllBtn').textContent =
-                `Enroll in All ${courseCount} Subjects - ${formatNGN(discountedPrice)}`;
+            const enrollAllBtn = document.getElementById('enrollAllBtn');
+
+            if (!selectedPlanId) {
+                enrollAllBtn.textContent = `Enroll in All ${courseCount} Subjects - Select a plan`;
+                enrollAllBtn.disabled = true;
+                return;
+            }
+
+            // If subscription plan is selected, calculate price for all courses
+            const selectedPlan = allSubscriptionPlans.find(p => p.id == selectedPlanId);
+            if (selectedPlan) {
+                // Calculate total price for all subjects (plan price × number of subjects)
+                const regularPrice = selectedPlan.price * courseCount;
+
+                // Apply 10% discount for subscribing to all subjects
+                const discountAmount = regularPrice * 0.10;
+                const discountedPrice = regularPrice - discountAmount;
+
+                // Format button text with discount info
+                enrollAllBtn.textContent = `Subscribe to All ${courseCount} Subjects - ${formatNGN(regularPrice)} (Save 10% - ${formatNGN(discountedPrice)})`;
+                enrollAllBtn.disabled = false;
+            }
         }
 
         /**
          * Show error message
          */
         function showError(message) {
-            const coursesList = document.getElementById('coursesList');
-            coursesList.innerHTML =
-                `<div class="txn-row"><div class="txn-left"><p class="text-danger">${message}</p></div></div>`;
+            const subjectContainer = document.getElementById('subjectContainer');
+            if (subjectContainer) {
+                subjectContainer.innerHTML =
+                    `<div style="text-align: center; padding: 40px; grid-column: 1/-1;"><p class="text-danger" style="font-size: 16px; color: #dc3545;">${message}</p></div>`;
+            } else {
+                console.error('Error:', message);
+            }
         }
 
         /**
@@ -915,6 +1077,12 @@
          */
         document.getElementById('proceedBtn').addEventListener('click', function(e) {
             e.preventDefault();
+
+            if (!selectedPlanId) {
+                alert('Please select a subscription plan first.');
+                return;
+            }
+
             const checked = document.querySelectorAll('.check-subject:checked');
 
             if (checked.length === 0) {
@@ -925,14 +1093,21 @@
             // Store payment data and open modal
             const selectedCourses = Array.from(checked).map(cb => cb.dataset.courseId);
             const subtotal = document.getElementById('subtotal').textContent;
-            const enrollAllBtn = document.getElementById('enrollAllBtn');
-            const enrollAllPrice = extractPrice(enrollAllBtn.textContent);
+            const selectedPlan = allSubscriptionPlans.find(p => p.id == selectedPlanId);
+            const courseCount = checked.length;
+
+            // Calculate price: plan price × number of selected subjects (no discount for partial selection)
+            const totalPrice = selectedPlan.price * courseCount;
 
             pendingPaymentData = {
                 courses: selectedCourses,
                 subtotal: subtotal,
-                enrollAllPrice: enrollAllPrice,
-                courseCount: checked.length
+                planId: selectedPlanId,
+                planPrice: selectedPlan.price,
+                courseCount: courseCount,
+                totalPrice: totalPrice,
+                hasDiscount: false,
+                isSubscription: true
             };
 
             openPaymentModal();
@@ -943,23 +1118,41 @@
          */
         document.getElementById('enrollAllBtn').addEventListener('click', function(e) {
             e.preventDefault();
-            // Select all checkboxes
-            document.querySelectorAll('.check-subject').forEach(cb => {
+
+            if (!selectedPlanId) {
+                alert('Please select a subscription plan first.');
+                return;
+            }
+
+            // Select all non-disabled checkboxes
+            document.querySelectorAll('.check-subject:not(:disabled)').forEach(cb => {
                 cb.checked = true;
             });
             updateSubtotal();
 
-            // Open payment modal
-            const allCourses = document.querySelectorAll('.check-subject');
-            const selectedCourses = Array.from(allCourses).map(cb => cb.dataset.courseId);
-            const enrollAllBtn = document.getElementById('enrollAllBtn');
-            const enrollAllPrice = extractPrice(enrollAllBtn.textContent);
+            // Get selected courses
+            const selectedCheckboxes = document.querySelectorAll('.check-subject:checked');
+            const selectedCourses = Array.from(selectedCheckboxes).map(cb => cb.dataset.courseId);
+
+            const selectedPlan = allSubscriptionPlans.find(p => p.id == selectedPlanId);
+            const courseCount = selectedCourses.length;
+
+            // Calculate price with 10% discount for subscribing to all subjects
+            const regularPrice = selectedPlan.price * courseCount;
+            const discountAmount = regularPrice * 0.10;
+            const discountedPrice = regularPrice - discountAmount;
 
             pendingPaymentData = {
                 courses: selectedCourses,
-                subtotal: formatNGN(enrollAllPrice),
-                enrollAllPrice: enrollAllPrice,
-                courseCount: selectedCourses.length
+                subtotal: formatNGN(discountedPrice),
+                planId: selectedPlanId,
+                planPrice: selectedPlan.price,
+                courseCount: courseCount,
+                regularPrice: regularPrice,
+                discountAmount: discountAmount,
+                discountedPrice: discountedPrice,
+                hasDiscount: true,
+                isSubscription: true
             };
 
             openPaymentModal();
@@ -1077,32 +1270,52 @@
             try {
                 showLoadingState('Processing Kudikah Wallet payment...');
 
-                let successCount = 0;
-                let failureCount = 0;
-                const courseIds = paymentData.courses;
+                // If this is a subscription payment
+                if (paymentData.isSubscription) {
+                    const subscriptionData = {
+                        subscription_plan_id: paymentData.planId,
+                        amount_paid: paymentData.planPrice,
+                        payment_reference: 'kudikah_wallet_' + Date.now(),
+                        course_ids: paymentData.courses
+                    };
 
-                // Process each course individually using WalletApiClient
-                for (const courseId of courseIds) {
-                    const result = await WalletApiClient.purchaseCourse(courseId);
+                    const result = await SubscriptionApiClient.subscribe(subscriptionData);
 
                     if (result.success) {
-                        successCount++;
+                        showSuccessMessage(`Successfully subscribed to plan via Kudikah Wallet!`);
+                        // Reload page to show updated subscriptions
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
                     } else {
-                        failureCount++;
-                        console.error(`Failed to purchase course ${courseId}:`, result.message);
-                        // Show toast notification for each failed course
-                        ToastNotification.error('Purchase Failed', result.message || 'Failed to purchase course');
+                        showErrorMessage(result.message || 'Failed to subscribe to plan.');
                     }
-                }
-
-                if (successCount > 0) {
-                    showSuccessMessage(`Successfully purchased ${successCount} course(s) via Kudikah Wallet!`);
-                    // Redirect to subject page to show newly enrolled courses
-                    setTimeout(() => {
-                        window.location.href = '/usersubject';
-                    }, 2000);
                 } else {
-                    showErrorMessage(`Failed to purchase courses. Please try again.`);
+                    // Original course purchase logic
+                    let successCount = 0;
+                    let failureCount = 0;
+                    const courseIds = paymentData.courses;
+
+                    // Process each course individually using WalletApiClient
+                    for (const courseId of courseIds) {
+                        const result = await WalletApiClient.purchaseCourse(courseId);
+
+                        if (result.success) {
+                            successCount++;
+                        } else {
+                            failureCount++;
+                            console.error(`Failed to purchase course ${courseId}:`, result.message);
+                        }
+                    }
+
+                    if (successCount > 0) {
+                        showSuccessMessage(`Successfully purchased ${successCount} course(s) via Kudikah Wallet!`);
+                        setTimeout(() => {
+                            window.location.href = '/usersubject';
+                        }, 2000);
+                    } else {
+                        showErrorMessage(`Failed to purchase courses. Please try again.`);
+                    }
                 }
             } catch (error) {
                 console.error('Kudikah payment error:', error);
@@ -1117,22 +1330,37 @@
             try {
                 showLoadingState('Initializing Paystack payment...');
 
-                // For multiple courses, process the first one and redirect
-                // User can purchase additional courses after
-                const courseId = paymentData.courses[0];
+                if (paymentData.isSubscription) {
+                    // For subscription, redirect to subscription payment
+                    const subscriptionData = {
+                        subscription_plan_id: paymentData.planId,
+                        course_ids: paymentData.courses,
+                        gateway: 'paystack'
+                    };
 
-                const paymentRequest = {
-                    course_id: courseId,
-                    gateway: 'paystack'
-                };
+                    const result = await PaymentApiClient.initializeSubscriptionPayment(subscriptionData);
 
-                const result = await PaymentApiClient.initializeCoursePayment(paymentRequest);
-
-                if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
-                    // Redirect to Paystack payment page
-                    window.location.href = result.data.gateway_data.authorization_url;
+                    if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
+                        window.location.href = result.data.gateway_data.authorization_url;
+                    } else {
+                        showErrorMessage(result.message || 'Failed to initialize Paystack payment.');
+                    }
                 } else {
-                    showErrorMessage(result.message || 'Failed to initialize Paystack payment.');
+                    // Original course purchase logic
+                    const courseId = paymentData.courses[0];
+
+                    const paymentRequest = {
+                        course_id: courseId,
+                        gateway: 'paystack'
+                    };
+
+                    const result = await PaymentApiClient.initializeCoursePayment(paymentRequest);
+
+                    if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
+                        window.location.href = result.data.gateway_data.authorization_url;
+                    } else {
+                        showErrorMessage(result.message || 'Failed to initialize Paystack payment.');
+                    }
                 }
             } catch (error) {
                 console.error('Paystack payment error:', error);
@@ -1147,22 +1375,35 @@
             try {
                 showLoadingState('Initializing Flutterwave payment...');
 
-                // For multiple courses, process the first one and redirect
-                // User can purchase additional courses after
-                const courseId = paymentData.courses[0];
+                if (paymentData.isSubscription) {
+                    const subscriptionData = {
+                        subscription_plan_id: paymentData.planId,
+                        course_ids: paymentData.courses,
+                        gateway: 'flutterwave'
+                    };
 
-                const paymentRequest = {
-                    course_id: courseId,
-                    gateway: 'flutterwave'
-                };
+                    const result = await PaymentApiClient.initializeSubscriptionPayment(subscriptionData);
 
-                const result = await PaymentApiClient.initializeCoursePayment(paymentRequest);
-
-                if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
-                    // Redirect to Flutterwave payment page
-                    window.location.href = result.data.gateway_data.authorization_url;
+                    if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
+                        window.location.href = result.data.gateway_data.authorization_url;
+                    } else {
+                        showErrorMessage(result.message || 'Failed to initialize Flutterwave payment.');
+                    }
                 } else {
-                    showErrorMessage(result.message || 'Failed to initialize Flutterwave payment.');
+                    const courseId = paymentData.courses[0];
+
+                    const paymentRequest = {
+                        course_id: courseId,
+                        gateway: 'flutterwave'
+                    };
+
+                    const result = await PaymentApiClient.initializeCoursePayment(paymentRequest);
+
+                    if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
+                        window.location.href = result.data.gateway_data.authorization_url;
+                    } else {
+                        showErrorMessage(result.message || 'Failed to initialize Flutterwave payment.');
+                    }
                 }
             } catch (error) {
                 console.error('Flutterwave payment error:', error);
@@ -1177,22 +1418,35 @@
             try {
                 showLoadingState('Initializing Stripe payment...');
 
-                // For multiple courses, process the first one and redirect
-                // User can purchase additional courses after
-                const courseId = paymentData.courses[0];
+                if (paymentData.isSubscription) {
+                    const subscriptionData = {
+                        subscription_plan_id: paymentData.planId,
+                        course_ids: paymentData.courses,
+                        gateway: 'stripe'
+                    };
 
-                const paymentRequest = {
-                    course_id: courseId,
-                    gateway: 'stripe'
-                };
+                    const result = await PaymentApiClient.initializeSubscriptionPayment(subscriptionData);
 
-                const result = await PaymentApiClient.initializeCoursePayment(paymentRequest);
-
-                if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
-                    // Redirect to Stripe payment page
-                    window.location.href = result.data.gateway_data.authorization_url;
+                    if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
+                        window.location.href = result.data.gateway_data.authorization_url;
+                    } else {
+                        showErrorMessage(result.message || 'Failed to initialize Stripe payment.');
+                    }
                 } else {
-                    showErrorMessage(result.message || 'Failed to initialize Stripe payment.');
+                    const courseId = paymentData.courses[0];
+
+                    const paymentRequest = {
+                        course_id: courseId,
+                        gateway: 'stripe'
+                    };
+
+                    const result = await PaymentApiClient.initializeCoursePayment(paymentRequest);
+
+                    if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
+                        window.location.href = result.data.gateway_data.authorization_url;
+                    } else {
+                        showErrorMessage(result.message || 'Failed to initialize Stripe payment.');
+                    }
                 }
             } catch (error) {
                 console.error('Stripe payment error:', error);
@@ -1207,22 +1461,35 @@
             try {
                 showLoadingState('Initializing PayPal payment...');
 
-                // For multiple courses, process the first one and redirect
-                // User can purchase additional courses after
-                const courseId = paymentData.courses[0];
+                if (paymentData.isSubscription) {
+                    const subscriptionData = {
+                        subscription_plan_id: paymentData.planId,
+                        course_ids: paymentData.courses,
+                        gateway: 'paypal'
+                    };
 
-                const paymentRequest = {
-                    course_id: courseId,
-                    gateway: 'paypal'
-                };
+                    const result = await PaymentApiClient.initializeSubscriptionPayment(subscriptionData);
 
-                const result = await PaymentApiClient.initializeCoursePayment(paymentRequest);
-
-                if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
-                    // Redirect to PayPal payment page
-                    window.location.href = result.data.gateway_data.authorization_url;
+                    if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
+                        window.location.href = result.data.gateway_data.authorization_url;
+                    } else {
+                        showErrorMessage(result.message || 'Failed to initialize PayPal payment.');
+                    }
                 } else {
-                    showErrorMessage(result.message || 'Failed to initialize PayPal payment.');
+                    const courseId = paymentData.courses[0];
+
+                    const paymentRequest = {
+                        course_id: courseId,
+                        gateway: 'paypal'
+                    };
+
+                    const result = await PaymentApiClient.initializeCoursePayment(paymentRequest);
+
+                    if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
+                        window.location.href = result.data.gateway_data.authorization_url;
+                    } else {
+                        showErrorMessage(result.message || 'Failed to initialize PayPal payment.');
+                    }
                 }
             } catch (error) {
                 console.error('PayPal payment error:', error);
@@ -1238,10 +1505,7 @@
             const body = modal.querySelector('.payment-modal-body');
             body.innerHTML = `
                 <div style="text-align: center; padding: 40px;">
-                    <div class="spinner-border text-primary mb-3" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                    <p>${message}</p>
+                    <p style="font-size: 16px; color: #004A53; font-weight: 500;">${message}</p>
                 </div>
             `;
         }

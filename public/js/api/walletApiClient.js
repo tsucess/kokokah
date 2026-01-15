@@ -62,14 +62,24 @@ class WalletApiClient extends BaseApiClient {
   }
 
   /**
+   * Validate recipient email and get recipient info
+   * @param {string} email - Recipient email address
+   */
+  static async validateRecipient(email) {
+    return this.post('/wallet/validate-recipient', {
+      email: email
+    });
+  }
+
+  /**
    * Transfer funds to another user
-   * @param {number} recipientId - Recipient user ID
+   * @param {string} recipientEmail - Recipient email address
    * @param {number} amount - Amount to transfer
    * @param {string} description - Transfer description
    */
-  static async transferFunds(recipientId, amount, description = '') {
+  static async transferFunds(recipientEmail, amount, description = '') {
     return this.post('/wallet/transfer', {
-      recipient_id: recipientId,
+      recipient_email: recipientEmail,
       amount: amount,
       description: description
     });

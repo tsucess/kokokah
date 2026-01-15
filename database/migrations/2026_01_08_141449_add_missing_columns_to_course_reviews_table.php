@@ -66,6 +66,15 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('course_reviews', function (Blueprint $table) {
+            // Drop foreign key first if it exists
+            if (Schema::hasColumn('course_reviews', 'moderated_by')) {
+                try {
+                    $table->dropForeign(['moderated_by']);
+                } catch (\Exception $e) {
+                    // Foreign key might not exist
+                }
+            }
+
             $columns = ['title', 'comment', 'pros', 'cons', 'status',
                        'helpful_count', 'moderated_by', 'moderated_at', 'rejection_reason'];
 

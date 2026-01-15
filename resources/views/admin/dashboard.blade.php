@@ -6,17 +6,34 @@
         // Check if user is authenticated via localStorage token
         (function() {
             const token = localStorage.getItem('auth_token') || localStorage.getItem('token');
-            const user = localStorage.getItem('auth_user');
+            const userStr = localStorage.getItem('auth_user');
 
             // If no token or user data, redirect to login
-            if (!token || !user) {
+            if (!token || !userStr) {
                 console.warn('No authentication token found. Redirecting to login...');
                 window.location.href = '/login';
                 return;
             }
 
-            // Token exists, user can access dashboard
-            console.log('User authenticated. Token found.');
+            // Parse user data
+            let user = null;
+            try {
+                user = JSON.parse(userStr);
+            } catch (e) {
+                console.error('Failed to parse user data:', e);
+                window.location.href = '/login';
+                return;
+            }
+
+            // Check user role - students and instructors should not access admin dashboard
+            if (user && ['student', 'instructor'].includes(user.role)) {
+                console.warn('User role is ' + user.role + '. Redirecting to user dashboard...');
+                window.location.href = '/usersdashboard';
+                return;
+            }
+
+            // Token exists and user has admin/superadmin role, can access dashboard
+            console.log('User authenticated. Token found. Role:', user?.role);
         })();
     </script>
 

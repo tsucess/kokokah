@@ -198,6 +198,7 @@
     <script src="{{ asset('js/api/userApiClient.js') }}"></script>
     <script src="{{ asset('js/api/walletApiClient.js') }}"></script>
     <script src="{{ asset('js/api/badgeApiClient.js') }}"></script>
+    <script src="{{ asset('js/api/subscriptionApiClient.js') }}"></script>
     <script src="{{ asset('js/api/pointsAndBadgesApiClient.js') }}"></script>
     <script src="{{ asset('js/utils/toastNotification.js') }}"></script>
     <script src="{{ asset('js/utils/uiHelpers.js') }}"></script>

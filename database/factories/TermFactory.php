@@ -18,7 +18,6 @@ class TermFactory extends Factory
     {
         return [
             'name' => $this->faker->randomElement(['First Term', 'Second Term', 'Third Term']),
-            'year' => $this->faker->numberBetween(2020, 2030),
         ];
     }
 }

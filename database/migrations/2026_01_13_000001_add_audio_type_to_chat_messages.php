@@ -34,6 +34,8 @@ return new class extends Migration
     {
         // Revert to the original ENUM without 'audio'
         if (DB::getDriverName() === 'mysql') {
+            // First, update any 'audio' type messages to 'file' before removing the enum value
+            DB::statement("UPDATE chat_messages SET type = 'file' WHERE type = 'audio'");
             DB::statement("ALTER TABLE chat_messages MODIFY COLUMN type ENUM('text', 'image', 'file', 'system') DEFAULT 'text'");
         }
     }
