@@ -90,7 +90,7 @@ class LessonController extends Controller
             $rules = [
                 'title' => 'required|string|max:255',
                 'topic_id' => 'required|integer|exists:topics,id',
-                'lesson_type' => 'required|in:content,youtube,document,image,audio',
+                'lesson_type' => 'required|in:content,youtube,document,image,audio,video',
                 'duration_minutes' => 'nullable|integer|min:1',
             ];
 
@@ -103,9 +103,16 @@ class LessonController extends Controller
                     $rules['content'] = 'required|string';
                     break;
                 case 'document':
+                    $rules['attachment'] = 'required|file|mimes:pdf|max:10240';
+                    break;
                 case 'image':
+                    $rules['attachment'] = 'required|file|mimes:jpg,jpeg,png,gif,webp,svg,bmp|max:10240';
+                    break;
                 case 'audio':
-                    $rules['attachment'] = 'required|file|mimes:pdf,doc,docx,ppt,pptx,xls,xlsx,zip,jpg,jpeg,png,gif,webp,mp3,wav,m4a|max:10240';
+                    $rules['attachment'] = 'required|file|mimes:mp3,wav,ogg,aac,flac,m4a|max:10240';
+                    break;
+                case 'video':
+                    $rules['attachment'] = 'required|file|mimes:mp4,webm,mov,avi,mkv,flv,wmv,m4v|max:10485760'; // 10GB max for videos
                     break;
             }
 
@@ -229,10 +236,10 @@ class LessonController extends Controller
                 'title' => 'sometimes|string|max:255',
                 'content' => 'sometimes|string',
                 'video_url' => 'nullable|url',
-                'lesson_type' => 'sometimes|in:content,youtube,document,image,audio',
+                'lesson_type' => 'sometimes|in:content,youtube,document,image,audio,video',
                 'duration_minutes' => 'nullable|integer|min:1',
                 'order' => 'sometimes|integer|min:1',
-                'attachment' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,xls,xlsx,zip,jpg,jpeg,png,gif,webp,mp3,wav,m4a|max:10240'
+                'attachment' => 'nullable|file|mimes:pdf,jpg,jpeg,png,gif,webp,svg,bmp,mp3,wav,ogg,aac,flac,m4a,mp4,webm,mov,avi,mkv,flv,wmv,m4v|max:10485760' // 10GB max for videos
             ]);
 
             if ($validator->fails()) {

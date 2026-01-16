@@ -17,7 +17,7 @@ class SubscriptionController extends Controller
     public function index(Request $request)
     {
         try {
-            $query = SubscriptionPlan::query();
+            $query = SubscriptionPlan::with('courses');
 
             // Filter by active status
             if ($request->has('active')) {
@@ -55,7 +55,7 @@ class SubscriptionController extends Controller
                 'description' => 'nullable|string',
                 'price' => 'required|numeric|min:0',
                 'duration' => 'required|integer|min:1',
-                'duration_type' => 'required|in:daily,weekly,monthly,yearly',
+                'duration_type' => 'required|in:free,daily,weekly,quarterly,monthly,half_yearly,yearly',
                 'features' => 'nullable|array',
                 'is_active' => 'boolean',
                 'max_users' => 'nullable|integer|min:1'
@@ -89,7 +89,7 @@ class SubscriptionController extends Controller
     public function show($id)
     {
         try {
-            $plan = SubscriptionPlan::findOrFail($id);
+            $plan = SubscriptionPlan::with('courses')->findOrFail($id);
 
             return response()->json([
                 'success' => true,
@@ -117,7 +117,7 @@ class SubscriptionController extends Controller
                 'description' => 'nullable|string',
                 'price' => 'numeric|min:0',
                 'duration' => 'integer|min:1',
-                'duration_type' => 'in:daily,weekly,monthly,yearly',
+                'duration_type' => 'in:free,daily,weekly,quarterly,monthly,half_yearly,yearly',
                 'features' => 'nullable|array',
                 'is_active' => 'boolean',
                 'max_users' => 'nullable|integer|min:1'

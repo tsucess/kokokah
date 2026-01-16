@@ -8,11 +8,14 @@ use App\Models\CourseCategory;
 use App\Models\Level;
 use App\Models\Enrollment;
 use App\Models\User;
+use App\Models\SubscriptionPlan;
+use App\Models\UserSubscription;
 use App\Services\WalletService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class CourseController extends Controller
 {
@@ -146,11 +149,6 @@ class CourseController extends Controller
             }
         }
 
-        if ($request->has('price_range')) {
-            [$min, $max] = explode('-', $request->price_range);
-            $query->whereBetween('price', [(float)$min, (float)$max]);
-        }
-
         if ($request->filled('search')) {
             $s = $request->search;
             $query->where(fn($q) =>
@@ -208,12 +206,12 @@ class CourseController extends Controller
         $validation = $this->validateRequest($request, [
             'title'       => 'required|string|max:255',
             'description' => 'required|string',
-            'curriculum_category_id' => 'required|exists:curriculum_categories,id',
+            'term_id'  => 'required|exists:terms,id',
             'course_category_id'     => 'required|exists:course_categories,id',
-            'level_id' => 'nullable|exists:levels,id',
-            'term_id'  => 'nullable|exists:terms,id',
-            'price'    => 'required|numeric|min:0',
-            'free'     => 'required|boolean',
+            'level_id' => 'required|exists:levels,id',
+            'curriculum_category_id' => 'sometimes|nullable|exists:curriculum_categories,id',
+            'free'     => 'nullable|boolean',
+            'free_subscription' => 'nullable|boolean',
             'url'      => 'nullable|string|max:255',
             'duration_hours' => 'nullable|integer|min:1',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:5048'
@@ -222,10 +220,22 @@ class CourseController extends Controller
         if ($validation) return $validation;
 
         try {
-            $courseData = $request->except('thumbnail');
+            // Only include fields that are in the Course model's fillable array
+            $fillable = [
+                'title', 'slug', 'description', 'curriculum_category_id', 'course_category_id',
+                'instructor_id', 'term_id', 'level_id', 'free', 'free_subscription', 'status',
+                'thumbnail', 'url', 'duration_hours', 'published_at'
+            ];
+
+            $courseData = $request->only($fillable);
             $courseData['status'] = 'draft';
             $courseData['instructor_id'] = Auth::id();
             $courseData['thumbnail'] = $this->uploadThumbnail($request);
+
+            // Set default free to false if not provided
+            if (!isset($courseData['free']) || $courseData['free'] === null) {
+                $courseData['free'] = false;
+            }
 
             // Generate slug from title if not provided
             if (!isset($courseData['slug']) || empty($courseData['slug'])) {
@@ -307,9 +317,7 @@ class CourseController extends Controller
                 'id' => $id,
                 'all_data' => $request->all(),
                 'free' => $request->input('free'),
-                'free_type' => gettype($request->input('free')),
-                'price' => $request->input('price'),
-                'price_type' => gettype($request->input('price'))
+                'free_type' => gettype($request->input('free'))
             ]);
 
             $validation = $this->validateRequest($request, [
@@ -319,7 +327,8 @@ class CourseController extends Controller
                 'course_category_id' => 'sometimes|exists:course_categories,id',
                 'curriculum_category_id' => 'sometimes|exists:curriculum_categories,id',
                 'free'  => 'sometimes|in:0,1',
-                'price' => 'sometimes|required_unless:free,1|numeric|min:0',
+                'free_subscription' => 'sometimes|boolean',
+                'url' => 'sometimes|nullable|string|max:255',
                 'difficulty' => 'sometimes|in:beginner,intermediate,advanced',
                 'duration_hours' => 'sometimes|nullable|integer|min:1',
                 'max_students' => 'sometimes|nullable|integer|min:1',
@@ -328,7 +337,14 @@ class CourseController extends Controller
 
             if ($validation) return $validation;
 
-            $data = $request->except('thumbnail');
+            // Only include fields that are in the Course model's fillable array
+            $fillable = [
+                'title', 'slug', 'description', 'curriculum_category_id', 'course_category_id',
+                'instructor_id', 'term_id', 'level_id', 'free', 'free_subscription', 'status',
+                'thumbnail', 'url', 'duration_hours', 'published_at'
+            ];
+
+            $data = $request->only($fillable);
             $data['thumbnail'] = $this->uploadThumbnail($request, $course->thumbnail);
 
             // Generate slug from title if title is being updated and slug is not provided
@@ -390,9 +406,7 @@ class CourseController extends Controller
             'course_category_id' => 'nullable|exists:course_categories,id',
             'level_id' => 'nullable|exists:levels,id',
             'difficulty' => 'nullable|in:beginner,intermediate,advanced',
-            'min_price' => 'nullable|numeric|min:0',
-            'max_price' => 'nullable|numeric|min:0',
-            'sort_by'  => 'nullable|in:title,price,created_at,rating',
+            'sort_by'  => 'nullable|in:title,created_at,rating',
             'sort_order' => 'nullable|in:asc,desc'
         ]);
 
@@ -413,9 +427,6 @@ class CourseController extends Controller
                 $query->where($filter, $request->$filter);
             }
         }
-
-        if ($request->filled('min_price')) $query->where('price', '>=', $request->min_price);
-        if ($request->filled('max_price')) $query->where('price', '<=', $request->max_price);
 
         if ($request->sort_by === 'rating') {
             $query->withAvg('reviews', 'rating')
@@ -469,18 +480,104 @@ class CourseController extends Controller
 
             if (!$user) return $this->error('User not authenticated', 401);
 
+            $results = [];
+            $courseIds = [];
+
+            // 1. Get enrolled courses
             $enrollments = Enrollment::where('user_id', $user->id)
                                      ->latest('enrolled_at')
                                      ->get();
-
-            $results = [];
 
             foreach ($enrollments as $e) {
                 $course = Course::with(['courseCategory', 'instructor', 'level'])->find($e->course_id);
                 if ($course) {
                     $item = $e->toArray();
                     $item['course'] = $course;
+                    $item['access_type'] = 'enrolled'; // Mark as enrolled
                     $results[] = $item;
+                    $courseIds[] = $course->id;
+                }
+            }
+
+            // 2. Get free courses (show to all users)
+            $freeSubscriptionPlan = SubscriptionPlan::where('duration_type', 'free')
+                                                    ->where('is_active', true)
+                                                    ->first();
+
+            \Log::info('Free subscription plan lookup', [
+                'found' => $freeSubscriptionPlan ? true : false,
+                'plan_id' => $freeSubscriptionPlan?->id,
+                'plan_title' => $freeSubscriptionPlan?->title
+            ]);
+
+            if ($freeSubscriptionPlan) {
+                // Show free courses to all users
+                $freeCourses = $freeSubscriptionPlan->courses()
+                                                   ->where('courses.status', 'published')
+                                                   ->whereNotIn('courses.id', $courseIds)
+                                                   ->with(['courseCategory', 'instructor', 'level'])
+                                                   ->get();
+
+                \Log::info('Free courses found', [
+                    'count' => $freeCourses->count(),
+                    'course_ids' => $freeCourses->pluck('id')->toArray()
+                ]);
+
+                foreach ($freeCourses as $course) {
+                    $results[] = [
+                        'id' => null,
+                        'user_id' => $user->id,
+                        'course_id' => $course->id,
+                        'progress' => 0,
+                        'status' => 'active',
+                        'enrolled_at' => null,
+                        'completed_at' => null,
+                        'amount_paid' => 0,
+                        'course' => $course,
+                        'access_type' => 'free_subscription' // Mark as free
+                    ];
+                    $courseIds[] = $course->id;
+                }
+            }
+
+            // 3. Get courses from active subscriptions
+            $activeSubscriptions = UserSubscription::where('user_id', $user->id)
+                                                  ->where('status', 'active')
+                                                  ->where(function ($q) {
+                                                      $q->whereNull('expires_at')
+                                                        ->orWhere('expires_at', '>', Carbon::now());
+                                                  })
+                                                  ->with('subscriptionPlan.courses')
+                                                  ->get();
+
+            foreach ($activeSubscriptions as $subscription) {
+                if ($subscription->subscriptionPlan && $subscription->subscriptionPlan->courses) {
+                    foreach ($subscription->subscriptionPlan->courses as $course) {
+                        // Skip if already in results (enrolled or free)
+                        if (in_array($course->id, $courseIds)) {
+                            continue;
+                        }
+
+                        // Only show published courses
+                        if ($course->status !== 'published') {
+                            continue;
+                        }
+
+                        $results[] = [
+                            'id' => null,
+                            'user_id' => $user->id,
+                            'course_id' => $course->id,
+                            'progress' => 0,
+                            'status' => 'active',
+                            'enrolled_at' => null,
+                            'completed_at' => null,
+                            'amount_paid' => $subscription->amount_paid,
+                            'course' => $course->load(['courseCategory', 'instructor', 'level']),
+                            'access_type' => 'subscription', // Mark as subscription
+                            'subscription_plan_id' => $subscription->subscription_plan_id
+                        ];
+                        $courseIds[] = $course->id;
+                    }
                 }
             }
 

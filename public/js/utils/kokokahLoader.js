@@ -56,6 +56,11 @@ class KokokahLoader {
   setupEventListeners() {
     // Show loader on link clicks
     document.addEventListener('click', (e) => {
+      // Don't process clicks from within iframes or elements with data-no-loader
+      if (e.target.closest('[data-no-loader]')) {
+        return;
+      }
+
       const link = e.target.closest('a');
       if (link && !link.hasAttribute('data-no-loader')) {
         const href = link.getAttribute('href');

@@ -51,10 +51,33 @@
                             <!-- Filter Dropdown -->
                             <select class="custom-select" id="filterSelect"
                                 >
-                                <option value="">All Status</option>
-                                <option value="completed">Completed</option>
-                                <option value="pending">Pending</option>
-                                <option value="failed">Failed</option>
+                                <option value="">All Activities</option>
+                                <optgroup label="Status">
+                                    <option value="completed">Completed</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="failed">Failed</option>
+                                    <option value="active">Active</option>
+                                </optgroup>
+                                <optgroup label="Learning Activities">
+                                    <option value="user_registered">User Registration</option>
+                                    <option value="course_created">Course Created</option>
+                                    <option value="course_enrolled">Course Enrollment</option>
+                                    <option value="lesson_completed">Lesson Completed</option>
+                                    <option value="quiz_attempted">Quiz Attempted</option>
+                                    <option value="course_reviewed">Course Review</option>
+                                    <option value="course_completed">Course Completed</option>
+                                    <option value="learning_path_enrolled">Learning Path</option>
+                                    <option value="certificate_issued">Certificate Issued</option>
+                                </optgroup>
+                                <optgroup label="Wallet & Kudikah">
+                                    <option value="wallet_deposit">Wallet Deposit</option>
+                                    <option value="money_transfer">Money Transfer</option>
+                                    <option value="reward_earned">Reward Earned</option>
+                                    <option value="badge_earned">Badge Earned</option>
+                                    <option value="refund_processed">Refund Processed</option>
+                                    <option value="points_earned">Points Earned</option>
+                                    <option value="payment_completed">Payment</option>
+                                </optgroup>
                             </select>
 
 
@@ -343,24 +366,37 @@
         // Apply filters and search
         function applyFiltersAndSearch() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
-            const statusFilter = document.getElementById('filterSelect').value;
+            const filterValue = document.getElementById('filterSelect').value;
 
             filteredActivities = allActivities.filter(activity => {
-                // Filter by status
-                if (statusFilter && activity.status !== statusFilter) {
-                    return false;
+                // Filter by status or activity type
+                if (filterValue) {
+                    // Check if it's a status filter
+                    const statusFilters = ['completed', 'pending', 'failed', 'active', 'inactive'];
+                    if (statusFilters.includes(filterValue)) {
+                        if (activity.status !== filterValue) {
+                            return false;
+                        }
+                    } else {
+                        // It's an activity type filter
+                        if (activity.type !== filterValue) {
+                            return false;
+                        }
+                    }
                 }
 
-                // Filter by search term (name or date)
+                // Filter by search term (name, email, or description)
                 if (searchTerm) {
                     const userName = activity.user ? (activity.user.first_name + ' ' + activity.user.last_name).toLowerCase() : '';
                     const userEmail = activity.user ? (activity.user.email || '').toLowerCase() : '';
                     const activityDate = activity.timestamp ? activity.timestamp.split(' ')[0] : '';
+                    const activityDescription = (activity.description || '').toLowerCase();
 
                     const matchesName = userName.includes(searchTerm) || userEmail.includes(searchTerm);
                     const matchesDate = activityDate.includes(searchTerm);
+                    const matchesDescription = activityDescription.includes(searchTerm);
 
-                    return matchesName || matchesDate;
+                    return matchesName || matchesDate || matchesDescription;
                 }
 
                 return true;
@@ -393,6 +429,8 @@
                 const userPhoto = activity.user && activity.user.profile_photo ? 'storage/' + activity.user.profile_photo : 'images/jimmy.png';
                 const actionDescription = activity.description || 'Activity';
                 const statusBadgeColor = getStatusBadgeColor(activity.status);
+                const activityIcon = getActivityIcon(activity.type);
+                const activityTypeLabel = getActivityTypeLabel(activity.type);
 
                 const row = `
                     <tr style="border-bottom: 1px solid #e8e8e8;">
@@ -400,11 +438,19 @@
                         <td style="padding: 1rem; font-size:14px;">
                             <div class="d-flex align-items-center">
                                 <img src="${userPhoto ? userPhoto : 'images/avatar.png'}" class="rounded-circle me-3" alt="User"
-                                    width="40" height="40" style="object-fit: cover;">
+                                    width="40"  style="object-fit: cover; aspect-ratio:1/1; object-position: top;">
                                 <span style="color: #333; font-weight: 500; text-transform: capitalize;" >${userName}</span>
                             </div>
                         </td>
-                        <td style="padding: 1rem; color: #666; font-size:14px;">${actionDescription}</td>
+                        <td style="padding: 1rem; color: #666; font-size:14px;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="fa-solid ${activityIcon}" style="color: #004A53; width: 20px;"></i>
+                                <div>
+                                    <div style="font-weight: 500; color: #333;">${activityTypeLabel}</div>
+                                    <div style="font-size: 12px; color: #999;">${actionDescription}</div>
+                                </div>
+                            </div>
+                        </td>
                         <td style="padding: 1rem; color: #666; font-size:14px;">${UIHelpers.formatDate(activity.timestamp)}</td>
                         <td style="padding: 1rem;">
                             <span class="badge" style="background-color: ${statusBadgeColor}; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">${activity.status.charAt(0).toUpperCase() + activity.status.slice(1)}</span>
@@ -424,9 +470,61 @@
             const colors = {
                 'completed': '#28a745',
                 'pending': '#ffc107',
-                'failed': '#dc3545'
+                'failed': '#dc3545',
+                'active': '#17a2b8',
+                'inactive': '#6c757d'
             };
             return colors[status] || '#6c757d';
+        }
+
+        // Get activity icon based on type
+        function getActivityIcon(type) {
+            const icons = {
+                // Learning Activities
+                'user_registered': 'fa-user-plus',
+                'course_created': 'fa-book',
+                'course_enrolled': 'fa-graduation-cap',
+                'lesson_completed': 'fa-check-circle',
+                'quiz_attempted': 'fa-clipboard-list',
+                'course_reviewed': 'fa-star',
+                'course_completed': 'fa-trophy',
+                'payment_completed': 'fa-credit-card',
+                'learning_path_enrolled': 'fa-road',
+                'certificate_issued': 'fa-certificate',
+                // Kudikah Wallet Activities
+                'wallet_deposit': 'fa-wallet',
+                'money_transfer': 'fa-exchange-alt',
+                'reward_earned': 'fa-gift',
+                'badge_earned': 'fa-medal',
+                'refund_processed': 'fa-undo',
+                'points_earned': 'fa-star-half-alt'
+            };
+            return icons[type] || 'fa-circle';
+        }
+
+        // Get activity type label
+        function getActivityTypeLabel(type) {
+            const labels = {
+                // Learning Activities
+                'user_registered': 'User Registration',
+                'course_created': 'Course Created',
+                'course_enrolled': 'Course Enrollment',
+                'lesson_completed': 'Lesson Completed',
+                'quiz_attempted': 'Quiz Attempted',
+                'course_reviewed': 'Course Review',
+                'course_completed': 'Course Completed',
+                'payment_completed': 'Payment',
+                'learning_path_enrolled': 'Learning Path',
+                'certificate_issued': 'Certificate Issued',
+                // Kudikah Wallet Activities
+                'wallet_deposit': 'Wallet Deposit',
+                'money_transfer': 'Money Transfer',
+                'reward_earned': 'Reward Earned',
+                'badge_earned': 'Badge Earned',
+                'refund_processed': 'Refund Processed',
+                'points_earned': 'Points Earned'
+            };
+            return labels[type] || 'Activity';
         }
 
         // Export to CSV
@@ -437,19 +535,21 @@
             }
 
             // Prepare CSV content
-            let csvContent = 'No,User Name,Action,Timestamp,Status\n';
+            let csvContent = 'No,User Name,Activity Type,Description,Timestamp,Status\n';
 
             filteredActivities.forEach((activity, index) => {
                 const userName = activity.user ? (activity.user.first_name + ' ' + activity.user.last_name) : 'System';
+                const activityType = getActivityTypeLabel(activity.type);
                 const actionDescription = activity.description || 'Activity';
                 const timestamp = UIHelpers.formatDate(activity.timestamp);
                 const status = activity.status.charAt(0).toUpperCase() + activity.status.slice(1);
 
                 // Escape quotes and wrap in quotes if contains comma
                 const escapedName = `"${userName.replace(/"/g, '""')}"`;
+                const escapedType = `"${activityType.replace(/"/g, '""')}"`;
                 const escapedAction = `"${actionDescription.replace(/"/g, '""')}"`;
 
-                csvContent += `${index + 1},${escapedName},${escapedAction},${timestamp},${status}\n`;
+                csvContent += `${index + 1},${escapedName},${escapedType},${escapedAction},${timestamp},${status}\n`;
             });
 
             // Create blob and download

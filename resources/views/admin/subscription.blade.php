@@ -33,7 +33,7 @@
 
         .stats {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, min(100%, 400px)));
+            grid-template-columns: repeat(auto-fill, minmax(280px, min(100%, 320px)));
             gap: 30px;
         }
 
@@ -229,9 +229,12 @@
                                 <label for="subscriptionDurationType" class="modal-label">Duration Type</label>
                                 <select class="modal-input" id="subscriptionDurationType" required>
                                     <option value="">Select Duration Type</option>
+                                    <option value="free">Free</option>
                                     <option value="daily">Daily</option>
                                     <option value="weekly">Weekly</option>
+                                    <option value="quarterly">Quarterly (3 Months)</option>
                                     <option value="monthly">Monthly</option>
+                                    <option value="half_yearly">Half Yearly (6 Months)</option>
                                     <option value="yearly">Yearly</option>
                                 </select>
                             </div>

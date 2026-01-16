@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Course;
 use App\Models\ChatRoom;
+use App\Models\SubscriptionPlan;
 
 class CourseObserver
 {
@@ -54,6 +55,11 @@ class CourseObserver
                 }
                 $chatRoom->users()->attach($attachData);
             }
+
+            // If course is marked as free_subscription, add it to the free subscription plan
+            if ($course->free_subscription) {
+                $this->attachToFreeSubscriptionPlan($course);
+            }
         } catch (\Exception $e) {
             \Log::error('Failed to create chatroom for course: ' . $e->getMessage(), [
                 'course_id' => $course->id,
@@ -64,8 +70,9 @@ class CourseObserver
 
     /**
      * Handle the Course "updated" event.
-     * 
+     *
      * Update the chat room name and description if the course title or description changes.
+     * Also handle free_subscription status changes.
      */
     public function updated(Course $course): void
     {
@@ -78,6 +85,17 @@ class CourseObserver
                     'name' => $course->title . ' Discussion',
                     'description' => 'Discussion room for ' . $course->title,
                 ]);
+            }
+        }
+
+        // Handle free_subscription status changes
+        if ($course->isDirty('free_subscription')) {
+            if ($course->free_subscription) {
+                // Add to free subscription plan if not already attached
+                $this->attachToFreeSubscriptionPlan($course);
+            } else {
+                // Remove from free subscription plan
+                $this->detachFromFreeSubscriptionPlan($course);
             }
         }
     }
@@ -112,7 +130,7 @@ class CourseObserver
 
     /**
      * Handle the Course "force deleted" event.
-     * 
+     *
      * Permanently delete the chat room when a course is force deleted.
      */
     public function forceDeleted(Course $course): void
@@ -121,6 +139,68 @@ class CourseObserver
 
         if ($chatRoom) {
             $chatRoom->forceDelete();  // Permanent delete
+        }
+    }
+
+    /**
+     * Attach course to the free subscription plan
+     */
+    private function attachToFreeSubscriptionPlan(Course $course): void
+    {
+        try {
+            // Find the free subscription plan
+            $freePlan = SubscriptionPlan::where('duration_type', 'free')
+                                        ->where('is_active', true)
+                                        ->first();
+
+            if ($freePlan) {
+                // Attach course to free plan if not already attached
+                if (!$course->subscriptionPlans()->where('subscription_plan_id', $freePlan->id)->exists()) {
+                    $course->subscriptionPlans()->attach($freePlan->id);
+                    \Log::info('Course attached to free subscription plan', [
+                        'course_id' => $course->id,
+                        'course_title' => $course->title,
+                        'plan_id' => $freePlan->id,
+                        'plan_title' => $freePlan->title,
+                    ]);
+                } else {
+                    \Log::info('Course already attached to free subscription plan', [
+                        'course_id' => $course->id,
+                        'course_title' => $course->title,
+                        'plan_id' => $freePlan->id,
+                    ]);
+                }
+            } else {
+                \Log::warning('Free subscription plan not found when trying to attach course', [
+                    'course_id' => $course->id,
+                    'course_title' => $course->title,
+                ]);
+            }
+        } catch (\Exception $e) {
+            \Log::error('Error attaching course to free subscription plan: ' . $e->getMessage(), [
+                'course_id' => $course->id,
+                'course_title' => $course->title,
+            ]);
+        }
+    }
+
+    /**
+     * Detach course from the free subscription plan
+     */
+    private function detachFromFreeSubscriptionPlan(Course $course): void
+    {
+        try {
+            // Find the free subscription plan
+            $freePlan = SubscriptionPlan::where('duration_type', 'free')
+                                        ->where('is_active', true)
+                                        ->first();
+
+            if ($freePlan) {
+                // Detach course from free plan
+                $course->subscriptionPlans()->detach($freePlan->id);
+            }
+        } catch (\Exception $e) {
+            \Log::error('Error detaching course from free subscription plan: ' . $e->getMessage());
         }
     }
 }

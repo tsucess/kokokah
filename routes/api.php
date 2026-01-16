@@ -796,6 +796,9 @@ Route::middleware('auth:sanctum')->prefix('subscriptions')->group(function () {
 
     // Resume subscription
     Route::post('/{id}/resume', [UserSubscriptionController::class, 'resumeSubscription']);
+
+    // Check course access based on subscription
+    Route::get('/courses/{courseId}/access', [UserSubscriptionController::class, 'checkCourseAccess']);
 });
 
 // Admin Subscription Management Routes

@@ -37,11 +37,10 @@ class CourseTest extends TestCase
         $course = Course::create([
             'title' => 'Test Course',
             'description' => 'Test Description',
-            'category_id' => $this->category->id,
+            'curriculum_category_id' => $this->category->id,
             'instructor_id' => $this->instructor->id,
             'term_id' => $this->term->id,
             'level_id' => $this->level->id,
-            'price' => 100.00,
             'status' => 'published',
             'duration_hours' => 10,
             'difficulty' => 'beginner'
@@ -58,11 +57,10 @@ class CourseTest extends TestCase
         $course = Course::create([
             'title' => 'Test Course',
             'description' => 'Test',
-            'category_id' => $this->category->id,
+            'curriculum_category_id' => $this->category->id,
             'instructor_id' => $this->instructor->id,
             'term_id' => $this->term->id,
             'level_id' => $this->level->id,
-            'price' => 100.00,
             'status' => 'published'
         ]);
 
@@ -74,11 +72,10 @@ class CourseTest extends TestCase
         $course = Course::create([
             'title' => 'Test Course',
             'description' => 'Test',
-            'category_id' => $this->category->id,
+            'curriculum_category_id' => $this->category->id,
             'instructor_id' => $this->instructor->id,
             'term_id' => $this->term->id,
             'level_id' => $this->level->id,
-            'price' => 100.00,
             'status' => 'published'
         ]);
 
@@ -92,16 +89,15 @@ class CourseTest extends TestCase
         $course = Course::create([
             'title' => 'Test Course',
             'description' => 'Test',
-            'category_id' => $this->category->id,
+            'curriculum_category_id' => $this->category->id,
             'instructor_id' => $this->instructor->id,
             'term_id' => $this->term->id,
             'level_id' => $this->level->id,
-            'price' => 100.00,
             'status' => 'published'
         ]);
 
         $students = User::factory()->count(2)->create(['role' => 'student']);
-        
+
         foreach ($students as $student) {
             Enrollment::factory()->create([
                 'course_id' => $course->id,
@@ -117,16 +113,15 @@ class CourseTest extends TestCase
         $course = Course::create([
             'title' => 'Test Course',
             'description' => 'Test',
-            'category_id' => $this->category->id,
+            'curriculum_category_id' => $this->category->id,
             'instructor_id' => $this->instructor->id,
             'term_id' => $this->term->id,
             'level_id' => $this->level->id,
-            'price' => 100.00,
             'status' => 'published'
         ]);
 
         $students = User::factory()->count(2)->create(['role' => 'student']);
-        
+
         foreach ($students as $student) {
             Enrollment::factory()->create([
                 'course_id' => $course->id,
@@ -142,11 +137,10 @@ class CourseTest extends TestCase
         $course = Course::create([
             'title' => 'Test Course',
             'description' => 'Test',
-            'category_id' => $this->category->id,
+            'curriculum_category_id' => $this->category->id,
             'instructor_id' => $this->instructor->id,
             'term_id' => $this->term->id,
             'level_id' => $this->level->id,
-            'price' => 100.00,
             'status' => 'published'
         ]);
 
@@ -158,45 +152,27 @@ class CourseTest extends TestCase
         $course = Course::create([
             'title' => 'Test Course',
             'description' => 'Test',
-            'category_id' => $this->category->id,
+            'curriculum_category_id' => $this->category->id,
             'instructor_id' => $this->instructor->id,
             'term_id' => $this->term->id,
             'level_id' => $this->level->id,
-            'price' => 100.00,
             'status' => 'draft'
         ]);
 
         $this->assertEquals('draft', $course->status);
     }
 
-    public function test_course_price_is_numeric()
-    {
-        $course = Course::create([
-            'title' => 'Test Course',
-            'description' => 'Test',
-            'category_id' => $this->category->id,
-            'instructor_id' => $this->instructor->id,
-            'term_id' => $this->term->id,
-            'level_id' => $this->level->id,
-            'price' => 99.99,
-            'status' => 'published'
-        ]);
 
-        // Decimal fields are cast to strings in Laravel
-        $this->assertIsString($course->price);
-        $this->assertEquals('99.99', $course->price);
-    }
 
     public function test_course_belongs_to_category()
     {
         $course = Course::create([
             'title' => 'Test Course',
             'description' => 'Test',
-            'category_id' => $this->category->id,
+            'curriculum_category_id' => $this->category->id,
             'instructor_id' => $this->instructor->id,
             'term_id' => $this->term->id,
             'level_id' => $this->level->id,
-            'price' => 100.00,
             'status' => 'published'
         ]);
 

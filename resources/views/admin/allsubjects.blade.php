@@ -95,28 +95,27 @@
             <!-- Header Section -->
             <div class="d-flex justify-content-between align-items-start mb-5">
                 <div>
-                    <h1 class="fw-bold mb-2">All Courses</h1>
+                    <h1 class="fw-bold mb-2">All Subjects</h1>
                     <p class="text-muted" style="font-size: 0.95rem;">Here overview of your</p>
                 </div>
                 <div>
                     <a href='/createsubject' class="btn px-4 py-2 fw-semibold"
                         style="background-color: #004A53; border: none; color: white;">
-                        <i class="fa-solid fa-plus me-2"></i> Create New Course
+                        <i class="fa-solid fa-plus me-2"></i> Create New Subject
                     </a>
                 </div>
             </div>
 
             <!-- Stats Row -->
             <div class="row g-4 mb-5">
-                <div class="col-md-6 col-lg-3">
+                 <div class="col-md-6 col-lg-3">
                     <div class="card h-100 border-0 shadow-sm rounded-4"
                         style="background: linear-gradient(135deg, #004A53 0%, #006b7d 100%); border: 1px solid #e8e8e8;">
                         <div class="card-body p-4">
                             <div class="d-flex justify-content-between align-items-start gap-2">
                                 <div>
-                                    <p class="text-white-50 mb-2" style="font-size: 0.9rem;">Published Courses</p>
-                                    {{-- <h3 class="fw-bold text-white mb-0">50</h3> --}}
-                                    <h3 class="fw-bold text-white mb-0" id="activeSubjects">0</h3>
+                                    <p class="text-white-50 mb-2" style="font-size: 0.9rem;">Total Subjects</p>
+                                    <h3 class="fw-bold text-white mb-0" id="totalSubjects">0</h3>
                                 </div>
                                 <div style="background: rgba(255,255,255,0.2); padding: 0.75rem; border-radius: 0.75rem;">
                                     <i class="fa-solid fa-book text-white" style="font-size: 1.5rem;"></i>
@@ -125,25 +124,26 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-6 col-lg-3">
+                
+                 <div class="col-md-6 col-lg-3">
                     <div class="card h-100 border-0 shadow-sm rounded-4"
-                        style="background: linear-gradient(135deg, #FDAF22 0%, #ffc857 100%); border: 1px solid #e8e8e8;">
+                         style="background: linear-gradient(135deg, #FDAF22 0%, #ffc857 100%); border: 1px solid #e8e8e8;">
                         <div class="card-body p-4">
                             <div class="d-flex justify-content-between align-items-start gap-2">
                                 <div>
-                                    <p class="text-white-50 mb-2" style="font-size: 0.9rem; color: rgba(0,0,0,0.3);">Pending
-                                        Students</p>
-                                    {{-- <h3 class="fw-bold text-white mb-0" style="color: #333;">308</h3> --}}
-                                    <h3 class="fw-bold text-white mb-0" style="color: #333;" id="pendingStudents">0</h3>
+                                    <p class="text-white-50 mb-2" style="font-size: 0.9rem;">Published Subjects</p>
+                                    {{-- <h3 class="fw-bold text-white mb-0">50</h3> --}}
+                                    <h3 class="fw-bold text-white mb-0" id="activeSubjects">0</h3>
                                 </div>
-                                <div style="background: rgba(255,255,255,0.3); padding: 0.75rem; border-radius: 0.75rem;">
-                                    <i class="fa-solid fa-users text-white" style="font-size: 1.5rem; color: #333;"></i>
+                                <div style="background: rgba(255,255,255,0.2); padding: 0.75rem; border-radius: 0.75rem;">
+                                    <i class="fa-solid fa-users text-white" style="font-size: 1.5rem;"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+               
 
                 <div class="col-md-6 col-lg-3">
                     <div class="card h-100 border-0 shadow-sm rounded-4"
@@ -151,7 +151,7 @@
                         <div class="card-body p-4">
                             <div class="d-flex justify-content-between align-items-start gap-2">
                                 <div>
-                                    <p class="text-white-50 mb-2" style="font-size: 0.9rem;">Draft Courses</p>
+                                    <p class="text-white-50 mb-2" style="font-size: 0.9rem;">Drafted Subjects</p>
                                     {{-- <h3 class="fw-bold text-white mb-0">100</h3> --}}
                                     <h3 class="fw-bold text-white mb-0" id="draftCourses">0</h3>
                                 </div>
@@ -187,7 +187,7 @@
                 <div class="card-body p-5">
                     <!-- Table Header with Search and Filters -->
                     <div class="d-flex justify-content-between align-items-center mb-5">
-                        <h5 class="fw-bold mb-0" style="font-size: 1.1rem; color: #1a1a1a;">Courses</h5>
+                        <h5 class="fw-bold mb-0" style="font-size: 1.1rem; color: #1a1a1a;">Subjects</h5>
                         <div class="d-flex gap-3 justify-content-end" style="flex: 1; margin-left: 2rem;">
                             <div class="d-flex gap-2 align-items-center search-border-custom">
                                 <i class="fa-solid fa-search fa-xs " style="color: #999;"></i>
@@ -198,7 +198,7 @@
                             <!-- Filter Dropdown -->
                             <select class="custom-select" id="filterSelect">
                                 <option value="" style="">All Classes</option>
-                                <option value="course">All Courses</option>
+                                <option value="course">All Subjects</option>
                                 <option value="category">All Categories</option>
                                 <option value="role-student">Students</option>
                                 <option value="role-instructor">Instructors</option>
@@ -215,7 +215,7 @@
                             <thead>
                                 <tr style="background-color: #f0f0f0; border-bottom: 2px solid #e8e8e8;">
                                     <th class="allSubject">No</th>
-                                    <th class="allSubject">Course Name</th>
+                                    <th class="allSubject">Subject Name</th>
                                     <th class="allSubject">Date Created</th>
                                     <th class="allSubject">Progress</th>
                                     <th class="allSubject">Ratings</th>
@@ -463,6 +463,9 @@
         ---------------------------- */
         function updateStats(courses) {
 
+            // Total subjects count
+            document.getElementById("totalSubjects").innerText = courses.length;
+
             document.getElementById("activeSubjects").innerText =
                 courses.filter(c => c.status === "published").length;
 
@@ -470,10 +473,7 @@
                 courses.filter(c => c.status === "draft").length;
 
             document.getElementById("freeCourses").innerText =
-                courses.filter(c => Number(c.price) === 0).length;
-
-            // Placeholder
-            document.getElementById("pendingStudents").innerText = 0;
+                courses.filter(c => c.free_subscription === true || c.free_subscription === 1).length;
         }
 
 

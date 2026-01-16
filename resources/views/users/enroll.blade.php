@@ -65,6 +65,35 @@
             border-color: #22c55e;
         }
 
+        /* DISABLED state */
+        .custom-switch .form-check-input:disabled {
+            background-color: #cbd5e1;
+            border-color: #cbd5e1;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* DISABLED CHECKED state - Active and disabled (for enrolled/free courses) */
+        .custom-switch .form-check-input:disabled:checked {
+            background-color: #22c55e;
+            border-color: #22c55e;
+            opacity: 1;
+            /* Full opacity to show it's active */
+        }
+
+        /* Add visual indicator for disabled checked state */
+        .custom-switch .form-check-input:disabled:checked::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            background-color: #22c55e;
+            border-radius: 50%;
+            box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.3);
+        }
+
         /* focus ring */
         .custom-switch .form-check-input:focus {
             box-shadow: 0 0 0 0.25rem rgba(34, 197, 94, 0.25);
@@ -534,6 +563,402 @@
                 font-size: 12px;
             }
         }
+
+        /* Subscription Details Modal Styles */
+        .subscription-details {
+            padding: 20px 0;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            font-size: 14px;
+        }
+
+        .detail-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .detail-value {
+            color: #222;
+            font-weight: 600;
+        }
+
+        .detail-row.discount .detail-value {
+            color: #004A53;
+            font-weight: 700;
+        }
+
+        .detail-row.total {
+            padding: 16px 0;
+            font-size: 16px;
+            border-top: 2px solid #FDAF22;
+            border-bottom: 2px solid #FDAF22;
+            background: linear-gradient(90deg, rgba(0, 74, 83, 0.05) 0%, rgba(253, 175, 34, 0.05) 100%);
+            border-radius: 8px;
+            padding: 16px 12px;
+            margin: 8px 0;
+        }
+
+        .detail-row.total .detail-label {
+            color: #004A53;
+        }
+
+        .detail-row.total .detail-value {
+            color: #FDAF22;
+            font-size: 18px;
+        }
+
+        .subscription-details hr {
+            margin: 12px 0;
+            border: none;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        /* Modal Header Styling */
+        #subscribeAllModal .modal-header {
+            background: linear-gradient(135deg, #004A53 0%, #00626d 100%);
+            border-bottom: 3px solid #FDAF22;
+        }
+
+        #subscribeAllModal .modal-title {
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        #subscribeAllModal .btn-close {
+            filter: brightness(0) invert(1);
+        }
+
+        /* Modal Body Styling */
+        #subscribeAllModal .modal-body {
+            background: #f9fafb;
+            padding: 28px;
+        }
+
+        /* Modal Footer Styling */
+        #subscribeAllModal .modal-footer {
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            padding: 16px 28px;
+        }
+
+        #subscribeAllModal .btn-secondary {
+            background-color: #e0e0e0;
+            border-color: #e0e0e0;
+            color: #333;
+            font-weight: 600;
+        }
+
+        #subscribeAllModal .btn-secondary:hover {
+            background-color: #d0d0d0;
+            border-color: #d0d0d0;
+        }
+
+        #subscribeAllModal .btn-primary {
+            background-color: #FDAF22;
+            border-color: #FDAF22;
+            color: #000F11;
+            font-weight: 600;
+        }
+
+        #subscribeAllModal .btn-primary:hover {
+            background-color: #e59a0f;
+            border-color: #e59a0f;
+        }
+
+        #subscribeAllModal .btn-primary:focus {
+            box-shadow: 0 0 0 0.25rem rgba(253, 175, 34, 0.25);
+        }
+
+        /* Payment Confirmation Modal Styling */
+        #paymentConfirmationModal .modal-header {
+            background: linear-gradient(135deg, #004A53 0%, #00626d 100%);
+            border-bottom: 3px solid #FDAF22;
+        }
+
+        #paymentConfirmationModal .modal-title {
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        #paymentConfirmationModal .btn-close {
+            filter: brightness(0) invert(1);
+        }
+
+        /* Modal Body Styling */
+        #paymentConfirmationModal .modal-body {
+            background: #f9fafb;
+            padding: 28px;
+        }
+
+        /* Subscription Details Styling */
+        .subscription-details {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            font-size: 15px;
+        }
+
+        .detail-row.discount {
+            color: #28a745;
+        }
+
+        .detail-row.total {
+            padding: 16px 0;
+            font-size: 16px;
+        }
+
+        .detail-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .detail-value {
+            color: #004A53;
+            font-weight: 600;
+        }
+
+        .detail-row.discount .detail-value {
+            color: #28a745;
+        }
+
+        .detail-row.total .detail-value {
+            color: #FDAF22;
+            font-size: 18px;
+        }
+
+        .subscription-details hr {
+            margin: 12px 0;
+            border: none;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        /* Modal Footer Styling */
+        #paymentConfirmationModal .modal-footer {
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            padding: 16px 28px;
+        }
+
+        #paymentConfirmationModal .btn-secondary {
+            background-color: #e0e0e0;
+            border-color: #e0e0e0;
+            color: #333;
+            font-weight: 600;
+        }
+
+        #paymentConfirmationModal .btn-secondary:hover {
+            background-color: #d0d0d0;
+            border-color: #d0d0d0;
+        }
+
+        #paymentConfirmationModal .btn-primary {
+            background-color: #FDAF22;
+            border-color: #FDAF22;
+            color: #000F11;
+            font-weight: 600;
+        }
+
+        #paymentConfirmationModal .btn-primary:hover {
+            background-color: #e59a0f;
+            border-color: #e59a0f;
+        }
+
+        #paymentConfirmationModal .btn-primary:focus {
+            box-shadow: 0 0 0 0.25rem rgba(253, 175, 34, 0.25);
+        }
+
+        /* Plan Selection Warning Modal Styling */
+        #planSelectionWarningModal .modal-header {
+            background: linear-gradient(135deg, #004A53 0%, #00626d 100%);
+            border-bottom: 3px solid #FDAF22;
+        }
+
+        #planSelectionWarningModal .modal-title {
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        #planSelectionWarningModal .btn-close {
+            filter: brightness(0) invert(1);
+        }
+
+        /* Modal Body Styling */
+        #planSelectionWarningModal .modal-body {
+            background: #f9fafb;
+            padding: 28px;
+            text-align: center;
+        }
+
+        .warning-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .warning-icon {
+            font-size: 48px;
+            line-height: 1;
+        }
+
+        .warning-message {
+            font-size: 16px;
+            color: #333;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        /* Modal Footer Styling */
+        #planSelectionWarningModal .modal-footer {
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            padding: 16px 28px;
+            justify-content: center;
+        }
+
+        #planSelectionWarningModal .btn-primary {
+            background-color: #FDAF22;
+            border-color: #FDAF22;
+            color: #000F11;
+            font-weight: 600;
+            padding: 10px 32px;
+        }
+
+        #planSelectionWarningModal .btn-primary:hover {
+            background-color: #e59a0f;
+            border-color: #e59a0f;
+        }
+
+        #planSelectionWarningModal .btn-primary:focus {
+            box-shadow: 0 0 0 0.25rem rgba(253, 175, 34, 0.25);
+        }
+
+        /* Subject Selection Warning Modal Styling */
+        #subjectSelectionWarningModal .modal-header {
+            background: linear-gradient(135deg, #004A53 0%, #00626d 100%);
+            border-bottom: 3px solid #FDAF22;
+        }
+
+        #subjectSelectionWarningModal .modal-title {
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        #subjectSelectionWarningModal .btn-close {
+            filter: brightness(0) invert(1);
+        }
+
+        /* Modal Body Styling */
+        #subjectSelectionWarningModal .modal-body {
+            background: #f9fafb;
+            padding: 28px;
+            text-align: center;
+        }
+
+        /* Modal Footer Styling */
+        #subjectSelectionWarningModal .modal-footer {
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            padding: 16px 28px;
+            justify-content: center;
+        }
+
+        #subjectSelectionWarningModal .btn-primary {
+            background-color: #FDAF22;
+            border-color: #FDAF22;
+            color: #000F11;
+            font-weight: 600;
+            padding: 10px 32px;
+        }
+
+        #subjectSelectionWarningModal .btn-primary:hover {
+            background-color: #e59a0f;
+            border-color: #e59a0f;
+        }
+
+        #subjectSelectionWarningModal .btn-primary:focus {
+            box-shadow: 0 0 0 0.25rem rgba(253, 175, 34, 0.25);
+        }
+
+        /* Plan Selection Notification */
+        .plan-notification {
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8f6 100%);
+            border-left: 4px solid #004A53;
+            border-radius: 6px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .notification-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            color: #004A53;
+            margin: 0 0 4px 0;
+            font-size: 14px;
+        }
+
+        .notification-message {
+            color: #2e7d32;
+            margin: 0;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: #004A53;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 0;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .notification-close:hover {
+            color: #002a2f;
+        }
     </style>
 @section('content')
     <main>
@@ -545,7 +970,7 @@
                     </button>
                     <h1 id="levelTitle">Loading...</h1>
                 </div>
-                <button class = "enroll-btn align-self-start" type = "button" id="enrollAllBtn">Enroll in All Subjects - ₦0.00</button>
+                <button class = "enroll-btn" type = "button" id="enrollAllBtn">Subscribe to All Subjects</button>
             </div>
             <section class="d-flex flex-column gap-4">
                 <div class="d-flex flex-column flex-md-row  align-items-md-center gap-3">
@@ -553,6 +978,9 @@
                         <option value="">Loading plans...</option>
                     </select>
                     <p id="planPriceInfo">Select a plan to see pricing</p>
+                </div>
+                <div id="planSelectionNotification" class="plan-notification" style="display: none;">
+                    <!-- Notification will be shown here -->
                 </div>
                 <div class="subject-container" id="subjectContainer">
                     <!-- Subjects will be loaded dynamically here -->
@@ -595,7 +1023,7 @@
             <!-- Footer with proceed button -->
             <div style=" display: flex; justify-content:center;">
                 <button id="proceedBtn" class="proceed-payment-btn">
-                    Proceed to Payment - Subtotal: <span id="subtotal" class="subtotal">₦0.00</span>
+                    Proceed to Payment
                 </button>
             </div>
 
@@ -677,6 +1105,90 @@
                 </div>
             </div>
 
+            <!-- Subscribe to All Subjects Modal -->
+            <div class="modal fade" id="subscribeAllModal" tabindex="-1" aria-labelledby="subscribeAllModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="subscribeAllModalLabel">Subscribe to All Subjects</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="subscribeAllDetails">
+                                <!-- Details will be populated by JavaScript -->
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary enroll-btn" id="proceedToPaymentBtn">Proceed to Payment</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Confirmation Modal -->
+            <div class="modal fade" id="paymentConfirmationModal" tabindex="-1" aria-labelledby="paymentConfirmationModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="paymentConfirmationModalLabel">Confirm Payment</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="paymentConfirmationDetails">
+                                <!-- Details will be populated by JavaScript -->
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary enroll-btn" id="confirmPaymentBtn">Proceed to Payment Gateway</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Plan Selection Warning Modal -->
+            <div class="modal fade" id="planSelectionWarningModal" tabindex="-1" aria-labelledby="planSelectionWarningModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="planSelectionWarningModalLabel">Select a Plan</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="warning-content">
+                                <div class="warning-icon">⚠️</div>
+                                <p class="warning-message">Please select a subscription plan first before proceeding.</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subject Selection Warning Modal -->
+            <div class="modal fade" id="subjectSelectionWarningModal" tabindex="-1" aria-labelledby="subjectSelectionWarningModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="subjectSelectionWarningModalLabel">Select Subjects</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="warning-content">
+                                <div class="warning-icon">📚</div>
+                                <p class="warning-message">Please select at least one subject to proceed.</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </section>
     </main>
 
@@ -687,11 +1199,14 @@
         let allCourses = [];
         let allSubscriptionPlans = [];
         let userSubscriptions = [];
+        let userEnrollments = [];
+        let freeSubscriptionPlan = null;
         let selectedPlanId = null;
 
         document.addEventListener("DOMContentLoaded", async () => {
             await loadSubscriptionPlans();
             await loadUserSubscriptions();
+            await loadUserEnrollments();
             await loadCourses();
             setupBackButton();
             setupPlanSelector();
@@ -715,10 +1230,12 @@
         async function loadSubscriptionPlans() {
             try {
                 const result = await SubscriptionApiClient.getPlans({ active: true });
+                console.log('loadSubscriptionPlans API result:', result);
                 if (result.success && result.data) {
                     // Handle paginated response
                     const plans = result.data.data || result.data;
                     allSubscriptionPlans = Array.isArray(plans) ? plans : [];
+                    console.log('Loaded subscription plans:', allSubscriptionPlans);
                     populatePlanSelector();
                 }
             } catch (error) {
@@ -742,6 +1259,50 @@
             } catch (error) {
                 console.error('Error loading user subscriptions:', error);
                 // Don't show error - subscriptions are optional
+            }
+        }
+
+        /**
+         * Load user's enrollments
+         */
+        async function loadUserEnrollments() {
+            try {
+                const result = await CourseApiClient.getMyCourses();
+                if (result.success && result.data) {
+                    // Extract enrolled course IDs from the response
+                    const courses = result.data.courses || result.data;
+                    if (Array.isArray(courses)) {
+                        userEnrollments = courses.map(c => c.course_id || c.id);
+                    }
+                    console.log('User enrollments:', userEnrollments);
+                }
+            } catch (error) {
+                console.error('Error loading user enrollments:', error);
+                // Don't show error - enrollments are optional
+            }
+        }
+
+        /**
+         * Load free subscription plan
+         */
+        async function loadFreePlan() {
+            try {
+                const result = await SubscriptionApiClient.getPlans({ active: true });
+                if (result.success && result.data) {
+                    const plans = result.data.data || result.data;
+                    if (Array.isArray(plans)) {
+                        freeSubscriptionPlan = plans.find(p => p.duration_type === 'free');
+                        console.log('Free plan loaded:', freeSubscriptionPlan);
+
+                        // If free plan found, ensure it has courses
+                        if (freeSubscriptionPlan) {
+                            console.log('Free plan courses:', freeSubscriptionPlan.courses);
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading free plan:', error);
+                // Don't show error - free plan is optional
             }
         }
 
@@ -815,22 +1376,38 @@
          *
          * Pricing is purely based on the selected plan (per-subject)
          * No individual course prices are used
+         *
+         * Enrolled and free courses remain disabled regardless of plan selection
+         * Available courses remain enabled for user to manually select
+         * Active subscriptions show "Active" badge but don't auto-select other courses
          */
         function updateCoursePricesForPlan(planId, selectedPlan) {
             const courseCards = document.querySelectorAll('.subject-card');
+
             courseCards.forEach((card, index) => {
                 const checkbox = card.querySelector('.check-subject');
                 if (checkbox) {
                     // Store selected plan ID for reference
                     checkbox.dataset.selectedPlanId = planId;
 
-                    // Check if user has active subscription for this plan
-                    const hasActiveSubscription = userSubscriptions.some(sub =>
-                        sub.subscription_plan_id == planId && sub.status === 'active'
+                    const courseStatus = checkbox.dataset.courseStatus;
+                    const courseId = checkbox.dataset.courseId;
+
+                    // Check if user has active subscription for this specific course and plan
+                    const hasActiveSubscriptionForCourse = userSubscriptions.some(sub =>
+                        sub.subscription_plan_id == planId &&
+                        sub.status === 'active' &&
+                        sub.course_ids &&
+                        sub.course_ids.includes(parseInt(courseId))
                     );
 
-                    if (hasActiveSubscription) {
-                        // Disable checkbox and mark as checked
+                    // If course is enrolled or free, keep it disabled
+                    if (courseStatus === 'enrolled' || courseStatus === 'free') {
+                        checkbox.disabled = true;
+                        checkbox.checked = true;
+                        card.style.opacity = '0.7';
+                    } else if (hasActiveSubscriptionForCourse) {
+                        // Disable checkbox and mark as checked for active subscription
                         checkbox.disabled = true;
                         checkbox.checked = true;
                         card.style.opacity = '0.7';
@@ -846,7 +1423,7 @@
                             card.appendChild(badge);
                         }
                     } else {
-                        // Enable checkbox
+                        // Available courses: keep enabled and unchecked for user to manually select
                         checkbox.disabled = false;
                         checkbox.checked = false;
                         card.style.opacity = '1';
@@ -858,8 +1435,37 @@
                 }
             });
 
+            // Hide notification - no auto-selection happening
+            hidePlanSelectionNotification();
+
             // Recalculate subtotal
             updateSubtotal();
+        }
+
+        /**
+         * Show notification when plan is selected and subjects are auto-selected
+         */
+        function showPlanSelectionNotification(planTitle, subjectCount) {
+            const notificationDiv = document.getElementById('planSelectionNotification');
+            const subjectText = subjectCount === 1 ? 'subject' : 'subjects';
+
+            notificationDiv.innerHTML = `
+                <div class="notification-icon">✓</div>
+                <div class="notification-content">
+                    <p class="notification-title">Plan Selected</p>
+                    <p class="notification-message">${subjectCount} ${subjectText} automatically selected for the <strong>${planTitle}</strong> plan.</p>
+                </div>
+                <button type="button" class="notification-close" onclick="document.getElementById('planSelectionNotification').style.display = 'none';">×</button>
+            `;
+            notificationDiv.style.display = 'flex';
+        }
+
+        /**
+         * Hide plan selection notification
+         */
+        function hidePlanSelectionNotification() {
+            const notificationDiv = document.getElementById('planSelectionNotification');
+            notificationDiv.style.display = 'none';
         }
 
         /**
@@ -956,26 +1562,99 @@
         }
 
         /**
+         * Check if a course is enrolled by the user
+         */
+        function isUserEnrolled(courseId) {
+            return userEnrollments.includes(courseId);
+        }
+
+        /**
+         * Check if a course is free (has free_subscription = true)
+         */
+        function isFreeCourse(courseId) {
+            // Find the course in allCourses
+            const course = allCourses.find(c => c.id === courseId);
+
+            if (!course) {
+                console.log(`isFreeCourse(${courseId}): Course not found in allCourses`);
+                return false;
+            }
+
+            console.log(`isFreeCourse(${courseId}): Course found:`, course);
+            console.log(`isFreeCourse(${courseId}): free_subscription = ${course.free_subscription}`);
+
+            // Check if course has free_subscription = true
+            const isFree = course.free_subscription === true || course.free_subscription === 1 || course.free_subscription === '1';
+
+            console.log(`isFreeCourse(${courseId}): Result = ${isFree}`);
+
+            return isFree;
+        }
+
+        /**
+         * Get course status: 'enrolled', 'free', or null
+         */
+        function getCourseStatus(courseId) {
+            const enrolled = isUserEnrolled(courseId);
+            const free = isFreeCourse(courseId);
+
+            console.log(`getCourseStatus(${courseId}): enrolled=${enrolled}, free=${free}`);
+
+            if (enrolled) {
+                return 'enrolled';
+            }
+            if (free) {
+                return 'free';
+            }
+            return null;
+        }
+
+        /**
          * Display courses as subject cards with toggle switches
          *
          * Pricing is based on the selected subscription plan only
          * Individual course prices are NOT used
+         *
+         * Enrolled and free courses are checked and disabled by default
          */
         function displayCourses(courses) {
             const subjectContainer = document.getElementById('subjectContainer');
 
+            console.log('=== displayCourses called ===');
+            console.log('Total courses:', courses.length);
+            console.log('Free subscription plan:', freeSubscriptionPlan);
+
             const coursesHtml = courses.map((course, index) => {
+                const courseStatus = getCourseStatus(course.id);
+                const isDisabled = courseStatus !== null; // Disable if enrolled or free
+                const isChecked = courseStatus !== null; // Check if enrolled or free
+
+                console.log(`Course ${index}: ${course.title} (ID: ${course.id}) - Status: ${courseStatus}, Disabled: ${isDisabled}, Checked: ${isChecked}`);
+
+                let statusBadge = '';
+                if (courseStatus === 'enrolled') {
+                    statusBadge = '<span style="margin-left: 8px; padding: 4px 8px; background: #FF9800; color: white; border-radius: 4px; font-size: 11px; font-weight: 600;">ENROLLED</span>';
+                } else if (courseStatus === 'free') {
+                    statusBadge = '<span style="margin-left: 8px; padding: 4px 8px; background: #4CAF50; color: white; border-radius: 4px; font-size: 11px; font-weight: 600;">FREE</span>';
+                }
+
                 return `
-                    <div class="subject-card d-flex align-items-center gap-2 justify-content-between">
+                    <div class="subject-card d-flex align-items-center gap-2 justify-content-between" style="${isDisabled ? 'opacity: 0.7;' : ''}">
                         <div>
-                            <h5 style="margin: 0 0 4px 0;">${course.title}</h5>
+                            <h5 style="margin: 0 0 4px 0; display: flex; align-items: center;">
+                                ${course.title}
+                                ${statusBadge}
+                            </h5>
                         </div>
                         <div class="form-check form-switch custom-switch">
                             <input class="form-check-input check-subject"
                                    type="checkbox"
                                    role="switch"
                                    data-course-id="${course.id}"
-                                   id="cb${index}">
+                                   data-course-status="${courseStatus || 'available'}"
+                                   id="cb${index}"
+                                   ${isChecked ? 'checked' : ''}
+                                   ${isDisabled ? 'disabled' : ''}>
                         </div>
                     </div>
                 `;
@@ -996,7 +1675,7 @@
         }
 
         /**
-         * Calculate and update subtotal
+         * Update button states based on selections
          *
          * For subscription-based enrollment:
          * - Plan price is PER SUBJECT
@@ -1007,53 +1686,39 @@
          * All pricing is based on the selected subscription plan
          */
         function updateSubtotal() {
-            const checks = document.querySelectorAll('.check-subject:checked');
-            let total = 0;
-
-            // Calculate subtotal based on selected plan and number of subjects
-            if (selectedPlanId) {
-                const selectedPlan = allSubscriptionPlans.find(p => p.id == selectedPlanId);
-                if (selectedPlan) {
-                    // Plan price is per subject, multiply by number of selected subjects
-                    const numSelectedSubjects = checks.length;
-                    total = selectedPlan.price * numSelectedSubjects;
-                }
-            }
-
-            document.getElementById('subtotal').textContent = formatNGN(total);
+            // Update the "Subscribe to All" button state
             updateEnrollAllButton();
         }
 
         /**
-         * Update "Enroll in All" button text with 10% discount
+         * Update "Subscribe to All" button state
          *
          * When user subscribes to ALL subjects:
-         * - Regular price = Plan price × Number of subjects
+         * - Only count non-free, non-enrolled courses
+         * - Regular price = Plan price × Number of paid subjects
          * - Discount = 10% off total
          * - Final price = Regular price - (Regular price × 10%)
          */
         function updateEnrollAllButton() {
-            const courseCount = allCourses.length;
             const enrollAllBtn = document.getElementById('enrollAllBtn');
 
             if (!selectedPlanId) {
-                enrollAllBtn.textContent = `Enroll in All ${courseCount} Subjects - Select a plan`;
                 enrollAllBtn.disabled = true;
                 return;
             }
 
-            // If subscription plan is selected, calculate price for all courses
+            // Count only courses that are available for purchase (not enrolled, not free)
+            const availableCourses = allCourses.filter(course => {
+                const status = getCourseStatus(course.id);
+                return status === null; // null means available for purchase
+            });
+
+            const paidCourseCount = availableCourses.length;
+            const totalCourseCount = allCourses.length;
+
+            // If subscription plan is selected, enable button
             const selectedPlan = allSubscriptionPlans.find(p => p.id == selectedPlanId);
             if (selectedPlan) {
-                // Calculate total price for all subjects (plan price × number of subjects)
-                const regularPrice = selectedPlan.price * courseCount;
-
-                // Apply 10% discount for subscribing to all subjects
-                const discountAmount = regularPrice * 0.10;
-                const discountedPrice = regularPrice - discountAmount;
-
-                // Format button text with discount info
-                enrollAllBtn.textContent = `Subscribe to All ${courseCount} Subjects - ${formatNGN(regularPrice)} (Save 10% - ${formatNGN(discountedPrice)})`;
                 enrollAllBtn.disabled = false;
             }
         }
@@ -1077,81 +1742,117 @@
         let pendingPaymentData = null;
 
         /**
-         * Handle proceed to payment button
+         * Handle proceed to payment button (for individual selections)
+         * Only includes checked subjects that are NOT disabled (enrolled or free)
          */
         document.getElementById('proceedBtn').addEventListener('click', function(e) {
             e.preventDefault();
 
             if (!selectedPlanId) {
-                alert('Please select a subscription plan first.');
+                const warningModal = new bootstrap.Modal(document.getElementById('planSelectionWarningModal'));
+                warningModal.show();
                 return;
             }
 
-            const checked = document.querySelectorAll('.check-subject:checked');
+            // Get only checked AND enabled checkboxes (exclude enrolled/free subjects)
+            const checked = document.querySelectorAll('.check-subject:checked:not(:disabled)');
 
             if (checked.length === 0) {
-                alert('Please select at least one subject to proceed.');
+                const warningModal = new bootstrap.Modal(document.getElementById('subjectSelectionWarningModal'));
+                warningModal.show();
                 return;
             }
 
-            // Store payment data and open modal
+            // Store payment data
             const selectedCourses = Array.from(checked).map(cb => cb.dataset.courseId);
-            const subtotal = document.getElementById('subtotal').textContent;
             const selectedPlan = allSubscriptionPlans.find(p => p.id == selectedPlanId);
             const courseCount = checked.length;
 
             // Calculate price: plan price × number of selected subjects (no discount for partial selection)
-            const totalPrice = selectedPlan.price * courseCount;
+            const regularPrice = selectedPlan.price * courseCount;
 
             pendingPaymentData = {
                 courses: selectedCourses,
-                subtotal: subtotal,
                 planId: selectedPlanId,
                 planPrice: selectedPlan.price,
                 courseCount: courseCount,
-                totalPrice: totalPrice,
+                regularPrice: regularPrice,
                 hasDiscount: false,
                 isSubscription: true
             };
 
-            openPaymentModal();
+            // Populate payment confirmation modal
+            const detailsHtml = `
+                <div class="subscription-details">
+                    <div class="detail-row">
+                        <span class="detail-label">Plan:</span>
+                        <span class="detail-value">${selectedPlan.title}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Subjects to Subscribe:</span>
+                        <span class="detail-value">${courseCount}</span>
+                    </div>
+                    <hr>
+                    <div class="detail-row">
+                        <span class="detail-label">Price per Subject:</span>
+                        <span class="detail-value">${formatNGN(selectedPlan.price)}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Subtotal (${courseCount} × ${formatNGN(selectedPlan.price)}):</span>
+                        <span class="detail-value">${formatNGN(regularPrice)}</span>
+                    </div>
+                    <hr>
+                    <div class="detail-row total">
+                        <span class="detail-label"><strong>Total Amount:</strong></span>
+                        <span class="detail-value"><strong>${formatNGN(regularPrice)}</strong></span>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('paymentConfirmationDetails').innerHTML = detailsHtml;
+
+            // Open payment confirmation modal
+            const paymentConfirmationModal = new bootstrap.Modal(document.getElementById('paymentConfirmationModal'));
+            paymentConfirmationModal.show();
         });
 
         /**
-         * Handle "Enroll in All" button
+         * Handle "Subscribe to All" button
+         *
+         * Shows a modal with subscription details before proceeding to payment
          */
         document.getElementById('enrollAllBtn').addEventListener('click', function(e) {
             e.preventDefault();
 
             if (!selectedPlanId) {
-                alert('Please select a subscription plan first.');
+                const warningModal = new bootstrap.Modal(document.getElementById('planSelectionWarningModal'));
+                warningModal.show();
                 return;
             }
 
-            // Select all non-disabled checkboxes
-            document.querySelectorAll('.check-subject:not(:disabled)').forEach(cb => {
-                cb.checked = true;
+            // Get all available courses (not enrolled, not free)
+            const availableCourses = allCourses.filter(course => {
+                const status = getCourseStatus(course.id);
+                return status === null; // null means available for purchase
             });
-            updateSubtotal();
-
-            // Get selected courses
-            const selectedCheckboxes = document.querySelectorAll('.check-subject:checked');
-            const selectedCourses = Array.from(selectedCheckboxes).map(cb => cb.dataset.courseId);
 
             const selectedPlan = allSubscriptionPlans.find(p => p.id == selectedPlanId);
-            const courseCount = selectedCourses.length;
+            const paidCourseCount = availableCourses.length;
+            const totalCourseCount = allCourses.length;
+            const freeCount = totalCourseCount - paidCourseCount;
 
             // Calculate price with 10% discount for subscribing to all subjects
-            const regularPrice = selectedPlan.price * courseCount;
+            const regularPrice = selectedPlan.price * paidCourseCount;
             const discountAmount = regularPrice * 0.10;
             const discountedPrice = regularPrice - discountAmount;
 
+            // Store data for payment
             pendingPaymentData = {
-                courses: selectedCourses,
+                courses: availableCourses.map(c => c.id),
                 subtotal: formatNGN(discountedPrice),
                 planId: selectedPlanId,
                 planPrice: selectedPlan.price,
-                courseCount: courseCount,
+                courseCount: paidCourseCount,
                 regularPrice: regularPrice,
                 discountAmount: discountAmount,
                 discountedPrice: discountedPrice,
@@ -1159,6 +1860,122 @@
                 isSubscription: true
             };
 
+            // Populate and show modal
+            const detailsHtml = `
+                <div class="subscription-details">
+                    <div class="detail-row">
+                        <span class="detail-label">Plan:</span>
+                        <span class="detail-value">${selectedPlan.title}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Total Subjects:</span>
+                        <span class="detail-value">${totalCourseCount}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Free Subjects:</span>
+                        <span class="detail-value">${freeCount}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Paid Subjects:</span>
+                        <span class="detail-value">${paidCourseCount}</span>
+                    </div>
+                    <hr>
+                    <div class="detail-row">
+                        <span class="detail-label">Price per Subject:</span>
+                        <span class="detail-value">${formatNGN(selectedPlan.price)}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Subtotal (${paidCourseCount} × ${formatNGN(selectedPlan.price)}):</span>
+                        <span class="detail-value">${formatNGN(regularPrice)}</span>
+                    </div>
+                    <div class="detail-row discount">
+                        <span class="detail-label">Discount (10%):</span>
+                        <span class="detail-value">-${formatNGN(discountAmount)}</span>
+                    </div>
+                    <hr>
+                    <div class="detail-row total">
+                        <span class="detail-label"><strong>Total Amount:</strong></span>
+                        <span class="detail-value"><strong>${formatNGN(discountedPrice)}</strong></span>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('subscribeAllDetails').innerHTML = detailsHtml;
+            const modal = new bootstrap.Modal(document.getElementById('subscribeAllModal'));
+            modal.show();
+        });
+
+        /**
+         * Handle "Proceed to Payment" button in Subscribe All modal
+         */
+        document.getElementById('proceedToPaymentBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+
+            if (!pendingPaymentData) {
+                alert('Payment data not found. Please try again.');
+                return;
+            }
+
+            // Populate payment confirmation modal
+            const detailsHtml = `
+                <div class="subscription-details">
+                    <div class="detail-row">
+                        <span class="detail-label">Plan:</span>
+                        <span class="detail-value">${allSubscriptionPlans.find(p => p.id == pendingPaymentData.planId).title}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Subjects to Subscribe:</span>
+                        <span class="detail-value">${pendingPaymentData.courseCount}</span>
+                    </div>
+                    <hr>
+                    <div class="detail-row">
+                        <span class="detail-label">Price per Subject:</span>
+                        <span class="detail-value">${formatNGN(pendingPaymentData.planPrice)}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Subtotal (${pendingPaymentData.courseCount} × ${formatNGN(pendingPaymentData.planPrice)}):</span>
+                        <span class="detail-value">${formatNGN(pendingPaymentData.regularPrice)}</span>
+                    </div>
+                    ${pendingPaymentData.hasDiscount ? `
+                    <div class="detail-row discount">
+                        <span class="detail-label">Discount (10%):</span>
+                        <span class="detail-value">-${formatNGN(pendingPaymentData.discountAmount)}</span>
+                    </div>
+                    ` : ''}
+                    <hr>
+                    <div class="detail-row total">
+                        <span class="detail-label"><strong>Total Amount:</strong></span>
+                        <span class="detail-value"><strong>${pendingPaymentData.hasDiscount ? formatNGN(pendingPaymentData.discountedPrice) : formatNGN(pendingPaymentData.regularPrice)}</strong></span>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('paymentConfirmationDetails').innerHTML = detailsHtml;
+
+            // Close the subscribe all modal
+            const subscribeAllModal = bootstrap.Modal.getInstance(document.getElementById('subscribeAllModal'));
+            if (subscribeAllModal) {
+                subscribeAllModal.hide();
+            }
+
+            // Open payment confirmation modal
+            const paymentConfirmationModal = new bootstrap.Modal(document.getElementById('paymentConfirmationModal'));
+            paymentConfirmationModal.show();
+        });
+
+        /**
+         * Handle "Proceed to Payment Gateway" button in Payment Confirmation modal
+         */
+        document.getElementById('confirmPaymentBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+
+            // Close the payment confirmation modal
+            const paymentConfirmationModal = bootstrap.Modal.getInstance(document.getElementById('paymentConfirmationModal'));
+            if (paymentConfirmationModal) {
+                paymentConfirmationModal.hide();
+            }
+
+            // Open payment gateway modal
             openPaymentModal();
         });
 

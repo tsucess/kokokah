@@ -909,7 +909,7 @@
         <div class="container bg-white">
             <div class="subject-header">
                 <div>
-                    <h1>Edit Course</h1>
+                    <h1>Edit Subject</h1>
                     <p>Here overview of your</p>
                 </div>
 
@@ -918,10 +918,10 @@
                         Save As Draft
                     </button>
                     <button type="button" class="btn btn-draft" id="publishBtn" style="display: none;">
-                        Publish Course
+                        Publish Subject
                     </button>
                     <button type="button" class="btn btn-publish" id="updateBtn">
-                        Update Course
+                        Update Subject
                     </button>
                 </div>
             </div>
@@ -938,7 +938,7 @@
 
                 <button type="button" class="coursebtn" data-section="details">
                     <i class="fa-solid fa-circle fa-2xs"></i>
-                    Course Details
+                    Subject Details
                     <i class="fa fa-arrow-right"></i>
                 </button>
 
@@ -956,10 +956,10 @@
             </div>
         </div>
 
-        <!-- Course Details Section -->
+        <!-- Subject Details Section -->
         <div class="container bg-white content-section d-none" id="details">
             <div class="section-header">
-                <h5>Course Details</h5>
+                <h5>Subject Details</h5>
             </div>
 
             <form id="courseDetailsForm">
@@ -968,7 +968,7 @@
                 <input type="hidden" class="form-control" id="curriculumCategoryId" name="curriculumCategoryId" required>
                 <div class="form-row-two">
                     <div class="form-group-custom">
-                        <label for="courseTitle">Course Title</label>
+                        <label for="courseTitle">Subject Title</label>
                         <input type="text" class="form-control" id="courseTitle" name="courseTitle"
                             placeholder="Enter Subject Title" required>
                     </div>
@@ -981,14 +981,14 @@
 
                 <div class="form-row-two">
                     <div class="form-group-custom">
-                        <label for="courseCategory">Course Category</label>
+                        <label for="courseCategory">Subject Category</label>
                         <select class="form-control" id="courseCategory" name="courseCategory" required>
 
                         </select>
                     </div>
 
                     <div class="form-group-custom">
-                        <label for="courseLevel">Course Level</label>
+                        <label for="courseLevel">Subject Level</label>
                         <select class="form-control" id="courseLevel" name="courseLevel" required></select>
                     </div>
                 </div>
@@ -1001,23 +1001,18 @@
                     </div>
 
                     <div class="form-group-custom">
-                        <div class="d-flex align-items-center gap-2">
-                            <label for="coursePrice">Price</label>
-                            <div class="form-check d-flex gap-1 align-items-center ">
-                                <input class="form-check-input small-check" type="checkbox" value="" id="free-course">
-                                <label class="form-check-label" for="checkChecked">
-                                    Free Course
-                                </label>
-                            </div>
+                        <label>.</label>
+                        <div class="form-check d-flex gap-2 align-items-center">
+                            <input class="form-check-input small-check" type="checkbox" value="" id="free-course">
+                            <label class="form-check-label" for="free-course">
+                                Include in Free Subscription Plan
+                            </label>
                         </div>
-
-                        <input type="number" class="form-control" id="coursePrice" name="coursePrice"
-                            placeholder="e.g., 200" min="1" required>
                     </div>
                 </div>
 
                 <div class="description-section">
-                    <p class="description-label">Course Description</p>
+                    <p class="description-label">Subject Description</p>
 
                     <div id="courseDescription" class="ql-editor"></div>
                 </div>
@@ -1136,7 +1131,8 @@
                                         Type</label><select name="" id="addContent" class="modal-input">
                                         {{-- <option value="image">Image</option> --}}
                                         <option value="youtube">Youtube Url</option>
-                                        {{-- <option value="audio">Audio</option> --}}
+                                        <option value="video">Video File</option>
+                                        <option value="audio">Audio</option>
                                         <option value="content">Content</option>
                                         <option value="document">Document</option>
                                     </select>
@@ -1177,6 +1173,21 @@
                                         {{-- <small class="text-muted d-block mt-2">Duration will be automatically extracted from the video URL</small> --}}
                                     </div>
                                 </div>
+                                {{-- video container --}}
+                                <div class="flex-column gap-3 hide select-children" id="video-container">
+                                    <div class="upload-file-container">
+                                        <label for="" class="upload-label">Upload Video File (MP4, WebM, MOV, AVI, MKV - Max 10GB)</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control upload-input p-3"
+                                                style="border-top-left-radius:15px; border-bottom-left-radius:15px;"
+                                                placeholder="Upload video file" aria-label="Video file"
+                                                aria-describedby="basic-addon2" />
+                                            <button class="upload-btn" type="button" data-upload-type="video">Upload
+                                                File </button>
+                                        </div>
+                                    </div>
+                                    <input type="file" id="videoFileInput" style="display: none;" accept="video/*" />
+                                </div>
                                 {{-- content container  --}}
                                 <div class="flex-column gap-3 hide select-children" id="content-container">
                                     <div class="d-flex flex-column gap-1">
@@ -1209,11 +1220,7 @@
                                     <div class="modal-form-input-border">
                                         <label for="" class="modal-label">File Type</label>
                                         <select name="" id="" class="modal-input">
-                                            <option value="image">Image</option>
-                                            <option value="audio">Audio</option>
-                                            <option value="video">Video</option>
                                             <option value="pdf">PDF</option>
-                                            <option value="docx">Docx</option>
                                         </select>
                                     </div>
                                     <div class="upload-file-container"><label for="" class="upload-label">Upload
@@ -1352,7 +1359,7 @@
                     </div>
                     <div class="meta-item"><i class="fa-solid fa-layer-group"></i><span id="publishLevel">Level</span>
                     </div>
-                </div><img id="publishCourseImage" src="{{ asset('images/publish.png') }}" alt="Course Preview" class="course-image">
+                </div><img id="publishCourseImage" src="{{ asset('images/publish.png') }}" alt="Subject Preview" class="course-image">
                 <div class="course-description-section">
                     <h6>Subject Description</h6>
                     <p id="publishDescription">This comprehensive course covers essential concepts and skills. Students
@@ -1407,7 +1414,7 @@
                 }
 
                 const course = result.data || result;
-                console.log('Course updated successfully:', result.data);
+                console.log('Subject updated successfully:', result.data);
 
                 // Populate form fields with course data
                 if (course.title) document.getElementById('courseTitle').value = course.title;
@@ -1417,15 +1424,12 @@
                 if (course.level_id) document.getElementById('courseLevel').value = course.level_id;
                 if (course.term_id) document.getElementById('subjectTerm').value = course.term_id;
                 if (course.duration_hours) document.getElementById('courseTime').value = course.duration_hours;
-                if (course.price) document.getElementById('coursePrice').value = course.price;
                 if (course.url) document.getElementById('overviewVideoUrl').value = course.url;
 
-                // Set free course checkbox and disable price if free
+                // Set free subscription checkbox
                 const freeCourseCheckbox = document.getElementById('free-course');
-                const priceInput = document.getElementById('coursePrice');
-                if (course.free) {
-                    freeCourseCheckbox.checked = course.free;
-                    if (priceInput) priceInput.disabled = true;
+                if (course.free_subscription) {
+                    freeCourseCheckbox.checked = course.free_subscription;
                 }
 
                 // Store course data for later use in populatePublishSection
@@ -1449,7 +1453,7 @@
 
             // Show appropriate buttons based on status
             if (status === 'draft') {
-                // For draft courses: show "Publish Course" and "Save As Draft" buttons
+                // For draft courses: show "Publish Subject" and "Save As Draft" buttons
                 if (publishBtn) publishBtn.style.display = 'inline-block';
                 // if (saveDraftBtn) saveDraftBtn.style.display = 'inline-block';
             } else if (status === 'published') {
@@ -1790,7 +1794,7 @@
                         console.error('Failed to load terms. Response:', termsResult);
                     }
 
-                    // Load Course Categories
+                    // Load Subject Categories
                     const categoriesResponse = await fetch('/api/course-category', {
                         method: 'GET',
                         headers: {
@@ -1801,7 +1805,7 @@
                     if (categoriesResponse.ok && categoriesResult) {
                         const categorySelect = document.getElementById('courseCategory');
                         const categories = Array.isArray(categoriesResult) ? categoriesResult : [];
-                        categorySelect.innerHTML = `<option value="">Select Course Category</option>`;
+                        categorySelect.innerHTML = `<option value="">Select Subject Category</option>`;
                         categories.forEach(category => {
                             const option = document.createElement('option');
                             option.value = category.id;
@@ -1810,7 +1814,7 @@
                         });
                     }
 
-                    // Load Course Levels
+                    // Load Subject Levels
                     const levelsResponse = await fetch('/api/level', {
                         method: 'GET',
                         headers: {
@@ -1821,7 +1825,7 @@
                     if (levelsResponse.ok && levelsResult) {
                         const levelSelect = document.getElementById('courseLevel');
                         const levels = Array.isArray(levelsResult) ? levelsResult : [];
-                        levelSelect.innerHTML = `<option value="">Select Course Level</option>`;
+                        levelSelect.innerHTML = `<option value="">Select Subject Level</option>`;
                         levels.forEach(level => {
                             const option = document.createElement('option');
                             option.value = level.id;
@@ -1897,6 +1901,9 @@
                 }
                 if (contentType === "youtube") {
                     document.getElementById("youtube-container").style.display = "flex";
+                }
+                if (contentType === "video") {
+                    document.getElementById("video-container").style.display = "flex";
                 }
                 if (contentType === "audio") {
                     document.getElementById("audio-container").style.display = "flex";
@@ -1981,19 +1988,7 @@
                 });
             }
 
-            // Free course checkbox handler
-            const freeCourseCheckbox = document.getElementById('free-course');
-            const priceInput = document.getElementById('coursePrice');
-            if (freeCourseCheckbox) {
-                freeCourseCheckbox.addEventListener('change', (e) => {
-                    if (priceInput) {
-                        priceInput.disabled = e.target.checked;
-                        if (e.target.checked) {
-                            priceInput.value = '0';
-                        }
-                    }
-                });
-            }
+
 
             // Update course function
             async function updateCourse(newStatus = null) {
@@ -2005,8 +2000,7 @@
                     const courseLevel = document.getElementById('courseLevel').value;
                     const term = document.getElementById('subjectTerm').value;
                     const duration = document.getElementById('courseTime').value;
-                    const price = document.getElementById('coursePrice').value;
-                    const freeCourse = document.getElementById('free-course').checked;
+                    const freeSubscription = document.getElementById('free-course').checked;
                     const overviewUrl = document.getElementById('overviewVideoUrl').value;
 
                     // Validate required fields - check if description has actual content (not just empty tags)
@@ -2035,8 +2029,7 @@
                         formData.append('duration_hours', parseInt(duration));
                     }
 
-                    formData.append('price', freeCourse ? 0 : price);
-                    formData.append('free', freeCourse ? 1 : 0);
+                    formData.append('free_subscription', freeSubscription ? 1 : 0);
                     formData.append('url', overviewUrl);
 
                     // Only set status if newStatus is provided (for Save As Draft or Publish)
@@ -2085,19 +2078,19 @@
                         return;
                     }
 
-                    console.log('Course updated successfully:', result);
+                    console.log('Subject updated successfully:', result);
 
                     // Show success message based on action
                     if (newStatus === 'published') {
-                        ToastNotification.success('Success', 'Course published successfully!');
+                        ToastNotification.success('Success', 'Subject published successfully!');
                         // Redirect to all courses page after 2 seconds
                         setTimeout(() => {
                             window.location.href = '/subjects';
                         }, 2000);
                     } else if (newStatus === 'draft') {
-                        ToastNotification.success('Success', 'Course saved as draft!');
+                        ToastNotification.success('Success', 'Subject saved as draft!');
                     } else {
-                        ToastNotification.success('Success', 'Course updated successfully!');
+                        ToastNotification.success('Success', 'Subject updated successfully!');
                     }
 
                     // Reload course data to reflect changes (only if not redirecting)
@@ -2635,6 +2628,12 @@
                     case 'image':
                         document.getElementById('image-container').style.display = 'flex';
                         break;
+                    case 'audio':
+                        document.getElementById('audio-container').classList.remove('hide');
+                        break;
+                    case 'video':
+                        document.getElementById('video-container').classList.remove('hide');
+                        break;
                     default:
                         break;
                 }
@@ -2660,6 +2659,7 @@
         const uploadedFiles = {
             image: null,
             audio: null,
+            video: null,
             document: null
         };
 
@@ -2675,6 +2675,13 @@
         if (audioFileInput) {
             audioFileInput.addEventListener('change', function(e) {
                 handleFileUpload(e, 'audio');
+            });
+        }
+
+        const videoFileInput = document.getElementById('videoFileInput');
+        if (videoFileInput) {
+            videoFileInput.addEventListener('change', function(e) {
+                handleFileUpload(e, 'video');
             });
         }
 
@@ -2700,6 +2707,9 @@
                     break;
                 case 'audio':
                     inputField = modal.querySelector('#audio-container input[type="text"]');
+                    break;
+                case 'video':
+                    inputField = modal.querySelector('#video-container input[type="text"]');
                     break;
                 case 'document':
                     inputField = modal.querySelector('#document-container input[type="text"]');
@@ -2971,6 +2981,15 @@
                         formData.append('attachment', documentFile);
                         break;
 
+                    case 'video':
+                        const videoFile = uploadedFiles.video;
+                        if (!videoFile) {
+                            ToastNotification.warning('Validation', 'Please upload a video file');
+                            return;
+                        }
+                        formData.append('attachment', videoFile);
+                        break;
+
                     case 'image':
                         const imageFile = uploadedFiles.image;
                         if (!imageFile) {
@@ -2979,6 +2998,15 @@
                         }
                         formData.append('attachment', imageFile);
                         break;
+
+                    case 'audio':
+                        const audioFile = uploadedFiles.audio;
+                        if (!audioFile) {
+                            ToastNotification.warning('Validation', 'Please upload an audio file');
+                            return;
+                        }
+                        formData.append('attachment', audioFile);
+                        break;
                 }
 
                 let result;
@@ -2986,10 +3014,32 @@
                     // Update existing lesson
                     formData.append('_method', 'PUT');
                     result = await LessonApiClient.updateLesson(window.editingLessonId, formData);
-                    ToastNotification.success('Success', 'Lesson updated successfully');
                 } else {
                     // Create new lesson
                     result = await LessonApiClient.createLesson(courseId, formData);
+                }
+
+                // Check if the request was successful
+                if (!result.success) {
+                    console.error('Lesson save failed:', result);
+                    let errorMessage = result.message || 'Failed to save lesson';
+
+                    // If there are validation errors, show them
+                    if (result.errors && Object.keys(result.errors).length > 0) {
+                        const errorList = Object.entries(result.errors)
+                            .map(([field, messages]) => `${field}: ${Array.isArray(messages) ? messages.join(', ') : messages}`)
+                            .join('\n');
+                        errorMessage = `Validation errors:\n${errorList}`;
+                        console.error('Validation errors:', result.errors);
+                    }
+
+                    ToastNotification.error('Error', errorMessage);
+                    return;
+                }
+
+                if (window.editingLessonId) {
+                    ToastNotification.success('Success', 'Lesson updated successfully');
+                } else {
                     ToastNotification.success('Success', 'Lesson created successfully');
                 }
 
@@ -2997,6 +3047,7 @@
                 uploadedFiles.image = null;
                 uploadedFiles.audio = null;
                 uploadedFiles.document = null;
+                uploadedFiles.video = null;
 
                 // Close modal with proper cleanup
                 const modalInstance = bootstrap.Modal.getInstance(modal);
@@ -3069,6 +3120,8 @@
                         break;
                     case 'document':
                     case 'image':
+                    case 'audio':
+                    case 'video':
                         const attachmentInput = modal.querySelector(`#${lessonType}-container input[type="text"]`);
                         if (attachmentInput) attachmentInput.value = lesson.attachment || '';
                         break;

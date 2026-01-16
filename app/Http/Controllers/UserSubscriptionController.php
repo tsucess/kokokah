@@ -86,14 +86,26 @@ class UserSubscriptionController extends Controller
             // Calculate expiration date based on duration type
             $expiresAt = Carbon::now();
             switch ($plan->duration_type) {
+                case 'free':
+                    // Free subscriptions don't expire
+                    $expiresAt = null;
+                    break;
                 case 'daily':
                     $expiresAt->addDays($plan->duration);
                     break;
                 case 'weekly':
                     $expiresAt->addWeeks($plan->duration);
                     break;
+                case 'quarterly':
+                    // Quarterly = 3 months
+                    $expiresAt->addMonths(3);
+                    break;
                 case 'monthly':
                     $expiresAt->addMonths($plan->duration);
+                    break;
+                case 'half_yearly':
+                    // Half yearly = 6 months
+                    $expiresAt->addMonths(6);
                     break;
                 case 'yearly':
                     $expiresAt->addYears($plan->duration);
@@ -222,6 +234,94 @@ class UserSubscriptionController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to resume subscription: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Check if user has access to a course based on subscription
+     *
+     * Access is granted if:
+     * 1. User is enrolled in the course
+     * 2. Course is in free subscription plan AND user has active free subscription
+     * 3. Course is in free subscription plan AND user has no subscriptions (new/unsubscribed users)
+     */
+    public function checkCourseAccess(Request $request, $courseId)
+    {
+        try {
+            $user = Auth::user();
+            $course = Course::findOrFail($courseId);
+
+            // Check if course is in free subscription plan
+            $freeSubscriptionPlan = SubscriptionPlan::where('duration_type', 'free')
+                                                    ->where('is_active', true)
+                                                    ->first();
+
+            $hasAccess = false;
+            $accessReason = null;
+
+            // If course is in free subscription plan, grant access to:
+            // 1. Users with active free subscription
+            // 2. Users with no subscriptions at all (new/unsubscribed users)
+            if ($freeSubscriptionPlan && $course->subscriptionPlans()->where('subscription_plan_id', $freeSubscriptionPlan->id)->exists()) {
+                // Check if user has any active subscription
+                $hasAnyActiveSubscription = UserSubscription::where('user_id', $user->id)
+                                                           ->where('status', 'active')
+                                                           ->where(function ($q) {
+                                                               $q->whereNull('expires_at')
+                                                                 ->orWhere('expires_at', '>', Carbon::now());
+                                                           })
+                                                           ->exists();
+
+                // If user has no active subscriptions, they are new/unsubscribed - grant free access
+                if (!$hasAnyActiveSubscription) {
+                    $hasAccess = true;
+                    $accessReason = 'User has access to free courses (new/unsubscribed user)';
+                } else {
+                    // User has subscriptions, check if they have active free subscription
+                    $activeFreeSubscription = UserSubscription::where('user_id', $user->id)
+                                                             ->where('subscription_plan_id', $freeSubscriptionPlan->id)
+                                                             ->where('status', 'active')
+                                                             ->where(function ($q) {
+                                                                 $q->whereNull('expires_at')
+                                                                   ->orWhere('expires_at', '>', Carbon::now());
+                                                             })
+                                                             ->first();
+
+                    if ($activeFreeSubscription) {
+                        $hasAccess = true;
+                        $accessReason = 'User has active free subscription';
+                    } else {
+                        $accessReason = 'Course requires free subscription which user does not have';
+                    }
+                }
+            } else {
+                // Check if user is enrolled in the course
+                $enrollment = Enrollment::where('user_id', $user->id)
+                                       ->where('course_id', $courseId)
+                                       ->where('status', 'active')
+                                       ->first();
+
+                if ($enrollment) {
+                    $hasAccess = true;
+                    $accessReason = 'User is enrolled in this course';
+                } else {
+                    $accessReason = 'User is not enrolled in this course';
+                }
+            }
+
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'course_id' => $courseId,
+                    'has_access' => $hasAccess,
+                    'reason' => $accessReason
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to check course access: ' . $e->getMessage()
             ], 500);
         }
     }

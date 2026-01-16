@@ -27,7 +27,6 @@ class StoreCourseRequest extends FormRequest
             'category_id' => 'required|exists:categories,id',
             'term_id' => 'nullable|exists:terms,id',
             'level_id' => 'nullable|exists:levels,id',
-            'price' => 'required|numeric|min:0|max:999999.99',
             'duration_hours' => 'nullable|integer|min:1|max:1000',
             'difficulty' => 'required|in:beginner,intermediate,advanced',
             'max_students' => 'nullable|integer|min:1|max:10000',
@@ -51,10 +50,6 @@ class StoreCourseRequest extends FormRequest
             'description.min' => 'Course description must be at least 50 characters',
             'category_id.required' => 'Please select a category',
             'category_id.exists' => 'Selected category does not exist',
-            'price.required' => 'Course price is required',
-            'price.numeric' => 'Price must be a valid number',
-            'price.min' => 'Price cannot be negative',
-            'price.max' => 'Price cannot exceed 999,999.99',
             'difficulty.required' => 'Please select difficulty level',
             'difficulty.in' => 'Difficulty must be beginner, intermediate, or advanced',
             'max_students.min' => 'Maximum students must be at least 1',
@@ -84,12 +79,6 @@ class StoreCourseRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         // Clean and prepare data
-        if ($this->has('price')) {
-            $this->merge([
-                'price' => (float) str_replace(',', '', $this->price)
-            ]);
-        }
-
         if ($this->has('tags') && is_string($this->tags)) {
             $this->merge([
                 'tags' => array_filter(array_map('trim', explode(',', $this->tags)))

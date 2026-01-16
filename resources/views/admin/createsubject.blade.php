@@ -69,7 +69,7 @@
             flex-wrap: wrap;
         }
 
-        .coursebtn {
+        .subjectbtn {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -87,12 +87,12 @@
             text-decoration: none;
         }
 
-        .coursebtn:hover {
+        .subjectbtn:hover {
             border-color: #004A53;
             background-color: #f9f9f9;
         }
 
-        .coursebtn.course-btn-active {
+        .subjectbtn.subject-btn-active {
             background-color: #004A53;
             color: white;
             border-color: #004A53;
@@ -305,7 +305,7 @@
         <div class="container bg-white">
             <div class="subject-header">
                 <div>
-                    <h1>Create New Course</h1>
+                    <h1>Create New Subject</h1>
                     <p>Here overview of your</p>
                 </div>
 
@@ -315,7 +315,7 @@
                     </button>
 
                     <button type="button" class="btn btn-publish" id="finalPublishBtn">
-                        Publish Course
+                        Publish Subject
                     </button>
                 </div> --}}
             </div>
@@ -324,25 +324,25 @@
         <!-- Navigation Buttons -->
         <div class="container bg-white">
             <div class="nav-buttons-container">
-                <button type="button" class="coursebtn" data-section="details">
+                <button type="button" class="subjectbtn" data-section="details">
                     <i class="fa-solid fa-circle fa-2xs"></i>
                     Create New Subject
                     <i class="fa fa-arrow-right"></i>
                 </button>
 
-                <button type="button" class="coursebtn" data-section="media">
+                <button type="button" class="subjectbtn" data-section="media">
                     <i class="fa-solid fa-circle fa-2xs"></i>
                     Subject Media
                     <i class="fa fa-arrow-right"></i>
                 </button>
 
-                {{-- <button type="button" class="coursebtn" data-section="curriculum">
+                {{-- <button type="button" class="subjectbtn" data-section="curriculum">
                     <i class="fa-solid fa-circle fa-2xs"></i>
                     Curriculum
                     <i class="fa fa-arrow-right"></i>
                 </button> --}}
 
-                <button type="button" class="coursebtn" data-section="publish">
+                <button type="button" class="subjectbtn" data-section="publish">
                     <i class="fa-solid fa-circle fa-2xs"></i>
                     Additional Information
                     <i class="fa fa-arrow-right"></i>
@@ -350,20 +350,19 @@
             </div>
         </div>
 
-        <!-- Course Details Section -->
+        <!-- Subject Details Section -->
         <div class="container bg-white content-section" id="details">
             <div class="section-header">
                 <h5>Subject Details</h5>
             </div>
 
-            <form id="courseDetailsForm">
+            <form id="subjectDetailsForm">
                 @csrf
 
-                <input type="hidden" class="form-control" id="curriculumCategoryId" name="curriculumCategoryId" required>
                 <div class="form-row-two">
                     <div class="form-group-custom">
-                        <label for="courseTitle">Subject Title</label>
-                        <input type="text" class="form-control" id="courseTitle" name="courseTitle"
+                        <label for="subjectTitle">Subject Title</label>
+                        <input type="text" class="form-control" id="subjectTitle" name="subjectTitle"
                             placeholder="Enter Subject Title" required>
                     </div>
                     <div class="form-group-custom">
@@ -375,43 +374,38 @@
 
                 <div class="form-row-two">
                     <div class="form-group-custom">
-                        <label for="courseCategory">Subject Category</label>
-                        <select class="form-control" id="courseCategory" name="courseCategory" required>
+                        <label for="subjectCategory">Subject Category</label>
+                        <select class="form-control" id="subjectCategory" name="subjectCategory" required>
 
                         </select>
                     </div>
 
                     <div class="form-group-custom">
-                        <label for="courseLevel">Subject Level</label>
-                        <select class="form-control" id="courseLevel" name="courseLevel" required></select>
+                        <label for="subjectLevel">Subject Level</label>
+                        <select class="form-control" id="subjectLevel" name="subjectLevel" required></select>
                     </div>
                 </div>
 
                 <div class="form-row-two">
                     <div class="form-group-custom">
-                        <label for="courseTime">Duration</label>
-                        <input type="number" class="form-control" id="courseTime" name="courseTime"
+                        <label for="subjectTime">Duration</label>
+                        <input type="number" class="form-control" id="subjectTime" name="subjectTime"
                             placeholder="e.g., 2 hours" required>
                     </div>
 
                     <div class="form-group-custom">
-                        <div class="d-flex align-items-center gap-2">
-                            <label for="coursePrice">Price</label>
-                            <div class="form-check d-flex gap-1 align-items-center ">
-                                <input class="form-check-input small-check" type="checkbox" value="" id="free-course">
-                                <label class="form-check-label" for="checkChecked">
-                                    Free Subject
-                                </label>
-                            </div>
+                        <label>.</label>
+                        <div class="form-check d-flex gap-2 align-items-center">
+                            <input class="form-check-input small-check" type="checkbox" value="" id="free-subject">
+                            <label class="form-check-label" for="free-subject">
+                                Include in Free Subscription Plan
+                            </label>
                         </div>
-
-                        <input type="number" class="form-control" id="coursePrice" name="coursePrice"
-                            placeholder="e.g., 200" min="1" required>
                     </div>
                 </div>
 
                 <div class="description-section">
-                    <p class="description-label">Course Description</p>
+                    <p class="description-label">Subject Description</p>
 
                     {{-- <div class="editor-toolbar">
                         <span title="Bold"><i class="fa-solid fa-bold"></i></span>
@@ -423,7 +417,7 @@
 
                     <textarea class="description-textarea" id="courseDescription" name="courseDescription"
                         placeholder="Write subject description here..." form="courseDetailsForm"></textarea> --}}
-                    <div id="courseDescription" class="ql-editor"></div>
+                    <div id="subjectDescription" class="ql-editor"></div>
                 </div>
             </form>
 
@@ -437,7 +431,7 @@
         <!-- Media Section -->
         <div class="container bg-white d-none content-section" id="media">
             <div class="section-header">
-                <h5>Course Media</h5>
+                <h5>Subject Media</h5>
             </div>
 
             <form id="mediaUploadForm">
@@ -552,7 +546,7 @@
                     color: #004A53;
                 }
 
-                .course-image {
+                .subject-image {
                     width: 100%;
                     height: 250px;
                     object-fit: cover;
@@ -560,18 +554,18 @@
                     margin-bottom: 2rem;
                 }
 
-                .course-description-section {
+                .subject-description-section {
                     margin-bottom: 2rem;
                 }
 
-                .course-description-section h6 {
+                .subject-description-section h6 {
                     font-size: 1rem;
                     color: #004A53;
                     font-weight: 600;
                     margin-bottom: 1rem;
                 }
 
-                .course-description-section p {
+                .subject-description-section p {
                     color: #333;
                     line-height: 1.7;
                     margin-bottom: 1rem;
@@ -726,18 +720,14 @@
                         <i class="fa-solid fa-layer-group"></i>
                         <span id="publishLevel">Level</span>
                     </div>
-                    <div class="meta-item">
-                        <i class="fa-solid fa-money-bill"></i>
-                        <span id="publishPrice">0 Price</span>
-                    </div>
                 </div>
 
-                <img id="publishCourseImage" src="{{ asset('images/publish.png') }}" alt="Course Preview" class="course-image">
+                <img id="publishSubjectImage" src="{{ asset('images/publish.png') }}" alt="Subject Preview" class="subject-image">
 
-                <div class="course-description-section">
+                <div class="subject-description-section">
                     <h6>Subject Description</h6>
                     <p id="publishDescription">
-                        This comprehensive course covers essential concepts and skills. Students will learn through
+                        This comprehensive subject covers essential concepts and skills. Students will learn through
                         interactive lessons, practice exercises, and assessments to build a strong foundation.
                     </p>
                 </div>
@@ -761,7 +751,7 @@
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 
     <script>
-        const quill = new Quill('#courseDescription', {
+        const quill = new Quill('#subjectDescription', {
             theme: 'snow'
         });
 
@@ -796,7 +786,7 @@
                     console.error('Failed to load terms. Response:', termsResult);
                 }
 
-                // Load Course Categories
+                // Load Subject Categories
                 const categoriesResponse = await fetch('/api/course-category', {
                     method: 'GET',
                     headers: {
@@ -805,9 +795,9 @@
                 });
                 const categoriesResult = await categoriesResponse.json();
                 if (categoriesResponse.ok && categoriesResult) {
-                    const categorySelect = document.getElementById('courseCategory');
+                    const categorySelect = document.getElementById('subjectCategory');
                     const categories = Array.isArray(categoriesResult) ? categoriesResult : [];
-                    categorySelect.innerHTML = `<option value="">Select Course Category</option>`;
+                    categorySelect.innerHTML = `<option value="">Select Subject Category</option>`;
                     categories.forEach(category => {
                         const option = document.createElement('option');
                         option.value = category.id;
@@ -816,7 +806,7 @@
                     });
                 }
 
-                // Load Course Levels
+                // Load Subject Levels
                 const levelsResponse = await fetch('/api/level', {
                     method: 'GET',
                     headers: {
@@ -825,9 +815,9 @@
                 });
                 const levelsResult = await levelsResponse.json();
                 if (levelsResponse.ok && levelsResult) {
-                    const levelSelect = document.getElementById('courseLevel');
+                    const levelSelect = document.getElementById('subjectLevel');
                     const levels = Array.isArray(levelsResult) ? levelsResult : [];
-                    levelSelect.innerHTML = `<option value="">Select Course Level</option>`;
+                    levelSelect.innerHTML = `<option value="">Select Subject Level</option>`;
                     levels.forEach(level => {
                         const option = document.createElement('option');
                         option.value = level.id;
@@ -842,13 +832,13 @@
 
         // Navigation between sections
         document.addEventListener('DOMContentLoaded', () => {
-            const navButtons = document.querySelectorAll('.coursebtn');
+            const navButtons = document.querySelectorAll('.subjectbtn');
             const sections = document.querySelectorAll('.content-section');
             const continueButtons = document.querySelectorAll('.continue-btn');
             const backButtons = document.querySelectorAll('.back-btn');
 
-            // Initialize courseData object to track form values
-            const courseData = {
+            // Initialize subjectData object to track form values
+            const subjectData = {
                 title: '',
                 category: '',
                 categoryName: '',
@@ -856,8 +846,7 @@
                 levelName: '',
                 duration: '',
                 description: '',
-                price: '',
-                freeCourse: false,
+                freeSubscription: false,
                 imageFile: null
             };
 
@@ -877,11 +866,11 @@
                     section.classList.remove('d-none');
                 }
 
-                navButtons.forEach(btn => btn.classList.remove('course-btn-active'));
+                navButtons.forEach(btn => btn.classList.remove('subject-btn-active'));
                 // Use a safer method to find the active button
                 const activeBtn = Array.from(navButtons).find(btn => btn.getAttribute('data-section') === sectionId);
                 if (activeBtn) {
-                    activeBtn.classList.add('course-btn-active');
+                    activeBtn.classList.add('subject-btn-active');
                 }
 
                 // Populate publish section when navigating to it
@@ -893,73 +882,57 @@
 
 
             // Get data from form fields
-            document.getElementById('courseTitle').addEventListener('input', e => {
-                courseData.title = e.target.value;
+            document.getElementById('subjectTitle').addEventListener('input', e => {
+                subjectData.title = e.target.value;
             });
 
-            document.getElementById('courseCategory').addEventListener('change', e => {
-                courseData.category = e.target.value;
+            document.getElementById('subjectCategory').addEventListener('change', e => {
+                subjectData.category = e.target.value;
                 // Store the category name for display
                 const selectedOption = e.target.options[e.target.selectedIndex];
-                courseData.categoryName = selectedOption.textContent;
+                subjectData.categoryName = selectedOption.textContent;
             });
 
-            document.getElementById('courseLevel').addEventListener('change', e => {
-                courseData.level = e.target.value;
+            document.getElementById('subjectLevel').addEventListener('change', e => {
+                subjectData.level = e.target.value;
                 // Store the level name for display
                 const selectedOption = e.target.options[e.target.selectedIndex];
-                courseData.levelName = selectedOption.textContent;
+                subjectData.levelName = selectedOption.textContent;
             });
 
-            document.getElementById('courseTime').addEventListener('input', e => {
-                courseData.duration = e.target.value;
-            });
-
-            document.getElementById('coursePrice').addEventListener('input', e => {
-                courseData.price = e.target.value;
+            document.getElementById('subjectTime').addEventListener('input', e => {
+                subjectData.duration = e.target.value;
             });
 
             quill.on('text-change', function () {
-    courseData.description = quill.getText();
+    subjectData.description = quill.getText();
 });
 
-            document.getElementById('free-course').addEventListener('change', e => {
-                const checked = e.target.checked;
-
-                courseData.freeCourse = checked;
-                const priceInput = document.getElementById("coursePrice");
-
-                priceInput.disabled = checked;
-
-                if (checked) {
-                    priceInput.value = "";
-                    courseData.price = "";
-                }
+            document.getElementById('free-subject').addEventListener('change', e => {
+                subjectData.freeSubscription = e.target.checked;
             })
 
             // File upload
             document.getElementById('fileInput').addEventListener('change', e => {
-                courseData.imageFile = e.target.files[0];
+                subjectData.imageFile = e.target.files[0];
 
-                if (courseData.imageFile) {
-                    document.getElementById("fileNameDisplay").textContent = courseData.imageFile.name;
+                if (subjectData.imageFile) {
+                    document.getElementById("fileNameDisplay").textContent = subjectData.imageFile.name;
                 }
             });
 
             function populatePublishSection() {
-                // document.getElementById('overviewUrl').textContent = courseData.url;
-                document.getElementById('publishSubjectTitle').textContent = courseData.title;
-                document.getElementById('publishCategory').textContent = (courseData.categoryName || 'Category');
-                document.getElementById('publishPrice').textContent = courseData.freeCourse ? 'Free Course' :
-                    courseData.price + ' Price';
-                document.getElementById('publishTime').textContent = courseData.duration + ' Hours';
-                document.getElementById('publishLevel').textContent = (courseData.levelName || 'Level');
-                document.getElementById('publishDescription').textContent = courseData.description;
+                // document.getElementById('overviewUrl').textContent = subjectData.url;
+                document.getElementById('publishSubjectTitle').textContent = subjectData.title;
+                document.getElementById('publishCategory').textContent = (subjectData.categoryName || 'Category');
+                document.getElementById('publishTime').textContent = subjectData.duration + ' Hours';
+                document.getElementById('publishLevel').textContent = (subjectData.levelName || 'Level');
+                document.getElementById('publishDescription').textContent = subjectData.description;
 
                 if (fileInput && fileInput.files && fileInput.files[0]) {
                     const reader = new FileReader();
                     reader.onload = (e) => {
-                        document.getElementById('publishCourseImage').src = e.target.result;
+                        document.getElementById('publishSubjectImage').src = e.target.result;
                     };
                     reader.readAsDataURL(fileInput.files[0]);
                 }
@@ -1025,9 +998,9 @@
             const finalPublishBtn = document.getElementById('finalPublishBtn');
             if (finalPublishBtn) {
                 finalPublishBtn.addEventListener('click', async () => {
-                    const title = document.getElementById('courseTitle').value;
-                    const category = document.getElementById('courseCategory').value;
-                    const level = document.getElementById('courseLevel').value;
+                    const title = document.getElementById('subjectTitle').value;
+                    const category = document.getElementById('subjectCategory').value;
+                    const level = document.getElementById('subjectLevel').value;
                     const description = quill.getText().trim();
                     const term = document.getElementById('subjectTerm').value;
 
@@ -1046,11 +1019,8 @@
                         formData.append('slug', generateSlug(title));
                         formData.append('description', description);
                         formData.append('course_category_id', category);
-                        formData.append('curriculum_category_id',
-                        category); // Using same category for both
                         formData.append('level_id', level);
-                        formData.append('price', courseData.price || 0);
-                        formData.append('free', courseData.freeCourse ? 1 : 0);
+                        formData.append('free_subscription', subjectData.freeSubscription ? 1 : 0);
                         formData.append('url', generateSlug(title));
 
                         // Add optional fields
@@ -1058,7 +1028,7 @@
                             formData.append('term_id', term);
                         }
 
-                        const duration = document.getElementById('courseTime').value;
+                        const duration = document.getElementById('subjectTime').value;
                         if (duration) {
                             formData.append('duration_hours', duration);
                         }
@@ -1071,18 +1041,25 @@
 
                         const result = await window.CourseApiClient.createCourse(formData);
                         if (result.success) {
-                            ToastNotification.success('Success', 'Course published successfully!');
-                            // Get the course ID from the response
-                            const courseId = result.data?.id || result.id;
+                            ToastNotification.success('Success', 'Subject published successfully!');
+                            // Get the subject ID from the response
+                            const subjectId = result.data?.id || result.id;
                             setTimeout(() => {
-                                window.location.href = `/editsubject/${courseId}`;
+                                window.location.href = `/editsubject/${subjectId}`;
                             }, 1500);
                         } else {
-                            ToastNotification.error('Error', result.message || 'Failed to publish course');
+                            // Show validation errors if available
+                            if (result.errors && Object.keys(result.errors).length > 0) {
+                                const errorMessages = Object.values(result.errors).flat().join('\n');
+                                console.error('Validation errors:', result.errors);
+                                ToastNotification.error('Validation Error', errorMessages);
+                            } else {
+                                ToastNotification.error('Error', result.message || 'Failed to publish subject');
+                            }
                         }
                     } catch (error) {
                         console.error('Publish error:', error);
-                        ToastNotification.error('Error', 'Error publishing course: ' + error.message);
+                        ToastNotification.error('Error', 'Error publishing subject: ' + error.message);
                     }
                 });
             }
@@ -1091,9 +1068,9 @@
             const saveNowBtn = document.getElementById('saveNowBtn');
             if (saveNowBtn) {
                 saveNowBtn.addEventListener('click', async () => {
-                    const title = document.getElementById('courseTitle').value;
-                    const category = document.getElementById('courseCategory').value;
-                    const level = document.getElementById('courseLevel').value;
+                    const title = document.getElementById('subjectTitle').value;
+                    const category = document.getElementById('subjectCategory').value;
+                    const level = document.getElementById('subjectLevel').value;
                     const description = quill.getText().trim();
                     const term = document.getElementById('subjectTerm').value;
 
@@ -1111,19 +1088,14 @@
                         formData.append('slug', generateSlug(title));
                         formData.append('description', description);
                         formData.append('course_category_id', category);
-                        formData.append('curriculum_category_id',
-                        category); // Using same category for both
                         formData.append('level_id', level);
-                        formData.append('price', courseData.price || 0);
-                        formData.append('free', courseData.freeCourse ? 1 : 0);
+                        formData.append('term_id', term);
+                        formData.append('free_subscription', subjectData.freeSubscription ? 1 : 0);
                         formData.append('url', generateSlug(title));
 
                         // Add optional fields
-                        if (term) {
-                            formData.append('term_id', term);
-                        }
 
-                        const duration = document.getElementById('courseTime').value;
+                        const duration = document.getElementById('subjectTime').value;
                         if (duration) {
                             formData.append('duration_hours', duration);
                         }
@@ -1136,18 +1108,25 @@
 
                         const result = await window.CourseApiClient.createCourse(formData);
                         if (result.success) {
-                            ToastNotification.success('Success', 'Course saved successfully!');
-                            // Get the course ID from the response
-                            const courseId = result.data?.id || result.id;
+                            ToastNotification.success('Success', 'Subject saved successfully!');
+                            // Get the subject ID from the response
+                            const subjectId = result.data?.id || result.id;
                             setTimeout(() => {
-                                window.location.href = `/editsubject/${courseId}`;
+                                window.location.href = `/editsubject/${subjectId}`;
                             }, 1500);
                         } else {
-                            ToastNotification.error('Error', result.message || 'Failed to save course');
+                            // Show validation errors if available
+                            if (result.errors && Object.keys(result.errors).length > 0) {
+                                const errorMessages = Object.values(result.errors).flat().join('\n');
+                                console.error('Validation errors:', result.errors);
+                                ToastNotification.error('Validation Error', errorMessages);
+                            } else {
+                                ToastNotification.error('Error', result.message || 'Failed to save subject');
+                            }
                         }
                     } catch (error) {
                         console.error('Save error:', error);
-                        ToastNotification.error('Error', 'Error saving course: ' + error.message);
+                        ToastNotification.error('Error', 'Error saving subject: ' + error.message);
                     }
                 });
             }
@@ -1156,9 +1135,9 @@
             const saveDraftBtn = document.getElementById('saveDraftBtn');
             if (saveDraftBtn) {
                 saveDraftBtn.addEventListener('click', async () => {
-                    const title = document.getElementById('courseTitle').value;
-                    const category = document.getElementById('courseCategory').value;
-                    const description = document.getElementById('courseDescription').value;
+                    const title = document.getElementById('subjectTitle').value;
+                    const category = document.getElementById('subjectCategory').value;
+                    const description = document.getElementById('subjectDescription').value;
                     const term = document.getElementById('subjectTerm').value;
 
                     console.log(title, category, description)
@@ -1176,14 +1155,11 @@
                         formData.append('slug', generateSlug(title));
                         formData.append('description', description);
                         formData.append('course_category_id', category);
-                        formData.append('curriculum_category_id',
-                        category); // Using same category for both
-                        formData.append('price', courseData.price || 0);
-                        formData.append('free', courseData.freeCourse ? 1 : 0);
+                        formData.append('free_subscription', subjectData.freeSubscription ? 1 : 0);
                         formData.append('url', generateSlug(title));
 
                         // Add optional fields
-                        const level = document.getElementById('courseLevel').value;
+                        const level = document.getElementById('subjectLevel').value;
                         if (level) {
                             formData.append('level_id', level);
                         }
@@ -1192,7 +1168,7 @@
                             formData.append('term_id', term);
                         }
 
-                        const duration = document.getElementById('courseTime').value;
+                        const duration = document.getElementById('subjectTime').value;
                         if (duration) {
                             formData.append('duration_hours', duration);
                         }
@@ -1205,11 +1181,11 @@
 
                         const result = await window.CourseApiClient.createCourse(formData);
                         if (result.success) {
-                            ToastNotification.success('Success', 'Course saved as draft!');
-                            // Get the course ID from the response
-                            const courseId = result.data?.id || result.id;
+                            ToastNotification.success('Success', 'Subject saved as draft!');
+                            // Get the subject ID from the response
+                            const subjectId = result.data?.id || result.id;
                             setTimeout(() => {
-                                window.location.href = `/editsubject/${courseId}`;
+                                window.location.href = `/editsubject/${subjectId}`;
                             }, 1500);
                         } else {
                             ToastNotification.error('Error', result.message || 'Failed to save draft');

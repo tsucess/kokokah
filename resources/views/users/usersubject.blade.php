@@ -95,12 +95,25 @@ let userCourses = [];
             try {
                 const response = await CourseApiClient.getMyCourses();
                 console.log('API Response:', response);
+                console.log('API Response Data:', response.data);
 
                 if (response.success && response.data) {
                     // Handle response structure: { courses: [...], total: ... }
                     userCourses = response.data.courses || response.data.data || response.data;
 
                     console.log('Courses extracted:', userCourses);
+                    console.log('Number of courses:', userCourses.length);
+
+                    // Log each course's access_type
+                    if (Array.isArray(userCourses)) {
+                        userCourses.forEach((course, index) => {
+                            console.log(`Course ${index}:`, {
+                                title: course.course?.title || 'Unknown',
+                                access_type: course.access_type,
+                                course_id: course.course_id
+                            });
+                        });
+                    }
 
                     // Ensure userCourses is an array
                     if (!Array.isArray(userCourses)) {
@@ -154,9 +167,28 @@ let userCourses = [];
             // Get course progress from enrollment or course
             const progress = enrollment.progress || course.progress || 0;
 
+            // Determine access type badge
+            const accessType = enrollment.access_type || 'enrolled';
+            let accessBadge = '';
+            let badgeColor = '#004A53'; // Default color
+
+            if (accessType === 'free_subscription') {
+                accessBadge = 'FREE';
+                badgeColor = '#4CAF50'; // Green for free
+            } else if (accessType === 'subscription') {
+                accessBadge = 'SUBSCRIPTION';
+                badgeColor = '#2196F3'; // Blue for subscription
+            } else if (accessType === 'enrolled') {
+                accessBadge = 'ENROLLED';
+                badgeColor = '#FF9800'; // Orange for enrolled
+            }
+
             card.innerHTML = `
-                <div class="border border-dark p-3" style="height: 200px; border-radius: 10px; overflow: hidden; text-align: center; align-items: center; justify-content: center; display: flex;">
-                    <img src="${courseImage}" class="img-fluid" style="max-height: 100%; object-fit: contain;" alt="${course.title}" />
+                <div style="position: relative;">
+                    <div class="border border-dark p-3" style="height: 200px; border-radius: 10px; overflow: hidden; text-align: center; align-items: center; justify-content: center; display: flex;">
+                        <img src="${courseImage}" class="img-fluid" style="max-height: 100%; object-fit: contain;" alt="${course.title}" />
+                    </div>
+                    ${accessBadge ? `<div style="position: absolute; top: 10px; right: 10px; background-color: ${badgeColor}; color: white; padding: 4px 12px; border-radius: 4px; font-size: 11px; font-weight: 600;">${accessBadge}</div>` : ''}
                 </div>
                 <div class="card-item-class align-self-start">${courseLevel}</div>
                 <div class="d-flex justify-content-between align-items-center">
@@ -186,7 +218,7 @@ let userCourses = [];
             const container = document.getElementById('coursesContainer');
             container.innerHTML = `
                 <div class="col-12 text-center py-5">
-                    <p class="text-muted">No courses enrolled yet. <a href="/userclass">Browse courses</a></p>
+                    <p class="text-muted">No courses available yet. <a href="/userclass">Browse all courses</a> to get started with free or premium courses.</p>
                 </div>
             `;
         }    </script>
