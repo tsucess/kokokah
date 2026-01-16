@@ -160,7 +160,8 @@
     </style>
 
     <main>
-        <section class="container-fluid header-banner">
+        <section class="container-fluid header-banner d-flex align-items-center">
+            <h3>Result & Score</h3>
             <div><img src="{{ asset('images/result-score-img.png') }}" alt="Result Score" class="banner-img" /></div>
         </section>
 

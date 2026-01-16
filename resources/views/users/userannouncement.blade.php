@@ -21,8 +21,8 @@
             <section class=" d-flex flex-column" style="gap: 30px;">
                 <div class="d-flex align-items-center justify-content-between">
                     <div>
-                        <h1>Notifications & Announcements</h1>
-                        <p class="text">Stay updated with the latest news and updates from your school/instructor.</p>
+                        <h2>Notifications & Announcements</h2>
+                        <p >Stay updated with the latest news and updates from your school/instructor.</p>
                     </div>
                 </div>
 

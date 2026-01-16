@@ -14,7 +14,7 @@
                 </div>
 
                 <div class="col-12 mb-5">
-                    <div class="d-flex overflow-auto py-2 border-bottom border-top" id="lessonsProgressContainer">
+                    <div class="d-flex overflow-auto py-2" id="lessonsProgressContainer">
                         <!-- Lesson progress buttons will be loaded dynamically -->
                     </div>
                 </div>
@@ -709,8 +709,8 @@ let currentCourseId = null;
 
             includes.forEach(item => {
                 const li = document.createElement('li');
-                li.className = 'mb-2';
-                li.innerHTML = `<img src="${item.icon}" class="img-fluid" style="width:15px; height:15px;"> ${item.text}`;
+                li.className = 'mb-2 d-flex align-items-center gap-1';
+                li.innerHTML = `<img src="${item.icon}" class="img-fluid" style="width:15px; aspect-ratio:1/1;"> ${item.text}`;
                 list.appendChild(li);
             });
 
@@ -904,7 +904,7 @@ let currentCourseId = null;
                         <div class="review-card-header">
                             <div class="review-card-user">
                                 <span class="review-card-name">Your Review</span>
-                              
+
                             </div>
                             <p class="review-card-date">${formatDate(review.created_at)}</p>
                         </div>
