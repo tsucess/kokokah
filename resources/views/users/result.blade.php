@@ -42,7 +42,7 @@
         .result-div {
             border: 28px solid #004A53;
             width: 160px;
-            height: 160px;
+            aspect-ratio:1/1;
             border-radius: 50%;
             font-size: 36px;
             color: #004A53;
@@ -116,6 +116,7 @@
             border-radius: 8px;
             display: inline-block;
             margin-top: 10px;
+            font-size: 14px;
         }
 
         .failed-badge {
@@ -126,6 +127,7 @@
             border-radius: 8px;
             display: inline-block;
             margin-top: 10px;
+            font-size: 14px;
         }
 
         .quiz-title {
@@ -140,6 +142,18 @@
             font-size: 14px;
             margin-top: 10px;
         }
+         @media screen and (max-width:768px) {
+            .failed-badge, .success-badge {
+               padding: 10px 10px;
+            }
+            .quiz-title{
+                font-size: 20px;
+            }
+            .result-items-text{
+                font-size: 18px;
+            }
+        }
+
 
         @media screen and (min-width:500px) {
             .banner-img {
@@ -178,7 +192,7 @@
         <!-- Results Content -->
         <div id="resultsContent" class="d-none">
             <!-- Overall Score Container (overlapping banner on left) -->
-            <div class="container-fluid" style="position: relative; z-index: 10; margin-top: -100px; padding-left: 20px;">
+            <div class="container-fluid" style="position: relative; z-index: 10; padding-left: 20px;">
                 <div class="d-flex align-items-center result-container">
                     <div class="d-flex justify-content-center align-items-center result-div">
                         <span id="percentageScore">0%</span>
@@ -355,17 +369,17 @@
                                 ${passed ? '✓ Passed' : '✗ Failed'}
                             </span>
                         </div>
-                        <small class="text-muted">${quizCount} Quiz${quizCount !== 1 ? 'zes' : ''}</small>
+                        <small class="">${quizCount} Quiz${quizCount !== 1 ? 'zes' : ''}</small>
                     </div>
                     <div class="d-flex align-items-center justify-content-between">
-                        <span class="text-muted">Total Score</span>
+                        <span class="">Total Score</span>
                         <p class="result-items-text">${total_points_earned}/${total_points_possible}</p>
                     </div>
                     <div class="result-progress-bar">
                         <span class="result-progress-bar-track" style="width: ${percentage}%"></span>
                     </div>
                     <div class="d-flex align-items-center justify-content-between">
-                        <span class="text-muted">Percentage</span>
+                        <span class="">Percentage</span>
                         <p class="result-items-text">${Math.round(percentage)}%</p>
                     </div>
                 `;

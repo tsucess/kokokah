@@ -135,6 +135,18 @@
             overflow-wrap: break-word;
             white-space: normal;
         }
+        @media screen and (max-width:768px){
+            .nav-btn{
+                font-size: 16px;
+            }
+            .mark-complete-btn{
+                padding: 7px 10px;
+            }
+            .box-title{
+                font-size: 18px;
+            }
+
+        }
     </style>
     <main class="py-4 px-3">
         <!-- Button trigger modal -->
@@ -167,7 +179,7 @@
             <h1 id="lessonTitle">Loading...</h1>
             <div class="row g-3">
                 <div class="col-12">
-                    <div class="d-flex align-items-center gap-2 justify-content-between box mb-4">
+                    <div class="d-flex flex-column flex-md-row align-items-md-center gap-2 justify-content-between box mb-4">
                         <h3 class="box-title" id="lessonProgress">Loading...</h3>
                         <div class="box-progress-bar">
                             <div class="progress-track" id="progressTrack"></div>
@@ -248,11 +260,10 @@
 
                     </div>
                     <div class="d-flex align-items-center gap-2 justify-content-between">
-                        <button class="nav-btn" id="prevBtn" onclick="navigateToPreviousLesson()">Previous
-                            Lesson</button>
-                        <button class="mark-complete-btn" id="markCompleteBtn" onclick="markLessonComplete()">Mark Lesson
+                        <button class="nav-btn" id="prevBtn" onclick="navigateToPreviousLesson()">Previous</button>
+                        <button class="mark-complete-btn" id="markCompleteBtn" onclick="markLessonComplete()">Mark
                             Complete</button>
-                        <button class="nav-btn" id="nextBtn" onclick="navigateToNextLesson()">Next Lesson</button>
+                        <button class="nav-btn" id="nextBtn" onclick="navigateToNextLesson()">Next</button>
                     </div>
 
                 </div>
@@ -843,7 +854,7 @@
                     buttonText = 'Max Attempts Reached';
                 } else if (isAnswered && !isRetaking) {
                     buttonDisabled = 'disabled';
-                    buttonClass += ' opacity-50';
+                    buttonClass += ' opacity-50 d-none';
                     buttonText = 'Quiz Already Submitted';
                 }
 
