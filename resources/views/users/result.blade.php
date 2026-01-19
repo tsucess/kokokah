@@ -201,9 +201,9 @@
     </style>
 
     <main>
-        <section class="container-fluid header-banner d-flex align-items-center">
+        <section class="container-fluid header-section d-flex align-items-center">
             <h2 class="text-center">Result & Score</h2>
-            <div><img src="{{ asset('images/result-score-img.png') }}" alt="Result Score" class="banner-img" /></div>
+            <img src="{{ asset('images/result-score-img.png') }}" alt="Result Score" class="banner-img" />
         </section>
 
         <!-- Loading State -->

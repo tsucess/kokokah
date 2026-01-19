@@ -205,7 +205,7 @@ font-size: 12px;
     <div class="container">
 
         <div class="d-flex flex-column gap-2 align-items-start pt-4 pt-md-5 ">
-          <h3 id="userGreeting">Hello 👋</h3>
+          <h2 id="userGreeting">Hello 👋</h2>
           <p>Let’s learn something new today!</p>
         </div>
 
