@@ -367,6 +367,17 @@
             .call-action-text {
                 color: #004A53;
                 font-size: 8px;
+                pointer-events: none;
+            }
+
+            #convertPointsOpenBtn {
+                pointer-events: auto;
+            }
+
+            #convertPointsOpenBtn .icon-container,
+            #convertPointsOpenBtn .icon-container i,
+            #convertPointsOpenBtn .call-action-text {
+                pointer-events: none;
             }
 
             @media screen and (min-width:768px) {
@@ -640,6 +651,13 @@
                                     style="color: #004A53;"></i></div>
                             <p class="call-action-text">Transfer Money</p>
                         </button>
+                        <button type="button" id="convertPointsOpenBtn"
+                            class="call-to-action-container d-flex flex-column gap-2 align-items-center"
+                            style="background: none; cursor: pointer; padding: 8px 8px;">
+                            <div class="icon-container"><i class="fa-solid fa-star fa-xs"
+                                    style="color: #004A53;"></i></div>
+                            <p class="call-action-text">Convert Points</p>
+                        </button>
                         <button id="enrollSubjectBtn"
                             class="call-to-action-container d-flex flex-column gap-2 align-items-center ">
                             <div class="icon-container"><i class="fa-solid fa-clipboard-list fa-xs"
@@ -862,7 +880,7 @@
                     </div>
 
                     <!-- Stripe -->
-                    <div class="payment-method-item" onclick="selectPaymentGateway('stripe')">
+                    <div class="payment-method-item" onclick="selectPaymentGateway('stripe')" style="display: none;">
                         <div class="payment-method-icon">
                             <img src="./images/stripe.webp" alt="Stripe"
                                 style="height: 40px; width: auto; object-fit: contain;">
@@ -874,7 +892,7 @@
                     </div>
 
                     <!-- PayPal -->
-                    <div class="payment-method-item" onclick="selectPaymentGateway('paypal')">
+                    <div class="payment-method-item" onclick="selectPaymentGateway('paypal')" style="display: none;">
                         <div class="payment-method-icon">
                             <img src="./images/paypal.png" alt="PayPal"
                                 style="height: 40px; width: auto; object-fit: contain;">

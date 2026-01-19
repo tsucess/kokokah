@@ -176,6 +176,18 @@
             const lastName = user.last_name || 'User';
             const points = user.total_points || 0;
             const badgesCount = user.badges_count || 0;
+            const badges = user.badges || [];
+
+            // Create badge icons HTML
+            let badgesHtml = '';
+            if (badges && badges.length > 0) {
+                badges.forEach(badge => {
+                    const badgeIcon = badge.icon || '🏆';
+                    badgesHtml += `<span class="badge-icon" title="${badge.name}: ${badge.description}" style="font-size: 18px; margin-right: 4px; cursor: pointer;">${badgeIcon}</span>`;
+                });
+            } else {
+                badgesHtml = '<span class="text-muted">No badges yet</span>';
+            }
 
             row.innerHTML = `
                 <td scope="row" class="align-middle rank-text">${String(rank).padStart(2, '0')}</td>
@@ -191,8 +203,8 @@
                 <td class="align-middle table-data-text">
                     ${getLevelBadge(points)}
                 </td>
-                <td class="align-middle">
-                    <img src="./images/badge-icon.png" alt="badge" class="img-badge" title="${badgesCount} badges earned">
+                <td class="align-middle" style="max-width: 200px; overflow-x: auto;">
+                    ${badgesHtml}
                 </td>
             `;
 
@@ -252,6 +264,18 @@
             const lastName = user.last_name || 'User';
             const points = user.total_points || 0;
             const badgesCount = user.badges_count || 0;
+            const badges = user.badges || [];
+
+            // Create badge icons HTML
+            let badgesHtml = '';
+            if (badges && badges.length > 0) {
+                badges.forEach(badge => {
+                    const badgeIcon = badge.icon || '🏆';
+                    badgesHtml += `<span class="badge-icon" title="${badge.name}: ${badge.description}" style="font-size: 18px; margin-right: 4px; cursor: pointer;">${badgeIcon}</span>`;
+                });
+            } else {
+                badgesHtml = '<span class="text-muted">No badges yet</span>';
+            }
 
             row.innerHTML = `
                 <td scope="row" class="align-middle rank-text">${String(rank).padStart(2, '0')}</td>
@@ -267,8 +291,8 @@
                 <td class="align-middle table-data-text">
                     ${getLevelBadge(points)}
                 </td>
-                <td class="align-middle">
-                    <img src="./images/badge-icon.png" alt="badge" class="img-badge" title="${badgesCount} badges earned">
+                <td class="align-middle" style="max-width: 200px; overflow-x: auto;">
+                    ${badgesHtml}
                 </td>
             `;
 

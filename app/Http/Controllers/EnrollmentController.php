@@ -7,6 +7,7 @@ use App\Models\Course;
 use App\Models\Certificate;
 use App\Models\LessonCompletion;
 use App\Services\WalletService;
+use App\Services\PointsAndBadgesService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -141,6 +142,10 @@ class EnrollmentController extends Controller
             $enrollment = Enrollment::where('user_id', $user->id)
                                    ->where('course_id', $course->id)
                                    ->first();
+
+            // Award enrollment badges
+            $badgeService = new PointsAndBadgesService();
+            $badgeService->awardEnrollmentBadges($user);
 
             return response()->json([
                 'success' => true,

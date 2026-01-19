@@ -349,6 +349,9 @@
     <!-- Notification Modal Component -->
     <script src="{{ asset('js/components/notificationModal.js') }}"></script>
 
+    <!-- Points Conversion Component -->
+    <script src="{{ asset('js/components/pointsConversionComponent.js') }}"></script>
+
     <!-- Initialize Notification Modal -->
     <script>
         if (document.readyState === 'loading') {

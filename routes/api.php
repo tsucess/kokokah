@@ -171,6 +171,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/claim-login-reward', [WalletController::class, 'claimLoginReward']);
         Route::post('/check-affordability', [WalletController::class, 'checkAffordability']);
 
+        // Points conversion routes
+        Route::post('/convert-points', [WalletController::class, 'convertPoints']);
+        Route::get('/conversion-history', [WalletController::class, 'conversionHistory']);
+
         // Payment method routes
         Route::get('/payment-methods', [WalletController::class, 'getPaymentMethods']);
         Route::post('/payment-methods', [WalletController::class, 'addPaymentMethod']);

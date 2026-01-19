@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ChatMessage;
 use App\Models\ChatRoom;
 use App\Events\MessageSent;
+use App\Services\PointsAndBadgesService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -164,6 +165,10 @@ class ChatMessageController extends Controller
             // Update chat room stats
             $chatRoom->increment('message_count');
             $chatRoom->update(['last_message_at' => now()]);
+
+            // Award chat activity badges
+            $badgeService = new PointsAndBadgesService();
+            $badgeService->awardChatActivityBadges($user);
 
             // Broadcast message event
             broadcast(new MessageSent($message, $chatRoom))->toOthers();

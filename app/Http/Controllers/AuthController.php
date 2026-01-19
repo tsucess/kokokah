@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\VerificationCode;
 use App\Notifications\VerificationCodeNotification;
 use Illuminate\Validation\ValidationException;
+use App\Services\PointsAndBadgesService;
 
 class AuthController extends Controller
 {
@@ -30,6 +31,10 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
             'role' => $request->role ?? 'student',
         ]);
+
+        // Award signup badge
+        $badgeService = new PointsAndBadgesService();
+        $badgeService->awardSignupBadge($user);
 
         // after $user = User::create([...]);
         $user->sendEmailVerificationNotification();

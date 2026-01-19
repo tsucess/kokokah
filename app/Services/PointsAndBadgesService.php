@@ -14,15 +14,41 @@ class PointsAndBadgesService
     const POINTS_PER_COURSE_COMPLETION = 50;
 
     /**
+     * Award badge for user signup
+     */
+    public function awardSignupBadge(User $user)
+    {
+        $badge = Badge::where('criteria', 'signup:1')->first();
+        if ($badge && !$user->badges()->where('badge_id', $badge->id)->exists()) {
+            $user->badges()->attach($badge->id, ['earned_at' => now()]);
+        }
+        return $user;
+    }
+
+    /**
+     * Award badge for profile completion
+     */
+    public function awardProfileCompletionBadge(User $user)
+    {
+        if ($this->isProfileComplete($user)) {
+            $badge = Badge::where('criteria', 'profile_complete:1')->first();
+            if ($badge && !$user->badges()->where('badge_id', $badge->id)->exists()) {
+                $user->badges()->attach($badge->id, ['earned_at' => now()]);
+            }
+        }
+        return $user;
+    }
+
+    /**
      * Award points for completing a topic/lesson
      */
     public function awardPointsForTopicCompletion(User $user, $topicId)
     {
         $user->addPoints(self::POINTS_PER_TOPIC_COMPLETION);
-        
+
         // Check if user qualifies for any badges
         $this->checkAndAwardBadges($user);
-        
+
         return $user;
     }
 
@@ -47,10 +73,50 @@ class PointsAndBadgesService
     public function awardPointsForCourseCompletion(User $user, $courseId)
     {
         $user->addPoints(self::POINTS_PER_COURSE_COMPLETION);
-        
+
         // Check if user qualifies for any badges
         $this->checkAndAwardBadges($user);
-        
+
+        return $user;
+    }
+
+    /**
+     * Award badges for money transfer
+     */
+    public function awardMoneyTransferBadges(User $user)
+    {
+        // Check and award money transfer badges
+        $this->checkAndAwardBadges($user);
+        return $user;
+    }
+
+    /**
+     * Award badges for chat activity
+     */
+    public function awardChatActivityBadges(User $user)
+    {
+        // Check and award chat-related badges
+        $this->checkAndAwardBadges($user);
+        return $user;
+    }
+
+    /**
+     * Award badges for subscription
+     */
+    public function awardSubscriptionBadges(User $user)
+    {
+        // Check and award subscription-related badges
+        $this->checkAndAwardBadges($user);
+        return $user;
+    }
+
+    /**
+     * Award badges for enrollment
+     */
+    public function awardEnrollmentBadges(User $user)
+    {
+        // Check and award enrollment-related badges
+        $this->checkAndAwardBadges($user);
         return $user;
     }
 
@@ -192,6 +258,49 @@ class PointsAndBadgesService
                 $level = $this->calculateUserLevel($user->points);
                 return strtolower($level) === strtolower($criteriaValue);
 
+            // SIGNUP & PROFILE BADGES
+            case 'signup':
+                return true; // User exists, so they've signed up
+
+            case 'profile_complete':
+                return $this->isProfileComplete($user);
+
+            // MONEY TRANSFER BADGES
+            case 'money_transfer':
+                $transfers = \App\Models\Transaction::where('sender_id', $user->id)
+                    ->where('type', 'transfer')
+                    ->count();
+                return $transfers >= (int)$criteriaValue;
+
+            case 'transfer_champion':
+                // Check if user has the most transfers
+                $userTransfers = \App\Models\Transaction::where('sender_id', $user->id)
+                    ->where('type', 'transfer')
+                    ->count();
+                $maxTransfers = \App\Models\Transaction::where('type', 'transfer')
+                    ->selectRaw('sender_id, COUNT(*) as transfer_count')
+                    ->groupBy('sender_id')
+                    ->orderByDesc('transfer_count')
+                    ->first();
+                return $maxTransfers && $maxTransfers->sender_id === $user->id && $userTransfers > 0;
+
+            // CHATROOM CHAMPION BADGE
+            case 'chatroom_champion':
+                // Check if user has the most chatroom posts
+                $userPosts = \App\Models\ChatMessage::where('user_id', $user->id)->count();
+                $maxPosts = \App\Models\ChatMessage::selectRaw('user_id, COUNT(*) as post_count')
+                    ->groupBy('user_id')
+                    ->orderByDesc('post_count')
+                    ->first();
+                return $maxPosts && $maxPosts->user_id === $user->id && $userPosts > 0;
+
+            // SUBSCRIPTION BADGES
+            case 'subscription':
+                return $this->checkSubscriptionMonths($user, (int)$criteriaValue);
+
+            case 'resubscription':
+                return $this->checkResubscription($user);
+
             default:
                 return false;
         }
@@ -244,6 +353,46 @@ class PointsAndBadgesService
     }
 
     /**
+     * Check if user profile is complete
+     */
+    private function isProfileComplete(User $user)
+    {
+        // Check if all required profile fields are filled
+        return !empty($user->first_name) &&
+               !empty($user->last_name) &&
+               !empty($user->email) &&
+               !empty($user->profile_photo);
+    }
+
+    /**
+     * Check subscription months
+     */
+    private function checkSubscriptionMonths(User $user, $months)
+    {
+        // Check if user has an active subscription for at least the specified months
+        $subscription = \App\Models\Subscription::where('user_id', $user->id)
+            ->where('status', 'active')
+            ->first();
+
+        if (!$subscription) {
+            return false;
+        }
+
+        $subscriptionMonths = $subscription->created_at->diffInMonths(now());
+        return $subscriptionMonths >= $months;
+    }
+
+    /**
+     * Check if user has resubscribed
+     */
+    private function checkResubscription(User $user)
+    {
+        // Check if user has more than one subscription record
+        $subscriptionCount = \App\Models\Subscription::where('user_id', $user->id)->count();
+        return $subscriptionCount > 1;
+    }
+
+    /**
      * Use points to enroll in a course
      */
     public function enrollWithPoints(User $user, $courseId, $coursePrice)
@@ -254,10 +403,10 @@ class PointsAndBadgesService
                 'message' => 'Insufficient points. Required: ' . $coursePrice . ', Available: ' . $user->points
             ];
         }
-        
+
         // Deduct points
         $user->deductPoints($coursePrice);
-        
+
         // Create enrollment
         $enrollment = $user->enrollments()->create([
             'course_id' => $courseId,
@@ -265,7 +414,7 @@ class PointsAndBadgesService
             'enrolled_at' => now(),
             'amount_paid' => 0 // Points-based enrollment
         ]);
-        
+
         return [
             'success' => true,
             'message' => 'Successfully enrolled using points',

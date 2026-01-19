@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Course;
 use App\Models\PaymentMethod;
 use App\Services\WalletService;
+use App\Services\PointsAndBadgesService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -163,6 +164,10 @@ class WalletController extends Controller
                 $request->description
             );
 
+            // Award money transfer badges
+            $badgeService = new PointsAndBadgesService();
+            $badgeService->awardMoneyTransferBadges($sender);
+
             return response()->json([
                 'success' => true,
                 'message' => 'Transfer successful',
@@ -288,6 +293,77 @@ class WalletController extends Controller
             'success' => true,
             'data' => $transactions->values()
         ]);
+    }
+
+    /**
+     * Convert points to wallet balance
+     */
+    public function convertPoints(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'points' => 'required|integer|min:10'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        try {
+            $user = Auth::user();
+            $points = $request->points;
+
+            // Perform conversion
+            $result = $this->walletService->convertPointsToWallet($user, $points);
+
+            if (!$result['success']) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $result['message'],
+                    'errors' => $result['errors'] ?? []
+                ], 400);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => $result['message'],
+                'data' => $result['data']
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Conversion failed: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Get conversion history
+     */
+    public function conversionHistory(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $limit = $request->get('limit', 50);
+
+            $conversions = $this->walletService->getConversionHistory($user, $limit);
+
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'conversions' => $conversions,
+                    'total_count' => $conversions->count()
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch conversion history: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     /**

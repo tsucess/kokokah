@@ -1074,7 +1074,7 @@
                             </div>
 
                             <!-- Stripe -->
-                            <div class="gateway-option">
+                            <div class="gateway-option" style="display: none;">
                                 <input type="radio" id="gateway-stripe" name="payment_gateway" value="stripe">
                                 <label for="gateway-stripe" class="gateway-label">
                                     <div class="gateway-icon">
@@ -1085,7 +1085,7 @@
                             </div>
 
                             <!-- PayPal -->
-                            <div class="gateway-option">
+                            <div class="gateway-option" style="display: none;">
                                 <input type="radio" id="gateway-paypal" name="payment_gateway" value="paypal">
                                 <label for="gateway-paypal" class="gateway-label">
                                     <div class="gateway-icon">

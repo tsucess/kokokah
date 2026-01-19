@@ -7,10 +7,148 @@ use App\Models\Wallet;
 use App\Models\Course;
 use App\Models\UserReward;
 use App\Models\Coupon;
+use App\Models\UserPointsHistory;
+use App\Models\PointsConversion;
 use Illuminate\Support\Facades\DB;
 
 class WalletService
 {
+    const POINTS_TO_WALLET_RATIO = 10; // 10 points = 1 wallet unit
+
+    /**
+     * Convert user points to wallet balance
+     * 10 points = 1 wallet unit (₦1.00)
+     */
+    public function convertPointsToWallet(User $user, int $points): array
+    {
+        // Validation
+        $validation = $this->validatePointsConversion($user, $points);
+        if (!$validation['valid']) {
+            return [
+                'success' => false,
+                'message' => $validation['errors'][0],
+                'errors' => $validation['errors']
+            ];
+        }
+
+        try {
+            return DB::transaction(function () use ($user, $points) {
+                // Get or create wallet
+                $wallet = $user->getOrCreateWallet();
+
+                // Calculate wallet amount
+                $walletAmount = $points / self::POINTS_TO_WALLET_RATIO;
+
+                // Deduct points from user
+                $pointsBefore = $user->points;
+                $user->deductPoints($points);
+                $pointsAfter = $user->points;
+
+                // Add to wallet
+                $transaction = $wallet->deposit(
+                    $walletAmount,
+                    'PTS-' . uniqid(),
+                    "Points conversion: {$points} points to ₦{$walletAmount}",
+                    ['points_converted' => $points, 'conversion_ratio' => self::POINTS_TO_WALLET_RATIO],
+                    'Points'
+                );
+
+                // Log conversion in points history
+                UserPointsHistory::create([
+                    'user_id' => $user->id,
+                    'points_change' => -$points,
+                    'points_before' => $pointsBefore,
+                    'points_after' => $pointsAfter,
+                    'reason' => 'Converted to wallet',
+                    'action_type' => 'conversion',
+                    'metadata' => [
+                        'wallet_amount' => $walletAmount,
+                        'conversion_ratio' => self::POINTS_TO_WALLET_RATIO,
+                        'transaction_id' => $transaction->id
+                    ]
+                ]);
+
+                // Log conversion in points_conversions table
+                $conversion = PointsConversion::create([
+                    'user_id' => $user->id,
+                    'points_converted' => $points,
+                    'wallet_amount' => $walletAmount,
+                    'conversion_ratio' => self::POINTS_TO_WALLET_RATIO,
+                    'reference' => 'CONV-' . uniqid(),
+                    'metadata' => [
+                        'transaction_id' => $transaction->id,
+                        'points_before' => $pointsBefore,
+                        'points_after' => $pointsAfter,
+                        'wallet_balance_after' => $wallet->balance
+                    ]
+                ]);
+
+                return [
+                    'success' => true,
+                    'message' => "Successfully converted {$points} points to ₦{$walletAmount}",
+                    'data' => [
+                        'points_converted' => $points,
+                        'wallet_amount' => $walletAmount,
+                        'remaining_points' => $pointsAfter,
+                        'new_wallet_balance' => $wallet->balance,
+                        'conversion_id' => $conversion->reference,
+                        'converted_at' => $conversion->created_at
+                    ]
+                ];
+            });
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Failed to convert points: ' . $e->getMessage(),
+                'errors' => [$e->getMessage()]
+            ];
+        }
+    }
+
+    /**
+     * Validate points conversion
+     */
+    public function validatePointsConversion(User $user, int $points): array
+    {
+        $errors = [];
+
+        // Check if points is positive
+        if ($points <= 0) {
+            $errors[] = 'Points must be greater than zero';
+        }
+
+        // Check minimum points
+        if ($points < self::POINTS_TO_WALLET_RATIO) {
+            $errors[] = "Minimum " . self::POINTS_TO_WALLET_RATIO . " points required for conversion";
+        }
+
+        // Check if points is multiple of 10
+        if ($points % self::POINTS_TO_WALLET_RATIO !== 0) {
+            $errors[] = 'Points must be a multiple of ' . self::POINTS_TO_WALLET_RATIO;
+        }
+
+        // Check if user has enough points
+        if ($user->points < $points) {
+            $errors[] = "Insufficient points. You have {$user->points} points but requested {$points}";
+        }
+
+        return [
+            'valid' => empty($errors),
+            'errors' => $errors
+        ];
+    }
+
+    /**
+     * Get conversion history for user
+     */
+    public function getConversionHistory(User $user, int $limit = 50)
+    {
+        return PointsConversion::forUser($user->id)
+                              ->orderBy('created_at', 'desc')
+                              ->limit($limit)
+                              ->get();
+    }
+
     /**
      * Process a deposit to user's wallet
      */

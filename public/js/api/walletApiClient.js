@@ -224,6 +224,24 @@ class WalletApiClient extends BaseApiClient {
       course_id: courseId
     });
   }
+
+  /**
+   * Convert points to wallet balance
+   * @param {number} points - Number of points to convert (must be multiple of 10)
+   */
+  static async convertPoints(points) {
+    return this.post('/wallet/convert-points', {
+      points: points
+    });
+  }
+
+  /**
+   * Get conversion history
+   * @param {number} limit - Number of records to fetch (default: 50)
+   */
+  static async getConversionHistory(limit = 50) {
+    return this.get(`/wallet/conversion-history?limit=${limit}`);
+  }
 }
 
 // Make available globally
