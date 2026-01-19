@@ -18,7 +18,6 @@ class GlobalDataManager {
    * Initialize the data manager
    */
   async init() {
-    console.log('Initializing GlobalDataManager...');
     await this.loadAllData();
     this.setupEventListeners();
   }
@@ -59,7 +58,6 @@ class GlobalDataManager {
 
       this.isRefreshing = false;
     } catch (error) {
-      console.error('Error loading data:', error);
       this.isRefreshing = false;
     }
   }
@@ -111,7 +109,6 @@ class GlobalDataManager {
 
       this.isRefreshing = false;
     } catch (error) {
-      console.error(`Error refreshing ${type}:`, error);
       this.isRefreshing = false;
     }
   }
@@ -140,7 +137,6 @@ class GlobalDataManager {
         try {
           callback(data);
         } catch (error) {
-          console.error('Error in listener callback:', error);
         }
       });
     }

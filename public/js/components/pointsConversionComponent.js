@@ -15,13 +15,11 @@ class PointsConversionComponent {
    * Initialize the component
    */
   init() {
-    console.log('Initializing PointsConversionComponent...');
     try {
       this.createModals();
       this.setupEventListeners();
-      console.log('PointsConversionComponent initialized successfully');
     } catch (error) {
-      console.error('Error initializing PointsConversionComponent:', error);
+      // Error handled silently
     }
   }
 
@@ -94,20 +92,17 @@ class PointsConversionComponent {
 
       // Check if Bootstrap is available
       if (typeof bootstrap === 'undefined') {
-        console.error('Bootstrap not loaded');
         return;
       }
 
       const modalElement = document.getElementById('pointsConversionModal');
       if (!modalElement) {
-        console.error('Modal element not found after insertion');
         return;
       }
 
       this.conversionModal = new bootstrap.Modal(modalElement);
-      console.log('Conversion modal created successfully');
     } catch (error) {
-      console.error('Error creating conversion modal:', error);
+      // Error handled silently
     }
   }
 
@@ -138,20 +133,17 @@ class PointsConversionComponent {
 
       // Check if Bootstrap is available
       if (typeof bootstrap === 'undefined') {
-        console.error('Bootstrap not loaded');
         return;
       }
 
       const modalElement = document.getElementById('conversionHistoryModal');
       if (!modalElement) {
-        console.error('History modal element not found after insertion');
         return;
       }
 
       this.conversionHistoryModal = new bootstrap.Modal(modalElement);
-      console.log('History modal created successfully');
     } catch (error) {
-      console.error('Error creating history modal:', error);
+      // Error handled silently
     }
   }
 
@@ -174,7 +166,6 @@ class PointsConversionComponent {
         self.handleConversion();
       }
       if (e.target.id === 'convertPointsOpenBtn') {
-        console.log('Convert Points button clicked');
         self.openConversionModal();
       }
       if (e.target.id === 'viewConversionHistoryBtn') {
@@ -202,11 +193,8 @@ class PointsConversionComponent {
    */
   async openConversionModal() {
     try {
-      console.log('Opening conversion modal...');
-
       // Check if modal exists
       if (!this.conversionModal) {
-        console.error('Conversion modal not initialized');
         alert('Modal not initialized. Please refresh the page.');
         return;
       }
@@ -215,11 +203,8 @@ class PointsConversionComponent {
       await this.loadUserPoints();
       this.clearForm();
 
-      console.log('Showing modal...');
       this.conversionModal.show();
-      console.log('Modal shown successfully');
     } catch (error) {
-      console.error('Error opening conversion modal:', error);
       alert('Error opening conversion modal: ' + error.message);
     }
   }
@@ -229,22 +214,17 @@ class PointsConversionComponent {
    */
   async loadUserPoints() {
     try {
-      console.log('Loading user points...');
       const response = await PointsAndBadgesApiClient.getUserPoints();
-      console.log('Points response:', response);
 
       if (response.success && response.data) {
         const userPoints = response.data.points || 0;
         const display = document.getElementById('userPointsDisplay');
         if (display) {
           display.textContent = userPoints.toLocaleString();
-          console.log('Points loaded:', userPoints);
         }
-      } else {
-        console.warn('Failed to load points:', response.message);
       }
     } catch (error) {
-      console.error('Error loading user points:', error);
+      // Error handled silently
     }
   }
 
@@ -339,19 +319,19 @@ class PointsConversionComponent {
                 </div>
               </div>
               <small class="text-muted">
-                ${new Date(conversion.created_at).toLocaleDateString()} 
+                ${new Date(conversion.created_at).toLocaleDateString()}
                 ${new Date(conversion.created_at).toLocaleTimeString()}
               </small>
             </div>
           </div>
         `).join('');
-        
+
         historyList.innerHTML = html;
       } else {
         historyList.innerHTML = '<p class="text-muted">No conversions yet</p>';
       }
     } catch (error) {
-      console.error('Error loading conversion history:', error);
+      // Error handled silently
     }
   }
 
@@ -380,11 +360,9 @@ class PointsConversionComponent {
 
 // Initialize when DOM is ready
 function initializePointsConversion() {
-  console.log('Initializing Points Conversion Component...');
   if (!window.pointsConversion) {
     window.pointsConversion = new PointsConversionComponent();
     window.pointsConversion.init();
-    console.log('Points Conversion Component initialized');
   }
 }
 

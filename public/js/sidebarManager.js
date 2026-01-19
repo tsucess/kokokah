@@ -12,7 +12,6 @@ class SidebarManager {
   static renderSidebarMenu() {
     const user = this.getUserFromStorage();
     if (!user) {
-      console.warn('No user data found in localStorage');
       return;
     }
 
@@ -175,7 +174,6 @@ class SidebarManager {
     try {
       return JSON.parse(userStr);
     } catch (e) {
-      console.error('Failed to parse user data:', e);
       return null;
     }
   }

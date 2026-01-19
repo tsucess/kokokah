@@ -65,7 +65,6 @@ class NotificationModal {
       this.announcements = this.ensureArray(response.success && response.data ? response.data : []);
       this.renderAnnouncements();
     } catch (error) {
-      console.error('Error loading announcements:', error);
       this.announcements = [];
       this.renderEmpty('announcementsList', 'No announcements');
     }
@@ -80,7 +79,6 @@ class NotificationModal {
       this.messages = this.ensureArray(response.success && response.data ? response.data : []);
       this.renderMessages();
     } catch (error) {
-      console.error('Error loading messages:', error);
       this.messages = [];
       this.renderEmpty('messagesList', 'No messages');
     }
@@ -95,7 +93,6 @@ class NotificationModal {
       this.notifications = this.ensureArray(response.success && response.data ? response.data : []);
       this.renderNotifications();
     } catch (error) {
-      console.error('Error loading notifications:', error);
       this.notifications = [];
       this.renderEmpty('notificationsList', 'No notifications');
     }
@@ -234,7 +231,6 @@ class NotificationModal {
         }
       }
     } catch (error) {
-      console.error('Error marking all as read:', error);
     }
   }
 

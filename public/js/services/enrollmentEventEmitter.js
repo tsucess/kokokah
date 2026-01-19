@@ -28,7 +28,6 @@ class EnrollmentEventEmitter {
 
           // If successful, emit event
           if (response.success && window.DataRefreshService) {
-            console.log('[EnrollmentEventEmitter] Course completed, emitting event...');
             await DataRefreshService.emit(DataRefreshService.EVENTS.COURSE_COMPLETED, {
               enrollment_id: enrollmentId,
               user_points: response.data?.user_points,
@@ -39,12 +38,9 @@ class EnrollmentEventEmitter {
 
           return response;
         } catch (error) {
-          console.error('[EnrollmentEventEmitter] Error in completeEnrollment:', error);
           throw error;
         }
       };
-
-      console.log('[EnrollmentEventEmitter] Initialized');
     }
   }
 }

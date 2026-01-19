@@ -768,12 +768,11 @@
                     }
                 });
                 const termsResult = await termsResponse.json();
-                console.log('Terms API Response:', termsResult);
+             
                 if (termsResponse.ok && termsResult) {
                     const termSelect = document.getElementById('subjectTerm');
                     // Handle both array and object with data property
                     const terms = Array.isArray(termsResult) ? termsResult : (termsResult.data || []);
-                    console.log('Processed terms:', terms);
                     termSelect.innerHTML = `<option value="">Select Term</option>`;
                     terms.forEach(term => {
                         const option = document.createElement('option');
@@ -781,7 +780,6 @@
                         option.textContent = term.name;
                         termSelect.appendChild(option);
                     });
-                    console.log('Terms loaded successfully. Total:', terms.length);
                 } else {
                     console.error('Failed to load terms. Response:', termsResult);
                 }
@@ -1082,7 +1080,6 @@
                     try {
                         // Create FormData for file upload
                         const formData = new FormData();
-                        console.log(category)
                         // Add required fields
                         formData.append('title', title);
                         formData.append('slug', generateSlug(title));
@@ -1140,7 +1137,6 @@
                     const description = document.getElementById('subjectDescription').value;
                     const term = document.getElementById('subjectTerm').value;
 
-                    console.log(title, category, description)
                     if (!title || !category || !description) {
                         ToastNotification.warning('Warning', 'Please fill in all required fields');
                         return;

@@ -15,7 +15,6 @@ class NotificationHelper {
     if (window.ToastNotification) {
       window.ToastNotification.success(title, message, timeout);
     } else {
-      console.warn('ToastNotification not available');
       alert(`${title}: ${message}`);
     }
   }
@@ -30,7 +29,6 @@ class NotificationHelper {
     if (window.ToastNotification) {
       window.ToastNotification.error(title, message, timeout);
     } else {
-      console.warn('ToastNotification not available');
       alert(`${title}: ${message}`);
     }
   }
@@ -45,7 +43,6 @@ class NotificationHelper {
     if (window.ToastNotification) {
       window.ToastNotification.warning(title, message, timeout);
     } else {
-      console.warn('ToastNotification not available');
       alert(`${title}: ${message}`);
     }
   }
@@ -60,7 +57,6 @@ class NotificationHelper {
     if (window.ToastNotification) {
       window.ToastNotification.info(title, message, timeout);
     } else {
-      console.warn('ToastNotification not available');
       alert(`${title}: ${message}`);
     }
   }
@@ -74,7 +70,6 @@ class NotificationHelper {
     if (window.confirmationModal) {
       return await window.confirmationModal.showDeleteConfirmation(itemName);
     } else {
-      console.warn('confirmationModal not available');
       return confirm(`Are you sure you want to delete ${itemName}?`);
     }
   }
@@ -87,7 +82,6 @@ class NotificationHelper {
     if (window.confirmationModal) {
       return await window.confirmationModal.showLogoutConfirmation();
     } else {
-      console.warn('confirmationModal not available');
       return confirm('Are you sure you want to logout?');
     }
   }
@@ -100,7 +94,6 @@ class NotificationHelper {
     if (window.confirmationModal) {
       return await window.confirmationModal.showAccountDeletionConfirmation();
     } else {
-      console.warn('confirmationModal not available');
       return confirm('Are you sure you want to delete your account? This action cannot be undone.');
     }
   }
@@ -117,7 +110,6 @@ class NotificationHelper {
     if (window.confirmationModal) {
       return await window.confirmationModal.show(title, message, confirmText, cancelText);
     } else {
-      console.warn('confirmationModal not available');
       return confirm(message);
     }
   }
