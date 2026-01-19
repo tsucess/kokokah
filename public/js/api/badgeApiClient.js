@@ -18,7 +18,6 @@ class BadgeApiClient extends BaseApiClient {
       }
       return await this.get(endpoint);
     } catch (error) {
-      console.error('Error fetching leaderboard:', error);
       return {
         success: false,
         message: 'Failed to fetch leaderboard',
@@ -35,7 +34,6 @@ class BadgeApiClient extends BaseApiClient {
     try {
       return await this.get('/badges/leaderboard?period=all_time');
     } catch (error) {
-      console.error('Error fetching top winners:', error);
       return {
         success: false,
         message: 'Failed to fetch top winners',
@@ -53,7 +51,6 @@ class BadgeApiClient extends BaseApiClient {
     try {
       return await this.get(`/users/${userId}/badges`);
     } catch (error) {
-      console.error('Error fetching user badges:', error);
       return {
         success: false,
         message: 'Failed to fetch user badges',
@@ -70,7 +67,6 @@ class BadgeApiClient extends BaseApiClient {
     try {
       return await this.get('/badges');
     } catch (error) {
-      console.error('Error fetching badges:', error);
       return {
         success: false,
         message: 'Failed to fetch badges',
@@ -88,7 +84,6 @@ class BadgeApiClient extends BaseApiClient {
     try {
       return await this.get(`/badges/${badgeId}`);
     } catch (error) {
-      console.error('Error fetching badge details:', error);
       return {
         success: false,
         message: 'Failed to fetch badge details',

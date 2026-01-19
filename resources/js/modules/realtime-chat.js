@@ -29,13 +29,12 @@ class RealtimeChat {
      */
     connect() {
         if (!window.Echo) {
-            console.error('Laravel Echo not initialized');
             return;
         }
 
         // Subscribe to public channel
         this.channel = window.Echo.channel(this.channelName);
-        
+
         // Subscribe to private channel (for authenticated users)
         this.privateChannel = window.Echo.private(this.privateChannelName);
 
@@ -47,7 +46,6 @@ class RealtimeChat {
      */
     onMessageSent(callback) {
         if (!this.privateChannel) {
-            console.error('Private channel not connected');
             return;
         }
 
@@ -64,7 +62,6 @@ class RealtimeChat {
      */
     onMessageUpdated(callback) {
         if (!this.privateChannel) {
-            console.error('Private channel not connected');
             return;
         }
 
@@ -81,7 +78,6 @@ class RealtimeChat {
      */
     onMessageDeleted(callback) {
         if (!this.privateChannel) {
-            console.error('Private channel not connected');
             return;
         }
 
@@ -98,7 +94,6 @@ class RealtimeChat {
      */
     onUserTyping(callback) {
         if (!this.channel) {
-            console.error('Channel not connected');
             return;
         }
 
@@ -115,7 +110,6 @@ class RealtimeChat {
      */
     onReactionAdded(callback) {
         if (!this.privateChannel) {
-            console.error('Private channel not connected');
             return;
         }
 
@@ -132,7 +126,6 @@ class RealtimeChat {
      */
     onReactionRemoved(callback) {
         if (!this.privateChannel) {
-            console.error('Private channel not connected');
             return;
         }
 
@@ -149,7 +142,6 @@ class RealtimeChat {
      */
     onUserStatusChanged(callback) {
         if (!this.channel) {
-            console.error('Channel not connected');
             return;
         }
 
@@ -224,7 +216,6 @@ class RealtimeChat {
      */
     log(...args) {
         if (this.options.debug) {
-            console.log('[RealtimeChat]', ...args);
         }
     }
 

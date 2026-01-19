@@ -21,7 +21,6 @@ class NotificationApiClient extends BaseApiClient {
       const endpoint = queryString ? `/users/notifications?${queryString}` : '/users/notifications';
       return await this.get(endpoint);
     } catch (error) {
-      console.error('Error fetching notifications:', error);
       return {
         success: false,
         message: 'Failed to fetch notifications',
@@ -42,7 +41,6 @@ class NotificationApiClient extends BaseApiClient {
       }
       return 0;
     } catch (error) {
-      console.error('Error getting unread count:', error);
       return 0;
     }
   }
@@ -56,7 +54,6 @@ class NotificationApiClient extends BaseApiClient {
     try {
       return await this.put(`/users/notifications/${notificationId}/read`, {});
     } catch (error) {
-      console.error('Error marking notification as read:', error);
       return {
         success: false,
         message: 'Failed to mark notification as read'
@@ -72,7 +69,6 @@ class NotificationApiClient extends BaseApiClient {
     try {
       return await this.put('/users/notifications/read-all', {});
     } catch (error) {
-      console.error('Error marking all notifications as read:', error);
       return {
         success: false,
         message: 'Failed to mark all notifications as read'
@@ -89,7 +85,6 @@ class NotificationApiClient extends BaseApiClient {
     try {
       return await this.getNotifications({ ...filters, type: 'announcement' });
     } catch (error) {
-      console.error('Error fetching announcements:', error);
       return {
         success: false,
         message: 'Failed to fetch announcements',
@@ -107,7 +102,6 @@ class NotificationApiClient extends BaseApiClient {
     try {
       return await this.getNotifications({ ...filters, type: 'message' });
     } catch (error) {
-      console.error('Error fetching messages:', error);
       return {
         success: false,
         message: 'Failed to fetch messages',
@@ -125,7 +119,6 @@ class NotificationApiClient extends BaseApiClient {
     try {
       return await this.getNotifications({ ...filters, type: 'system' });
     } catch (error) {
-      console.error('Error fetching system notifications:', error);
       return {
         success: false,
         message: 'Failed to fetch system notifications',

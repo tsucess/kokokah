@@ -45,14 +45,11 @@ class AuthApiClient extends BaseApiClient {
       const token = data.token || response.token;
       const user = data.user || response.user;
 
-      console.log('Login response:', { response, data, token, user });
-
       if (token && user) {
         this.setToken(token);
         this.setUser(user);
         return { success: true, data: { token, user } };
       } else {
-        console.error('Missing token or user in login response', { token, user });
         return { success: false, message: 'Invalid login response' };
       }
     }
@@ -126,7 +123,7 @@ class AuthApiClient extends BaseApiClient {
     try {
       await this.post('/logout');
     } catch (error) {
-      console.error('Logout error:', error);
+      // Error handled silently
     }
 
     // Clear stored data regardless of API response

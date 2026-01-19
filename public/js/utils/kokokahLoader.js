@@ -12,6 +12,7 @@ class KokokahLoader {
     this.pageLoadStartTime = Date.now();
     this.visibilityStartTime = null; // Track when loader became visible
     this.safetyCheckInterval = null;
+    this.isInitialPageLoad = true; // Track if this is the initial page load
     this.init();
   }
 
@@ -21,7 +22,8 @@ class KokokahLoader {
   init() {
     this.createLoaderHTML();
     this.setupEventListeners();
-    // Don't show loader on initial page load - only on navigation/actions
+    // Hide loader after initial page load completes
+    this.hideInitialLoader();
   }
 
   /**
@@ -35,7 +37,7 @@ class KokokahLoader {
     }
 
     const loaderHTML = `
-      <div class="kokokah-loader-overlay hidden" id="kokokahLoader">
+      <div class="kokokah-loader-overlay" id="kokokahLoader" style="opacity: 1; visibility: visible; pointer-events: auto;">
         <div class="kokokah-loader-container">
           <div class="kokokah-spinner"></div>
           <div class="kokokah-loader-text">
@@ -47,7 +49,45 @@ class KokokahLoader {
 
     document.body.insertAdjacentHTML('afterbegin', loaderHTML);
     this.loaderElement = document.getElementById('kokokahLoader');
-    this.isVisible = false;
+    this.isVisible = true; // Loader starts visible
+  }
+
+  /**
+   * Hide the initial page load loader
+   */
+  hideInitialLoader() {
+    // Wait for page to be fully loaded (both DOM and resources)
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        this.hideInitialLoaderAfterDelay();
+      });
+    } else if (document.readyState === 'interactive') {
+      // If DOM is interactive but not complete, wait for load event
+      window.addEventListener('load', () => {
+        this.hideInitialLoaderAfterDelay();
+      });
+    } else {
+      // Page is already fully loaded
+      this.hideInitialLoaderAfterDelay();
+    }
+  }
+
+  /**
+   * Hide initial loader after a small delay to ensure page is rendered
+   */
+  hideInitialLoaderAfterDelay() {
+    // Add a delay to ensure all content is rendered and CSS is applied
+    // Use a longer delay (800ms) to ensure page is fully visible
+    setTimeout(() => {
+      if (this.isInitialPageLoad && this.loaderElement) {
+        this.loaderElement.classList.add('hidden');
+        this.loaderElement.style.opacity = '0';
+        this.loaderElement.style.visibility = 'hidden';
+        this.loaderElement.style.pointerEvents = 'none';
+        this.isVisible = false;
+        this.isInitialPageLoad = false;
+      }
+    }, 800);
   }
 
   /**
@@ -89,18 +129,6 @@ class KokokahLoader {
     window.addEventListener('popstate', () => {
       this.hide();
     });
-
-    // Auto-hide loader after 10 seconds if it's still visible (safety mechanism)
-    this.safetyCheckInterval = setInterval(() => {
-      if (this.isVisible && this.visibilityStartTime) {
-        const elapsedTime = Date.now() - this.visibilityStartTime;
-        // If loader has been visible for more than 10 seconds, force hide it
-        if (elapsedTime > 10000) {
-          console.warn('Loader visible for too long, force hiding');
-          this.forceHide();
-        }
-      }
-    }, 5000);
   }
 
   /**
@@ -128,6 +156,42 @@ class KokokahLoader {
       clearTimeout(this.hideTimeout);
       this.hideTimeout = null;
     }
+
+    // Start safety check interval when loader is shown
+    this.startSafetyCheck();
+  }
+
+  /**
+   * Start the safety check interval
+   */
+  startSafetyCheck() {
+    // Clear any existing interval first
+    if (this.safetyCheckInterval) {
+      clearInterval(this.safetyCheckInterval);
+    }
+
+    // Start new interval to check if loader is stuck
+    this.safetyCheckInterval = setInterval(() => {
+      if (this.isVisible && this.visibilityStartTime) {
+        const elapsedTime = Date.now() - this.visibilityStartTime;
+        // If loader has been visible for more than 10 seconds, force hide it
+        if (elapsedTime > 10000) {
+          console.warn('Loader visible for too long (>10s), force hiding');
+          this.forceHide();
+          this.stopSafetyCheck();
+        }
+      }
+    }, 5000);
+  }
+
+  /**
+   * Stop the safety check interval
+   */
+  stopSafetyCheck() {
+    if (this.safetyCheckInterval) {
+      clearInterval(this.safetyCheckInterval);
+      this.safetyCheckInterval = null;
+    }
   }
 
   /**
@@ -135,6 +199,9 @@ class KokokahLoader {
    */
   hide() {
     if (!this.isVisible) return;
+
+    // Stop the safety check when hiding
+    this.stopSafetyCheck();
 
     // Clear any pending timeout
     if (this.hideTimeout) {
@@ -179,6 +246,9 @@ class KokokahLoader {
    * Force hide the loader immediately
    */
   forceHide() {
+    // Stop the safety check
+    this.stopSafetyCheck();
+
     if (this.hideTimeout) {
       clearTimeout(this.hideTimeout);
       this.hideTimeout = null;
@@ -186,6 +256,9 @@ class KokokahLoader {
 
     if (this.loaderElement) {
       this.loaderElement.classList.add('hidden');
+      this.loaderElement.style.opacity = '0';
+      this.loaderElement.style.visibility = 'hidden';
+      this.loaderElement.style.pointerEvents = 'none';
       this.isVisible = false;
       this.visibilityStartTime = null; // Reset visibility start time
     }

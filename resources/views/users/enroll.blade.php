@@ -1230,13 +1230,12 @@
         async function loadSubscriptionPlans() {
             try {
                 const result = await SubscriptionApiClient.getPlans({ active: true });
-                console.log('loadSubscriptionPlans API result:', result);
+
                 if (result.success && result.data) {
                     // Handle paginated response
                     const plans = result.data.data || result.data;
                     allSubscriptionPlans = Array.isArray(plans) ? plans : [];
-                    console.log('Loaded subscription plans:', allSubscriptionPlans);
-                    populatePlanSelector();
+                   populatePlanSelector();
                 }
             } catch (error) {
                 console.error('Error loading subscription plans:', error);
@@ -1254,7 +1253,6 @@
                     // Handle paginated response
                     const subscriptions = result.data.data || result.data;
                     userSubscriptions = Array.isArray(subscriptions) ? subscriptions : [];
-                    console.log('User subscriptions:', userSubscriptions);
                 }
             } catch (error) {
                 console.error('Error loading user subscriptions:', error);
@@ -1274,7 +1272,6 @@
                     if (Array.isArray(courses)) {
                         userEnrollments = courses.map(c => c.course_id || c.id);
                     }
-                    console.log('User enrollments:', userEnrollments);
                 }
             } catch (error) {
                 console.error('Error loading user enrollments:', error);
@@ -1292,12 +1289,6 @@
                     const plans = result.data.data || result.data;
                     if (Array.isArray(plans)) {
                         freeSubscriptionPlan = plans.find(p => p.duration_type === 'free');
-                        console.log('Free plan loaded:', freeSubscriptionPlan);
-
-                        // If free plan found, ensure it has courses
-                        if (freeSubscriptionPlan) {
-                            console.log('Free plan courses:', freeSubscriptionPlan.courses);
-                        }
                     }
                 }
             } catch (error) {
@@ -1485,9 +1476,6 @@
         function getLevelIdFromURL() {
             const params = new URLSearchParams(window.location.search);
             const levelId = params.get('level_id');
-            console.log('URL:', window.location.href);
-            console.log('Search params:', window.location.search);
-            console.log('Extracted level_id:', levelId);
             return levelId;
         }
 
@@ -1502,20 +1490,13 @@
                     return;
                 }
 
-                console.log('Loading courses for level_id:', levelId);
-                console.log('API call parameters:', {
-                    level_id: levelId,
-                    per_page: 50
-                });
+        
 
                 // Fetch courses for this level
                 const result = await CourseApiClient.getCourses({
                     level_id: levelId,
                     per_page: 50
                 });
-
-                console.log('API Response:', result);
-                console.log('API Response data.courses.data:', result.data?.courses?.data);
 
                 // Handle API response structure - courses are in result.data.courses.data
                 let courses = [];
@@ -1535,7 +1516,6 @@
                     updateLevelTitle(levelId);
                     updateEnrollAllButton();
                 } else {
-                    console.log('No courses found. Response data:', result.data);
                     showError('No courses available for this class.');
                 }
             } catch (error) {
@@ -1576,18 +1556,11 @@
             const course = allCourses.find(c => c.id === courseId);
 
             if (!course) {
-                console.log(`isFreeCourse(${courseId}): Course not found in allCourses`);
                 return false;
             }
 
-            console.log(`isFreeCourse(${courseId}): Course found:`, course);
-            console.log(`isFreeCourse(${courseId}): free_subscription = ${course.free_subscription}`);
-
             // Check if course has free_subscription = true
             const isFree = course.free_subscription === true || course.free_subscription === 1 || course.free_subscription === '1';
-
-            console.log(`isFreeCourse(${courseId}): Result = ${isFree}`);
-
             return isFree;
         }
 
@@ -1598,7 +1571,6 @@
             const enrolled = isUserEnrolled(courseId);
             const free = isFreeCourse(courseId);
 
-            console.log(`getCourseStatus(${courseId}): enrolled=${enrolled}, free=${free}`);
 
             if (enrolled) {
                 return 'enrolled';
@@ -1620,16 +1592,10 @@
         function displayCourses(courses) {
             const subjectContainer = document.getElementById('subjectContainer');
 
-            console.log('=== displayCourses called ===');
-            console.log('Total courses:', courses.length);
-            console.log('Free subscription plan:', freeSubscriptionPlan);
-
             const coursesHtml = courses.map((course, index) => {
                 const courseStatus = getCourseStatus(course.id);
                 const isDisabled = courseStatus !== null; // Disable if enrolled or free
                 const isChecked = courseStatus !== null; // Check if enrolled or free
-
-                console.log(`Course ${index}: ${course.title} (ID: ${course.id}) - Status: ${courseStatus}, Disabled: ${isDisabled}, Checked: ${isChecked}`);
 
                 let statusBadge = '';
                 if (courseStatus === 'enrolled') {
@@ -2032,7 +1998,6 @@
                 gateway: gateway
             };
 
-            console.log('Payment Data:', paymentData);
 
             // Close modal and route to payment gateway
             closePaymentModal();

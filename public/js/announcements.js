@@ -169,9 +169,6 @@ class AnnouncementManager {
             status: status
         };
 
-        console.log('Submitting announcement:', data);
-        console.log('Using token:', token.substring(0, 20) + '...');
-
         try {
             const response = await fetch(this.apiBaseUrl, {
                 method: 'POST',
@@ -190,7 +187,6 @@ class AnnouncementManager {
                     window.location.href = '/announcement';
                 }, 1500);
             } else {
-                console.error('API Error:', result);
                 if (response.status === 401) {
                     this.showToast('Authentication Error', 'Authentication failed. Please log in again.', 'error');
                     setTimeout(() => {
@@ -209,14 +205,12 @@ class AnnouncementManager {
                     } else {
                         errorMessage = result.message || 'Please check your form data';
                     }
-                    console.error('Validation errors:', result.errors);
                     this.showToast('Validation Error', errorMessage, 'warning');
                 } else {
                     this.showToast('Error', result.message || 'Failed to save announcement', 'error');
                 }
             }
         } catch (error) {
-            console.error('Error submitting announcement:', error);
             this.showToast('Error', 'Error submitting announcement. Please try again.', 'error');
         }
     }
@@ -235,7 +229,6 @@ class AnnouncementManager {
                 this.renderAnnouncements();
             }
         } catch (error) {
-            console.error('Error loading announcements:', error);
         }
     }
 
@@ -270,26 +263,21 @@ class AnnouncementManager {
         // Try to get token from localStorage (check both possible keys)
         let token = localStorage.getItem('auth_token');  // BaseApiClient key
         if (token) {
-            console.log('Token found in localStorage (auth_token):', token.substring(0, 20) + '...');
             return token;
         }
 
         // Fallback to 'token' key (alternative storage key)
         token = localStorage.getItem('token');
         if (token) {
-            console.log('Token found in localStorage (token):', token.substring(0, 20) + '...');
             return token;
         }
 
         // Fallback to CSRF token if no API token found
         const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
         if (csrfToken) {
-            console.log('Using CSRF token as fallback');
             return csrfToken;
         }
 
-        console.warn('No authentication token found in localStorage or meta tags!');
-        console.warn('Available localStorage keys:', Object.keys(localStorage));
         return null;
     }
 
@@ -305,7 +293,6 @@ class AnnouncementManager {
             window.ToastNotification.show(title, message, type, timeout);
         } else {
             // Fallback to alert if ToastNotification is not available
-            console.warn('ToastNotification not available, falling back to alert');
             alert(`${title}: ${message}`);
         }
     }

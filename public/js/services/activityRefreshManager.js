@@ -32,15 +32,12 @@ class ActivityRefreshManager {
         `activity_${event}`
       );
     });
-
-    console.log('[ActivityRefreshManager] Initialized');
   }
 
   /**
    * Handle any activity event
    */
   static async onActivityEvent(eventType) {
-    console.log(`[ActivityRefreshManager] Activity event: ${eventType}, refreshing...`);
     await this.refreshUserActivity();
   }
 
@@ -50,13 +47,13 @@ class ActivityRefreshManager {
   static async refreshUserActivity() {
     try {
       const response = await DataRefreshService.refreshUserActivity();
-      
+
       // Trigger custom event for activity page
       window.dispatchEvent(new CustomEvent('userActivityUpdated', {
         detail: response
       }));
     } catch (error) {
-      console.error('[ActivityRefreshManager] Error refreshing activity:', error);
+      // Error handled silently
     }
   }
 }

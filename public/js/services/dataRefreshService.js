@@ -60,14 +60,11 @@ class DataRefreshService {
    * @param {object} data - Data to pass to listeners
    */
   static async emit(eventType, data = {}) {
-    console.log(`[DataRefreshService] Emitting event: ${eventType}`, data);
-    
     if (this.listeners[eventType]) {
       for (const listener of this.listeners[eventType]) {
         try {
           await listener.callback(data);
         } catch (error) {
-          console.error(`[DataRefreshService] Error in listener:`, error);
         }
       }
     }
@@ -88,7 +85,6 @@ class DataRefreshService {
         return response.data;
       }
     } catch (error) {
-      console.error('[DataRefreshService] Error refreshing points:', error);
     }
   }
 
@@ -107,7 +103,6 @@ class DataRefreshService {
         return response.data;
       }
     } catch (error) {
-      console.error('[DataRefreshService] Error refreshing wallet:', error);
     }
   }
 
@@ -121,7 +116,6 @@ class DataRefreshService {
         return response.data;
       }
     } catch (error) {
-      console.error('[DataRefreshService] Error refreshing transactions:', error);
     }
   }
 
@@ -135,7 +129,6 @@ class DataRefreshService {
         return response.data;
       }
     } catch (error) {
-      console.error('[DataRefreshService] Error refreshing badges:', error);
     }
   }
 
@@ -149,7 +142,6 @@ class DataRefreshService {
         return response.data;
       }
     } catch (error) {
-      console.error('[DataRefreshService] Error refreshing activity:', error);
     }
   }
 
@@ -164,7 +156,6 @@ class DataRefreshService {
         this.refreshUserBadges()
       ]);
     } catch (error) {
-      console.error('[DataRefreshService] Error refreshing all data:', error);
     }
   }
 }

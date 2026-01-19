@@ -40,15 +40,12 @@ class DashboardRefreshManager {
       () => this.onBadgeEarned(),
       'dashboard_badge_earned'
     );
-
-    console.log('[DashboardRefreshManager] Initialized');
   }
 
   /**
    * Handle points converted event
    */
   static async onPointsConverted() {
-    console.log('[DashboardRefreshManager] Points converted, refreshing...');
     await DataRefreshService.refreshUserPoints();
     await DataRefreshService.refreshWalletBalance();
   }
@@ -57,7 +54,6 @@ class DashboardRefreshManager {
    * Handle course completed event
    */
   static async onCourseCompleted() {
-    console.log('[DashboardRefreshManager] Course completed, refreshing...');
     await DataRefreshService.refreshUserPoints();
     await DataRefreshService.refreshUserBadges();
   }
@@ -66,7 +62,6 @@ class DashboardRefreshManager {
    * Handle wallet updated event
    */
   static async onWalletUpdated() {
-    console.log('[DashboardRefreshManager] Wallet updated, refreshing...');
     await DataRefreshService.refreshWalletBalance();
     await DataRefreshService.refreshWalletTransactions();
   }
@@ -75,7 +70,6 @@ class DashboardRefreshManager {
    * Handle badge earned event
    */
   static async onBadgeEarned() {
-    console.log('[DashboardRefreshManager] Badge earned, refreshing...');
     await DataRefreshService.refreshUserBadges();
   }
 }

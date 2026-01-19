@@ -64,14 +64,12 @@
      */
     async function loadLeaderboard() {
         try {
-            console.log('Loading leaderboard for period:', currentPeriod);
+       
             const response = await window.BadgeApiClient.getLeaderboard(currentPeriod);
 
             if (response.success && response.data) {
                 const leaderboardData = response.data.leaderboard || response.data;
                 allLeaderboardData = Array.isArray(leaderboardData) ? leaderboardData : [];
-
-                console.log('Leaderboard data loaded:', allLeaderboardData);
 
                 // Calculate pagination
                 totalPages = Math.ceil(allLeaderboardData.length / itemsPerPage);

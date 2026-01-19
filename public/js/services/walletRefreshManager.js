@@ -34,18 +34,15 @@ class WalletRefreshManager {
       () => this.onPointsConverted(),
       'wallet_points_converted'
     );
-
-    console.log('[WalletRefreshManager] Initialized');
   }
 
   /**
    * Handle transaction created event
    */
   static async onTransactionCreated() {
-    console.log('[WalletRefreshManager] Transaction created, refreshing...');
     await DataRefreshService.refreshWalletBalance();
     await DataRefreshService.refreshWalletTransactions();
-    
+
     // Trigger custom event for wallet page
     window.dispatchEvent(new CustomEvent('walletTransactionsUpdated'));
   }
@@ -54,10 +51,9 @@ class WalletRefreshManager {
    * Handle wallet updated event
    */
   static async onWalletUpdated() {
-    console.log('[WalletRefreshManager] Wallet updated, refreshing...');
     await DataRefreshService.refreshWalletBalance();
     await DataRefreshService.refreshWalletTransactions();
-    
+
     // Trigger custom event for wallet page
     window.dispatchEvent(new CustomEvent('walletUpdated'));
   }
@@ -66,10 +62,9 @@ class WalletRefreshManager {
    * Handle points converted event
    */
   static async onPointsConverted() {
-    console.log('[WalletRefreshManager] Points converted, refreshing...');
     await DataRefreshService.refreshWalletBalance();
     await DataRefreshService.refreshWalletTransactions();
-    
+
     // Trigger custom event for wallet page
     window.dispatchEvent(new CustomEvent('walletUpdated'));
   }

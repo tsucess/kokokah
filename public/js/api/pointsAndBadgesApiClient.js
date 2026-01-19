@@ -12,7 +12,6 @@ class PointsAndBadgesApiClient extends BaseApiClient {
     try {
       return await this.get('/points-badges/points');
     } catch (error) {
-      console.error('Error fetching user points:', error);
       return {
         success: false,
         message: 'Failed to fetch user points',
@@ -36,7 +35,6 @@ class PointsAndBadgesApiClient extends BaseApiClient {
     try {
       return await this.get(`/points-badges/points/history?page=${page}&per_page=${perPage}`);
     } catch (error) {
-      console.error('Error fetching points history:', error);
       return {
         success: false,
         message: 'Failed to fetch points history',
@@ -58,7 +56,6 @@ class PointsAndBadgesApiClient extends BaseApiClient {
       }
       return await this.get(endpoint);
     } catch (error) {
-      console.error('Error fetching user badges:', error);
       return {
         success: false,
         message: 'Failed to fetch user badges',
@@ -76,7 +73,6 @@ class PointsAndBadgesApiClient extends BaseApiClient {
     try {
       return await this.get(`/points-badges/badges/${badgeId}`);
     } catch (error) {
-      console.error('Error fetching badge details:', error);
       return {
         success: false,
         message: 'Failed to fetch badge details',
@@ -93,7 +89,6 @@ class PointsAndBadgesApiClient extends BaseApiClient {
     try {
       return await this.get('/points-badges/badges/stats');
     } catch (error) {
-      console.error('Error fetching badge stats:', error);
       return {
         success: false,
         message: 'Failed to fetch badge stats',
@@ -116,7 +111,6 @@ class PointsAndBadgesApiClient extends BaseApiClient {
     try {
       return await this.get(`/points-badges/leaderboard?limit=${limit}`);
     } catch (error) {
-      console.error('Error fetching leaderboard:', error);
       return {
         success: false,
         message: 'Failed to fetch leaderboard',
