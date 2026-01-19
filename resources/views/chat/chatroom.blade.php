@@ -13,7 +13,7 @@
             color: white;
             border-radius: 12px;
             padding: 10px 15px;
-            max-width: 500px;
+            max-width: 350px;
             margin-left: auto;
 
         }
@@ -128,6 +128,9 @@
             /* Prevent chat from being covered */
             .chat-panel-right {
                 width: 100%;
+            }
+            .admin-badge{
+                font-size: 0.65rem;
             }
         }
 
@@ -689,6 +692,14 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0.6; }
         }
+        .send-text{
+            display: none;
+        }
+        @media screen and (min-width:500px){
+            .send-text{
+                display: inline;
+            }
+        }
     </style>
     <main>
         <div class="container-fluid py-4">
@@ -726,7 +737,7 @@
                     </div>
 
                     <div class="chat-history" id="chat-history">
-                        <div class="welcome-message mb-5">
+                        <div class="welcome-message mb-4">
                             <div class="welcome-icon mx-auto mb-3">
                                 <i class="bi bi-hash text-white"></i>
                             </div>
@@ -753,7 +764,7 @@
                                 <i class="bi bi-camera-fill cursor-pointer" id="cameraBtn" title="Take picture"></i>
                             </div>
                             <button class="btn btn-send d-flex align-items-center" id="sendBtn">
-                                Send <i class="bi bi-send-fill ms-2"></i>
+                               <span class="send-text">Send</span>  <i class="bi bi-send-fill ms-2"></i>
                             </button>
                         </div>
                     </div>

@@ -379,10 +379,27 @@
             #convertPointsOpenBtn .call-action-text {
                 pointer-events: none;
             }
+            @media screen and (max-width:380px) {
+                .call-to-action-container {
+                    padding: 8px 8px;
+                    gap: 10px;
+                }
+                .call-action-text {
+                    font-size: 10px;
+                    line-height: 1.3;
+                }
+                .icon-container {
+                    width: 30px;
+                    height: 30px;
+                }
+                .addmoney-btn{
+                    padding: 8px 10px;
+                }
+            }
 
             @media screen and (min-width:768px) {
                 .call-to-action-container {
-                    padding: 14px 20px;
+                    padding: 14px 14px;
                 }
 
                 .call-action-text {
@@ -390,8 +407,8 @@
                 }
 
                 .icon-container {
-                    width: 50px;
-                    height: 50px;
+                    width: 45px;
+                    height: 45px;
                 }
             }
 
@@ -637,7 +654,7 @@
                             style="bottom:20px; right:60px;" />
                     </div>
 
-                    <div class="d-flex align-items-center gap-3 justify-content-center">
+                    <div class="d-flex align-items-center gap-2 gap-lg-3 justify-content-center">
                         <button id="addMoneyBtn"
                             class="call-to-action-container d-flex flex-column gap-2 align-items-center">
                             <div class="icon-container"><i class="fa-solid fa-money-bill fa-xs"
@@ -653,7 +670,7 @@
                         </button>
                         <button type="button" id="convertPointsOpenBtn"
                             class="call-to-action-container d-flex flex-column gap-2 align-items-center"
-                            style="background: none; cursor: pointer; padding: 8px 8px;">
+                            style="cursor: pointer;">
                             <div class="icon-container"><i class="fa-solid fa-star fa-xs"
                                     style="color: #004A53;"></i></div>
                             <p class="call-action-text">Convert Points</p>
@@ -689,7 +706,7 @@
                                 <p style="font-size: 24px; color:#fff;" id="cardHolderName">Card Holder Name</p>
                             </div>
                         </div>
-                        <div class="d-flex align-items-center gap-3 justify-content-center">
+                        <div class="d-flex align-items-center gap-2 gap-lg-3 justify-content-center">
                             <button id="addCardBtn" data-bs-toggle="modal" data-bs-target="#addCard"
                                 class="call-to-action-container d-flex flex-column gap-2 align-items-center ">
                                 <div class="icon-container"><i class="fa-solid fa-plus fa-xs"

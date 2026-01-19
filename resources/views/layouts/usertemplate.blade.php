@@ -57,15 +57,16 @@
         }
 
         .img {
-            width: 15px;
+            width: 30px;
             aspect-ratio:1/1;
+            object-fit: contain;
         }
         .point{
             font-size: 14px;
         }
         @media screen and (max-width:768px){
             .img{
-                width: 13px;
+                width: 20px;
             }
             .point{
                 font-size: 12px;
@@ -86,9 +87,9 @@
         </div>
 
         <nav class="nav-group" id="sidebarNav">
-            <a class="nav-item-link" href="/usersdashboard"><i class="fa-solid fa-gauge pe-3"></i> Dashboard</a>
+            <a class="nav-item-link" href="/usersdashboard"><i class="fa-solid fa-gauge pe-2"></i> Dashboard</a>
 
-            <a class="nav-item-link" href="/userclass"><i class="fa-solid fa-book-open me-2  pe-1"></i> Class</a>
+            <a class="nav-item-link" href="/userclass"><i class="fa-solid fa-book-open me-2 pe-2"></i> Class</a>
 
             <a class="nav-item-link" href="/usersubject"><i class="fa-solid fa-user me-2  pe-2"></i> Subject</a>
 
@@ -100,7 +101,7 @@
                     class="fa-solid fa-money-bill-transfer me-2 pe-2"></i></i>Subscription History</a>
             <a class="nav-item-link" href="/userleaderboard"><i
                     class="fa-solid fa-trophy me-2 pe-2"></i></i>Leaderboard</a>
-            <a class="nav-item-link" href="/userkoodies"><i class="fa-solid fa-robot me-2 pe-2"></i>Ai</a>
+            {{-- <a class="nav-item-link" href="/userkoodies"><i class="fa-solid fa-robot me-2 pe-2"></i>Ai</a> --}}
             <a class="nav-item-link" href="/chatroom"><i class="fa-solid fa-comment me-2 pe-2"></i>Chatroom</a>
 
             <!-- Communication -->
@@ -154,10 +155,10 @@
 
         <div class="d-flex gap-2 shadow-sm rounded-pill align-items-center py-1 py-md-2 px-3  mx-1 mx-lg-3">
             <div class="d-flex align-items-center gap-1"><img src="./images/leaderboard-award-icon.png"
-                    alt="" class="img"> <span data-badges class="point">0</span></div>
+                    alt="" class="icon-img"> <span data-badges class="point">0</span></div>
 
             <div class="ps-2 d-flex align-items-center gap-1" style="border-left: 1px solid #000000;"><img
-                    src="./images/point-icon.png" alt="" class="img"> <span data-points class="point">0</span></div>
+                    src="./images/point-icon.png" alt="" class="icon-img"> <span data-points class="point">0</span></div>
 
         </div>
 
@@ -178,7 +179,7 @@
     @yield('content')
 
     <!-- Footer -->
-    <footer
+    {{-- <footer
         class="d-flex page-footer flex-column align-items-center gap-2 gap-md-0 flex-md-row justify-content-between mt-auto"
         style="background-color: inherit;">
         <p class="footer-link-text text-center">© Copyright Kokokah 2025. All rights reserved.</p>
@@ -191,7 +192,7 @@
         </div>
 
 
-    </footer>
+    </footer> --}}
     </div>
     </main>
 

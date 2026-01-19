@@ -93,6 +93,15 @@
         font-size: 0.8rem;
         line-height: 1.6;
     }
+    .modal-form-btn{
+        padding: 8px 10px;
+    }
+    .modal-form-input-border{
+        padding: 14px 15px 14px;
+    }
+    .modal-label{
+        left: 15px;
+    }
 }
 
 /* Small Devices (max-width: 320px) */

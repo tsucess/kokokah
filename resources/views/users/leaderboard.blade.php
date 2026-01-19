@@ -191,7 +191,7 @@
 
             row.innerHTML = `
                 <td scope="row" class="align-middle rank-text">${String(rank).padStart(2, '0')}</td>
-                <td class="d-flex gap-2 align-items-center pe-4">
+                <td class="d-flex gap-2 align-items-center pe-5">
                     <img src="${profilePhoto}" alt="${firstName}" class="avatar" onerror="this.src='./images/winner.png'">
                     <span class="table-data-text">${firstName} ${lastName}</span>
                 </td>
@@ -603,7 +603,7 @@
                             </div>
                             <div class="leaderboard-winner-track"></div>
                         </div>
-                        <div class="d-flex align-items-center justify-content-center leaderboard-first-platform">
+                        <div class="d-flex align-items-start pt-5 align-items-md-center pt-md-0 justify-content-center leaderboard-first-platform">
                             <img src="./images/medal-first-place.png" alt="" class="leaderboard-first-img">
                         </div>
                     </div>

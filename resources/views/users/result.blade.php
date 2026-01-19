@@ -35,7 +35,7 @@
             padding: 20px 20px;
             background-color: #FFFFFF;
             gap: 20px;
-            max-width: 523px;
+            max-width: 423px;
             margin-top: 100px;
         }
 
@@ -142,6 +142,30 @@
             font-size: 14px;
             margin-top: 10px;
         }
+        .point-container{
+            padding: 20px;
+        }
+        .span{
+                font-size: 16px;
+            }
+
+        @media screen and (max-width:500px) {
+            .failed-badge, .success-badge {
+               padding: 5px 10px;
+            }
+            .quiz-title{
+                font-size: 18px;
+            }
+            .result-items-text{
+                font-size: 14px;
+            }
+            .point-container{
+                padding: 10px;
+            }
+            .span{
+                font-size: 14px;
+            }
+        }
          @media screen and (max-width:768px) {
             .failed-badge, .success-badge {
                padding: 10px 10px;
@@ -150,7 +174,7 @@
                 font-size: 20px;
             }
             .result-items-text{
-                font-size: 18px;
+                font-size: 16px;
             }
         }
 
@@ -165,8 +189,11 @@
 
         @media screen and (min-width:1000px) {
             .result-container {
-                margin-top: -140px;
+                margin-top: -60px;
                 z-index: 1000;
+            }
+            .banner-img{
+                right: -100px;
             }
         }
 
@@ -175,7 +202,7 @@
 
     <main>
         <section class="container-fluid header-banner d-flex align-items-center">
-            <h3>Result & Score</h3>
+            <h2 class="text-center">Result & Score</h2>
             <div><img src="{{ asset('images/result-score-img.png') }}" alt="Result Score" class="banner-img" /></div>
         </section>
 
@@ -192,14 +219,14 @@
         <!-- Results Content -->
         <div id="resultsContent" class="d-none">
             <!-- Overall Score Container (overlapping banner on left) -->
-            <div class="container-fluid" style="position: relative; z-index: 10; padding-left: 20px;">
+            <div class="container-fluid point-container" style="position: relative; z-index: 10;">
                 <div class="d-flex align-items-center result-container">
                     <div class="d-flex justify-content-center align-items-center result-div">
                         <span id="percentageScore">0%</span>
                     </div>
                     <div class="d-flex flex-column">
                         <p class="result-point-title"><span id="scorePoints">0</span>/<span id="maxPoints">0</span></p>
-                        <span style="color: #1C1D1D; font-size: 20px;">Points</span>
+                        <span style="color: #1C1D1D; font-size: 16px;">Points</span>
                         <div id="passStatus"></div>
                         <p class="attempt-info" id="attemptInfo"></p>
                     </div>
@@ -372,14 +399,14 @@
                         <small class="">${quizCount} Quiz${quizCount !== 1 ? 'zes' : ''}</small>
                     </div>
                     <div class="d-flex align-items-center justify-content-between">
-                        <span class="">Total Score</span>
+                        <span class='span'>Total Score</span>
                         <p class="result-items-text">${total_points_earned}/${total_points_possible}</p>
                     </div>
                     <div class="result-progress-bar">
                         <span class="result-progress-bar-track" style="width: ${percentage}%"></span>
                     </div>
                     <div class="d-flex align-items-center justify-content-between">
-                        <span class="">Percentage</span>
+                        <span class='span'>Percentage</span>
                         <p class="result-items-text">${Math.round(percentage)}%</p>
                     </div>
                 `;

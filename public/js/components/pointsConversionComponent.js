@@ -33,7 +33,7 @@ class PointsConversionComponent {
     if (!document.getElementById('pointsConversionModal')) {
       this.createConversionModal();
     }
-    
+
     // Create history modal if it doesn't exist
     if (!document.getElementById('conversionHistoryModal')) {
       this.createHistoryModal();
@@ -68,7 +68,7 @@ class PointsConversionComponent {
                     <label for="conversionPoints" class="modal-label">Points to Convert</label>
                     <input type="number" class="modal-input" id="conversionPoints"
                            placeholder="Enter points (multiple of 10)" min="10" step="10" required />
-                    <small style="color: #8E8E93; font-size: 12px; margin-top: 4px;">Minimum: 10 points | Must be multiple of 10</small>
+                    
                   </div>
 
                   <div class="modal-form-input-border">
@@ -82,7 +82,7 @@ class PointsConversionComponent {
                 </div>
                 <div class="d-flex gap-2">
                   <button type="button" class="btn addmoney-btn" data-bs-dismiss="modal">Cancel</button>
-                  <button type="button" class="btn modal-form-btn" id="convertPointsBtn">Convert Points</button>
+                  <button type="button" class="btn modal-form-btn w-100" id="convertPointsBtn">Convert Points</button>
                 </div>
               </form>
             </div>
@@ -190,7 +190,7 @@ class PointsConversionComponent {
     const pointsInput = document.getElementById('conversionPoints');
     const points = parseInt(pointsInput.value) || 0;
     const walletAmount = points / this.CONVERSION_RATIO;
-    
+
     const display = document.getElementById('walletAmountDisplay');
     if (display) {
       display.textContent = `₦${walletAmount.toFixed(2)}`;
@@ -339,13 +339,13 @@ class PointsConversionComponent {
                 </div>
               </div>
               <small class="text-muted">
-                ${new Date(conversion.created_at).toLocaleDateString()} 
+                ${new Date(conversion.created_at).toLocaleDateString()}
                 ${new Date(conversion.created_at).toLocaleTimeString()}
               </small>
             </div>
           </div>
         `).join('');
-        
+
         historyList.innerHTML = html;
       } else {
         historyList.innerHTML = '<p class="text-muted">No conversions yet</p>';

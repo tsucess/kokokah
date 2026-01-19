@@ -1207,7 +1207,7 @@ main .container {
 .chat-message {
     display: flex;
     margin-bottom: 1rem;
-    padding-inline: 1.5rem;
+    padding-inline: 1.2rem;
     gap: 10px;
 }
 
@@ -1226,6 +1226,7 @@ main .container {
 .message-user {
     font-weight: 500;
     margin-right: 0.5rem;
+    font-size: 1.2rem;
 }
 
 .message-timestamp {
@@ -1278,6 +1279,12 @@ main .container {
         border-left: none;
         border-right: none;
         border-radius: 0;
+    }
+    .chat-message{
+        padding-inline: .2rem;
+    }
+    .message-user{
+        font-size: 0.9rem;
     }
 }
 
@@ -2241,9 +2248,9 @@ select {
     font-size: 16px;
     font-weight: 600;
     background-color: #fdaf22;
-    padding-block: 16px;
+    padding: 10px 16px;
     border: none;
-    border-radius: 10px;
+    border-radius: 4px;
 }
 
 .search-border-custom {
