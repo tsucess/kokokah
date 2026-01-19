@@ -290,7 +290,7 @@ font-size: 12px;
         <template id="courseCardTemplate">
             <div class = "p-3 bg-white mysubject d-flex flex-column gap-3 w-100 rounded-4">
                 <div class = "border border-dark p-2 text-center" style="border-radius: 10px;">
-                    <img src="{{ asset('images/Kokokah_Logo.png') }}" class = "img-fluid userdasboard-card-img" alt="Course" />
+                    <img src="{{ asset('images/KOKOKAH Logo.svg') }}" class = "img-fluid userdasboard-card-img" alt="Course" />
                 </div>
                 <div class = "card-item-class align-self-start course-level">JSS 1</div>
                 <div class="d-flex justify-content-between align-items-center">
