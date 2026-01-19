@@ -25,9 +25,12 @@
             padding-bottom: 20px;
         }
         .logo {
-            max-width: 150px;
+            max-width: 200px;
             height: auto;
             margin-bottom: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
         .content {
             margin: 20px 0;
@@ -90,7 +93,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="{{ $logoUrl }}" alt="Kokokah Logo" class="logo" style="display: block; margin: 0 auto; width: 150px; height: auto;">
+            <img src="{{ $logoUrl }}" alt="Kokokah Logo" class="logo">
             <h1 style="margin: 10px 0; color: #333;">Email Verification</h1>
         </div>
 

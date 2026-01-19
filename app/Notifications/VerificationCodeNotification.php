@@ -41,11 +41,11 @@ class VerificationCodeNotification extends Notification implements ShouldQueue
     {
         $expiresIn = $this->verificationCode->expires_at->diffInMinutes(now());
 
-        // Convert SVG logo to base64 data URI for reliable email display
-        $logoPath = public_path('images/KOKOKAH Logo.svg');
+        // Convert PNG logo to base64 data URI for reliable email display
+        $logoPath = public_path('images/Kokokah_Logo.png');
         $logoContent = file_get_contents($logoPath);
         $logoBase64 = base64_encode($logoContent);
-        $logoUrl = 'data:image/svg+xml;base64,' . $logoBase64;
+        $logoUrl = 'data:image/png;base64,' . $logoBase64;
 
         return (new MailMessage)
             ->subject('Email Verification Code - Kokokah LMS')
