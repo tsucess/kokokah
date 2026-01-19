@@ -93,8 +93,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="" alt="Kokokah Logo" class="logo">
-            <img src="{{ $message->embed($logoPath) }}" alt="Kokokah Logo" class="logo">
+            <img src="cid:logo.png" alt="Kokokah Logo" class="logo">
             <h1 style="margin: 10px 0; color: #333;">Email Verification</h1>
         </div>
 

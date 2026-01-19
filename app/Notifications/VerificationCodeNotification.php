@@ -40,8 +40,6 @@ class VerificationCodeNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         $expiresIn = $this->verificationCode->expires_at->diffInMinutes(now());
-
-        // Use Laravel's embed() method for reliable image embedding
         $logoPath = public_path('images/Kokokah_Logo.png');
 
         return (new MailMessage)
@@ -49,8 +47,11 @@ class VerificationCodeNotification extends Notification implements ShouldQueue
             ->view('emails.verification-code', [
                 'user' => $notifiable,
                 'code' => $this->verificationCode->code,
-                'expiresIn' => $expiresIn,
-                'logoPath' => $logoPath
+                'expiresIn' => $expiresIn
+            ])
+            ->attach($logoPath, [
+                'as' => 'logo.png',
+                'mime' => 'image/png'
             ]);
     }
 
