@@ -40,7 +40,7 @@ class VerificationCodeNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         $expiresIn = $this->verificationCode->expires_at->diffInMinutes(now());
-        $logoPath = public_path('images/Kokokah_Logo.png');
+        $logoPath = public_path('images/kokokah_logoo.png');
 
         return (new MailMessage)
             ->subject('Email Verification Code - Kokokah LMS')
