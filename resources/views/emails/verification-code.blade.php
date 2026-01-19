@@ -90,7 +90,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="{{ urlencode($logoUrl) }}" alt="Kokokah Logo" class="logo" style="display: block; margin: 0 auto;">
+            <img src="{{ $logoUrl }}" alt="Kokokah Logo" class="logo" style="display: block; margin: 0 auto; width: 150px; height: auto;">
             <h1 style="margin: 10px 0; color: #333;">Email Verification</h1>
         </div>
 
