@@ -40,21 +40,17 @@ class VerificationCodeNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         $expiresIn = $this->verificationCode->expires_at->diffInMinutes(now());
+        $appUrl = config('app.url');
+        $logoUrl = rtrim($appUrl, '/') . '/images/KOKOKAH Logo.svg';
 
         return (new MailMessage)
             ->subject('Email Verification Code - Kokokah LMS')
-            ->logo('https://kokokah.com/images/Kokokah_Logo.png')
-            ->greeting('Hello ' . $notifiable->first_name . '!')
-            ->line('Your email verification code is:')
-            ->line('')
-            ->line('**' . $this->verificationCode->code . '**')
-            ->line('')
-            ->line('This code will expire in ' . $expiresIn . ' minutes.')
-            ->line('If you did not request this code, please ignore this email.')
-            ->action('Verify Email', url('/verifypassword?code=' . $this->verificationCode->code))
-            ->line('Or enter the code manually in the verification page.')
-            ->line('')
-            ->line('Thank you for using Kokokah LMS!');
+            ->view('emails.verification-code', [
+                'user' => $notifiable,
+                'code' => $this->verificationCode->code,
+                'expiresIn' => $expiresIn,
+                'logoUrl' => $logoUrl
+            ]);
     }
 
     /**
