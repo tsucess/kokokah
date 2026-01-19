@@ -1461,7 +1461,6 @@ main .container {
     padding: 0.1rem 1.5rem;
     color: #fff;
     position: relative;
-    overflow: hidden;
     height: 250px;
 }
 @media (min-width: 767.98px) {
@@ -1470,7 +1469,7 @@ main .container {
     }
 }
 
-.header-section h3 {
+.header-section h2 {
     font-weight: 700;
     color: #000;
 }

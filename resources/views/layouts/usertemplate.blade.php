@@ -58,17 +58,20 @@
 
         .img {
             width: 30px;
-            aspect-ratio:1/1;
+            aspect-ratio: 1/1;
             object-fit: contain;
         }
-        .point{
+
+        .point {
             font-size: 14px;
         }
-        @media screen and (max-width:768px){
-            .img{
+
+        @media screen and (max-width:768px) {
+            .img {
                 width: 20px;
             }
-            .point{
+
+            .point {
                 font-size: 12px;
             }
         }
@@ -154,11 +157,17 @@
 
 
         <div class="d-flex gap-2 shadow-sm rounded-pill align-items-center py-1 py-md-2 px-3  mx-1 mx-lg-3">
-            <div class="d-flex align-items-center gap-1"><img src="./images/leaderboard-award-icon.png"
-                    alt="" class="icon-img"> <span data-badges class="point">0</span></div>
+            <div class="d-flex align-items-center gap-1">
+                <i class="fa-solid fa-trophy fa-xs" style="color: #EF4444
 
-            <div class="ps-2 d-flex align-items-center gap-1" style="border-left: 1px solid #000000;"><img
-                    src="./images/point-icon.png" alt="" class="icon-img"> <span data-points class="point">0</span></div>
+;"></i><span data-badges class="point">0</span>
+            </div>
+
+            <div class="ps-2 d-flex align-items-center gap-1" style="border-left: 1px solid #000000;"><i
+                    class="fa-solid fa-coins fa-xs" style="color: #F59E0B 
+
+;"></i> <span data-points
+                    class="point">0</span></div>
 
         </div>
 
