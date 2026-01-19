@@ -13,6 +13,14 @@ export default defineConfig({
         }),
         // tailwindcss(),
     ],
+    build: {
+        minify: 'terser',
+        terserOptions: {
+            compress: {
+                drop_console: true,
+            },
+        },
+    },
     server: {
         host: 'localhost',
         port: 5173,

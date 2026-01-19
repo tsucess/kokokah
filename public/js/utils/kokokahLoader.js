@@ -176,7 +176,6 @@ class KokokahLoader {
         const elapsedTime = Date.now() - this.visibilityStartTime;
         // If loader has been visible for more than 10 seconds, force hide it
         if (elapsedTime > 10000) {
-          console.warn('Loader visible for too long (>10s), force hiding');
           this.forceHide();
           this.stopSafetyCheck();
         }
