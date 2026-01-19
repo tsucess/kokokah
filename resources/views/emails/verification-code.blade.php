@@ -93,7 +93,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="{{ $logoUrl }}" alt="Kokokah Logo" class="logo">
+            <img src="https://kokokah.com/images/KOKOKAH%20Logo.svg" alt="Kokokah Logo" class="logo">
+            {{-- <img src="{{ $logoUrl }}" alt="Kokokah Logo" class="logo"> --}}
             <h1 style="margin: 10px 0; color: #333;">Email Verification</h1>
         </div>
 
