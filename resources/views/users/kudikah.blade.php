@@ -821,9 +821,15 @@
         <!-- Amount Input Modal -->
         <div id="amountModal" class="payment-method-modal">
             <div class="payment-method-content">
-                <button class="payment-method-close" onclick="closeAmountModal()">&times;</button>
-                <h2 class="payment-method-header">Deposit Money to Wallet</h2>
+                <header class="d-flex align-items-start justify-content-between gap-2">
+                    <div class="d-flex flex-column gap-2">
+                        <h2 class="payment-method-header">Deposit Money to Wallet</h2>
                 <p class="payment-method-subtitle">Enter the amount you want to add</p>
+                    </div>
+                    <button class="payment-method-close" onclick="closeAmountModal()"><i class="fa-regular fa-circle-xmark"></i></button>
+                </header>
+
+
 
                 <div style="padding: 20px 0;">
                     <div class="input-border">

@@ -804,7 +804,7 @@ main .container {
     margin-bottom: 1rem;
     padding: 1.25rem;
     /* background-color: #e5e6e7; */
-    box-shadow: 5px 5px white;
+    box-shadow: 0px 1px 3px  #0000004D, 0px 4px 8px 3px #00000026 ;
 }
 
 .lesson-item h5 {
@@ -833,9 +833,9 @@ main .container {
 
 /* Styling for the "Go to Lesson" button */
 .btn-lesson {
-    background-color: #e9ecef;
+    background-color: #A3D8DF;
     /* Light gray background */
-    color: #ccdbdd;
+    color: #FFFFFF00;
     /* Dark green/teal text color */
     border: none;
     padding: 0.5rem 1.5rem;
@@ -1903,6 +1903,7 @@ p {
 @media screen and (max-width: 768px) {
     .tab-text {
         font-size: 12px;
+        padding-block: 6px;
     }
     .tab {
         gap: 16px;

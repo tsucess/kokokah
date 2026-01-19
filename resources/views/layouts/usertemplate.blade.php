@@ -58,8 +58,18 @@
 
         .img {
             width: 15px;
-            height: 15px;
-            object-fit: fill;
+            aspect-ratio:1/1;
+        }
+        .point{
+            font-size: 14px;
+        }
+        @media screen and (max-width:768px){
+            .img{
+                width: 13px;
+            }
+            .point{
+                font-size: 12px;
+            }
         }
     </style>
 </head>
@@ -142,12 +152,12 @@
         <button class="btn btn-light d-lg-none" id="hamburger"><i class="fa-solid fa-bars"></i></button>
 
 
-        <div class="d-flex gap-2 shadow-sm rounded-pill align-items-center py-2 px-3  mx-1 mx-lg-3">
+        <div class="d-flex gap-2 shadow-sm rounded-pill align-items-center py-1 py-md-2 px-3  mx-1 mx-lg-3">
             <div class="d-flex align-items-center gap-1"><img src="./images/leaderboard-award-icon.png"
-                    alt="" class="img"> <span data-badges>0</span></div>
+                    alt="" class="img"> <span data-badges class="point">0</span></div>
 
             <div class="ps-2 d-flex align-items-center gap-1" style="border-left: 1px solid #000000;"><img
-                    src="./images/point-icon.png" alt="" class="img"> <span data-points>0</span></div>
+                    src="./images/point-icon.png" alt="" class="img"> <span data-points class="point">0</span></div>
 
         </div>
 

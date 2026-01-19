@@ -5,7 +5,7 @@
     <style>
         .card-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, min(100%, 500px)));
+            grid-template-columns: repeat(auto-fill, minmax(280px, min(100%, 300px)));
             gap: 1rem;
             position: relative;
             z-index: 10;
@@ -90,11 +90,11 @@
                     // Generate HTML for each class/level
                     const classesHtml = result.data.map((classItem, index) => `
                     <div class="p-3 rounded-4 bg-white mysubject d-flex flex-column gap-3 w-100">
-                        <div class="border border-dark p-2 text-center" style="border-radius: 10px;">
+                        <div class="border border-dark p-2 d-flex justify-content-center" style="border-radius: 10px;">
                             <img src="images/KOKOKAH Logo.svg"
                                  class="img-fluid userdasboard-card-img"
                                  alt="${classItem.name}"
-                                 style="max-height: 150px; object-fit: cover;" />
+                                 style="max-height: 50px; object-fit: cover;" />
                         </div>
                         <div class="card-item-class align-self-start">${classItem.curriculum_category?.title || 'Class'}</div>
                         <h5 class="subjects">${classItem.name}</h5>
