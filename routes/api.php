@@ -405,8 +405,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // Badges endpoints
         Route::get('/badges', [PointsAndBadgesController::class, 'getUserBadges']);
-        Route::get('/badges/{badgeId}', [PointsAndBadgesController::class, 'getBadgeDetails']);
         Route::get('/badges/stats', [PointsAndBadgesController::class, 'getBadgeStats']);
+        Route::get('/badges/{badgeId}', [PointsAndBadgesController::class, 'getBadgeDetails']);
 
         // Leaderboard
         Route::get('/leaderboard', [PointsAndBadgesController::class, 'getLeaderboard']);

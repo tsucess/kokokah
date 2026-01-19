@@ -362,6 +362,13 @@
     <!-- Points Conversion Component -->
     <script src="{{ asset('js/components/pointsConversionComponent.js') }}"></script>
 
+    <!-- Data Refresh Services -->
+    <script src="{{ asset('js/services/dataRefreshService.js') }}"></script>
+    <script src="{{ asset('js/services/dashboardRefreshManager.js') }}"></script>
+    <script src="{{ asset('js/services/walletRefreshManager.js') }}"></script>
+    <script src="{{ asset('js/services/activityRefreshManager.js') }}"></script>
+    <script src="{{ asset('js/services/enrollmentEventEmitter.js') }}"></script>
+
     <!-- Initialize Notification Modal -->
     <script>
         if (document.readyState === 'loading') {

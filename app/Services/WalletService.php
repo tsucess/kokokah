@@ -301,7 +301,8 @@ class WalletService
         }
 
         return $wallet->transactions()
-                     ->where('type', 'purchase')
+                     ->where('type', 'debit')
+                     ->whereNotNull('course_id')
                      ->sum('amount');
     }
 
@@ -357,11 +358,33 @@ class WalletService
 
         return [
             'balance' => $wallet->balance,
-            'total_deposits' => $transactions->clone()->where('type', 'deposit')->sum('amount'),
-            'total_spending' => $transactions->clone()->where('type', 'purchase')->sum('amount'),
-            'total_rewards' => $transactions->clone()->where('type', 'reward')->sum('amount'),
-            'total_transfers_sent' => $transactions->clone()->where('type', 'transfer')->where('amount', '<', 0)->sum('amount'),
-            'total_transfers_received' => $transactions->clone()->where('type', 'transfer')->where('amount', '>', 0)->sum('amount'),
+            // Deposits: credit transactions with no related_user_id, course_id, or reward_type
+            'total_deposits' => $transactions->clone()
+                ->where('type', 'credit')
+                ->whereNull('related_user_id')
+                ->whereNull('course_id')
+                ->whereNull('reward_type')
+                ->sum('amount'),
+            // Spending: debit transactions with course_id
+            'total_spending' => $transactions->clone()
+                ->where('type', 'debit')
+                ->whereNotNull('course_id')
+                ->sum('amount'),
+            // Rewards: credit transactions with reward_type
+            'total_rewards' => $transactions->clone()
+                ->where('type', 'credit')
+                ->whereNotNull('reward_type')
+                ->sum('amount'),
+            // Transfers sent: debit transactions with related_user_id
+            'total_transfers_sent' => $transactions->clone()
+                ->where('type', 'debit')
+                ->whereNotNull('related_user_id')
+                ->sum('amount'),
+            // Transfers received: credit transactions with related_user_id
+            'total_transfers_received' => $transactions->clone()
+                ->where('type', 'credit')
+                ->whereNotNull('related_user_id')
+                ->sum('amount'),
             'transaction_count' => $transactions->count()
         ];
     }

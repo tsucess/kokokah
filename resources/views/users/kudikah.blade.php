@@ -936,7 +936,26 @@
             await loadWalletData();
             await loadTransactions();
             setupEventListeners();
+            setupAutoRefresh();
         });
+
+        /**
+         * Setup automatic refresh listeners
+         */
+        function setupAutoRefresh() {
+            // Listen for wallet updated events
+            window.addEventListener('walletUpdated', async () => {
+                console.log('[Wallet Page] Wallet updated event received, refreshing...');
+                await loadWalletData();
+                await loadTransactions();
+            });
+
+            // Listen for wallet transactions updated events
+            window.addEventListener('walletTransactionsUpdated', async () => {
+                console.log('[Wallet Page] Transactions updated event received, refreshing...');
+                await loadTransactions();
+            });
+        }
 
         /**
          * Load wallet data (balance, stats, etc.)
@@ -1699,6 +1718,15 @@
                     // Reload wallet data
                     await loadWalletData();
                     await loadTransactions();
+
+                    // Emit event for global data refresh
+                    if (window.DataRefreshService) {
+                        await DataRefreshService.emit(DataRefreshService.EVENTS.TRANSACTION_CREATED, {
+                            type: 'transfer',
+                            amount: transferAmount,
+                            recipient: recipientEmail
+                        });
+                    }
                 } else {
                     // Show detailed error message
                     let errorMsg = result.message || 'Transfer failed';

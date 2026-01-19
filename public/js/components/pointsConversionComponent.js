@@ -237,7 +237,7 @@ class PointsConversionComponent {
         const userPoints = response.data.points || 0;
         const display = document.getElementById('userPointsDisplay');
         if (display) {
-          display.textContent = userPoints;
+          display.textContent = userPoints.toLocaleString();
           console.log('Points loaded:', userPoints);
         }
       } else {
@@ -281,12 +281,21 @@ class PointsConversionComponent {
       if (response.success) {
         NotificationHelper.success('Points converted successfully!');
         this.conversionModal.hide();
-        
+
         // Reload wallet data
         await this.loadUserPoints();
-        
+
         // Reload conversion history
         await this.loadConversionHistory();
+
+        // Emit event for global data refresh
+        if (window.DataRefreshService) {
+          await DataRefreshService.emit(DataRefreshService.EVENTS.POINTS_CONVERTED, {
+            points_converted: response.data.points_converted,
+            new_balance: response.data.new_wallet_balance,
+            remaining_points: response.data.remaining_points
+          });
+        }
       } else {
         this.showError(response.message || 'Conversion failed');
       }

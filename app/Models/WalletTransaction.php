@@ -122,12 +122,12 @@ class WalletTransaction extends Model
 
     public function scopeCredit($query)
     {
-        return $query->whereIn('type', ['deposit', 'refund', 'reward', 'transfer_in', 'commission']);
+        return $query->where('type', 'credit');
     }
 
     public function scopeDebit($query)
     {
-        return $query->whereIn('type', ['withdrawal', 'purchase', 'transfer_out', 'fee']);
+        return $query->where('type', 'debit');
     }
 
     public function scopeCompleted($query)
@@ -199,12 +199,12 @@ class WalletTransaction extends Model
 
     public function getIsDebitAttribute()
     {
-        return in_array($this->type, ['withdrawal', 'purchase', 'transfer_out', 'fee']);
+        return $this->type === 'debit';
     }
 
     public function getIsCreditAttribute()
     {
-        return in_array($this->type, ['deposit', 'refund', 'reward', 'transfer_in', 'commission']);
+        return $this->type === 'credit';
     }
 
     // Methods
@@ -300,8 +300,8 @@ class WalletTransaction extends Model
             return false;
         }
 
-        // Create reverse transaction
-        $reverseType = $this->isDebit() ? 'refund' : 'withdrawal';
+        // Create reverse transaction with opposite type
+        $reverseType = $this->isDebit() ? 'credit' : 'debit';
 
         $reverseTransaction = static::create([
             'wallet_id' => $this->wallet_id,
@@ -333,7 +333,7 @@ class WalletTransaction extends Model
         return static::create([
             'wallet_id' => $walletId,
             'amount' => $amount,
-            'type' => 'deposit',
+            'type' => 'credit',  // Deposits are credit transactions
             'reference' => $reference,
             'status' => 'pending',
             'description' => $description ?? 'Wallet deposit',
@@ -347,7 +347,7 @@ class WalletTransaction extends Model
         return static::create([
             'wallet_id' => $walletId,
             'amount' => $amount,
-            'type' => 'purchase',
+            'type' => 'debit',  // Purchases are debit transactions
             'reference' => $reference,
             'status' => 'completed',
             'description' => $description ?? 'Course purchase',
@@ -364,7 +364,7 @@ class WalletTransaction extends Model
         $debitTransaction = static::create([
             'wallet_id' => $fromWalletId,
             'amount' => $amount,
-            'type' => 'transfer_out',
+            'type' => 'debit',  // Transfers out are debit transactions
             'reference' => $reference,
             'status' => 'completed',
             'description' => $description ?? 'Wallet transfer',
@@ -378,7 +378,7 @@ class WalletTransaction extends Model
         $creditTransaction = static::create([
             'wallet_id' => $toWalletId,
             'amount' => $amount,
-            'type' => 'transfer_in',
+            'type' => 'credit',  // Transfers in are credit transactions
             'reference' => $reference,
             'status' => 'completed',
             'description' => $description ?? 'Wallet transfer',

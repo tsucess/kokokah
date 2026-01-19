@@ -2123,6 +2123,14 @@
 
                         if (result.success) {
                             successCount++;
+
+                            // Emit event for global data refresh
+                            if (window.DataRefreshService) {
+                                await DataRefreshService.emit(DataRefreshService.EVENTS.COURSE_ENROLLED, {
+                                    course_id: courseId,
+                                    payment_method: 'wallet'
+                                });
+                            }
                         } else {
                             failureCount++;
                             console.error(`Failed to purchase course ${courseId}:`, result.message);
@@ -2131,6 +2139,14 @@
 
                     if (successCount > 0) {
                         showSuccessMessage(`Successfully purchased ${successCount} course(s) via Kudikah Wallet!`);
+
+                        // Emit wallet updated event
+                        if (window.DataRefreshService) {
+                            await DataRefreshService.emit(DataRefreshService.EVENTS.WALLET_UPDATED, {
+                                courses_purchased: successCount
+                            });
+                        }
+
                         setTimeout(() => {
                             window.location.href = '/usersubject';
                         }, 2000);

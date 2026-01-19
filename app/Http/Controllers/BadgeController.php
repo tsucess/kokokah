@@ -292,7 +292,7 @@ class BadgeController extends Controller
 
         // Filter by name (since category doesn't exist)
         if ($request->has('name')) {
-            $query->where('name', 'like', '%' . $request->name . '%');
+            $query->where('badges.name', 'like', '%' . $request->name . '%');
         }
 
         // Sorting
@@ -302,7 +302,7 @@ class BadgeController extends Controller
         if ($sortBy === 'earned_at') {
             $query->orderBy('user_badges.earned_at', $sortOrder);
         } else {
-            $query->orderBy($sortBy, $sortOrder);
+            $query->orderBy('badges.' . $sortBy, $sortOrder);
         }
 
         $userBadges = $query->paginate($request->get('per_page', 20));
@@ -313,9 +313,9 @@ class BadgeController extends Controller
         $stats = [
             'total_badges' => $totalBadges,
             'badge_names' => $targetUser->badges()
-                                     ->selectRaw('name, COUNT(*) as count')
-                                     ->groupBy('name')
-                                     ->pluck('count', 'name'),
+                                     ->selectRaw('badges.name, COUNT(*) as count')
+                                     ->groupBy('badges.name')
+                                     ->pluck('count', 'badges.name'),
             'recent_badges' => $targetUser->badges()
                                         ->orderBy('user_badges.earned_at', 'desc')
                                         ->limit(5)
@@ -537,12 +537,20 @@ class BadgeController extends Controller
                            ->limit(50)
                            ->get();
 
-        // Add rank to each user and calculate level
+        // Add rank, level, and badges to each user
         $leaderboard = $leaderboard->map(function($user, $index) {
             $userData = $user->toArray();
             $userData['rank'] = $index + 1;
             $userData['level'] = $this->calculateUserLevel($user->points);
             $userData['profile_photo'] = $user->profile_photo ? '/storage/' . $user->profile_photo : null;
+
+            // Load actual badge objects with icons and names
+            $userModel = User::find($user->id);
+            $userData['badges'] = $userModel->badges()
+                ->select('badges.id', 'badges.name', 'badges.icon', 'badges.description')
+                ->get()
+                ->toArray();
+
             return $userData;
         });
 

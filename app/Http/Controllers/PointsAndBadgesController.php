@@ -28,15 +28,16 @@ class PointsAndBadgesController extends Controller
     {
         try {
             $user = Auth::user();
-            
+            $points = $user->getPoints();
+
             return response()->json([
                 'success' => true,
                 'data' => [
                     'user_id' => $user->id,
-                    'points' => $user->getPoints(),
-                    'level' => $this->calculateUserLevel($user->getPoints()),
-                    'next_level_points' => $this->getNextLevelPoints($user->getPoints()),
-                    'progress_to_next_level' => $this->getProgressToNextLevel($user->getPoints())
+                    'points' => $points,
+                    'level' => $this->calculateUserLevel($points),
+                    'next_level_points' => $this->getNextLevelPoints($points),
+                    'progress_to_next_level' => $this->getProgressToNextLevel($points)
                 ]
             ]);
         } catch (\Exception $e) {
@@ -80,17 +81,18 @@ class PointsAndBadgesController extends Controller
         try {
             $user = Auth::user();
             $category = $request->get('category');
-            
+
             $query = $user->badges()
-                ->with('pivot')
+                ->withPivot('earned_at', 'revoked_at')
+                ->whereNull('user_badges.revoked_at')
                 ->orderBy('user_badges.earned_at', 'desc');
-            
+
             if ($category) {
-                $query->where('category', $category);
+                $query->where('badges.category', $category);
             }
-            
+
             $badges = $query->paginate($request->get('per_page', 20));
-            
+
             return response()->json([
                 'success' => true,
                 'data' => $badges
@@ -188,21 +190,27 @@ class PointsAndBadgesController extends Controller
     {
         try {
             $user = Auth::user();
-            
+
+            // Use raw query to avoid pivot column selection issues
+            $badgesByCategory = \DB::table('badges')
+                ->join('user_badges', 'badges.id', '=', 'user_badges.badge_id')
+                ->where('user_badges.user_id', $user->id)
+                ->select('badges.category')
+                ->selectRaw('count(*) as count')
+                ->groupBy('badges.category')
+                ->get();
+
             $stats = [
                 'total_badges' => $user->badges()->count(),
-                'badges_by_category' => $user->badges()
-                    ->groupBy('category')
-                    ->selectRaw('category, count(*) as count')
-                    ->get(),
+                'badges_by_category' => $badgesByCategory,
                 'total_badge_points' => $user->badges()
-                    ->sum('points'),
+                    ->sum('badges.points'),
                 'recent_badges' => $user->badges()
                     ->orderBy('user_badges.earned_at', 'desc')
                     ->limit(5)
                     ->get()
             ];
-            
+
             return response()->json([
                 'success' => true,
                 'data' => $stats

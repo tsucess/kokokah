@@ -232,8 +232,10 @@ class PointsAndBadgesService
                 return $posts >= (int)$criteriaValue;
 
             case 'helpful_posts':
+                // Count posts with reactions (as a proxy for helpful posts)
+                // Since chat_messages doesn't have is_helpful column, we use reaction_count
                 $helpful = \App\Models\ChatMessage::where('user_id', $user->id)
-                    ->where('is_helpful', true)
+                    ->where('reaction_count', '>', 0)
                     ->count();
                 return $helpful >= (int)$criteriaValue;
 
@@ -267,22 +269,35 @@ class PointsAndBadgesService
 
             // MONEY TRANSFER BADGES
             case 'money_transfer':
-                $transfers = \App\Models\Transaction::where('sender_id', $user->id)
-                    ->where('type', 'transfer')
+                // Count transfers where user is the sender (via wallet relationship)
+                $transfers = \App\Models\Transaction::whereHas('wallet', function($q) use ($user) {
+                    $q->where('user_id', $user->id);
+                })
+                    ->where('type', 'debit')  // Debit = money going out (transfer)
                     ->count();
                 return $transfers >= (int)$criteriaValue;
 
             case 'transfer_champion':
                 // Check if user has the most transfers
-                $userTransfers = \App\Models\Transaction::where('sender_id', $user->id)
-                    ->where('type', 'transfer')
+                $userTransfers = \App\Models\Transaction::whereHas('wallet', function($q) use ($user) {
+                    $q->where('user_id', $user->id);
+                })
+                    ->where('type', 'debit')
                     ->count();
-                $maxTransfers = \App\Models\Transaction::where('type', 'transfer')
-                    ->selectRaw('sender_id, COUNT(*) as transfer_count')
-                    ->groupBy('sender_id')
+
+                // Get user with most transfers
+                $maxTransfers = \App\Models\Transaction::where('type', 'debit')
+                    ->selectRaw('wallet_id, COUNT(*) as transfer_count')
+                    ->groupBy('wallet_id')
                     ->orderByDesc('transfer_count')
                     ->first();
-                return $maxTransfers && $maxTransfers->sender_id === $user->id && $userTransfers > 0;
+
+                // Check if current user has the most transfers
+                if ($maxTransfers) {
+                    $maxWallet = \App\Models\Wallet::find($maxTransfers->wallet_id);
+                    return $maxWallet && $maxWallet->user_id === $user->id && $userTransfers > 0;
+                }
+                return false;
 
             // CHATROOM CHAMPION BADGE
             case 'chatroom_champion':
@@ -370,7 +385,7 @@ class PointsAndBadgesService
     private function checkSubscriptionMonths(User $user, $months)
     {
         // Check if user has an active subscription for at least the specified months
-        $subscription = \App\Models\Subscription::where('user_id', $user->id)
+        $subscription = \App\Models\UserSubscription::where('user_id', $user->id)
             ->where('status', 'active')
             ->first();
 
@@ -378,7 +393,7 @@ class PointsAndBadgesService
             return false;
         }
 
-        $subscriptionMonths = $subscription->created_at->diffInMonths(now());
+        $subscriptionMonths = $subscription->started_at->diffInMonths(now());
         return $subscriptionMonths >= $months;
     }
 
@@ -388,7 +403,7 @@ class PointsAndBadgesService
     private function checkResubscription(User $user)
     {
         // Check if user has more than one subscription record
-        $subscriptionCount = \App\Models\Subscription::where('user_id', $user->id)->count();
+        $subscriptionCount = \App\Models\UserSubscription::where('user_id', $user->id)->count();
         return $subscriptionCount > 1;
     }
 

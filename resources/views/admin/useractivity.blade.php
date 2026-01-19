@@ -308,7 +308,20 @@
             loadUsersActivities(1);
             setupPaginationListeners();
             setupSearchAndFilterListeners();
+            setupAutoRefresh();
         });
+
+        /**
+         * Setup automatic refresh listeners
+         */
+        function setupAutoRefresh() {
+            // Listen for user activity updated events
+            window.addEventListener('userActivityUpdated', async () => {
+                console.log('[Activity Page] User activity updated event received, refreshing...');
+                currentPage = 1; // Reset to first page
+                await loadUsersActivities(1);
+            });
+        }
 
         // Setup pagination button listeners
         function setupPaginationListeners() {

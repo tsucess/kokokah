@@ -194,35 +194,51 @@ class DashboardModule {
    */
   static async loadPointsAndBadges() {
     try {
+      console.log('[DashboardModule] Loading points and badges...');
+
       // Fetch user points
       const pointsResponse = await window.PointsAndBadgesApiClient.getUserPoints();
+      console.log('[DashboardModule] Points response:', pointsResponse);
 
       if (pointsResponse.success && pointsResponse.data) {
         const { points = 0 } = pointsResponse.data;
+        console.log('[DashboardModule] Points value:', points);
 
         // Update points in topbar
         const pointsElements = document.querySelectorAll('[data-points]');
+        console.log('[DashboardModule] Found', pointsElements.length, 'points elements');
         pointsElements.forEach(el => {
           el.textContent = points.toLocaleString();
+          console.log('[DashboardModule] Updated points element:', el);
         });
 
         // Also update the span that displays points in the topbar
         const topbarPoints = document.querySelector('.d-flex.gap-2 .ps-2 span');
         if (topbarPoints) {
           topbarPoints.textContent = points.toLocaleString();
+          console.log('[DashboardModule] Updated topbar points:', topbarPoints);
         }
       }
 
       // Fetch user badges
       const badgesResponse = await window.PointsAndBadgesApiClient.getUserBadges();
+      console.log('[DashboardModule] Badges response:', badgesResponse);
 
       if (badgesResponse.success && badgesResponse.data) {
-        const badgeCount = Array.isArray(badgesResponse.data)
-          ? badgesResponse.data.length
-          : (badgesResponse.data.data ? badgesResponse.data.data.length : 0);
+        // Handle paginated response
+        let badgeCount = 0;
+        if (badgesResponse.data.data && Array.isArray(badgesResponse.data.data)) {
+          // Paginated response
+          badgeCount = badgesResponse.data.total || badgesResponse.data.data.length;
+        } else if (Array.isArray(badgesResponse.data)) {
+          // Direct array response
+          badgeCount = badgesResponse.data.length;
+        }
+        console.log('[DashboardModule] Badge count:', badgeCount);
 
         // Update badges in topbar
         const badgeElements = document.querySelectorAll('[data-badges]');
+        console.log('[DashboardModule] Found', badgeElements.length, 'badge elements');
         badgeElements.forEach(el => {
           el.textContent = badgeCount;
         });
@@ -231,10 +247,11 @@ class DashboardModule {
         const topbarBadges = document.querySelector('.d-flex.gap-2 > div:first-child span');
         if (topbarBadges) {
           topbarBadges.textContent = badgeCount;
+          console.log('[DashboardModule] Updated topbar badges:', topbarBadges);
         }
       }
     } catch (error) {
-      console.error('Error loading points and badges:', error);
+      console.error('[DashboardModule] Error loading points and badges:', error);
     }
   }
 

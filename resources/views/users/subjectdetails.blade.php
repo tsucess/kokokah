@@ -1427,6 +1427,15 @@
                     progressTrack.style.width = progressPercentage + '%';
 
                     showSuccess('Lesson marked as complete!');
+
+                    // Emit event for global data refresh
+                    if (window.DataRefreshService) {
+                        await DataRefreshService.emit(DataRefreshService.EVENTS.LESSON_COMPLETED, {
+                            lesson_id: currentLesson.id,
+                            lesson_title: currentLesson.title,
+                            progress: progressPercentage
+                        });
+                    }
                 } else {
                     showError(response.message || 'Failed to mark lesson complete');
                     // Re-enable button on error
