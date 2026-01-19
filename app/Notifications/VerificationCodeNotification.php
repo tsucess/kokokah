@@ -41,11 +41,8 @@ class VerificationCodeNotification extends Notification implements ShouldQueue
     {
         $expiresIn = $this->verificationCode->expires_at->diffInMinutes(now());
 
-        // Convert PNG logo to base64 data URI for reliable email display
+        // Use Laravel's embed() method for reliable image embedding
         $logoPath = public_path('images/Kokokah_Logo.png');
-        $logoContent = file_get_contents($logoPath);
-        $logoBase64 = base64_encode($logoContent);
-        $logoUrl = 'data:image/png;base64,' . $logoBase64;
 
         return (new MailMessage)
             ->subject('Email Verification Code - Kokokah LMS')
@@ -53,7 +50,7 @@ class VerificationCodeNotification extends Notification implements ShouldQueue
                 'user' => $notifiable,
                 'code' => $this->verificationCode->code,
                 'expiresIn' => $expiresIn,
-                'logoUrl' => $logoUrl
+                'logoPath' => $logoPath
             ]);
     }
 
