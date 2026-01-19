@@ -693,11 +693,11 @@
                             <img src="./images/logos_mastercard.png" alt="" class="position-absolute"
                                 style="right:20px; bottom:40px;" />
                             <img src="./images/card-chip-icon.png" alt="" class="position-absolute"
-                                style="right:30px; top:20px;" />
+                                style="right:20px; top:20px;" />
 
-                            <div class="position-absolute d-flex flex-column gap-3" style="bottom: 40px; left:30px;">
+                            <div class="position-absolute d-flex flex-column gap-3" style="bottom: 40px; left:20px;">
                                 <div class="d-flex flex-column gap-1">
-                                    <p style="font-size: 24px; color:#fff;" id="cardNumberDisplay">**** **** **** ****</p>
+                                    <p style="font-size: 20px; color:#fff;" id="cardNumberDisplay">**** **** **** ****</p>
                                     <div class="d-flex flex-column">
                                         <p style="font-size: 14px; color:#fff;">Valid Till</p>
                                         <p style="font-size: 14px; color:#fff;" id="cardExpiry">MM/YY</p>
