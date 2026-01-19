@@ -308,9 +308,9 @@ font-size: 12px;
 
     </div>
 
-    <div class="chat-btn-circle">
+    {{-- <div class="chat-btn-circle">
         <i class="fa-solid fa-comment"></i>
-    </div>
+    </div> --}}
 
 </main>
     <!-- API Clients -->
