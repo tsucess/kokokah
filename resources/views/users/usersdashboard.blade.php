@@ -300,7 +300,7 @@
             <!-- Course Card Template (hidden) -->
             <template id="courseCardTemplate">
                 <div class = "p-3 bg-white mysubject d-flex flex-column gap-3 w-100 rounded-4">
-                    <div class = "border border-dark p-2 text-center" style="border-radius: 10px;">
+                    <div class = "border border-dark d-flex justify-content-center p-2 text-center" style="border-radius: 10px;">
                         <img src="{{ asset('images/KOKOKAH Logo.svg') }}" class = "img-fluid userdasboard-card-img"
                             alt="Course" />
                     </div>

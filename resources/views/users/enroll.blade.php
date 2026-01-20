@@ -968,7 +968,7 @@
                     <button class="back-btn" type="button" id="backBtn" title="Go back">
                         <i class="fas fa-chevron-left"></i>
                     </button>
-                    <h1 id="levelTitle">Loading...</h1>
+                    <h1 id="levelTitle">Level Title</h1>
                 </div>
                 <button class = "enroll-btn" type = "button" id="enrollAllBtn">Subscribe to All Subjects</button>
             </div>
@@ -1490,7 +1490,7 @@
                     return;
                 }
 
-        
+
 
                 // Fetch courses for this level
                 const result = await CourseApiClient.getCourses({
