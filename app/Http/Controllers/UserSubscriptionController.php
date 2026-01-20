@@ -6,6 +6,7 @@ use App\Models\UserSubscription;
 use App\Models\SubscriptionPlan;
 use App\Models\Enrollment;
 use App\Models\Course;
+use App\Services\WalletService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -14,6 +15,13 @@ use Carbon\Carbon;
 
 class UserSubscriptionController extends Controller
 {
+    protected $walletService;
+
+    public function __construct(WalletService $walletService)
+    {
+        $this->walletService = $walletService;
+    }
+
     /**
      * Get current user's subscriptions
      */
@@ -54,7 +62,7 @@ class UserSubscriptionController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'subscription_plan_id' => 'required|exists:subscription_plans,id',
-                'amount_paid' => 'required|numeric|min:0',
+                'amount_paid' => 'required|numeric|min:0.01',
                 'payment_reference' => 'nullable|string',
                 'course_ids' => 'nullable|array',
                 'course_ids.*' => 'exists:courses,id'
@@ -70,6 +78,18 @@ class UserSubscriptionController extends Controller
             $user = Auth::user();
             $plan = SubscriptionPlan::findOrFail($request->subscription_plan_id);
 
+            // Validate wallet balance if amount_paid is provided (wallet payment)
+            if ($request->amount_paid > 0) {
+                $affordability = $this->walletService->canAffordSubscription($user, $request->amount_paid);
+                if (!$affordability['can_afford']) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Insufficient wallet balance for this subscription',
+                        'data' => $affordability
+                    ], 400);
+                }
+            }
+
             // Check if user already has active subscription to this plan
             $existingSubscription = UserSubscription::where('user_id', $user->id)
                                                     ->where('subscription_plan_id', $plan->id)
@@ -81,6 +101,24 @@ class UserSubscriptionController extends Controller
                     'success' => false,
                     'message' => 'User already has an active subscription to this plan'
                 ], 400);
+            }
+
+            // Check if user is trying to subscribe to courses they're already enrolled in through this plan
+            if ($request->has('course_ids') && is_array($request->course_ids)) {
+                $duplicateCourses = Enrollment::where('user_id', $user->id)
+                                             ->whereIn('course_id', $request->course_ids)
+                                             ->pluck('course_id')
+                                             ->toArray();
+
+                if (!empty($duplicateCourses)) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'User is already enrolled in some of the selected courses through this plan',
+                        'data' => [
+                            'duplicate_course_ids' => $duplicateCourses
+                        ]
+                    ], 400);
+                }
             }
 
             // Calculate expiration date based on duration type

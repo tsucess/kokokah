@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use App\Models\User;
 use App\Models\SubscriptionPlan;
 use App\Models\UserSubscription;
+use App\Models\Wallet;
+use App\Models\Course;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -76,6 +78,9 @@ class SubscriptionTest extends TestCase
      */
     public function test_user_can_subscribe_to_plan()
     {
+        // Set wallet balance to sufficient amount
+        $this->user->wallet->update(['balance' => 10000]);
+
         $response = $this->actingAs($this->user)
                          ->postJson('/api/subscriptions/subscribe', [
                              'subscription_plan_id' => $this->subscriptionPlan->id,
@@ -188,6 +193,205 @@ class SubscriptionTest extends TestCase
 
         $response->assertStatus(200)
                  ->assertJsonPath('success', true);
+    }
+
+    /**
+     * Test user cannot subscribe with insufficient wallet balance
+     */
+    public function test_user_cannot_subscribe_with_insufficient_wallet_balance()
+    {
+        // Set wallet balance to insufficient amount
+        $this->user->wallet->update(['balance' => 1000]); // Less than subscription price of 5000
+
+        $response = $this->actingAs($this->user)
+                         ->postJson('/api/subscriptions/subscribe', [
+                             'subscription_plan_id' => $this->subscriptionPlan->id,
+                             'amount_paid' => 5000,
+                             'payment_reference' => 'PAY-123456'
+                         ]);
+
+        $response->assertStatus(400)
+                 ->assertJsonPath('success', false)
+                 ->assertJsonPath('message', 'Insufficient wallet balance for this subscription');
+    }
+
+    /**
+     * Test user can subscribe with sufficient wallet balance
+     */
+    public function test_user_can_subscribe_with_sufficient_wallet_balance()
+    {
+        // Set wallet balance to sufficient amount
+        $this->user->wallet->update(['balance' => 10000]); // More than subscription price of 5000
+
+        $response = $this->actingAs($this->user)
+                         ->postJson('/api/subscriptions/subscribe', [
+                             'subscription_plan_id' => $this->subscriptionPlan->id,
+                             'amount_paid' => 5000,
+                             'payment_reference' => 'PAY-123456'
+                         ]);
+
+        $response->assertStatus(201)
+                 ->assertJsonPath('success', true)
+                 ->assertJsonPath('data.status', 'active');
+    }
+
+    /**
+     * Test user cannot subscribe with zero amount
+     */
+    public function test_user_cannot_subscribe_with_zero_amount()
+    {
+        $response = $this->actingAs($this->user)
+                         ->postJson('/api/subscriptions/subscribe', [
+                             'subscription_plan_id' => $this->subscriptionPlan->id,
+                             'amount_paid' => 0,
+                             'payment_reference' => 'PAY-123456'
+                         ]);
+
+        $response->assertStatus(422)
+                 ->assertJsonPath('success', false);
+    }
+
+    /**
+     * Test user can have multiple active subscriptions to different plans
+     */
+    public function test_user_can_have_multiple_active_subscriptions()
+    {
+        // Create second subscription plan
+        $secondPlan = SubscriptionPlan::create([
+            'title' => 'Premium Plan',
+            'description' => 'Premium Description',
+            'price' => 10000,
+            'duration' => 30,
+            'duration_type' => 'monthly',
+            'features' => ['Premium Feature 1'],
+            'is_active' => true
+        ]);
+
+        // Set wallet balance to sufficient amount
+        $this->user->wallet->update(['balance' => 20000]);
+
+        // Subscribe to first plan
+        $response1 = $this->actingAs($this->user)
+                          ->postJson('/api/subscriptions/subscribe', [
+                              'subscription_plan_id' => $this->subscriptionPlan->id,
+                              'amount_paid' => 5000,
+                              'payment_reference' => 'PAY-123456'
+                          ]);
+
+        $response1->assertStatus(201);
+
+        // Subscribe to second plan
+        $response2 = $this->actingAs($this->user)
+                          ->postJson('/api/subscriptions/subscribe', [
+                              'subscription_plan_id' => $secondPlan->id,
+                              'amount_paid' => 10000,
+                              'payment_reference' => 'PAY-789012'
+                          ]);
+
+        $response2->assertStatus(201);
+
+        // Verify both subscriptions exist
+        $this->assertDatabaseHas('user_subscriptions', [
+            'user_id' => $this->user->id,
+            'subscription_plan_id' => $this->subscriptionPlan->id,
+            'status' => 'active'
+        ]);
+
+        $this->assertDatabaseHas('user_subscriptions', [
+            'user_id' => $this->user->id,
+            'subscription_plan_id' => $secondPlan->id,
+            'status' => 'active'
+        ]);
+    }
+
+    /**
+     * Test user cannot subscribe to same plan twice
+     */
+    public function test_user_cannot_subscribe_to_same_plan_twice()
+    {
+        // Set wallet balance to sufficient amount
+        $this->user->wallet->update(['balance' => 20000]);
+
+        // Subscribe to plan
+        $response1 = $this->actingAs($this->user)
+                          ->postJson('/api/subscriptions/subscribe', [
+                              'subscription_plan_id' => $this->subscriptionPlan->id,
+                              'amount_paid' => 5000,
+                              'payment_reference' => 'PAY-123456'
+                          ]);
+
+        $response1->assertStatus(201);
+
+        // Try to subscribe to same plan again
+        $response2 = $this->actingAs($this->user)
+                          ->postJson('/api/subscriptions/subscribe', [
+                              'subscription_plan_id' => $this->subscriptionPlan->id,
+                              'amount_paid' => 5000,
+                              'payment_reference' => 'PAY-789012'
+                          ]);
+
+        $response2->assertStatus(400)
+                  ->assertJsonPath('success', false)
+                  ->assertJsonPath('message', 'User already has an active subscription to this plan');
+    }
+
+    /**
+     * Test user cannot subscribe to same plan on same course
+     */
+    public function test_user_cannot_subscribe_to_same_plan_on_same_course()
+    {
+        // Create a course manually
+        $course = Course::create([
+            'title' => 'Test Course',
+            'slug' => 'test-course',
+            'description' => 'Test Description',
+            'status' => 'published',
+            'instructor_id' => $this->user->id
+        ]);
+
+        // Attach course to subscription plan
+        $this->subscriptionPlan->courses()->attach($course->id);
+
+        // Set wallet balance to sufficient amount
+        $this->user->wallet->update(['balance' => 20000]);
+
+        // First subscription with course enrollment
+        $response1 = $this->actingAs($this->user)
+                          ->postJson('/api/subscriptions/subscribe', [
+                              'subscription_plan_id' => $this->subscriptionPlan->id,
+                              'amount_paid' => 5000,
+                              'payment_reference' => 'PAY-123456',
+                              'course_ids' => [$course->id]
+                          ]);
+
+        $response1->assertStatus(201);
+
+        // Verify enrollment was created
+        $this->assertDatabaseHas('enrollments', [
+            'user_id' => $this->user->id,
+            'course_id' => $course->id,
+            'status' => 'active'
+        ]);
+
+        // Cancel the first subscription to allow another subscription attempt
+        $subscription = UserSubscription::where('user_id', $this->user->id)
+                                       ->where('subscription_plan_id', $this->subscriptionPlan->id)
+                                       ->first();
+        $subscription->update(['status' => 'cancelled']);
+
+        // Try to subscribe to same plan with same course
+        $response2 = $this->actingAs($this->user)
+                          ->postJson('/api/subscriptions/subscribe', [
+                              'subscription_plan_id' => $this->subscriptionPlan->id,
+                              'amount_paid' => 5000,
+                              'payment_reference' => 'PAY-789012',
+                              'course_ids' => [$course->id]
+                          ]);
+
+        $response2->assertStatus(400)
+                  ->assertJsonPath('success', false)
+                  ->assertJsonPath('message', 'User is already enrolled in some of the selected courses through this plan')
+                  ->assertJsonPath('data.duplicate_course_ids.0', $course->id);
     }
 }
 

@@ -418,4 +418,20 @@ class WalletService
             'errors' => $errors
         ];
     }
+
+    /**
+     * Validate subscription affordability using wallet
+     */
+    public function canAffordSubscription(User $user, float $subscriptionPrice): array
+    {
+        $wallet = $user->getOrCreateWallet();
+        $canAfford = $wallet->balance >= $subscriptionPrice;
+
+        return [
+            'can_afford' => $canAfford,
+            'balance' => $wallet->balance,
+            'subscription_price' => $subscriptionPrice,
+            'shortfall' => $canAfford ? 0 : $subscriptionPrice - $wallet->balance
+        ];
+    }
 }
