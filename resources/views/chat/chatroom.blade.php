@@ -38,7 +38,7 @@
             color: #333;
             border-radius: 12px;
             padding: 10px 15px;
-            max-width: 500px;
+            max-width: 200px;
         }
 
         .chat-message:not(.current-user-message) .message-timestamp {
@@ -695,9 +695,23 @@
         .send-text{
             display: none;
         }
+        .send-btn{
+            background-color: #FDAF22;
+            padding: 10px 16px;
+            gap: 8px;
+            border-radius: 50%;
+            color: #000F11;
+            transition: background-color 0.2s ease;
+        }
+        .send-btn:hover{
+            background-color: #F3A61C;
+        }
         @media screen and (min-width:500px){
             .send-text{
                 display: inline;
+            }
+            .send-btn{
+                border-radius: 100px;
             }
         }
     </style>
@@ -763,8 +777,8 @@
                                 <i class="bi bi-emoji-smile-fill cursor-pointer" id="emojiBtn" title="Add emoji"></i>
                                 <i class="bi bi-camera-fill cursor-pointer" id="cameraBtn" title="Take picture"></i>
                             </div>
-                            <button class="btn btn-send d-flex align-items-center" id="sendBtn">
-                               <span class="send-text">Send</span>  <i class="bi bi-send-fill ms-2"></i>
+                            <button class="btn send-btn d-flex align-items-center" id="sendBtn">
+                               <span class="send-text">Send</span>  <i class="bi bi-send-fill"></i>
                             </button>
                         </div>
                     </div>

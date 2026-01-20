@@ -56,6 +56,7 @@
             height: 60px;
             border: none;
             font-weight: 600;
+            border-radius: 6px;
         }
 
         .share-feedback-title {

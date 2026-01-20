@@ -9,6 +9,7 @@
             gap: 1rem;
             position: relative;
             z-index: 10;
+            justify-content: center;
         }
 
         .card-item-class {
@@ -47,7 +48,7 @@
 
         </div>
 
-        <div class  = "container position-relative " style="margin-top: -70px; min-height:200px;">
+        <div class  = "container-fluid position-relative " style="margin-top: -70px; min-height:200px;">
             <div class = "card-container" id="coursesContainer">
                 <!-- Classes will be loaded here dynamically -->
                 <div class="text-center w-100" id="loadingMessage">
