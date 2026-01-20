@@ -1226,7 +1226,7 @@ main .container {
 .message-user {
     font-weight: 500;
     margin-right: 0.5rem;
-    font-size: 1.2rem;
+    font-size: 0.9rem;
 }
 
 .message-timestamp {
@@ -1835,7 +1835,7 @@ p {
 .tab {
     background-color: #ccdbdd;
     height: auto;
-    gap: 14px;
+    gap: 10px;
     padding: 15px;
 }
 

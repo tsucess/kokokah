@@ -4,7 +4,8 @@
 <style>
     .tabs{
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(120px,1fr))
+        grid-template-columns: repeat(auto-fit, minmax(130px,1fr));
+        border-radius: 30px;
     }
     @media screen and (max-width:768px){
         .tabs{
@@ -19,11 +20,9 @@
 
 
             <section class=" d-flex flex-column" style="gap: 30px;">
-                <div class="d-flex align-items-center justify-content-between">
-                    <div>
-                        <h2>Notifications & Announcements</h2>
+                <div class="d-flex flex-column gap-1">
+                        <h2>Notifications</h2>
                         <p >Stay updated with the latest news and updates from your school/instructor.</p>
-                    </div>
                 </div>
 
                 <div class="d-flex flex-column " style="gap: 75px;">

@@ -9,6 +9,7 @@
             gap: 1rem;
             position: relative;
             z-index: 10;
+            justify-content: center;
         }
 
         .card-item-class {
@@ -43,7 +44,7 @@
 
         </div>
 
-        <div class="container">
+        <div class="container-fluid">
             <div class="card-container" id="coursesContainer">
                 <!-- Courses will be loaded dynamically -->
             </div>
@@ -217,8 +218,8 @@ let userCourses = [];
         function showNoCourses() {
             const container = document.getElementById('coursesContainer');
             container.innerHTML = `
-                <div class="col-12 text-center py-5">
-                    <p class="text-muted">No courses available yet. <a href="/userclass">Browse all courses</a> to get started with free or premium courses.</p>
+                <div class="col-12 w-100 py-5">
+                    <p class="text-muted text-center">No courses available yet. <a href="/userclass">Browse all courses</a> to get started with free or premium courses.</p>
                 </div>
             `;
         }    </script>

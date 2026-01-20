@@ -64,7 +64,7 @@
      */
     async function loadLeaderboard() {
         try {
-       
+
             const response = await window.BadgeApiClient.getLeaderboard(currentPeriod);
 
             if (response.success && response.data) {
@@ -563,7 +563,7 @@
             <header class="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-items-start gap-3">
                 <div class="d-flex gap-1 align-items-center">
                     <img src="./images/leaderboard-icon.png" alt="" class="leaderboard-img">
-                    <h2 class="leaderboard-title">Leaderboard</h2>
+                    <h2 >Leaderboard</h2>
                 </div>
                 <div class="d-flex align-items-center gap-3">
                     <div class="d-flex gap-3 align-items-center">
@@ -587,7 +587,7 @@
                                 <img src="./images/little-winner.jpg" alt="" class="leaderboard-winner-img">
                                 <h4 class="leaderboard-winner-name">Winner Effiong</h4>
                             </div>
-                            <div class="leaderboard-winner-track"></div>
+                            {{-- <div class="leaderboard-winner-track"></div> --}}
                         </div>
                         <div class="d-flex align-items-center justify-content-center leaderboard-second-platform">
                             <img src="./images/medal-second-place.png" alt="" class="leaderboard-second-img">
@@ -599,7 +599,7 @@
                                 <img src="./images/little-winner.jpg" alt="" class="leaderboard-winner-img">
                                 <h4 class="leaderboard-winner-name">Winner Effiong</h4>
                             </div>
-                            <div class="leaderboard-winner-track"></div>
+                            {{-- <div class="leaderboard-winner-track"></div> --}}
                         </div>
                         <div class="d-flex align-items-start pt-5 align-items-md-center pt-md-0 justify-content-center leaderboard-first-platform">
                             <img src="./images/medal-first-place.png" alt="" class="leaderboard-first-img">
@@ -611,7 +611,7 @@
                                 <img src="./images/little-winner.jpg" alt="" class="leaderboard-winner-img">
                                 <h4 class="leaderboard-winner-name">Winner Effiong</h4>
                             </div>
-                            <div class="leaderboard-winner-track"></div>
+                            {{-- <div class="leaderboard-winner-track"></div> --}}
                         </div>
                         <div class="d-flex align-items-center justify-content-center leaderboard-third-platform">
                             <img src="./images/medal-third-place.png" alt="" class="leaderboard-third-img">

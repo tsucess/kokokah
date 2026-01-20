@@ -58,7 +58,7 @@
 </style>
 
  <main class="transactions-main">
-        <div class="container-fluid px-2 py-4 px-lg-4">
+        <div class="container-fluid px-3 py-4 px-md-4">
             <!-- Header Section -->
             <div class="d-flex justify-content-between align-items-start mb-4">
                 <div>
