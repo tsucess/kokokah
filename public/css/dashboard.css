@@ -835,7 +835,7 @@ main .container {
 .btn-lesson {
     background-color: #A3D8DF;
     /* Light gray background */
-    color: #FFFFFF00;
+    color: #000f11;
     /* Dark green/teal text color */
     border: none;
     padding: 0.5rem 1.5rem;
@@ -1021,7 +1021,7 @@ main .container {
     /* Simulating the green gradient and shape */
     background: linear-gradient(135deg, #2eaf4a, #8dd234);
     color: white;
-    padding: 2rem 2.5rem;
+    padding: 2rem 1.5rem;
     border-radius: 0.5rem;
     margin-bottom: 1.5rem;
     position: relative;
@@ -2168,7 +2168,7 @@ select {
 
 .modal-dialog {
     max-width: 600px;
-    margin: auto;
+    margin: auto 15px;
 }
 
 .modal-container {

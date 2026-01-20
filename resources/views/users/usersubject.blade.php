@@ -44,16 +44,16 @@
 
         </div>
 
-        <div class="container-fluid">
+        <div class="container-fluid mb-5">
             <div class="card-container" id="coursesContainer">
                 <!-- Courses will be loaded dynamically -->
             </div>
 
         </div>
 
-        <div class="chat-btn-circle">
+        {{-- <div class="chat-btn-circle">
             <i class="fa-solid fa-comment"></i>
-        </div>
+        </div> --}}
 
     </main>
         <!-- API Clients -->
@@ -186,8 +186,8 @@ let userCourses = [];
 
             card.innerHTML = `
                 <div style="position: relative;">
-                    <div class="border border-dark p-3" style="height: 200px; border-radius: 10px; overflow: hidden; text-align: center; align-items: center; justify-content: center; display: flex;">
-                        <img src="${courseImage}" class="img-fluid" style="max-height: 100%; object-fit: contain;" alt="${course.title}" />
+                    <div class="border border-dark" style="height: 200px; border-radius: 10px; overflow: hidden; text-align: center; align-items: center; justify-content: center; display: flex;">
+                        <img src="${courseImage}" class="img-fluid" style="max-height: 100%; owidth:100%; aspect-ratio:1/1;" alt="${course.title}" />
                     </div>
                     ${accessBadge ? `<div style="position: absolute; top: 10px; right: 10px; background-color: ${badgeColor}; color: white; padding: 4px 12px; border-radius: 4px; font-size: 11px; font-weight: 600;">${accessBadge}</div>` : ''}
                 </div>
