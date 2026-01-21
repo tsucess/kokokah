@@ -164,7 +164,7 @@
             </div>
 
             <div class="ps-2 d-flex align-items-center gap-1" style="border-left: 1px solid #000000;"><i
-                    class="fa-solid fa-coins fa-xs" style="color: #F59E0B 
+                    class="fa-solid fa-coins fa-xs" style="color: #F59E0B
 
 ;"></i> <span data-points
                     class="point">0</span></div>
@@ -176,8 +176,8 @@
                 style="position: relative;">
                 <i class="fa-regular fa-bell fa-2xs"></i>
             </button>
-            <button class="icon-btn round-2 icon-btn-light" title="message"><i
-                    class="fa-regular fa-envelope fa-2xs"></i></button>
+            {{-- <button class="icon-btn round-2 icon-btn-light" title="message"><i
+                    class="fa-regular fa-envelope fa-2xs"></i></button> --}}
             <button class="icon-btn round-2 icon-btn-light" title="Help & FAQ"
                 onclick="window.location.href='/help'">
                 <i class="fa-solid fa-question fa-2xs"></i>
@@ -307,12 +307,12 @@
                                 Announcements
                             </a>
                         </li>
-                        <li class="nav-item" role="presentation">
+                        {{-- <li class="nav-item" role="presentation">
                             <a class="nav-link" id="messages-tab" data-bs-toggle="tab" href="#messages"
                                 role="tab" aria-controls="messages" aria-selected="false">
                                 Messages
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item" role="presentation">
                             <a class="nav-link" id="notifications-tab" data-bs-toggle="tab" href="#notifications"
                                 role="tab" aria-controls="notifications" aria-selected="false">

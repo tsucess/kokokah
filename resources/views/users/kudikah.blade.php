@@ -597,7 +597,7 @@
                         <div class="modal-form">
                             <div class="modal-form-input-border">
                                 <label for="recipientEmail" class="modal-label">Recipient Email</label>
-                                <div class="d-flex justify-content-between gap-1 align-items-center w-100">
+                                <div class="d-flex flex-column flex-md-row align-items-md-start justify-content-between gap-1 align-items-center w-100">
                                     <input class="modal-input" type="email" id="recipientEmail"
                                     placeholder="recipient@example.com" required />
                                 <small id="recipientEmailError" class="text-danger d-none error-message flex-shrink-0"></small>

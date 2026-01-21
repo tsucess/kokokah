@@ -13,7 +13,7 @@
             color: white;
             border-radius: 12px;
             padding: 10px 15px;
-            max-width: 350px;
+            max-width: 200px;
             margin-left: auto;
 
         }
