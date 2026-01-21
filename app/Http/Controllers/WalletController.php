@@ -68,6 +68,17 @@ class WalletController extends Controller
             $sender = Auth::user();
             $email = $request->email;
 
+            // Check sender role - only student and instructor can transfer
+            // Admin and superadmin cannot transfer money
+            $allowedRoles = ['student', 'instructor'];
+            if (!in_array($sender->role, $allowedRoles)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Only students and instructors can transfer money',
+                    'exists' => false
+                ], 403);
+            }
+
             // Check if recipient exists
             $recipient = User::where('email', $email)->first();
 
@@ -88,6 +99,21 @@ class WalletController extends Controller
                     'data' => [
                         'name' => $recipient->first_name . ' ' . $recipient->last_name,
                         'email' => $recipient->email
+                    ]
+                ], 400);
+            }
+
+            // Check recipient role - only student and instructor can receive transfers
+            // Admin and superadmin cannot receive transfers
+            if (!in_array($recipient->role, $allowedRoles)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Money can only be transferred to students or instructors',
+                    'exists' => true,
+                    'data' => [
+                        'name' => $recipient->first_name . ' ' . $recipient->last_name,
+                        'email' => $recipient->email,
+                        'role' => $recipient->role
                     ]
                 ], 400);
             }
@@ -113,7 +139,8 @@ class WalletController extends Controller
                 'data' => [
                     'name' => $recipient->first_name . ' ' . $recipient->last_name,
                     'email' => $recipient->email,
-                    'is_active' => $recipient->is_active
+                    'is_active' => $recipient->is_active,
+                    'role' => $recipient->role
                 ]
             ]);
         } catch (\Exception $e) {

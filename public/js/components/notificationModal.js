@@ -6,8 +6,6 @@
 class NotificationModal {
   constructor() {
     this.modal = null;
-    this.announcements = [];
-    this.messages = [];
     this.notifications = [];
   }
 
@@ -28,114 +26,48 @@ class NotificationModal {
     if (markAllReadBtn) {
       markAllReadBtn.addEventListener('click', () => this.markAllAsRead());
     }
-
-    // Load notifications when tabs are clicked
-    const announcementsTab = document.querySelector('[href="#announcements"]');
-    const messagesTab = document.querySelector('[href="#messages"]');
-    const notificationsTab = document.querySelector('[href="#notifications"]');
-
-    if (announcementsTab) {
-      announcementsTab.addEventListener('click', () => this.loadAnnouncements());
-    }
-    if (messagesTab) {
-      messagesTab.addEventListener('click', () => this.loadMessages());
-    }
-    if (notificationsTab) {
-      notificationsTab.addEventListener('click', () => this.loadSystemNotifications());
-    }
   }
 
   /**
-   * Load all notifications
+   * Load all notifications (consolidated from announcements, messages, and system notifications)
    */
   async loadNotifications() {
-    await Promise.all([
-      this.loadAnnouncements(),
-      this.loadMessages(),
-      this.loadSystemNotifications()
-    ]);
-  }
-
-  /**
-   * Load announcements
-   */
-  async loadAnnouncements() {
     try {
-      const response = await window.NotificationApiClient.getAnnouncements({ per_page: 5 });
-      this.announcements = this.ensureArray(response.success && response.data ? response.data : []);
-      this.renderAnnouncements();
-    } catch (error) {
-      this.announcements = [];
-      this.renderEmpty('announcementsList', 'No announcements');
-    }
-  }
+      const [announcementsResponse, messagesResponse, notificationsResponse] = await Promise.all([
+        window.NotificationApiClient.getAnnouncements({ per_page: 5 }),
+        window.NotificationApiClient.getMessages({ per_page: 5 }),
+        window.NotificationApiClient.getSystemNotifications({ per_page: 5 })
+      ]);
 
-  /**
-   * Load messages
-   */
-  async loadMessages() {
-    try {
-      const response = await window.NotificationApiClient.getMessages({ per_page: 5 });
-      this.messages = this.ensureArray(response.success && response.data ? response.data : []);
-      this.renderMessages();
-    } catch (error) {
-      this.messages = [];
-      this.renderEmpty('messagesList', 'No messages');
-    }
-  }
+      // Consolidate all notifications into a single array
+      const announcements = this.ensureArray(announcementsResponse.success && announcementsResponse.data ? announcementsResponse.data : []);
+      const messages = this.ensureArray(messagesResponse.success && messagesResponse.data ? messagesResponse.data : []);
+      const systemNotifications = this.ensureArray(notificationsResponse.success && notificationsResponse.data ? notificationsResponse.data : []);
 
-  /**
-   * Load system notifications
-   */
-  async loadSystemNotifications() {
-    try {
-      const response = await window.NotificationApiClient.getSystemNotifications({ per_page: 5 });
-      this.notifications = this.ensureArray(response.success && response.data ? response.data : []);
+      // Combine all notifications with type information
+      this.notifications = [
+        ...announcements.map(item => ({ ...item, type: 'announcement', readMoreLink: '/userannouncement' })),
+        ...messages.map(item => ({ ...item, type: 'message', readMoreLink: '/usermessagecenter' })),
+        ...systemNotifications.map(item => ({ ...item, type: 'notification', readMoreLink: '#' }))
+      ];
+
+      // Sort by date (most recent first) if available
+      this.notifications.sort((a, b) => {
+        const dateA = new Date(a.created_at || 0);
+        const dateB = new Date(b.created_at || 0);
+        return dateB - dateA;
+      });
+
       this.renderNotifications();
     } catch (error) {
+      console.error('Error loading notifications:', error);
       this.notifications = [];
       this.renderEmpty('notificationsList', 'No notifications');
     }
   }
 
   /**
-   * Render announcements
-   */
-  renderAnnouncements() {
-    const container = document.getElementById('announcementsList');
-    if (!container) return;
-
-    if (this.announcements.length === 0) {
-      this.renderEmpty('announcementsList', 'No announcements');
-      return;
-    }
-
-    container.innerHTML = this.announcements.map(item => this.createNotificationItem(
-      item,
-      '/userannouncement'
-    )).join('');
-  }
-
-  /**
-   * Render messages
-   */
-  renderMessages() {
-    const container = document.getElementById('messagesList');
-    if (!container) return;
-
-    if (this.messages.length === 0) {
-      this.renderEmpty('messagesList', 'No messages');
-      return;
-    }
-
-    container.innerHTML = this.messages.map(item => this.createNotificationItem(
-      item,
-      '/usermessagecenter'
-    )).join('');
-  }
-
-  /**
-   * Render notifications
+   * Render all notifications (consolidated)
    */
   renderNotifications() {
     const container = document.getElementById('notificationsList');
@@ -146,24 +78,23 @@ class NotificationModal {
       return;
     }
 
-    container.innerHTML = this.notifications.map(item => this.createNotificationItem(
-      item,
-      '#'
-    )).join('');
+    container.innerHTML = this.notifications.map(item => this.createNotificationItem(item)).join('');
   }
 
   /**
    * Create notification item HTML
    */
-  createNotificationItem(item, readMoreLink) {
+  createNotificationItem(item) {
     const title = item.title || 'Untitled';
     const message = item.message || '';
     const snippet = this.truncateText(message, 100);
     const isUnread = !item.read_at;
     const itemId = item.id || '';
+    const readMoreLink = item.readMoreLink || '#';
+    const type = item.type || 'notification';
 
     return `
-      <div class="notification-item ${isUnread ? 'unread' : ''}" data-notification-id="${itemId}">
+      <div class="notification-item ${isUnread ? 'unread' : ''}" data-notification-id="${itemId}" data-notification-type="${type}">
         <div class="notification-title">${this.escapeHtml(title)}</div>
         <div class="notification-snippet">${this.escapeHtml(snippet)}</div>
         <button class="btn-read-more" onclick="window.location.href='${readMoreLink}'">
