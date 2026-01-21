@@ -463,6 +463,92 @@
             word-break: break-word;
         }
 
+        .message-image {
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+        }
+
+        .message-image:hover {
+            opacity: 0.8;
+        }
+
+        /* Full Image Viewer Modal */
+        #imageViewerModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2001;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        #imageViewerModal.show {
+            display: flex;
+        }
+
+        .image-viewer-container {
+            position: relative;
+            width: 100%;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-viewer-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
+            z-index: 10;
+        }
+
+        .image-viewer-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: background 0.2s ease;
+        }
+
+        .image-viewer-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .image-viewer-btn.delete {
+            background: rgba(220, 53, 69, 0.3);
+        }
+
+        .image-viewer-btn.delete:hover {
+            background: rgba(220, 53, 69, 0.5);
+        }
+
+        #viewerImage {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
         .message-audio {
             margin-top: 8px;
             display: flex;
@@ -916,6 +1002,21 @@
 
                     <!-- Overlay for modals -->
                     <div id="modalOverlay" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1999;"></div>
+
+                    <!-- Full Image Viewer Modal -->
+                    <div id="imageViewerModal">
+                        <div class="image-viewer-container">
+                            <div class="image-viewer-header">
+                                <button class="image-viewer-btn" id="closeImageViewerBtn" title="Back">
+                                    <i class="bi bi-arrow-left"></i>
+                                </button>
+                                <button class="image-viewer-btn delete" id="deleteImageBtn" title="Delete image">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                            <img id="viewerImage" src="" alt="Full view">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1316,7 +1417,7 @@
                 let messageBody = '';
                 if (messageType === 'image') {
                     const fileUrl = msg.metadata?.file_url || `/storage/${msg.metadata?.file_path || ''}`;
-                    messageBody = `<div class="message-image-container"><img src="${fileUrl}" alt="Image" class="message-image" onerror="this.src='/images/default-avatar.png'" style="pointer-events: none;"></div>`;
+                    messageBody = `<div class="message-image-container"><img src="${fileUrl}" alt="Image" class="message-image" onclick="openImageViewer('${fileUrl}', ${msg.id}, '${currentChatroomId}')" onerror="this.src='/images/default-avatar.png'" style="cursor: pointer;"></div>`;
                 } else if (messageType === 'audio') {
                     const fileUrl = msg.metadata?.file_url || `/storage/${msg.metadata?.file_path || ''}`;
                     const audioId = `audio-${msg.id}`;
@@ -2264,6 +2365,93 @@
 
             currentPlayingAudioId = null;
         }
+
+        // ============ IMAGE VIEWER FUNCTIONALITY ============
+        const imageViewerModal = document.getElementById('imageViewerModal');
+        const viewerImage = document.getElementById('viewerImage');
+        const closeImageViewerBtn = document.getElementById('closeImageViewerBtn');
+        const deleteImageBtn = document.getElementById('deleteImageBtn');
+        let currentViewingImageData = {
+            url: null,
+            messageId: null,
+            roomId: null
+        };
+
+        function openImageViewer(imageUrl, messageId, roomId) {
+            console.log('Opening image viewer for message:', messageId);
+            currentViewingImageData = {
+                url: imageUrl,
+                messageId: messageId,
+                roomId: roomId
+            };
+            viewerImage.src = imageUrl;
+            imageViewerModal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImageViewer() {
+            console.log('Closing image viewer');
+            imageViewerModal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+            currentViewingImageData = {
+                url: null,
+                messageId: null,
+                roomId: null
+            };
+        }
+
+        async function deleteViewingImage() {
+            if (!currentViewingImageData.messageId || !currentViewingImageData.roomId) {
+                alert('Error: Could not identify image to delete');
+                return;
+            }
+
+            if (!confirm('Are you sure you want to delete this image?')) {
+                return;
+            }
+
+            try {
+                console.log('Deleting image message:', currentViewingImageData.messageId);
+                const token = localStorage.getItem('auth_token');
+                const response = await fetch(`${API_BASE_URL}/chatrooms/${currentViewingImageData.roomId}/messages/${currentViewingImageData.messageId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Failed to delete image');
+                }
+
+                console.log('Image deleted successfully');
+                closeImageViewer();
+                await loadMessages(currentViewingImageData.roomId);
+            } catch (error) {
+                console.error('Error deleting image:', error);
+                alert('Failed to delete image: ' + error.message);
+            }
+        }
+
+        // Event listeners for image viewer
+        closeImageViewerBtn.addEventListener('click', closeImageViewer);
+        deleteImageBtn.addEventListener('click', deleteViewingImage);
+
+        // Close image viewer when clicking outside the image
+        imageViewerModal.addEventListener('click', (e) => {
+            if (e.target === imageViewerModal) {
+                closeImageViewer();
+            }
+        });
+
+        // Close image viewer with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && imageViewerModal.classList.contains('show')) {
+                closeImageViewer();
+            }
+        });
     </script>
 @endsection
 
