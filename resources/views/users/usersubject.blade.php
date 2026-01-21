@@ -28,6 +28,17 @@
             font-size: 16px;
             font-weight: 600;
             z-index: 9999;
+            transition: background-color 0.2s ease,
+              color 0.2s ease,
+              border-color 0.2s ease,
+              transform 0.15s ease;
+        }
+
+        .view-btn:hover {
+            background-color: #004A53;
+            color: #ffffff;
+            border-color: #004A53;
+            transform: translateY(-1px);
         }
     </style>
     <main>
@@ -56,9 +67,9 @@
         </div> --}}
 
     </main>
-        <!-- API Clients -->
+    <!-- API Clients -->
     <script>
-let userCourses = [];
+        let userCourses = [];
 
         // Initialize page
         document.addEventListener('DOMContentLoaded', async () => {
@@ -81,7 +92,8 @@ let userCourses = [];
                 if (response.success && response.data) {
                     const user = response.data;
                     const firstName = user.first_name || 'User';
-                    document.getElementById('userGreeting').textContent = `Hello ${firstName.charAt(0).toUpperCase() + firstName.slice(1)} `;
+                    document.getElementById('userGreeting').textContent =
+                        `Hello ${firstName.charAt(0).toUpperCase() + firstName.slice(1)} `;
                     const icon = document.createElement('i');
                     icon.className = 'fa-solid fa-hands-clapping text-warning';
                     document.getElementById('userGreeting').appendChild(icon);
@@ -222,5 +234,6 @@ let userCourses = [];
                     <p class="text-muted text-center">No courses available yet. <a href="/userclass">Browse all courses</a> to get started with free or premium courses.</p>
                 </div>
             `;
-        }    </script>
+        }
+    </script>
 @endsection

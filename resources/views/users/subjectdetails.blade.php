@@ -57,7 +57,7 @@
         .lecture-box {
             border: 1px solid #000000;
             border-radius: 20px;
-            padding: 20px
+            padding: 15px
         }
 
         .lecture-download-btn {
@@ -137,10 +137,12 @@
             font-size: 14px;
             font-weight: 700;
         }
-        .option{
+
+        .option {
             font-size: 14px;
         }
-        .question{
+
+        .question {
             font-size: 16px;
         }
 
@@ -148,25 +150,40 @@
 
         .submit-btn {
             border: 1px solid #004A53;
-            padding: 16px 20px;
+            padding: 8px 20px;
             color: #004A53;
             font-size: 16px;
             border-radius: 4px;
+            transition: background-color 0.2s ease,
+              color 0.2s ease,
+              border-color 0.2s ease,
+              transform 0.15s ease;
         }
+
+        .submit-btn:hover {
+            background-color: #004A53;
+            color: #ffffff;
+            border-color: #004A53;
+            transform: translateY(-1px);
+        }
+
 
         #lessonTitle {
             word-wrap: break-word;
             overflow-wrap: break-word;
             white-space: normal;
         }
-        @media screen and (max-width:768px){
-            .nav-btn{
+
+        @media screen and (max-width:768px) {
+            .nav-btn {
                 font-size: 16px;
             }
-            .mark-complete-btn{
+
+            .mark-complete-btn {
                 padding: 7px 10px;
             }
-            .box-title{
+
+            .box-title {
                 font-size: 18px;
             }
 
@@ -200,10 +217,11 @@
 
 
         <section class="container-fluid d-flex flex-column gap-4">
-            <h1 id="lessonTitle">Loading...</h1>
+            <h3 id="lessonTitle">Loading...</h3>
             <div class="row g-3">
                 <div class="col-12">
-                    <div class="d-flex flex-column flex-md-row align-items-md-center gap-2 justify-content-between box mb-4">
+                    <div
+                        class="d-flex flex-column flex-md-row align-items-md-center gap-2 justify-content-between box mb-4">
                         <h3 class="box-title" id="lessonProgress">Loading...</h3>
                         <div class="box-progress-bar">
                             <div class="progress-track" id="progressTrack"></div>
@@ -255,8 +273,7 @@
                                     <!-- Results will be populated here -->
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     {{-- <button type="button" class="btn btn-primary"
                                         onclick="window.retakeQuizFromModal()">Retake Quiz</button> --}}
                                 </div>
@@ -437,8 +454,10 @@
          */
         function updateLessonUI() {
             // Update title
-            const topicTitle = currentTopic?.title ? currentTopic.title[0].toUpperCase() + currentTopic.title.slice(1) : 'Topic';
-            const lessonTitle = currentLesson?.title ? currentLesson.title[0].toUpperCase() + currentLesson.title.slice(1) : 'Lesson';
+            const topicTitle = currentTopic?.title ? currentTopic.title[0].toUpperCase() + currentTopic.title.slice(1) :
+                'Topic';
+            const lessonTitle = currentLesson?.title ? currentLesson.title[0].toUpperCase() + currentLesson.title.slice(1) :
+                'Lesson';
             document.getElementById('lessonTitle').textContent = `${topicTitle}: ${lessonTitle}`;
 
             // Clear and update video
@@ -741,7 +760,8 @@
                 fileViewerLabel.textContent = `Video: ${fileName}`;
             } else if (fileType === 'pdf') {
                 // Display PDF using PDF.js viewer
-                fileViewerBody.innerHTML = '<div class="text-center py-5"><div class="spinner-border" role="status"><span class="sr-only">Loading PDF...</span></div></div>';
+                fileViewerBody.innerHTML =
+                    '<div class="text-center py-5"><div class="spinner-border" role="status"><span class="sr-only">Loading PDF...</span></div></div>';
                 fileViewerLabel.textContent = `PDF: ${fileName}`;
 
                 // Create PDF viewer container
@@ -760,7 +780,9 @@
                     })
                     .then(arrayBuffer => {
                         // Load PDF with PDF.js
-                        const pdf = pdfjsLib.getDocument({ data: arrayBuffer });
+                        const pdf = pdfjsLib.getDocument({
+                            data: arrayBuffer
+                        });
 
                         pdf.promise.then(pdfDoc => {
 
@@ -779,7 +801,9 @@
                                     const canvas = document.createElement('canvas');
                                     const context = canvas.getContext('2d');
 
-                                    const viewport = page.getViewport({ scale: 1.5 });
+                                    const viewport = page.getViewport({
+                                        scale: 1.5
+                                    });
                                     canvas.width = viewport.width;
                                     canvas.height = viewport.height;
                                     canvas.style.display = 'block';
@@ -930,7 +954,9 @@
                     audio.pause();
                     audio.currentTime = 0;
                 });
-            }, { once: true });
+            }, {
+                once: true
+            });
 
             modal.show();
         }
@@ -973,7 +999,7 @@
                                         latestAttempt.answers.forEach(answer => {
                                             // Use user_answer from the API response
                                             previousAnswersMap[quiz.id][answer.question_id] = answer
-                                            .user_answer;
+                                                .user_answer;
                                         });
                                         // Mark this quiz as answered
                                         answeredQuizzes.add(quiz.id);
@@ -1011,7 +1037,7 @@
 
             quizzes.forEach((quiz, quizIndex) => {
                 const quizDiv = document.createElement('div');
-                quizDiv.className = 'd-flex flex-column gap-4 mb-5 p-4 border rounded';
+                quizDiv.className = 'd-flex flex-column gap-4 mb-3 p-2 border rounded';
                 quizDiv.style.backgroundColor = '#f9f9f9';
                 quizDiv.setAttribute('data-quiz-id', quiz.id);
 
@@ -1441,7 +1467,7 @@
                                         previousAnswersMap[quiz.id] = {};
                                         latestAttempt.answers.forEach(answer => {
                                             previousAnswersMap[quiz.id][answer.question_id] = answer
-                                            .user_answer;
+                                                .user_answer;
                                         });
                                         answeredQuizzes.add(quiz.id);
                                     }
@@ -1802,22 +1828,22 @@
                             </div>
 
                             ${!result.is_correct ? `
-                                    <div class="mb-2">
-                                        <small class="text-muted option"><strong>✓ Correct Answer:</strong></small>
-                                        <div class="p-2 bg-white rounded mt-1" style="border-left: 3px solid #28a745">
-                                            <small class='option' style="color: #28a745; font-weight: bold;">
-                                                ${result.correct_answer}
-                                            </small>
+                                        <div class="mb-2">
+                                            <small class="text-muted option"><strong>✓ Correct Answer:</strong></small>
+                                            <div class="p-2 bg-white rounded mt-1" style="border-left: 3px solid #28a745">
+                                                <small class='option' style="color: #28a745; font-weight: bold;">
+                                                    ${result.correct_answer}
+                                                </small>
+                                            </div>
                                         </div>
-                                    </div>
-                                ` : ''}
+                                    ` : ''}
 
                             ${result.explanation ? `
-                                    <div class="mt-2 p-2 bg-light rounded">
-                                        <small><strong>💡 Explanation:</strong></small>
-                                        <p class="mb-0 text-muted mt-1" style="font-size: 0.85rem;">${result.explanation}</p>
-                                    </div>
-                                ` : ''}
+                                        <div class="mt-2 p-2 bg-light rounded">
+                                            <small><strong>💡 Explanation:</strong></small>
+                                            <p class="mb-0 text-muted mt-1" style="font-size: 0.85rem;">${result.explanation}</p>
+                                        </div>
+                                    ` : ''}
                         </div>
                     `;
                 });
@@ -1884,7 +1910,5 @@
                 showError('Error reloading quizzes');
             });
         };
-
-
     </script>
 @endsection
