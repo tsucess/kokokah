@@ -483,6 +483,106 @@
                 font-size: 12px;
                 font-family: 'sitka'
             }
+
+            /* Fix for dropdown menus */
+            .dropdown {
+                position: relative;
+            }
+
+            .dropdown-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                z-index: 1050 !important;
+                min-width: 160px;
+                padding: 0.5rem 0;
+                margin: 0.125rem 0 0;
+                font-size: 1rem;
+                color: #212529;
+                text-align: left;
+                list-style: none;
+                background-color: #fff;
+                background-clip: padding-box;
+                border: 1px solid rgba(0, 0, 0, 0.15);
+                border-radius: 0.25rem;
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+            }
+
+            .dropdown-menu:not(.show) {
+                display: none !important;
+            }
+
+            .dropdown-menu.show {
+                display: block !important;
+                visibility: visible !important;
+            }
+
+            .dropdown-item {
+                display: block;
+                width: 100%;
+                padding: 0.25rem 1.5rem;
+                clear: both;
+                font-weight: 400;
+                color: #212529;
+                text-align: inherit;
+                white-space: nowrap;
+                background-color: transparent;
+                border: 0;
+                cursor: pointer;
+                font-size: 1rem;
+                font-family: inherit;
+            }
+
+            button.dropdown-item {
+                text-align: left;
+            }
+
+            .dropdown-item:hover,
+            .dropdown-item:focus {
+                color: #16213e;
+                background-color: #e9ecef;
+            }
+
+            /* Ensure transaction list container doesn't clip dropdowns */
+            .bg-white.rounded-3.shadow-sm {
+                overflow: visible !important;
+            }
+
+            /* Ensure the flex container with dropdowns allows overflow */
+            .d-flex.gap-2 {
+                overflow: visible !important;
+            }
+
+            /* Ensure the header flex container allows dropdown overflow */
+            .d-flex.flex-column.flex-md-row.gap-3 {
+                overflow: visible !important;
+            }
+
+            /* Ensure the section container allows overflow */
+            section.container-fluid {
+                overflow: visible !important;
+            }
+
+            /* Override Bootstrap's rounded class to allow dropdown overflow */
+            .rounded-3 {
+                overflow: visible !important;
+            }
+
+            /* Ensure transaction-list doesn't clip dropdowns */
+            .transaction-list {
+                overflow: visible !important;
+            }
+
+            .dropdown-toggle::after {
+                display: inline-block;
+                margin-left: 0.255em;
+                vertical-align: 0.255em;
+                content: "";
+                border-top: 0.3em solid;
+                border-right: 0.3em solid transparent;
+                border-bottom: 0;
+                border-left: 0.3em solid transparent;
+            }
         </style>
         <!-- Toast Notification -->
         <div id="toastNotification" class="toast-notification" style="display: none;">
@@ -796,14 +896,14 @@
                                     All Categories
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#"
-                                            onclick="filterTransactions('all')">All</a></li>
-                                    <li><a class="dropdown-item" href="#"
-                                            onclick="filterTransactions('transfer')">Transfers</a></li>
-                                    <li><a class="dropdown-item" href="#"
-                                            onclick="filterTransactions('deposit')">Deposits</a></li>
-                                    <li><a class="dropdown-item" href="#"
-                                            onclick="filterTransactions('purchase')">Purchases</a></li>
+                                    <li><button class="dropdown-item" type="button"
+                                            onclick="filterTransactions('all')">All</button></li>
+                                    <li><button class="dropdown-item" type="button"
+                                            onclick="filterTransactions('transfer')">Transfers</button></li>
+                                    <li><button class="dropdown-item" type="button"
+                                            onclick="filterTransactions('deposit')">Deposits</button></li>
+                                    <li><button class="dropdown-item" type="button"
+                                            onclick="filterTransactions('purchase')">Purchases</button></li>
                                 </ul>
                             </div>
                             <div class="dropdown">
@@ -812,14 +912,14 @@
                                     All Status
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#"
-                                            onclick="filterTransactions('all', 'all')">All</a></li>
-                                    <li><a class="dropdown-item" href="#"
-                                            onclick="filterTransactions('all', 'completed')">Completed</a></li>
-                                    <li><a class="dropdown-item" href="#"
-                                            onclick="filterTransactions('all', 'pending')">Pending</a></li>
-                                    <li><a class="dropdown-item" href="#"
-                                            onclick="filterTransactions('all', 'failed')">Failed</a></li>
+                                    <li><button class="dropdown-item" type="button"
+                                            onclick="filterTransactions('all', 'all')">All</button></li>
+                                    <li><button class="dropdown-item" type="button"
+                                            onclick="filterTransactions('all', 'completed')">Completed</button></li>
+                                    <li><button class="dropdown-item" type="button"
+                                            onclick="filterTransactions('all', 'pending')">Pending</button></li>
+                                    <li><button class="dropdown-item" type="button"
+                                            onclick="filterTransactions('all', 'failed')">Failed</button></li>
                                 </ul>
                             </div>
                         </div>
@@ -950,11 +1050,56 @@
             // Hide loader in case user cancelled payment and came back
             hidePageLoader();
 
+            // Initialize Bootstrap dropdowns
+            const dropdownElements = document.querySelectorAll('[data-bs-toggle="dropdown"]');
+            dropdownElements.forEach(element => {
+                new bootstrap.Dropdown(element);
+            });
+
+            // Setup custom dropdown handlers
+            setupDropdownHandlers();
+
             await loadWalletData();
             await loadTransactions();
             setupEventListeners();
             setupAutoRefresh();
         });
+
+        /**
+         * Setup custom dropdown handlers
+         */
+        function setupDropdownHandlers() {
+            const dropdownButtons = document.querySelectorAll('[data-bs-toggle="dropdown"]');
+
+            dropdownButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const menu = this.nextElementSibling;
+                    if (menu && menu.classList.contains('dropdown-menu')) {
+                        // Close other dropdowns
+                        document.querySelectorAll('.dropdown-menu.show').forEach(m => {
+                            if (m !== menu) {
+                                m.classList.remove('show');
+                            }
+                        });
+
+                        // Toggle current dropdown
+                        menu.classList.toggle('show');
+                    }
+                });
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.dropdown')) {
+                    document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
+                        menu.classList.remove('show');
+                    });
+                }
+            });
+        }
 
         /**
          * Setup automatic refresh listeners
@@ -1143,14 +1288,18 @@
                 const filters = {
                     type: currentTypeFilter === 'all' ? null : currentTypeFilter,
                     status: currentStatusFilter === 'all' ? null : currentStatusFilter,
-                    per_page: 50
+                    limit: 50
                 };
 
+                console.log('loadTransactions - filters:', filters);
                 const result = await WalletApiClient.getTransactions(filters);
+                console.log('loadTransactions - result:', result);
 
                 if (result.success && result.data) {
+                    console.log('Displaying transactions:', result.data);
                     displayTransactions(result.data);
                 } else {
+                    console.log('Failed to load transactions - result:', result);
                     showToast('Failed to load transactions', 'error');
                 }
             } catch (error) {
@@ -1244,12 +1393,23 @@
          * Filter transactions
          */
         window.filterTransactions = async function(type, status) {
-            if (type !== undefined && type !== 'all') {
-                currentTypeFilter = type;
+            console.log('filterTransactions called with:', { type, status });
+
+            if (type !== undefined) {
+                currentTypeFilter = type === 'all' ? 'all' : type;
+                console.log('Updated currentTypeFilter to:', currentTypeFilter);
             }
-            if (status !== undefined && status !== 'all') {
-                currentStatusFilter = status;
+
+            if (status !== undefined) {
+                currentStatusFilter = status === 'all' ? 'all' : status;
+                console.log('Updated currentStatusFilter to:', currentStatusFilter);
             }
+
+            // Close all dropdowns
+            document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
+                menu.classList.remove('show');
+            });
+
             await loadTransactions();
         };
 

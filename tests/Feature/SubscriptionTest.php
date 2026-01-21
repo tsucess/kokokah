@@ -305,34 +305,74 @@ class SubscriptionTest extends TestCase
     }
 
     /**
-     * Test user cannot subscribe to same plan twice
+     * Test user can subscribe to same plan for different courses
      */
-    public function test_user_cannot_subscribe_to_same_plan_twice()
+    public function test_user_can_subscribe_to_same_plan_for_different_courses()
     {
+        // Create two courses
+        $course1 = Course::create([
+            'title' => 'Test Course 1',
+            'slug' => 'test-course-1',
+            'description' => 'Test Description 1',
+            'status' => 'published',
+            'instructor_id' => $this->user->id
+        ]);
+
+        $course2 = Course::create([
+            'title' => 'Test Course 2',
+            'slug' => 'test-course-2',
+            'description' => 'Test Description 2',
+            'status' => 'published',
+            'instructor_id' => $this->user->id
+        ]);
+
+        // Attach both courses to subscription plan
+        $this->subscriptionPlan->courses()->attach([$course1->id, $course2->id]);
+
         // Set wallet balance to sufficient amount
         $this->user->wallet->update(['balance' => 20000]);
 
-        // Subscribe to plan
+        // Subscribe to plan with first course
         $response1 = $this->actingAs($this->user)
                           ->postJson('/api/subscriptions/subscribe', [
                               'subscription_plan_id' => $this->subscriptionPlan->id,
                               'amount_paid' => 5000,
-                              'payment_reference' => 'PAY-123456'
+                              'payment_reference' => 'PAY-123456',
+                              'course_ids' => [$course1->id]
                           ]);
 
         $response1->assertStatus(201);
 
-        // Try to subscribe to same plan again
+        // Subscribe to same plan with different course
         $response2 = $this->actingAs($this->user)
                           ->postJson('/api/subscriptions/subscribe', [
                               'subscription_plan_id' => $this->subscriptionPlan->id,
                               'amount_paid' => 5000,
-                              'payment_reference' => 'PAY-789012'
+                              'payment_reference' => 'PAY-789012',
+                              'course_ids' => [$course2->id]
                           ]);
 
-        $response2->assertStatus(400)
-                  ->assertJsonPath('success', false)
-                  ->assertJsonPath('message', 'User already has an active subscription to this plan');
+        $response2->assertStatus(201);
+
+        // Verify both subscriptions exist
+        $this->assertDatabaseHas('user_subscriptions', [
+            'user_id' => $this->user->id,
+            'subscription_plan_id' => $this->subscriptionPlan->id,
+            'status' => 'active'
+        ]);
+
+        // Verify both enrollments exist
+        $this->assertDatabaseHas('enrollments', [
+            'user_id' => $this->user->id,
+            'course_id' => $course1->id,
+            'status' => 'active'
+        ]);
+
+        $this->assertDatabaseHas('enrollments', [
+            'user_id' => $this->user->id,
+            'course_id' => $course2->id,
+            'status' => 'active'
+        ]);
     }
 
     /**
@@ -390,7 +430,7 @@ class SubscriptionTest extends TestCase
 
         $response2->assertStatus(400)
                   ->assertJsonPath('success', false)
-                  ->assertJsonPath('message', 'User is already enrolled in some of the selected courses through this plan')
+                  ->assertJsonPath('message', 'User is already enrolled in some of the selected courses')
                   ->assertJsonPath('data.duplicate_course_ids.0', $course->id);
     }
 }

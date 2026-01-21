@@ -11,19 +11,19 @@ class TermSeeder extends Seeder
     {
         // $currentYear = now()->year;
         $terms = [
-            ['name' => 'First Term'],
-            ['name' => 'Second Term'],
-            ['name' => 'Third Term'],
+            ['name' => 'First Term', 'order' => 1],
+            ['name' => 'Second Term', 'order' => 2],
+            ['name' => 'Third Term', 'order' => 3],
 
             // Previous year
-            ['name' => 'First Term'],
-            ['name' => 'Second Term'],
-            ['name' => 'Third Term'],
+            ['name' => 'First Term', 'order' => 1],
+            ['name' => 'Second Term', 'order' => 2],
+            ['name' => 'Third Term', 'order' => 3],
 
             // Next year
-            ['name' => 'First Term'],
-            ['name' => 'Second Term'],
-            ['name' => 'Third Term'],
+            ['name' => 'First Term', 'order' => 1],
+            ['name' => 'Second Term', 'order' => 2],
+            ['name' => 'Third Term', 'order' => 3],
         ];
 
         foreach ($terms as $term) {
