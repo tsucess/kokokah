@@ -108,7 +108,19 @@
                 font-weight: 600;
                 z-index: 9999;
                 position: relative;
+                transition: background-color 0.2s ease,
+              color 0.2s ease,
+              border-color 0.2s ease,
+              transform 0.15s ease;
             }
+
+            .view-btn:hover {
+                background-color: #004A53;
+                color: #ffffff;
+                border-color: #004A53;
+                transform: translateY(-1px);
+            }
+
 
             .slider-controls {
                 display: flex;
@@ -300,7 +312,8 @@
             <!-- Course Card Template (hidden) -->
             <template id="courseCardTemplate">
                 <div class = "p-3 bg-white mysubject d-flex flex-column gap-3 w-100 rounded-4">
-                    <div class = "border border-dark d-flex justify-content-center p-2 text-center" style="border-radius: 10px;">
+                    <div class = "border border-dark d-flex justify-content-center p-2 text-center"
+                        style="border-radius: 10px;">
                         <img src="{{ asset('images/KOKOKAH Logo.svg') }}" class = "img-fluid userdasboard-card-img"
                             alt="Course" />
                     </div>

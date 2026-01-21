@@ -27,7 +27,19 @@
             color: #004A53;
             font-size: 16px;
             font-weight: 600;
+            transition: background-color 0.2s ease,
+              color 0.2s ease,
+              border-color 0.2s ease,
+              transform 0.15s ease;
         }
+
+        .enroll-btn:hover {
+            background-color: #004A53;
+            color: #ffffff;
+            border-color: #004A53;
+            transform: translateY(-1px);
+        }
+
 
         @media screen and (max-width:500px) {
             .enroll-btn {
