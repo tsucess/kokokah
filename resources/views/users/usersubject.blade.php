@@ -187,7 +187,7 @@ let userCourses = [];
             card.innerHTML = `
                 <div style="position: relative;">
                     <div class="border border-dark" style="height: 200px; border-radius: 10px; overflow: hidden; text-align: center; align-items: center; justify-content: center; display: flex;">
-                        <img src="${courseImage}" class="img-fluid" style="max-height: 100%; owidth:100%; aspect-ratio:1/1;" alt="${course.title}" />
+                        <img src="${courseImage}" class="img-fluid" style=" width:100%; " alt="${course.title}" />
                     </div>
                     ${accessBadge ? `<div style="position: absolute; top: 10px; right: 10px; background-color: ${badgeColor}; color: white; padding: 4px 12px; border-radius: 4px; font-size: 11px; font-weight: 600;">${accessBadge}</div>` : ''}
                 </div>

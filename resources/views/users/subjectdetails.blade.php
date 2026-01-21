@@ -137,6 +137,12 @@
             font-size: 14px;
             font-weight: 700;
         }
+        .option{
+            font-size: 14px;
+        }
+        .question{
+            font-size: 16px;
+        }
 
 
 
@@ -218,9 +224,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#" data-tab="quiz">Quiz</a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link" href="#" data-tab="ai-chat">Ai Chat</a>
-                        </li>
+                        </li> --}}
                     </ul>
                     <div id="material" class="tab-content-section ">
                         <div class="lecture-box d-flex flex-column gap-3 mb-4">
@@ -240,7 +246,7 @@
                         aria-labelledby="quizResultsModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
-                                <div class="modal-header bg-light">
+                                <div class="modal-header bg-light d-flex align-items-center ">
                                     <h5 class="modal-title" id="quizResultsModalLabel">📊 Quiz Results</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
@@ -1024,12 +1030,12 @@
                 // Quiz header with attempt info
                 let quizHTML = `
                     <div>
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div>
-                                <h4 class="mb-2">${quiz.title || 'Untitled Quiz'}</h4>
-                            </div>
-                            <div class="text-end">
-                                <small class="text-muted d-block">Attempts: <strong>${currentAttempts}/${maxAttempts}</strong></small>
+                        <div class="d-flex flex-column flex-md-row gap-2 justify-content-between align-items-start mb-2">
+
+                                <h4 class="question">${quiz.title || 'Untitled Quiz'}</h4>
+
+                            <div >
+                                <small class="text-muted d-block option">Attempts: <strong>${currentAttempts}/${maxAttempts}</strong></small>
                                 ${!canAttempt ? '<small class="text-danger d-block">Max attempts reached</small>' : ''}
                             </div>
                         </div>
@@ -1052,9 +1058,9 @@
 
                         quizHTML += `
                             <div class="question-item mb-4 p-3 bg-white rounded" data-question-id="${question.id}">
-                                <h6 class="mb-3">
-                                    <strong>Question ${questionIndex + 1}:</strong> ${question.question_text || 'Untitled Question'}
-                                </h6>
+                                // <h6 class="mb-3">
+                                //     <strong>Question ${questionIndex + 1}:</strong> ${question.question_text || 'Untitled Question'}
+                                // </h6>
                         `;
 
                         // Display options based on question type
@@ -1080,7 +1086,7 @@
                                     quizHTML += `
                                         <div class="form-check mb-2">
                                             <input class="form-check-input" type="radio" name="${questionId}" id="${optionId}" value="${option}" ${isChecked} ${disabledAttr}>
-                                            <label class="form-check-label" for="${optionId}">
+                                            <label class="form-check-label option" for="${optionId}">
                                                 ${option}
                                             </label>
                                         </div>
@@ -1100,13 +1106,13 @@
                                 <div class="options-container">
                                     <div class="form-check mb-2">
                                         <input class="form-check-input" type="radio" name="${questionId}" id="${questionId}_true" value="true" ${isTrueChecked} ${disabledAttr}>
-                                        <label class="form-check-label" for="${questionId}_true">
+                                        <label class="form-check-label option" for="${questionId}_true">
                                             True
                                         </label>
                                     </div>
                                     <div class="form-check mb-2">
                                         <input class="form-check-input" type="radio" name="${questionId}" id="${questionId}_false" value="false" ${isFalseChecked} ${disabledAttr}>
-                                        <label class="form-check-label" for="${questionId}_false">
+                                        <label class="form-check-label option" for="${questionId}_false">
                                             False
                                         </label>
                                     </div>
@@ -1117,7 +1123,7 @@
                             quizHTML += `
                                         <div class="form-check mb-2">
                                             <input class="form-check-input" type="radio" name="${questionId}" id="${optionId}" value="${option}" ${disabledAttr}>
-                                            <label class="form-check-label" for="${optionId}">
+                                            <label class="form-check-label option" for="${optionId}">
                                                 ${option}
                                             </label>
                                         </div>
@@ -1656,7 +1662,7 @@
                     <div class="quiz-results-modal">
                         <div class="p-3 border rounded bg-light mb-4">
                             <h5 class="mb-3">📊 Complete Quiz Results</h5>
-                            <p class="text-muted mb-3"><small>Quizzes: ${quizTitles.join(', ')}</small></p>
+                            <div class=" mb-3"><p style='font-size:12px;'>Quizzes: ${quizTitles.join('\n')}</p></div>
 
                             <div class="results-summary">
                                 <div class="row">
@@ -1701,20 +1707,20 @@
 
                     resultsHTML += `
                         <div class="question-item mb-3 p-3 bg-light rounded" style="border-left: 4px solid ${result.is_correct ? '#28a745' : '#dc3545'}">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div class="d-flex flex-column flex-md-row gap-2 justify-content-between align-items-start mb-2">
                                 <div>
-                                    <h6 class="mb-1">
+                                    <h6 class="mb-1 question">
                                         <strong>Q${index + 1}:</strong> ${result.question_text || ''}
                                     </h6>
-                                    <small class="text-muted">${result.quiz_title}</small>
+                                    // <small class="text-muted">${result.quiz_title}</small>
                                 </div>
-                                <span class="${resultClass} font-weight-bold">${resultIcon} ${result.points_earned}/${result.points_possible} pts</span>
+                                <span class="${resultClass} font-weight-bold" style='font-size:18px;'>${resultIcon} ${result.points_earned}/${result.points_possible} pts</span>
                             </div>
 
                             <div class="mb-2">
-                                <small class="text-muted"><strong>Your Answer:</strong></small>
+                                <small class="text-muted option"><strong>Your Answer:</strong></small>
                                 <div class="p-2 bg-white rounded mt-1" style="border-left: 3px solid ${result.is_correct ? '#28a745' : '#dc3545'}">
-                                    <small style="color: ${result.is_correct ? '#28a745' : '#dc3545'}; font-weight: bold;">
+                                    <small class='option' style="color: ${result.is_correct ? '#28a745' : '#dc3545'}; font-weight: bold;">
                                         ${result.user_answer || 'No answer'}
                                     </small>
                                 </div>
@@ -1722,9 +1728,9 @@
 
                             ${!result.is_correct ? `
                                     <div class="mb-2">
-                                        <small class="text-muted"><strong>✓ Correct Answer:</strong></small>
+                                        <small class="text-muted option"><strong>✓ Correct Answer:</strong></small>
                                         <div class="p-2 bg-white rounded mt-1" style="border-left: 3px solid #28a745">
-                                            <small style="color: #28a745; font-weight: bold;">
+                                            <small class='option' style="color: #28a745; font-weight: bold;">
                                                 ${result.correct_answer}
                                             </small>
                                         </div>
