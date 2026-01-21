@@ -33,6 +33,8 @@
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
     <link rel="stylesheet" href="{{ asset('css/responsiveness.css') }}">
     <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
+    <!-- Badge Congratulation Modal CSS -->
+    <link rel="stylesheet" href="{{ asset('css/badgeCongratulationModal.css') }}">
 
     {{-- @vite(['resources/css/dashboard.css']) --}}
 
@@ -293,7 +295,10 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="notificationModalLabel">Notifications</h5>
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-bell" style="color: #ffffff; font-size: 20px;"></i>
+                        <h5 class="modal-title" id="notificationModalLabel">Notifications</h5>
+                    </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
@@ -306,10 +311,10 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Close
+                        <i class="fa-solid fa-times" style="margin-right: 6px;"></i>Close
                     </button>
                     <button type="button" class="btn btn-primary" id="markAllReadBtn">
-                        Mark All as Read
+                        <i class="fa-solid fa-check-double" style="margin-right: 6px;"></i>Mark All as Read
                     </button>
                 </div>
             </div>
@@ -335,15 +340,30 @@
     <script src="{{ asset('js/services/activityRefreshManager.js') }}"></script>
     <script src="{{ asset('js/services/enrollmentEventEmitter.js') }}"></script>
 
-    <!-- Initialize Notification Modal -->
+    <!-- Badge Congratulation Modal Component -->
+    <script src="{{ asset('js/components/badgeCongratulationModal.js') }}"></script>
+    <!-- Badge Award Wrapper Service -->
+    <script src="{{ asset('js/services/badgeAwardService.js') }}"></script>
+
+    <!-- Initialize Badge Modal and Notification Modal -->
     <script>
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => {
+                // Initialize Badge Congratulation Modal
+                if (window.BadgeCongratulationModal) {
+                    window.BadgeCongratulationModal.init();
+                }
+                // Initialize Notification Modal
                 if (window.NotificationModalComponent) {
                     window.NotificationModalComponent.init();
                 }
             });
         } else {
+            // Initialize Badge Congratulation Modal
+            if (window.BadgeCongratulationModal) {
+                window.BadgeCongratulationModal.init();
+            }
+            // Initialize Notification Modal
             if (window.NotificationModalComponent) {
                 window.NotificationModalComponent.init();
             }

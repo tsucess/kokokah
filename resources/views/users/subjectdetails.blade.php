@@ -1058,7 +1058,7 @@
                     <div>
                         <div class="d-flex flex-column flex-md-row gap-2 justify-content-between align-items-start mb-2">
 
-                                <h4 class="question">Question ${quizIndex} ${quiz.title || 'Untitled Quiz'}</h4>
+                                <h4 class="question">Q ${quizIndex + 1} ${quiz.title || 'Untitled Quiz'}</h4>
 
                             <div >
                                 <small class="text-muted d-block option">Attempts: <strong>${currentAttempts}/${maxAttempts}</strong></small>
@@ -1161,53 +1161,19 @@
                     quizHTML += '<p class="text-muted">No questions available for this quiz</p>';
                 }
 
-                // Submit button logic
-                const isAnswered = answeredQuizzes.has(quiz.id);
-                const canAttemptQuiz = quiz.can_attempt !== false;
-                const maxAttemptsReached = !canAttemptQuiz;
-                const isRetaking = retakingQuizId === quiz.id;
-
-                let buttonDisabled = '';
-                let buttonClass = 'submit-btn align-self-end';
-                let buttonText = 'Submit Quiz';
-
-                if (maxAttemptsReached) {
-                    buttonDisabled = 'disabled';
-                    buttonClass += ' opacity-50';
-                    buttonText = 'Max Attempts Reached';
-                } else if (isAnswered && !isRetaking) {
-                    buttonDisabled = 'disabled';
-                    buttonClass += ' opacity-50 d-none';
-                    buttonText = 'Quiz Already Submitted';
-                }
-
-                // Check if this is the last quiz
-                const isLastQuiz = quizIndex === quizzes.length - 1;
-
-                quizHTML += `
-                    <div class="d-flex gap-2 align-self-end">
-                        <button class="${buttonClass}" onclick="window.submitQuiz(${quiz.id})" ${buttonDisabled}>
-                            ${buttonText}
-                        </button>
-                        ${isLastQuiz && isAnswered && !isRetaking ? `
-                                    <button class="btn btn-success" onclick="window.showAllQuizzesResultsModal()">
-                                        📊 Show Results
-                                    </button>
-                                ` : ''}
-                    </div>
-                `;
-
-                // ${
-                //  isAnswered && canAttemptQuiz && !isRetaking ? `
-            //     <button class="btn btn-warning" onclick="window.retakeQuiz(${quiz.id})">
-            //         🔄 Retake Quiz
-            //     </button>
-            // ` : ''
-                // }
-
                 quizDiv.innerHTML = quizHTML;
                 quizContainer.appendChild(quizDiv);
             });
+
+            // Add single submit button at the end after all quizzes
+            const submitButtonContainer = document.createElement('div');
+            submitButtonContainer.className = 'd-flex gap-2 align-self-end mt-4';
+            submitButtonContainer.innerHTML = `
+                <button class="submit-btn" onclick="window.submitAllQuizzes()">
+                    Submit Quiz
+                </button>
+            `;
+            quizContainer.appendChild(submitButtonContainer);
         }
 
         /**
@@ -1307,7 +1273,119 @@
             }
         };
 
+        /**
+         * Submit all quizzes at once
+         */
+        window.submitAllQuizzes = async function() {
+            try {
+                const quizContainer = document.getElementById('quizContainer');
+                const quizDivs = quizContainer.querySelectorAll('[data-quiz-id]');
 
+                if (quizDivs.length === 0) {
+                    showError('No quizzes found');
+                    return;
+                }
+
+                // Validate all questions in all quizzes are answered
+                const questionElements = quizContainer.querySelectorAll('.question-item');
+                let allAnswered = true;
+
+                questionElements.forEach((questionEl) => {
+                    const inputs = questionEl.querySelectorAll('input[type="radio"], textarea');
+                    let answered = false;
+
+                    inputs.forEach(input => {
+                        if (input.type === 'radio' && input.checked) {
+                            answered = true;
+                        } else if (input.tagName === 'TEXTAREA' && input.value.trim()) {
+                            answered = true;
+                        }
+                    });
+
+                    if (!answered) {
+                        allAnswered = false;
+                    }
+                });
+
+                if (!allAnswered) {
+                    showError('Please answer all questions in all quizzes before submitting');
+                    return;
+                }
+
+                // Submit each quiz
+                let successCount = 0;
+                let failureCount = 0;
+                const failedQuizzes = [];
+
+                for (const quizDiv of quizDivs) {
+                    const quizId = parseInt(quizDiv.getAttribute('data-quiz-id'));
+
+                    try {
+                        // Collect answers for this quiz
+                        const quizQuestionElements = quizDiv.querySelectorAll('.question-item');
+                        const answers = [];
+
+                        quizQuestionElements.forEach((questionEl) => {
+                            const questionId = parseInt(questionEl.getAttribute('data-question-id'));
+                            const inputs = questionEl.querySelectorAll('input[type="radio"], textarea');
+                            let answerValue = null;
+
+                            inputs.forEach(input => {
+                                if (input.type === 'radio' && input.checked) {
+                                    answerValue = input.value;
+                                } else if (input.tagName === 'TEXTAREA' && input.value.trim()) {
+                                    answerValue = input.value;
+                                }
+                            });
+
+                            if (questionId && answerValue) {
+                                answers.push({
+                                    question_id: questionId,
+                                    answer: answerValue
+                                });
+                            }
+                        });
+
+                        // Get attempt info
+                        const attemptNumber = parseInt(quizDiv.getAttribute('data-attempt-number')) || 1;
+
+                        // Submit this quiz
+                        const response = await window.LessonApiClient.submitQuiz(quizId, {
+                            attempt_number: attemptNumber,
+                            answers: answers
+                        });
+
+                        if (response.success) {
+                            successCount++;
+                        } else {
+                            failureCount++;
+                            failedQuizzes.push(quizId);
+                        }
+                    } catch (error) {
+                        console.error('Error submitting quiz ' + quizId + ':', error);
+                        failureCount++;
+                        failedQuizzes.push(quizId);
+                    }
+                }
+
+                // Show results
+                if (failureCount === 0) {
+                    showSuccess(`All ${successCount} quiz(zes) submitted successfully!`);
+
+                    // Redirect to results page after a short delay
+                    setTimeout(() => {
+                        window.showAllQuizzesResultsModal();
+                    }, 1500);
+                } else if (successCount > 0) {
+                    showError(`${successCount} quiz(zes) submitted successfully, but ${failureCount} failed`);
+                } else {
+                    showError('Failed to submit quizzes');
+                }
+            } catch (error) {
+                console.error('Error submitting all quizzes:', error);
+                showError('Error submitting quizzes');
+            }
+        };
 
         /**
          * Retake quiz - reload quiz for another attempt

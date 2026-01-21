@@ -255,7 +255,10 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="notificationModalLabel">Notifications</h5>
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-bell" style="color: #ffffff; font-size: 20px;"></i>
+                        <h5 class="modal-title" id="notificationModalLabel">Notifications</h5>
+                    </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
@@ -268,10 +271,10 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Close
+                        <i class="fa-solid fa-times" style="margin-right: 6px;"></i>Close
                     </button>
                     <button type="button" class="btn btn-primary" id="markAllReadBtn">
-                        Mark All as Read
+                        <i class="fa-solid fa-check-double" style="margin-right: 6px;"></i>Mark All as Read
                     </button>
                 </div>
             </div>

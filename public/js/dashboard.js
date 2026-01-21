@@ -12,7 +12,7 @@ class DashboardModule {
     this.initProfileNavigation();
     this.initTooltips();
     this.loadUserProfile();
-    this.loadPointsAndBadges();
+    this.startPointsAndBadgesPolling();
     this.initNotificationBell();
     this.highlightActivePage();
   }
@@ -241,6 +241,22 @@ class DashboardModule {
       }
     } catch (error) {
     }
+  }
+
+  /**
+   * Start polling for points and badges updates
+   * Automatically refreshes points and badges every 10 seconds
+   */
+  static startPointsAndBadgesPolling() {
+    // Initial load
+    this.loadPointsAndBadges();
+
+    // Poll every 10 seconds
+    setInterval(() => {
+      if (window.BadgeAwardService) {
+        window.BadgeAwardService.refreshUserPointsAndBadges();
+      }
+    }, 10000); // 10 seconds
   }
 
   /**
