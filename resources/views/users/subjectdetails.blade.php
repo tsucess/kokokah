@@ -1032,7 +1032,7 @@
                     <div>
                         <div class="d-flex flex-column flex-md-row gap-2 justify-content-between align-items-start mb-2">
 
-                                <h4 class="question">Question ${quizIndex} ${quiz.title || 'Untitled Quiz'}</h4>
+                                <h4 class="question">Q ${quizIndex + 1} ${quiz.title || 'Untitled Quiz'}</h4>
 
                             <div >
                                 <small class="text-muted d-block option">Attempts: <strong>${currentAttempts}/${maxAttempts}</strong></small>
