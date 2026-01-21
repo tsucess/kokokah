@@ -566,6 +566,7 @@
 
         .chat-message.current-user-message .message-audio-progress {
             background-color: rgba(255, 255, 255, 0.3);
+            max-width: 300px;
         }
 
         .message-audio-progress-bar {
@@ -578,6 +579,7 @@
 
         .chat-message.current-user-message .message-audio-progress-bar {
             background-color: white;
+            max-width: 300px;
         }
 
         .message-audio-time {
@@ -590,6 +592,7 @@
 
         .chat-message.current-user-message .message-audio-time {
             color: rgba(255, 255, 255, 0.8);
+            max-width: 300px;
         }
 
         .message-file {
@@ -602,7 +605,7 @@
             margin-top: 8px;
             text-decoration: none;
             color: inherit;
-            max-width: 100%;
+            max-width: 250px;
             overflow: hidden;
             min-width: 0;
             font-size: 0.85rem;
