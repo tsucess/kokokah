@@ -48,7 +48,7 @@
 
         </div>
 
-        <div class  = "container-fluid position-relative " style="margin-top: -70px; min-height:200px;">
+        <div class  = "container-fluid position-relative mb-5" style="margin-top: -70px; min-height:200px;">
             <div class = "card-container" id="coursesContainer">
                 <!-- Classes will be loaded here dynamically -->
                 <div class="text-center w-100" id="loadingMessage">
@@ -62,9 +62,9 @@
 
         </div>
 
-        <div class="chat-btn-circle">
+        {{-- <div class="chat-btn-circle">
             <i class="fa-solid fa-comment"></i>
-        </div>
+        </div> --}}
 
     </main>
     <!-- API Clients -->

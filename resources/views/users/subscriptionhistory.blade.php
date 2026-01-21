@@ -55,6 +55,14 @@
         background-color: #f8d7da;
         color: #721c24;
     }
+    .pagination-btn{
+        font-size: 12px;
+    }
+    @media screen and (min-width:768px){
+.pagination-btn{
+    font-size: 16px;
+}
+    }
 </style>
 
  <main class="transactions-main">
@@ -122,7 +130,7 @@
                     <!-- Pagination Section -->
                     <div class="d-flex justify-content-between align-items-center gap-2 pt-4">
                         <!-- Previous Button -->
-                        <button class="btn px-1 py-2 d-flex align-items-center gap-1 px-md-3" id="prevBtn" onclick="loadTransactions(currentPage - 1)"
+                        <button class="btn px-1 py-2 d-flex align-items-center gap-1 px-md-3 pagination-btn" id="prevBtn" onclick="loadTransactions(currentPage - 1)"
                             style="border: 1px solid #004A53; color: #004A53; font-weight: 500; border-radius: 0.5rem;"
                             disabled>
                             <i class="fa-solid fa-chevron-left"></i> Previous
@@ -130,7 +138,7 @@
 
                         <!-- Pagination Info -->
                         <div class="d-flex align-items-center gap-3">
-                            <span class="text-muted fw-semibold" style="font-size: 0.9rem;">Page <strong
+                            <span class="text-muted fw-semibold" style="font-size: 0.7rem;">Page <strong
                                     style="color: #004A53;" id="currentPageNum">1</strong> of <strong
                                     style="color: #004A53;" id="totalPageNum">1</strong></span>
 
@@ -141,7 +149,7 @@
                         </div>
 
                         <!-- Next Button -->
-                        <button class="btn px-1 py-2 d-flex align-items-center gap-1 px-md-3" id="nextBtn" onclick="loadTransactions(currentPage + 1)"
+                        <button class="btn px-1 py-2 d-flex align-items-center gap-1 px-md-3 pagination-btn" id="nextBtn" onclick="loadTransactions(currentPage + 1)"
                             style="border: 1px solid #004A53; color: #004A53; font-weight: 500; border-radius: 0.5rem;">
                             Next <i class="fa-solid fa-chevron-right "></i>
                         </button>
@@ -172,7 +180,7 @@
                 if (response.success && response.data) {
                     const user = response.data;
                     const welcomeMessage = document.getElementById('welcomeMessage');
-                    welcomeMessage.textContent = `Welcome Back ${user.first_name[0]+user.first_name.slice(1)} ${user.last_name[0]+user.last_name.slice(1)}`;
+                    welcomeMessage.textContent = `Welcome Back ${user.first_name[0].toUpperCase()+user.first_name.slice(1)} ${user.last_name[0].toUpperCase()+user.last_name.slice(1)}`;
                 }
             } catch (error) {
                 console.error('Error loading user profile:', error);

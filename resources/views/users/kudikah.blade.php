@@ -88,7 +88,7 @@
                 top: 0;
                 width: 100%;
                 height: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
+                background-color: rgba(0, 74, 83, 0.5);
                 animation: fadeIn 0.3s ease-in-out;
             }
 
@@ -751,7 +751,7 @@
                         <p class="balance-header-cardNo mb-0" id="cardNumber">Loading...</p>
                         {{-- <i class="bi bi-bank text-white fs-3 position-absolute" style="bottom: 20px; right: 20px; opacity: 0.5;"></i> --}}
                         <img src="./images/card-icon.png" alt="" class="position-absolute "
-                            style="bottom:20px; right:60px;" />
+                            style="bottom:20px; right:30px;" />
                     </div>
 
                     <div class="d-flex align-items-center gap-2 gap-lg-3 justify-content-center">
@@ -943,7 +943,7 @@
                         <h2 class="payment-method-header">Deposit Money to Wallet</h2>
                 <p class="payment-method-subtitle">Enter the amount you want to add</p>
                     </div>
-                    <button class="payment-method-close" onclick="closeAmountModal()"><i class="fa-regular fa-circle-xmark"></i></button>
+                    <button  onclick="closeAmountModal()"><i class="fa-regular fa-circle-xmark"></i></button>
                 </header>
 
 

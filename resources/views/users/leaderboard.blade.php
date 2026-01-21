@@ -128,7 +128,7 @@
             const imgElement = containers[domPosition].querySelector('.leaderboard-winner-img');
 
             if (nameElement) {
-                nameElement.textContent = `${winner.first_name} ${winner.last_name}`;
+                nameElement.textContent = `${winner.first_name[0].toUpperCase()+winner.first_name.slice(1).toLowerCase()} ${winner.last_name[0].toUpperCase()+winner.last_name.slice(1).toLowerCase()}`;
             }
 
             if (imgElement && winner.profile_photo) {
@@ -170,8 +170,8 @@
             const row = document.createElement('tr');
 
             const profilePhoto = user.profile_photo || './images/winner.png';
-            const firstName = user.first_name || 'Unknown';
-            const lastName = user.last_name || 'User';
+            const firstName = user.first_name[0].toUpperCase()+user.first_name.slice(1).toLowerCase() || 'Unknown';
+            const lastName = user.last_name[0].toUpperCase()+user.last_name.slice(1).toLowerCase() || 'User';
             const points = user.total_points || 0;
             const badgesCount = user.badges_count || 0;
             const badges = user.badges || [];
