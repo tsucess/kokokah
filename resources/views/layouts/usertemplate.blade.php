@@ -33,6 +33,8 @@
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
     <link rel="stylesheet" href="{{ asset('css/responsiveness.css') }}">
     <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
+    <!-- Badge Congratulation Modal CSS -->
+    <link rel="stylesheet" href="{{ asset('css/badgeCongratulationModal.css') }}">
 
     {{-- @vite(['resources/css/dashboard.css']) --}}
 
@@ -335,15 +337,30 @@
     <script src="{{ asset('js/services/activityRefreshManager.js') }}"></script>
     <script src="{{ asset('js/services/enrollmentEventEmitter.js') }}"></script>
 
-    <!-- Initialize Notification Modal -->
+    <!-- Badge Congratulation Modal Component -->
+    <script src="{{ asset('js/components/badgeCongratulationModal.js') }}"></script>
+    <!-- Badge Award Wrapper Service -->
+    <script src="{{ asset('js/services/badgeAwardService.js') }}"></script>
+
+    <!-- Initialize Badge Modal and Notification Modal -->
     <script>
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => {
+                // Initialize Badge Congratulation Modal
+                if (window.BadgeCongratulationModal) {
+                    window.BadgeCongratulationModal.init();
+                }
+                // Initialize Notification Modal
                 if (window.NotificationModalComponent) {
                     window.NotificationModalComponent.init();
                 }
             });
         } else {
+            // Initialize Badge Congratulation Modal
+            if (window.BadgeCongratulationModal) {
+                window.BadgeCongratulationModal.init();
+            }
+            // Initialize Notification Modal
             if (window.NotificationModalComponent) {
                 window.NotificationModalComponent.init();
             }
