@@ -1032,7 +1032,7 @@
                     <div>
                         <div class="d-flex flex-column flex-md-row gap-2 justify-content-between align-items-start mb-2">
 
-                                <h4 class="question">${quiz.title || 'Untitled Quiz'}</h4>
+                                <h4 class="question">Question ${quizIndex} ${quiz.title || 'Untitled Quiz'}</h4>
 
                             <div >
                                 <small class="text-muted d-block option">Attempts: <strong>${currentAttempts}/${maxAttempts}</strong></small>
@@ -1058,9 +1058,6 @@
 
                         quizHTML += `
                             <div class="question-item mb-4 p-3 bg-white rounded" data-question-id="${question.id}">
-                                // <h6 class="mb-3">
-                                //     <strong>Question ${questionIndex + 1}:</strong> ${question.question_text || 'Untitled Question'}
-                                // </h6>
                         `;
 
                         // Display options based on question type
@@ -1712,7 +1709,7 @@
                                     <h6 class="mb-1 question">
                                         <strong>Q${index + 1}:</strong> ${result.question_text || ''}
                                     </h6>
-                                    // <small class="text-muted">${result.quiz_title}</small>
+
                                 </div>
                                 <span class="${resultClass} font-weight-bold" style='font-size:18px;'>${resultIcon} ${result.points_earned}/${result.points_possible} pts</span>
                             </div>
