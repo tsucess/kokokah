@@ -1414,7 +1414,7 @@
                 let messageBody = '';
                 if (messageType === 'image') {
                     const fileUrl = msg.metadata?.file_url || `/storage/${msg.metadata?.file_path || ''}`;
-                    messageBody = `<div class="message-image-container"><img src="${fileUrl}" alt="Image" class="message-image" onclick="openImageViewer('${fileUrl}', ${msg.id}, '${currentChatroomId}')" onerror="this.src='/images/default-avatar.png'" style="cursor: pointer;"></div>`;
+                    messageBody = `<div class="message-image-container"><img src="${fileUrl}" alt="Image" class="message-image" onclick="openImageViewer(event, '${fileUrl}', ${msg.id}, '${currentChatroomId}')" onerror="this.src='/images/default-avatar.png'" style="cursor: pointer;"></div>`;
                 } else if (messageType === 'audio') {
                     const fileUrl = msg.metadata?.file_url || `/storage/${msg.metadata?.file_path || ''}`;
                     const audioId = `audio-${msg.id}`;
@@ -1615,11 +1615,13 @@
         async function confirmDeleteMessage() {
             try {
                 const token = localStorage.getItem('auth_token');
-                const url = `${API_BASE_URL}/chatrooms/${currentContextMessage.roomId}/messages/${currentContextMessage.id}`;
+                const roomId = currentContextMessage.roomId || currentChatroomId;
+                const url = `${API_BASE_URL}/chatrooms/${roomId}/messages/${currentContextMessage.id}`;
 
                 console.log('Deleting message:', {
                     messageId: currentContextMessage.id,
-                    roomId: currentContextMessage.roomId,
+                    roomId: roomId,
+                    currentChatroomId: currentChatroomId,
                     url: url,
                     tokenPresent: !!token
                 });
@@ -1642,8 +1644,12 @@
                 }
 
                 closeDeleteConfirmModal();
-                await loadMessages(currentContextMessage.roomId);
-                console.log('Message deleted successfully');
+                console.log('About to reload messages for room:', roomId);
+                // Small delay to ensure modal is closed before reloading
+                setTimeout(async () => {
+                    await loadMessages(roomId);
+                    console.log('Message deleted successfully and chat reloaded');
+                }, 100);
             } catch (error) {
                 console.error('Error deleting message:', error);
                 alert('Failed to delete message: ' + error.message);
@@ -2374,7 +2380,8 @@
             roomId: null
         };
 
-        function openImageViewer(imageUrl, messageId, roomId) {
+        function openImageViewer(event, imageUrl, messageId, roomId) {
+            event.stopPropagation();
             console.log('Opening image viewer for message:', messageId);
             currentViewingImageData = {
                 url: imageUrl,
@@ -2397,44 +2404,30 @@
             };
         }
 
-        async function deleteViewingImage() {
+        function openImageContextMenu() {
             if (!currentViewingImageData.messageId || !currentViewingImageData.roomId) {
-                alert('Error: Could not identify image to delete');
+                alert('Error: Could not identify image');
                 return;
             }
 
-            if (!confirm('Are you sure you want to delete this image?')) {
-                return;
-            }
+            // Set the current context message for the delete function
+            currentContextMessage = {
+                id: currentViewingImageData.messageId,
+                roomId: currentViewingImageData.roomId,
+                content: 'Image',
+                type: 'image'
+            };
 
-            try {
-                console.log('Deleting image message:', currentViewingImageData.messageId);
-                const token = localStorage.getItem('auth_token');
-                const response = await fetch(`${API_BASE_URL}/chatrooms/${currentViewingImageData.roomId}/messages/${currentViewingImageData.messageId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Accept': 'application/json'
-                    }
-                });
+            // Close the image viewer
+            closeImageViewer();
 
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || 'Failed to delete image');
-                }
-
-                console.log('Image deleted successfully');
-                closeImageViewer();
-                await loadMessages(currentViewingImageData.roomId);
-            } catch (error) {
-                console.error('Error deleting image:', error);
-                alert('Failed to delete image: ' + error.message);
-            }
+            // Open the delete confirmation modal
+            openDeleteConfirmModal();
         }
 
         // Event listeners for image viewer
         closeImageViewerBtn.addEventListener('click', closeImageViewer);
-        deleteImageBtn.addEventListener('click', deleteViewingImage);
+        deleteImageBtn.addEventListener('click', openImageContextMenu);
 
         // Close image viewer when clicking outside the image
         imageViewerModal.addEventListener('click', (e) => {
