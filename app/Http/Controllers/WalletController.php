@@ -68,6 +68,17 @@ class WalletController extends Controller
             $sender = Auth::user();
             $email = $request->email;
 
+            // Check sender role - only student and instructor can transfer
+            // Admin and superadmin cannot transfer money
+            $allowedRoles = ['student', 'instructor'];
+            if (!in_array($sender->role, $allowedRoles)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Only students and instructors can transfer money',
+                    'exists' => false
+                ], 403);
+            }
+
             // Check if recipient exists
             $recipient = User::where('email', $email)->first();
 
@@ -88,6 +99,21 @@ class WalletController extends Controller
                     'data' => [
                         'name' => $recipient->first_name . ' ' . $recipient->last_name,
                         'email' => $recipient->email
+                    ]
+                ], 400);
+            }
+
+            // Check recipient role - only student and instructor can receive transfers
+            // Admin and superadmin cannot receive transfers
+            if (!in_array($recipient->role, $allowedRoles)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Money can only be transferred to students or instructors',
+                    'exists' => true,
+                    'data' => [
+                        'name' => $recipient->first_name . ' ' . $recipient->last_name,
+                        'email' => $recipient->email,
+                        'role' => $recipient->role
                     ]
                 ], 400);
             }
@@ -113,7 +139,8 @@ class WalletController extends Controller
                 'data' => [
                     'name' => $recipient->first_name . ' ' . $recipient->last_name,
                     'email' => $recipient->email,
-                    'is_active' => $recipient->is_active
+                    'is_active' => $recipient->is_active,
+                    'role' => $recipient->role
                 ]
             ]);
         } catch (\Exception $e) {
@@ -245,6 +272,7 @@ class WalletController extends Controller
         $user = Auth::user();
         $limit = $request->get('limit', 50);
         $type = $request->get('type'); // deposit, transfer, purchase, reward, withdrawal
+        $status = $request->get('status'); // completed, pending, failed
 
         // Check if user is admin
         $isAdmin = $user && in_array($user->role, ['admin', 'super_admin', 'superadmin']);
@@ -254,19 +282,30 @@ class WalletController extends Controller
             'user_role' => $user?->role,
             'is_admin' => $isAdmin,
             'type' => $type,
+            'status' => $status,
             'limit' => $limit
         ]);
 
         if ($isAdmin) {
-            // For admins, get all transactions
+            // For admins, get all transactions (without limit first, we'll apply it after filtering)
             $transactions = \App\Models\WalletTransaction::with(['wallet.user', 'course'])
                 ->orderBy('created_at', 'desc')
-                ->limit($limit)
                 ->get();
             \Log::info('Admin transactions fetched', ['count' => count($transactions)]);
         } else {
-            // For regular users, get only their transactions
-            $transactions = $this->walletService->getTransactionHistory($user, $limit);
+            // For regular users, get only their transactions (without limit first, we'll apply it after filtering)
+            $wallet = $user->wallet;
+            if (!$wallet) {
+                return response()->json([
+                    'success' => true,
+                    'data' => []
+                ]);
+            }
+
+            $transactions = $wallet->transactions()
+                                 ->with(['relatedUser', 'course'])
+                                 ->orderBy('created_at', 'desc')
+                                 ->get();
             \Log::info('User transactions fetched', ['count' => count($transactions)]);
         }
 
@@ -288,6 +327,15 @@ class WalletController extends Controller
                 }
             });
         }
+
+        if ($status) {
+            $transactions = $transactions->filter(function ($transaction) use ($status) {
+                return $transaction->status === $status;
+            });
+        }
+
+        // Apply limit after filtering
+        $transactions = $transactions->take($limit);
 
         return response()->json([
             'success' => true,

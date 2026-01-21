@@ -298,53 +298,9 @@
                 </div>
 
                 <div class="modal-body">
-                    <!-- Tab Navigation -->
-                    <ul class="nav nav-tabs mb-3" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link active" id="announcements-tab" data-bs-toggle="tab"
-                                href="#announcements" role="tab" aria-controls="announcements"
-                                aria-selected="true">
-                                Announcements
-                            </a>
-                        </li>
-                        {{-- <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="messages-tab" data-bs-toggle="tab" href="#messages"
-                                role="tab" aria-controls="messages" aria-selected="false">
-                                Messages
-                            </a>
-                        </li> --}}
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="notifications-tab" data-bs-toggle="tab" href="#notifications"
-                                role="tab" aria-controls="notifications" aria-selected="false">
-                                Notifications
-                            </a>
-                        </li>
-                    </ul>
-
-                    <!-- Tab Content -->
-                    <div class="tab-content">
-                        <!-- Announcements Tab -->
-                        <div id="announcements" class="tab-pane fade show active" role="tabpanel"
-                            aria-labelledby="announcements-tab">
-                            <div id="announcementsList" class="notification-list">
-                                <p class="text-muted text-center py-4">Loading announcements...</p>
-                            </div>
-                        </div>
-
-                        <!-- Messages Tab -->
-                        <div id="messages" class="tab-pane fade" role="tabpanel" aria-labelledby="messages-tab">
-                            <div id="messagesList" class="notification-list">
-                                <p class="text-muted text-center py-4">Loading messages...</p>
-                            </div>
-                        </div>
-
-                        <!-- Notifications Tab -->
-                        <div id="notifications" class="tab-pane fade" role="tabpanel"
-                            aria-labelledby="notifications-tab">
-                            <div id="notificationsList" class="notification-list">
-                                <p class="text-muted text-center py-4">Loading notifications...</p>
-                            </div>
-                        </div>
+                    <!-- Notifications List -->
+                    <div id="notificationsList" class="notification-list">
+                        <p class="text-muted text-center py-4">Loading notifications...</p>
                     </div>
                 </div>
 

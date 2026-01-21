@@ -405,7 +405,8 @@ let currentCourseId = null;
             try {
                 const response = await CourseApiClient.getTerms();
                 if (response.success && response.data) {
-                    allTerms = response.data;
+                    // Sort terms by order field
+                    allTerms = response.data.sort((a, b) => (a.order || 0) - (b.order || 0));
                     renderTermButtons();
 
                     // Set first term as default

@@ -10,7 +10,7 @@ class TermController extends Controller
     // GET all terms
     public function index()
     {
-        $data = Term::orderBy('id')->get();
+        $data = Term::orderBy('order')->orderBy('id')->get();
         return response()->json([
             'success' => true,
             'data' => $data,

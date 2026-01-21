@@ -90,20 +90,7 @@ class UserSubscriptionController extends Controller
                 }
             }
 
-            // Check if user already has active subscription to this plan
-            $existingSubscription = UserSubscription::where('user_id', $user->id)
-                                                    ->where('subscription_plan_id', $plan->id)
-                                                    ->where('status', 'active')
-                                                    ->first();
-
-            if ($existingSubscription) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'User already has an active subscription to this plan'
-                ], 400);
-            }
-
-            // Check if user is trying to subscribe to courses they're already enrolled in through this plan
+            // Check if user is trying to subscribe to courses they're already enrolled in
             if ($request->has('course_ids') && is_array($request->course_ids)) {
                 $duplicateCourses = Enrollment::where('user_id', $user->id)
                                              ->whereIn('course_id', $request->course_ids)
@@ -113,7 +100,7 @@ class UserSubscriptionController extends Controller
                 if (!empty($duplicateCourses)) {
                     return response()->json([
                         'success' => false,
-                        'message' => 'User is already enrolled in some of the selected courses through this plan',
+                        'message' => 'User is already enrolled in some of the selected courses',
                         'data' => [
                             'duplicate_course_ids' => $duplicateCourses
                         ]
@@ -161,6 +148,28 @@ class UserSubscriptionController extends Controller
                     'amount_paid' => $request->amount_paid,
                     'payment_reference' => $request->payment_reference
                 ]);
+
+                // Deduct from wallet if amount_paid is provided (wallet payment)
+                if ($request->amount_paid > 0) {
+                    $wallet = $user->getOrCreateWallet();
+
+                    // Create wallet transaction
+                    $wallet->transactions()->create([
+                        'amount' => $request->amount_paid,
+                        'type' => 'debit',
+                        'reference' => $request->payment_reference ?? 'SUB-' . uniqid(),
+                        'status' => 'success',
+                        'description' => 'Subscription: ' . $plan->title,
+                        'payment_method' => 'wallet',
+                        'metadata' => [
+                            'subscription_plan_id' => $plan->id,
+                            'subscription_id' => $subscription->id
+                        ]
+                    ]);
+
+                    // Deduct from wallet balance
+                    $wallet->decrement('balance', $request->amount_paid);
+                }
 
                 // Enroll user in selected courses if course_ids provided
                 if ($request->has('course_ids') && is_array($request->course_ids)) {

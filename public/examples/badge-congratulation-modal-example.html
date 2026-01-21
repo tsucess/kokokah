@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Badge Congratulation Modal - Example</title>
+    <link rel="stylesheet" href="../css/badgeCongratulationModal.css">
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #ecfdff 0%, #ccdbdd 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 74, 83, 0.15);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            color: #004a53;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #004a53 0%, #2b6870 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 74, 83, 0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 74, 83, 0.4);
+        }
+        .btn-accent {
+            background: linear-gradient(135deg, #ff6b35 0%, #ffa366 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        }
+        .btn-accent:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        }
+        .info {
+            background: #ecfdff;
+            border-left: 4px solid #004a53;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            font-size: 14px;
+            color: #004a53;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 Badge Congratulation Modal</h1>
+        
+        <div class="info">
+            <strong>Info:</strong> Click the buttons below to see the badge congratulation modal with confetti animation. The modal uses Kokokah theme colors.
+        </div>
+
+        <div class="button-group">
+            <button class="btn-primary" onclick="showBadgeModal1()">
+                Show Achievement Badge
+            </button>
+            <button class="btn-primary" onclick="showBadgeModal2()">
+                Show Learning Badge
+            </button>
+            <button class="btn-accent" onclick="showBadgeModal3()">
+                Show Special Badge
+            </button>
+        </div>
+    </div>
+
+    <!-- Include the badge modal component -->
+    <script src="../js/components/badgeCongratulationModal.js"></script>
+
+    <script>
+        // Initialize the modal when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.BadgeCongratulationModal) {
+                window.BadgeCongratulationModal.init();
+            }
+        });
+
+        // Example 1: Achievement Badge
+        function showBadgeModal1() {
+            const badge = {
+                name: 'Course Master',
+                description: 'Completed your first course with flying colors!',
+                icon: '🎓',
+                points: 100
+            };
+            window.BadgeCongratulationModal.show(badge);
+        }
+
+        // Example 2: Learning Badge
+        function showBadgeModal2() {
+            const badge = {
+                name: 'Quick Learner',
+                description: 'Completed 5 lessons in one day. Keep up the momentum!',
+                icon: '⚡',
+                points: 50
+            };
+            window.BadgeCongratulationModal.show(badge);
+        }
+
+        // Example 3: Special Badge
+        function showBadgeModal3() {
+            const badge = {
+                name: 'Community Champion',
+                description: 'Helped 10 students in the community forum!',
+                icon: '👑',
+                points: 150
+            };
+            window.BadgeCongratulationModal.show(badge);
+        }
+    </script>
+</body>
+</html>
+

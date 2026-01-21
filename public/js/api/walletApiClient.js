@@ -21,12 +21,12 @@ class WalletApiClient extends BaseApiClient {
 
   /**
    * Get wallet transactions
-   * @param {object} filters - Filter options (page, per_page, type, status)
+   * @param {object} filters - Filter options (page, limit, type, status)
    */
   static async getTransactions(filters = {}) {
     const params = new URLSearchParams();
     if (filters.page) params.append('page', filters.page);
-    if (filters.per_page) params.append('per_page', filters.per_page);
+    if (filters.limit) params.append('limit', filters.limit);
     if (filters.type) params.append('type', filters.type);
     if (filters.status) params.append('status', filters.status);
 

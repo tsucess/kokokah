@@ -13,6 +13,7 @@ class Term extends Model
 
     protected $fillable = [
         'name',
+        'order',
     ];
 
     // Relationships

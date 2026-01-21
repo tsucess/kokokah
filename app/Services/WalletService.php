@@ -391,10 +391,23 @@ class WalletService
 
     /**
      * Validate transfer between users
+     * Only users with student or instructor roles can transfer money
+     * Admin and superadmin users cannot transfer or receive transfers
      */
     public function validateTransfer(User $sender, User $recipient, float $amount): array
     {
         $errors = [];
+
+        // Check sender role - only student and instructor can transfer
+        $allowedRoles = ['student', 'instructor'];
+        if (!in_array($sender->role, $allowedRoles)) {
+            $errors[] = 'Only students and instructors can transfer money';
+        }
+
+        // Check recipient role - only student and instructor can receive transfers
+        if (!in_array($recipient->role, $allowedRoles)) {
+            $errors[] = 'Money can only be transferred to students or instructors';
+        }
 
         if ($sender->id === $recipient->id) {
             $errors[] = 'Cannot transfer to yourself';
