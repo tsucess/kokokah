@@ -13,8 +13,10 @@
             color: white;
             border-radius: 12px;
             padding: 10px 15px;
-            max-width: 200px;
+            max-width: 300px;
             margin-left: auto;
+            word-break: break-word;
+            overflow-wrap: break-word;
 
         }
 
@@ -38,7 +40,9 @@
             color: #333;
             border-radius: 12px;
             padding: 10px 15px;
-            max-width: 200px;
+            max-width: 300px;
+            word-break: break-word;
+            overflow-wrap: break-word;
         }
 
         .chat-message:not(.current-user-message) .message-timestamp {
@@ -448,6 +452,15 @@
             max-width: 300px;
             border-radius: 8px;
             margin-top: 8px;
+            display: block;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .message-image-container {
+            max-width: 300px;
+            overflow: hidden;
+            word-break: break-word;
         }
 
         .message-audio {
@@ -580,19 +593,39 @@
         }
 
         .message-file {
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 12px;
+            gap: 6px;
+            padding: 6px 10px;
             background-color: rgba(0, 0, 0, 0.05);
             border-radius: 4px;
             margin-top: 8px;
             text-decoration: none;
             color: inherit;
+            max-width: 100%;
+            overflow: hidden;
+            min-width: 0;
+            font-size: 0.85rem;
         }
 
         .message-file:hover {
             background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .message-file i {
+            flex-shrink: 0;
+            min-width: 14px;
+            font-size: 0.85rem;
+        }
+
+        .message-file-name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            min-width: 0;
+            flex: 1;
+            font-size: 0.75rem;
+            word-break: break-all;
         }
 
         /* Audio Recording UI Styles */
@@ -775,6 +808,8 @@
                             <div class="d-flex gap-3 text-secondary fs-5 me-3 d-none d-md-flex">
                                 <i class="bi bi-mic-fill cursor-pointer" id="audioBtn" title="Record audio"></i>
                                 <i class="bi bi-emoji-smile-fill cursor-pointer" id="emojiBtn" title="Add emoji"></i>
+                            </div>
+                            <div class="d-flex gap-3 text-secondary fs-5 me-3">
                                 <i class="bi bi-camera-fill cursor-pointer" id="cameraBtn" title="Take picture"></i>
                             </div>
                             <button class="btn send-btn d-flex align-items-center" id="sendBtn">
@@ -1278,7 +1313,7 @@
                 let messageBody = '';
                 if (messageType === 'image') {
                     const fileUrl = msg.metadata?.file_url || `/storage/${msg.metadata?.file_path || ''}`;
-                    messageBody = `<img src="${fileUrl}" alt="Image" class="message-image" onerror="this.src='/images/default-avatar.png'">`;
+                    messageBody = `<div class="message-image-container"><img src="${fileUrl}" alt="Image" class="message-image" onerror="this.src='/images/default-avatar.png'" style="pointer-events: none;"></div>`;
                 } else if (messageType === 'audio') {
                     const fileUrl = msg.metadata?.file_url || `/storage/${msg.metadata?.file_path || ''}`;
                     const audioId = `audio-${msg.id}`;
@@ -1303,7 +1338,7 @@
                 } else if (messageType === 'file') {
                     const fileUrl = msg.metadata?.file_url || `/storage/${msg.metadata?.file_path || ''}`;
                     const fileName = msg.metadata?.file_name || 'Download File';
-                    messageBody = `<a href="${fileUrl}" class="message-file" download><i class="bi bi-file-earmark"></i> ${fileName}</a>`;
+                    messageBody = `<a href="${fileUrl}" class="message-file" download><i class="bi bi-file-earmark"></i> <span class="message-file-name">${fileName}</span></a>`;
                 } else {
                     messageBody = `<p class="mb-1">${messageContent}${editedIndicator}</p>`;
                 }
