@@ -144,7 +144,7 @@
         }
 
         .chatroom-item:hover {
-            background-color: #f5f5f5;
+            background-color: #00606B;
         }
 
         /* Active state for chatroom items - override sidebar-item styles */
@@ -848,6 +848,9 @@
         .send-btn:hover{
             background-color: #F3A61C;
         }
+        .sidebar-title{
+            font-size: 1rem
+        }
         @media screen and (min-width:500px){
             .send-text{
                 display: inline;
@@ -855,6 +858,9 @@
             .send-btn{
                 border-radius: 100px;
             }
+            .sidebar-title{
+            font-size: 1.3rem
+        }
         }
 
         /* Camera mirror mode styles */
@@ -1044,7 +1050,7 @@
                         <button class="btn btn-outline-secondary d-lg-none" id="toggleSidebar">
                             <i class="bi bi-list"></i>
                         </button>
-                        <span id="current-room-name">#General</span>
+                        <span id="current-room-name" >#General</span>
                     </div>
 
                     <div class="chat-history" id="chat-history">
@@ -1359,7 +1365,7 @@
                                 style="background: #114243; border-radius:20px; width: 25px;">
                                 <i class="bi bi-hash text-white"></i>
                             </span>
-                            ${room.name}
+                           <span class="sidebar-title">${room.name}</span>
                         </div>
                         ${levelTag}
                     </div>
