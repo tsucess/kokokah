@@ -836,6 +836,24 @@
                 border-radius: 100px;
             }
         }
+
+        /* Camera mirror mode styles */
+        #cameraPreview.mirror-mode {
+            transform: scaleX(-1);
+        }
+
+        /* Camera button visibility - ensure buttons are visible */
+        #switchCameraBtn,
+        #mirrorModeBtn {
+            display: none !important;
+            min-width: 60px;
+            white-space: nowrap;
+        }
+
+        #switchCameraBtn.visible,
+        #mirrorModeBtn.visible {
+            display: inline-block !important;
+        }
     </style>
     <main>
         <div class="container-fluid py-4">
@@ -959,7 +977,7 @@
 
                     <!-- Camera Capture Overlay -->
                     <div id="cameraOverlay" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 2000; padding: 20px; flex-direction: column; align-items: center; justify-content: center;">
-                        <div style="position: relative; width: 100%; max-width: 600px; background: #000; border-radius: 12px; overflow: hidden;">
+                        <div style="position: relative; width: 100%; max-width: 600px; background: #000; border-radius: 12px; overflow: visible;">
                             <!-- Camera Stream -->
                             <div id="cameraStreamContainer" style="display: none; position: relative; width: 100%; padding-bottom: 133.33%; background: #000;">
                                 <video id="cameraPreview" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; background: #000;"></video>
@@ -971,7 +989,13 @@
                             </div>
 
                             <!-- Controls -->
-                            <div style="position: absolute; bottom: 20px; left: 20px; right: 20px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                            <div style="position: absolute; bottom: 20px; left: 20px; right: 20px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; z-index: 10;">
+                                <button id="switchCameraBtn" class="btn btn-secondary btn-sm" style="display: none;" title="Switch camera">
+                                    <i class="bi bi-arrow-repeat"></i> Switch
+                                </button>
+                                <button id="mirrorModeBtn" class="btn btn-secondary btn-sm" style="display: none;" title="Toggle mirror mode">
+                                    <i class="bi bi-arrow-left-right"></i> Mirror
+                                </button>
                                 <button id="capturePhotoBtn" class="btn btn-warning btn-sm" style="display: none;">
                                     <i class="bi bi-camera-fill"></i> Capture
                                 </button>
@@ -1827,8 +1851,12 @@
         const retakeCameraBtn = document.getElementById('retakeCameraBtn');
         const sendPhotoBtn = document.getElementById('sendPhotoBtn');
         const closeCameraBtn = document.getElementById('closeCameraBtn');
+        const switchCameraBtn = document.getElementById('switchCameraBtn');
+        const mirrorModeBtn = document.getElementById('mirrorModeBtn');
         let cameraStream = null;
         let capturedPhotoBlob = null;
+        let currentFacingMode = 'user'; // Track current camera (user = front, environment = back)
+        let isMirrorMode = true; // Mirror mode enabled by default for front camera
 
         // Start camera immediately when button is clicked
         cameraBtn.addEventListener('click', async () => {
@@ -1862,12 +1890,101 @@
                 sendPhotoBtn.style.display = 'none';
 
                 console.log('Camera ready for capture');
+                // Show switch camera button when camera is active
+                switchCameraBtn.classList.add('visible');
+                // Show mirror mode button and apply mirror effect for front camera
+                mirrorModeBtn.classList.add('visible');
+                if (currentFacingMode === 'user' && isMirrorMode) {
+                    cameraPreview.classList.add('mirror-mode');
+                } else {
+                    cameraPreview.classList.remove('mirror-mode');
+                }
             } catch (error) {
                 console.error('Error accessing camera:', error);
                 cameraOverlay.style.display = 'none';
                 alert('Unable to access camera. Please check permissions and try again.');
             }
         });
+
+        // Switch between front and back camera
+        async function switchCamera() {
+            try {
+                console.log('Switching camera from', currentFacingMode, 'to', currentFacingMode === 'user' ? 'environment' : 'user');
+
+                // Stop current camera stream
+                if (cameraStream) {
+                    cameraStream.getTracks().forEach(track => track.stop());
+                    cameraStream = null;
+                }
+
+                // Toggle facing mode
+                currentFacingMode = currentFacingMode === 'user' ? 'environment' : 'user';
+
+                // Request new camera with different facing mode
+                cameraStream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        facingMode: currentFacingMode,
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    },
+                    audio: false
+                });
+
+                console.log('Camera switched to:', currentFacingMode);
+
+                // Set new video source
+                cameraPreview.srcObject = cameraStream;
+                cameraPreview.onloadedmetadata = () => {
+                    console.log('New camera stream loaded');
+                    cameraPreview.play().catch(err => console.error('Play error:', err));
+                };
+
+                // Apply mirror mode only for front camera
+                if (currentFacingMode === 'user' && isMirrorMode) {
+                    cameraPreview.classList.add('mirror-mode');
+                } else {
+                    cameraPreview.classList.remove('mirror-mode');
+                }
+
+                // Ensure buttons remain visible after camera switch
+                switchCameraBtn.classList.add('visible');
+                mirrorModeBtn.classList.add('visible');
+            } catch (error) {
+                console.error('Error switching camera:', error);
+                alert('Unable to switch camera. Your device may not have multiple cameras.');
+                // Reset facing mode on error
+                currentFacingMode = currentFacingMode === 'user' ? 'environment' : 'user';
+            }
+        }
+
+        switchCameraBtn.addEventListener('click', switchCamera);
+
+        // Toggle mirror mode
+        function toggleMirrorMode() {
+            try {
+                isMirrorMode = !isMirrorMode;
+                console.log('Mirror mode toggled to:', isMirrorMode);
+
+                if (isMirrorMode && currentFacingMode === 'user') {
+                    cameraPreview.classList.add('mirror-mode');
+                    console.log('Mirror mode enabled');
+                } else {
+                    cameraPreview.classList.remove('mirror-mode');
+                    console.log('Mirror mode disabled');
+                }
+
+                // Update button appearance
+                if (isMirrorMode) {
+                    mirrorModeBtn.style.opacity = '1';
+                } else {
+                    mirrorModeBtn.style.opacity = '0.5';
+                }
+            } catch (error) {
+                console.error('Error toggling mirror mode:', error);
+            }
+        }
+
+        mirrorModeBtn.addEventListener('click', toggleMirrorMode);
 
         capturePhotoBtn.addEventListener('click', () => {
             try {
@@ -1908,6 +2025,8 @@
             capturePhotoBtn.style.display = 'inline-block';
             retakeCameraBtn.style.display = 'none';
             sendPhotoBtn.style.display = 'none';
+            switchCameraBtn.classList.add('visible');
+            mirrorModeBtn.classList.add('visible');
             capturedPhotoBlob = null;
         });
 
@@ -1951,6 +2070,13 @@
                 capturePhotoBtn.style.display = 'inline-block';
                 retakeCameraBtn.style.display = 'none';
                 sendPhotoBtn.style.display = 'none';
+                switchCameraBtn.classList.remove('visible');
+                mirrorModeBtn.classList.remove('visible');
+                // Reset facing mode to front camera for next use
+                currentFacingMode = 'user';
+                // Reset mirror mode to enabled for next use
+                isMirrorMode = true;
+                cameraPreview.classList.remove('mirror-mode');
                 await loadMessages(currentChatroomId);
             } catch (error) {
                 console.error('Error sending photo:', error);
@@ -1971,6 +2097,13 @@
             capturePhotoBtn.style.display = 'inline-block';
             retakeCameraBtn.style.display = 'none';
             sendPhotoBtn.style.display = 'none';
+            switchCameraBtn.classList.remove('visible');
+            mirrorModeBtn.classList.remove('visible');
+            // Reset facing mode to front camera for next use
+            currentFacingMode = 'user';
+            // Reset mirror mode to enabled for next use
+            isMirrorMode = true;
+            cameraPreview.classList.remove('mirror-mode');
         });
 
         // ============ FILE ATTACHMENT FUNCTIONALITY ============
