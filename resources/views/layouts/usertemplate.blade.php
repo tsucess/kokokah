@@ -369,6 +369,9 @@
             }
         }
     </script>
+
+    <!-- Inactivity Timeout Manager - Auto logout after 30 minutes of inactivity -->
+    <script src="{{ asset('js/utils/inactivityTimeout.js') }}"></script>
 </body>
 
 </html>
