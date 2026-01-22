@@ -1237,6 +1237,7 @@ section.container-fluid {
     border-right: 1px solid var(--bs-light-gray);
     /* Ensure fixed height to align with right panel */
     height: 100%;
+    max-width: 350px;
 }
 
 .sidebar-item {
