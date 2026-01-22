@@ -112,7 +112,7 @@
 
             .sidebar-mobile {
                 position: fixed;
-                top: 70px;
+                top: 63px;
                 left: -100%;
                 height: 100vh;
                 width: 80%;
