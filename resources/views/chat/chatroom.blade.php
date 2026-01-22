@@ -849,7 +849,7 @@
             background-color: #F3A61C;
         }
         .sidebar-title{
-            font-size: 1rem
+            font-size: 0.8rem
         }
         @media screen and (min-width:500px){
             .send-text{
@@ -859,7 +859,7 @@
                 border-radius: 100px;
             }
             .sidebar-title{
-            font-size: 1.3rem
+            font-size: 1rem
         }
         }
 
