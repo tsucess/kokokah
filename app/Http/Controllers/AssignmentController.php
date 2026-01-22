@@ -212,7 +212,7 @@ class AssignmentController extends Controller
                                                           ->get();
             } else {
                 // Include only user's submission for students
-                $userSubmission = $assignment->submissions()->where('student_id', $user->id)->first();
+                $userSubmission = $assignment->submissions()->where('user_id', $user->id)->first();
                 $assignmentData['user_submission'] = $userSubmission;
                 $assignmentData['can_submit'] = !$userSubmission && now() <= $assignment->due_date;
                 $assignmentData['is_overdue'] = now() > $assignment->due_date;
