@@ -2049,6 +2049,7 @@
                 capturePhotoBtn.classList.add('visible');
                 retakeCameraBtn.classList.remove('visible');
                 sendPhotoBtn.classList.remove('visible');
+                closeCameraBtn.classList.add('visible');
 
                 console.log('Camera ready for capture');
                 // Show mirror mode button and apply mirror effect for front camera

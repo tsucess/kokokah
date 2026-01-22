@@ -620,8 +620,11 @@ Route::middleware('auth:sanctum')->prefix('notifications')->group(function () {
 
 // Announcement routes
 Route::middleware('auth:sanctum')->prefix('announcements')->group(function () {
-    Route::get('/', [AnnouncementController::class, 'index']);
+    // Specific routes first (before {id} parameter)
     Route::get('/types', [AnnouncementController::class, 'getByType']);
+
+    // General routes
+    Route::get('/', [AnnouncementController::class, 'index']);
     Route::get('/{id}', [AnnouncementController::class, 'show']);
 
     // Admin and Superadmin routes

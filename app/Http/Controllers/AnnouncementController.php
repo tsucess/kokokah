@@ -121,6 +121,17 @@ class AnnouncementController extends Controller
         try {
             $announcement = Announcement::with('user')->findOrFail($id);
 
+            // Check authorization: admins can view all, others can only view published
+            if (!Auth::user() || !in_array(Auth::user()->role, ['admin', 'superadmin'])) {
+                if ($announcement->status !== 'published') {
+                    return response()->json([
+                        'status' => 403,
+                        'message' => 'Unauthorized to view this announcement',
+                        'error' => 'forbidden'
+                    ], 403);
+                }
+            }
+
             // Increment view count
             $announcement->increment('view_count');
 
