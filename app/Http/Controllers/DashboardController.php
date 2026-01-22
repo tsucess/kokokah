@@ -285,11 +285,11 @@ class DashboardController extends Controller
     private function getUpcomingDeadlines($user)
     {
         $enrolledCourseIds = $user->enrollments()->pluck('course_id');
-        
+
         return Assignment::whereIn('course_id', $enrolledCourseIds)
                         ->where('due_date', '>', now())
                         ->whereDoesntHave('submissions', function($query) use ($user) {
-                            $query->where('student_id', $user->id);
+                            $query->where('user_id', $user->id);
                         })
                         ->with(['course'])
                         ->orderBy('due_date', 'asc')
@@ -629,13 +629,50 @@ class DashboardController extends Controller
      */
     private function getAdminOverview()
     {
+        // Current month stats
+        $totalStudentsNow = User::where('role', 'student')->count();
+        $totalInstructorsNow = User::where('role', 'instructor')->count();
+        $totalCoursesNow = Course::count();
+        $totalEnrollmentsNow = Enrollment::count();
+
+        // Previous month stats for comparison
+        $startOfLastMonth = now()->subMonth()->startOfMonth();
+        $endOfLastMonth = now()->subMonth()->endOfMonth();
+
+        $totalStudentsLastMonth = User::where('role', 'student')
+            ->where('created_at', '<=', $endOfLastMonth)
+            ->count();
+        $totalInstructorsLastMonth = User::where('role', 'instructor')
+            ->where('created_at', '<=', $endOfLastMonth)
+            ->count();
+        $totalCoursesLastMonth = Course::where('created_at', '<=', $endOfLastMonth)->count();
+        $totalEnrollmentsLastMonth = Enrollment::where('enrolled_at', '<=', $endOfLastMonth)->count();
+
+        // Calculate growth rates
+        $studentGrowth = $totalStudentsLastMonth > 0
+            ? round((($totalStudentsNow - $totalStudentsLastMonth) / $totalStudentsLastMonth) * 100, 1)
+            : 0;
+        $instructorGrowth = $totalInstructorsLastMonth > 0
+            ? round((($totalInstructorsNow - $totalInstructorsLastMonth) / $totalInstructorsLastMonth) * 100, 1)
+            : 0;
+        $courseGrowth = $totalCoursesLastMonth > 0
+            ? round((($totalCoursesNow - $totalCoursesLastMonth) / $totalCoursesLastMonth) * 100, 1)
+            : 0;
+        $enrollmentGrowth = $totalEnrollmentsLastMonth > 0
+            ? round((($totalEnrollmentsNow - $totalEnrollmentsLastMonth) / $totalEnrollmentsLastMonth) * 100, 1)
+            : 0;
+
         return [
             'total_users' => User::count(),
-            'total_students' => User::where('role', 'student')->count(),
-            'total_instructors' => User::where('role', 'instructor')->count(),
-            'total_courses' => Course::count(),
+            'total_students' => $totalStudentsNow,
+            'student_growth' => $studentGrowth,
+            'total_instructors' => $totalInstructorsNow,
+            'instructor_growth' => $instructorGrowth,
+            'total_courses' => $totalCoursesNow,
+            'course_growth' => $courseGrowth,
             'published_courses' => Course::where('status', 'published')->count(),
-            'total_enrollments' => Enrollment::count(),
+            'total_enrollments' => $totalEnrollmentsNow,
+            'enrollment_growth' => $enrollmentGrowth,
             'total_revenue' => Enrollment::sum('amount_paid'),
             'active_users_today' => User::where('last_login_at', '>=', now()->startOfDay())->count(),
             'new_users_this_month' => User::where('created_at', '>=', now()->startOfMonth())->count(),
