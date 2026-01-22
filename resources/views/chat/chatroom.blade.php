@@ -1050,7 +1050,7 @@
                         <button class="btn btn-outline-secondary d-lg-none" id="toggleSidebar">
                             <i class="bi bi-list"></i>
                         </button>
-                        <span id="current-room-name" class="sidebar-title">#General</span>
+                        <span id="current-room-name" >#General</span>
                     </div>
 
                     <div class="chat-history" id="chat-history">
@@ -1365,7 +1365,7 @@
                                 style="background: #114243; border-radius:20px; width: 25px;">
                                 <i class="bi bi-hash text-white"></i>
                             </span>
-                            ${room.name}
+                           <span class="sidebar-title">${room.name}</span>
                         </div>
                         ${levelTag}
                     </div>
