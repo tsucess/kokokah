@@ -347,27 +347,27 @@
 
 @media (min-width: 1201px) {
     h1 {
-        font-size: 1.9rem;
-        color: #004a53;
-    }
-
-    h2 {
         font-size: 1.7rem;
         color: #004a53;
     }
 
-    h3 {
+    h2 {
         font-size: 1.55rem;
         color: #004a53;
     }
 
-    h4 {
+    h3 {
         font-size: 1.35rem;
         color: #004a53;
     }
 
-    h5 {
+    h4 {
         font-size: 1.15rem;
+        color: #004a53;
+    }
+
+    h5 {
+        font-size: 1.05rem;
         color: #004a53;
     }
 
@@ -378,7 +378,7 @@
 
     p {
         font-size: 0.9rem;
-        line-height: 1.8;
+        line-height: 1.3;
         color: #004a53;
     }
     p.feature,

@@ -58,8 +58,8 @@
 
         .plan-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, min(100%, 400px)));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, min(100%, 310px)));
+            gap: 20px;
         }
 
         .plan-card {
@@ -99,7 +99,8 @@
 
         .plan-card-text {
             color: #004A53;
-            font-size: 18px;
+            font-size: 14px;
+            line-height: 1.3;
         }
 
         .ellipsisBtn {
@@ -154,14 +155,14 @@
         }
 
         .list-title {
-            font-size: 20px;
+            font-size: 18px;
             color: #000F11;
             font-family: "Fredoka", sans-serif;
             font-weight: 300;
         }
 
         .list-item {
-            font-size: 15px;
+            font-size: 12px;
             color: #000F11;
             font-family: "Fredoka", sans-serif;
             font-weight: 300;
@@ -485,7 +486,7 @@
             container.innerHTML = allPlans.map((plan, index) => `
                 <article class="plan-card ${index === 0 ? 'accent' : ''} d-flex flex-column">
                     <div class="d-flex gap-2 align-items-start justify-content-between">
-                        <div class="d-flex align-items-center gap-3">
+                        <div class="d-flex align-items-start gap-2">
                             <div class="badge">${plan.title.charAt(0).toUpperCase()}</div>
                             <div class="d-flex flex-column gap-3">
                                 <h3 class="plan-card-title">${plan.title}</h3>
