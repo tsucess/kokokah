@@ -71,6 +71,10 @@
   </main>
 
   @vite(['resources/js/app.js'])
+
+  <!-- Inactivity Timeout Manager - Auto logout after 30 minutes of inactivity -->
+  <script src="{{ asset('js/utils/inactivityTimeout.js') }}"></script>
+
   @yield('scripts')
 </body>
 </html>
