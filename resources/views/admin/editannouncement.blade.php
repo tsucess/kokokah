@@ -337,8 +337,22 @@
         }
 
         getToken() {
-            return document.querySelector('meta[name="csrf-token"]')?.content ||
-                   localStorage.getItem('auth_token') || '';
+            // Try to get auth token from localStorage first (for API authentication)
+            let token = localStorage.getItem('auth_token');
+            if (token) {
+                console.log('Using auth_token from localStorage');
+                return token;
+            }
+
+            // Fallback to CSRF token if no auth token found
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+            if (csrfToken) {
+                console.log('Using CSRF token as fallback');
+                return csrfToken;
+            }
+
+            console.warn('No authentication token found');
+            return '';
         }
 
         /**

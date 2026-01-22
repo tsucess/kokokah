@@ -22,7 +22,7 @@ class ChatroomController extends Controller
 
             // Admin and superadmin can see ALL chatrooms
             if (in_array($user->role, ['admin', 'superadmin'])) {
-                $allChatrooms = ChatRoom::with(['creator:id,first_name,last_name'])
+                $allChatrooms = ChatRoom::with(['creator:id,first_name,last_name', 'course.level:id,name'])
                     ->where('is_active', true)
                     ->get()
                     ->sortByDesc('updated_at')
@@ -31,7 +31,7 @@ class ChatroomController extends Controller
                 // Regular users see only general and enrolled course chatrooms
                 // Get General chatroom (available to all users)
                 $generalChatrooms = ChatRoom::where('type', 'general')
-                    ->with(['creator:id,first_name,last_name'])
+                    ->with(['creator:id,first_name,last_name', 'course.level:id,name'])
                     ->get();
 
                 // Get course-specific chatrooms for courses user is enrolled in
@@ -41,7 +41,7 @@ class ChatroomController extends Controller
 
                 $courseChatrooms = ChatRoom::where('type', 'course')
                     ->whereIn('course_id', $enrolledCourseIds)
-                    ->with(['creator:id,first_name,last_name'])
+                    ->with(['creator:id,first_name,last_name', 'course.level:id,name'])
                     ->get();
 
                 // Combine both types of chatrooms
@@ -68,6 +68,7 @@ class ChatroomController extends Controller
                         ->where('user_id', $user->id)
                         ->first()?->pivot->unread_count ?? 0,
                     'created_by' => $room->creator,
+                    'level' => $room->course?->level?->name ?? null,
                 ];
             });
 

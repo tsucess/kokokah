@@ -160,6 +160,23 @@
             background-color: rgba(255, 255, 255, 0.3) !important;
         }
 
+        /* Level badge styling */
+        .level-badge {
+            background-color: #FDAF22;
+            color: #000;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+            margin-left: 8px;
+        }
+
+        .chatroom-item.active .level-badge {
+            background-color: rgba(253, 175, 34, 0.9);
+            color: #000;
+        }
+
         /* Message actions styling */
         .message-actions {
             display: flex;
@@ -493,13 +510,13 @@
         }
 
         .image-viewer-container {
-            position: relative;
-            width: 100%;
-            max-width: 90vw;
-            max-height: 90vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: relative !important;
+            width: 100% !important;
+            max-width: 90vw !important;
+            max-height: 90vh !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
         }
 
         .image-viewer-header {
@@ -507,39 +524,42 @@
             top: 0;
             left: 0;
             right: 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
-            z-index: 10;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            padding: 20px !important;
+            background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%) !important;
+            z-index: 10 !important;
         }
 
         .image-viewer-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            transition: background 0.2s ease;
+            background: rgba(255, 255, 255, 0.2) !important;
+            border: none !important;
+            color: white !important;
+            width: 40px !important;
+            height: 40px !important;
+            border-radius: 50% !important;
+            cursor: pointer !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 20px !important;
+            transition: background 0.2s ease !important;
+            padding: 0 !important;
+            min-width: auto !important;
+            white-space: normal !important;
         }
 
         .image-viewer-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.3) !important;
         }
 
         .image-viewer-btn.delete {
-            background: rgba(220, 53, 69, 0.3);
+            background: rgba(220, 53, 69, 0.3) !important;
         }
 
         .image-viewer-btn.delete:hover {
-            background: rgba(220, 53, 69, 0.5);
+            background: rgba(220, 53, 69, 0.5) !important;
         }
 
         #viewerImage {
@@ -842,6 +862,161 @@
             font-size: 1.3rem
         }
         }
+
+        /* Camera mirror mode styles */
+        #cameraPreview.mirror-mode {
+            transform: scaleX(-1);
+        }
+
+        /* Camera button visibility - ensure buttons are visible */
+        #switchCameraBtn,
+        #mirrorModeBtn,
+        #capturePhotoBtn,
+        #retakeCameraBtn,
+        #sendPhotoBtn,
+        #closeCameraBtn {
+            display: none !important;
+            min-width: 60px;
+            white-space: nowrap;
+        }
+
+        #switchCameraBtn.visible,
+        #mirrorModeBtn.visible,
+        #capturePhotoBtn.visible,
+        #retakeCameraBtn.visible,
+        #sendPhotoBtn.visible,
+        #closeCameraBtn.visible {
+            display: inline-block !important;
+        }
+
+        /* Camera button theme styling */
+        #switchCameraBtn,
+        #mirrorModeBtn {
+            background-color: #004a53 !important;
+            color: #fff !important;
+            border: none !important;
+            padding: 8px 12px !important;
+            border-radius: 6px !important;
+            font-size: 0.875rem !important;
+            font-weight: 500 !important;
+            transition: all 0.2s ease !important;
+        }
+
+        #switchCameraBtn:hover,
+        #mirrorModeBtn:hover {
+            background-color: #2b6870 !important;
+            transform: scale(1.05) !important;
+        }
+
+        #capturePhotoBtn {
+            background-color: #fdaf22 !important;
+            color: #000 !important;
+            border: none !important;
+            padding: 8px 12px !important;
+            border-radius: 6px !important;
+            font-size: 0.875rem !important;
+            font-weight: 500 !important;
+            transition: all 0.2s ease !important;
+        }
+
+        #capturePhotoBtn:hover {
+            background-color: #ffc14e !important;
+            transform: scale(1.05) !important;
+        }
+
+        #retakeCameraBtn {
+            background-color: #338a8a !important;
+            color: #fff !important;
+            border: none !important;
+            padding: 8px 12px !important;
+            border-radius: 6px !important;
+            font-size: 0.875rem !important;
+            font-weight: 500 !important;
+            transition: all 0.2s ease !important;
+        }
+
+        #retakeCameraBtn:hover {
+            background-color: #2b6870 !important;
+            transform: scale(1.05) !important;
+        }
+
+        #sendPhotoBtn {
+            background-color: #16b265 !important;
+            color: #fff !important;
+            border: none !important;
+            padding: 8px 12px !important;
+            border-radius: 6px !important;
+            font-size: 0.875rem !important;
+            font-weight: 500 !important;
+            transition: all 0.2s ease !important;
+        }
+
+        #sendPhotoBtn:hover {
+            background-color: #0d8a4a !important;
+            transform: scale(1.05) !important;
+        }
+
+        #closeCameraBtn {
+            background-color: #dc3545 !important;
+            color: #fff !important;
+            border: none !important;
+            padding: 8px 12px !important;
+            border-radius: 6px !important;
+            font-size: 0.875rem !important;
+            font-weight: 500 !important;
+            transition: all 0.2s ease !important;
+        }
+
+        #closeCameraBtn:hover {
+            background-color: #c82333 !important;
+            transform: scale(1.05) !important;
+        }
+
+        /* Mobile: Hide button text, show only icons */
+        @media (max-width: 768px) {
+            #switchCameraBtn,
+            #mirrorModeBtn,
+            #capturePhotoBtn,
+            #retakeCameraBtn,
+            #sendPhotoBtn,
+            #closeCameraBtn {
+                padding: 8px 10px !important;
+                font-size: 0 !important;
+            }
+
+            #switchCameraBtn i,
+            #mirrorModeBtn i,
+            #capturePhotoBtn i,
+            #retakeCameraBtn i,
+            #sendPhotoBtn i,
+            #closeCameraBtn i {
+                font-size: 1.25rem !important;
+                margin: 0 !important;
+            }
+
+            /* Hide switch camera button on mobile - users typically have one camera */
+            #switchCameraBtn {
+                display: none !important;
+            }
+        }
+
+        /* Desktop: Show button text with icons */
+        @media (min-width: 769px) {
+            #switchCameraBtn i,
+            #mirrorModeBtn i,
+            #capturePhotoBtn i,
+            #retakeCameraBtn i,
+            #sendPhotoBtn i,
+            #closeCameraBtn i {
+                margin-right: 6px !important;
+                font-size: 1rem !important;
+            }
+
+            /* Hide switch camera button on desktop - users typically have one camera */
+            #switchCameraBtn {
+                display: none !important;
+            }
+        }
     </style>
     <main>
         <div class="container-fluid py-4">
@@ -965,7 +1140,7 @@
 
                     <!-- Camera Capture Overlay -->
                     <div id="cameraOverlay" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 2000; padding: 20px; flex-direction: column; align-items: center; justify-content: center;">
-                        <div style="position: relative; width: 100%; max-width: 600px; background: #000; border-radius: 12px; overflow: hidden;">
+                        <div style="position: relative; width: 100%; max-width: 600px; background: #000; border-radius: 12px; overflow: visible;">
                             <!-- Camera Stream -->
                             <div id="cameraStreamContainer" style="display: none; position: relative; width: 100%; padding-bottom: 133.33%; background: #000;">
                                 <video id="cameraPreview" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; background: #000;"></video>
@@ -977,18 +1152,24 @@
                             </div>
 
                             <!-- Controls -->
-                            <div style="position: absolute; bottom: 20px; left: 20px; right: 20px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                                <button id="capturePhotoBtn" class="btn btn-warning btn-sm" style="display: none;">
-                                    <i class="bi bi-camera-fill"></i> Capture
+                            <div style="position: absolute; bottom: 20px; left: 20px; right: 20px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; z-index: 10;">
+                                <button id="switchCameraBtn" style="display: none;" title="Switch camera">
+                                    <i class="bi bi-arrow-repeat"></i> <span class="d-none d-md-inline">Switch</span>
                                 </button>
-                                <button id="retakeCameraBtn" class="btn btn-info btn-sm" style="display: none;">
-                                    <i class="bi bi-arrow-counterclockwise"></i> Retake
+                                <button id="mirrorModeBtn" style="display: none;" title="Toggle mirror mode">
+                                    <i class="bi bi-arrow-left-right"></i> <span class="d-none d-md-inline">Mirror</span>
                                 </button>
-                                <button id="sendPhotoBtn" class="btn btn-success btn-sm" style="display: none;">
-                                    <i class="bi bi-check-circle-fill"></i> Send
+                                <button id="capturePhotoBtn" style="display: none;">
+                                    <i class="bi bi-camera-fill"></i> <span class="d-none d-md-inline">Capture</span>
                                 </button>
-                                <button id="closeCameraBtn" class="btn btn-danger btn-sm">
-                                    <i class="bi bi-x-circle-fill"></i> Close
+                                <button id="retakeCameraBtn" style="display: none;">
+                                    <i class="bi bi-arrow-counterclockwise"></i> <span class="d-none d-md-inline">Retake</span>
+                                </button>
+                                <button id="sendPhotoBtn" style="display: none;">
+                                    <i class="bi bi-check-circle-fill"></i> <span class="d-none d-md-inline">Send</span>
+                                </button>
+                                <button id="closeCameraBtn">
+                                    <i class="bi bi-x-circle-fill"></i> <span class="d-none d-md-inline">Close</span>
                                 </button>
                             </div>
                         </div>
@@ -1175,14 +1356,18 @@
         function renderChatrooms(chatrooms) {
             const html = chatrooms.map(room => {
                 const roomId = String(room.id); // Ensure ID is a string
+                const levelTag = room.level ? `<span class="level-badge">${room.level}</span>` : '';
                 return `
                 <a href="#" class="sidebar-item chatroom-item" data-room-id="${roomId}" data-room-name="${room.name}" onclick="selectChatroom('${roomId}', '${room.name}'); return false;">
-                    <div class="d-flex align-items-center">
-                        <span class="badge me-2 d-flex justify-content-center align-items-center"
-                            style="background: #114243; border-radius:20px; width: 25px;">
-                            <i class="bi bi-hash text-white"></i>
-                        </span>
-                        ${room.name}
+                    <div class="d-flex align-items-center justify-content-between w-100">
+                        <div class="d-flex align-items-center">
+                            <span class="badge me-2 d-flex justify-content-center align-items-center"
+                                style="background: #114243; border-radius:20px; width: 25px;">
+                                <i class="bi bi-hash text-white"></i>
+                            </span>
+                            ${room.name}
+                        </div>
+                        ${levelTag}
                     </div>
                     ${room.unread_count ? `<span class="new-message-badge">${room.unread_count}</span>` : ''}
                 </a>
@@ -1423,7 +1608,7 @@
                 let messageBody = '';
                 if (messageType === 'image') {
                     const fileUrl = msg.metadata?.file_url || `/storage/${msg.metadata?.file_path || ''}`;
-                    messageBody = `<div class="message-image-container"><img src="${fileUrl}" alt="Image" class="message-image" onclick="openImageViewer('${fileUrl}', ${msg.id}, '${currentChatroomId}')" onerror="this.src='/images/default-avatar.png'" style="cursor: pointer;"></div>`;
+                    messageBody = `<div class="message-image-container"><img src="${fileUrl}" alt="Image" class="message-image" onclick="openImageViewer(event, '${fileUrl}', ${msg.id}, '${currentChatroomId}')" onerror="this.src='/images/default-avatar.png'" style="cursor: pointer;"></div>`;
                 } else if (messageType === 'audio') {
                     const fileUrl = msg.metadata?.file_url || `/storage/${msg.metadata?.file_path || ''}`;
                     const audioId = `audio-${msg.id}`;
@@ -1624,11 +1809,13 @@
         async function confirmDeleteMessage() {
             try {
                 const token = localStorage.getItem('auth_token');
-                const url = `${API_BASE_URL}/chatrooms/${currentContextMessage.roomId}/messages/${currentContextMessage.id}`;
+                const roomId = currentContextMessage.roomId || currentChatroomId;
+                const url = `${API_BASE_URL}/chatrooms/${roomId}/messages/${currentContextMessage.id}`;
 
                 console.log('Deleting message:', {
                     messageId: currentContextMessage.id,
-                    roomId: currentContextMessage.roomId,
+                    roomId: roomId,
+                    currentChatroomId: currentChatroomId,
                     url: url,
                     tokenPresent: !!token
                 });
@@ -1651,8 +1838,12 @@
                 }
 
                 closeDeleteConfirmModal();
-                await loadMessages(currentContextMessage.roomId);
-                console.log('Message deleted successfully');
+                console.log('About to reload messages for room:', roomId);
+                // Small delay to ensure modal is closed before reloading
+                setTimeout(async () => {
+                    await loadMessages(roomId);
+                    console.log('Message deleted successfully and chat reloaded');
+                }, 100);
             } catch (error) {
                 console.error('Error deleting message:', error);
                 alert('Failed to delete message: ' + error.message);
@@ -1827,8 +2018,12 @@
         const retakeCameraBtn = document.getElementById('retakeCameraBtn');
         const sendPhotoBtn = document.getElementById('sendPhotoBtn');
         const closeCameraBtn = document.getElementById('closeCameraBtn');
+        const switchCameraBtn = document.getElementById('switchCameraBtn');
+        const mirrorModeBtn = document.getElementById('mirrorModeBtn');
         let cameraStream = null;
         let capturedPhotoBlob = null;
+        let currentFacingMode = 'user'; // Track current camera (user = front, environment = back)
+        let isMirrorMode = true; // Mirror mode enabled by default for front camera
 
         // Start camera immediately when button is clicked
         cameraBtn.addEventListener('click', async () => {
@@ -1857,17 +2052,104 @@
 
                 cameraStreamContainer.style.display = 'block';
                 capturedPhotoContainer.style.display = 'none';
-                capturePhotoBtn.style.display = 'inline-block';
-                retakeCameraBtn.style.display = 'none';
-                sendPhotoBtn.style.display = 'none';
+                capturePhotoBtn.classList.add('visible');
+                retakeCameraBtn.classList.remove('visible');
+                sendPhotoBtn.classList.remove('visible');
+                closeCameraBtn.classList.add('visible');
 
                 console.log('Camera ready for capture');
+                // Show mirror mode button and apply mirror effect for front camera
+                mirrorModeBtn.classList.add('visible');
+                if (currentFacingMode === 'user' && isMirrorMode) {
+                    cameraPreview.classList.add('mirror-mode');
+                } else {
+                    cameraPreview.classList.remove('mirror-mode');
+                }
             } catch (error) {
                 console.error('Error accessing camera:', error);
                 cameraOverlay.style.display = 'none';
                 alert('Unable to access camera. Please check permissions and try again.');
             }
         });
+
+        // Switch between front and back camera
+        async function switchCamera() {
+            try {
+                console.log('Switching camera from', currentFacingMode, 'to', currentFacingMode === 'user' ? 'environment' : 'user');
+
+                // Stop current camera stream
+                if (cameraStream) {
+                    cameraStream.getTracks().forEach(track => track.stop());
+                    cameraStream = null;
+                }
+
+                // Toggle facing mode
+                currentFacingMode = currentFacingMode === 'user' ? 'environment' : 'user';
+
+                // Request new camera with different facing mode
+                cameraStream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        facingMode: currentFacingMode,
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    },
+                    audio: false
+                });
+
+                console.log('Camera switched to:', currentFacingMode);
+
+                // Set new video source
+                cameraPreview.srcObject = cameraStream;
+                cameraPreview.onloadedmetadata = () => {
+                    console.log('New camera stream loaded');
+                    cameraPreview.play().catch(err => console.error('Play error:', err));
+                };
+
+                // Apply mirror mode only for front camera
+                if (currentFacingMode === 'user' && isMirrorMode) {
+                    cameraPreview.classList.add('mirror-mode');
+                } else {
+                    cameraPreview.classList.remove('mirror-mode');
+                }
+
+                // Ensure buttons remain visible after camera switch
+                mirrorModeBtn.classList.add('visible');
+            } catch (error) {
+                console.error('Error switching camera:', error);
+                alert('Unable to switch camera. Your device may not have multiple cameras.');
+                // Reset facing mode on error
+                currentFacingMode = currentFacingMode === 'user' ? 'environment' : 'user';
+            }
+        }
+
+        switchCameraBtn.addEventListener('click', switchCamera);
+
+        // Toggle mirror mode
+        function toggleMirrorMode() {
+            try {
+                isMirrorMode = !isMirrorMode;
+                console.log('Mirror mode toggled to:', isMirrorMode);
+
+                if (isMirrorMode && currentFacingMode === 'user') {
+                    cameraPreview.classList.add('mirror-mode');
+                    console.log('Mirror mode enabled');
+                } else {
+                    cameraPreview.classList.remove('mirror-mode');
+                    console.log('Mirror mode disabled');
+                }
+
+                // Update button appearance
+                if (isMirrorMode) {
+                    mirrorModeBtn.style.opacity = '1';
+                } else {
+                    mirrorModeBtn.style.opacity = '0.5';
+                }
+            } catch (error) {
+                console.error('Error toggling mirror mode:', error);
+            }
+        }
+
+        mirrorModeBtn.addEventListener('click', toggleMirrorMode);
 
         capturePhotoBtn.addEventListener('click', () => {
             try {
@@ -1890,9 +2172,9 @@
                     capturedPhoto.src = canvas.toDataURL();
                     capturedPhotoContainer.style.display = 'block';
                     cameraStreamContainer.style.display = 'none';
-                    capturePhotoBtn.style.display = 'none';
-                    retakeCameraBtn.style.display = 'inline-block';
-                    sendPhotoBtn.style.display = 'inline-block';
+                    capturePhotoBtn.classList.remove('visible');
+                    retakeCameraBtn.classList.add('visible');
+                    sendPhotoBtn.classList.add('visible');
                     console.log('Photo captured successfully');
                 }, 'image/jpeg', 0.95);
             } catch (error) {
@@ -1905,9 +2187,10 @@
             console.log('Retaking photo...');
             capturedPhotoContainer.style.display = 'none';
             cameraStreamContainer.style.display = 'block';
-            capturePhotoBtn.style.display = 'inline-block';
-            retakeCameraBtn.style.display = 'none';
-            sendPhotoBtn.style.display = 'none';
+            capturePhotoBtn.classList.add('visible');
+            retakeCameraBtn.classList.remove('visible');
+            sendPhotoBtn.classList.remove('visible');
+            mirrorModeBtn.classList.add('visible');
             capturedPhotoBlob = null;
         });
 
@@ -1948,9 +2231,16 @@
                 capturedPhotoBlob = null;
                 cameraStreamContainer.style.display = 'none';
                 capturedPhotoContainer.style.display = 'none';
-                capturePhotoBtn.style.display = 'inline-block';
-                retakeCameraBtn.style.display = 'none';
-                sendPhotoBtn.style.display = 'none';
+                capturePhotoBtn.classList.remove('visible');
+                retakeCameraBtn.classList.remove('visible');
+                sendPhotoBtn.classList.remove('visible');
+                switchCameraBtn.classList.remove('visible');
+                mirrorModeBtn.classList.remove('visible');
+                // Reset facing mode to front camera for next use
+                currentFacingMode = 'user';
+                // Reset mirror mode to enabled for next use
+                isMirrorMode = true;
+                cameraPreview.classList.remove('mirror-mode');
                 await loadMessages(currentChatroomId);
             } catch (error) {
                 console.error('Error sending photo:', error);
@@ -1968,9 +2258,16 @@
             capturedPhotoBlob = null;
             cameraStreamContainer.style.display = 'none';
             capturedPhotoContainer.style.display = 'none';
-            capturePhotoBtn.style.display = 'inline-block';
-            retakeCameraBtn.style.display = 'none';
-            sendPhotoBtn.style.display = 'none';
+            capturePhotoBtn.classList.remove('visible');
+            retakeCameraBtn.classList.remove('visible');
+            sendPhotoBtn.classList.remove('visible');
+            switchCameraBtn.classList.remove('visible');
+            mirrorModeBtn.classList.remove('visible');
+            // Reset facing mode to front camera for next use
+            currentFacingMode = 'user';
+            // Reset mirror mode to enabled for next use
+            isMirrorMode = true;
+            cameraPreview.classList.remove('mirror-mode');
         });
 
         // ============ FILE ATTACHMENT FUNCTIONALITY ============
@@ -2383,7 +2680,8 @@
             roomId: null
         };
 
-        function openImageViewer(imageUrl, messageId, roomId) {
+        function openImageViewer(event, imageUrl, messageId, roomId) {
+            event.stopPropagation();
             console.log('Opening image viewer for message:', messageId);
             currentViewingImageData = {
                 url: imageUrl,
@@ -2406,44 +2704,30 @@
             };
         }
 
-        async function deleteViewingImage() {
+        function openImageContextMenu() {
             if (!currentViewingImageData.messageId || !currentViewingImageData.roomId) {
-                alert('Error: Could not identify image to delete');
+                alert('Error: Could not identify image');
                 return;
             }
 
-            if (!confirm('Are you sure you want to delete this image?')) {
-                return;
-            }
+            // Set the current context message for the delete function
+            currentContextMessage = {
+                id: currentViewingImageData.messageId,
+                roomId: currentViewingImageData.roomId,
+                content: 'Image',
+                type: 'image'
+            };
 
-            try {
-                console.log('Deleting image message:', currentViewingImageData.messageId);
-                const token = localStorage.getItem('auth_token');
-                const response = await fetch(`${API_BASE_URL}/chatrooms/${currentViewingImageData.roomId}/messages/${currentViewingImageData.messageId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Accept': 'application/json'
-                    }
-                });
+            // Close the image viewer
+            closeImageViewer();
 
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || 'Failed to delete image');
-                }
-
-                console.log('Image deleted successfully');
-                closeImageViewer();
-                await loadMessages(currentViewingImageData.roomId);
-            } catch (error) {
-                console.error('Error deleting image:', error);
-                alert('Failed to delete image: ' + error.message);
-            }
+            // Open the delete confirmation modal
+            openDeleteConfirmModal();
         }
 
         // Event listeners for image viewer
         closeImageViewerBtn.addEventListener('click', closeImageViewer);
-        deleteImageBtn.addEventListener('click', deleteViewingImage);
+        deleteImageBtn.addEventListener('click', openImageContextMenu);
 
         // Close image viewer when clicking outside the image
         imageViewerModal.addEventListener('click', (e) => {
