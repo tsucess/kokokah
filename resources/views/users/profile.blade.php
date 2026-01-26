@@ -177,17 +177,21 @@
 
     <main>
         <div class="container my-5">
-            <h1>My Profile</h1>
+            <h1 data-i18n="profile.my_profile">My Profile</h1>
 
             <!-- Tabs -->
             <ul class="nav nav-tabs mt-3" id="profileTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details"
-                        type="button" role="tab">My details</button>
+                        type="button" role="tab" data-i18n="profile.my_details">My details</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button"
-                        role="tab">Login</button>
+                        role="tab" data-i18n="profile.login">Login</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button"
+                        role="tab" data-i18n="profile.settings">Settings</button>
                 </li>
                 {{-- <li class="nav-item" role="presentation">
                     <button class="nav-link" id="wallet-tab" data-bs-toggle="tab" data-bs-target="#wallet" type="button" role="tab">Wallet</button>
@@ -205,7 +209,7 @@
                                 style="background: #f9f9f9; border: 1px solid #e8e8e8;">
                                 <div class="card-body p-4 d-flex flex-column gap-4">
                                     <div class="d-flex align-items-center justify-content-between">
-                                        <h5 class="fw-bold mb-0" style="font-size: 1.1rem; color: #1a1a1a;">Basic
+                                        <h5 class="fw-bold mb-0" style="font-size: 1.1rem; color: #1a1a1a;" data-i18n="profile.basic_information">Basic
                                             Information</h5>
                                         <span class="text-danger ms-2" style="font-size: 1.2rem;">*</span>
                                     </div>
@@ -219,7 +223,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <div class="modal-form-input-border">
-                                                        <label class="modal-label">First Name</label>
+                                                        <label class="modal-label" data-i18n="profile.first_name">First Name</label>
                                                         <input type="text" class="modal-input" id="firstName"
                                                             name="first_name" placeholder="Winner" required>
                                                     </div>
@@ -229,7 +233,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <div class="modal-form-input-border">
-                                                        <label class="modal-label">Last Name</label>
+                                                        <label class="modal-label" data-i18n="profile.last_name">Last Name</label>
                                                         <input type="text" class="modal-input" id="lastName"
                                                             name="last_name" placeholder="Winner" required>
                                                     </div>
@@ -246,27 +250,27 @@
                                             <div class="col-md-6">
                                                 <!-- Gender Row -->
                                                 <div class="mb-4 d-flex flex-column gap-2">
-                                                    <label class="form-label form-label-custom">Gender</label>
+                                                    <label class="form-label form-label-custom" data-i18n="profile.gender">Gender</label>
                                                     <div class="d-flex gap-4 mb-1">
                                                         <div class="form-check d-flex align-items-center gap-2">
                                                             <input class="form-check-input" type="radio" name="gender"
                                                                 id="genderMale" value="male" checked
                                                                 style="width: 1rem; height: 1rem; cursor: pointer;">
                                                             <label class="form-check-label" for="genderMale"
-                                                                style="cursor: pointer;  color: #000000; font-weight: 500; font-size:1rem;">Male</label>
+                                                                style="cursor: pointer;  color: #000000; font-weight: 500; font-size:1rem;" data-i18n="profile.male">Male</label>
                                                         </div>
                                                         <div class="form-check d-flex align-items-center gap-2">
                                                             <input class="form-check-input" type="radio" name="gender"
                                                                 id="genderFemale" value="female"
                                                                 style="width: 1rem; height: 1rem; cursor: pointer;">
                                                             <label class="form-check-label" for="genderFemale"
-                                                                style="cursor: pointer;  color: #000000; font-weight: 500; font-size:1rem;">Female</label>
+                                                                style="cursor: pointer;  color: #000000; font-weight: 500; font-size:1rem;" data-i18n="profile.female">Female</label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="modal-form-input-border">
-                                                        <label class="modal-label">Date of Birth</label>
+                                                        <label class="modal-label" data-i18n="profile.date_of_birth">Date of Birth</label>
                                                         <input type="date" class="modal-input" id="dateOfBirth"
                                                             name="date_of_birth" placeholder="DD/MM/YYYY">
                                                     </div>
@@ -282,11 +286,11 @@
                                                         <i class="fa-solid fa-file-lines fa-lg"
                                                             style="color: #004A53;"></i>
                                                     </div>
-                                                    <p class="fw-semibold mb-2" style="color: #000000; font-size: 14px;">
+                                                    <p class="fw-semibold mb-2" style="color: #000000; font-size: 14px;" data-i18n="profile.drop_files_to_upload">
                                                         Drop your
                                                         files to upload</p>
                                                     <small
-                                                        style="color: #000000; font-size:12px; padding:3px 20px; border: 1px solid #C4C4C4; border-radius:34px; ">Edit</small>
+                                                        style="color: #000000; font-size:12px; padding:3px 20px; border: 1px solid #C4C4C4; border-radius:34px; " data-i18n="profile.edit">Edit</small>
                                                     <input type="file" id="profilePhoto" name="profile_photo"
                                                         class="d-none" accept="image/*">
                                                 </div>
@@ -302,7 +306,7 @@
                             <div class="card border-0 shadow-sm rounded-4 mb-4"
                                 style="background: #f9f9f9; border: 1px solid #e8e8e8;">
                                 <div class="card-body p-4 d-flex flex-column gap-4">
-                                    <h5 class="fw-bold " style="font-size: 1.1rem; color: #1a1a1a;">Parent Details</h5>
+                                    <h5 class="fw-bold " style="font-size: 1.1rem; color: #1a1a1a;" data-i18n="profile.parent_details">Parent Details</h5>
                                     <div class="line-divider"></div>
 
                                     <form id="parentForm" class=" d-flex flex-column gap-3">
@@ -311,7 +315,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <div class="modal-form-input-border">
-                                                        <label class="modal-label">First Name</label>
+                                                        <label class="modal-label" data-i18n="profile.parent_first_name">First Name</label>
                                                         <input type="text" class="modal-input" id="parentFirstName"
                                                             name="parent_first_name" placeholder="Enter First Name">
                                                     </div>
@@ -321,7 +325,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <div class="modal-form-input-border">
-                                                        <label class="modal-label">Last Name</label>
+                                                        <label class="modal-label" data-i18n="profile.parent_last_name">Last Name</label>
                                                         <input type="text" class="modal-input" id="parentLastName"
                                                             name="parent_last_name" placeholder="Enter Last Name">
                                                     </div>
@@ -335,7 +339,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <div class="modal-form-input-border">
-                                                        <label class="modal-label">Parent Email Address</label>
+                                                        <label class="modal-label" data-i18n="profile.parent_email_address">Parent Email Address</label>
                                                         <input type="email" class="modal-input" id="parentEmail"
                                                             name="parent_email" placeholder="Enter Parent Email Address">
                                                     </div>
@@ -345,7 +349,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <div class="modal-form-input-border">
-                                                        <label class="modal-label">Parent Phone Number</label>
+                                                        <label class="modal-label" data-i18n="profile.parent_phone_number">Parent Phone Number</label>
                                                         <input type="tel" class="modal-input" id="parentPhone"
                                                             name="parent_phone" placeholder="Enter Parent Phone Number">
                                                     </div>
@@ -386,7 +390,7 @@
                         <div class="col-8">
                             <div class="card d-flex flex-column gap-4">
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <h5 class="fw-bold mb-0" style="font-size: 1.1rem; color: #000;">Login/Account Details
+                                    <h5 class="fw-bold mb-0" style="font-size: 1.1rem; color: #000;" data-i18n="profile.login">Login/Account Details
                                     </h5>
                                     <span class="text-danger ms-2" style="font-size: 1.2rem;">*</span>
                                 </div>
@@ -394,7 +398,7 @@
                                 <form class='d-flex flex-column gap-4'>
                                     <div class="form-group">
                                         <div class="modal-form-input-border">
-                                            <label class="modal-label">Email Address</label>
+                                            <label class="modal-label" data-i18n="profile.email_address">Email Address</label>
                                             <input type="email" class="modal-input" id="email" name="email"
                                                 placeholder="@gmail.com" readonly>
                                         </div>
@@ -402,7 +406,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="modal-form-input-border">
-                                            <label class="modal-label">Current Password</label>
+                                            <label class="modal-label" data-i18n="profile.current_password">Current Password</label>
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <input type="password" class="modal-input" id="currentPassword"
                                                     name="password" placeholder="••••••••" required>
@@ -418,7 +422,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="modal-form-input-border">
-                                            <label class="modal-label">New Password</label>
+                                            <label class="modal-label" data-i18n="profile.new_password">New Password</label>
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <input type="password" class="modal-input" id="newPassword"
                                                     name="password" placeholder="••••••••" required>
@@ -433,7 +437,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="modal-form-input-border">
-                                            <label class="modal-label">Confirm Password</label>
+                                            <label class="modal-label" data-i18n="profile.confirm_password">Confirm Password</label>
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <input type="password" class="modal-input" id="confirmPassword"
                                                     name="password" placeholder="••••••••" required>
@@ -449,25 +453,66 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="modal-form-input-border">
-                                            <label class="modal-label">Role</label>
+                                            <label class="modal-label" data-i18n="profile.role">Role</label>
                                             <input type="text" class="modal-input" id="role" name="role"
                                                 readonly>
                                         </div>
                                         <small class="text-danger d-none" id="roleError"></small>
                                     </div>
-                                    <button class="save-btn mt-0">Change Password</button>
+                                    <button class="save-btn mt-0" data-i18n="profile.change_password">Change Password</button>
                                 </form>
                             </div>
 
                         </div>
                         <div class="col-4">
                             <div class="card d-flex flex-column gap-4" style="background-color: #CCDBDD;">
-                                <h3 class="account-deletion-title">Account Deleting</h3>
-                                <p class="account-deletion-text">Once your account is deleted, you will lose access to it
+                                <h3 class="account-deletion-title" data-i18n="profile.account_deletion">Account Deleting</h3>
+                                <p class="account-deletion-text" data-i18n="profile.account_deletion_warning">Once your account is deleted, you will lose access to it
                                     and all your data. Information from your account is not duplicated and after deleting,
                                     your account will be lost forever without the possibility of recovery.</p>
-                                <button class="account-deletion-btn">Delete Account</button>
+                                <button class="account-deletion-btn" data-i18n="profile.delete_account">Delete Account</button>
 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Tab -->
+                <div class="tab-pane fade" id="settings" role="tabpanel">
+                    <div class="row g-4">
+                        <div class="col-8">
+                            <div class="card d-flex flex-column gap-4">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h5 class="fw-bold mb-0" style="font-size: 1.1rem; color: #000;" data-i18n="profile.settings">Settings</h5>
+                                    <span class="text-danger ms-2" style="font-size: 1.2rem;">*</span>
+                                </div>
+                                <div class="line-divider"></div>
+                                <form id="settingsForm" class='d-flex flex-column gap-4'>
+                                    @csrf
+                                    <!-- Language Selection -->
+                                    <div class="form-group">
+                                        <div class="modal-form-input-border">
+                                            <label class="modal-label" data-i18n="profile.language_preference">Language Preference</label>
+                                            <select class="modal-input" id="languagePreference" name="language_preference" required>
+                                                <option value="" data-i18n="profile.select_language">Select a language</option>
+                                                <option value="en">English</option>
+                                                <option value="fr">Français (French)</option>
+                                                <option value="ar">العربية (Arabic)</option>
+                                                <option value="yo">Yorùbá (Yoruba)</option>
+                                                <option value="ha">Hausa</option>
+                                                <option value="ig">Igbo</option>
+                                            </select>
+                                        </div>
+                                        <small class="text-danger d-none" id="languageError"></small>
+                                    </div>
+                                    <button type="button" class="save-btn mt-0" id="saveSettingsBtn" data-i18n="profile.save_settings">Save Settings</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card d-flex flex-column gap-4" style="background-color: #E8F4F8;">
+                                <h3 class="account-deletion-title" data-i18n="profile.language_settings">Language Settings</h3>
+                                <p class="account-deletion-text" data-i18n="profile.language_settings_description">Choose your preferred language for the application interface. Your selection will be saved to your profile.</p>
                             </div>
                         </div>
                     </div>
@@ -479,7 +524,7 @@
                     <div class="modal-dialog modal-dialog-centered modal-md">
                         <div class="modal-content">
                             <div class="modal-header border-bottom">
-                                <h5 class="modal-title" id="cropperModalLabel">Crop Profile Photo</h5>
+                                <h5 class="modal-title" id="cropperModalLabel" data-i18n="profile.crop_profile_photo">Crop Profile Photo</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
@@ -493,24 +538,24 @@
                                         max="3" step="0.1" value="1">
                                 </div>
                                 <div class="controls-container">
-                                    <button type="button" class="btn" id="rotateLeftBtn">
-                                        <i class="fa-solid fa-rotate-left"></i> <span class="d-none d-md-inline">Rotate
+                                    <button type="button" class="btn" id="rotateLeftBtn" data-i18n="profile.rotate_left">
+                                        <i class="fa-solid fa-rotate-left"></i> <span class="d-none d-md-inline" data-i18n="profile.rotate_left">Rotate
                                             Left</span>
                                     </button>
-                                    <button type="button" class="btn" id="rotateRightBtn">
-                                        <i class="fa-solid fa-rotate-right"></i> <span class="d-none d-md-inline">Rotate
+                                    <button type="button" class="btn" id="rotateRightBtn" data-i18n="profile.rotate_right">
+                                        <i class="fa-solid fa-rotate-right"></i> <span class="d-none d-md-inline" data-i18n="profile.rotate_right">Rotate
                                             Right</span>
                                     </button>
-                                    <button type="button" class="btn" id="resetCropBtn">
+                                    <button type="button" class="btn" id="resetCropBtn" data-i18n="profile.reset">
                                         <i class="fa-solid fa-arrows-rotate"></i> <span
-                                            class="d-none d-md-inline">Reset</span>
+                                            class="d-none d-md-inline" data-i18n="profile.reset">Reset</span>
                                     </button>
                                 </div>
                             </div>
                             <div class="modal-footer border-top">
                                 <button type="button" class="btn btn-sm btn-secondary"
-                                    data-bs-dismiss="modal">Cancel</button>
-                                <button type="button" class="btn btn-sm" id="cropperSave">Crop & Save</button>
+                                    data-bs-dismiss="modal" data-i18n="profile.cancel">Cancel</button>
+                                <button type="button" class="btn btn-sm" id="cropperSave" data-i18n="profile.crop_and_save">Crop & Save</button>
                             </div>
                         </div>
                     </div>
@@ -1150,8 +1195,103 @@
                         }
                     }
 
+                    // Load settings data on page load
+                    async function loadSettingsData() {
+                        try {
+                            console.log('Loading settings data...');
+                            const response = await UserApiClient.getProfile();
+
+                            if (response.success && response.data) {
+                                const user = response.data;
+                                const languageSelect = document.getElementById('languagePreference');
+
+                                if (languageSelect && user.language_preference) {
+                                    languageSelect.value = user.language_preference;
+                                    console.log('Language preference loaded:', user.language_preference);
+                                }
+                            }
+                        } catch (error) {
+                            console.error('Error loading settings:', error);
+                        }
+                    }
+
+                    // Save settings
+                    async function saveSettings() {
+                        try {
+                            const languageSelect = document.getElementById('languagePreference');
+                            const language = languageSelect.value;
+
+                            if (!language) {
+                                ToastNotification.error('Please select a language');
+                                return;
+                            }
+
+                            console.log('Saving settings with language:', language);
+
+                            // Call the API to update language preference
+                            const response = await fetch('/api/language/user/set', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': 'Bearer ' + localStorage.getItem('auth_token'),
+                                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]')?.value || ''
+                                },
+                                body: JSON.stringify({
+                                    locale: language
+                                })
+                            });
+
+                            const data = await response.json();
+
+                            if (data.success) {
+                                ToastNotification.success('Settings saved successfully!');
+                                console.log('Settings saved:', data.data);
+
+                                // Update localStorage
+                                const user = JSON.parse(localStorage.getItem('auth_user') || '{}');
+                                user.language_preference = language;
+                                localStorage.setItem('auth_user', JSON.stringify(user));
+
+                                // Wait a moment then reload the page to apply the new language
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 1000);
+                            } else {
+                                ToastNotification.error(data.message || 'Failed to save settings');
+                            }
+                        } catch (error) {
+                            console.error('Error saving settings:', error);
+                            ToastNotification.error('An error occurred while saving settings');
+                        }
+                    }
+
+                    // Setup settings event listeners
+                    function setupSettingsEventListeners() {
+                        const saveSettingsBtn = document.getElementById('saveSettingsBtn');
+                        if (saveSettingsBtn) {
+                            saveSettingsBtn.addEventListener('click', async (e) => {
+                                e.preventDefault();
+                                await saveSettings();
+                            });
+                        }
+                    }
+
+                    // Update the initial DOMContentLoaded to include settings
+                    const originalDOMContentLoaded = document.addEventListener;
+                    document.addEventListener('DOMContentLoaded', async () => {
+                        console.log('Profile page loaded, fetching user data...');
+
+                        await loadProfileData();
+                        await loadSettingsData();
+                        setupEventListeners();
+                        setupSettingsEventListeners();
+                        restoreActiveTab();
+                    });
+
                     // Expose functions to window for debugging
                     window.loadProfileData = loadProfileData;
-                    window.saveProfileData = saveProfileData;    </script>
+                    window.saveProfileData = saveProfileData;
+                    window.loadSettingsData = loadSettingsData;
+                    window.saveSettings = saveSettings;    </script>
     </main>
 @endsection

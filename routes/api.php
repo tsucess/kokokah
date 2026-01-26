@@ -732,9 +732,6 @@ Route::prefix('language')->group(function () {
     // Set locale (for guests)
     Route::post('/set', [LanguageController::class, 'setLocale']);
 
-    // Get translations for current locale
-    Route::get('/translations', [LanguageController::class, 'getTranslations']);
-
     // Get translations for specific locale
     Route::get('/translations/{locale}', [LanguageController::class, 'getTranslationsByLocale']);
 
@@ -746,7 +743,10 @@ Route::prefix('language')->group(function () {
 });
 
 // Language/Localization Routes (Authenticated)
-Route::middleware('auth:sanctum')->prefix('language')->group(function () {
+Route::middleware(['auth:sanctum', \App\Http\Middleware\SetLocale::class])->prefix('language')->group(function () {
+    // Get translations for current locale (authenticated - uses user's language preference)
+    Route::get('/translations', [LanguageController::class, 'getTranslations']);
+
     // Set user's preferred language
     Route::post('/user/set', [LanguageController::class, 'setUserLanguage']);
 

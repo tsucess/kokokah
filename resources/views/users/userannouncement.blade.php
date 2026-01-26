@@ -21,32 +21,32 @@
 
             <section class=" d-flex flex-column" style="gap: 30px;">
                 <div class="d-flex flex-column gap-1">
-                        <h2>Notifications</h2>
-                        <p >Stay updated with the latest news and updates from your school/instructor.</p>
+                        <h2 data-i18n="announcements.notifications">Notifications</h2>
+                        <p data-i18n="announcements.stay_updated">Stay updated with the latest news and updates from your school/instructor.</p>
                 </div>
 
                 <div class="d-flex flex-column " style="gap: 75px;">
                     <div class="tab tabs" id="announcementTabs">
                         <div class=" rounded-pill d-flex justify-content-center gap-1 py-lg-2 align-items-center col tab-text bg-light" data-filter="all">
-                            <i class="fa-solid fa-bell"></i> All (<span class="count">0</span>)
+                            <i class="fa-solid fa-bell"></i> <span data-i18n="announcements.all">All</span> (<span class="count">0</span>)
                         </div>
                         <div class=" rounded-pill d-flex justify-content-center gap-1 py-lg-2 align-items-center col tab-text" data-filter="Exams">
-                            <i class="fa-solid fa-bell"></i> Exams (<span class="count">0</span>)
+                            <i class="fa-solid fa-bell"></i> <span data-i18n="announcements.exams">Exams</span> (<span class="count">0</span>)
                         </div>
                         <div class=" rounded-pill d-flex justify-content-center gap-1 py-lg-2 align-items-center col tab-text" data-filter="Events">
-                            <i class="fa-solid fa-bell"></i> Events (<span class="count">0</span>)
+                            <i class="fa-solid fa-bell"></i> <span data-i18n="announcements.events">Events</span> (<span class="count">0</span>)
                         </div>
                         <div class=" rounded-pill d-flex justify-content-center gap-1 py-lg-2 align-items-center col tab-text" data-filter="Alert">
-                            <i class="fa-solid fa-bell"></i> Alert (<span class="count">0</span>)
+                            <i class="fa-solid fa-bell"></i> <span data-i18n="announcements.alert">Alert</span> (<span class="count">0</span>)
                         </div>
                         <div class=" rounded-pill d-flex justify-content-center gap-1 py-lg-2 align-items-center col tab-text" data-filter="General Info">
-                            <i class="fa-solid fa-bell"></i> General Info (<span class="count">0</span>)
+                            <i class="fa-solid fa-bell"></i> <span data-i18n="announcements.general_info">General Info</span> (<span class="count">0</span>)
                         </div>
                     </div>
                     <div id="announcementsContainer" class="d-flex flex-column" style="gap: 30px;">
                         <!-- Announcements will be loaded here dynamically -->
                         <div class="text-center py-5">
-                            <p>Loading announcements...</p>
+                            <p data-i18n="announcements.loading_announcements">Loading announcements...</p>
                         </div>
                     </div>
 
@@ -140,7 +140,8 @@
             }
 
             if (filtered.length === 0) {
-                container.innerHTML = '<div class="text-center py-5"><p>No announcements found</p></div>';
+                const noAnnouncementsText = window.i18nManager ? window.i18nManager.translate('announcements.no_announcements_found') : 'No announcements found';
+                container.innerHTML = `<div class="text-center py-5"><p>${noAnnouncementsText}</p></div>`;
                 return;
             }
 

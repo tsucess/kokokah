@@ -184,7 +184,8 @@
                     badgesHtml += `<span class="badge-icon" title="${badge.name}: ${badge.description}" style="font-size: 18px; margin-right: 4px; cursor: pointer;">${badgeIcon}</span>`;
                 });
             } else {
-                badgesHtml = '<span class="text-muted">No badges yet</span>';
+                const noBadgesText = window.i18nManager ? window.i18nManager.translate('leaderboard.no_badges_yet') : 'No badges yet';
+                badgesHtml = `<span class="text-muted">${noBadgesText}</span>`;
             }
 
             row.innerHTML = `
@@ -216,10 +217,15 @@
      * Get level badge based on points
      */
     function getLevelBadge(points) {
-        if (points >= 1000) return 'Expert';
-        if (points >= 500) return 'Advanced';
-        if (points >= 100) return 'Intermediate';
-        return 'Amateur';
+        const expertText = window.i18nManager ? window.i18nManager.translate('leaderboard.expert') : 'Expert';
+        const advancedText = window.i18nManager ? window.i18nManager.translate('leaderboard.advanced') : 'Advanced';
+        const intermediateText = window.i18nManager ? window.i18nManager.translate('leaderboard.intermediate') : 'Intermediate';
+        const amateurText = window.i18nManager ? window.i18nManager.translate('leaderboard.amateur') : 'Amateur';
+
+        if (points >= 1000) return expertText;
+        if (points >= 500) return advancedText;
+        if (points >= 100) return intermediateText;
+        return amateurText;
     }
 
     /**
@@ -243,10 +249,11 @@
         tableBody.innerHTML = '';
 
         if (filtered.length === 0) {
+            const noResultsText = window.i18nManager ? window.i18nManager.translate('leaderboard.no_results_found') : 'No results found for';
             tableBody.innerHTML = `
                 <tr>
                     <td colspan="6" class="text-center text-muted py-4">
-                        No results found for "${searchTerm}"
+                        ${noResultsText} "${searchTerm}"
                     </td>
                 </tr>
             `;
@@ -272,7 +279,8 @@
                     badgesHtml += `<span class="badge-icon" title="${badge.name}: ${badge.description}" style="font-size: 18px; margin-right: 4px; cursor: pointer;">${badgeIcon}</span>`;
                 });
             } else {
-                badgesHtml = '<span class="text-muted">No badges yet</span>';
+                const noBadgesText = window.i18nManager ? window.i18nManager.translate('leaderboard.no_badges_yet') : 'No badges yet';
+                badgesHtml = `<span class="text-muted">${noBadgesText}</span>`;
             }
 
             row.innerHTML = `
@@ -304,7 +312,8 @@
     function updatePaginationInfo() {
         const pageCountElement = document.getElementById('pageCount');
         if (pageCountElement) {
-            pageCountElement.textContent = `Page ${currentPage} of ${totalPages}`;
+            const pageText = window.i18nManager ? window.i18nManager.translate('leaderboard.page_of') : 'Page';
+            pageCountElement.textContent = `${pageText} ${currentPage} of ${totalPages}`;
         }
 
         const prevBtn = document.getElementById('prevBtn');
@@ -563,19 +572,19 @@
             <header class="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-items-start gap-3">
                 <div class="d-flex gap-1 align-items-center">
                     <img src="./images/leaderboard-icon.png" alt="" class="leaderboard-img">
-                    <h2 >Leaderboard</h2>
+                    <h2 data-i18n="leaderboard.leaderboard">Leaderboard</h2>
                 </div>
                 <div class="d-flex align-items-center gap-3">
                     <div class="d-flex gap-3 align-items-center">
                         <div class="d-flex align-items-center search-container shadow-sm">
                             <i class="fa-solid fa-magnifying-glass fa-2xs" style="color: #8E8D93;"></i>
-                            <input type="search" id="searchInput" placeholder="Search by name">
+                            <input type="search" id="searchInput" placeholder="Search by name" data-i18n="leaderboard.search_by_name">
                         </div>
                     </div>
                     <select id="periodSelect" class="select shadow-sm">
-                        <option value="all_time">All Time</option>
-                        <option value="this_month">This Month</option>
-                        <option value="this_year">This Year</option>
+                        <option value="all_time" data-i18n="leaderboard.all_time">All Time</option>
+                        <option value="this_month" data-i18n="leaderboard.this_month">This Month</option>
+                        <option value="this_year" data-i18n="leaderboard.this_year">This Year</option>
                     </select>
                 </div>
             </header>
@@ -626,27 +635,27 @@
             <table class="table leaderboard-table-container">
                 <thead>
                     <tr>
-                        <th scope="col">Rank</th>
-                        <th scope="col">Student Name</th>
-                        <th scope="col">Badges</th>
-                        <th scope="col">Points</th>
-                        <th scope="col">Level</th>
-                        <th scope="col">Badge</th>
+                        <th scope="col" data-i18n="leaderboard.rank">Rank</th>
+                        <th scope="col" data-i18n="leaderboard.student_name">Student Name</th>
+                        <th scope="col" data-i18n="leaderboard.badges">Badges</th>
+                        <th scope="col" data-i18n="leaderboard.points">Points</th>
+                        <th scope="col" data-i18n="leaderboard.level">Level</th>
+                        <th scope="col" data-i18n="leaderboard.badge">Badge</th>
                     </tr>
                 </thead>
                 <tbody id="leaderboardTableBody">
                     <tr>
                         <td colspan="6" class="text-center text-muted py-4">
-                            <i class="fa-solid fa-spinner fa-spin me-2"></i>Loading leaderboard...
+                            <i class="fa-solid fa-spinner fa-spin me-2"></i><span data-i18n="leaderboard.loading_leaderboard">Loading leaderboard...</span>
                         </td>
                     </tr>
                 </tbody>
             </table>
             </div>
             <div class="d-flex gap-3 align-items-center justify-content-between">
-                <button id="prevBtn" class="footer-btn">Previous</button>
+                <button id="prevBtn" class="footer-btn" data-i18n="leaderboard.previous">Previous</button>
                 <p id="pageCount" class="footer-pagecount">Page 1 of 1</p>
-                <button id="nextBtn" class="footer-btn">Next</button>
+                <button id="nextBtn" class="footer-btn" data-i18n="leaderboard.next">Next</button>
             </div>
 
         </section>

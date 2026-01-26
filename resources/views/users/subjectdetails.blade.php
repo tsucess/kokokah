@@ -201,14 +201,14 @@
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 80vw;">
                 <div class="modal-content">
                     <div class="modal-header bg-light">
-                        <h5 class="modal-title" id="fileViewerLabel">File Viewer</h5>
+                        <h5 class="modal-title" id="fileViewerLabel" data-i18n="subjectdetails.file_viewer">File Viewer</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body" id="fileViewerBody" style="max-height: 80vh; overflow-y: auto; padding: 2rem;">
                         <!-- Content will be dynamically loaded here -->
                     </div>
                     <div class="modal-footer bg-light">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="subjectdetails.close">Close</button>
                     </div>
                 </div>
             </div>
@@ -230,17 +230,17 @@
                     <div class="video-box mb-3" id="videoContainer" data-no-loader>
                         <div class="d-flex justify-content-center align-items-center"
                             style="height: 400px; background-color: #f0f0f0;">
-                            <p>Loading video...</p>
+                            <p data-i18n="subjectdetails.loading_video">Loading video...</p>
                         </div>
                     </div>
 
                     <ul class="nav nav-underline nav-fill mb-3">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#" data-tab="material">Material &
+                            <a class="nav-link active" aria-current="page" href="#" data-tab="material" data-i18n="subjectdetails.material_links">Material &
                                 Links</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" data-tab="quiz">Quiz</a>
+                            <a class="nav-link" href="#" data-tab="quiz" data-i18n="subjectdetails.quiz">Quiz</a>
                         </li>
                         {{-- <li class="nav-item">
                             <a class="nav-link" href="#" data-tab="ai-chat">Ai Chat</a>
@@ -248,13 +248,13 @@
                     </ul>
                     <div id="material" class="tab-content-section ">
                         <div class="lecture-box d-flex flex-column gap-3 mb-4">
-                            <p class="lecture-text" id="lessonContent">Loading content...</p>
+                            <p class="lecture-text" id="lessonContent" data-i18n="subjectdetails.loading_content">Loading content...</p>
                             <div id="attachmentsContainer"></div>
                         </div>
                     </div>
                     <div id="quiz" class="tab-content-section d-none">
                         <div class="quiz-box lecture-box d-flex flex-column gap-3 mb-4" id="quizContainer">
-                            <p class="text-center">Loading quizzes...</p>
+                            <p class="text-center" data-i18n="subjectdetails.loading_quizzes">Loading quizzes...</p>
                         </div>
 
                     </div>
@@ -265,7 +265,7 @@
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header bg-light d-flex align-items-center ">
-                                    <h5 class="modal-title" id="quizResultsModalLabel">📊 Quiz Results</h5>
+                                    <h5 class="modal-title" id="quizResultsModalLabel" data-i18n="subjectdetails.quiz_results">📊 Quiz Results</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
@@ -273,7 +273,7 @@
                                     <!-- Results will be populated here -->
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="subjectdetails.close">Close</button>
                                     {{-- <button type="button" class="btn btn-primary"
                                         onclick="window.retakeQuizFromModal()">Retake Quiz</button> --}}
                                 </div>
@@ -287,13 +287,13 @@
                                 <div class="d-flex gap-2 align-items-start"><i class="fa-solid fa-paperclip"
                                         style="color:#94A3B8;"></i>
                                     <textarea class="message-input flex-fill" name="" id="" cols="" rows=""
-                                        placeholder="Message to kodie..."></textarea>
+                                        placeholder="Message to kodie..." data-i18n-placeholder="subjectdetails.message_placeholder"></textarea>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-3 justify-content-end mt-auto">
                                     <div class="emoji d-flex justify-content-center align-items-center"><i
                                             class="fa-solid fa-face-smile"></i></div>
-                                    <button class="send-message-btn">Send</button>
+                                    <button class="send-message-btn" data-i18n="subjectdetails.send">Send</button>
                                 </div>
 
                             </div>
@@ -301,10 +301,10 @@
 
                     </div>
                     <div class="d-flex align-items-center gap-2 justify-content-between">
-                        <button class="nav-btn" id="prevBtn" onclick="navigateToPreviousLesson()">Previous</button>
-                        <button class="mark-complete-btn" id="markCompleteBtn" onclick="markLessonComplete()">Mark
+                        <button class="nav-btn" id="prevBtn" onclick="navigateToPreviousLesson()" data-i18n="subjectdetails.previous">Previous</button>
+                        <button class="mark-complete-btn" id="markCompleteBtn" onclick="markLessonComplete()" data-i18n="subjectdetails.mark_complete">Mark
                             Complete</button>
-                        <button class="nav-btn" id="nextBtn" onclick="navigateToNextLesson()">Next</button>
+                        <button class="nav-btn" id="nextBtn" onclick="navigateToNextLesson()" data-i18n="subjectdetails.next">Next</button>
                     </div>
 
                 </div>

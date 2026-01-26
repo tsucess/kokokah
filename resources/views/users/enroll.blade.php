@@ -970,14 +970,14 @@
                     </button>
                     <h1 id="levelTitle">Level Title</h1>
                 </div>
-                <button class = "enroll-btn" type = "button" id="enrollAllBtn">Subscribe to All Subjects</button>
+                <button class = "enroll-btn" type = "button" id="enrollAllBtn" data-i18n="enroll.subscribe_all_subjects">Subscribe to All Subjects</button>
             </div>
             <section class="d-flex flex-column gap-4">
                 <div class="d-flex flex-column flex-md-row  align-items-md-center gap-3">
                     <select name="plan" id="planSelector" class="custom-select-plan">
-                        <option value="">Loading plans...</option>
+                        <option value="" data-i18n="enroll.loading_plans">Loading plans...</option>
                     </select>
-                    <p id="planPriceInfo">Select a plan to see pricing</p>
+                    <p id="planPriceInfo" data-i18n="enroll.select_plan_pricing">Select a plan to see pricing</p>
                 </div>
                 <div id="planSelectionNotification" class="plan-notification" style="display: none;">
                     <!-- Notification will be shown here -->
@@ -1022,7 +1022,7 @@
 
             <!-- Footer with proceed button -->
             <div style=" display: flex; justify-content:center;">
-                <button id="proceedBtn" class="proceed-payment-btn">
+                <button id="proceedBtn" class="proceed-payment-btn" data-i18n="enroll.proceed_payment">
                     Proceed to Payment
                 </button>
             </div>
@@ -1031,7 +1031,7 @@
             <div id="paymentGatewayModal" class="payment-modal-overlay" style="display: none;">
                 <div class="payment-modal">
                     <div class="payment-modal-header">
-                        <h2>Select Payment Method</h2>
+                        <h2 data-i18n="enroll.select_payment_method">Select Payment Method</h2>
                         <button type="button" class="payment-modal-close" id="closePaymentModal">
                             <i class="fas fa-times"></i>
                         </button>
@@ -1098,8 +1098,8 @@
                     </div>
 
                     <div class="payment-modal-footer">
-                        <button type="button" class="payment-modal-cancel" id="cancelPaymentModal">Cancel</button>
-                        <button type="button" class="payment-modal-confirm" id="confirmPaymentModal">Proceed with
+                        <button type="button" class="payment-modal-cancel" id="cancelPaymentModal" data-i18n="enroll.cancel">Cancel</button>
+                        <button type="button" class="payment-modal-confirm" id="confirmPaymentModal" data-i18n="enroll.proceed_payment">Proceed with
                             Payment</button>
                     </div>
                 </div>
@@ -1110,7 +1110,7 @@
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="subscribeAllModalLabel">Subscribe to All Subjects</h5>
+                            <h5 class="modal-title" id="subscribeAllModalLabel" data-i18n="enroll.subscribe_all_subjects">Subscribe to All Subjects</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -1119,8 +1119,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-primary enroll-btn" id="proceedToPaymentBtn">Proceed to Payment</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="enroll.cancel">Cancel</button>
+                            <button type="button" class="btn btn-primary enroll-btn" id="proceedToPaymentBtn" data-i18n="enroll.proceed_payment">Proceed to Payment</button>
                         </div>
                     </div>
                 </div>
@@ -1131,7 +1131,7 @@
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="paymentConfirmationModalLabel">Confirm Payment</h5>
+                            <h5 class="modal-title" id="paymentConfirmationModalLabel" data-i18n="enroll.confirm_payment">Confirm Payment</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -1140,8 +1140,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-primary enroll-btn" id="confirmPaymentBtn">Proceed to Payment Gateway</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="enroll.cancel">Cancel</button>
+                            <button type="button" class="btn btn-primary enroll-btn" id="confirmPaymentBtn" data-i18n="enroll.proceed_gateway">Proceed to Payment Gateway</button>
                         </div>
                     </div>
                 </div>
@@ -1152,17 +1152,17 @@
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="planSelectionWarningModalLabel">Select a Plan</h5>
+                            <h5 class="modal-title" id="planSelectionWarningModalLabel" data-i18n="enroll.select_plan">Select a Plan</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="warning-content">
                                 <div class="warning-icon">⚠️</div>
-                                <p class="warning-message">Please select a subscription plan first before proceeding.</p>
+                                <p class="warning-message" data-i18n="enroll.select_plan_warning">Please select a subscription plan first before proceeding.</p>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-i18n="enroll.ok">OK</button>
                         </div>
                     </div>
                 </div>
@@ -1173,17 +1173,17 @@
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="subjectSelectionWarningModalLabel">Select Subjects</h5>
+                            <h5 class="modal-title" id="subjectSelectionWarningModalLabel" data-i18n="enroll.select_subjects">Select Subjects</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="warning-content">
                                 <div class="warning-icon">📚</div>
-                                <p class="warning-message">Please select at least one subject to proceed.</p>
+                                <p class="warning-message" data-i18n="enroll.select_subjects_warning">Please select at least one subject to proceed.</p>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-i18n="enroll.ok">OK</button>
                         </div>
                     </div>
                 </div>

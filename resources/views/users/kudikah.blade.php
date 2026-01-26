@@ -596,7 +596,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header d-flex justify-content-between align-items-center">
-                        <h1 class="modal-title" id="cardModalTitle">Add New Card</h1>
+                        <h1 class="modal-title" id="cardModalTitle" data-i18n="wallet.add_new_card">Add New Card</h1>
                         <button type="button" class="modal-header-btn" data-bs-dismiss="modal" aria-label="Close">
                             <i class="fa-regular fa-circle-xmark"></i>
                         </button>
@@ -604,13 +604,13 @@
                     <form class="modal-form-container" id="cardForm">
                         <div class="modal-form">
                             <div class="modal-form-input-border">
-                                <label for="modalCardHolderName" class="modal-label">Enter Card holder Name</label>
+                                <label for="modalCardHolderName" class="modal-label" data-i18n="wallet.enter_card_holder_name">Enter Card holder Name</label>
                                 <input class="modal-input" type="text" id="modalCardHolderName"
                                     placeholder="Jane Appleseed" required />
                                 <small class="text-danger d-none" id="cardHolderNameError"></small>
                             </div>
                             <div class="modal-form-input-border">
-                                <label for="modalCardNumber" class="modal-label">Card Number</label>
+                                <label for="modalCardNumber" class="modal-label" data-i18n="wallet.card_number">Card Number</label>
                                 <div class="d-flex gap-2 justify-content-between align-items-center">
                                     <input class="modal-input" type="text" id="modalCardNumber"
                                         placeholder="**** **** **** ****" inputmode="numeric" required />
@@ -621,7 +621,7 @@
                                 <small class="text-danger d-none" id="cardNumberError"></small>
                             </div>
                             <div class="modal-form-input-border">
-                                <label for="modalExpiryDate" class="modal-label">Expiry Date</label>
+                                <label for="modalExpiryDate" class="modal-label" data-i18n="wallet.expiry_date">Expiry Date</label>
                                 <div class="d-flex gap-2 justify-content-between align-items-center">
                                     <input class="modal-input" type="text" id="modalExpiryDate" placeholder="MM/YY"
                                         inputmode="numeric" required />
@@ -632,7 +632,7 @@
                                 <small class="text-danger d-none" id="expiryDateError"></small>
                             </div>
                             <div class="modal-form-input-border">
-                                <label for="modalCvv" class="modal-label">CVV</label>
+                                <label for="modalCvv" class="modal-label" data-i18n="wallet.cvv">CVV</label>
                                 <div class="d-flex gap-2 justify-content-between align-items-center">
                                     <input class="modal-input" type="password" id="modalCvv" placeholder="123"
                                         inputmode="numeric" maxlength="3" required />
@@ -644,13 +644,13 @@
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="modalIsDefault" checked>
-                                <label class="form-check-label secure-label" for="modalIsDefault">
+                                <label class="form-check-label secure-label" for="modalIsDefault" data-i18n="wallet.set_as_default_card">
                                     Set as default card. <a href='#' class="fw-bold">Why is it important?</a>
                                 </label>
                             </div>
                         </div>
                         <div class="d-flex gap-2">
-                            <button type="submit" class="btn primaryBtn" id="cardSubmitBtn">Save New Card</button>
+                            <button type="submit" class="btn primaryBtn" id="cardSubmitBtn" data-i18n="wallet.save_new_card">Save New Card</button>
                         </div>
                     </form>
                 </div>
@@ -665,18 +665,18 @@
                     <div class="d-flex flex-column gap-4 align-items-center mb-5">
                         <img src="images/trash-bin-outline.png" alt="trash-bin-icon" />
                         <div class="d-flex flex-column gap-3 align-items-center">
-                            <h2 class="delete-title text-center">Delete Existing Card</h2>
-                            <p class="text-center delete-text">Your existing card will be permanently deleted from our
+                            <h2 class="delete-title text-center" data-i18n="wallet.delete_existing_card">Delete Existing Card</h2>
+                            <p class="text-center delete-text" data-i18n="wallet.card_delete_warning">Your existing card will be permanently deleted from our
                                 system</p>
                         </div>
                     </div>
 
                     <div class="d-flex gap-5 justify-content-between align-items-center">
                         <button type="button" class="delete-cancel-btn w-100" data-bs-dismiss="modal"
-                            aria-label="Close">
+                            aria-label="Close" data-i18n="wallet.cancel">
                             Cancel
                         </button>
-                        <button type="button" class="delete-delete-btn w-100" id="confirmDeleteCardBtn">Delete</button>
+                        <button type="button" class="delete-delete-btn w-100" id="confirmDeleteCardBtn" data-i18n="wallet.delete">Delete</button>
                     </div>
 
                 </div>
@@ -688,7 +688,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header d-flex justify-content-between align-items-center">
-                        <h1 class="modal-title">Transfer Money</h1>
+                        <h1 class="modal-title" data-i18n="wallet.transfer_money">Transfer Money</h1>
                         <button type="button" class="modal-header-btn" data-bs-dismiss="modal" aria-label="Close">
                             <i class="fa-regular fa-circle-xmark"></i>
                         </button>
@@ -696,7 +696,7 @@
                     <form class="modal-form-container" id="transferForm">
                         <div class="modal-form">
                             <div class="modal-form-input-border">
-                                <label for="recipientEmail" class="modal-label">Recipient Email</label>
+                                <label for="recipientEmail" class="modal-label" data-i18n="wallet.recipient_email">Recipient Email</label>
                                 <div class="d-flex flex-column flex-md-row align-items-md-start justify-content-between gap-1 align-items-center w-100">
                                     <input class="modal-input" type="email" id="recipientEmail"
                                     placeholder="recipient@example.com" required />
@@ -732,8 +732,8 @@
         <!-- Page Loader -->
         <div id="pageLoader" class="page-loader">
             <div class="loader-spinner"></div>
-            <div class="loader-text">Processing Payment</div>
-            <div class="loader-subtext">Please wait while we redirect you to the payment gateway...</div>
+            <div class="loader-text" data-i18n="wallet.processing_payment">Processing Payment</div>
+            <div class="loader-subtext" data-i18n="wallet.payment_redirect_message">Please wait while we redirect you to the payment gateway...</div>
         </div>
 
         <section class="container-fluid px-3 py-4 px-lg-4">
@@ -744,7 +744,7 @@
 
                     <div class="balance-header d-flex flex-column ">
                         <div>
-                            <small class="opacity-75 balance-header-title">Total Balance</small>
+                            <small class="opacity-75 balance-header-title" data-i18n="wallet.total_balance">Total Balance</small>
                             <i class="fa-regular fa-eye" style="color:#fff; cursor: pointer;" id="toggleBalance"></i>
                         </div>
                         <h1 class="main-balance-text mb-4" id="walletBalance">₦0.00</h1>
@@ -760,27 +760,27 @@
                             <div class="icon-container"><i class="fa-solid fa-money-bill fa-xs"
                                     style="color: #004A53;"></i>
                             </div>
-                            <p class="call-action-text">Deposit Money</p>
+                            <p class="call-action-text" data-i18n="wallet.deposit_money">Deposit Money</p>
                         </button>
                         <button id="transferMoneyBtn"
                             class="call-to-action-container d-flex flex-column gap-2 align-items-center">
                             <div class="icon-container"><i class="fa-solid fa-money-bill-transfer fa-xs"
                                     style="color: #004A53;"></i></div>
-                            <p class="call-action-text">Transfer Money</p>
+                            <p class="call-action-text" data-i18n="wallet.transfer_money">Transfer Money</p>
                         </button>
                         <button type="button" id="convertPointsOpenBtn"
                             class="call-to-action-container d-flex flex-column gap-2 align-items-center"
                             style="cursor: pointer;">
                             <div class="icon-container"><i class="fa-solid fa-star fa-xs"
                                     style="color: #004A53;"></i></div>
-                            <p class="call-action-text">Convert Points</p>
+                            <p class="call-action-text" data-i18n="wallet.convert_points">Convert Points</p>
                         </button>
                         <button id="enrollSubjectBtn"
                             class="call-to-action-container d-flex flex-column gap-2 align-items-center ">
                             <div class="icon-container"><i class="fa-solid fa-clipboard-list fa-xs"
                                     style="color: #004A53;"></i>
                             </div>
-                            <p class="call-action-text">Enroll Subject</p>
+                            <p class="call-action-text" data-i18n="wallet.enroll_subject">Enroll Subject</p>
                         </button>
 
                     </div>
@@ -812,19 +812,19 @@
                                 <div class="icon-container"><i class="fa-solid fa-plus fa-xs"
                                         style="color: #004A53;"></i>
                                 </div>
-                                <p class="call-action-text">Add Card</p>
+                                <p class="call-action-text" data-i18n="wallet.add_card">Add Card</p>
                             </button>
                             <button id="editCardBtn"
                                 class="call-to-action-container d-flex flex-column gap-2 align-items-center ">
                                 <div class="icon-container"><i class="fa-solid fa-pen-to-square fa-xs"
                                         style="color: #004A53;"></i></div>
-                                <p class="call-action-text">Edit Card</p>
+                                <p class="call-action-text" data-i18n="wallet.edit_card">Edit Card</p>
                             </button>
                             <button id="deleteCardBtn" data-bs-toggle="modal" data-bs-target="#deleteCard"
                                 class="call-to-action-container d-flex flex-column gap-2 align-items-center ">
                                 <div class="icon-container" style="background-color: #FFE6E6;"><i
                                         class="fa-solid fa-xmark fa-xs" style="color: #FF383C;"></i></div>
-                                <p class="call-action-text">Delete Card</p>
+                                <p class="call-action-text" data-i18n="wallet.delete_card">Delete Card</p>
                             </button>
 
                         </div>
@@ -887,39 +887,39 @@
                 <div class="bg-white rounded-3 shadow-sm">
                     <div
                         class="d-flex flex-column flex-md-row gap-3 align-items-start align-items-md-center justify-content-between p-3">
-                        <h5 class="fw-bold">Transaction History</h5>
+                        <h5 class="fw-bold" data-i18n="wallet.transaction_history">Transaction History</h5>
 
                         <div class="d-flex gap-2">
                             <div class="dropdown">
                                 <button class="btn filter-btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false" id="categoryFilter">
+                                    aria-expanded="false" id="categoryFilter" data-i18n="wallet.all_categories">
                                     All Categories
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li><button class="dropdown-item" type="button"
-                                            onclick="filterTransactions('all')">All</button></li>
+                                            onclick="filterTransactions('all')" data-i18n="wallet.all">All</button></li>
                                     <li><button class="dropdown-item" type="button"
-                                            onclick="filterTransactions('transfer')">Transfers</button></li>
+                                            onclick="filterTransactions('transfer')" data-i18n="wallet.transfers">Transfers</button></li>
                                     <li><button class="dropdown-item" type="button"
-                                            onclick="filterTransactions('deposit')">Deposits</button></li>
+                                            onclick="filterTransactions('deposit')" data-i18n="wallet.deposits">Deposits</button></li>
                                     <li><button class="dropdown-item" type="button"
-                                            onclick="filterTransactions('purchase')">Purchases</button></li>
+                                            onclick="filterTransactions('purchase')" data-i18n="wallet.purchases">Purchases</button></li>
                                 </ul>
                             </div>
                             <div class="dropdown">
                                 <button class="btn filter-btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false" id="statusFilter">
+                                    aria-expanded="false" id="statusFilter" data-i18n="wallet.all_status">
                                     All Status
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li><button class="dropdown-item" type="button"
-                                            onclick="filterTransactions('all', 'all')">All</button></li>
+                                            onclick="filterTransactions('all', 'all')" data-i18n="wallet.all">All</button></li>
                                     <li><button class="dropdown-item" type="button"
-                                            onclick="filterTransactions('all', 'completed')">Completed</button></li>
+                                            onclick="filterTransactions('all', 'completed')" data-i18n="wallet.completed">Completed</button></li>
                                     <li><button class="dropdown-item" type="button"
-                                            onclick="filterTransactions('all', 'pending')">Pending</button></li>
+                                            onclick="filterTransactions('all', 'pending')" data-i18n="wallet.pending">Pending</button></li>
                                     <li><button class="dropdown-item" type="button"
-                                            onclick="filterTransactions('all', 'failed')">Failed</button></li>
+                                            onclick="filterTransactions('all', 'failed')" data-i18n="wallet.failed">Failed</button></li>
                                 </ul>
                             </div>
                         </div>
@@ -927,7 +927,7 @@
 
                     <div class="transaction-list p-3" id="transactionList">
                         <div style="text-align: center; padding: 40px;">
-                            <p style="color: #004A53; font-weight: 500;">Loading transactions...</p>
+                            <p style="color: #004A53; font-weight: 500;" data-i18n="wallet.loading_transactions">Loading transactions...</p>
                         </div>
                     </div>
                 </div>
@@ -940,8 +940,8 @@
             <div class="payment-method-content">
                 <header class="d-flex align-items-start justify-content-between gap-2">
                     <div class="d-flex flex-column gap-2">
-                        <h2 class="payment-method-header">Deposit Money to Wallet</h2>
-                <p class="payment-method-subtitle">Enter the amount you want to add</p>
+                        <h2 class="payment-method-header" data-i18n="wallet.deposit_money_to_wallet">Deposit Money to Wallet</h2>
+                <p class="payment-method-subtitle" data-i18n="wallet.enter_amount_to_add">Enter the amount you want to add</p>
                     </div>
                     <button  onclick="closeAmountModal()"><i class="fa-regular fa-circle-xmark"></i></button>
                 </header>

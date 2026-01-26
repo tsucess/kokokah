@@ -203,13 +203,13 @@
 
     <main>
         <section class="container-fluid header-section d-flex align-items-center">
-            <h2 class="text-center">Result & Score</h2>
+            <h2 class="text-center" data-i18n="results.results_and_scoring">Result & Score</h2>
             <img src="{{ asset('images/result-score-img.png') }}" alt="Result Score" class="banner-img" />
         </section>
 
         <!-- Loading State -->
         <div id="loadingState" class="loading-spinner">
-            <p style="text-align: center; padding: 40px; color: #004A53; font-weight: 500;">Loading results...</p>
+            <p style="text-align: center; padding: 40px; color: #004A53; font-weight: 500;" data-i18n="results.loading_results">Loading results...</p>
         </div>
 
         <!-- Error State -->
@@ -227,7 +227,7 @@
                     </div>
                     <div class="d-flex flex-column">
                         <p class="result-point-title"><span id="scorePoints">0</span>/<span id="maxPoints">0</span></p>
-                        <span style="color: #1C1D1D; font-size: 16px;">Points</span>
+                        <span style="color: #1C1D1D; font-size: 16px;" data-i18n="results.points">Points</span>
                         <div id="passStatus"></div>
                         <p class="attempt-info" id="attemptInfo"></p>
                     </div>
@@ -303,19 +303,23 @@
                             if (quizResults.length > 0) {
                                 displayResults(quizResults);
                             } else {
-                                showError('No quiz results found. Please complete some quizzes first.');
+                                const noResultsMsg = window.i18nManager ? window.i18nManager.translate('results.no_quiz_results') : 'No quiz results found. Please complete some quizzes first.';
+                                showError(noResultsMsg);
                             }
                         } else {
-                            showError('Failed to load quiz results');
+                            const failedMsg = window.i18nManager ? window.i18nManager.translate('results.failed_to_load') : 'Failed to load quiz results';
+                            showError(failedMsg);
                         }
                     } catch (error) {
                         console.error('Error loading quiz results:', error);
-                        showError('Error loading quiz results. Please try again.');
+                        const errorMsg = window.i18nManager ? window.i18nManager.translate('results.error_loading') : 'Error loading quiz results. Please try again.';
+                        showError(errorMsg);
                     }
                 }
             } catch (error) {
                 console.error('Error loading quiz results:', error);
-                showError('Error loading quiz results. Please try again.');
+                const errorMsg = window.i18nManager ? window.i18nManager.translate('results.error_loading') : 'Error loading quiz results. Please try again.';
+                showError(errorMsg);
             }
         }
 
@@ -347,7 +351,8 @@
             const overallPercentage = totalMaxScore > 0 ? (totalScore / totalMaxScore) * 100 : 0;
 
             // Update overall score display
-            document.getElementById('quizTitle').textContent = 'Overall Quiz Results';
+            const overallTitle = window.i18nManager ? window.i18nManager.translate('results.overall_quiz_results') : 'Overall Quiz Results';
+            document.getElementById('quizTitle').textContent = overallTitle;
             document.getElementById('percentageScore').textContent = `${Math.round(overallPercentage)}%`;
             document.getElementById('scorePoints').textContent = Math.round(totalScore);
             document.getElementById('maxPoints').textContent = Math.round(totalMaxScore);
@@ -355,14 +360,18 @@
             // Update pass status
             const passStatus = document.getElementById('passStatus');
             if (overallPercentage >= 70) {
-                passStatus.innerHTML = '<div class="success-badge">✓ Overall Passed</div>';
+                const passedText = window.i18nManager ? window.i18nManager.translate('results.overall_passed') : 'Overall Passed';
+                passStatus.innerHTML = `<div class="success-badge">✓ ${passedText}</div>`;
             } else {
-                passStatus.innerHTML = '<div class="failed-badge">✗ Needs Improvement</div>';
+                const needsImprovementText = window.i18nManager ? window.i18nManager.translate('results.needs_improvement') : 'Needs Improvement';
+                passStatus.innerHTML = `<div class="failed-badge">✗ ${needsImprovementText}</div>`;
             }
 
             // Update attempt info
             const attemptInfo = document.getElementById('attemptInfo');
-            attemptInfo.textContent = `${totalCourses} Course${totalCourses !== 1 ? 's' : ''} • ${passedCourses} Passed`;
+            const courseText = window.i18nManager ? window.i18nManager.translate('results.course') : 'Course';
+            const passedText = window.i18nManager ? window.i18nManager.translate('results.passed') : 'Passed';
+            attemptInfo.textContent = `${totalCourses} ${courseText}${totalCourses !== 1 ? 's' : ''} • ${passedCourses} ${passedText}`;
 
             // Display individual course results
             displayIndividualCourseResults(courseResultsArray);
@@ -389,25 +398,32 @@
                 const courseTitle = course ? course.title : 'Unknown Course';
                 const quizCount = quizzes ? quizzes.length : 0;
 
+                // Get translations
+                const passedText = window.i18nManager ? window.i18nManager.translate('results.passed') : 'Passed';
+                const failedText = window.i18nManager ? window.i18nManager.translate('results.failed') : 'Failed';
+                const quizText = window.i18nManager ? window.i18nManager.translate('results.quiz') : 'Quiz';
+                const totalScoreText = window.i18nManager ? window.i18nManager.translate('results.total_score') : 'Total Score';
+                const percentageText = window.i18nManager ? window.i18nManager.translate('results.percentage') : 'Percentage';
+
                 courseDiv.innerHTML = `
                     <div class="d-flex flex-column gap-1 mb-2">
                         <div class="d-flex align-items-center justify-content-between">
                             <h3 class="result-items-text mb-0">${courseTitle}</h3>
                             <span class="badge ${passed ? 'bg-success' : 'bg-danger'}">
-                                ${passed ? '✓ Passed' : '✗ Failed'}
+                                ${passed ? '✓ ' + passedText : '✗ ' + failedText}
                             </span>
                         </div>
-                        <small class="">${quizCount} Quiz${quizCount !== 1 ? 'zes' : ''}</small>
+                        <small class="">${quizCount} ${quizText}${quizCount !== 1 ? 'zes' : ''}</small>
                     </div>
                     <div class="d-flex align-items-center justify-content-between">
-                        <span class='span'>Total Score</span>
+                        <span class='span'>${totalScoreText}</span>
                         <p class="result-items-text">${total_points_earned}/${total_points_possible}</p>
                     </div>
                     <div class="result-progress-bar">
                         <span class="result-progress-bar-track" style="width: ${percentage}%"></span>
                     </div>
                     <div class="d-flex align-items-center justify-content-between">
-                        <span class='span'>Percentage</span>
+                        <span class='span'>${percentageText}</span>
                         <p class="result-items-text">${Math.round(percentage)}%</p>
                     </div>
                 `;

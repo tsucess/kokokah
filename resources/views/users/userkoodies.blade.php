@@ -92,8 +92,8 @@
             <div class="row g-4 ">
                 <div class="ai-center-container col-12 col-lg-8">
 
-                    <h1 class="fw-bold mb-3" style="color: var(--bs-dark-teal);">What can I help with?</h1>
-                    <p class="text-muted mb-5">
+                    <h1 class="fw-bold mb-3" style="color: var(--bs-dark-teal);" data-i18n="koodies.help_title">What can I help with?</h1>
+                    <p class="text-muted mb-5" data-i18n="koodies.help_description">
                         Here to help with your overall academic questions, ranging from English, Mathematic and Physic<br>
                         What's on your mind today?
                     </p>
@@ -103,7 +103,7 @@
                         <div class="col-12 col-md-4">
                             <div class="suggestion-card">
                                 <div class="suggestion-icon-container"><i class="fa-solid fa-file-lines"></i></div>
-                                <p class="small fw-bold mb-0" style="color: var(--bs-dark-teal);">Give me a concise summary
+                                <p class="small fw-bold mb-0" style="color: var(--bs-dark-teal);" data-i18n="koodies.suggestion_summary">Give me a concise summary
                                     of this meeting transcript</p>
                             </div>
                         </div>
@@ -111,7 +111,7 @@
                         <div class="col-12 col-md-4">
                             <div class="suggestion-card">
                                 <div class="suggestion-icon-container"><i class="fa-solid fa-pen-to-square"></i></div>
-                                <p class="small fw-bold mb-0" style="color: var(--bs-dark-teal);">Write a product
+                                <p class="small fw-bold mb-0" style="color: var(--bs-dark-teal);" data-i18n="koodies.suggestion_product">Write a product
                                     description for a miniature smartwatch</p>
                             </div>
                         </div>
@@ -121,7 +121,7 @@
                                 <div class="suggestion-icon-container"
                                     style="background-color: var(--bs-main-green); color: white;"><i
                                         class="fa-solid fa-star"></i></div>
-                                <p class="small fw-bold mb-0" style="color: var(--bs-dark-teal);">Provide a polite response
+                                <p class="small fw-bold mb-0" style="color: var(--bs-dark-teal);" data-i18n="koodies.suggestion_refund">Provide a polite response
                                     to a customer asking for a refund</p>
                             </div>
                         </div>
@@ -130,11 +130,11 @@
                     <div class="d-flex align-items-center justify-content-center">
                         <div class="chat-input-box flex-grow-1 d-flex align-items-center">
                             <input type="text" class="form-control border-0 shadow-none"
-                                placeholder="Message to koodie...">
+                                placeholder="Message to koodie..." data-i18n-placeholder="koodies.message_placeholder">
                             <i class="fa-solid fa-microphone me-3 text-muted"></i>
                             <i class="fa-regular fa-face-smile me-3 text-muted"></i>
                         </div>
-                        <button class="btn btn-send d-flex align-items-center">
+                        <button class="btn btn-send d-flex align-items-center" data-i18n="koodies.send_button">
                             Send <i class="fa-solid fa-chevron-right ms-2 small"></i>
                         </button>
                     </div>
@@ -143,18 +143,18 @@
                 </div>
 
                 <div class="history-panel col-12 col-lg-4 ">
-                    <h6 class="fw-bold" style="color: var(--bs-dark-teal);">History</h6>
+                    <h6 class="fw-bold" style="color: var(--bs-dark-teal);" data-i18n="koodies.history_title">History</h6>
                     <div class="py-2 small border-bottom">
-                        <p class="mb-0 fw-bold">Summarized meeting transcript</p>
-                        <span class="text-muted">5 minutes ago</span>
+                        <p class="mb-0 fw-bold" data-i18n="koodies.history_item_1">Summarized meeting transcript</p>
+                        <span class="text-muted" data-i18n="koodies.history_time_1">5 minutes ago</span>
                     </div>
                     <div class="py-2 small border-bottom">
-                        <p class="mb-0 fw-bold">Drafted product description</p>
-                        <span class="text-muted">1 hour ago</span>
+                        <p class="mb-0 fw-bold" data-i18n="koodies.history_item_2">Drafted product description</p>
+                        <span class="text-muted" data-i18n="koodies.history_time_2">1 hour ago</span>
                     </div>
                     <div class="py-2 small border-bottom">
-                        <p class="mb-0 fw-bold">Wrote refund response</p>
-                        <span class="text-muted">2 hours ago</span>
+                        <p class="mb-0 fw-bold" data-i18n="koodies.history_item_3">Wrote refund response</p>
+                        <span class="text-muted" data-i18n="koodies.history_time_3">2 hours ago</span>
                     </div>
                 </div>
             </div>
