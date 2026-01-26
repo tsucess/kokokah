@@ -47,6 +47,46 @@ return [
         'deleted_success' => 'Ịhichapụ ọkwa nke ọma',
     ],
 
+    // Toast Messages
+    'toast' => [
+        'success' => 'Ịga nke ọma',
+        'error' => 'Mmebi',
+        'warning' => 'Ịdọ aka n\'ihu',
+        'info' => 'Ozi',
+    ],
+
+    // Subject Details Messages
+    'subject_details' => [
+        'no_lessons_found' => 'Achọtaghị ihe mmụta maka isiokwu a',
+        'no_topic_id' => 'Enweghị ID isiokwu',
+        'error_loading_lessons' => 'Mmebi na ịkwụ ihe mmụta',
+        'please_answer_all' => 'Biko zaa ajụjụ niile tupu izipu',
+        'quiz_submitted_success' => 'Izipu ajụjụ nke ọma!',
+        'quiz_submission_failed' => 'Izipu ajụjụ daalụ',
+        'error_submitting_quiz' => 'Mmebi na izipu ajụjụ',
+        'no_quizzes_found' => 'Achọtaghị ajụjụ',
+        'all_quizzes_submitted' => 'Izipu ajụjụ {count} niile nke ọma!',
+        'quizzes_partial_success' => 'Izipu ajụjụ {success} nke ọma, mana {failure} daalụ',
+        'quizzes_submission_failed' => 'Izipu ajụjụ daalụ',
+        'error_submitting_quizzes' => 'Mmebi na izipu ajụjụ',
+        'max_attempts_reached' => 'I rutere oke nnwale ({max})',
+        'quiz_reloaded' => 'Ajụjụ agbakwunyere. Nnwale {current} nke {max}',
+        'error_reloading_quiz' => 'Mmebi na ịkwụ ajụjụ',
+        'lesson_not_selected' => 'Enweghị ihe mmụta a họpụtara',
+        'lesson_data_not_loaded' => 'Ụdị ihe mmụta enweghị ịkwụ',
+        'lesson_marked_complete' => 'Akara ihe mmụta dị ka emechara!',
+        'error_marking_complete' => 'Mmebi na ịkara ihe mmụta dị ka emechara',
+        'error_loading_previous' => 'Mmebi na ịkwụ ihe mmụta gara aga',
+        'error_loading_next' => 'Mmebi na ịkwụ ihe mmụta na-abịa',
+        'no_quiz_results' => 'Achọtaghị nsonaazụ ajụjụ. Biko zipu ajụjụ niile tupu.',
+        'modal_not_found' => 'Mmebi: Achọtaghị ahụ modal',
+        'error_displaying_modal' => 'Mmebi na igosi modal',
+        'error_displaying_results' => 'Mmebi na igosi nsonaazụ ajụjụ',
+        'no_quizzes_to_retake' => 'Enweghị ajụjụ iji nwale ọzọ',
+        'quizzes_reloaded' => 'Ajụjụ agbakwunyere. Ị nwere ike ịnwale ha ọzọ!',
+        'error_reloading_quizzes' => 'Mmebi na ịkwụ ajụjụ',
+    ],
+
     // Errors
     'errors' => [
         'unauthorized' => 'Enweghị ikike',
@@ -132,6 +172,7 @@ return [
         'reset' => 'Megharia',
         'cancel' => 'Kagbuo',
         'crop_and_save' => 'Gbutu & Zọọ',
+        'settings_saved_success' => 'Echekwara ntọala nke ọma!',
     ],
 
     // Announcements

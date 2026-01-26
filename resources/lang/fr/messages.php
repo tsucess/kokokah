@@ -47,6 +47,46 @@ return [
         'deleted_success' => 'Notification supprimée avec succès',
     ],
 
+    // Toast Messages
+    'toast' => [
+        'success' => 'Succès',
+        'error' => 'Erreur',
+        'warning' => 'Avertissement',
+        'info' => 'Information',
+    ],
+
+    // Subject Details Messages
+    'subject_details' => [
+        'no_lessons_found' => 'Aucune leçon trouvée pour ce sujet',
+        'no_topic_id' => 'Aucun ID de sujet fourni',
+        'error_loading_lessons' => 'Erreur lors du chargement des leçons',
+        'please_answer_all' => 'Veuillez répondre à toutes les questions avant de soumettre',
+        'quiz_submitted_success' => 'Quiz soumis avec succès!',
+        'quiz_submission_failed' => 'Échec de la soumission du quiz',
+        'error_submitting_quiz' => 'Erreur lors de la soumission du quiz',
+        'no_quizzes_found' => 'Aucun quiz trouvé',
+        'all_quizzes_submitted' => 'Tous les {count} quiz soumis avec succès!',
+        'quizzes_partial_success' => '{success} quiz soumis avec succès, mais {failure} ont échoué',
+        'quizzes_submission_failed' => 'Échec de la soumission des quiz',
+        'error_submitting_quizzes' => 'Erreur lors de la soumission des quiz',
+        'max_attempts_reached' => 'Vous avez atteint le nombre maximum de tentatives ({max})',
+        'quiz_reloaded' => 'Quiz rechargé. Tentative {current} sur {max}',
+        'error_reloading_quiz' => 'Erreur lors du rechargement du quiz',
+        'lesson_not_selected' => 'Aucune leçon sélectionnée',
+        'lesson_data_not_loaded' => 'Les données de la leçon ne sont pas chargées',
+        'lesson_marked_complete' => 'Leçon marquée comme complète!',
+        'error_marking_complete' => 'Erreur lors du marquage de la leçon comme complète',
+        'error_loading_previous' => 'Erreur lors du chargement de la leçon précédente',
+        'error_loading_next' => 'Erreur lors du chargement de la leçon suivante',
+        'no_quiz_results' => 'Aucun résultat de quiz trouvé. Veuillez soumettre tous les quiz d\'abord.',
+        'modal_not_found' => 'Erreur: Corps de la fenêtre modale non trouvé',
+        'error_displaying_modal' => 'Erreur lors de l\'affichage de la fenêtre modale',
+        'error_displaying_results' => 'Erreur lors de l\'affichage des résultats du quiz',
+        'no_quizzes_to_retake' => 'Aucun quiz à reprendre',
+        'quizzes_reloaded' => 'Quiz rechargés. Vous pouvez maintenant les reprendre!',
+        'error_reloading_quizzes' => 'Erreur lors du rechargement des quiz',
+    ],
+
     // Errors
     'errors' => [
         'unauthorized' => 'Accès non autorisé',
@@ -132,6 +172,7 @@ return [
         'reset' => 'Réinitialiser',
         'cancel' => 'Annuler',
         'crop_and_save' => 'Recadrer et enregistrer',
+        'settings_saved_success' => 'Paramètres enregistrés avec succès!',
     ],
 
     // Announcements

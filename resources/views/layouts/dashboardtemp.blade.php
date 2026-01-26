@@ -81,7 +81,7 @@
 
         <div class="sidebar-footer mt-auto p-3">
             <!-- Settings link (Superadmin only - rendered by sidebarManager.js) -->
-            <a class="nav-item-link" href="#" id="settingsLink" style="display: none;"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
+            {{-- <a class="nav-item-link" href="#" id="settingsLink" style="display: none;"><i class="fa-solid fa-gear pe-3"></i> Settings</a> --}}
 
             <div class="profile mt-3 d-flex align-items-center" id="profileSection">
                 <img class="avatar" id="profileImage" src="{{ asset('images/default-avatar.png') }}" alt="user"

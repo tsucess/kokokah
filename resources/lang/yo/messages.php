@@ -49,6 +49,46 @@ return [
     'deleted_success' => 'A pa ìkéde rẹ́ ní àṣeyọrí',
 ],
 
+// Toast Messages
+'toast' => [
+    'success' => 'Àṣeyọrí',
+    'error' => 'Àṣìṣe',
+    'warning' => 'Ìkìlọ̀',
+    'info' => 'Ìmọ̀ràn',
+],
+
+// Subject Details Messages
+'subject_details' => [
+    'no_lessons_found' => 'A kò rí ẹ̀kọ́ fún ọ̀rọ̀ yìí',
+    'no_topic_id' => 'A kò fi ìdánimọ̀ ọ̀rọ̀ rán',
+    'error_loading_lessons' => 'Àṣìṣe nínú ìgbékalẹ̀ ẹ̀kọ́',
+    'please_answer_all' => 'Jọ̀wọ́ dáhùn gbogbo ìbéèrè kí o tó fi ránṣẹ́',
+    'quiz_submitted_success' => 'Idanwo ti fi ránṣẹ́ ní àṣeyọrí!',
+    'quiz_submission_failed' => 'Ìfìránṣẹ́ idanwo kùnà',
+    'error_submitting_quiz' => 'Àṣìṣe nínú ìfìránṣẹ́ idanwo',
+    'no_quizzes_found' => 'A kò rí idanwo',
+    'all_quizzes_submitted' => 'Gbogbo {count} idanwo ti fi ránṣẹ́ ní àṣeyọrí!',
+    'quizzes_partial_success' => '{success} idanwo ti fi ránṣẹ́ ní àṣeyọrí, ṣùgbọ́n {failure} kùnà',
+    'quizzes_submission_failed' => 'Ìfìránṣẹ́ idanwo kùnà',
+    'error_submitting_quizzes' => 'Àṣìṣe nínú ìfìránṣẹ́ idanwo',
+    'max_attempts_reached' => 'O ti dé òpin iye ìgbiyanju ({max})',
+    'quiz_reloaded' => 'Idanwo ti tún ṣe àgbékalẹ̀. Ìgbiyanju {current} nínú {max}',
+    'error_reloading_quiz' => 'Àṣìṣe nínú ìtúnṣe àgbékalẹ̀ idanwo',
+    'lesson_not_selected' => 'A kò yan ẹ̀kọ́',
+    'lesson_data_not_loaded' => 'Àlàyé ẹ̀kọ́ kò tún ṣe àgbékalẹ̀',
+    'lesson_marked_complete' => 'Ẹ̀kọ́ ti samisi gẹ́gẹ́ bí ẹni pé o ti pari!',
+    'error_marking_complete' => 'Àṣìṣe nínú ìsamisi ẹ̀kọ́ gẹ́gẹ́ bí ẹni pé o ti pari',
+    'error_loading_previous' => 'Àṣìṣe nínú ìgbékalẹ̀ ẹ̀kọ́ tẹ́lẹ̀',
+    'error_loading_next' => 'Àṣìṣe nínú ìgbékalẹ̀ ẹ̀kọ́ tẹ̀ ń bọ̀',
+    'no_quiz_results' => 'A kò rí èsì idanwo. Jọ̀wọ́ fi gbogbo idanwo ránṣẹ́ kọ́kọ̀.',
+    'modal_not_found' => 'Àṣìṣe: A kò rí ara ìtẹ́jáde',
+    'error_displaying_modal' => 'Àṣìṣe nínú ìfihàn ìtẹ́jáde',
+    'error_displaying_results' => 'Àṣìṣe nínú ìfihàn èsì idanwo',
+    'no_quizzes_to_retake' => 'A kò rí idanwo láti tún gbiyanju',
+    'quizzes_reloaded' => 'Idanwo ti tún ṣe àgbékalẹ̀. O lè tún gbiyanju wọn!',
+    'error_reloading_quizzes' => 'Àṣìṣe nínú ìtúnṣe àgbékalẹ̀ idanwo',
+],
+
 // Errors
 'errors' => [
     'unauthorized' => 'O kò ní àṣẹ láti ṣe èyí',
@@ -135,6 +175,7 @@ return [
     'reset' => 'Tún Ṣe',
     'cancel' => 'Fagile',
     'crop_and_save' => 'Gé & Fipamọ́',
+    'settings_saved_success' => 'Àwọn ìtumọ̀ ti fi pamọ́ ní àṣeyọrí!',
 ],
 
 // Announcements

@@ -47,6 +47,46 @@ return [
         'deleted_success' => 'Notification deleted successfully',
     ],
 
+    // Toast Messages
+    'toast' => [
+        'success' => 'Success',
+        'error' => 'Error',
+        'warning' => 'Warning',
+        'info' => 'Info',
+    ],
+
+    // Subject Details Messages
+    'subject_details' => [
+        'no_lessons_found' => 'No lessons found for this topic',
+        'no_topic_id' => 'No topic ID provided',
+        'error_loading_lessons' => 'Error loading lessons',
+        'please_answer_all' => 'Please answer all questions before submitting',
+        'quiz_submitted_success' => 'Quiz submitted successfully!',
+        'quiz_submission_failed' => 'Failed to submit quiz',
+        'error_submitting_quiz' => 'Error submitting quiz',
+        'no_quizzes_found' => 'No quizzes found',
+        'all_quizzes_submitted' => 'All {count} quiz(zes) submitted successfully!',
+        'quizzes_partial_success' => '{success} quiz(zes) submitted successfully, but {failure} failed',
+        'quizzes_submission_failed' => 'Failed to submit quizzes',
+        'error_submitting_quizzes' => 'Error submitting quizzes',
+        'max_attempts_reached' => 'You have reached the maximum number of attempts ({max})',
+        'quiz_reloaded' => 'Quiz reloaded. Attempt {current} of {max}',
+        'error_reloading_quiz' => 'Error reloading quiz',
+        'lesson_not_selected' => 'No lesson selected',
+        'lesson_data_not_loaded' => 'Lesson data not loaded',
+        'lesson_marked_complete' => 'Lesson marked as complete!',
+        'error_marking_complete' => 'Error marking lesson complete',
+        'error_loading_previous' => 'Error loading previous lesson',
+        'error_loading_next' => 'Error loading next lesson',
+        'no_quiz_results' => 'No quiz results found. Please submit all quizzes first.',
+        'modal_not_found' => 'Error: Modal body not found',
+        'error_displaying_modal' => 'Error displaying modal',
+        'error_displaying_results' => 'Error displaying quiz results',
+        'no_quizzes_to_retake' => 'No quizzes found to retake',
+        'quizzes_reloaded' => 'Quizzes reloaded. You can now retake them!',
+        'error_reloading_quizzes' => 'Error reloading quizzes',
+    ],
+
     // Errors
     'errors' => [
         'unauthorized' => 'Unauthorized access',
@@ -132,6 +172,7 @@ return [
         'reset' => 'Reset',
         'cancel' => 'Cancel',
         'crop_and_save' => 'Crop & Save',
+        'settings_saved_success' => 'Settings saved successfully!',
     ],
 
     // Announcements

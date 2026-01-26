@@ -47,6 +47,46 @@ return [
         'deleted_success' => 'تم حذف الإخطار بنجاح',
     ],
 
+    // Toast Messages
+    'toast' => [
+        'success' => 'نجح',
+        'error' => 'خطأ',
+        'warning' => 'تحذير',
+        'info' => 'معلومة',
+    ],
+
+    // Subject Details Messages
+    'subject_details' => [
+        'no_lessons_found' => 'لم يتم العثور على دروس لهذا الموضوع',
+        'no_topic_id' => 'لم يتم توفير معرف الموضوع',
+        'error_loading_lessons' => 'خطأ في تحميل الدروس',
+        'please_answer_all' => 'يرجى الإجابة على جميع الأسئلة قبل الإرسال',
+        'quiz_submitted_success' => 'تم إرسال الاختبار بنجاح!',
+        'quiz_submission_failed' => 'فشل إرسال الاختبار',
+        'error_submitting_quiz' => 'خطأ في إرسال الاختبار',
+        'no_quizzes_found' => 'لم يتم العثور على اختبارات',
+        'all_quizzes_submitted' => 'تم إرسال جميع {count} اختبار بنجاح!',
+        'quizzes_partial_success' => 'تم إرسال {success} اختبار بنجاح، لكن {failure} فشل',
+        'quizzes_submission_failed' => 'فشل إرسال الاختبارات',
+        'error_submitting_quizzes' => 'خطأ في إرسال الاختبارات',
+        'max_attempts_reached' => 'لقد وصلت إلى الحد الأقصى من المحاولات ({max})',
+        'quiz_reloaded' => 'تم إعادة تحميل الاختبار. المحاولة {current} من {max}',
+        'error_reloading_quiz' => 'خطأ في إعادة تحميل الاختبار',
+        'lesson_not_selected' => 'لم يتم تحديد درس',
+        'lesson_data_not_loaded' => 'بيانات الدرس لم يتم تحميلها',
+        'lesson_marked_complete' => 'تم وضع علامة على الدرس كمكتمل!',
+        'error_marking_complete' => 'خطأ في وضع علامة على الدرس كمكتمل',
+        'error_loading_previous' => 'خطأ في تحميل الدرس السابق',
+        'error_loading_next' => 'خطأ في تحميل الدرس التالي',
+        'no_quiz_results' => 'لم يتم العثور على نتائج الاختبار. يرجى إرسال جميع الاختبارات أولاً.',
+        'modal_not_found' => 'خطأ: لم يتم العثور على نص النافذة المنبثقة',
+        'error_displaying_modal' => 'خطأ في عرض النافذة المنبثقة',
+        'error_displaying_results' => 'خطأ في عرض نتائج الاختبار',
+        'no_quizzes_to_retake' => 'لا توجد اختبارات لإعادة محاولتها',
+        'quizzes_reloaded' => 'تم إعادة تحميل الاختبارات. يمكنك الآن إعادة محاولتها!',
+        'error_reloading_quizzes' => 'خطأ في إعادة تحميل الاختبارات',
+    ],
+
     // Errors
     'errors' => [
         'unauthorized' => 'وصول غير مصرح به',
@@ -132,6 +172,7 @@ return [
         'reset' => 'إعادة تعيين',
         'cancel' => 'إلغاء',
         'crop_and_save' => 'قص وحفظ',
+        'settings_saved_success' => 'تم حفظ الإعدادات بنجاح!',
     ],
 
     // Announcements

@@ -1244,7 +1244,8 @@
                             const data = await response.json();
 
                             if (data.success) {
-                                ToastNotification.success('Settings saved successfully!');
+                                const successMessage = window.i18nManager ? window.i18nManager.translate('profile.settings_saved_success') : 'Settings saved successfully!';
+                                ToastNotification.success(successMessage);
                                 console.log('Settings saved:', data.data);
 
                                 // Update localStorage

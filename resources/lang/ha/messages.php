@@ -47,6 +47,46 @@ return [
         'deleted_success' => 'An goge sanarwa cikin nasara',
     ],
 
+    // Toast Messages
+    'toast' => [
+        'success' => 'Nasara',
+        'error' => 'Kuskure',
+        'warning' => 'Gargadi',
+        'info' => 'Sanarwa',
+    ],
+
+    // Subject Details Messages
+    'subject_details' => [
+        'no_lessons_found' => 'Ba a samu koyo don wannan jiya ba',
+        'no_topic_id' => 'Ba a ba da ID na jiya ba',
+        'error_loading_lessons' => 'Kuskure wajen uta koyo',
+        'please_answer_all' => 'Da fatan za a amsa duk tambayoyi kafin aika',
+        'quiz_submitted_success' => 'An aika jarabawa cikin nasara!',
+        'quiz_submission_failed' => 'Aika jarabawa ya gaza',
+        'error_submitting_quiz' => 'Kuskure wajen aika jarabawa',
+        'no_quizzes_found' => 'Ba a samu jarabawa ba',
+        'all_quizzes_submitted' => 'An aika duk {count} jarabawa cikin nasara!',
+        'quizzes_partial_success' => 'An aika {success} jarabawa cikin nasara, amma {failure} ya gaza',
+        'quizzes_submission_failed' => 'Aika jarabawa ya gaza',
+        'error_submitting_quizzes' => 'Kuskure wajen aika jarabawa',
+        'max_attempts_reached' => 'Ka isa iyaka na yunƙurin ({max})',
+        'quiz_reloaded' => 'An sake uta jarabawa. Yunƙuri {current} na {max}',
+        'error_reloading_quiz' => 'Kuskure wajen sake uta jarabawa',
+        'lesson_not_selected' => 'Ba a zaɓi koyo ba',
+        'lesson_data_not_loaded' => 'Bayanan koyo ba a uta ba',
+        'lesson_marked_complete' => 'An alama koyo a matsayin an gama!',
+        'error_marking_complete' => 'Kuskure wajen alama koyo a matsayin an gama',
+        'error_loading_previous' => 'Kuskure wajen uta koyo na jiya',
+        'error_loading_next' => 'Kuskure wajen uta koyo na gida',
+        'no_quiz_results' => 'Ba a samu sakamakon jarabawa. Da fatan za a aika duk jarabawa da farko.',
+        'modal_not_found' => 'Kuskure: Ba a samu jiki na madanniyar ido ba',
+        'error_displaying_modal' => 'Kuskure wajen nuna madanniyar ido',
+        'error_displaying_results' => 'Kuskure wajen nuna sakamakon jarabawa',
+        'no_quizzes_to_retake' => 'Ba a samu jarabawa don sake yunƙuri ba',
+        'quizzes_reloaded' => 'An sake uta jarabawa. Za ka iya sake yunƙurinsu!',
+        'error_reloading_quizzes' => 'Kuskure wajen sake uta jarabawa',
+    ],
+
     // Errors
     'errors' => [
         'unauthorized' => 'Ba ka da izini',
@@ -131,6 +171,7 @@ return [
         'reset' => 'Sake Saita',
         'cancel' => 'Soke',
         'crop_and_save' => 'Yanke & Ajiye',
+        'settings_saved_success' => 'An adana saitunan cikin nasara!',
     ],
 
     // Announcements

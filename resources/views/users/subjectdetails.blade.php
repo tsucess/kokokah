@@ -406,10 +406,12 @@
                     setupTabNavigation();
                 } else {
                     console.error('No lessons found for topic:', topicId);
-                    showError('No lessons found for this topic');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.no_lessons_found') : 'No lessons found for this topic';
+                    showError(msg);
                 }
             } else {
-                showError('No topic ID provided');
+                const msg = window.i18nManager ? window.i18nManager.translate('subject_details.no_topic_id') : 'No topic ID provided';
+                showError(msg);
             }
         });
 
@@ -431,7 +433,8 @@
             } catch (error) {
                 console.error('Error loading topic lessons:', error);
                 console.error('Error stack:', error.stack);
-                showError('Error loading lessons: ' + error.message);
+                const msg = window.i18nManager ? window.i18nManager.translate('subject_details.error_loading_lessons') : 'Error loading lessons';
+                showError(msg);
             }
         }
 
@@ -1205,7 +1208,8 @@
                 });
 
                 if (!allAnswered) {
-                    showError('Please answer all questions before submitting');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.please_answer_all') : 'Please answer all questions before submitting';
+                    showError(msg);
                     return;
                 }
 
@@ -1256,7 +1260,8 @@
                 });
 
                 if (response.success) {
-                    showSuccess('Quiz submitted successfully!');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.quiz_submitted_success') : 'Quiz submitted successfully!';
+                    showSuccess(msg);
 
                     // Redirect to result page after a short delay
                     setTimeout(() => {
@@ -1265,11 +1270,13 @@
                     }, 1500);
                 } else {
                     console.error('Quiz submission failed:', response.message);
-                    showError(response.message || 'Failed to submit quiz');
+                    const msg = response.message || (window.i18nManager ? window.i18nManager.translate('subject_details.quiz_submission_failed') : 'Failed to submit quiz');
+                    showError(msg);
                 }
             } catch (error) {
                 console.error('Error submitting quiz:', error);
-                showError('Error submitting quiz');
+                const msg = window.i18nManager ? window.i18nManager.translate('subject_details.error_submitting_quiz') : 'Error submitting quiz';
+                showError(msg);
             }
         };
 
@@ -1282,7 +1289,8 @@
                 const quizDivs = quizContainer.querySelectorAll('[data-quiz-id]');
 
                 if (quizDivs.length === 0) {
-                    showError('No quizzes found');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.no_quizzes_found') : 'No quizzes found';
+                    showError(msg);
                     return;
                 }
 
@@ -1308,7 +1316,8 @@
                 });
 
                 if (!allAnswered) {
-                    showError('Please answer all questions in all quizzes before submitting');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.please_answer_all') : 'Please answer all questions before submitting';
+                    showError(msg);
                     return;
                 }
 
@@ -1370,20 +1379,24 @@
 
                 // Show results
                 if (failureCount === 0) {
-                    showSuccess(`All ${successCount} quiz(zes) submitted successfully!`);
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.all_quizzes_submitted').replace('{count}', successCount) : `All ${successCount} quiz(zes) submitted successfully!`;
+                    showSuccess(msg);
 
                     // Redirect to results page after a short delay
                     setTimeout(() => {
                         window.showAllQuizzesResultsModal();
                     }, 1500);
                 } else if (successCount > 0) {
-                    showError(`${successCount} quiz(zes) submitted successfully, but ${failureCount} failed`);
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.quizzes_partial_success').replace('{success}', successCount).replace('{failure}', failureCount) : `${successCount} quiz(zes) submitted successfully, but ${failureCount} failed`;
+                    showError(msg);
                 } else {
-                    showError('Failed to submit quizzes');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.quizzes_submission_failed') : 'Failed to submit quizzes';
+                    showError(msg);
                 }
             } catch (error) {
                 console.error('Error submitting all quizzes:', error);
-                showError('Error submitting quizzes');
+                const msg = window.i18nManager ? window.i18nManager.translate('subject_details.error_submitting_quizzes') : 'Error submitting quizzes';
+                showError(msg);
             }
         };
 
@@ -1653,14 +1666,16 @@
          * Show error notification
          */
         window.showError = function(message) {
-            window.ToastNotification.error('Error', message);
+            const errorTitle = window.i18nManager ? window.i18nManager.translate('toast.error') : 'Error';
+            window.ToastNotification.error(errorTitle, message);
         };
 
         /**
          * Show success notification
          */
         window.showSuccess = function(message) {
-            window.ToastNotification.success('Success', message);
+            const successTitle = window.i18nManager ? window.i18nManager.translate('toast.success') : 'Success';
+            window.ToastNotification.success(successTitle, message);
         };
 
         /**
