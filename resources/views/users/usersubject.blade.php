@@ -45,10 +45,10 @@
         <div class="container m-2">
             <div class="row">
                 <div>
-                    <h4 id="userGreeting">Hello
+                    <h4 id="userGreeting" data-i18n="dashboard.hello">Hello
                         <i class="fa-solid fa-hands-clapping text-warning"></i>
                     </h4>
-                    <p>Let`s learn something new today</p>
+                    <p data-i18n="dashboard.lets_learn">Let`s learn something new today</p>
                 </div>
 
             </div>
@@ -76,7 +76,9 @@
             // Check if redirected from successful payment
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('payment_success') === 'true') {
-                ToastNotification.success('Payment Successful', 'Your course has been enrolled successfully!');
+                const successTitle = window.i18nManager ? window.i18nManager.translate('dashboard.payment_successful') : 'Payment Successful';
+                const successMsg = window.i18nManager ? window.i18nManager.translate('dashboard.course_enrolled_successfully') : 'Your course has been enrolled successfully!';
+                ToastNotification.success(successTitle, successMsg);
                 // Clean up URL
                 window.history.replaceState({}, document.title, '/usersubject');
             }
@@ -212,7 +214,7 @@
                 <div class="progress" style="height:6px; background-color:#D9D9D9;">
                     <div class="progress-bar" style="width:${progress}%; background:#004A53; height:100%;"></div>
                 </div>
-                <button class="view-btn" type="button" data-course-id="${courseId}">View Subjects</button>
+                <button class="view-btn" type="button" data-course-id="${courseId}" data-i18n="dashboard.view_subjects">View Subjects</button>
             `;
 
             // Add click event listener
@@ -229,9 +231,10 @@
         // Show no courses message
         function showNoCourses() {
             const container = document.getElementById('coursesContainer');
+            const noCourseText = window.i18nManager ? window.i18nManager.translate('dashboard.no_courses_enrolled') : 'No courses available yet';
             container.innerHTML = `
                 <div class="col-12 w-100 py-5">
-                    <p class="text-muted text-center">No courses available yet. <a href="/userclass">Browse all courses</a> to get started with free or premium courses.</p>
+                    <p class="text-muted text-center">${noCourseText}. <a href="/userclass">Browse all courses</a> to get started with free or premium courses.</p>
                 </div>
             `;
         }

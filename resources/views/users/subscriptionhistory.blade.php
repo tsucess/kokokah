@@ -71,8 +71,8 @@
             <div class="d-flex justify-content-between align-items-start mb-4">
                 <div>
                     <h1 class=""
-                       id="welcomeMessage">Welcome Back</h1>
-                    <p class="text-muted" >Here's an overview of your subscription and payment history</p>
+                       id="welcomeMessage" data-i18n="subscription.welcome_back">Welcome Back</h1>
+                    <p class="text-muted" data-i18n="subscription.overview_text">Here's an overview of your subscription and payment history</p>
                 </div>
             </div>
 
@@ -81,23 +81,23 @@
                 <div class="card-body p-4">
                     <!-- Table Header with Search and Filters -->
                     <div class="d-flex flex-column gap-3 align-items-md-center flex-md-row justify-content-between align-items-start mb-5">
-                        <h5 class="fw-bold mb-0" style="font-size: 1.1rem; color: #1a1a1a;">Subscription History</h5>
+                        <h5 class="fw-bold mb-0" style="font-size: 1.1rem; color: #1a1a1a;" data-i18n="subscription.subscription_history">Subscription History</h5>
                         <div class="d-flex gap-3 flex-column flex-md-row">
 
                             <div class="d-flex gap-2 align-items-center search-border-custom">
                                 <i class="fa-solid fa-search fa-xs " style="color: #999;"></i>
                                 <input type="search" class="search-input-custom-input" id="searchInput"
-                                    placeholder="Search by Course Name" aria-label="Search">
+                                    placeholder="Search by Course Name" aria-label="Search" data-i18n-placeholder="subscription.search_by_course">
                             </div>
 
                             <!-- Filter Dropdown -->
                             <select class="custom-select" id="filterSelect">
-                                <option value="">All Statuses</option>
-                                <option value="active">Active</option>
-                                <option value="completed">Completed</option>
-                                <option value="dropped">Dropped</option>
-                                <option value="paused">Paused</option>
-                                <option value="cancelled">Cancelled</option>
+                                <option value="" data-i18n="subscription.all_statuses">All Statuses</option>
+                                <option value="active" data-i18n="subscription.active">Active</option>
+                                <option value="completed" data-i18n="subscription.completed">Completed</option>
+                                <option value="dropped" data-i18n="subscription.dropped">Dropped</option>
+                                <option value="paused" data-i18n="subscription.paused">Paused</option>
+                                <option value="cancelled" data-i18n="subscription.cancelled">Cancelled</option>
                             </select>
 
 
@@ -109,18 +109,18 @@
                         <table class="table table-hover align-middle transactions-table">
                             <thead>
                                 <tr style="background-color: #f0f0f0; border-bottom: 2px solid #e8e8e8;">
-                                    <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">ID</th>
-                                    <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Course</th>
-                                    <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Amount</th>
-                                    <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;" class="text-nowrap">Enrollment Date</th>
-                                    <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Status</th>
-                                    <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;">Progress</th>
+                                    <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;" data-i18n="subscription.id">ID</th>
+                                    <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;" data-i18n="subscription.course">Course</th>
+                                    <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;" data-i18n="subscription.amount">Amount</th>
+                                    <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;" class="text-nowrap" data-i18n="subscription.enrollment_date">Enrollment Date</th>
+                                    <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;" data-i18n="subscription.status">Status</th>
+                                    <th style="color: #333; font-weight: 600; padding: 1rem; font-size:14px;" data-i18n="subscription.progress">Progress</th>
                                 </tr>
                             </thead>
                             <tbody id="transactionsTableBody">
                                 <tr style="border-bottom: 1px solid #e8e8e8;">
                                     <td colspan="6" class="text-center text-muted py-4" style="font-size:16px;">
-                                        <i class="fa-solid fa-spinner fa-spin me-2"></i>Loading subscription history...
+                                        <i class="fa-solid fa-spinner fa-spin me-2"></i><span data-i18n="subscription.loading_history">Loading subscription history...</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -132,14 +132,14 @@
                         <!-- Previous Button -->
                         <button class="btn px-1 py-2 d-flex align-items-center gap-1 px-md-3 pagination-btn" id="prevBtn" onclick="loadTransactions(currentPage - 1)"
                             style="border: 1px solid #004A53; color: #004A53; font-weight: 500; border-radius: 0.5rem;"
-                            disabled>
+                            disabled data-i18n="subscription.previous">
                             <i class="fa-solid fa-chevron-left"></i> Previous
                         </button>
 
                         <!-- Pagination Info -->
                         <div class="d-flex align-items-center gap-3">
-                            <span class="text-muted fw-semibold" style="font-size: 0.7rem;">Page <strong
-                                    style="color: #004A53;" id="currentPageNum">1</strong> of <strong
+                            <span class="text-muted fw-semibold" style="font-size: 0.7rem;"><span data-i18n="subscription.page">Page</span> <strong
+                                    style="color: #004A53;" id="currentPageNum">1</strong> <span data-i18n="subscription.of">of</span> <strong
                                     style="color: #004A53;" id="totalPageNum">1</strong></span>
 
                             <!-- Page Numbers -->
@@ -150,7 +150,7 @@
 
                         <!-- Next Button -->
                         <button class="btn px-1 py-2 d-flex align-items-center gap-1 px-md-3 pagination-btn" id="nextBtn" onclick="loadTransactions(currentPage + 1)"
-                            style="border: 1px solid #004A53; color: #004A53; font-weight: 500; border-radius: 0.5rem;">
+                            style="border: 1px solid #004A53; color: #004A53; font-weight: 500; border-radius: 0.5rem;" data-i18n="subscription.next">
                             Next <i class="fa-solid fa-chevron-right "></i>
                         </button>
                     </div>
@@ -180,7 +180,7 @@
                 if (response.success && response.data) {
                     const user = response.data;
                     const welcomeMessage = document.getElementById('welcomeMessage');
-                    welcomeMessage.textContent = `Welcome Back ${user.first_name[0].toUpperCase()+user.first_name.slice(1)} ${user.last_name[0].toUpperCase()+user.last_name.slice(1)}`;
+                    welcomeMessage.textContent = `Welcome Back ${user.first_name[0].toUpperCase()+user.first_name.slice(1)}`;
                 }
             } catch (error) {
                 console.error('Error loading user profile:', error);
@@ -232,10 +232,11 @@
             tableBody.innerHTML = '';
 
             if (!subscriptions || subscriptions.length === 0) {
+                const noDataText = window.i18nManager ? window.i18nManager.translate('subscription.no_history_found') : 'No subscription history found';
                 tableBody.innerHTML = `
                     <tr style="border-bottom: 1px solid #e8e8e8;">
                         <td colspan="6" class="text-center text-muted py-4" style="font-size:16px;">
-                            No subscription history found
+                            ${noDataText}
                         </td>
                     </tr>
                 `;

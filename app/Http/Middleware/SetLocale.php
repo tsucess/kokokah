@@ -20,13 +20,21 @@ class SetLocale
     public function handle(Request $request, Closure $next)
     {
         $locale = $this->getLocale($request);
-        
+
+        // Debug logging
+        \Log::info('[SetLocale] Middleware executed', [
+            'path' => $request->path(),
+            'locale' => $locale,
+            'auth_user_id' => Auth::id(),
+            'user_language_preference' => Auth::user()?->language_preference,
+        ]);
+
         // Set the application locale
         App::setLocale($locale);
-        
+
         // Store locale in request for later use
         $request->attributes->set('locale', $locale);
-        
+
         return $next($request);
     }
 
@@ -41,35 +49,37 @@ class SetLocale
         $supportedLocales = LocalizationService::SUPPORTED_LANGUAGES;
         $defaultLocale = config('app.locale', 'en');
 
-        // 1. Check if locale is passed in query parameter
+        // 1. Check if locale is passed in query parameter (highest priority)
         if ($request->has('locale') && in_array($request->query('locale'), $supportedLocales)) {
             return $request->query('locale');
         }
 
-        // 2. Check if locale is passed in request header
-        if ($request->hasHeader('Accept-Language')) {
-            $locale = $this->parseAcceptLanguageHeader($request->header('Accept-Language'), $supportedLocales);
-            if ($locale) {
-                return $locale;
-            }
-        }
-
-        // 3. Check if user is authenticated and has language preference
+        // 2. Check if user is authenticated and has language preference (user preference takes priority)
         if (Auth::check()) {
-            $userLocale = Auth::user()->language_preference ?? null;
+            // Refresh the user to get the latest data from the database
+            $user = Auth::user()->fresh();
+            $userLocale = $user->language_preference ?? null;
             if ($userLocale && in_array($userLocale, $supportedLocales)) {
                 return $userLocale;
             }
         }
 
-        // 4. Check if locale is in session
+        // 3. Check if locale is in session
         if (session()->has('locale') && in_array(session('locale'), $supportedLocales)) {
             return session('locale');
         }
 
-        // 5. Check if locale is in cookie
+        // 4. Check if locale is in cookie
         if ($request->hasCookie('locale') && in_array($request->cookie('locale'), $supportedLocales)) {
             return $request->cookie('locale');
+        }
+
+        // 5. Check if locale is passed in request header (lower priority than user preference)
+        if ($request->hasHeader('Accept-Language')) {
+            $locale = $this->parseAcceptLanguageHeader($request->header('Accept-Language'), $supportedLocales);
+            if ($locale) {
+                return $locale;
+            }
         }
 
         // 6. Fall back to default locale

@@ -94,6 +94,9 @@ class LanguageController extends Controller
         // Update user's language preference
         $this->localizationService->setUserLanguage($user->id, $locale);
 
+        // Refresh the authenticated user to get the updated language preference
+        Auth::setUser($user->fresh());
+
         // Set locale in session
         session(['locale' => $locale]);
 
@@ -135,6 +138,14 @@ class LanguageController extends Controller
     {
         $locale = App::getLocale();
         $messages = trans('messages');
+
+        // Debug logging
+        \Log::info('[LanguageController] getTranslations called', [
+            'locale' => $locale,
+            'auth_user_id' => Auth::id(),
+            'user_language_preference' => Auth::user()?->language_preference,
+            'messages_keys' => array_keys($messages)
+        ]);
 
         return response()->json([
             'success' => true,

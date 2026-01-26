@@ -201,14 +201,14 @@
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 80vw;">
                 <div class="modal-content">
                     <div class="modal-header bg-light">
-                        <h5 class="modal-title" id="fileViewerLabel">File Viewer</h5>
+                        <h5 class="modal-title" id="fileViewerLabel" data-i18n="subjectdetails.file_viewer">File Viewer</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body" id="fileViewerBody" style="max-height: 80vh; overflow-y: auto; padding: 2rem;">
                         <!-- Content will be dynamically loaded here -->
                     </div>
                     <div class="modal-footer bg-light">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="subjectdetails.close">Close</button>
                     </div>
                 </div>
             </div>
@@ -230,17 +230,17 @@
                     <div class="video-box mb-3" id="videoContainer" data-no-loader>
                         <div class="d-flex justify-content-center align-items-center"
                             style="height: 400px; background-color: #f0f0f0;">
-                            <p>Loading video...</p>
+                            <p data-i18n="subjectdetails.loading_video">Loading video...</p>
                         </div>
                     </div>
 
                     <ul class="nav nav-underline nav-fill mb-3">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#" data-tab="material">Material &
+                            <a class="nav-link active" aria-current="page" href="#" data-tab="material" data-i18n="subjectdetails.material_links">Material &
                                 Links</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" data-tab="quiz">Quiz</a>
+                            <a class="nav-link" href="#" data-tab="quiz" data-i18n="subjectdetails.quiz">Quiz</a>
                         </li>
                         {{-- <li class="nav-item">
                             <a class="nav-link" href="#" data-tab="ai-chat">Ai Chat</a>
@@ -248,13 +248,13 @@
                     </ul>
                     <div id="material" class="tab-content-section ">
                         <div class="lecture-box d-flex flex-column gap-3 mb-4">
-                            <p class="lecture-text" id="lessonContent">Loading content...</p>
+                            <p class="lecture-text" id="lessonContent" data-i18n="subjectdetails.loading_content">Loading content...</p>
                             <div id="attachmentsContainer"></div>
                         </div>
                     </div>
                     <div id="quiz" class="tab-content-section d-none">
                         <div class="quiz-box lecture-box d-flex flex-column gap-3 mb-4" id="quizContainer">
-                            <p class="text-center">Loading quizzes...</p>
+                            <p class="text-center" data-i18n="subjectdetails.loading_quizzes">Loading quizzes...</p>
                         </div>
 
                     </div>
@@ -265,7 +265,7 @@
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header bg-light d-flex align-items-center ">
-                                    <h5 class="modal-title" id="quizResultsModalLabel">📊 Quiz Results</h5>
+                                    <h5 class="modal-title" id="quizResultsModalLabel" data-i18n="subjectdetails.quiz_results">📊 Quiz Results</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
@@ -273,7 +273,7 @@
                                     <!-- Results will be populated here -->
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="subjectdetails.close">Close</button>
                                     {{-- <button type="button" class="btn btn-primary"
                                         onclick="window.retakeQuizFromModal()">Retake Quiz</button> --}}
                                 </div>
@@ -287,13 +287,13 @@
                                 <div class="d-flex gap-2 align-items-start"><i class="fa-solid fa-paperclip"
                                         style="color:#94A3B8;"></i>
                                     <textarea class="message-input flex-fill" name="" id="" cols="" rows=""
-                                        placeholder="Message to kodie..."></textarea>
+                                        placeholder="Message to kodie..." data-i18n-placeholder="subjectdetails.message_placeholder"></textarea>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-3 justify-content-end mt-auto">
                                     <div class="emoji d-flex justify-content-center align-items-center"><i
                                             class="fa-solid fa-face-smile"></i></div>
-                                    <button class="send-message-btn">Send</button>
+                                    <button class="send-message-btn" data-i18n="subjectdetails.send">Send</button>
                                 </div>
 
                             </div>
@@ -301,10 +301,10 @@
 
                     </div>
                     <div class="d-flex align-items-center gap-2 justify-content-between">
-                        <button class="nav-btn" id="prevBtn" onclick="navigateToPreviousLesson()">Previous</button>
-                        <button class="mark-complete-btn" id="markCompleteBtn" onclick="markLessonComplete()">Mark
+                        <button class="nav-btn" id="prevBtn" onclick="navigateToPreviousLesson()" data-i18n="subjectdetails.previous">Previous</button>
+                        <button class="mark-complete-btn" id="markCompleteBtn" onclick="markLessonComplete()" data-i18n="subjectdetails.mark_complete">Mark
                             Complete</button>
-                        <button class="nav-btn" id="nextBtn" onclick="navigateToNextLesson()">Next</button>
+                        <button class="nav-btn" id="nextBtn" onclick="navigateToNextLesson()" data-i18n="subjectdetails.next">Next</button>
                     </div>
 
                 </div>
@@ -406,10 +406,12 @@
                     setupTabNavigation();
                 } else {
                     console.error('No lessons found for topic:', topicId);
-                    showError('No lessons found for this topic');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.no_lessons_found') : 'No lessons found for this topic';
+                    showError(msg);
                 }
             } else {
-                showError('No topic ID provided');
+                const msg = window.i18nManager ? window.i18nManager.translate('subject_details.no_topic_id') : 'No topic ID provided';
+                showError(msg);
             }
         });
 
@@ -431,7 +433,8 @@
             } catch (error) {
                 console.error('Error loading topic lessons:', error);
                 console.error('Error stack:', error.stack);
-                showError('Error loading lessons: ' + error.message);
+                const msg = window.i18nManager ? window.i18nManager.translate('subject_details.error_loading_lessons') : 'Error loading lessons';
+                showError(msg);
             }
         }
 
@@ -1205,7 +1208,8 @@
                 });
 
                 if (!allAnswered) {
-                    showError('Please answer all questions before submitting');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.please_answer_all') : 'Please answer all questions before submitting';
+                    showError(msg);
                     return;
                 }
 
@@ -1256,7 +1260,8 @@
                 });
 
                 if (response.success) {
-                    showSuccess('Quiz submitted successfully!');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.quiz_submitted_success') : 'Quiz submitted successfully!';
+                    showSuccess(msg);
 
                     // Redirect to result page after a short delay
                     setTimeout(() => {
@@ -1265,11 +1270,13 @@
                     }, 1500);
                 } else {
                     console.error('Quiz submission failed:', response.message);
-                    showError(response.message || 'Failed to submit quiz');
+                    const msg = response.message || (window.i18nManager ? window.i18nManager.translate('subject_details.quiz_submission_failed') : 'Failed to submit quiz');
+                    showError(msg);
                 }
             } catch (error) {
                 console.error('Error submitting quiz:', error);
-                showError('Error submitting quiz');
+                const msg = window.i18nManager ? window.i18nManager.translate('subject_details.error_submitting_quiz') : 'Error submitting quiz';
+                showError(msg);
             }
         };
 
@@ -1282,7 +1289,8 @@
                 const quizDivs = quizContainer.querySelectorAll('[data-quiz-id]');
 
                 if (quizDivs.length === 0) {
-                    showError('No quizzes found');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.no_quizzes_found') : 'No quizzes found';
+                    showError(msg);
                     return;
                 }
 
@@ -1308,7 +1316,8 @@
                 });
 
                 if (!allAnswered) {
-                    showError('Please answer all questions in all quizzes before submitting');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.please_answer_all') : 'Please answer all questions before submitting';
+                    showError(msg);
                     return;
                 }
 
@@ -1370,20 +1379,24 @@
 
                 // Show results
                 if (failureCount === 0) {
-                    showSuccess(`All ${successCount} quiz(zes) submitted successfully!`);
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.all_quizzes_submitted').replace('{count}', successCount) : `All ${successCount} quiz(zes) submitted successfully!`;
+                    showSuccess(msg);
 
                     // Redirect to results page after a short delay
                     setTimeout(() => {
                         window.showAllQuizzesResultsModal();
                     }, 1500);
                 } else if (successCount > 0) {
-                    showError(`${successCount} quiz(zes) submitted successfully, but ${failureCount} failed`);
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.quizzes_partial_success').replace('{success}', successCount).replace('{failure}', failureCount) : `${successCount} quiz(zes) submitted successfully, but ${failureCount} failed`;
+                    showError(msg);
                 } else {
-                    showError('Failed to submit quizzes');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.quizzes_submission_failed') : 'Failed to submit quizzes';
+                    showError(msg);
                 }
             } catch (error) {
                 console.error('Error submitting all quizzes:', error);
-                showError('Error submitting quizzes');
+                const msg = window.i18nManager ? window.i18nManager.translate('subject_details.error_submitting_quizzes') : 'Error submitting quizzes';
+                showError(msg);
             }
         };
 
@@ -1396,7 +1409,8 @@
                 const quizDiv = quizContainer.querySelector(`[data-quiz-id="${quizId}"]`);
 
                 if (!quizDiv) {
-                    showError('Quiz not found');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.no_quizzes_found') : 'Quiz not found';
+                    showError(msg);
                     return;
                 }
 
@@ -1407,7 +1421,8 @@
 
                 // Check if user can attempt
                 if (nextAttemptNumber > maxAttempts) {
-                    showError(`You have reached the maximum number of attempts (${maxAttempts})`);
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.max_attempts_reached').replace('{max}', maxAttempts) : `You have reached the maximum number of attempts (${maxAttempts})`;
+                    showError(msg);
                     return;
                 }
 
@@ -1429,10 +1444,12 @@
                     }
                 }, 300);
 
-                showSuccess(`Quiz reloaded. Attempt ${nextAttemptNumber} of ${maxAttempts}`);
+                const msg = window.i18nManager ? window.i18nManager.translate('subject_details.quiz_reloaded').replace('{current}', nextAttemptNumber).replace('{max}', maxAttempts) : `Quiz reloaded. Attempt ${nextAttemptNumber} of ${maxAttempts}`;
+                showSuccess(msg);
             } catch (error) {
                 console.error('Error retaking quiz:', error);
-                showError('Error reloading quiz');
+                const msg = window.i18nManager ? window.i18nManager.translate('subject_details.error_reloading_quiz') : 'Error reloading quiz';
+                showError(msg);
             }
         };
 
@@ -1503,7 +1520,8 @@
 
             try {
                 if (!currentLesson || !currentLesson.id) {
-                    showError('Lesson data not loaded');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.lesson_data_not_loaded') : 'Lesson data not loaded';
+                    showError(msg);
                     return;
                 }
 
@@ -1533,7 +1551,8 @@
                     const progressTrack = document.getElementById('progressTrack');
                     progressTrack.style.width = progressPercentage + '%';
 
-                    showSuccess('Lesson marked as complete!');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.lesson_marked_complete') : 'Lesson marked as complete!';
+                    showSuccess(msg);
 
                     // Emit event for global data refresh
                     if (window.DataRefreshService) {
@@ -1544,13 +1563,15 @@
                         });
                     }
                 } else {
-                    showError(response.message || 'Failed to mark lesson complete');
+                    const msg = response.message || (window.i18nManager ? window.i18nManager.translate('subject_details.error_marking_complete') : 'Failed to mark lesson complete');
+                    showError(msg);
                     // Re-enable button on error
                     markCompleteBtn.disabled = false;
                 }
             } catch (error) {
                 console.error('Error marking lesson complete:', error);
-                showError('Error marking lesson complete');
+                const msg = window.i18nManager ? window.i18nManager.translate('subject_details.error_marking_complete') : 'Error marking lesson complete';
+                showError(msg);
                 // Re-enable button on error
                 const markCompleteBtn = document.getElementById('markCompleteBtn');
                 markCompleteBtn.disabled = false;
@@ -1584,7 +1605,8 @@
                     window.scrollTo(0, 0);
                 } catch (error) {
                     console.error('Error navigating to previous lesson:', error);
-                    showError('Error loading previous lesson');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.error_loading_previous') : 'Error loading previous lesson';
+                    showError(msg);
                     currentLessonIndex++; // Revert index on error
                 } finally {
                     isNavigating = false;
@@ -1617,7 +1639,8 @@
                     window.scrollTo(0, 0);
                 } catch (error) {
                     console.error('Error navigating to next lesson:', error);
-                    showError('Error loading next lesson');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.error_loading_next') : 'Error loading next lesson';
+                    showError(msg);
                     currentLessonIndex--; // Revert index on error
                 } finally {
                     isNavigating = false;
@@ -1653,14 +1676,16 @@
          * Show error notification
          */
         window.showError = function(message) {
-            window.ToastNotification.error('Error', message);
+            const errorTitle = window.i18nManager ? window.i18nManager.translate('toast.error') : 'Error';
+            window.ToastNotification.error(errorTitle, message);
         };
 
         /**
          * Show success notification
          */
         window.showSuccess = function(message) {
-            window.ToastNotification.success('Success', message);
+            const successTitle = window.i18nManager ? window.i18nManager.translate('toast.success') : 'Success';
+            window.ToastNotification.success(successTitle, message);
         };
 
         /**
@@ -1674,14 +1699,16 @@
             try {
                 // Get all quizzes for the current lesson
                 if (!currentLesson || !currentLesson.id) {
-                    showError('No lesson selected');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.lesson_not_selected') : 'No lesson selected';
+                    showError(msg);
                     return;
                 }
 
                 const quizzesResponse = await window.LessonApiClient.getQuizzesByLesson(currentLesson.id);
 
                 if (!quizzesResponse.success || !quizzesResponse.data) {
-                    showError('Failed to load quizzes');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.no_quizzes_found') : 'Failed to load quizzes';
+                    showError(msg);
                     return;
                 }
 
@@ -1706,7 +1733,8 @@
                 }
 
                 if (allQuizResults.length === 0) {
-                    showError('No quiz results found. Please submit all quizzes first.');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.no_quiz_results') : 'No quiz results found. Please submit all quizzes first.';
+                    showError(msg);
                     return;
                 }
 
@@ -1749,7 +1777,8 @@
                 const resultsModalElement = document.getElementById('quizResultsModal');
 
                 if (!modalBody) {
-                    showError('Error: Modal body not found');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.modal_not_found') : 'Error: Modal body not found';
+                    showError(msg);
                     return;
                 }
 
@@ -1861,11 +1890,13 @@
                     modal.show();
                 } else {
                     console.error('Modal element not found');
-                    showError('Error displaying modal');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.error_displaying_modal') : 'Error displaying modal';
+                    showError(msg);
                 }
             } catch (error) {
                 console.error('Error showing all quizzes results modal:', error);
-                showError('Error displaying quiz results');
+                const msg = window.i18nManager ? window.i18nManager.translate('subject_details.error_displaying_results') : 'Error displaying quiz results';
+                showError(msg);
             }
         };
 
@@ -1877,7 +1908,8 @@
             const modalElement = document.getElementById('quizResultsModal');
 
             if (!modalElement) {
-                showError('Modal not found');
+                const msg = window.i18nManager ? window.i18nManager.translate('subject_details.modal_not_found') : 'Modal not found';
+                showError(msg);
                 return;
             }
 
@@ -1898,16 +1930,19 @@
             }
 
             if (quizIds.length === 0) {
-                showError('No quizzes found to retake');
+                const msg = window.i18nManager ? window.i18nManager.translate('subject_details.no_quizzes_to_retake') : 'No quizzes found to retake';
+                showError(msg);
                 return;
             }
 
             // Reload quizzes to allow retake - pass the first quiz ID as the retaking quiz
             loadQuizzesForRetake(quizIds[0]).then(() => {
-                showSuccess('Quizzes reloaded. You can now retake them!');
+                const msg = window.i18nManager ? window.i18nManager.translate('subject_details.quizzes_reloaded') : 'Quizzes reloaded. You can now retake them!';
+                showSuccess(msg);
             }).catch(error => {
                 console.error('Error reloading quizzes:', error);
-                showError('Error reloading quizzes');
+                const msg = window.i18nManager ? window.i18nManager.translate('subject_details.error_reloading_quizzes') : 'Error reloading quizzes';
+                showError(msg);
             });
         };
     </script>

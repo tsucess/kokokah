@@ -1024,10 +1024,10 @@
             <div id="sidebar-mobile" class="sidebar-mobile d-lg-none">
                 <div class="input-group mb-4">
                     <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
-                    <input type="text" class="form-control border-start-0 ps-0" placeholder="Find a Conversation" id="searchChatrooms">
+                    <input type="text" class="form-control border-start-0 ps-0" placeholder="Find a Conversation" id="searchChatrooms" data-i18n-placeholder="chatroom.find_conversation">
                 </div>
                  <div class="d-flex align-items-center gap-2 justify-content-between">
-                    <h6 class="text-muted text-uppercase small mb-2">Conversations</h6>
+                    <h6 class="text-muted text-uppercase small mb-2" data-i18n="chatroom.conversations">Conversations</h6>
                     <button id='closeBtn'><i class="fa-regular fa-circle-xmark"></i></button>
                  </div>
 
@@ -1038,10 +1038,10 @@
                 <div class="col-lg-4 d-none d-lg-block sidebar-left">
                     <div class="input-group mb-4">
                         <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
-                        <input type="text" class="form-control border-start-0 ps-0" placeholder="Find a Conversation" id="searchChatroomsDesktop">
+                        <input type="text" class="form-control border-start-0 ps-0" placeholder="Find a Conversation" id="searchChatroomsDesktop" data-i18n-placeholder="chatroom.find_conversation">
                     </div>
 
-                    <h6 class="text-muted text-uppercase small mb-2">Conversations</h6>
+                    <h6 class="text-muted text-uppercase small mb-2" data-i18n="chatroom.conversations">Conversations</h6>
                     <div id="chatrooms-list-desktop" class="chatrooms-list"></div>
                 </div>
 
@@ -1058,8 +1058,8 @@
                             <div class="welcome-icon mx-auto mb-3">
                                 <i class="bi bi-hash text-white"></i>
                             </div>
-                            <h4 class="fw-bold mb-1" style="color: var(--color-primary-button: #004A53);">Welcome to Chatroom</h4>
-                            <p class="text-muted">Select a conversation to start chatting</p>
+                            <h4 class="fw-bold mb-1" style="color: var(--color-primary-button: #004A53);" data-i18n="chatroom.welcome_heading">Welcome to Chatroom</h4>
+                            <p class="text-muted" data-i18n="chatroom.select_conversation">Select a conversation to start chatting</p>
                         </div>
                         <div class="chat-messages p-2" id="chat-messages">
 
@@ -1070,20 +1070,20 @@
                         <div class="d-flex align-items-center">
                             <div class="flex-grow-1 d-flex align-items-center border rounded-pill py-2 px-3 me-3"
                                 style="border-color: var(--bs-light-gray) !important;">
-                                <i class="bi bi-paperclip me-2 text-muted cursor-pointer" id="attachmentBtn" title="Attach file"></i>
+                                <i class="bi bi-paperclip me-2 text-muted cursor-pointer" id="attachmentBtn" title="Attach file" data-i18n-title="chatroom.attach_file"></i>
                                 <input type="text" class="form-control border-0 p-0 shadow-none" id="messageInput"
-                                    placeholder="Type a message..." style="height: auto;">
+                                    placeholder="Type a message..." data-i18n-placeholder="chatroom.type_message" style="height: auto;">
                             </div>
 
                             <div class="d-flex gap-3 text-secondary fs-5 me-3 d-none d-md-flex">
-                                <i class="bi bi-mic-fill cursor-pointer" id="audioBtn" title="Record audio"></i>
-                                <i class="bi bi-emoji-smile-fill cursor-pointer" id="emojiBtn" title="Add emoji"></i>
+                                <i class="bi bi-mic-fill cursor-pointer" id="audioBtn" title="Record audio" data-i18n-title="chatroom.record_audio"></i>
+                                <i class="bi bi-emoji-smile-fill cursor-pointer" id="emojiBtn" title="Add emoji" data-i18n-title="chatroom.add_emoji"></i>
                             </div>
                             <div class="d-flex gap-3 text-secondary fs-5 me-3">
-                                <i class="bi bi-camera-fill cursor-pointer" id="cameraBtn" title="Take picture"></i>
+                                <i class="bi bi-camera-fill cursor-pointer" id="cameraBtn" title="Take picture" data-i18n-title="chatroom.take_picture"></i>
                             </div>
                             <button class="btn send-btn d-flex align-items-center" id="sendBtn">
-                               <span class="send-text">Send</span>  <i class="bi bi-send-fill"></i>
+                               <span class="send-text" data-i18n="chatroom.send">Send</span>  <i class="bi bi-send-fill"></i>
                             </button>
                         </div>
                     </div>
@@ -1122,19 +1122,19 @@
 
                     <!-- Audio Recording Modal -->
                     <div id="audioRecordingModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; border: 1px solid #ddd; border-radius: 8px; padding: 20px; z-index: 2000; box-shadow: 0 4px 20px rgba(0,0,0,0.2); min-width: 300px;">
-                        <h5 class="mb-3">Record Audio Message</h5>
+                        <h5 class="mb-3" data-i18n="chatroom.record_audio_message">Record Audio Message</h5>
                         <div id="audioRecordingStatus" class="mb-3">
-                            <p>Click "Start Recording" to begin</p>
-                            <p id="recordingTime" style="display: none; font-weight: bold;">Recording: <span id="recordingDuration">0:00</span></p>
+                            <p data-i18n="chatroom.click_start_recording">Click "Start Recording" to begin</p>
+                            <p id="recordingTime" style="display: none; font-weight: bold;"><span data-i18n="chatroom.recording">Recording</span>: <span id="recordingDuration">0:00</span></p>
                         </div>
                         <div id="audioPlaybackContainer" style="display: none; margin-bottom: 15px;">
                             <audio id="audioPlayback" controls style="width: 100%; margin-bottom: 10px;"></audio>
                         </div>
                         <div class="d-flex gap-2">
-                            <button id="startRecordingBtn" class="btn btn-primary btn-sm">Start Recording</button>
-                            <button id="stopRecordingBtn" class="btn btn-danger btn-sm" style="display: none;">Stop Recording</button>
-                            <button id="sendAudioBtn" class="btn btn-success btn-sm" style="display: none;">Send Audio</button>
-                            <button id="closeAudioModalBtn" class="btn btn-secondary btn-sm">Close</button>
+                            <button id="startRecordingBtn" class="btn btn-primary btn-sm" data-i18n="chatroom.start_recording">Start Recording</button>
+                            <button id="stopRecordingBtn" class="btn btn-danger btn-sm" style="display: none;" data-i18n="chatroom.stop_recording">Stop Recording</button>
+                            <button id="sendAudioBtn" class="btn btn-success btn-sm" style="display: none;" data-i18n="chatroom.send_audio">Send Audio</button>
+                            <button id="closeAudioModalBtn" class="btn btn-secondary btn-sm" data-i18n="chatroom.close">Close</button>
                         </div>
                     </div>
 

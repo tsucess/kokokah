@@ -160,7 +160,7 @@
 <main>
     <section class="container-fluid d-flex flex-column gap-4 px-4 py-5">
         <header class="d-flex flex-column gap-2">
-            <h3 class="header-title">We Value Your Feedback</h3>
+            <h3 class="header-title" data-i18n="feedback.we_value_your_feedback">We Value Your Feedback</h3>
             <p class="header-subtitle">Your input helps us build products and experiences. Whether you’ve found a bug, have a feature request, or just want to share your thoughts, we’re here to listen.</p>
         </header>
         <section class="container feature-container">
@@ -169,8 +169,8 @@
                     <div class="feature-item-container d-flex flex-column gap-4 align-items-center justify-content-center">
                         <div><i class="fa-solid fa-bug fa-xl" style="color: #000000;"></i></div>
                         <div class="d-flex flex-column gap-1">
-                            <h4 class="feature-title">Report Bugs</h4>
-                            <p class="feature-text">Found something broken? Let us know so we can fix it quickly.</p>
+                            <h4 class="feature-title" data-i18n="feedback.report_bugs">Report Bugs</h4>
+                            <p class="feature-text" data-i18n="feedback.report_bugs_description">Found something broken? Let us know so we can fix it quickly.</p>
                         </div>
                     </div>
                 </div>
@@ -178,8 +178,8 @@
                     <div class="feature-item-container d-flex flex-column gap-4 align-items-center justify-content-center">
                         <div><i class="fa-regular fa-lightbulb fa-xl" style="color: #000000;"></i></div>
                         <div class="d-flex flex-column gap-1">
-                            <h4 class="feature-title">Request Features</h4>
-                            <p class="feature-text">Have an idea for improvement? Share your suggestions with us.</p>
+                            <h4 class="feature-title" data-i18n="feedback.request_features">Request Features</h4>
+                            <p class="feature-text" data-i18n="feedback.request_features_description">Have an idea for improvement? Share your suggestions with us.</p>
                         </div>
                     </div>
                 </div>
@@ -187,8 +187,8 @@
                     <div class="feature-item-container d-flex flex-column gap-4 align-items-center justify-content-center">
                         <div><i class="fa-regular fa-comment fa-xl" style="color: #000000;"></i></div>
                         <div class="d-flex flex-column gap-1">
-                            <h4 class="feature-title">General Feedback</h4>
-                            <p class="feature-text">Share your thoughts on how we can make things better for you.</p>
+                            <h4 class="feature-title" data-i18n="feedback.general_feedback">General Feedback</h4>
+                            <p class="feature-text" data-i18n="feedback.general_feedback_description">Share your thoughts on how we can make things better for you.</p>
                         </div>
                     </div>
                 </div>
@@ -196,8 +196,8 @@
                     <div class="feature-item-container d-flex flex-column gap-4 align-items-center justify-content-center">
                         <div><i class="fa-regular fa-heart fa-xl" style="color: #000000;"></i></div>
                         <div class="d-flex flex-column gap-1">
-                            <h4 class="feature-title">We Listen</h4>
-                            <p class="feature-text">Every piece of feedback help us create a better product and experience for you.</p>
+                            <h4 class="feature-title" data-i18n="feedback.we_listen">We Listen</h4>
+                            <p class="feature-text" data-i18n="feedback.we_listen_description">Every piece of feedback help us create a better product and experience for you.</p>
                         </div>
                     </div>
                 </div>
@@ -206,8 +206,8 @@
         <section class="container-fluid d-flex flex-column share-feedback-container">
             <div class="d-flex flex-column gap-4">
                 <header class="d-flex flex-column gap-1">
-                    <h5 class="share-feedback-title">Share Your Feedback</h5>
-                    <p class="header-subtitle">Help us improve by sharing your thoughts, reporting bugs, or suggesting new features.</p>
+                    <h5 class="share-feedback-title" data-i18n="feedback.share_your_feedback">Share Your Feedback</h5>
+                    <p class="header-subtitle" data-i18n="feedback.help_us_improve">Help us improve by sharing your thoughts, reporting bugs, or suggesting new features.</p>
                 </header>
 
                 <div id="successMessage" class="success-message" style="display: none;"></div>
@@ -216,31 +216,31 @@
                     @csrf
 
                     <div class="d-flex flex-column input-area">
-                        <label for="firstName" class="label">Enter Full Name *</label>
+                        <label for="firstName" class="label" data-i18n="feedback.enter_full_name">Enter Full Name *</label>
                         <input type="text" name="first_name" id="firstName" placeholder="Winner" class="input" required>
                         <span class="error-message" id="firstNameError"></span>
                     </div>
 
                     <div class="d-flex flex-column input-area">
-                        <label for="lastName" class="label">Enter Email Address *</label>
+                        <label for="lastName" class="label" data-i18n="feedback.enter_email_address">Enter Email Address *</label>
                         <input type="text" name="last_name" id="lastName" placeholder="Effiong" class="input" required>
                         <span class="error-message" id="lastNameError"></span>
                     </div>
 
                     <div class="d-flex flex-column input-area">
-                        <label for="feedbackType" class="label">Select Feedback Type *</label>
+                        <label for="feedbackType" class="label" data-i18n="feedback.select_feedback_type">Select Feedback Type *</label>
                         <select name="feedback_type" id="feedbackType" required>
-                            <option value="">-- Select Type --</option>
-                            <option value="bug">Report Bugs</option>
-                            <option value="feature_request">Request Features</option>
-                            <option value="general">General Feedback</option>
-                            <option value="other">Other</option>
+                            <option value="" data-i18n="feedback.select_type">-- Select Type --</option>
+                            <option value="bug" data-i18n="feedback.report_bugs">Report Bugs</option>
+                            <option value="feature_request" data-i18n="feedback.request_features">Request Features</option>
+                            <option value="general" data-i18n="feedback.general_feedback">General Feedback</option>
+                            <option value="other" data-i18n="feedback.other">Other</option>
                         </select>
                         <span class="error-message" id="feedbackTypeError"></span>
                     </div>
 
                     <div class="d-flex flex-column gap-3">
-                        <h6 class="rate-title">How would you rate your overall experience?</h6>
+                        <h6 class="rate-title" data-i18n="feedback.rate_experience">How would you rate your overall experience?</h6>
                         <div class="d-flex align-items-center gap-2" id="ratingStars">
                             <i class="fa-solid fa-star fa-lg star" data-rating="1" style="color: #E5E6E7;"></i>
                             <i class="fa-solid fa-star fa-lg star" data-rating="2" style="color: #E5E6E7;"></i>
@@ -252,13 +252,13 @@
                     </div>
 
                     <div class="d-flex flex-column input-area">
-                        <label for="subject" class="label">Subject</label>
+                        <label for="subject" class="label" data-i18n="feedback.subject">Subject</label>
                         <input type="text" name="subject" id="subject" placeholder="Brief summary of your feedback" class="input">
                         <span class="error-message" id="subjectError"></span>
                     </div>
 
                     <div class="d-flex flex-column textarea-area">
-                        <label for="message" class="label">Message *</label>
+                        <label for="message" class="label" data-i18n="feedback.message">Message *</label>
                         <textarea name="message" id="message" class="input h-100" placeholder="Please provide detailed information about your feedback......" required></textarea>
                         <span class="error-message" id="messageError"></span>
                     </div>
@@ -269,10 +269,10 @@
                 <div class="spinner-border text-warning" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
-                <p>Submitting your feedback...</p>
+                <p data-i18n="feedback.submitting_feedback">Submitting your feedback...</p>
             </div>
 
-            <button type="submit" form="feedbackForm" class="align-self-center share-feedback-btn" id="submitBtn">Submit Feedback</button>
+            <button type="submit" form="feedbackForm" class="align-self-center share-feedback-btn" id="submitBtn" data-i18n="feedback.submit_feedback">Submit Feedback</button>
         </section>
     </section>
 </main>

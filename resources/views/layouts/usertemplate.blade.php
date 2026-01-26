@@ -92,34 +92,33 @@
         </div>
 
         <nav class="nav-group" id="sidebarNav">
-            <a class="nav-item-link" href="/usersdashboard"><i class="fa-solid fa-gauge pe-2"></i> Dashboard</a>
+            <a class="nav-item-link" href="/usersdashboard"><i class="fa-solid fa-gauge pe-2"></i> <span data-i18n="nav.dashboard">Dashboard</span></a>
 
-            <a class="nav-item-link" href="/userclass"><i class="fa-solid fa-book-open me-2 pe-2"></i> Class</a>
+            <a class="nav-item-link" href="/userclass"><i class="fa-solid fa-book-open me-2 pe-2"></i> <span data-i18n="nav.class">Class</span></a>
 
-            <a class="nav-item-link" href="/usersubject"><i class="fa-solid fa-user me-2  pe-2"></i> Subject</a>
+            <a class="nav-item-link" href="/usersubject"><i class="fa-solid fa-user me-2  pe-2"></i> <span data-i18n="nav.subject">Subject</span></a>
 
-            <a class="nav-item-link" href="/userresult"><i class="fa-solid fa-chart-line me-2  pe-2"></i> Results &
-                Scoring</a>
+            <a class="nav-item-link" href="/userresult"><i class="fa-solid fa-chart-line me-2  pe-2"></i> <span data-i18n="nav.results">Results & Scoring</span></a>
 
-            <a class="nav-item-link" href="/userkudikah"><i class="fa-solid fa-wallet me-2 pe-2"></i>Kudikah</a>
+            <a class="nav-item-link" href="/userkudikah"><i class="fa-solid fa-wallet me-2 pe-2"></i> <span data-i18n="nav.kudikah">Kudikah</span></a>
             <a class="nav-item-link" href="/usersubscriptionhistory"><i
-                    class="fa-solid fa-money-bill-transfer me-2 pe-2"></i></i>Subscription History</a>
+                    class="fa-solid fa-money-bill-transfer me-2 pe-2"></i> <span data-i18n="nav.subscription_history">Subscription History</span></a>
             <a class="nav-item-link" href="/userleaderboard"><i
-                    class="fa-solid fa-trophy me-2 pe-2"></i></i>Leaderboard</a>
+                    class="fa-solid fa-trophy me-2 pe-2"></i> <span data-i18n="nav.leaderboard">Leaderboard</span></a>
             {{-- <a class="nav-item-link" href="/userkoodies"><i class="fa-solid fa-robot me-2 pe-2"></i>Ai</a> --}}
-            <a class="nav-item-link" href="/chatroom"><i class="fa-solid fa-comment me-2 pe-2"></i>Chatroom</a>
+            <a class="nav-item-link" href="/chatroom"><i class="fa-solid fa-comment me-2 pe-2"></i> <span data-i18n="nav.chatroom">Chatroom</span></a>
 
             <!-- Communication -->
             <a class="nav-item-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
                 href="#communication" role="button" aria-expanded="false" aria-controls="communication">
-                <span><i class="fa-solid fa-comments me-2 pe-2"></i> Communication</span>
+                <span><i class="fa-solid fa-comments me-2 pe-2"></i> <span data-i18n="nav.communication">Communication</span></span>
                 <i class="fa-solid fa-chevron-down small"></i>
             </a>
 
             <!-- communication dropdowns -->
             <div class="collapse ps-4" id="communication">
-                <a class="nav-item-link d-block" href="/userannouncement">Notifications</a>
-                <a class="nav-item-link d-block" href="/userfeedback">Feedback / Surveys</a>
+                <a class="nav-item-link d-block" href="/userannouncement"><span data-i18n="nav.notifications">Notifications</span></a>
+                <a class="nav-item-link d-block" href="/userfeedback"><span data-i18n="nav.feedback_surveys">Feedback / Surveys</span></a>
             </div>
 
 
@@ -128,7 +127,7 @@
 
 
         <div class="sidebar-footer mt-auto p-3">
-            <a class="nav-item-link" href="#"><i class="fa-solid fa-gear pe-3"></i> Settings</a>
+            {{-- <a class="nav-item-link" href="#"><i class="fa-solid fa-gear pe-3"></i> <span data-i18n="nav.settings">Settings</span></a> --}}
             <div class="profile mt-5" id="profileSection">
                 <img class="avatar" id="profileImage" src="{{ asset('images/default-avatar.png') }}" alt="user"
                     style="cursor: pointer; width: 40px; height: 40px; object-fit: cover; border-radius: 50%; border: 2px solid #ff00;"
@@ -287,6 +286,48 @@
                 document.body.style.overflow = '';
             }
         });
+
+        // Initialize communication dropdown toggle
+        function initCommunicationDropdown() {
+            const communicationToggle = document.querySelector('[href="#communication"]');
+            const communicationCollapse = document.getElementById('communication');
+
+            if (communicationToggle && communicationCollapse) {
+                // Initialize Bootstrap Collapse instance
+                const collapseInstance = new bootstrap.Collapse(communicationCollapse, {
+                    toggle: false
+                });
+
+                // Handle toggle click
+                communicationToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    // Toggle the collapse
+                    if (communicationCollapse.classList.contains('show')) {
+                        collapseInstance.hide();
+                    } else {
+                        collapseInstance.show();
+                    }
+                });
+
+                // Update aria-expanded attribute when collapse changes
+                communicationCollapse.addEventListener('show.bs.collapse', function() {
+                    communicationToggle.setAttribute('aria-expanded', 'true');
+                });
+
+                communicationCollapse.addEventListener('hide.bs.collapse', function() {
+                    communicationToggle.setAttribute('aria-expanded', 'false');
+                });
+            }
+        }
+
+        // Initialize on DOMContentLoaded or immediately if DOM is already loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initCommunicationDropdown);
+        } else {
+            initCommunicationDropdown();
+        }
     </script>
 
     <!-- Notification Modal -->
@@ -297,7 +338,7 @@
                 <div class="modal-header">
                     <div class="d-flex align-items-center gap-2">
                         <i class="fa-solid fa-bell" style="color: #ffffff; font-size: 20px;"></i>
-                        <h5 class="modal-title" id="notificationModalLabel">Notifications</h5>
+                        <h5 class="modal-title" id="notificationModalLabel" data-i18n="notifications.title">Notifications</h5>
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -305,17 +346,17 @@
                 <div class="modal-body">
                     <!-- Notifications List -->
                     <div id="notificationsList" class="notification-list">
-                        <p class="text-muted text-center py-4">Loading notifications...</p>
+                        <p class="text-muted text-center py-4" data-i18n="notifications.loading">Loading notifications...</p>
                     </div>
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="notifications.close">
                         <i class="fa-solid fa-times" style="margin-right: 6px;"></i>Close
                     </button>
-                    <button type="button" class="btn btn-primary" id="markAllReadBtn">
+                    {{-- <button type="button" class="btn btn-primary" id="markAllReadBtn" data-i18n="notifications.mark_all_read">
                         <i class="fa-solid fa-check-double" style="margin-right: 6px;"></i>Mark All as Read
-                    </button>
+                    </button> --}}
                 </div>
             </div>
         </div>
@@ -372,6 +413,9 @@
 
     <!-- Inactivity Timeout Manager - Auto logout after 30 minutes of inactivity -->
     <script src="{{ asset('js/utils/inactivityTimeout.js') }}"></script>
+
+    <!-- Internationalization (i18n) Manager - Load translations and apply to DOM -->
+    <script src="{{ asset('js/utils/i18n.js') }}"></script>
 </body>
 
 </html>

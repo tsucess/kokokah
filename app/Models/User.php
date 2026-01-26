@@ -44,7 +44,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'parent_email',
         'parent_phone',
         'email_verified_at',
-        'points'
+        'points',
+        'language_preference',
+        'currency_preference',
+        'timezone_preference'
     ];
 
     /**

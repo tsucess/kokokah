@@ -970,14 +970,14 @@
                     </button>
                     <h1 id="levelTitle">Level Title</h1>
                 </div>
-                <button class = "enroll-btn" type = "button" id="enrollAllBtn">Subscribe to All Subjects</button>
+                <button class = "enroll-btn" type = "button" id="enrollAllBtn" data-i18n="enroll.subscribe_all_subjects">Subscribe to All Subjects</button>
             </div>
             <section class="d-flex flex-column gap-4">
                 <div class="d-flex flex-column flex-md-row  align-items-md-center gap-3">
                     <select name="plan" id="planSelector" class="custom-select-plan">
-                        <option value="">Loading plans...</option>
+                        <option value="" data-i18n="enroll.loading_plans">Loading plans...</option>
                     </select>
-                    <p id="planPriceInfo">Select a plan to see pricing</p>
+                    <p id="planPriceInfo" data-i18n="enroll.select_plan_pricing">Select a plan to see pricing</p>
                 </div>
                 <div id="planSelectionNotification" class="plan-notification" style="display: none;">
                     <!-- Notification will be shown here -->
@@ -1022,7 +1022,7 @@
 
             <!-- Footer with proceed button -->
             <div style=" display: flex; justify-content:center;">
-                <button id="proceedBtn" class="proceed-payment-btn">
+                <button id="proceedBtn" class="proceed-payment-btn" data-i18n="enroll.proceed_payment">
                     Proceed to Payment
                 </button>
             </div>
@@ -1031,7 +1031,7 @@
             <div id="paymentGatewayModal" class="payment-modal-overlay" style="display: none;">
                 <div class="payment-modal">
                     <div class="payment-modal-header">
-                        <h2>Select Payment Method</h2>
+                        <h2 data-i18n="enroll.select_payment_method">Select Payment Method</h2>
                         <button type="button" class="payment-modal-close" id="closePaymentModal">
                             <i class="fas fa-times"></i>
                         </button>
@@ -1098,8 +1098,8 @@
                     </div>
 
                     <div class="payment-modal-footer">
-                        <button type="button" class="payment-modal-cancel" id="cancelPaymentModal">Cancel</button>
-                        <button type="button" class="payment-modal-confirm" id="confirmPaymentModal">Proceed with
+                        <button type="button" class="payment-modal-cancel" id="cancelPaymentModal" data-i18n="enroll.cancel">Cancel</button>
+                        <button type="button" class="payment-modal-confirm" id="confirmPaymentModal" data-i18n="enroll.proceed_payment">Proceed with
                             Payment</button>
                     </div>
                 </div>
@@ -1110,7 +1110,7 @@
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="subscribeAllModalLabel">Subscribe to All Subjects</h5>
+                            <h5 class="modal-title" id="subscribeAllModalLabel" data-i18n="enroll.subscribe_all_subjects">Subscribe to All Subjects</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -1119,8 +1119,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-primary enroll-btn" id="proceedToPaymentBtn">Proceed to Payment</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="enroll.cancel">Cancel</button>
+                            <button type="button" class="btn btn-primary enroll-btn" id="proceedToPaymentBtn" data-i18n="enroll.proceed_payment">Proceed to Payment</button>
                         </div>
                     </div>
                 </div>
@@ -1131,7 +1131,7 @@
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="paymentConfirmationModalLabel">Confirm Payment</h5>
+                            <h5 class="modal-title" id="paymentConfirmationModalLabel" data-i18n="enroll.confirm_payment">Confirm Payment</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -1140,8 +1140,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-primary enroll-btn" id="confirmPaymentBtn">Proceed to Payment Gateway</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="enroll.cancel">Cancel</button>
+                            <button type="button" class="btn btn-primary enroll-btn" id="confirmPaymentBtn" data-i18n="enroll.proceed_gateway">Proceed to Payment Gateway</button>
                         </div>
                     </div>
                 </div>
@@ -1152,17 +1152,17 @@
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="planSelectionWarningModalLabel">Select a Plan</h5>
+                            <h5 class="modal-title" id="planSelectionWarningModalLabel" data-i18n="enroll.select_plan">Select a Plan</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="warning-content">
                                 <div class="warning-icon">⚠️</div>
-                                <p class="warning-message">Please select a subscription plan first before proceeding.</p>
+                                <p class="warning-message" data-i18n="enroll.select_plan_warning">Please select a subscription plan first before proceeding.</p>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-i18n="enroll.ok">OK</button>
                         </div>
                     </div>
                 </div>
@@ -1173,17 +1173,17 @@
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="subjectSelectionWarningModalLabel">Select Subjects</h5>
+                            <h5 class="modal-title" id="subjectSelectionWarningModalLabel" data-i18n="enroll.select_subjects">Select Subjects</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="warning-content">
                                 <div class="warning-icon">📚</div>
-                                <p class="warning-message">Please select at least one subject to proceed.</p>
+                                <p class="warning-message" data-i18n="enroll.select_subjects_warning">Please select at least one subject to proceed.</p>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-i18n="enroll.ok">OK</button>
                         </div>
                     </div>
                 </div>
@@ -1239,7 +1239,8 @@
                 }
             } catch (error) {
                 console.error('Error loading subscription plans:', error);
-                showError('Failed to load subscription plans.');
+                const msg = window.i18nManager ? window.i18nManager.translate('enroll.failed_load_plans') : 'Failed to load subscription plans.';
+                showError(msg);
             }
         }
 
@@ -1486,7 +1487,8 @@
             try {
                 const levelId = getLevelIdFromURL();
                 if (!levelId) {
-                    showError('No level selected. Please go back and select a class.');
+                    const msg = window.i18nManager ? window.i18nManager.translate('enroll.no_level_selected') : 'No level selected. Please go back and select a class.';
+                    showError(msg);
                     return;
                 }
 
@@ -1516,11 +1518,13 @@
                     updateLevelTitle(levelId);
                     updateEnrollAllButton();
                 } else {
-                    showError('No courses available for this class.');
+                    const msg = window.i18nManager ? window.i18nManager.translate('enroll.no_courses_available') : 'No courses available for this class.';
+                    showError(msg);
                 }
             } catch (error) {
                 console.error('Error loading courses:', error);
-                showError('Failed to load courses. Please try again later.');
+                const msg = window.i18nManager ? window.i18nManager.translate('enroll.failed_load_courses') : 'Failed to load courses. Please try again later.';
+                showError(msg);
             }
         }
 
@@ -1878,7 +1882,8 @@
             e.preventDefault();
 
             if (!pendingPaymentData) {
-                alert('Payment data not found. Please try again.');
+                const msg = window.i18nManager ? window.i18nManager.translate('enroll.payment_data_not_found') : 'Payment data not found. Please try again.';
+                alert(msg);
                 return;
             }
 
@@ -1981,14 +1986,16 @@
             e.preventDefault();
 
             if (!pendingPaymentData) {
-                alert('Payment data not found. Please try again.');
+                const msg = window.i18nManager ? window.i18nManager.translate('enroll.payment_data_not_found') : 'Payment data not found. Please try again.';
+                alert(msg);
                 return;
             }
 
             // Get selected payment gateway from modal
             const selectedGateway = document.querySelector('input[name="payment_gateway"]:checked');
             if (!selectedGateway) {
-                alert('Please select a payment method.');
+                const msg = window.i18nManager ? window.i18nManager.translate('enroll.select_payment_method_required') : 'Please select a payment method.';
+                alert(msg);
                 return;
             }
 
@@ -2045,7 +2052,8 @@
                     processPayPalPayment(paymentData);
                     break;
                 default:
-                    alert('Invalid payment gateway selected.');
+                    const msg = window.i18nManager ? window.i18nManager.translate('enroll.invalid_payment_gateway') : 'Invalid payment gateway selected.';
+                    alert(msg);
             }
         }
 
@@ -2068,13 +2076,15 @@
                     const result = await SubscriptionApiClient.subscribe(subscriptionData);
 
                     if (result.success) {
-                        showSuccessMessage(`Successfully subscribed to plan via Kudikah Wallet!`);
+                        const msg = window.i18nManager ? window.i18nManager.translate('enroll.subscribed_wallet_success') : 'Successfully subscribed to plan via Kudikah Wallet!';
+                        showSuccessMessage(msg);
                         // Reload page to show updated subscriptions
                         setTimeout(() => {
                             window.location.reload();
                         }, 2000);
                     } else {
-                        showErrorMessage(result.message || 'Failed to subscribe to plan.');
+                        const msg = result.message || (window.i18nManager ? window.i18nManager.translate('enroll.failed_subscribe_plan') : 'Failed to subscribe to plan.');
+                        showErrorMessage(msg);
                     }
                 } else {
                     // Original course purchase logic
@@ -2103,7 +2113,8 @@
                     }
 
                     if (successCount > 0) {
-                        showSuccessMessage(`Successfully purchased ${successCount} course(s) via Kudikah Wallet!`);
+                        const msg = window.i18nManager ? window.i18nManager.translate('enroll.purchased_courses_success', {count: successCount}) : `Successfully purchased ${successCount} course(s) via Kudikah Wallet!`;
+                        showSuccessMessage(msg);
 
                         // Emit wallet updated event
                         if (window.DataRefreshService) {
@@ -2116,12 +2127,14 @@
                             window.location.href = '/usersubject';
                         }, 2000);
                     } else {
-                        showErrorMessage(`Failed to purchase courses. Please try again.`);
+                        const msg = window.i18nManager ? window.i18nManager.translate('enroll.failed_purchase_courses') : 'Failed to purchase courses. Please try again.';
+                        showErrorMessage(msg);
                     }
                 }
             } catch (error) {
                 console.error('Kudikah payment error:', error);
-                showErrorMessage('Error processing Kudikah Wallet payment: ' + error.message);
+                const msg = window.i18nManager ? window.i18nManager.translate('enroll.kudikah_payment_error', {error: error.message}) : 'Error processing Kudikah Wallet payment: ' + error.message;
+                showErrorMessage(msg);
             }
         }
 
@@ -2145,7 +2158,8 @@
                     if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
                         window.location.href = result.data.gateway_data.authorization_url;
                     } else {
-                        showErrorMessage(result.message || 'Failed to initialize Paystack payment.');
+                        const msg = result.message || (window.i18nManager ? window.i18nManager.translate('enroll.failed_init_paystack') : 'Failed to initialize Paystack payment.');
+                        showErrorMessage(msg);
                     }
                 } else {
                     // Original course purchase logic
@@ -2161,12 +2175,14 @@
                     if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
                         window.location.href = result.data.gateway_data.authorization_url;
                     } else {
-                        showErrorMessage(result.message || 'Failed to initialize Paystack payment.');
+                        const msg = result.message || (window.i18nManager ? window.i18nManager.translate('enroll.failed_init_paystack') : 'Failed to initialize Paystack payment.');
+                        showErrorMessage(msg);
                     }
                 }
             } catch (error) {
                 console.error('Paystack payment error:', error);
-                showErrorMessage('Error initializing Paystack payment: ' + error.message);
+                const msg = window.i18nManager ? window.i18nManager.translate('enroll.paystack_error', {error: error.message}) : 'Error initializing Paystack payment: ' + error.message;
+                showErrorMessage(msg);
             }
         }
 
@@ -2189,7 +2205,8 @@
                     if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
                         window.location.href = result.data.gateway_data.authorization_url;
                     } else {
-                        showErrorMessage(result.message || 'Failed to initialize Flutterwave payment.');
+                        const msg = result.message || (window.i18nManager ? window.i18nManager.translate('enroll.failed_init_flutterwave') : 'Failed to initialize Flutterwave payment.');
+                        showErrorMessage(msg);
                     }
                 } else {
                     const courseId = paymentData.courses[0];
@@ -2204,12 +2221,14 @@
                     if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
                         window.location.href = result.data.gateway_data.authorization_url;
                     } else {
-                        showErrorMessage(result.message || 'Failed to initialize Flutterwave payment.');
+                        const msg = result.message || (window.i18nManager ? window.i18nManager.translate('enroll.failed_init_flutterwave') : 'Failed to initialize Flutterwave payment.');
+                        showErrorMessage(msg);
                     }
                 }
             } catch (error) {
                 console.error('Flutterwave payment error:', error);
-                showErrorMessage('Error initializing Flutterwave payment: ' + error.message);
+                const msg = window.i18nManager ? window.i18nManager.translate('enroll.flutterwave_error', {error: error.message}) : 'Error initializing Flutterwave payment: ' + error.message;
+                showErrorMessage(msg);
             }
         }
 
@@ -2232,7 +2251,8 @@
                     if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
                         window.location.href = result.data.gateway_data.authorization_url;
                     } else {
-                        showErrorMessage(result.message || 'Failed to initialize Stripe payment.');
+                        const msg = result.message || (window.i18nManager ? window.i18nManager.translate('enroll.failed_init_stripe') : 'Failed to initialize Stripe payment.');
+                        showErrorMessage(msg);
                     }
                 } else {
                     const courseId = paymentData.courses[0];
@@ -2247,12 +2267,14 @@
                     if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
                         window.location.href = result.data.gateway_data.authorization_url;
                     } else {
-                        showErrorMessage(result.message || 'Failed to initialize Stripe payment.');
+                        const msg = result.message || (window.i18nManager ? window.i18nManager.translate('enroll.failed_init_stripe') : 'Failed to initialize Stripe payment.');
+                        showErrorMessage(msg);
                     }
                 }
             } catch (error) {
                 console.error('Stripe payment error:', error);
-                showErrorMessage('Error initializing Stripe payment: ' + error.message);
+                const msg = window.i18nManager ? window.i18nManager.translate('enroll.stripe_error', {error: error.message}) : 'Error initializing Stripe payment: ' + error.message;
+                showErrorMessage(msg);
             }
         }
 
@@ -2275,7 +2297,8 @@
                     if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
                         window.location.href = result.data.gateway_data.authorization_url;
                     } else {
-                        showErrorMessage(result.message || 'Failed to initialize PayPal payment.');
+                        const msg = result.message || (window.i18nManager ? window.i18nManager.translate('enroll.failed_init_paypal') : 'Failed to initialize PayPal payment.');
+                        showErrorMessage(msg);
                     }
                 } else {
                     const courseId = paymentData.courses[0];
@@ -2290,12 +2313,14 @@
                     if (result.success && result.data.gateway_data && result.data.gateway_data.authorization_url) {
                         window.location.href = result.data.gateway_data.authorization_url;
                     } else {
-                        showErrorMessage(result.message || 'Failed to initialize PayPal payment.');
+                        const msg = result.message || (window.i18nManager ? window.i18nManager.translate('enroll.failed_init_paypal') : 'Failed to initialize PayPal payment.');
+                        showErrorMessage(msg);
                     }
                 }
             } catch (error) {
                 console.error('PayPal payment error:', error);
-                showErrorMessage('Error initializing PayPal payment: ' + error.message);
+                const msg = window.i18nManager ? window.i18nManager.translate('enroll.paypal_error', {error: error.message}) : 'Error initializing PayPal payment: ' + error.message;
+                showErrorMessage(msg);
             }
         }
 

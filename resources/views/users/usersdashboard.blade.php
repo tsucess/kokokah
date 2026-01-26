@@ -231,8 +231,8 @@
         <!-- Header -->
         <div class="header-section position-relative container-fluid">
             <div class="d-flex flex-column gap-2 align-items-start pt-5 pt-md-5 ">
-                <h2 id="userGreeting">Hello 👋</h2>
-                <p>Let’s learn something new today!</p>
+                <h2 ><span data-i18n="dashboard.hello"></span> <span id="userGreeting" ></span> 👋</h2>
+                <p data-i18n="dashboard.lets_learn">Let’s learn something new today!</p>
             </div>
 
             <img src="{{ asset('images/mydashboard.png') }}" alt="Robot" class="header-img">
@@ -252,7 +252,7 @@
                             </div>
                             <div class="d-flex flex-column gap-1">
                                 <strong class="fs-2 lh-1 d-block text-dark" id="completedCount">0</strong>
-                                <small class="text-nowrap header-card-text">Completed Subject</small>
+                                <small class="text-nowrap header-card-text" data-i18n="dashboard.completed_subject">Completed Subject</small>
                             </div>
                         </div>
 
@@ -272,7 +272,7 @@
                             </div>
                             <div>
                                 <strong class="fs-2 lh-1 d-block text-dark" id="ongoingCount">0</strong>
-                                <small class="header-card-text text-nowrap">Ongoing Subject</small>
+                                <small class="header-card-text text-nowrap" data-i18n="dashboard.ongoing_subject">Ongoing Subject</small>
                             </div>
                         </div>
 
@@ -289,7 +289,7 @@
         <div class  = "container d-flex flex-column gap-3" style="min-height: 200px;">
             <div class ="d-flex justify-content-between align-items-center">
                 <div>
-                    <p class = "usersparagraph">
+                    <p class = "usersparagraph" data-i18n="dashboard.continue_reading">
                         Continue reading
                     </p>
                 </div>
@@ -327,7 +327,7 @@
                         <div class="progress-bar course-progress-bar" style="width:0%; background:#F56824; height:100%;">
                         </div>
                     </div>
-                    <button class="view-btn view-course-btn" type="button" data-course-id="">View Subjects</button>
+                    <button class="view-btn view-course-btn" type="button" data-course-id="" data-i18n="dashboard.view_subjects">View Subjects</button>
                 </div>
             </template>
         </div>
@@ -346,7 +346,7 @@
             const user = AuthApiClient.getUser();
             if (user) {
                 document.getElementById('userGreeting').textContent =
-                    `Hello ${user.first_name[0].toUpperCase() + user.first_name.slice(1)} 👋`;
+                    `${user.first_name[0].toUpperCase() + user.first_name.slice(1)}`;
             }
 
             // Load user's enrolled courses
@@ -387,7 +387,8 @@
                 container.innerHTML = '';
 
                 if (courses.length === 0) {
-                    container.innerHTML = '<p class="text-center text-muted">No courses enrolled yet</p>';
+                    const noCourseText = window.i18nManager ? window.i18nManager.translate('dashboard.no_courses_enrolled') : 'No courses enrolled yet';
+                    container.innerHTML = `<p class="text-center text-muted">${noCourseText}</p>`;
                     updateStats(0, 0);
                     return;
                 }

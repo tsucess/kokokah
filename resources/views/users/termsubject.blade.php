@@ -6,7 +6,7 @@
 
             <div class="row mb-4">
                 <div class="col-12">
-                    <p id='back-btn' class="text-muted mb-4" style="cursor: pointer;"><i class="fa-solid fa-chevron-left me-2"></i> Back</p>
+                    <p id='back-btn' class="text-muted mb-4" style="cursor: pointer;" data-i18n="term_subject.back"><i class="fa-solid fa-chevron-left me-2"></i> Back</p>
                 </div>
 
                 <div class="col-12 d-flex flex-column flex-md-row gap-3 mb-4" id="termButtonsContainer">
@@ -32,7 +32,7 @@
                         <div class="card-body">
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between small text-muted">
-                                    <span class = "text-dark">Rating In The Group</span>
+                                    <span class = "text-dark" data-i18n="term_subject.rating_in_group">Rating In The Group</span>
                                     <span id="groupRating">-
                                         <img src = "images/celebrate.png" class = "img-fluid"
                                             style = "width:15px; height:15px;">
@@ -45,7 +45,7 @@
 
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between small text-muted">
-                                    <span>Average Point</span>
+                                    <span data-i18n="term_subject.average_point">Average Point</span>
                                     <span id="averagePoint">-</span>
                                 </div>
                                 <div class="progress" style="height: 6px;">
@@ -57,7 +57,7 @@
 
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between small text-muted">
-                                    <span>Subject Completed</span>
+                                    <span data-i18n="term_subject.subject_completed">Subject Completed</span>
                                     <span id="subjectCompleted">-</span>
                                 </div>
                                 <div class="progress" style="height: 6px;">
@@ -72,7 +72,7 @@
 
                     <div class="card shadow-sm border-0 mb-4">
                         <div class="card-body">
-                            <h6 class="fw-bold mb-3">This Subject Includes</h6>
+                            <h6 class="fw-bold mb-3" data-i18n="term_subject.this_subject_includes">This Subject Includes</h6>
 
                             <ul class="list-unstyled small" id="subjectIncludesList">
                                 <!-- Subject details will be loaded dynamically -->
@@ -83,7 +83,7 @@
                     <!-- Course Reviews Section -->
                     <div class="card shadow-sm border-0">
                         <div class="card-body">
-                            <h6 class="fw-bold mb-3">Course Reviews</h6>
+                            <h6 class="fw-bold mb-3" data-i18n="term_subject.course_reviews">Course Reviews</h6>
 
                             <!-- Review Statistics -->
                             <div class="d-flex align-items-center gap-3 mb-4">
@@ -341,7 +341,8 @@ let currentCourseId = null;
          */
         window.showSuccess = function(message) {
             if (window.ToastNotification) {
-                window.ToastNotification.success('Success', message);
+                const successTitle = window.i18nManager ? window.i18nManager.translate('toast.success') : 'Success';
+                window.ToastNotification.success(successTitle, message);
             } else {
                 alert('Success: ' + message);
             }
@@ -352,7 +353,8 @@ let currentCourseId = null;
          */
         window.showError = function(message) {
             if (window.ToastNotification) {
-                window.ToastNotification.error('Error', message);
+                const errorTitle = window.i18nManager ? window.i18nManager.translate('toast.error') : 'Error';
+                window.ToastNotification.error(errorTitle, message);
             } else {
                 alert('Error: ' + message);
             }
@@ -370,7 +372,8 @@ let currentCourseId = null;
             currentCourseId = urlParams.get('course_id') || sessionStorage.getItem('selectedCourseId');
 
             if (!currentCourseId) {
-                ToastNotification.error('Course not found');
+                const msg = window.i18nManager ? window.i18nManager.translate('term_subject.course_not_found') : 'Course not found';
+                ToastNotification.error(window.i18nManager ? window.i18nManager.translate('toast.error') : 'Error', msg);
                 return;
             }
 
@@ -396,7 +399,8 @@ let currentCourseId = null;
                 }
             } catch (error) {
                 console.error('Error loading course:', error);
-                ToastNotification.error('Failed to load course data');
+                const msg = window.i18nManager ? window.i18nManager.translate('term_subject.failed_load_course') : 'Failed to load course data';
+                ToastNotification.error(window.i18nManager ? window.i18nManager.translate('toast.error') : 'Error', msg);
             }
         }
 
@@ -519,7 +523,8 @@ let currentCourseId = null;
                 renderLessons(topicsForTerm);
             } catch (error) {
                 console.error('Error loading topics:', error);
-                ToastNotification.error('Failed to load topics');
+                const msg = window.i18nManager ? window.i18nManager.translate('term_subject.failed_load_topics') : 'Failed to load topics';
+                ToastNotification.error(window.i18nManager ? window.i18nManager.translate('toast.error') : 'Error', msg);
             }
         }
 
@@ -540,7 +545,8 @@ let currentCourseId = null;
                 }
             } catch (error) {
                 console.error('Error loading lessons:', error);
-                ToastNotification.error('Failed to load lessons');
+                const msg = window.i18nManager ? window.i18nManager.translate('term_subject.failed_load_lessons') : 'Failed to load lessons';
+                ToastNotification.error(window.i18nManager ? window.i18nManager.translate('toast.error') : 'Error', msg);
             }
         }
 
@@ -803,7 +809,7 @@ let currentCourseId = null;
 
                         <!-- Rating Selection -->
                         <div class="form-group">
-                            <label class="form-label">Rating</label>
+                            <label class="form-label" data-i18n="term_subject.rating">Rating</label>
                             <div class="rating-selector">
                                 <input type="radio" name="rating" value="1" id="rating1" class="rating-input" required>
                                 <label for="rating1" class="rating-label">
@@ -830,12 +836,12 @@ let currentCourseId = null;
 
                         <!-- Review Comment -->
                         <div class="form-group">
-                            <label for="reviewComment" class="form-label">Your Review</label>
+                            <label for="reviewComment" class="form-label" data-i18n="term_subject.your_review">Your Review</label>
                             <textarea id="reviewComment" name="comment" class="form-control" placeholder="Share your thoughts about this course..." rows="4" maxlength="1000" required></textarea>
                         </div>
 
                         <!-- Submit Button -->
-                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                        <button type="submit" class="btn btn-primary" data-i18n="term_subject.submit_review">Submit Review</button>
                     </form>
                 </div>
             `;
@@ -926,7 +932,8 @@ let currentCourseId = null;
 
             const courseId = document.querySelector('[data-course-id]')?.getAttribute('data-course-id');
             if (!courseId) {
-                showError('Course ID not found');
+                const msg = window.i18nManager ? window.i18nManager.translate('term_subject.course_id_not_found') : 'Course ID not found';
+                showError(msg);
                 return;
             }
 
@@ -956,7 +963,8 @@ let currentCourseId = null;
 
                 const result = await response.json();
                 if (result.success) {
-                    showSuccess('Review submitted successfully!');
+                    const msg = window.i18nManager ? window.i18nManager.translate('term_subject.review_submitted_success') : 'Review submitted successfully!';
+                    showSuccess(msg);
 
                     // Force hide the loader since this is an AJAX request
                     if (window.kokokahLoader) {
@@ -969,7 +977,8 @@ let currentCourseId = null;
                         loadCourseReviews();
                     }, 1000);
                 } else {
-                    showError(result.message || 'Failed to submit review');
+                    const msg = result.message || (window.i18nManager ? window.i18nManager.translate('term_subject.failed_submit_review') : 'Failed to submit review');
+                    showError(msg);
                     submitBtn.disabled = false;
                     submitBtn.textContent = originalText;
 
@@ -980,7 +989,8 @@ let currentCourseId = null;
                 }
             } catch (error) {
                 console.error('Error:', error);
-                showError('Failed to submit review');
+                const msg = window.i18nManager ? window.i18nManager.translate('term_subject.failed_submit_review') : 'Failed to submit review';
+                showError(msg);
                 submitBtn.disabled = false;
                 submitBtn.textContent = originalText;
 
@@ -1062,7 +1072,10 @@ let currentCourseId = null;
 
             // Update average rating
             document.getElementById('averageRating').textContent = avgRating.toFixed(1);
-            document.getElementById('totalReviews').textContent = `${totalReviews} review${totalReviews !== 1 ? 's' : ''}`;
+
+            // Use translation for reviews text
+            const reviewsText = window.i18nManager ? window.i18nManager.translate('term_subject.reviews') : 'reviews';
+            document.getElementById('totalReviews').textContent = `${totalReviews} ${reviewsText}`;
 
             // Update stars
             const starsContainer = document.getElementById('ratingStars');
@@ -1190,14 +1203,17 @@ let currentCourseId = null;
                 const result = await response.json();
 
                 if (result.success) {
-                    showSuccess('Thank you for marking this review as helpful!');
+                    const msg = window.i18nManager ? window.i18nManager.translate('term_subject.review_helpful_success') : 'Thank you for marking this review as helpful!';
+                    showSuccess(msg);
                     loadCourseReviews(); // Reload reviews
                 } else {
-                    showError(result.message || 'Failed to mark review as helpful');
+                    const msg = result.message || (window.i18nManager ? window.i18nManager.translate('term_subject.failed_mark_helpful') : 'Failed to mark review as helpful');
+                    showError(msg);
                 }
             } catch (error) {
                 console.error('Error marking review as helpful:', error);
-                showError('Error marking review as helpful');
+                const msg = window.i18nManager ? window.i18nManager.translate('term_subject.error_mark_helpful') : 'Error marking review as helpful';
+                showError(msg);
             }
         }
 

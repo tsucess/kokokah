@@ -24,12 +24,14 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // Apply global middleware
         $middleware->append(\App\Http\Middleware\SecurityHeadersMiddleware::class);
-        $middleware->append(\App\Http\Middleware\SetLocale::class);
 
         // Apply rate limiting to API routes
         $middleware->group('api', [
             'rate.limit:api,300', // 300 requests per minute (increased for testing)
         ]);
+
+        // Apply SetLocale middleware to web routes (after auth)
+        $middleware->appendToGroup('web', \App\Http\Middleware\SetLocale::class);
 
         // Configure authentication redirect for unauthenticated users
         $middleware->redirectGuestsTo('/login');
