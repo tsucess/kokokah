@@ -795,6 +795,48 @@
                 closeSidebar();
             }
         });
+
+        // Initialize communication dropdown toggle
+        function initCommunicationDropdown() {
+            const communicationToggle = document.querySelector('[href="#communication"]');
+            const communicationCollapse = document.getElementById('communication');
+
+            if (communicationToggle && communicationCollapse) {
+                // Initialize Bootstrap Collapse instance
+                const collapseInstance = new bootstrap.Collapse(communicationCollapse, {
+                    toggle: false
+                });
+
+                // Handle toggle click
+                communicationToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    // Toggle the collapse
+                    if (communicationCollapse.classList.contains('show')) {
+                        collapseInstance.hide();
+                    } else {
+                        collapseInstance.show();
+                    }
+                });
+
+                // Update aria-expanded attribute when collapse changes
+                communicationCollapse.addEventListener('show.bs.collapse', function() {
+                    communicationToggle.setAttribute('aria-expanded', 'true');
+                });
+
+                communicationCollapse.addEventListener('hide.bs.collapse', function() {
+                    communicationToggle.setAttribute('aria-expanded', 'false');
+                });
+            }
+        }
+
+        // Initialize on DOMContentLoaded or immediately if DOM is already loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initCommunicationDropdown);
+        } else {
+            initCommunicationDropdown();
+        }
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

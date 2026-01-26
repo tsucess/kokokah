@@ -705,24 +705,24 @@
 
                             </div>
                             <div class="modal-form-input-border" id="recipientNameContainer" style="display: none;">
-                                <label for="recipientName" class="modal-label">Recipient Name</label>
+                                <label for="recipientName" class="modal-label" data-i18n="wallet.recipient_name">Recipient Name</label>
                                 <input class="modal-input" type="text" id="recipientName"
                                     placeholder="Recipient name" readonly style="text-align:left; cursor: not-allowed;" />
                             </div>
                             <div class="modal-form-input-border">
-                                <label for="transferAmount" class="modal-label">Amount (₦)</label>
+                                <label for="transferAmount" class="modal-label" data-i18n="wallet.amount">Amount (₦)</label>
                                 <input class="modal-input" type="number" id="transferAmount" placeholder="Enter amount"
                                     min="1" step="1" required />
                             </div>
                             <div class="modal-form-input-border">
-                                <label for="transferDescription" class="modal-label">Description (Optional)</label>
+                                <label for="transferDescription" class="modal-label" data-i18n="wallet.description_optional">Description (Optional)</label>
                                 <input class="modal-input" type="text" id="transferDescription"
                                     placeholder="Transfer description" />
                             </div>
                         </div>
                         <div class="d-flex gap-2">
-                            <button type="button" class="btn addmoney-btn" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn primaryBtn" id="transferSubmitBtn">Transfer</button>
+                            <button type="button" class="btn addmoney-btn" data-bs-dismiss="modal" data-i18n="wallet.cancel">Cancel</button>
+                            <button type="submit" class="btn primaryBtn" id="transferSubmitBtn" data-i18n="wallet.transfer">Transfer</button>
                         </div>
                     </form>
                 </div>
@@ -950,22 +950,22 @@
 
                 <div style="padding: 20px 0;">
                     <div class="input-border">
-                        <label for="depositAmount" class="form-label">Amount (₦)</label>
+                        <label for="depositAmount" class="form-label" data-i18n="wallet.amount">Amount (₦)</label>
                         <input type="number" class="form-input" id="depositAmount" placeholder="Enter amount"
                             min="100" step="100" required>
                         <small class="text-danger d-none" id="amountErrorMsg"></small>
                     </div>
                     <div
                         style="margin-top: 15px; padding: 12px; background-color: #f0f8f9; border-radius: 8px; border-left: 4px solid #004A53;">
-                        <small style="color: #666;">Minimum amount: ₦100</small>
+                        <small style="color: #666;" data-i18n="wallet.minimum_amount">Minimum amount: ₦100</small>
                     </div>
                 </div>
 
                 <div style="display: flex; gap: 12px; margin-top: 20px;">
                     <button type="button" class="addmoney-btn" style="flex: 1; background: white;"
-                        onclick="closeAmountModal()">Cancel</button>
+                        onclick="closeAmountModal()" data-i18n="wallet.cancel">Cancel</button>
                     <button type="button" class="enroll-btn" style="flex: 1;"
-                        onclick="proceedToGatewaySelection()">Continue</button>
+                        onclick="proceedToGatewaySelection()" data-i18n="wallet.continue">Continue</button>
                 </div>
             </div>
         </div>
@@ -974,8 +974,8 @@
         <div id="paymentGatewayModal" class="payment-method-modal">
             <div class="payment-method-content">
                 <button class="payment-method-close" onclick="closePaymentGatewayModal()">&times;</button>
-                <h2 class="payment-method-header">Select Payment Method</h2>
-                <p class="payment-method-subtitle">Choose your preferred payment gateway</p>
+                <h2 class="payment-method-header" data-i18n="wallet.select_payment_method">Select Payment Method</h2>
+                <p class="payment-method-subtitle" data-i18n="wallet.choose_payment_gateway">Choose your preferred payment gateway</p>
 
                 <div class="payment-method-list">
                     <!-- Paystack -->
@@ -986,7 +986,7 @@
                         </div>
                         <div class="payment-method-info">
                             <div class="payment-method-name">Paystack</div>
-                            <div class="payment-method-desc">Fast and secure payment</div>
+                            <div class="payment-method-desc" data-i18n="wallet.paystack_desc">Fast and secure payment</div>
                         </div>
                     </div>
 
@@ -998,7 +998,7 @@
                         </div>
                         <div class="payment-method-info">
                             <div class="payment-method-name">Flutterwave</div>
-                            <div class="payment-method-desc">Multiple payment options</div>
+                            <div class="payment-method-desc" data-i18n="wallet.flutterwave_desc">Multiple payment options</div>
                         </div>
                     </div>
 
@@ -1010,7 +1010,7 @@
                         </div>
                         <div class="payment-method-info">
                             <div class="payment-method-name">Stripe</div>
-                            <div class="payment-method-desc">International payments</div>
+                            <div class="payment-method-desc" data-i18n="wallet.stripe_desc">International payments</div>
                         </div>
                     </div>
 
@@ -1022,16 +1022,16 @@
                         </div>
                         <div class="payment-method-info">
                             <div class="payment-method-name">PayPal</div>
-                            <div class="payment-method-desc">Secure online payment</div>
+                            <div class="payment-method-desc" data-i18n="wallet.paypal_desc">Secure online payment</div>
                         </div>
                     </div>
                 </div>
 
                 <div style="display: flex; gap: 12px; margin-top: 20px;">
                     <button type="button" class="addmoney-btn" style="flex: 1; background: white;"
-                        onclick="closePaymentGatewayModal()">Cancel</button>
+                        onclick="closePaymentGatewayModal()" data-i18n="wallet.cancel">Cancel</button>
                     <button type="button" class="enroll-btn" style="flex: 1;"
-                        onclick="proceedWithGateway()">Continue</button>
+                        onclick="proceedWithGateway()" data-i18n="wallet.continue">Continue</button>
                 </div>
             </div>
         </div>
@@ -1149,7 +1149,8 @@
                         eyeIcon.classList.add('fa-eye');
                     }
                 } else {
-                    showToast('Failed to load wallet data', 'error');
+                    const msg = window.i18nManager ? window.i18nManager.translate('wallet.failed_load_wallet') : 'Failed to load wallet data';
+                    showToast(msg, 'error');
                 }
 
                 // Load saved payment methods and display default card
@@ -1157,7 +1158,8 @@
 
             } catch (error) {
                 console.error('Error loading wallet data:', error);
-                showToast('Error loading wallet data: ' + error.message, 'error');
+                const msg = window.i18nManager ? window.i18nManager.translate('wallet.error_load_wallet', {error: error.message}) : 'Error loading wallet data: ' + error.message;
+                showToast(msg, 'error');
             }
         }
 
@@ -1300,11 +1302,13 @@
                     displayTransactions(result.data);
                 } else {
                     console.log('Failed to load transactions - result:', result);
-                    showToast('Failed to load transactions', 'error');
+                    const msg = window.i18nManager ? window.i18nManager.translate('wallet.failed_load_transactions') : 'Failed to load transactions';
+                    showToast(msg, 'error');
                 }
             } catch (error) {
                 console.error('Error loading transactions:', error);
-                showToast('Error loading transactions: ' + error.message, 'error');
+                const msg = window.i18nManager ? window.i18nManager.translate('wallet.error_load_transactions', {error: error.message}) : 'Error loading transactions: ' + error.message;
+                showToast(msg, 'error');
             }
         }
 
@@ -1460,7 +1464,8 @@
                         const cardModal = new bootstrap.Modal(document.getElementById('addCard'));
                         cardModal.show();
                     } else {
-                        showToast('No card to edit. Please save a card first.', 'warning');
+                        const msg = window.i18nManager ? window.i18nManager.translate('wallet.no_card_edit') : 'No card to edit. Please save a card first.';
+                        showToast(msg, 'warning');
                     }
                 });
             }
@@ -1473,7 +1478,8 @@
                         const deleteModal = new bootstrap.Modal(document.getElementById('deleteCard'));
                         deleteModal.show();
                     } else {
-                        showToast('No card to delete. Please save a card first.', 'warning');
+                        const msg = window.i18nManager ? window.i18nManager.translate('wallet.no_card_delete') : 'No card to delete. Please save a card first.';
+                        showToast(msg, 'warning');
                     }
                 });
             }
@@ -1697,12 +1703,14 @@
             const depositAmount = parseFloat(modal.dataset.depositAmount);
 
             if (!selectedGateway) {
-                showToast('Please select a payment gateway', 'warning');
+                const msg = window.i18nManager ? window.i18nManager.translate('wallet.select_payment_gateway') : 'Please select a payment gateway';
+                showToast(msg, 'warning');
                 return;
             }
 
             if (!depositAmount || depositAmount < 100) {
-                showToast('Invalid amount. Please enter at least ₦100', 'warning');
+                const msg = window.i18nManager ? window.i18nManager.translate('wallet.invalid_amount') : 'Invalid amount. Please enter at least ₦100';
+                showToast(msg, 'warning');
                 return;
             }
 
@@ -1741,18 +1749,21 @@
                             window.location.href = authUrl;
                         }, 500);
                     } else {
-                        showToast('Payment gateway URL not found', 'error');
+                        const msg = window.i18nManager ? window.i18nManager.translate('wallet.gateway_url_not_found') : 'Payment gateway URL not found';
+                        showToast(msg, 'error');
                         continueBtn.disabled = false;
                         continueBtn.textContent = originalText;
                     }
                 } else {
-                    showToast(result.message || 'Failed to initialize payment', 'error');
+                    const msg = result.message || (window.i18nManager ? window.i18nManager.translate('wallet.failed_init_payment') : 'Failed to initialize payment');
+                    showToast(msg, 'error');
                     continueBtn.disabled = false;
                     continueBtn.textContent = originalText;
                 }
             } catch (error) {
                 console.error('Payment initialization error:', error);
-                showToast('Error initializing payment: ' + error.message, 'error');
+                const msg = window.i18nManager ? window.i18nManager.translate('wallet.error_init_payment', {error: error.message}) : 'Error initializing payment: ' + error.message;
+                showToast(msg, 'error');
                 const continueBtn = event.target;
                 continueBtn.disabled = false;
                 continueBtn.textContent = 'Continue';
@@ -1831,31 +1842,36 @@
 
             // Validate inputs
             if (!recipientEmail) {
-                showToast('Please enter recipient email address', 'error');
+                const msg = window.i18nManager ? window.i18nManager.translate('wallet.enter_recipient_email') : 'Please enter recipient email address';
+                showToast(msg, 'error');
                 return;
             }
 
             // Validate email format
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(recipientEmail)) {
-                showToast('Please enter a valid email address', 'error');
+                const msg = window.i18nManager ? window.i18nManager.translate('wallet.invalid_email') : 'Please enter a valid email address';
+                showToast(msg, 'error');
                 return;
             }
 
             // Check if recipient was validated (name should be displayed)
             if (nameContainer.style.display === 'none') {
-                showToast('Please validate recipient email first', 'error');
+                const msg = window.i18nManager ? window.i18nManager.translate('wallet.validate_recipient_email') : 'Please validate recipient email first';
+                showToast(msg, 'error');
                 return;
             }
 
             // Check if there are any validation errors
             if (!errorElement.classList.contains('d-none')) {
-                showToast('Please fix the recipient email error', 'error');
+                const msg = window.i18nManager ? window.i18nManager.translate('wallet.fix_recipient_error') : 'Please fix the recipient email error';
+                showToast(msg, 'error');
                 return;
             }
 
             if (!transferAmount || transferAmount < 1) {
-                showToast('Please enter a valid transfer amount (minimum ₦1)', 'error');
+                const msg = window.i18nManager ? window.i18nManager.translate('wallet.invalid_transfer_amount') : 'Please enter a valid transfer amount (minimum ₦1)';
+                showToast(msg, 'error');
                 return;
             }
 
@@ -1872,7 +1888,8 @@
                 console.log('Transfer result:', result);
 
                 if (result.success) {
-                    showToast('Transfer successful!', 'success');
+                    const msg = window.i18nManager ? window.i18nManager.translate('wallet.transfer_success') : 'Transfer successful!';
+                    showToast(msg, 'success');
                     document.getElementById('transferForm').reset();
 
                     // Close modal and remove backdrop
@@ -1919,7 +1936,8 @@
                 }
             } catch (error) {
                 console.error('Transfer error:', error);
-                showToast('Error processing transfer: ' + error.message, 'error');
+                const msg = window.i18nManager ? window.i18nManager.translate('wallet.transfer_error', {error: error.message}) : 'Error processing transfer: ' + error.message;
+                showToast(msg, 'error');
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.textContent = originalText;
@@ -1931,7 +1949,8 @@
          */
         async function handleDeleteCard() {
             if (!currentCard) {
-                showToast('No card selected for deletion', 'error');
+                const msg = window.i18nManager ? window.i18nManager.translate('wallet.no_card_selected') : 'No card selected for deletion';
+                showToast(msg, 'error');
                 return;
             }
 
@@ -1949,7 +1968,8 @@
                 console.log('Delete result:', result);
 
                 if (result.success) {
-                    showToast('Card deleted successfully!', 'success');
+                    const msg = window.i18nManager ? window.i18nManager.translate('wallet.card_deleted_success') : 'Card deleted successfully!';
+                    showToast(msg, 'success');
 
                     // Reset current card first
                     currentCard = null;
@@ -1990,12 +2010,14 @@
                     // Reload wallet data
                     await loadWalletData();
                 } else {
-                    showToast(result.message || 'Failed to delete card', 'error');
+                    const msg = result.message || (window.i18nManager ? window.i18nManager.translate('wallet.failed_delete_card') : 'Failed to delete card');
+                    showToast(msg, 'error');
                     console.error('Delete failed:', result);
                 }
             } catch (error) {
                 console.error('Delete card error:', error);
-                showToast('Error deleting card: ' + error.message, 'error');
+                const msg = window.i18nManager ? window.i18nManager.translate('wallet.error_delete_card', {error: error.message}) : 'Error deleting card: ' + error.message;
+                showToast(msg, 'error');
             } finally {
                 deleteBtn.disabled = false;
                 deleteBtn.textContent = originalText;
@@ -2082,10 +2104,12 @@
                 if (luhnCheck(value)) {
                     errorElement.classList.add('d-none');
                 } else {
-                    showError('cardNumberError', 'Invalid card number (failed validation check)');
+                    const msg = window.i18nManager ? window.i18nManager.translate('wallet.invalid_card_number') : 'Invalid card number (failed validation check)';
+                    showError('cardNumberError', msg);
                 }
             } else if (value.length > 0) {
-                showError('cardNumberError', `Card number must be 16 digits (${value.length}/16)`);
+                const msg = window.i18nManager ? window.i18nManager.translate('wallet.card_number_digits', {count: value.length}) : `Card number must be 16 digits (${value.length}/16)`;
+                showError('cardNumberError', msg);
             } else {
                 errorElement.classList.add('d-none');
             }
@@ -2111,7 +2135,8 @@
                 const monthNum = parseInt(month);
 
                 if (monthNum < 1 || monthNum > 12) {
-                    showError('expiryDateError', 'Invalid month (01-12)');
+                    const msg = window.i18nManager ? window.i18nManager.translate('wallet.invalid_month') : 'Invalid month (01-12)';
+                    showError('expiryDateError', msg);
                 } else {
                     const currentDate = new Date();
                     const currentYear = currentDate.getFullYear() % 100;
@@ -2119,7 +2144,8 @@
                     const expiryYear = parseInt(year);
 
                     if (expiryYear < currentYear || (expiryYear === currentYear && monthNum < currentMonth)) {
-                        showError('expiryDateError', 'Card has expired');
+                        const msg = window.i18nManager ? window.i18nManager.translate('wallet.card_expired') : 'Card has expired';
+                        showError('expiryDateError', msg);
                     } else {
                         errorElement.classList.add('d-none');
                     }
@@ -2147,7 +2173,8 @@
             if (value.length === 3) {
                 errorElement.classList.add('d-none');
             } else if (value.length > 0) {
-                showError('cvvError', `CVV must be 3 digits (${value.length}/3)`);
+                const msg = window.i18nManager ? window.i18nManager.translate('wallet.cvv_3_digits', {count: value.length}) : `CVV must be 3 digits (${value.length}/3)`;
+                showError('cvvError', msg);
             } else {
                 errorElement.classList.add('d-none');
             }
@@ -2208,7 +2235,8 @@
             } else {
                 // For updates, at least card holder name is required
                 if (!cardHolderName) {
-                    showToast('Card holder name is required', 'error');
+                    const msg = window.i18nManager ? window.i18nManager.translate('wallet.card_holder_required') : 'Card holder name is required';
+                    showToast(msg, 'error');
                     return;
                 }
             }
@@ -2240,7 +2268,9 @@
                 const result = await WalletApiClient.addPaymentMethod(payload);
 
                 if (result.success) {
-                    const message = isUpdate ? 'Card updated successfully!' : 'Card saved successfully!';
+                    const msgKey = isUpdate ? 'wallet.card_updated_success' : 'wallet.card_saved_success';
+                    const fallback = isUpdate ? 'Card updated successfully!' : 'Card saved successfully!';
+                    const message = window.i18nManager ? window.i18nManager.translate(msgKey) : fallback;
                     showToast(message, 'success');
 
                     // Close modal and remove backdrop
@@ -2266,11 +2296,13 @@
                     // Reload wallet data to show updated card info
                     await loadWalletData();
                 } else {
-                    showToast(result.message || 'Failed to save card', 'error');
+                    const msg = result.message || (window.i18nManager ? window.i18nManager.translate('wallet.failed_save_card') : 'Failed to save card');
+                    showToast(msg, 'error');
                 }
             } catch (error) {
                 console.error('Error saving card:', error);
-                showToast('Error saving card: ' + error.message, 'error');
+                const msg = window.i18nManager ? window.i18nManager.translate('wallet.error_save_card', {error: error.message}) : 'Error saving card: ' + error.message;
+                showToast(msg, 'error');
             } finally {
                 // Restore button state
                 submitBtn.disabled = false;
@@ -2294,36 +2326,42 @@
 
             // Validate cardholder name
             if (!cardHolderName || cardHolderName.trim().length < 3) {
-                showError('cardHolderNameError', 'Cardholder name must be at least 3 characters');
+                const msg = window.i18nManager ? window.i18nManager.translate('wallet.cardholder_name_min') : 'Cardholder name must be at least 3 characters';
+                showError('cardHolderNameError', msg);
                 isValid = false;
             } else if (!/^[a-zA-Z\s'-]+$/.test(cardHolderName)) {
-                showError('cardHolderNameError',
-                    'Cardholder name can only contain letters, spaces, hyphens, and apostrophes');
+                const msg = window.i18nManager ? window.i18nManager.translate('wallet.cardholder_name_invalid') : 'Cardholder name can only contain letters, spaces, hyphens, and apostrophes';
+                showError('cardHolderNameError', msg);
                 isValid = false;
             }
 
             // Validate card number (exactly 16 digits)
             if (!cardNumber) {
-                showError('cardNumberError', 'Card number is required');
+                const msg = window.i18nManager ? window.i18nManager.translate('wallet.card_number_required') : 'Card number is required';
+                showError('cardNumberError', msg);
                 isValid = false;
             } else if (!/^\d{16}$/.test(cardNumber)) {
-                showError('cardNumberError', 'Card number must be exactly 16 digits');
+                const msg = window.i18nManager ? window.i18nManager.translate('wallet.card_number_16_digits') : 'Card number must be exactly 16 digits';
+                showError('cardNumberError', msg);
                 isValid = false;
             } else if (!luhnCheck(cardNumber)) {
-                showError('cardNumberError', 'Invalid card number (failed validation check)');
+                const msg = window.i18nManager ? window.i18nManager.translate('wallet.invalid_card_number') : 'Invalid card number (failed validation check)';
+                showError('cardNumberError', msg);
                 isValid = false;
             }
 
             // Validate expiry date (MM/YY format)
             if (!expiryDate || !/^\d{2}\/\d{2}$/.test(expiryDate)) {
-                showError('expiryDateError', 'Expiry date must be in MM/YY format');
+                const msg = window.i18nManager ? window.i18nManager.translate('wallet.expiry_date_format') : 'Expiry date must be in MM/YY format';
+                showError('expiryDateError', msg);
                 isValid = false;
             } else {
                 // Check if expiry date is valid
                 const [month, year] = expiryDate.split('/');
                 const monthNum = parseInt(month);
                 if (monthNum < 1 || monthNum > 12) {
-                    showError('expiryDateError', 'Invalid month (01-12)');
+                    const msg = window.i18nManager ? window.i18nManager.translate('wallet.invalid_month') : 'Invalid month (01-12)';
+                    showError('expiryDateError', msg);
                     isValid = false;
                 } else {
                     // Check if card is not expired
@@ -2333,7 +2371,8 @@
                     const expiryYear = parseInt(year);
 
                     if (expiryYear < currentYear || (expiryYear === currentYear && monthNum < currentMonth)) {
-                        showError('expiryDateError', 'Card has expired');
+                        const msg = window.i18nManager ? window.i18nManager.translate('wallet.card_expired') : 'Card has expired';
+                        showError('expiryDateError', msg);
                         isValid = false;
                     }
                 }
@@ -2341,10 +2380,12 @@
 
             // Validate CVV (exactly 3 digits)
             if (!cvv) {
-                showError('cvvError', 'CVV is required');
+                const msg = window.i18nManager ? window.i18nManager.translate('wallet.cvv_required') : 'CVV is required';
+                showError('cvvError', msg);
                 isValid = false;
             } else if (!/^\d{3}$/.test(cvv)) {
-                showError('cvvError', 'CVV must be exactly 3 digits');
+                const msg = window.i18nManager ? window.i18nManager.translate('wallet.cvv_3_digits_exact') : 'CVV must be exactly 3 digits';
+                showError('cvvError', msg);
                 isValid = false;
             }
 

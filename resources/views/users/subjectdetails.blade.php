@@ -1890,11 +1890,13 @@
                     modal.show();
                 } else {
                     console.error('Modal element not found');
-                    showError('Error displaying modal');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.error_displaying_modal') : 'Error displaying modal';
+                    showError(msg);
                 }
             } catch (error) {
                 console.error('Error showing all quizzes results modal:', error);
-                showError('Error displaying quiz results');
+                const msg = window.i18nManager ? window.i18nManager.translate('subject_details.error_displaying_results') : 'Error displaying quiz results';
+                showError(msg);
             }
         };
 
@@ -1906,7 +1908,8 @@
             const modalElement = document.getElementById('quizResultsModal');
 
             if (!modalElement) {
-                showError('Modal not found');
+                const msg = window.i18nManager ? window.i18nManager.translate('subject_details.modal_not_found') : 'Modal not found';
+                showError(msg);
                 return;
             }
 
@@ -1927,16 +1930,19 @@
             }
 
             if (quizIds.length === 0) {
-                showError('No quizzes found to retake');
+                const msg = window.i18nManager ? window.i18nManager.translate('subject_details.no_quizzes_to_retake') : 'No quizzes found to retake';
+                showError(msg);
                 return;
             }
 
             // Reload quizzes to allow retake - pass the first quiz ID as the retaking quiz
             loadQuizzesForRetake(quizIds[0]).then(() => {
-                showSuccess('Quizzes reloaded. You can now retake them!');
+                const msg = window.i18nManager ? window.i18nManager.translate('subject_details.quizzes_reloaded') : 'Quizzes reloaded. You can now retake them!';
+                showSuccess(msg);
             }).catch(error => {
                 console.error('Error reloading quizzes:', error);
-                showError('Error reloading quizzes');
+                const msg = window.i18nManager ? window.i18nManager.translate('subject_details.error_reloading_quizzes') : 'Error reloading quizzes';
+                showError(msg);
             });
         };
     </script>

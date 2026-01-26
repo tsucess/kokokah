@@ -341,7 +341,8 @@ let currentCourseId = null;
          */
         window.showSuccess = function(message) {
             if (window.ToastNotification) {
-                window.ToastNotification.success('Success', message);
+                const successTitle = window.i18nManager ? window.i18nManager.translate('toast.success') : 'Success';
+                window.ToastNotification.success(successTitle, message);
             } else {
                 alert('Success: ' + message);
             }
@@ -352,7 +353,8 @@ let currentCourseId = null;
          */
         window.showError = function(message) {
             if (window.ToastNotification) {
-                window.ToastNotification.error('Error', message);
+                const errorTitle = window.i18nManager ? window.i18nManager.translate('toast.error') : 'Error';
+                window.ToastNotification.error(errorTitle, message);
             } else {
                 alert('Error: ' + message);
             }
@@ -370,7 +372,8 @@ let currentCourseId = null;
             currentCourseId = urlParams.get('course_id') || sessionStorage.getItem('selectedCourseId');
 
             if (!currentCourseId) {
-                ToastNotification.error('Course not found');
+                const msg = window.i18nManager ? window.i18nManager.translate('term_subject.course_not_found') : 'Course not found';
+                ToastNotification.error(window.i18nManager ? window.i18nManager.translate('toast.error') : 'Error', msg);
                 return;
             }
 
@@ -396,7 +399,8 @@ let currentCourseId = null;
                 }
             } catch (error) {
                 console.error('Error loading course:', error);
-                ToastNotification.error('Failed to load course data');
+                const msg = window.i18nManager ? window.i18nManager.translate('term_subject.failed_load_course') : 'Failed to load course data';
+                ToastNotification.error(window.i18nManager ? window.i18nManager.translate('toast.error') : 'Error', msg);
             }
         }
 
@@ -519,7 +523,8 @@ let currentCourseId = null;
                 renderLessons(topicsForTerm);
             } catch (error) {
                 console.error('Error loading topics:', error);
-                ToastNotification.error('Failed to load topics');
+                const msg = window.i18nManager ? window.i18nManager.translate('term_subject.failed_load_topics') : 'Failed to load topics';
+                ToastNotification.error(window.i18nManager ? window.i18nManager.translate('toast.error') : 'Error', msg);
             }
         }
 
@@ -540,7 +545,8 @@ let currentCourseId = null;
                 }
             } catch (error) {
                 console.error('Error loading lessons:', error);
-                ToastNotification.error('Failed to load lessons');
+                const msg = window.i18nManager ? window.i18nManager.translate('term_subject.failed_load_lessons') : 'Failed to load lessons';
+                ToastNotification.error(window.i18nManager ? window.i18nManager.translate('toast.error') : 'Error', msg);
             }
         }
 
@@ -926,7 +932,8 @@ let currentCourseId = null;
 
             const courseId = document.querySelector('[data-course-id]')?.getAttribute('data-course-id');
             if (!courseId) {
-                showError('Course ID not found');
+                const msg = window.i18nManager ? window.i18nManager.translate('term_subject.course_id_not_found') : 'Course ID not found';
+                showError(msg);
                 return;
             }
 
@@ -956,7 +963,8 @@ let currentCourseId = null;
 
                 const result = await response.json();
                 if (result.success) {
-                    showSuccess('Review submitted successfully!');
+                    const msg = window.i18nManager ? window.i18nManager.translate('term_subject.review_submitted_success') : 'Review submitted successfully!';
+                    showSuccess(msg);
 
                     // Force hide the loader since this is an AJAX request
                     if (window.kokokahLoader) {
@@ -969,7 +977,8 @@ let currentCourseId = null;
                         loadCourseReviews();
                     }, 1000);
                 } else {
-                    showError(result.message || 'Failed to submit review');
+                    const msg = result.message || (window.i18nManager ? window.i18nManager.translate('term_subject.failed_submit_review') : 'Failed to submit review');
+                    showError(msg);
                     submitBtn.disabled = false;
                     submitBtn.textContent = originalText;
 
@@ -980,7 +989,8 @@ let currentCourseId = null;
                 }
             } catch (error) {
                 console.error('Error:', error);
-                showError('Failed to submit review');
+                const msg = window.i18nManager ? window.i18nManager.translate('term_subject.failed_submit_review') : 'Failed to submit review';
+                showError(msg);
                 submitBtn.disabled = false;
                 submitBtn.textContent = originalText;
 
@@ -1193,14 +1203,17 @@ let currentCourseId = null;
                 const result = await response.json();
 
                 if (result.success) {
-                    showSuccess('Thank you for marking this review as helpful!');
+                    const msg = window.i18nManager ? window.i18nManager.translate('term_subject.review_helpful_success') : 'Thank you for marking this review as helpful!';
+                    showSuccess(msg);
                     loadCourseReviews(); // Reload reviews
                 } else {
-                    showError(result.message || 'Failed to mark review as helpful');
+                    const msg = result.message || (window.i18nManager ? window.i18nManager.translate('term_subject.failed_mark_helpful') : 'Failed to mark review as helpful');
+                    showError(msg);
                 }
             } catch (error) {
                 console.error('Error marking review as helpful:', error);
-                showError('Error marking review as helpful');
+                const msg = window.i18nManager ? window.i18nManager.translate('term_subject.error_mark_helpful') : 'Error marking review as helpful';
+                showError(msg);
             }
         }
 
