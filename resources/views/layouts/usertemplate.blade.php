@@ -354,9 +354,9 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="notifications.close">
                         <i class="fa-solid fa-times" style="margin-right: 6px;"></i>Close
                     </button>
-                    <button type="button" class="btn btn-primary" id="markAllReadBtn" data-i18n="notifications.mark_all_read">
+                    {{-- <button type="button" class="btn btn-primary" id="markAllReadBtn" data-i18n="notifications.mark_all_read">
                         <i class="fa-solid fa-check-double" style="margin-right: 6px;"></i>Mark All as Read
-                    </button>
+                    </button> --}}
                 </div>
             </div>
         </div>
