@@ -14,7 +14,7 @@ class NotificationModal {
    */
   async init() {
     this.modal = new bootstrap.Modal(document.getElementById('notificationModal'));
-    this.setupEventListeners();
+    // this.setupEventListeners();
     await this.loadNotifications();
   }
 
