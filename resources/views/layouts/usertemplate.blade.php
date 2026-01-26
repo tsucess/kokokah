@@ -127,7 +127,7 @@
 
 
         <div class="sidebar-footer mt-auto p-3">
-            <a class="nav-item-link" href="#"><i class="fa-solid fa-gear pe-3"></i> <span data-i18n="nav.settings">Settings</span></a>
+            {{-- <a class="nav-item-link" href="#"><i class="fa-solid fa-gear pe-3"></i> <span data-i18n="nav.settings">Settings</span></a> --}}
             <div class="profile mt-5" id="profileSection">
                 <img class="avatar" id="profileImage" src="{{ asset('images/default-avatar.png') }}" alt="user"
                     style="cursor: pointer; width: 40px; height: 40px; object-fit: cover; border-radius: 50%; border: 2px solid #ff00;"

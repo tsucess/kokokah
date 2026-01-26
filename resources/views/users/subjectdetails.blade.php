@@ -1409,7 +1409,8 @@
                 const quizDiv = quizContainer.querySelector(`[data-quiz-id="${quizId}"]`);
 
                 if (!quizDiv) {
-                    showError('Quiz not found');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.no_quizzes_found') : 'Quiz not found';
+                    showError(msg);
                     return;
                 }
 
@@ -1420,7 +1421,8 @@
 
                 // Check if user can attempt
                 if (nextAttemptNumber > maxAttempts) {
-                    showError(`You have reached the maximum number of attempts (${maxAttempts})`);
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.max_attempts_reached').replace('{max}', maxAttempts) : `You have reached the maximum number of attempts (${maxAttempts})`;
+                    showError(msg);
                     return;
                 }
 
@@ -1442,10 +1444,12 @@
                     }
                 }, 300);
 
-                showSuccess(`Quiz reloaded. Attempt ${nextAttemptNumber} of ${maxAttempts}`);
+                const msg = window.i18nManager ? window.i18nManager.translate('subject_details.quiz_reloaded').replace('{current}', nextAttemptNumber).replace('{max}', maxAttempts) : `Quiz reloaded. Attempt ${nextAttemptNumber} of ${maxAttempts}`;
+                showSuccess(msg);
             } catch (error) {
                 console.error('Error retaking quiz:', error);
-                showError('Error reloading quiz');
+                const msg = window.i18nManager ? window.i18nManager.translate('subject_details.error_reloading_quiz') : 'Error reloading quiz';
+                showError(msg);
             }
         };
 
@@ -1516,7 +1520,8 @@
 
             try {
                 if (!currentLesson || !currentLesson.id) {
-                    showError('Lesson data not loaded');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.lesson_data_not_loaded') : 'Lesson data not loaded';
+                    showError(msg);
                     return;
                 }
 
@@ -1546,7 +1551,8 @@
                     const progressTrack = document.getElementById('progressTrack');
                     progressTrack.style.width = progressPercentage + '%';
 
-                    showSuccess('Lesson marked as complete!');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.lesson_marked_complete') : 'Lesson marked as complete!';
+                    showSuccess(msg);
 
                     // Emit event for global data refresh
                     if (window.DataRefreshService) {
@@ -1557,13 +1563,15 @@
                         });
                     }
                 } else {
-                    showError(response.message || 'Failed to mark lesson complete');
+                    const msg = response.message || (window.i18nManager ? window.i18nManager.translate('subject_details.error_marking_complete') : 'Failed to mark lesson complete');
+                    showError(msg);
                     // Re-enable button on error
                     markCompleteBtn.disabled = false;
                 }
             } catch (error) {
                 console.error('Error marking lesson complete:', error);
-                showError('Error marking lesson complete');
+                const msg = window.i18nManager ? window.i18nManager.translate('subject_details.error_marking_complete') : 'Error marking lesson complete';
+                showError(msg);
                 // Re-enable button on error
                 const markCompleteBtn = document.getElementById('markCompleteBtn');
                 markCompleteBtn.disabled = false;
@@ -1597,7 +1605,8 @@
                     window.scrollTo(0, 0);
                 } catch (error) {
                     console.error('Error navigating to previous lesson:', error);
-                    showError('Error loading previous lesson');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.error_loading_previous') : 'Error loading previous lesson';
+                    showError(msg);
                     currentLessonIndex++; // Revert index on error
                 } finally {
                     isNavigating = false;
@@ -1630,7 +1639,8 @@
                     window.scrollTo(0, 0);
                 } catch (error) {
                     console.error('Error navigating to next lesson:', error);
-                    showError('Error loading next lesson');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.error_loading_next') : 'Error loading next lesson';
+                    showError(msg);
                     currentLessonIndex--; // Revert index on error
                 } finally {
                     isNavigating = false;
@@ -1689,14 +1699,16 @@
             try {
                 // Get all quizzes for the current lesson
                 if (!currentLesson || !currentLesson.id) {
-                    showError('No lesson selected');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.lesson_not_selected') : 'No lesson selected';
+                    showError(msg);
                     return;
                 }
 
                 const quizzesResponse = await window.LessonApiClient.getQuizzesByLesson(currentLesson.id);
 
                 if (!quizzesResponse.success || !quizzesResponse.data) {
-                    showError('Failed to load quizzes');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.no_quizzes_found') : 'Failed to load quizzes';
+                    showError(msg);
                     return;
                 }
 
@@ -1721,7 +1733,8 @@
                 }
 
                 if (allQuizResults.length === 0) {
-                    showError('No quiz results found. Please submit all quizzes first.');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.no_quiz_results') : 'No quiz results found. Please submit all quizzes first.';
+                    showError(msg);
                     return;
                 }
 
@@ -1764,7 +1777,8 @@
                 const resultsModalElement = document.getElementById('quizResultsModal');
 
                 if (!modalBody) {
-                    showError('Error: Modal body not found');
+                    const msg = window.i18nManager ? window.i18nManager.translate('subject_details.modal_not_found') : 'Error: Modal body not found';
+                    showError(msg);
                     return;
                 }
 
