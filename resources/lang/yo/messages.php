@@ -93,7 +93,7 @@ return [
     'login' => 'Wọlé',
     'settings' => 'Ètò',
     'language_preference' => 'Ààyè Èdè',
-    'save_settings' => 'Fipamọ́ Ètò',
+    'save_settings' => 'Fi Ètò pamọ́ ',
     'select_language' => 'Yan èdè kan',
     'my_profile' => 'Pẹ̀ẹ́ mi',
     'basic_information' => 'Àlàyé Ipilẹ̀',
