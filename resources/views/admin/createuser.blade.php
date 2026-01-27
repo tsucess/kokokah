@@ -957,7 +957,6 @@
                         }, 1500);
                     } else {
                         // Handle error response
-                        console.log('Request failed:', result);
 
                         if (result.errors) {
                             // Show validation errors with user-friendly messages

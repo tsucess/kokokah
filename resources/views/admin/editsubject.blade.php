@@ -1399,7 +1399,7 @@
         // Load course data if course ID is provided
         async function loadCourseData() {
             if (!courseId) {
-                console.log('No course ID provided');
+            
                 return;
             }
 
@@ -1414,7 +1414,6 @@
                 }
 
                 const course = result.data || result;
-                console.log('Subject updated successfully:', result.data);
 
                 // Populate form fields with course data
                 if (course.title) document.getElementById('courseTitle').value = course.title;
@@ -1465,7 +1464,6 @@
         // Load topics for the course
         async function loadTopics() {
             if (!courseId) {
-                console.log('No course ID provided');
                 return;
             }
 
@@ -1478,7 +1476,6 @@
                 }
 
                 const topics = result.data || [];
-                console.log('Topics loaded:', topics);
 
                 // Store topics for later use
                 window.courseTopics = topics;
@@ -1761,11 +1758,9 @@
                         }
                     });
                     const termsResult = await termsResponse.json();
-                    console.log('Terms API Response:', termsResult);
                     if (termsResponse.ok && termsResult) {
                         // Handle both array and object with data property
                         const terms = Array.isArray(termsResult) ? termsResult : (termsResult.data || []);
-                        console.log('Processed terms:', terms);
 
                         // Populate subject term dropdown
                         const termSelect = document.getElementById('subjectTerm');
@@ -1788,8 +1783,6 @@
                                 topicTermSelect.appendChild(option);
                             });
                         }
-
-                        console.log('Terms loaded successfully. Total:', terms.length);
                     } else {
                         console.error('Failed to load terms. Response:', termsResult);
                     }
@@ -2019,9 +2012,6 @@
                     formData.append('level_id', courseLevel);
                     formData.append('term_id', term || null);
 
-                    // Debug duration value
-                    console.log('Duration value:', duration, 'Type:', typeof duration, 'Parsed:', parseInt(
-                        duration));
 
                     // Only send duration_hours if it has a valid value (min:1)
                     // If empty or 0, don't send the field at all (let backend use existing value)
@@ -2043,11 +2033,6 @@
                         formData.append('thumbnail', fileInput.files[0]);
                     }
 
-                    // Debug: Log FormData contents
-                    console.log('FormData contents:');
-                    for (let [key, value] of formData.entries()) {
-                        console.log(`${key}: ${value}`);
-                    }
 
                     // Use fetch to update course (FormData works better with fetch)
                     const token = localStorage.getItem('auth_token');
@@ -2078,7 +2063,6 @@
                         return;
                     }
 
-                    console.log('Subject updated successfully:', result);
 
                     // Show success message based on action
                     if (newStatus === 'published') {
@@ -2475,7 +2459,6 @@
                 // Populate term dropdown with the topic's current term
                 if (termSelect) {
                     termSelect.value = topic.term_id || '';
-                    console.log('Topic term set to:', topic.term_id);
                 }
 
                 // Store the topic ID being edited
@@ -2734,7 +2717,6 @@
                     `https://noembed.com/embed?url=https://www.youtube.com/watch?v=${videoId}`);
                 if (response.ok) {
                     const data = await response.json();
-                    console.log('YouTube noembed data:', data);
 
                     // Try to extract duration from the response
                     if (data.duration) {
@@ -2846,7 +2828,6 @@
                             `https://www.youtube.com/oembed?url=${encodeURIComponent(youtubeUrl)}&format=json`);
                         if (response.ok) {
                             const data = await response.json();
-                            console.log('YouTube oEmbed data:', data);
                             // YouTube oEmbed doesn't return duration, so we'll need to use a different approach
                             // Try to fetch the video page and extract duration from the HTML
                             return await getYouTubeDurationFromPage(videoId);

@@ -95,11 +95,6 @@
                     sessionStorage.getItem('registerEmail') ||
                     sessionStorage.getItem('resetEmail');
 
-        console.log('Page loaded - Email from URL:', UIHelpers.getUrlParameter('email'));
-        console.log('Page loaded - Email from registerEmail:', sessionStorage.getItem('registerEmail'));
-        console.log('Page loaded - Email from resetEmail:', sessionStorage.getItem('resetEmail'));
-        console.log('Final email value:', email);
-
         // Validate email on page load
         if (!email) {
             UIHelpers.showError('Email not found. Please register again.');
@@ -112,7 +107,6 @@
 
             const code = document.getElementById('verifycode').value.trim();
 
-            console.log('Verify form submitted - Email:', email, 'Code:', code);
 
             if (!email) {
                 UIHelpers.showError('Email not found. Please try again.');
@@ -149,7 +143,6 @@
         document.getElementById('resendLink').addEventListener('click', async (e) => {
             e.preventDefault();
 
-            console.log('Resend button clicked - Email:', email);
 
             if (!email) {
                 UIHelpers.showError('Email not found. Please try again.');
@@ -164,11 +157,8 @@
             resendLink.style.opacity = '0.5';
             resendLink.textContent = 'Sending...';
 
-            console.log('Calling resendVerificationCode API with email:', email);
-
             const result = await AuthApiClient.resendVerificationCode(email);
 
-            console.log('Resend API Response:', result);
 
             // Re-enable resend link
             resendLink.style.pointerEvents = 'auto';

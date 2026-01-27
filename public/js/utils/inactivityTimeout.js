@@ -37,7 +37,6 @@ class InactivityTimeoutManager {
     init() {
         this.attachActivityListeners();
         this.startInactivityTimer();
-        console.log('Inactivity Timeout Manager initialized - 30 minute timeout enabled');
     }
     
     /**

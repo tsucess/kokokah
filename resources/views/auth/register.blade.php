@@ -165,14 +165,6 @@
       const password = document.getElementById('password').value;
       const role = document.getElementById('role').value;
 
-      // Debug: Log the form data
-      console.log('Form Data:', {
-        firstName,
-        lastName,
-        email,
-        password,
-        role
-      });
 
       // Validate inputs
       if (!firstName || !lastName || !email || !password || !role) {
@@ -207,20 +199,10 @@
       // Store email for verification page
       sessionStorage.setItem('registerEmail', email);
 
-      // Debug: Log API call
-      console.log('Calling API with:', {
-        firstName,
-        lastName,
-        email,
-        password,
-        role
-      });
 
       // Call register API
       const result = await AuthApiClient.register(firstName, lastName, email, password, role);
 
-      // Debug: Log API response
-      console.log('API Response:', result);
 
       UIHelpers.showLoadingOverlay(false);
 

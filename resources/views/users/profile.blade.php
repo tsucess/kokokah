@@ -571,7 +571,6 @@
     <script>
 // Load profile data on page load
                     document.addEventListener('DOMContentLoaded', async () => {
-                        console.log('Profile page loaded, fetching user data...');
 
                         await loadProfileData();
                         setupEventListeners();
@@ -581,8 +580,6 @@
                     // Load profile data from API
                     async function loadProfileData() {
                         try {
-                            console.log('Fetching profile data from API...');
-                            console.log('Token:', localStorage.getItem('auth_token') ? 'Present' : 'Missing');
 
                             const response = await UserApiClient.getProfile();
 
@@ -669,7 +666,6 @@
                                     lastNameField.value = user.last_name || '';
                                 }
 
-                                console.log('Profile data loaded (success=false):', response.data);
                             } else {
                                 console.error('❌ Failed to fetch profile:', response);
                                 const errorMsg = response.message || response.error || 'Failed to load profile data';
@@ -680,7 +676,6 @@
 
                             // Check if it's a 401 error (unauthorized)
                             if (error.response?.status === 401 || error.status === 401) {
-                                console.log('User not authenticated, redirecting to login...');
                                 ToastNotification.error('Please log in to view your profile');
                                 setTimeout(() => {
                                     window.location.href = '/login';
@@ -772,7 +767,6 @@
 
                     // Setup event listeners
                     function setupEventListeners() {
-                        console.log('Setting up event listeners...');
 
                         // Password toggle for current password
                         const toggleCurrentPassword = document.getElementById('toggleCurrentPassword');
@@ -986,7 +980,6 @@
                             tab.addEventListener('shown.bs.tab', (e) => {
                                 const activeTabId = e.target.getAttribute('data-bs-target');
                                 localStorage.setItem('activeProfileTab', activeTabId);
-                                console.log('Active tab saved:', activeTabId);
                             });
                         });
                     }
@@ -1063,7 +1056,6 @@
                     // Save profile data
                     async function saveProfileData() {
                         try {
-                            console.log('Saving profile data...');
 
                             // Validate required fields
                             const firstName = document.getElementById('firstName').value.trim();
@@ -1190,7 +1182,6 @@
                                 // Use Bootstrap's tab method to show the tab
                                 const tab = new bootstrap.Tab(tabButton);
                                 tab.show();
-                                console.log('Active tab restored:', activeTabId);
                             }
                         }
                     }
@@ -1198,7 +1189,6 @@
                     // Load settings data on page load
                     async function loadSettingsData() {
                         try {
-                            console.log('Loading settings data...');
                             const response = await UserApiClient.getProfile();
 
                             if (response.success && response.data) {
@@ -1207,7 +1197,6 @@
 
                                 if (languageSelect && user.language_preference) {
                                     languageSelect.value = user.language_preference;
-                                    console.log('Language preference loaded:', user.language_preference);
                                 }
                             }
                         } catch (error) {
@@ -1225,8 +1214,6 @@
                                 ToastNotification.error('Please select a language');
                                 return;
                             }
-
-                            console.log('Saving settings with language:', language);
 
                             // Call the API to update language preference
                             const response = await fetch('/api/language/user/set', {
@@ -1246,7 +1233,6 @@
                             if (data.success) {
                                 const successMessage = window.i18nManager ? window.i18nManager.translate('profile.settings_saved_success') : 'Settings saved successfully!';
                                 ToastNotification.success(successMessage);
-                                console.log('Settings saved:', data.data);
 
                                 // Update localStorage
                                 const user = JSON.parse(localStorage.getItem('auth_user') || '{}');
@@ -1280,7 +1266,6 @@
                     // Update the initial DOMContentLoaded to include settings
                     const originalDOMContentLoaded = document.addEventListener;
                     document.addEventListener('DOMContentLoaded', async () => {
-                        console.log('Profile page loaded, fetching user data...');
 
                         await loadProfileData();
                         await loadSettingsData();

@@ -244,15 +244,6 @@
         .catch(error => console.error('Error marking helpful:', error));
     }
 
-    function previousPage() {
-        // Implement pagination if needed
-        console.log('Previous page clicked');
-    }
-
-    function nextPage() {
-        // Implement pagination if needed
-        console.log('Next page clicked');
-    }
 </script>
 @endsection
 

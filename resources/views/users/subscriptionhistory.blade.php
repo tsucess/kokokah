@@ -192,8 +192,7 @@
          */
         async function loadSubscriptionHistory(page = 1) {
             try {
-                console.log('Loading subscription history for page:', page);
-
+  
                 const token = localStorage.getItem('auth_token');
                 const response = await fetch(`/api/users/subscription-history?page=${page}&per_page=10`, {
                     headers: {
@@ -203,15 +202,11 @@
                 });
 
                 const data = await response.json();
-                console.log('Subscription History Response:', data);
 
                 if (data.success && data.data) {
                     allSubscriptions = data.data || [];
                     totalPages = data.pagination?.last_page || 1;
                     currentPage = page;
-
-                    console.log('Subscriptions loaded:', allSubscriptions);
-                    console.log('Total pages:', totalPages);
 
                     displaySubscriptions(allSubscriptions);
                     updatePagination();

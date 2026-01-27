@@ -109,36 +109,18 @@
         async function loadUserCourses() {
             try {
                 const response = await CourseApiClient.getMyCourses();
-                console.log('API Response:', response);
-                console.log('API Response Data:', response.data);
 
                 if (response.success && response.data) {
                     // Handle response structure: { courses: [...], total: ... }
                     userCourses = response.data.courses || response.data.data || response.data;
-
-                    console.log('Courses extracted:', userCourses);
-                    console.log('Number of courses:', userCourses.length);
-
-                    // Log each course's access_type
-                    if (Array.isArray(userCourses)) {
-                        userCourses.forEach((course, index) => {
-                            console.log(`Course ${index}:`, {
-                                title: course.course?.title || 'Unknown',
-                                access_type: course.access_type,
-                                course_id: course.course_id
-                            });
-                        });
-                    }
 
                     // Ensure userCourses is an array
                     if (!Array.isArray(userCourses)) {
                         userCourses = [];
                     }
 
-                    console.log('Final courses array:', userCourses);
                     renderCourses(userCourses);
                 } else {
-                    console.log('No success or data in response');
                     showNoCourses();
                 }
             } catch (error) {

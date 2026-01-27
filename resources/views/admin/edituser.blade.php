@@ -1023,14 +1023,7 @@
                     formData.append('profile_photo', profilePhoto.files[0]);
                 }
 
-                // Debug: Log form data
-                console.log('Sending update request to:', isEditMode ? `/api/admin/users/${userId}` :
-                    '/api/admin/users');
-                console.log('Method:', isEditMode ? 'PUT' : 'POST');
-                console.log('Form data entries:');
-                for (let [key, value] of formData.entries()) {
-                    console.log(`  ${key}:`, value);
-                }
+    
 
                 try {
                     saveBtn.disabled = true;
@@ -1046,7 +1039,6 @@
                     if (result.success) {
                         const message = isEditMode ? 'User updated successfully!' :
                             'User created successfully!';
-                        console.log('Success! Updated user data:', result.data);
                         showAlert(message, 'success');
 
                         // Add a small delay to ensure database is fully committed

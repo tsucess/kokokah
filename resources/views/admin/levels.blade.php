@@ -792,7 +792,7 @@
                 //             method: 'GET'
                 //         });
                 //         const item = unwrapItemResponse(data) || data;
-                //         console.log(item);
+             
                 //         if (!item) return showToast('Error', 'Level not found', 'danger');
                 //         currentEditId = item.id;
                 //         levelNameInput.value = item.name || '';

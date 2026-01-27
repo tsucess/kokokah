@@ -289,7 +289,7 @@ Messages are broadcast in real-time using Laravel Broadcasting.
 ```javascript
 Echo.private(`chatroom.5`)
     .listen('message.sent', (event) => {
-        console.log('New message:', event.data);
+       
         // Update UI with new message
     });
 ```

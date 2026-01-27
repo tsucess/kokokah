@@ -160,13 +160,10 @@
         // Get user from result.data.user or result.user
         const user = result.data?.user || result.user;
 
-        console.log('Login successful. User data:', user);
-        console.log('User role:', user?.role);
 
         // Students and instructors go to user dashboard
         if (user && ['student', 'instructor'].includes(user.role)) {
           redirectUrl = '/usersdashboard';
-          console.log('User is student/instructor, redirecting to:', redirectUrl);
         } else {
           console.log('User is admin/superadmin, redirecting to:', redirectUrl);
         }

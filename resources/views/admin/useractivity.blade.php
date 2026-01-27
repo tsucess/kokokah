@@ -317,7 +317,6 @@
         function setupAutoRefresh() {
             // Listen for user activity updated events
             window.addEventListener('userActivityUpdated', async () => {
-                console.log('[Activity Page] User activity updated event received, refreshing...');
                 currentPage = 1; // Reset to first page
                 await loadUsersActivities(1);
             });
@@ -590,8 +589,6 @@
                     const activities = recentActivityData.data || [];
                     paginationData = recentActivityData;
 
-                    console.log('Activities:', activities);
-                    console.log('Pagination:', paginationData);
 
                     // Use actual status from database
                     allActivities = activities.map(activity => {

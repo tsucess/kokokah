@@ -1272,7 +1272,6 @@
                 if (!token) {
                     token = '{{ $token }}';
                     localStorage.setItem('auth_token', token);
-                    console.log('Token set from server');
                 }
             @endif
 
@@ -1292,7 +1291,6 @@
         async function loadChatrooms() {
             try {
                 const token = localStorage.getItem('auth_token');
-                console.log('Loading chatrooms with token:', token ? 'present' : 'missing');
 
                 const response = await fetch(`${API_BASE_URL}/chatrooms`, {
                     headers: {
@@ -1301,8 +1299,6 @@
                     }
                 });
 
-                console.log('Chatrooms response status:', response.status);
-
                 if (!response.ok) {
                     const errorData = await response.json();
                     console.error('Failed to load chatrooms:', errorData);
@@ -1310,7 +1306,6 @@
                 }
 
                 const data = await response.json();
-                console.log('Chatrooms loaded:', data);
                 const chatrooms = data.data || data;
 
                 renderChatrooms(chatrooms);
@@ -1327,21 +1322,17 @@
                 // If no last chatroom or it doesn't exist, find "General" chatroom
                 if (!chatroomToLoad) {
                     chatroomToLoad = chatrooms.find(room => room.name.toLowerCase() === 'general');
-                    console.log('No last chatroom, found General:', chatroomToLoad ? chatroomToLoad.name : 'NOT FOUND');
                 }
 
                 // If still no chatroom found, use the first one
                 if (!chatroomToLoad && chatrooms.length > 0) {
                     chatroomToLoad = chatrooms[0];
-                    console.log('No General chatroom, using first:', chatroomToLoad.name);
                 }
 
                 // Load the selected chatroom
                 if (chatroomToLoad) {
-                    console.log('About to load chatroom:', chatroomToLoad.id, chatroomToLoad.name, 'Type of ID:', typeof chatroomToLoad.id);
                     // Use setTimeout to ensure DOM is fully updated before applying active state
                     setTimeout(() => {
-                        console.log('Timeout fired, calling selectChatroom');
                         selectChatroom(chatroomToLoad.id, chatroomToLoad.name);
                     }, 200);
                 } else {
@@ -1376,15 +1367,12 @@
 
             document.getElementById('chatrooms-list-desktop').innerHTML = html;
             document.getElementById('chatrooms-list-mobile').innerHTML = html;
-            console.log('Chatrooms rendered:', chatrooms.length, 'rooms');
         }
 
         // Select chatroom
         async function selectChatroom(roomId, roomName) {
             // Ensure roomId is a string for consistent selector matching
             roomId = String(roomId);
-            console.log('selectChatroom called with ID:', roomId, 'Name:', roomName, 'Type:', typeof roomId);
-
             currentChatroomId = roomId;
             document.getElementById('current-room-name').textContent = `#${roomName}`;
 
@@ -1393,28 +1381,20 @@
 
             // Update active state - remove from all
             const allItems = document.querySelectorAll('.chatroom-item');
-            console.log('Total chatroom items found:', allItems.length);
-
             allItems.forEach(item => {
                 item.classList.remove('active');
             });
 
             // Add active to the selected one(s) - there may be multiple (desktop and mobile)
             const selector = `[data-room-id="${roomId}"]`;
-            console.log('Looking for elements with selector:', selector);
 
             const activeElements = document.querySelectorAll(selector);
-            console.log('Elements found:', activeElements.length);
-
             if (activeElements.length > 0) {
                 activeElements.forEach(element => {
                     element.classList.add('active');
-                    console.log('✓ Active class added to chatroom element');
                 });
-                console.log('✓ Active class added to', activeElements.length, 'chatroom element(s) for:', roomName, 'ID:', roomId);
             } else {
                 console.warn('✗ Could not find chatroom element with ID:', roomId);
-                console.log('Available data-room-ids:', Array.from(allItems).map(item => item.getAttribute('data-room-id')));
             }
 
             await loadMessages(roomId);
@@ -1425,8 +1405,6 @@
         async function loadMessages(roomId) {
             try {
                 const token = localStorage.getItem('auth_token');
-                console.log('=== LOAD MESSAGES START ===');
-                console.log('Loading messages for room', roomId, 'with token:', token ? 'present' : 'missing');
 
                 const response = await fetch(`${API_BASE_URL}/chatrooms/${roomId}/messages`, {
                     headers: {
@@ -1435,7 +1413,6 @@
                     }
                 });
 
-                console.log('Messages response status:', response.status);
 
                 if (!response.ok) {
                     const errorData = await response.json();
@@ -1444,17 +1421,9 @@
                 }
 
                 const data = await response.json();
-                console.log('API Response:', data);
                 const messages = data.data || data;
-                console.log('Messages to render:', messages.length, 'messages');
-
-                // Log the first message to see if edited_content is present
-                if (messages.length > 0) {
-                    console.log('First message:', messages[0]);
-                }
 
                 renderMessages(messages);
-                console.log('=== LOAD MESSAGES COMPLETE ===');
             } catch (error) {
                 console.error('=== LOAD MESSAGES ERROR ===');
                 console.error('Error loading messages:', error);
@@ -1463,8 +1432,6 @@
 
         // Render messages
         function renderMessages(messages) {
-            console.log('=== RENDER MESSAGES START ===');
-            console.log('renderMessages called with:', messages.length, 'messages');
 
             // Get current user ID and role from localStorage
             let currentUserId = null;
@@ -1479,10 +1446,8 @@
                     console.error('Failed to parse auth_user:', e);
                 }
             }
-            console.log('Current user ID:', currentUserId, 'Role:', userRole);
 
             if (!messages || messages.length === 0) {
-                console.log('No messages to render');
                 document.getElementById('chat-messages').innerHTML = '<p class="text-muted text-center">No messages yet</p>';
                 return;
             }
@@ -1516,20 +1481,9 @@
                 const messageHtml = renderSingleMessage(msg, currentUserId, userRole, currentChatroomId);
                 html += messageHtml;
 
-                // Log edited messages
-                if (msg.edited_content) {
-                    console.log('Message', index, 'is edited:', {
-                        id: msg.id,
-                        content: msg.content,
-                        edited_content: msg.edited_content,
-                        edited_at: msg.edited_at
-                    });
-                }
             });
 
-            console.log('Rendered HTML length:', html.length);
             document.getElementById('chat-messages').innerHTML = html;
-            console.log('=== RENDER MESSAGES COMPLETE ===');
 
             // Load audio durations after rendering
             setTimeout(() => {
@@ -1560,15 +1514,7 @@
                 const isEdited = msg.edited_content && msg.edited_at;
                 const messageType = msg.type || 'text';
 
-                // Debug logging for edited messages
-                if (msg.edited_content) {
-                    console.log('Rendering edited message:', {
-                        id: msg.id,
-                        original: msg.content,
-                        edited: msg.edited_content,
-                        displaying: messageContent
-                    });
-                }
+          
 
                 // Check if the message sender is an admin or superadmin
                 const senderRole = msg.user?.role || null;
@@ -1661,12 +1607,6 @@
         function showMessageContextMenu(event, messageId, roomId, messageContent) {
             event.stopPropagation();
 
-            console.log('Context menu triggered:', {
-                messageId: messageId,
-                roomId: roomId,
-                contentLength: messageContent.length
-            });
-
             // Get message type from the clicked element
             const messageEl = event.currentTarget;
             const messageType = messageEl.getAttribute('data-message-type') || 'text';
@@ -1696,8 +1636,6 @@
             contextMenu.style.left = rect.left + 'px';
             contextMenu.style.top = (rect.bottom + 5) + 'px';
 
-            console.log('Context menu positioned at:', rect.left, rect.bottom + 5);
-
             // Close menu when clicking elsewhere
             setTimeout(() => {
                 document.addEventListener('click', closeContextMenu);
@@ -1715,7 +1653,6 @@
 
         // Open edit modal
         function openEditModal() {
-            console.log('Opening edit modal for message:', currentContextMessage.id);
             closeContextMenu();
             const editInput = document.getElementById('editMessageInput');
             editInput.value = currentContextMessage.content;
@@ -1724,14 +1661,12 @@
 
             const modal = document.getElementById('editMessageModal');
             modal.classList.add('show');
-            console.log('Edit modal opened');
         }
 
         // Close edit modal
         function closeEditModal() {
             const modal = document.getElementById('editMessageModal');
             modal.classList.remove('show');
-            console.log('Edit modal closed');
         }
 
         // Save edited message
@@ -1747,15 +1682,6 @@
                 const token = localStorage.getItem('auth_token');
                 const url = `${API_BASE_URL}/chatrooms/${currentContextMessage.roomId}/messages/${currentContextMessage.id}`;
 
-                console.log('=== EDIT MESSAGE START ===');
-                console.log('Editing message:', {
-                    messageId: currentContextMessage.id,
-                    roomId: currentContextMessage.roomId,
-                    url: url,
-                    newContent: newContent,
-                    tokenPresent: !!token
-                });
-
                 const response = await fetch(url, {
                     method: 'PUT',
                     headers: {
@@ -1766,9 +1692,7 @@
                     body: JSON.stringify({ content: newContent })
                 });
 
-                console.log('Edit response status:', response.status);
                 const responseData = await response.json();
-                console.log('Edit response data:', responseData);
 
                 if (!response.ok) {
                     console.error('Edit failed with status:', response.status);
@@ -1776,12 +1700,9 @@
                     return;
                 }
 
-                console.log('Edit successful, closing modal and reloading messages...');
                 closeEditModal();
 
-                console.log('About to load messages for room:', currentContextMessage.roomId);
                 await loadMessages(currentContextMessage.roomId);
-                console.log('=== EDIT MESSAGE SUCCESS ===');
             } catch (error) {
                 console.error('=== EDIT MESSAGE ERROR ===');
                 console.error('Error editing message:', error);
@@ -1791,18 +1712,15 @@
 
         // Open delete confirmation modal
         function openDeleteConfirmModal() {
-            console.log('Opening delete confirmation modal for message:', currentContextMessage.id);
             closeContextMenu();
             const modal = document.getElementById('deleteConfirmModal');
             modal.classList.add('show');
-            console.log('Delete confirmation modal opened');
         }
 
         // Close delete confirmation modal
         function closeDeleteConfirmModal() {
             const modal = document.getElementById('deleteConfirmModal');
             modal.classList.remove('show');
-            console.log('Delete confirmation modal closed');
         }
 
         // Confirm delete message
@@ -1812,13 +1730,6 @@
                 const roomId = currentContextMessage.roomId || currentChatroomId;
                 const url = `${API_BASE_URL}/chatrooms/${roomId}/messages/${currentContextMessage.id}`;
 
-                console.log('Deleting message:', {
-                    messageId: currentContextMessage.id,
-                    roomId: roomId,
-                    currentChatroomId: currentChatroomId,
-                    url: url,
-                    tokenPresent: !!token
-                });
 
                 const response = await fetch(url, {
                     method: 'DELETE',
@@ -1828,9 +1739,7 @@
                     }
                 });
 
-                console.log('Delete response status:', response.status);
                 const responseData = await response.json();
-                console.log('Delete response data:', responseData);
 
                 if (!response.ok) {
                     alert('Failed to delete message: ' + (responseData.message || 'Unknown error'));
@@ -1838,11 +1747,9 @@
                 }
 
                 closeDeleteConfirmModal();
-                console.log('About to reload messages for room:', roomId);
                 // Small delay to ensure modal is closed before reloading
                 setTimeout(async () => {
                     await loadMessages(roomId);
-                    console.log('Message deleted successfully and chat reloaded');
                 }, 100);
             } catch (error) {
                 console.error('Error deleting message:', error);
@@ -1886,8 +1793,6 @@
 
             try {
                 const token = localStorage.getItem('auth_token');
-                console.log('Sending message to room:', currentChatroomId);
-                console.log('Token present:', token ? 'YES' : 'NO');
 
                 const response = await fetch(`${API_BASE_URL}/chatrooms/${currentChatroomId}/messages`, {
                     method: 'POST',
@@ -1899,8 +1804,6 @@
                     body: JSON.stringify({ content })
                 });
 
-                console.log('Send message response status:', response.status);
-
                 if (!response.ok) {
                     const errorData = await response.json();
                     console.error('Server error response:', errorData);
@@ -1908,8 +1811,6 @@
                 }
 
                 const responseData = await response.json();
-                console.log('Message sent successfully:', responseData);
-
                 messageInput.value = '';
                 await loadMessages(currentChatroomId);
             } catch (error) {
@@ -2028,7 +1929,6 @@
         // Start camera immediately when button is clicked
         cameraBtn.addEventListener('click', async () => {
             try {
-                console.log('Starting camera...');
                 cameraOverlay.style.display = 'flex';
 
                 // Request camera access
@@ -2041,12 +1941,9 @@
                     audio: false
                 });
 
-                console.log('Camera stream obtained:', cameraStream);
-
                 // Set video source and ensure it plays
                 cameraPreview.srcObject = cameraStream;
                 cameraPreview.onloadedmetadata = () => {
-                    console.log('Video metadata loaded');
                     cameraPreview.play().catch(err => console.error('Play error:', err));
                 };
 
@@ -2057,7 +1954,6 @@
                 sendPhotoBtn.classList.remove('visible');
                 closeCameraBtn.classList.add('visible');
 
-                console.log('Camera ready for capture');
                 // Show mirror mode button and apply mirror effect for front camera
                 mirrorModeBtn.classList.add('visible');
                 if (currentFacingMode === 'user' && isMirrorMode) {
@@ -2075,8 +1971,6 @@
         // Switch between front and back camera
         async function switchCamera() {
             try {
-                console.log('Switching camera from', currentFacingMode, 'to', currentFacingMode === 'user' ? 'environment' : 'user');
-
                 // Stop current camera stream
                 if (cameraStream) {
                     cameraStream.getTracks().forEach(track => track.stop());
@@ -2096,12 +1990,9 @@
                     audio: false
                 });
 
-                console.log('Camera switched to:', currentFacingMode);
-
                 // Set new video source
                 cameraPreview.srcObject = cameraStream;
                 cameraPreview.onloadedmetadata = () => {
-                    console.log('New camera stream loaded');
                     cameraPreview.play().catch(err => console.error('Play error:', err));
                 };
 
@@ -2128,14 +2019,10 @@
         function toggleMirrorMode() {
             try {
                 isMirrorMode = !isMirrorMode;
-                console.log('Mirror mode toggled to:', isMirrorMode);
-
                 if (isMirrorMode && currentFacingMode === 'user') {
                     cameraPreview.classList.add('mirror-mode');
-                    console.log('Mirror mode enabled');
                 } else {
                     cameraPreview.classList.remove('mirror-mode');
-                    console.log('Mirror mode disabled');
                 }
 
                 // Update button appearance
@@ -2153,7 +2040,6 @@
 
         capturePhotoBtn.addEventListener('click', () => {
             try {
-                console.log('Capturing photo...');
                 const canvas = document.createElement('canvas');
                 canvas.width = cameraPreview.videoWidth;
                 canvas.height = cameraPreview.videoHeight;
@@ -2175,7 +2061,6 @@
                     capturePhotoBtn.classList.remove('visible');
                     retakeCameraBtn.classList.add('visible');
                     sendPhotoBtn.classList.add('visible');
-                    console.log('Photo captured successfully');
                 }, 'image/jpeg', 0.95);
             } catch (error) {
                 console.error('Error capturing photo:', error);
@@ -2184,7 +2069,6 @@
         });
 
         retakeCameraBtn.addEventListener('click', () => {
-            console.log('Retaking photo...');
             capturedPhotoContainer.style.display = 'none';
             cameraStreamContainer.style.display = 'block';
             capturePhotoBtn.classList.add('visible');
@@ -2198,7 +2082,6 @@
             if (!capturedPhotoBlob || !currentChatroomId) return;
 
             try {
-                console.log('Sending photo...');
                 const formData = new FormData();
                 formData.append('content', 'Sent a picture');
                 formData.append('type', 'image');
@@ -2219,7 +2102,6 @@
                     throw new Error(errorData.message || 'Failed to send photo');
                 }
 
-                console.log('Photo sent successfully');
 
                 // Stop camera stream
                 if (cameraStream) {
@@ -2249,7 +2131,6 @@
         });
 
         closeCameraBtn.addEventListener('click', () => {
-            console.log('Closing camera...');
             if (cameraStream) {
                 cameraStream.getTracks().forEach(track => track.stop());
                 cameraStream = null;
@@ -2682,7 +2563,6 @@
 
         function openImageViewer(event, imageUrl, messageId, roomId) {
             event.stopPropagation();
-            console.log('Opening image viewer for message:', messageId);
             currentViewingImageData = {
                 url: imageUrl,
                 messageId: messageId,
@@ -2694,7 +2574,6 @@
         }
 
         function closeImageViewer() {
-            console.log('Closing image viewer');
             imageViewerModal.classList.remove('show');
             document.body.style.overflow = 'auto';
             currentViewingImageData = {

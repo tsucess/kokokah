@@ -14,12 +14,12 @@ class I18nManager {
      */
     async init() {
         try {
-            console.log('[i18n] Initializing translation system...');
+           
             await this.loadTranslations();
-            console.log('[i18n] Translations loaded, current locale:', this.currentLocale);
+          
             this.applyTranslations();
             this.setupMutationObserver();
-            console.log('[i18n] Translation system initialized successfully');
+           
         } catch (error) {
             console.error('[i18n] Failed to initialize i18n:', error);
         }
@@ -30,15 +30,14 @@ class I18nManager {
      */
     async loadTranslations() {
         if (this.isLoading) {
-            console.log('[i18n] Already loading translations, skipping...');
+          
             return;
         }
 
         this.isLoading = true;
         try {
             const authToken = localStorage.getItem('auth_token');
-            console.log('[i18n] Loading translations with auth token:', authToken ? 'present (length: ' + authToken.length + ')' : 'missing');
-            console.log('[i18n] Current URL:', window.location.href);
+          
 
             const response = await fetch('/api/language/translations', {
                 headers: {
@@ -47,11 +46,7 @@ class I18nManager {
                 }
             });
 
-            console.log('[i18n] API response status:', response.status);
-            console.log('[i18n] API response headers:', {
-                'content-type': response.headers.get('content-type'),
-                'x-powered-by': response.headers.get('x-powered-by')
-            });
+    
 
             if (!response.ok) {
                 const errorText = await response.text();
@@ -60,13 +55,12 @@ class I18nManager {
             }
 
             const data = await response.json();
-            console.log('[i18n] API response data:', data);
+          
 
             if (data.success) {
                 this.translations = data.data.messages || {};
                 this.currentLocale = data.data.locale || 'en';
-                console.log('[i18n] Translations loaded successfully for locale:', this.currentLocale);
-                console.log('[i18n] Translation keys available:', Object.keys(this.translations));
+              
             } else {
                 console.warn('[i18n] API returned success: false', data);
             }
@@ -104,13 +98,13 @@ class I18nManager {
      */
     applyTranslations() {
         const elements = document.querySelectorAll('[data-i18n]');
-        console.log('[i18n] Found', elements.length, 'elements with data-i18n attribute');
+      
 
         elements.forEach(element => {
             const key = element.getAttribute('data-i18n');
             const translated = this.translate(key);
 
-            console.log('[i18n] Translating key:', key, '-> value:', translated);
+       
 
             // Check if element has child elements (don't replace innerHTML)
             if (element.children.length === 0) {

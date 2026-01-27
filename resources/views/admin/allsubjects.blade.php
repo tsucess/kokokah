@@ -353,7 +353,7 @@
 
                 const coursesData = result.data;
 
-                console.log("Courses Response:", coursesData);
+     
 
                 currentPage = page;
                 paginationData = coursesData.courses;

@@ -160,8 +160,7 @@ const response = await fetch(
     }
 );
 const data = await response.json();
-console.log(data.data); // Array of messages
-console.log(data.pagination); // Pagination info
+
 ```
 
 ### Frontend - Send Message

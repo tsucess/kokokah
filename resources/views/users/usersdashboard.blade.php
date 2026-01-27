@@ -32,8 +32,6 @@
                     return;
                 }
 
-                // Token exists and user has student/instructor role, can access dashboard
-                console.log('User authenticated. Token found. Role:', user?.role);
             })();
         </script>
         <style>

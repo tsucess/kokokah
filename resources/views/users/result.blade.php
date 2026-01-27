@@ -259,10 +259,6 @@
             const urlParams = new URLSearchParams(window.location.search);
             quizId = urlParams.get('quiz_id') || urlParams.get('quizId') || urlParams.get('id');
 
-            console.log('URL:', window.location.href);
-            console.log('Query params:', Object.fromEntries(urlParams));
-            console.log('Quiz ID:', quizId);
-
             // Load all quiz results for the user
             await loadAllQuizResults();
         });
@@ -284,7 +280,6 @@
                 } else {
                     // Fetch all quiz results directly from the API
                     try {
-                        console.log('Starting to load all quiz results...');
                         const token = localStorage.getItem('auth_token');
                         const response = await fetch('/api/users/all-quiz-results', {
                             headers: {
@@ -294,11 +289,9 @@
                         });
 
                         const data = await response.json();
-                        console.log('All Quiz Results Response:', data);
 
                         if (data.success && data.data && Array.isArray(data.data)) {
                             const quizResults = data.data;
-                            console.log('Quiz Results:', quizResults);
 
                             if (quizResults.length > 0) {
                                 displayResults(quizResults);

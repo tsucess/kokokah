@@ -1107,14 +1107,12 @@
         function setupAutoRefresh() {
             // Listen for wallet updated events
             window.addEventListener('walletUpdated', async () => {
-                console.log('[Wallet Page] Wallet updated event received, refreshing...');
                 await loadWalletData();
                 await loadTransactions();
             });
 
             // Listen for wallet transactions updated events
             window.addEventListener('walletTransactionsUpdated', async () => {
-                console.log('[Wallet Page] Transactions updated event received, refreshing...');
                 await loadTransactions();
             });
         }
@@ -1293,15 +1291,11 @@
                     limit: 50
                 };
 
-                console.log('loadTransactions - filters:', filters);
                 const result = await WalletApiClient.getTransactions(filters);
-                console.log('loadTransactions - result:', result);
 
                 if (result.success && result.data) {
-                    console.log('Displaying transactions:', result.data);
                     displayTransactions(result.data);
                 } else {
-                    console.log('Failed to load transactions - result:', result);
                     const msg = window.i18nManager ? window.i18nManager.translate('wallet.failed_load_transactions') : 'Failed to load transactions';
                     showToast(msg, 'error');
                 }
@@ -1397,16 +1391,12 @@
          * Filter transactions
          */
         window.filterTransactions = async function(type, status) {
-            console.log('filterTransactions called with:', { type, status });
-
             if (type !== undefined) {
                 currentTypeFilter = type === 'all' ? 'all' : type;
-                console.log('Updated currentTypeFilter to:', currentTypeFilter);
             }
 
             if (status !== undefined) {
                 currentStatusFilter = status === 'all' ? 'all' : status;
-                console.log('Updated currentStatusFilter to:', currentStatusFilter);
             }
 
             // Close all dropdowns
@@ -1494,8 +1484,6 @@
 
                     // Check if balance is currently hidden (showing asterisks)
                     if (balance.textContent.includes('*')) {
-                        // Balance is hidden, show it (no loader, just display stored balance)
-                        console.log('Showing balance...');
                         if (storedBalance) {
                             balance.textContent = storedBalance;
                         }
@@ -1503,8 +1491,6 @@
                         eyeIcon.classList.remove('fa-eye-slash');
                         eyeIcon.classList.add('fa-eye');
                     } else {
-                        // Balance is visible, hide it
-                        console.log('Hiding balance...');
                         storedBalance = balance.textContent; // Store the balance before hiding
                         balance.textContent = '******';
                         // Change icon to closed eye (hidden state)
@@ -1587,7 +1573,6 @@
             if (confirmDeleteBtn) {
                 confirmDeleteBtn.addEventListener('click', (e) => {
                     e.preventDefault();
-                    console.log('Delete button clicked');
                     handleDeleteCard();
                 });
             }
@@ -1721,12 +1706,6 @@
                 continueBtn.disabled = true;
                 continueBtn.textContent = 'Processing...';
 
-                console.log('Initializing wallet deposit:', {
-                    amount: depositAmount,
-                    gateway: selectedGateway,
-                    currency: 'NGN'
-                });
-
                 // Initialize wallet deposit with selected gateway
                 const result = await PaymentApiClient.initializeWalletDeposit({
                     amount: depositAmount,
@@ -1734,7 +1713,6 @@
                     currency: 'NGN'
                 });
 
-                console.log('Payment initialization response:', result);
 
                 if (result.success && result.data) {
                     // Close modal
@@ -1797,14 +1775,12 @@
             }
 
             try {
-                console.log('Validating recipient email:', email);
                 const result = await WalletApiClient.validateRecipient(email);
 
                 if (result.success && result.data) {
                     // Recipient found - display their name
                     nameInput.value = result.data.name;
                     nameContainer.style.display = 'flex';
-                    console.log('Recipient found:', result.data.name);
                 } else {
                     // Recipient not found
                     let errorMsg = result.message || 'Recipient not found';
@@ -1818,7 +1794,6 @@
 
                     errorElement.textContent = errorMsg;
                     errorElement.classList.remove('d-none');
-                    console.log('Recipient validation failed:', result.message);
                 }
             } catch (error) {
                 console.error('Error validating recipient:', error);
@@ -1882,10 +1857,7 @@
                 submitBtn.disabled = true;
                 submitBtn.textContent = 'Processing...';
 
-                console.log('Transferring ₦' + transferAmount + ' to ' + recipientEmail);
                 const result = await WalletApiClient.transferFunds(recipientEmail, transferAmount, transferDescription);
-
-                console.log('Transfer result:', result);
 
                 if (result.success) {
                     const msg = window.i18nManager ? window.i18nManager.translate('wallet.transfer_success') : 'Transfer successful!';
@@ -1962,10 +1934,7 @@
                 deleteBtn.disabled = true;
                 deleteBtn.textContent = 'Deleting...';
 
-                console.log('Deleting card with ID:', currentCard.id);
                 const result = await WalletApiClient.deletePaymentMethod(currentCard.id);
-
-                console.log('Delete result:', result);
 
                 if (result.success) {
                     const msg = window.i18nManager ? window.i18nManager.translate('wallet.card_deleted_success') : 'Card deleted successfully!';
@@ -1995,8 +1964,6 @@
                             document.querySelectorAll('.modal').forEach(m => {
                                 m.classList.remove('show');
                             });
-
-                            console.log('Backdrop cleanup completed');
 
                             // Remove this listener after it fires
                             modalElement.removeEventListener('hidden.bs.modal', cleanupBackdrop);

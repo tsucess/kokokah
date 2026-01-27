@@ -116,7 +116,7 @@
         }
 
         async loadAnnouncement() {
-            console.log('Loading announcement:', this.announcementId);
+
             const response = await fetch(`${this.apiBaseUrl}/${this.announcementId}`, {
                 headers: {
                     'Authorization': `Bearer ${this.getToken()}`
@@ -128,7 +128,7 @@
             }
 
             const data = await response.json();
-            console.log('Loaded announcement data:', data);
+           
             const announcement = data.data;
 
             // Populate form fields
@@ -237,14 +237,6 @@
             const audience = document.getElementById('audience').value;
             const scheduled_at_input = document.getElementById('scheduled_at').value;
 
-            console.log('Form values before validation:');
-            console.log('- title:', title);
-            console.log('- description:', description);
-            console.log('- type:', type);
-            console.log('- priority:', priority);
-            console.log('- audience:', audience);
-            console.log('- scheduled_at_input:', scheduled_at_input);
-            console.log('- actionType:', actionType);
 
             // Validation
             if (!title) {
@@ -282,9 +274,6 @@
                     status
                 };
 
-                console.log('Sending request to:', `${this.apiBaseUrl}/${this.announcementId}`);
-                console.log('Request body:', requestBody);
-                console.log('Token:', this.getToken());
 
                 const response = await fetch(`${this.apiBaseUrl}/${this.announcementId}`, {
                     method: 'PUT',
@@ -297,7 +286,6 @@
 
                 if (!response.ok) {
                     const error = await response.json();
-                    console.log('API Error Response:', error); // Debug log
                     let errorMessage = error.message || 'Failed to update announcement';
 
                     // If there are validation errors, format them
@@ -340,14 +328,12 @@
             // Try to get auth token from localStorage first (for API authentication)
             let token = localStorage.getItem('auth_token');
             if (token) {
-                console.log('Using auth_token from localStorage');
                 return token;
             }
 
             // Fallback to CSRF token if no auth token found
             const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
             if (csrfToken) {
-                console.log('Using CSRF token as fallback');
                 return csrfToken;
             }
 

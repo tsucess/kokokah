@@ -33,7 +33,7 @@
             }
 
             // Token exists and user has admin/superadmin role, can access dashboard
-            console.log('User authenticated. Token found. Role:', user?.role);
+          
         })();
     </script>
 
@@ -250,20 +250,16 @@
                 }
 
                 const data = result.data;
-                // console.log('Dashboard API Response:', data);
-                // console.log('Data type:', typeof data);
-                // console.log('Has statistics:', data && data.statistics);
+              
 
                 if (data && data.statistics) {
                     const stats = data.statistics;
-                    // console.log('Stats:', stats);
+                  
 
                     // Update total users
                     const totalUsers = stats.users?.total || 0;
                     const students = stats.users?.by_role?.students || 0;
                     const instructors = stats.users?.by_role?.instructors || 0;
-
-                    // console.log('Total Users:', totalUsers, 'Students:', students, 'Instructors:', instructors);
 
                     // Update elements with null checks
                     const totalUsersEl = document.getElementById('totalUsers');

@@ -160,12 +160,9 @@
         document.getElementById('resendLink').addEventListener('click', async (e) => {
             e.preventDefault();
 
-            console.log('Resend button clicked');
 
             // Get email from input field
             const currentEmail = document.getElementById('email').value.trim();
-
-            console.log('Current email:', currentEmail);
 
             if (!currentEmail) {
                 UIHelpers.showError('Email not found. Please register again.');
@@ -179,11 +176,8 @@
             resendLink.style.opacity = '0.5';
             resendLink.textContent = 'Sending...';
 
-            console.log('Calling resendVerificationCode API with email:', currentEmail);
 
             const result = await AuthApiClient.resendVerificationCode(currentEmail);
-
-            console.log('API Response:', result);
 
             // Re-enable resend link
             resendLink.style.pointerEvents = 'auto';
