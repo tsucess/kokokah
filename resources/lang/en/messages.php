@@ -290,6 +290,7 @@ return [
     // Subjects & Classes
     'subjects' => [
         'class' => 'Class',
+        'lets_learn' => "Let's learn something new today!",
         'explore_this_class' => 'Explore this class',
         'enroll' => 'Enroll',
         'loading_classes' => 'Loading classes...',
