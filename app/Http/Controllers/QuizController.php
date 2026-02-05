@@ -30,7 +30,7 @@ class QuizController extends Controller
             // Check if user has access to this lesson
             $isEnrolled = $lesson->course->enrollments()->where('user_id', $user->id)->exists();
             $isInstructor = $lesson->course->instructor_id === $user->id;
-            $isAdmin = $user->hasRole('admin');
+            $isAdmin = $user->hasAnyRole(['admin', 'superadmin']);
 
             if (!$isEnrolled && !$isInstructor && !$isAdmin) {
                 return response()->json([
@@ -117,7 +117,7 @@ class QuizController extends Controller
             $lesson = Lesson::findOrFail($lessonId);
 
             // Check if user is instructor or admin
-            if ($lesson->course->instructor_id !== Auth::id() && !Auth::user()->hasRole('admin')) {
+            if ($lesson->course->instructor_id !== Auth::id() && !Auth::user()->hasAnyRole(['admin', 'superadmin'])) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Unauthorized to create quizzes for this lesson'
@@ -290,7 +290,7 @@ class QuizController extends Controller
             $topic = Topic::findOrFail($topicId);
 
             // Check if user is instructor or admin
-            if ($topic->course->instructor_id !== Auth::id() && !Auth::user()->hasRole('admin')) {
+            if ($topic->course->instructor_id !== Auth::id() && !Auth::user()->hasAnyRole(['admin', 'superadmin'])) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Unauthorized to create quizzes for this topic'
@@ -390,7 +390,7 @@ class QuizController extends Controller
             // Check access
             $isEnrolled = $course->enrollments()->where('user_id', $user->id)->exists();
             $isInstructor = $course->instructor_id === $user->id;
-            $isAdmin = $user->hasRole('admin');
+            $isAdmin = $user->hasAnyRole(['admin', 'superadmin']);
 
             if (!$isEnrolled && !$isInstructor && !$isAdmin) {
                 return response()->json([
@@ -546,7 +546,7 @@ class QuizController extends Controller
             $quiz = Quiz::findOrFail($id);
 
             // Check if user is instructor or admin
-            if ($quiz->lesson->course->instructor_id !== Auth::id() && !Auth::user()->hasRole('admin')) {
+            if ($quiz->lesson->course->instructor_id !== Auth::id() && !Auth::user()->hasAnyRole(['admin', 'superadmin'])) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Unauthorized to delete this quiz'
@@ -786,7 +786,7 @@ class QuizController extends Controller
             // Check access
             $isEnrolled = $course->enrollments()->where('user_id', $user->id)->exists();
             $isInstructor = $course->instructor_id === $user->id;
-            $isAdmin = $user->hasRole('admin');
+            $isAdmin = $user->hasAnyRole(['admin', 'superadmin']);
 
             if (!$isEnrolled && !$isInstructor && !$isAdmin) {
                 return response()->json([
@@ -850,7 +850,7 @@ class QuizController extends Controller
             $quiz = Quiz::with(['questions', 'lesson.course'])->findOrFail($id);
 
             // Check if user is instructor or admin
-            if ($quiz->lesson->course->instructor_id !== Auth::id() && !Auth::user()->hasRole('admin')) {
+            if ($quiz->lesson->course->instructor_id !== Auth::id() && !Auth::user()->hasAnyRole(['admin', 'superadmin'])) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Unauthorized to view quiz analytics'

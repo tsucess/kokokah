@@ -454,7 +454,7 @@
         .quiz-item {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.5rem;
             padding: 0.75rem 1rem;
             background-color: #f9f9f9;
             border: 1px solid #e0e0e0;
@@ -1510,31 +1510,35 @@
             // Attach event listeners to the new items
             attachTopicEventListeners();
 
-            // Load quizzes for each topic
+            // Load quizzes for each lesson in each topic
             topics.forEach(topic => {
-                loadTopicQuizzes(topic.id);
+                if (topic.lessons && topic.lessons.length > 0) {
+                    topic.lessons.forEach(lesson => {
+                        loadLessonQuizzes(lesson.id);
+                    });
+                }
             });
         }
 
-        // Load and display quizzes for a topic
-        async function loadTopicQuizzes(topicId) {
+        // Load and display quizzes for a lesson
+        async function loadLessonQuizzes(lessonId) {
             try {
-                const result = await QuizApiClient.getQuizzesByTopic(topicId);
+                const result = await QuizApiClient.getQuizzesByLesson(lessonId);
                 if (result.success && result.data) {
-                    displayTopicQuizzes(topicId, result.data);
+                    displayLessonQuizzes(lessonId, result.data);
                 }
             } catch (error) {
-                console.error(`Error loading quizzes for topic ${topicId}:`, error);
+                console.error(`Error loading quizzes for lesson ${lessonId}:`, error);
             }
         }
 
-        // Display quizzes for a topic as Q1, Q2, Q3, etc.
-        function displayTopicQuizzes(topicId, quizzes) {
-            const quizRow = document.getElementById(`quiz-row-${topicId}`);
-            if (!quizRow) return;
+        // Display quizzes for a lesson as Q1, Q2, Q3, etc.
+        function displayLessonQuizzes(lessonId, quizzes) {
+            const quizContainer = document.getElementById(`quiz-container-${lessonId}`);
+            if (!quizContainer) return;
 
             if (!quizzes || quizzes.length === 0) {
-                quizRow.innerHTML = '';
+                quizContainer.innerHTML = '<p class="text-muted" style="font-size: 0.9rem; margin-left: 1rem;">No quizzes yet.</p>';
                 return;
             }
 
@@ -1542,7 +1546,6 @@
             const quizItemsHtml = quizzes.map((quiz, index) => `
                 <div class="quiz-item" data-quiz-id="${quiz.id}">
                     <span class="quiz-label">Q${index + 1}</span>
-                    <span class="quiz-title" title="${quiz.title}">${quiz.title}</span>
                     <div class="quiz-actions">
                         <button type="button" title="Edit Quiz" class="edit-quiz-btn" data-quiz-id="${quiz.id}">
                             <i class="fa-solid fa-pen-to-square"></i>
@@ -1554,7 +1557,7 @@
                 </div>
             `).join('');
 
-            quizRow.innerHTML = quizItemsHtml;
+            quizContainer.innerHTML = quizItemsHtml;
 
             // Attach event listeners to quiz buttons
             attachQuizEventListeners();
@@ -1598,11 +1601,9 @@
                             <button type="button" title="Delete" class="delete-lesson-btn" data-lesson-id="${lesson.id}"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     </div>
+                    <div class="quiz-row" id="quiz-container-${lesson.id}" style="margin-left: 2rem; margin-bottom: 1rem;"></div>
                 `).join('') :
                 '<p class="text-muted">No lessons yet. Click "Add Lesson" to create one.</p>';
-
-            // Create quizzes HTML (will be populated after loading)
-            const quizzesHtml = `<div class="quiz-row" id="quiz-row-${topic.id}"></div>`;
 
             return `
                 <div class="accordion-item draggable-topic" draggable="true" data-topic-id="${topic.id}" data-topic-index="${index}">
@@ -1632,7 +1633,6 @@
                             <button type="button" class="btn btn-add-lesson mt-3 add-lesson-btn" data-topic-id="${topic.id}">
                                 <i class="fa-solid fa-plus me-2"></i>Add Lesson
                             </button>
-                            ${quizzesHtml}
                         </div>
                     </div>
                 </div>
