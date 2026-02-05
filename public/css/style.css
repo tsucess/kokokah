@@ -301,6 +301,7 @@ a.nav-link.active {
 
 .product-section-teal {
     background-color: #004a53;
+    color: white;
 }
 
 .product-section-yellow {
@@ -1601,12 +1602,13 @@ footer p {
 /* ===== Modal for home page ===== */
 .modal-dialog {
     max-width: 70%;
+    margin: auto !important;
 }
 
 @media screen and (max-width: 1000px) {
     .modal-dialog {
         max-width: 100%;
-        margin: 20px;
+        margin: auto !important;
     }
 }
 

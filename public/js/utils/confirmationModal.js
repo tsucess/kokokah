@@ -43,7 +43,7 @@ class ConfirmationModal {
         <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
           <div class="modal-content" style="border-radius: 8px; max-height: 300px; display: flex; flex-direction: column;">
             <div class="modal-header" style="border-bottom: 1px solid #e8e8e8; padding: 1rem;">
-              <h1 class="modal-title" id="confirmationModalTitle" style="font-size: 1.1rem; font-weight: 600; color: #000;">Confirm Action</h1>
+              <h1 class="modal-title" id="confirmationModalTitle" style="font-size: 1.1rem; font-weight: 600; color: #fff;">Confirm Action</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" style="padding: 1rem; min-height: auto;">

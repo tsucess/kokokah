@@ -2270,7 +2270,7 @@ select {
 
 .modal-dialog {
     max-width: 600px;
-    margin: auto 15px;
+    margin: auto !important;
 }
 
 .modal-container {
@@ -2290,6 +2290,15 @@ select {
     padding: 20px 25px;
     border-bottom: 2px solid #f0f0f0;
     background: linear-gradient(135deg, #004a53 0%, #2b6870 100%);
+    color: white;
+}
+
+.modal-header .modal-title {
+    color: white;
+}
+
+.modal-header .btn-close {
+    filter: brightness(0) invert(1);
 }
 
 .modal-title {
